@@ -1,0 +1,153 @@
+### **smtp协议介绍**
+
+Simple Mail Transfer Protocol (SMTP) is an Internet standard for electronic mail (email) transmission. First defined by RFC 821 in 1982, it was updated in 2008 with ExtendedSMTPadditions by RFC 5321, which is the protocol in widespread use today.
+
+### **Session.getInstance vs Session.getDefaultInstance**
+
+https://stackoverflow.com/questions/4184204/what-is-the-difference-between-getdefaultinstance-and-getinstance-in-session
+
+### 发送文本邮件
+
+public boolean sendTextMail(String recipients, String subject, String message) throws AddressException, MessagingException, AuthenticationFailedException
+{   
+    try
+    {    
+// 获取邮件会话属性.
+Properties props = getProperties();    
+HashMap<String,String> ac = getMailAC(); 
+// 根据邮件会话属性和密码验证器构造一个发送邮件的session.  
+Session mailSession = Session.getInstance(props, new Authenticator()//Default
+        {
+            protected PasswordAuthentication getPasswordAuthentication()
+            {
+                return new PasswordAuthentication(ac.get("userName"), ac.get("userPwd"));
+            }
+        });     
+// 根据session创建一个邮件消息.
+Message mailMessage = new MimeMessage(mailSession);  
+// 设置发件人地址.
+InternetAddress o\_fromAddress = new InternetAddress(ac.get("fromAddress"));  
+mailMessage.setFrom(o\_fromAddress); 
+// 处理收件人地址. 
+String mail\_recipients = recipients.replace(",", ";");
+String\[\] mail\_recipients\_list = mail\_recipients.split(";");  
+InternetAddress\[\] toAddressList = new InternetAddress\[mail\_recipients\_list.length\];  
+// 添加收件人地址. 
+    for (int i = 0; i < mail\_recipients\_list.length; i++)   
+    {
+    String curr\_recipient = mail\_recipients\_list\[i\];
+    curr\_recipient.replace(" ", "");
+    toAddressList\[i\] = new InternetAddress(curr\_recipient);   
+    }
+    mailMessage.setRecipients(Message.RecipientType.TO, toAddressList);
+    // 添加抄送人地址(默认抄送给发件人).
+InternetAddress\[\] ccAddressList = new InternetAddress\[1\];  
+ccAddressList\[0\] = o\_fromAddress;
+    mailMessage.setRecipients(Message.RecipientType.CC, ccAddressList);
+// 设置邮件标题.   
+((MimeMessage)mailMessage).setSubject(subject, "GBK");
+// 设置邮件正文.
+mailMessage.setText(message);
+// 设置发送日期.
+mailMessage.setSentDate(new Date());
+// 发送邮件.
+Transport.send(mailMessage);
+// 设置函数返回值.
+return true;
+    }
+    catch (AddressException e)
+    {
+log4j.error(Debug.getFileName() 
++ ":" + Debug.getLineNumber()
++ ":" + e.toString());
+    }
+    catch (MessagingException e)
+    {
+log4j.error(Debug.getFileName() 
++ ":" + Debug.getLineNumber()
++ ":" + e.toString());
+    }       
+// 设置函数返回值.
+return false;
+} /\* End of 发送文本邮件. \*/
+
+### 发送html形式的邮件
+
+public boolean sendHtmlMail(String recipients, String mailCC, String subject, String message) throws AddressException, MessagingException, AuthenticationFailedException
+{   
+    try
+    {    
+// 获取邮件会话属性.
+Properties props = getProperties();           
+HashMap<String,String> ac = getMailAC(); 
+// 根据邮件会话属性和密码验证器构造一个发送邮件的session.  
+Session mailSession = Session.getInstance(props, new Authenticator()//Default
+        {
+            protected PasswordAuthentication getPasswordAuthentication()
+            {
+                return new PasswordAuthentication(ac.get("userName"), ac.get("userPwd"));
+            }
+        });     
+// 根据session创建一个邮件消息.
+Message mailMessage = new MimeMessage(mailSession);  
+// 设置发件人地址.
+InternetAddress o\_fromAddress = new InternetAddress(ac.get("fromAddress"));  
+mailMessage.setFrom(o\_fromAddress); 
+// 处理收件人地址. 
+String mail\_recipients = recipients.replace(",", ";");
+String\[\] mail\_recipients\_list = mail\_recipients.split(";");  
+InternetAddress\[\] toAddressList = new InternetAddress\[mail\_recipients\_list.length\];  
+// 添加收件人地址. 
+    for (int i = 0; i < mail\_recipients\_list.length; i++)   
+    {
+    String curr\_recipient = mail\_recipients\_list\[i\];
+    curr\_recipient.replace(" ", "");
+    toAddressList\[i\] = new InternetAddress(curr\_recipient);   
+    }
+    mailMessage.setRecipients(Message.RecipientType.TO, toAddressList);
+    // 处理收件人地址. 
+String mail\_ccRecipients = mailCC.replace(",", ";");
+String\[\] mail\_ccRecipients\_list = mail\_ccRecipients.split(";");  
+InternetAddress\[\] ccAddressList = new InternetAddress\[mail\_ccRecipients\_list.length\];  
+// 添加抄送人地址(默认抄送给发件人).
+for (int i = 0; i < mail\_ccRecipients\_list.length; i++)   
+    {
+    String curr\_recipient = mail\_ccRecipients\_list\[i\];
+    curr\_recipient.replace(" ", "");
+    ccAddressList\[i\] = new InternetAddress(curr\_recipient);   
+    }
+    mailMessage.setRecipients(Message.RecipientType.CC, ccAddressList);
+// 设置邮件标题.
+((MimeMessage)mailMessage).setSubject(subject, "GBK");
+// 创建一个MiniMultipart容器，用于包含MimeBodyPart类型的对象.
+MimeMultipart mainPart = new MimeMultipart();
+// 创建一个包含HTML内容的MimeBodyPart.
+MimeBodyPart htmlBody = new MimeBodyPart();
+// 设置HTML内容.  
+htmlBody.setContent(message, "text/html; charset=utf-8");
+mainPart.addBodyPart(htmlBody);
+// 将MiniMultipart对象设置为邮件内容.
+mailMessage.setContent(mainPart);   
+// 设置发送日期.
+mailMessage.setSentDate(new Date());
+// 发送邮件.
+Transport.send(mailMessage);
+// 设置函数返回值.
+return true;
+    }
+    catch (AddressException e)
+    {
+log4j.error(Debug.getFileName() 
++ ":" + Debug.getLineNumber()
++ ":" + e.toString());
+    }
+    catch (MessagingException e)
+    {
+log4j.error(Debug.getFileName() 
++ ":" + Debug.getLineNumber()
++ ":" + e.toString());
+    }    
+// 设置函数返回值.
+return false;
+} /\* End of 发送HTML邮件. \*/
+链接:[smtp协议邮件转发](https://bbs.huaweicloud.com/blogs/9dc27b09fd2411e8bd5a7ca23e93a891)

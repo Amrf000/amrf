@@ -1,0 +1,76 @@
+{
+  "_args": [
+    [
+      {
+        "name": "gitbook-plugin-copy",
+        "raw": "gitbook-plugin-copy@2.2.1",
+        "rawSpec": "2.2.1",
+        "scope": null,
+        "spec": "2.2.1",
+        "type": "version"
+      },
+      "E:\\dev\\gitbook"
+    ]
+  ],
+  "_from": "gitbook-plugin-copy@2.2.1",
+  "_id": "gitbook-plugin-copy@2.2.1",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/gitbook-plugin-copy",
+  "_nodeVersion": "5.9.0",
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/gitbook-plugin-copy-2.2.1.tgz_1461142220615_0.35995554365217686"
+  },
+  "_npmUser": {
+    "email": "johan.preynat@gmail.com",
+    "name": "jpreynat"
+  },
+  "_npmVersion": "3.7.3",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "gitbook-plugin-copy",
+    "raw": "gitbook-plugin-copy@2.2.1",
+    "rawSpec": "2.2.1",
+    "scope": null,
+    "spec": "2.2.1",
+    "type": "version"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/gitbook-plugin-copy/-/gitbook-plugin-copy-2.2.1.tgz",
+  "_shasum": "6d25b5a776990fa98fdfdfa37de331f78e0f6b13",
+  "_shrinkwrap": null,
+  "_spec": "gitbook-plugin-copy@2.2.1",
+  "_where": "E:\\dev\\gitbook",
+  "bugs": {
+    "url": "https://github.com/GitbookIO/plugin-copy/issues"
+  },
+  "dependencies": {},
+  "description": "Search input for your GitBook",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "6d25b5a776990fa98fdfdfa37de331f78e0f6b13",
+    "tarball": "https://registry.npmjs.org/gitbook-plugin-copy/-/gitbook-plugin-copy-2.2.1.tgz"
+  },
+  "engines": {
+    "gitbook": ">=3.0.0-pre.0"
+  },
+  "gitHead": "101ba4e085adf46e688824014bf9744f963bb75b",
+  "homepage": "https://github.com/GitbookIO/plugin-copy",
+  "license": "Apache-2.0",
+  "main": "index.js",
+  "maintainers": [],
+  "name": "gitbook-plugin-copy",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GitbookIO/plugin-copy.git"
+  },
+  "scripts": {
+  },
+  "version": "2.2.1"
+}

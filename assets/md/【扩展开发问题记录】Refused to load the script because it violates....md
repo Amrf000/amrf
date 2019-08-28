@@ -1,0 +1,136 @@
+最近写一个在浏览器中完成url重定向功能的chrome插件时遇到如下的问题
+
+Refused to load the script because it violates the following Content Security Policy directive style-src script-src
+
+现象是图片等资源可以完成加载，但是js和css加载却因为浏览器安全策略拒绝加载;
+
+网上的解决方案有添加meta修改策略
+
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src \*">
+
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'; style-src 'self' 'unsafe-inline'; media-src \*">
+
+或者在插件manifest.json中添加,Content-Security-Policy修改,该方法在高版本chrome中添加的策略会因为安全被忽略;
+
+后来找到一个禁止Content-Security-Policy 的插件[https://github.com/PhilGrayson/chrome-csp-disable](https://github.com/PhilGrayson/chrome-csp-disable)
+
+在这个插件的基础上编辑background.js添加我需要增加的插件功能，测试  
+
+///==========================================
+
+var host = "https://assets-cdn.github.com";
+chrome.webRequest.onBeforeRequest.addListener(
+    function(details) {
+         return {redirectUrl: host + details.url.match(/^https?:\\/\\/\[^\\/\]+(\[\\S\\s\]\*)/)\[1\]};
+    },
+    {
+        urls: \[
+            "\*://github.githubassets.com/\*",
+        \],
+        types: \["main\_frame", "sub\_frame", "stylesheet", "script", "image", "object", "xmlhttprequest", "other"\]
+    },
+    \["blocking"\]
+);
+
+研究向:
+
+[https://developer.chrome.com/apps/nativeMessaging](https://developer.chrome.com/apps/nativeMessaging)
+
+[https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/nativeMessaging](https://chromium.googlesource.com/chromium/src/+/master/chrome/common/extensions/docs/examples/api/nativeMessaging)
+
+Important:Chrome will be removing support for Chrome Apps on Windows, Mac, and Linux. Chrome OS will continue to support Chrome Apps. Additionally, Chrome and the Web Store will continue to support extensions on all platforms.[Read the announcement](http://127.0.0.1:8580/do/Qa_Z/d5jPLez80XAbXL08P/s-r4/-I/from-chrome-apps-to-web.html)and learn more about[migrating your app](http://127.0.0.1:8580/do/zaaZ9/MgnN5jkg89Lez2jXgLejh/vZZ3/migration).
+
+Native Messaging
+================
+
+Extensions and apps can exchange messages with native applications using an API that is similar to the other[message passing APIs](http://127.0.0.1:8580/do/zaak9/fgnN50ZN2Lxz80hNLx0h/vZZ3/messaging). Native applications that support this feature must register a_native messaging host_that knows how to communicate with the extension. Chrome starts the host in a separate process and communicates with it using standard input and standard output streams.
+
+Native messaging host
+---------------------
+
+In order to register a native messaging host the application must install a manifest file that defines the native messaging host configuration. Below is an example of the manifest file:
+
+{
+  "name": "com.my\_company.my\_application",
+  "description": "My Application",
+  "path": "C:\\\\Program Files\\\\My Application\\\\chrome\_native\_messaging\_host.exe",
+  "type": "stdio",
+  "allowed\_origins": \[
+    "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/"
+  \]}
+
+The native messaging host manifest file must be valid JSON and contains the following fields:
+
+Name
+
+Description
+
+`name`
+
+Name of the native messaging host. Clients pass this string to[runtime.connectNative](http://127.0.0.1:8580/do/zaak3/fgcgDjkN8Lez80XgLxjX/vZZ3/runtime#method-connectNative) or [runtime.sendNativeMessage](http://127.0.0.1:8580/do/z_ak3/fNcg5jkg8Lez8jXNLx0h/vZZ3/runtime#method-sendNativeMessage). This name can only contain lowercase alphanumeric characters, underscores and dots. The name cannot start or end with a dot, and a dot cannot be followed by another dot.
+
+`description`
+
+Short application description.
+
+`path`
+
+Path to the native messaging host binary. On Linux and OSX the path must be absolute. On Windows it can be relative to the directory in which the manifest file is located. The host process is started with the current directory set to the directory that contains the host binary. For example if this parameter is set to `C:\Application\nm_host.exe` then it will be started with current directory `C:\Application\`.
+
+`type`
+
+Type of the interface used to communicate with the native messaging host. Currently there is only one possible value for this parameter: `stdio`. It indicates that Chrome should use `stdin` and `stdout` to communicate with the host.
+
+`allowed_origins`
+
+List of extensions that should have access to the native messaging host. Wildcards such as `chrome-extension://*/*` are _not_ allowed.
+
+### Native messaging host location
+
+The location of the manifest file depends on the platform.
+
+OnWindows, the manifest file can be located anywhere in the file system. The application installer must create registry key`HKEY_LOCAL_MACHINE\SOFTWARE\Google\Chrome\NativeMessagingHosts\_com.my_company.my_application_`or`HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\_com.my_company.my_application_`, and set default value of that key to the full path to the manifest file. For example, using the following command:  
+
+REG ADD "HKCU\\Software\\Google\\Chrome\\NativeMessagingHosts\\com.my\_company.my\_application" /ve /t REG\_SZ /d "C:\\path\\to\\nmh-manifest.json" /f
+
+or using the following`.reg`file:
+
+Windows Registry Editor Version 5.00\[HKEY\_CURRENT\_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\com.my\_company.my\_application\]@="C:\\\\path\\\\to\\\\nmh-manifest.json"
+
+When Chrome looks for native messaging hosts, first the 32-bit registry is queried, then the 64-bit registry.
+
+OnOS XandLinux, the location of the native messaging host's manifest file varies by the browser (Google Chrome or Chromium). The system-wide native messaging hosts are looked up at a fixed location, while the user-level native messaging hosts are looked up in a subdirectory within the[native messaging host manifest](http://127.0.0.1:8580/do/https/developer.chrome.com/apps/nativeMessaging#)?
+
+*   Does the file specified in`path`exist? On Windows, paths may be relative, but on OS X and Linux, the paths must be absolute.
+    
+
+*   Native messaging host_host name_is not registered. (Windows-only)
+    
+*   The native messaging host was not found in the Windows registry. Double-check using`regedit`whether the key was really created and matches the required format as documented at[native messaging host location](http://127.0.0.1:8580/do/z_aZ3/fgcND0kg8Lez20hNLxjX/vZZ3/nativeMessaging#native-messaging-host-location%EF%BF%BD/do/https/developer.chrome.com/apps/nativeMessaging).
+    
+*   Access to the specified native messaging host is forbidden.
+    
+*   Is the extension's origin listed in`allowed_origins`?
+    
+*   Error when communicating with the native messaging host.
+    
+*   This is a very common error and indicates an incorrect implementation of the communication protocol in the native messaging host.
+    
+    *   Make sure that all output in`stdout`adheres to the<a href="http://127.0.0.1:8580/do/https/developer.chrome.com/apps/nativeMessaging#" do="" z\_ak3="" mgcndjzg2lez80xnlx0x="" vzz3="" nativemessaging#native-messaging-host-protocol"="" style="padding: 0px; box-sizing: border-box; margin: 0px; transition: opacity 0.3s ease 0s; background-image: initial; background-position: 0px 0px; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; color: rgb(51, 153, 204); font-weight: 700; text-decoration-line: none; overflow-wrap: break-word;">native messaging protocol. If you want to print some data for debugging purposes, write to`stderr`.
+        
+    *   Make sure that the 32-bit message length is in the platform's native integer format (little-endian / big-endian).
+        
+    *   The message length must not exceed 1024\*1024.
+        
+    *   The message size must be equal to the number of bytes in the message. This may differ from the "length" of a string, because characters may be represented by multiple bytes.
+        
+    *   Windows-only: Make sure that the program's I/O mode is set to`O_BINARY`. By default, the I/O mode is`O_TEXT`, which corrupts the message format as line breaks (`\n`\=`0A`) are replaced with Windows-style line endings (`\r\n`\=`0D 0A`). The I/O mode can be set using[`__setmode`](http://127.0.0.1:8580/do/Q__Z9/X9fYLXRx2j3jOaLe0h/NY.b3/DAw2v2E/tw4k6df8.aspx).
+        
+
+Examples
+--------
+
+The[examples/api/nativeMessaging](http://127.0.0.1:8580/do/zaaZ3/xz8jhAbXLy00PDN9jm8egLejX/xz20XAbX/32x/+/Xv3aN2/xz20XN/x0XX0Y/NuaNY3A0Y3/M0x3/NuvXZDN3/vZA/nativeMessaging)directory contains an example application that uses native messaging to communicate with a Python script that serves as a native messaging host. The sample host's directory also contains scripts to install/remove the native messaging host.
+
+To try out the example, first download and extract the[sample app](http://127.0.0.1:8580/do/Qa_Z9/fNnN5jZg8LeQ80hgLx0X/NuaNY3A0Y3/NuvXZDN3/vZA/YvaAcNhN33vyAYy/app.zip)and[sample host](http://127.0.0.1:8580/do/Qa_k3/MgcND0kN8Lxz80XgLe0X/NuaNY3A0Y3/NuvXZDN3/vZA/YvaAcNhN33vyAYy/host.zip). Run`install_host.bat`(Windows) or`install_host.sh`(Linux / OS X) to install the native messaging host. Then[load the app](http://127.0.0.1:8580/do/Qa_Z9/fgcN50kN8Lxz80XgLxjX/vZZ3/getstarted#unpacked)and interact with the app. Run`uninstall_host.bat`or`uninstall_host.sh`to unregister the native messaging host when you are done.
+链接:[【扩展开发问题记录】Refused to load the script because it violates...](https://bbs.huaweicloud.com/blogs/b4ba2e20032d11e9bd5a7ca23e93a891)
