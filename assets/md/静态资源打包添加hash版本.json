@@ -1,0 +1,116 @@
+1.  安装gulp
+    
+    npm install --save-dev gulp  
+    npm install --save-dev gulp-rev  
+    npm install --save-dev gulp-rev-collector  
+    npm install --save-dev run-sequence
+    
+2.  编写打包程序
+    
+
+//引入gulp和gulp插件  
+var gulp = require('gulp'),      
+    runSequence = require('run-sequence'),      
+    rev = require('gulp-rev'),      
+    revCollector = require('gulp-rev-collector');  
+  
+//定义css、js、img文件路径，是本地css,js,img文件的路径，可自行配置  
+var cssUrl = 'css/\*.css',     
+    jsUrl = 'js/\*.js';      
+    imageUrl = 'images/\*';  
+  
+//CSS生成文件hash编码并生成 rev-manifest.json文件名对照映射  
+gulp.task('revCss', function(){      
+    return gulp.src(cssUrl)          
+        .pipe(rev())         
+        .pipe(rev.manifest())          
+        .pipe(gulp.dest('rev/css'));  
+});  
+  
+//js生成文件hash编码并生成 rev-manifest.json文件名对照映射  
+gulp.task('revJs', function(){      
+    return gulp.src(jsUrl)          
+        .pipe(rev())          
+        .pipe(rev.manifest())          
+        .pipe(gulp.dest('rev/js'));  
+});  
+  
+//img生成文件hash编码并生成 rev-manifest.json文件名对照映射  
+gulp.task('revImg', function(){      
+    return gulp.src(imageUrl)          
+        .pipe(rev())          
+        .pipe(rev.manifest())          
+        .pipe(gulp.dest('rev/images'));  
+});  
+  
+//Html更换css、js、img文件版本  
+gulp.task('revHtml', function () {     
+    return gulp.src(\['rev/\*\*/\*.json', './\*.html'\])  /\*./是本地html文件的路径，可自行配置\*/         
+        .pipe(revCollector())          
+        .pipe(gulp.dest('.'));  /\*Html更换css、js文件版本,.也是和本地html文件的路径一致\*/});  
+  
+//开发构建  
+gulp.task('dev', function (done) {     
+    condition = false;     
+    runSequence(          
+        \['revCss'\],          
+       \['revJs'\],          
+       \['revImg'\],         
+       \['revHtml'\],          
+       done);  
+});  
+  
+gulp.task('default', \['dev'\]);  
+
+**3.更改gulp-rev和gulp-rev-collector**
+
+打开node\_modules\\gulp-rev\\index.js  
+第144行 manifest\[originalFile\] = revisionedFile;  
+更新为: manifest\[originalFile\] = originalFile + '?v=' + file.revHash;  
+
+打开node\_modules\\gulp-rev\\node\_modules\\rev-path\\index.js  
+10行 return filename + '-' + hash + ext;  
+更新为: return filename + ext;  
+
+打开node\_modules\\gulp-rev-collector\\index.js  
+31行if ( !\_.isString(json\[key\]) || path.basename(json\[key\]).replace(new RegExp( opts.revSuffix ), '' ) !== path.basename(key) ) {  
+更新为: if ( !\_.isString(json\[key\]) || path.basename(json\[key\]).split('?')\[0\] !== path.basename(key) ) {  
+
+**4.继续更改gulp-rev-collector**
+
+打开node\_modules\\gulp-rev-collector\\index.js  
+第107行 regexp: new RegExp( '(\[\\/\\\\\\\\\\'"\])' + pattern, 'g' ),  
+更新为: regexp: new RegExp( '(\[\\/\\\\\\\\\\'"\])' + pattern+'(\\\\?v=\\\\w{10})?', 'g' ),  
+
+参考:
+
+[前端静态资源版本更新与缓存——通过gulp 在原html文件上自动化添加js、css、img版本号](https://www.jianshu.com/p/164344f8e2ac)
+
+[前端工程精粹（一）：静态资源版本更新与缓存](https://webcache.googleusercontent.com/search?q=cache:GX97sawVRPQJ:https://www.infoq.cn/article/front-end-engineering-and-performance-optimization-part1/+&cd=17&hl=zh-CN&ct=clnk&gl=sg)
+
+[关于angularJs清除浏览器缓存的方法](https://blog.csdn.net/jimolangyaleng/article/details/76617771)
+
+[缓存（二）——浏览器缓存机制：强缓存、协商缓存](https://github.com/amandakelake/blog/issues/41)
+
+其他:
+
+[angular页面缓存与页面刷新](https://www.cnblogs.com/s-quan/p/6005020.html)
+
+[angularjs 缓存详解](http://webcache.googleusercontent.com/search?q=cache:D6f5FBc0as4J:www.fly63.com/article/detial/516+&cd=5&hl=zh-CN&ct=clnk&gl=sg)
+
+[Angular 跨页缓存设计](https://webcache.googleusercontent.com/search?q=cache:XOCtFB5ljnsJ:https://www.w3ctech.com/topic/1000+&cd=4&hl=zh-CN&ct=clnk&gl=sg)
+
+[angularJs中$cacheFactory缓存用法](https://blog.csdn.net/u012396955/article/details/73015217)
+
+[Angularjs中的缓存以及缓存清理](https://juejin.im/post/5abcb85af265da23884d256b)
+
+db操作缓存
+
+[基于注解的spring缓存，轻松无侵入解决cache问题](https://webcache.googleusercontent.com/search?q=cache:fSVS5OS32aAJ:https://my.oschina.net/thinwonton/blog/918163+&cd=5&hl=zh-CN&ct=clnk&gl=sg)
+
+[注释驱动的 Spring cache 缓存介绍](https://www.ibm.com/developerworks/cn/opensource/os-cn-spring-cache/)
+
+[Spring缓存注解@Cacheable、@CacheEvict、@CachePut使用](https://www.cnblogs.com/fashflying/p/6908028.html)
+
+[Angularjs中的缓存以及缓存清理](https://juejin.im/post/5abcb85af265da23884d256b)
+链接:[静态资源打包添加hash版本](https://bbs.huaweicloud.com/blogs/35c5f9b3be3e11e9b759fa163e330718)

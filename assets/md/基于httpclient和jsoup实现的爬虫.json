@@ -1,0 +1,169 @@
+*   创建并设置代理
+    
+
+DefaultHttpClient httpclient；
+proxyHost = prop.getProperty("proxy.host", "默认代理");
+proxyPort = Integer.parseInt(prop.getProperty("proxy.port", "默认代理端口"));
+proxyProtocol = prop.getProperty("proxy.protocol", "http");
+proxyUser = prop.getProperty("proxy.user");
+proxyPwd = prop.getProperty("proxy.pwd");
+proxy = new HttpHost(proxyHost, proxyPort, proxyProtocol);
+httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT\_PROXY,proxy);
+httpclient.getCredentialsProvider().setCredentials(new AuthScope(proxyHost, proxyPort),new UsernamePasswordCredentials(proxyUser, proxyPwd));
+
+*   登录
+    
+
+@SuppressWarnings("rawtypes")
+private List setFormData(String user,String pwd)
+{
+    Properties prop = ConfigFactory.getInstance().getProp(this.getClass().getResource("/").getPath()+CONFIG);
+    List<NameValuePair> nvps = new ArrayList<NameValuePair>(8);
+    Iterator iter = prop.entrySet().iterator();
+    while (iter.hasNext())
+    {
+        @SuppressWarnings("unchecked")
+        Map.Entry<String, String> entry = (Map.Entry<String, String>) iter
+                .next();
+        if (isFormField(entry.getKey()))
+        {
+        if(entry.getKey().equalsIgnoreCase("uid") && user!=null)
+        {
+        nvps.add(new BasicNameValuePair(entry.getKey(), user));
+        }else if(entry.getKey().equalsIgnoreCase("password") && pwd!=null){
+        nvps.add(new BasicNameValuePair(entry.getKey(), pwd));
+        }else{
+               nvps.add(new BasicNameValuePair(entry.getKey(), entry
+                    .getValue()));
+        }
+        }
+    }
+    return nvps;
+}
+private static X509TrustManager trustManager = new X509TrustManager()
+{
+ public X509Certificate\[\] getAcceptedIssuers()
+ {
+     // TODO Auto-generated
+     // method stub
+     return null;
+ }
+ public void checkServerTrusted(
+         X509Certificate\[\] arg0,
+         String arg1)
+         throws CertificateException
+ {
+     // TODO Auto-generated
+     // method stub
+ }
+ public void checkClientTrusted(
+         X509Certificate\[\] arg0,
+         String arg1)
+         throws CertificateException
+ {
+     // TODO Auto-generated
+     // method stub
+ }
+};
+DefaultHttpClient httpclient = new DefaultHttpClient();
+// for SSL
+//        SSLContext sslCtx = SSLContext.getInstance("TLS");
+//        sslCtx.init(null, new TrustManager\[\]
+//        { trustManager }, null);
+//        
+//        SSLSocketFactory ssf = new SSLSocketFactory(sslCtx);
+//        ssf.setHostnameVerifier(SSLSocketFactory.ALLOW\_ALL\_HOSTNAME\_VERIFIER);
+//        ClientConnectionManager ccm = httpclient.getConnectionManager();
+//        SchemeRegistry sr = ccm.getSchemeRegistry();
+//        sr.register(new Scheme("https", ssf, 443));
+//        httpclient = new DefaultHttpClient(ccm, httpclient.getParams());
+// for SSL end
+String postUrl = loginProp.getProperty("login.postUrl");
+String encoding = loginProp.getProperty("encoding", "UTF-8");
+HttpPost httpost = new HttpPost(postUrl);
+@SuppressWarnings("unchecked")
+List<NameValuePair> nvps = setFormData(user,pwd);
+httpost.setEntity(new UrlEncodedFormEntity(nvps, encoding));
+HttpResponse response = httpclient.execute(httpost);
+HttpEntity entity = response.getEntity();
+EntityUtils.consume(entity);
+logger.info("Post logon cookies:");
+List<Cookie> cookies = httpclient.getCookieStore().getCookies();
+StringBuffer cookieConcat = new StringBuffer(1024);
+if (cookies.isEmpty())
+{
+    logger.info("None");
+}
+else
+{
+    for (int i = 0; i < cookies.size(); i++)
+    {
+        cookieConcat.append(cookies.get(i).getName() + "="
+                + cookies.get(i).getValue() + ";");
+    }
+}
+cookieStr = cookieConcat.toString();
+
+  
+
+*   关闭连接
+    
+
+httpclient.getConnectionManager().shutdown();
+
+*   数据爬取
+    
+
+String cookie = Login.getInstance().getCookies(userName,userPwd);//cookieStr
+String pattern = "";
+if(cookie==null)
+{
+log4j.info("爬虫账号错误");
+return;
+}
+List<PostRecord> list = new ArrayList<PostRecord>();
+String crawl1 = url;
+pattern = "...";
+list.addAll(crawl(crawl1, pattern, cookie,"...",0));
+private List<PostRecord> crawl(String crawlHtml, String pattern, String cookie,String pcount,int offset){
+String html = "";
+List<PostRecord> postList = new ArrayList<PostRecord>();
+URLFetcher urlFetcher = new URLFetcher();
+while (true) {
+html = urlFetcher.fetch(crawlHtml, encoding, cookie);
+if (html == null) {
+for (int i = 0; i < TRY\_TIMES; i++) {
+log4j.warn("try to fetch again: " + crawlHtml + " ");
+html = urlFetcher.fetch(crawlHtml, encoding, cookie);
+}
+}
+Document doc = Jsoup.parse(html);
+Elements elements = doc.select(pattern).select("...");
+Elements elementCounts = doc.select(pcount);
+String text = "";
+String href = "";
+int c = 0,len = elementCounts.size(),count=0;
+for (Element elem : elements) {
+text = elem.text();
+href = elem.attr("href");
+count = 0;
+if(c+offset<len)
+{
+Element celem = elementCounts.get(c+offset);
+int idex = celem.text().indexOf(" ");
+count = Integer.parseInt(idex!=-1?celem.text().substring(0, idex):celem.text());
+}
+PostRecord postRec = new PostRecord(text, href,count);
+postList.add(postRec);
+c++;
+}
+Elements element = doc.select(nextPageSelector);
+if(!element.isEmpty() ){
+crawlHtml = "..." + element.attr("href");
+continue;
+}
+break;
+}
+return postList;
+}
+链接:[基于httpclient和jsoup实现的爬虫](https://bbs.huaweicloud.com/blogs/c44aa58dfd2111e8bd5a7ca23e93a891)

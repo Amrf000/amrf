@@ -1,0 +1,726 @@
+**分享一个浏览器历史记录整理的小技巧**\--->
+
+以前一直从onetab中分析整理,但无奈的是环境里C盘一旦满了之后，onetab保存标签出错后会导致所有onetab旧数据丢失；
+
+这次采用的是chrome better history插件,按日期查看 F12选择相应的链接节点复制，然后粘贴到[http://domchristie.github.io/turndown/](http://domchristie.github.io/turndown/)中，
+
+将需要的历史记录链接粘进去转换成markdown格式的然后一并复制整理,感觉还挺好用的;
+
+////=====================
+
+[地址栏".jsp"变为".action"的含义](https://blog.csdn.net/itzyjr/article/details/8451610)  
+
+[【Servlet】如何隐藏.jsp后缀或是更改后缀名](https://blog.csdn.net/smileyan9/article/details/80408711)
+
+[web项目更改文件后缀，隐藏编程语言](https://blog.csdn.net/chenqun123/article/details/48657267)
+
+[jsp 修改 后缀名](https://www.cnblogs.com/huapox/archive/2013/05/01/3516108.html)
+
+[html与jsp](https://blog.csdn.net/X_Jian/article/details/4015217)
+
+[Spring MVC 多个视图解析器配置](https://blog.csdn.net/xlxxcc/article/details/51148927)
+
+[springmvc的InternalResourceViewResolver自我理解](https://blog.csdn.net/wwzuizz/article/details/78268007)
+
+[Creating Multiple InternalResourceViewResolver](https://stackoverflow.com/questions/25055610/creating-multiple-internalresourceviewresolver)
+
+[Cant return to appropriate JSP from Spring Controller with @PathVariable](https://stackoverflow.com/questions/19998904/cant-return-to-appropriate-jsp-from-spring-controller-with-pathvariable)
+
+[Best Practice of redirecting in Spring Controller](https://stackoverflow.com/questions/24818802/best-practice-of-redirecting-in-spring-controller)
+
+[Redirect in Spring MVC](https://stackoverflow.com/questions/4584410/redirect-in-spring-mvc)
+
+[How to redirect from spring controller?](https://stackoverflow.com/questions/44362899/how-to-redirect-from-spring-controller)
+
+[Initialization of an ArrayList in one line](https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line)
+
+[Returning a simple map structure from spring mvc controller to ajax](https://stackoverflow.com/questions/28893796/returning-a-simple-map-structure-from-spring-mvc-controller-to-ajax)
+
+[@Autowired用法详解 - IVON](https://blog.csdn.net/u013257679/article/details/52295106)
+
+[Row size too large error in mysql create table query](https://stackoverflow.com/questions/13283381/row-size-too-large-error-in-mysql-create-table-query)
+
+[mysql - Convert datetime value into string](https://stackoverflow.com/questions/2392413/convert-datetime-value-into-string)
+
+[SpringBoot+mybatis+jsp整合](https://blog.csdn.net/fancheng614/article/details/79123123)
+
+[简单整合SpringBoot+MyBatis+JSP](https://blog.csdn.net/ws_kfxd/article/details/84500672)
+
+[Formatting a long timestamp into a Date with JSTL](https://stackoverflow.com/questions/75489/formatting-a-long-timestamp-into-a-date-with-jstl)
+
+[JSTL iterate over list of objects](https://stackoverflow.com/questions/5893183/jstl-iterate-over-list-of-objects)
+
+[JSP 中使用 JSTL 按不同条件输出内容](https://www.oschina.net/code/snippet_12_8666)
+
+[jsp - How to use if-else option in JSTL](https://stackoverflow.com/questions/4587397/how-to-use-if-else-option-in-jstl)
+
+[Spring MVC populate @RequestParam Map](https://stackoverflow.com/questions/47418489/spring-mvc-populate-requestparam-mapstring-string)
+
+[Spring MVC map json or encoded parameters to @RequestParam](https://stackoverflow.com/questions/32769203/spring-mvc-map-json-or-encoded-parameters-to-requestparam/32769625)
+
+[Spring处理x-www-form-urlencoded方式](https://blog.csdn.net/zpzkitt/article/details/79217811)
+
+[HTTP请求返回415错误码定位解决](https://blog.csdn.net/majinggogogo/article/details/78383772)
+
+[RESTful调用报错status code=415 Unsupported Media Type](https://blog.csdn.net/lk_blog/article/details/48110453)
+
+[@RequestMapping Content-Type error when a @RequestBody is used but Content-Type header is not given 3313 · spring-projects/spring-boot](https://github.com/spring-projects/spring-boot/issues/3313)
+
+[Support Content type "application/x-www-form-urlencoded" with sending KeyValue params 141 · authorjapps/zerocode](https://github.com/authorjapps/zerocode/issues/141)
+
+[How to access the String json payload and mapping it](https://stackoverflow.com/questions/52414552/how-to-access-the-string-json-payload-and-mapping-it-to-an-object-in-spring-rest)
+
+[Is it possible to use @Valid with @HashMap created from JSON payload?](https://stackoverflow.com/questions/26220791/is-it-possible-to-use-valid-with-hashmap-created-from-json-payload)
+
+[how to capture multiple parameters using @RequestParam using spring mvc?](https://stackoverflow.com/questions/22398892/how-to-capture-multiple-parameters-using-requestparam-using-spring-mvc)
+
+[How do I create a new MultiValueMap from Apache Commons Collections?](https://stackoverflow.com/questions/21534224/how-do-i-create-a-new-multivaluemap-from-apache-commons-collections)
+
+[Can I convert a Map<String, List](https://stackoverflow.com/questions/54720558/can-i-convert-a-mapstring-listinteger-into-a-multivaluemapstring-integer)
+
+[spring - Content type 'application/x-www-form-urlencoded;charset](https://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for)
+
+[Content type 'application/x-www-form-urlencoded' not supported 3 · 52North/timeseries-protector](https://github.com/52North/timeseries-protector/issues/3)
+
+[Spring MVC - How to get all request params in a map in Spring controller?](https://stackoverflow.com/questions/7312436/spring-mvc-how-to-get-all-request-params-in-a-map-in-spring-controller)
+
+[How to replace HashMap Values while iterating over them in Java](https://stackoverflow.com/questions/10993403/how-to-replace-hashmap-values-while-iterating-over-them-in-java)
+
+[通过request.getParameterMap()动态获取请求参数。](https://blog.csdn.net/sinat_33625560/article/details/78783980)
+
+[ServletRequest获取不到getParameter和filter获取不到request请求中的Parameter](https://blog.csdn.net/hithedy/article/details/50635542)
+
+[防止xss攻击 --- getParameter getParameterValues getParameterMap的使用](https://blog.csdn.net/zh521zh/article/details/79353127)
+
+[php - What size of an INT do I need to store Unix timestamp in MySQL database?](https://stackoverflow.com/questions/37217989/what-size-of-an-int-do-i-need-to-store-unix-timestamp-in-mysql-database)
+
+[insert unix timestamp in mysql](https://stackoverflow.com/questions/12333461/insert-unix-timestamp-in-mysql)
+
+[Combine GET and POST request methods in Spring](https://stackoverflow.com/questions/17987380/combine-get-and-post-request-methods-in-spring)
+
+[How to redirect to POST in Spring MVC](https://stackoverflow.com/questions/18526445/how-to-redirect-to-post-in-spring-mvc)
+
+[Redirect from spring controller with post parameter](https://stackoverflow.com/questions/9070375/redirect-from-spring-controller-with-post-parameter)
+
+[What are ways for pass parameters from controller after redirect in spring mvc?](https://stackoverflow.com/questions/19266427/what-are-ways-for-pass-parameters-from-controller-after-redirect-in-spring-mvc)
+
+[andriod eclipse 如何设置ndk-build也即NDK自动编译C/C++、JNI程序](https://blog.csdn.net/Guofengpu/article/details/51559311)
+
+[MySql密码过期解决方法](https://blog.csdn.net/gzj_1101/article/details/44310817)
+
+[MySQL的用户密码过期功能详解](https://blog.csdn.net/chszs/article/details/50651264)
+
+[mysql reset password](https://blog.csdn.net/u014734645/article/details/80467366)
+
+[MYSQL密码过期](https://blog.csdn.net/m0_37663482/article/details/80282697)
+
+[MySQL 密码管理之密码过期和账号锁定](https://blog.csdn.net/vkingnew/article/details/81012699)
+
+[mysql5.7.9 密码过期](https://blog.csdn.net/t244387066/article/details/52993763)
+
+[vs2015一键卸载所有组件工具，彻底卸载干净。](https://blog.csdn.net/a359877454/article/details/52679041)
+
+[卸载visual studio 2013、2015等，微软打脸出品 | Righere的博客](https://righere.github.io/2017/02/15/uninstall-VS/)
+
+[Microsoft/VisualStudioUninstaller: Visual Studio Uninstallation sometimes can be unreliable](https://github.com/Microsoft/VisualStudioUninstaller)
+
+[IonicaBizau/img-to-svg: Convert the image pixels in SVG squares.](https://github.com/IonicaBizau/img-to-svg)
+
+[xyproto/png2svg: Convert small PNG images to SVG Tiny 1.2](https://github.com/xyproto/png2svg)
+
+[ianmackinnon/png2svg: Convert PNG images to SVG.](https://github.com/ianmackinnon/png2svg)
+
+[filamentgroup/svg-to-png: Turn a folder full of SVGs into PNGs!](https://github.com/filamentgroup/svg-to-png)
+
+[HitoriSensei/png-to-jpg-to-svg: Converts a PNG file to a set of JPG+SVG files making a some kind of "JPG with alpha channe](https://github.com/HitoriSensei/png-to-jpg-to-svg)
+
+[convert-svg/packages/convert-svg-to-png](https://github.com/neocotic/convert-svg/tree/master/packages/convert-svg-to-png)
+
+[Spring: Enable global method security in Controller layer by java config](https://stackoverflow.com/questions/21554075/spring-enable-global-method-security-in-controller-layer-by-java-config)
+
+[Custom authorization in Spring MVC](https://stackoverflow.com/questions/13766685/custom-authorization-in-spring-mvc)
+
+[Spring Security - 获取当前登录用户的详细信息](https://blog.csdn.net/cloume/article/details/84983006)
+
+[Re：从零开始的Spring Security Oauth2（一）](https://blog.csdn.net/u013815546/article/details/76898524)
+
+[What are the main differences between JWT and OAuth authentication?](https://stackoverflow.com/questions/39909419/what-are-the-main-differences-between-jwt-and-oauth-authentication)
+
+[spring security 在jsp中的标签库](https://blog.csdn.net/running_snail_/article/details/7167771)
+
+[diary/privatediary/src/main/java/com/diary](https://github.com/GEJLY/diary/tree/0d868fd4fb1a844cef720db45b7b944441538adc/privatediary/src/main/java/com/diary)
+
+[diary-boot/src/main/java/com/lh/diary/service/imp](https://github.com/1332508387/diary-boot/tree/bd1bc6c1b9ff702bfe2b730e508059db8ad7204f/src/main/java/com/lh/diary/service/impl)
+
+[Vcooline/src](https://github.com/dwl588/Vcooline/tree/c78d58c93f4fe72ca33e7317a146ca60cfbca475/src)
+
+[js/jquery怎么取后台request.setAttribute的对象或者属性值?](https://blog.csdn.net/qq_37811638/article/details/80063335)
+
+[javascript - Chrome refuses to execute an AJAX script due to wrong MIME type](https://stackoverflow.com/questions/24528211/chrome-refuses-to-execute-an-ajax-script-due-to-wrong-mime-type)
+
+[spring security logout(spring security登出示例)](https://blog.csdn.net/u012156496/article/details/53421003)
+
+[SecurityContextHolder.getContext().getAuthentication() returning null](https://stackoverflow.com/questions/22191386/securitycontextholder-getcontext-getauthentication-returning-null)
+
+[Spring-Security: Difference Between /\*\* and /\* url pattern in Spring-Security](https://stackoverflow.com/questions/24948651/spring-security-difference-between-and-url-pattern-in-spring-security)
+
+[3.4、路径模式与后缀匹配 - Spring 5 MVC](https://segmentfault.com/a/1190000006858102)
+
+[Spring MVC interceptor拦截指定后缀请求](https://blog.csdn.net/nuaazhaofeng/article/details/47025359)
+
+[Configuring Spring Security 3.x to have multiple entry points](https://stackoverflow.com/questions/4783063/configuring-spring-security-3-x-to-have-multiple-entry-points)
+
+[Spring Security Ldap authentication userDn and password from login form](https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form)
+
+[what is userDn and base in LDAP terminology](https://stackoverflow.com/questions/16084180/what-is-userdn-and-base-in-ldap-terminology)
+
+[LDAP URLs in the userdn Keyword (Sun Java System Directory Server Enterprise Edition 6.0 Reference)](https://docs.oracle.com/cd/E19693-01/819-0997/gdzgn/index.html)
+
+[LDAP Authentication - Spring Security - LdapAuthenticationProvider](https://stackoverflow.com/questions/37075577/ldap-authentication-spring-security-ldapauthenticationprovider)
+
+[authentication - LDAP: error code 49 - 80090308: LdapErr: DSID-0C0903A9](https://stackoverflow.com/questions/31411665/ldap-error-code-49-80090308-ldaperr-dsid-0c0903a9-comment-acceptsecurityc)
+
+[Spring LDAP with dynamic base DN](https://stackoverflow.com/questions/32393856/spring-ldap-with-dynamic-base-dn)
+
+[LDAP authentication in spring boot app](https://stackoverflow.com/questions/47077160/ldap-authentication-in-spring-boot-app)
+
+[ldap-spring-boot/ldap-spring-boot-samples](https://github.com/eddumelendez/ldap-spring-boot/tree/master/ldap-spring-boot-samples)
+
+[spring-security/applicationContext-security.xml](https://github.com/spring-projects/spring-security/blob/master/samples/xml/ldap/src/main/webapp/WEB-INF/applicationContext-security.xml)
+
+[LDAP-97: Escaping of weird characters in DistinguishedNames is inconsistent 137 · spring-projects/spring-ldap](https://github.com/spring-projects/spring-ldap/issues/137)
+
+[python - Lexical error: Encountered: "" (0), after : ""](https://stackoverflow.com/questions/6501115/lexical-error-encountered-0-after)
+
+[TokenMgrError: Lexical error at line 1, column 104. Encountered: "E" (69), after : "\\\\" 48 · stanfordnlp/CoreNLP](https://github.com/stanfordnlp/CoreNLP/issues/48)
+
+[Configure Spring security for Ldap connection](https://stackoverflow.com/questions/36305360/configure-spring-security-for-ldap-connection)
+
+[Spring Boot LDAP Authentication](https://stackoverflow.com/questions/40846843/spring-boot-ldap-authentication)
+
+[Uncategorized exception for using correct credentials in LDAP authentication](https://stackoverflow.com/questions/36748592/uncategorized-exception-for-using-correct-credentials-in-ldap-authentication)
+
+[How to avoid plain text LDAP password in spring security?](https://stackoverflow.com/questions/33952246/how-to-avoid-plain-text-ldap-password-in-spring-security)
+
+[Encrypting a password within a Spring configuration file](https://stackoverflow.com/questions/20149939/encrypting-a-password-within-a-spring-configuration-file)
+
+[jasypt中的加密与解密](https://blog.csdn.net/she_lock/article/details/84371215)
+
+[使用Jasypt对SpringBoot配置文件加密](https://blog.csdn.net/rongxiang111/article/details/85255370)
+
+[jasypt结合spring加密](https://blog.csdn.net/gdfsbingfeng/article/details/16886805)
+
+[SpringBoot, how to Authenticate with LDAP without using ldif?](https://stackoverflow.com/questions/36732689/springboot-how-to-authenticate-with-ldap-without-using-ldif)
+
+[templates - LDAP SPRING : How to authenticate users belonging to different bases](https://stackoverflow.com/questions/42416818/ldap-spring-how-to-authenticate-users-belonging-to-different-bases)
+
+[jasypt 集成spring、spring boot 加密](https://blog.csdn.net/u014421556/article/details/78832427)
+
+[Spring 中使用jasypt对配置文件(.properties)中密码加密](https://blog.csdn.net/dyyaries/article/details/7399414)
+
+[password change in spring-security.xml](https://stackoverflow.com/questions/45816441/password-change-in-spring-security-xml)
+
+[Securing a password in a properties file](https://stackoverflow.com/questions/10306673/securing-a-password-in-a-properties-file/10307724#10307724)
+
+[How to migrate spring-mvc application in jasypt 1.9.x with spring security 4.0 + spring 4.1 and hibernate 4.x](https://stackoverflow.com/questions/30932467/how-to-migrate-spring-mvc-application-in-jasypt-1-9-x-with-spring-security-4-0)
+
+[How to use new PasswordEncoder from Spring Security](https://stackoverflow.com/questions/17444258/how-to-use-new-passwordencoder-from-spring-security)
+
+[jasypt-spring3 XML namespace is broken with Spring 4 1 · tfredrich/jasypt](https://github.com/tfredrich/jasypt/issues/1)
+
+[Full integration of encrypted properties in Spring 4/Boot](https://stackoverflow.com/questions/26095821/full-integration-of-encrypted-properties-in-spring-4-boot)
+
+[spring-security + ldap的认证配置](https://blog.csdn.net/saizzzzzz/article/details/52143896)
+
+[在 Spring MVC + Spring 项目中使用 Spring Security 4.2.3](https://blog.csdn.net/li90hou/article/details/77851845)
+
+[Spring get attributes from Active Directory UserDetails](https://stackoverflow.com/questions/47417778/java-spring-get-attributes-from-active-directory-userdetails)
+
+[Difference between Role and GrantedAuthority in Spring Security](https://stackoverflow.com/questions/19525380/difference-between-role-and-grantedauthority-in-spring-security)
+
+[paulhitz/yet-another-rest-client: YARC (Yet Another REST Client) is an easy-to-use REST Client for Google Chrome.](https://github.com/paulhitz/yet-another-rest-client)
+
+[jeremys/Simple-Rest-Client-Chrome-Extension](https://github.com/jeremys/Simple-Rest-Client-Chrome-Extension)
+
+[nathan-osman/REST-Easy: A simple REST client for Firefox](https://github.com/nathan-osman/Rest-Easy)
+
+[How to get value of a div using javascript](https://stackoverflow.com/questions/11238508/how-to-get-value-of-a-div-using-javascript)
+
+[Decode URL/URI in JSTL](https://stackoverflow.com/questions/16531729/decode-url-uri-in-jstl)
+
+[UriUtils (Spring Framework 5.1.6.RELEASE API)](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriUtils.html)
+
+[apache - How to Set Context root in Spring Mvc Project](https://stackoverflow.com/questions/40670654/how-to-set-context-root-in-spring-mvc-project)
+
+[angularjs - Refused to display in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'](https://stackoverflow.com/questions/20498831/refused-to-display-in-a-frame-because-it-set-x-frame-options-to-sameorigin)
+
+[Spring Security with LDAP and custom UserDetailsContextMapper](https://stackoverflow.com/questions/5195198/spring-security-with-ldap-and-custom-userdetailscontextmapper)
+
+[Spring Security 4.0.2- Multiple Authentication-manager -Error creating bean with name 'org.springframework.security.filterChainProxy'](https://stackoverflow.com/questions/41118109/spring-security-4-0-2-multiple-authentication-manager-error-creating-bean-with)
+
+[spring-security-demo/security-context.xml](https://github.com/bsnyder/spring-security-demo/blob/master/src/main/webapp/WEB-INF/spring/security-context.xml)
+
+[Spring Security + Ldap authentication](https://stackoverflow.com/questions/36712158/spring-security-ldap-authentication)
+
+[Spring security custom ldap authentication provider](https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider)
+
+[AbstractLdapAuthenticationProvider (Spring Security 4.2.11.RELEASE API)](https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/authentication/AbstractLdapAuthenticationProvider.html#userDetailsContextMapper)
+
+[Spring security custom ldap authentication provider](https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider/16609171)
+
+[18.LDAP Authentication](https://docs.spring.io/spring-security/site/docs/3.0.x/reference/ldap.html)
+
+[LdapAuthenticationProvider (Spring Security 4.2.11.RELEASE API)](https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/authentication/LdapAuthenticationProvider.html)
+
+[Spring Security custom ldapAuthenticationProvider + custom ldapAuthoritiesPopulator](https://stackoverflow.com/questions/45533063/spring-security-custom-ldapauthenticationprovider-custom-ldapauthoritiespopula)
+
+[Custom authorities with LDAP authentication](https://stackoverflow.com/questions/37007445/custom-authorities-with-ldap-authentication)
+
+[利用Spring进行LDAP验证登录遇到的问题及其解决方式](https://blog.csdn.net/t894690230/article/details/52928369)
+
+[解读Spring LDAP帮助中的代码案例（二）](https://blog.csdn.net/qq_16465949/article/details/41393605)
+
+[How to convert type collection into ArrayList?](https://stackoverflow.com/questions/1968068/java-how-to-convert-type-collection-into-arraylist)
+
+[Get UserDetails object from Security Context in Spring MVC controller](https://stackoverflow.com/questions/6161985/get-userdetails-object-from-security-context-in-spring-mvc-controller)
+
+[Spring Ldap: Lookup dn without throwing exception if it isn't there](https://stackoverflow.com/questions/3840191/spring-ldap-lookup-dn-without-throwing-exception-if-it-isnt-there)
+
+[authentication - How do i get a reference to an AuthenticationManager using a Spring java security configuration?](https://stackoverflow.com/questions/31171460/how-do-i-get-a-reference-to-an-authenticationmanager-using-a-spring-java-securit)
+
+[spring security 4 RestController with ldap provider](https://stackoverflow.com/questions/34350789/spring-security-4-restcontroller-with-ldap-provider)
+
+[Spring security custom ldap authentication provider](https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider/10559278)
+
+[spring - Get instance of AuthenticationManager Manually](https://stackoverflow.com/questions/5417509/get-instance-of-authenticationmanager-manually)
+
+[Spring Security（二）登录与安全控制](https://blog.csdn.net/a911711054/article/details/82530612)
+
+[Ldap Query - Configuration using Spring Boot](https://stackoverflow.com/questions/26004062/ldap-query-configuration-using-spring-boot)
+
+[antry-ldap/PersonRepoImpl.java](https://github.com/aibingdd/antry-ldap/blob/master/src/main/java/com/an/antry/ldap/PersonRepoImpl.java)
+
+[postmanlabs/postman-chrome-extension-legacy: Postman REST Client Chrome Extension (Legacy Version)](https://github.com/postmanlabs/postman-chrome-extension-legacy)
+
+[URL to URI encoding changes a "%3D" to "%253D"](https://stackoverflow.com/questions/4858108/url-to-uri-encoding-changes-a-3d-to-253d)
+
+[How do I correctly decode unicode parameters passed to a servlet](https://stackoverflow.com/questions/469874/how-do-i-correctly-decode-unicode-parameters-passed-to-a-servlet)
+
+[Decoding URI query string in Java](https://stackoverflow.com/questions/2632175/decoding-uri-query-string-in-java)
+
+[javascript - How to correctly iterate through getElementsByClassName](https://stackoverflow.com/questions/15843581/how-to-correctly-iterate-through-getelementsbyclassname)
+
+[how to make encodeURI/decodeURI using java spring?](https://stackoverflow.com/questions/55613413/how-to-make-encodeuri-decodeuri-using-java-spring)
+
+[ubuntu - How to start nginx via different port(other than 80)](https://stackoverflow.com/questions/10829402/how-to-start-nginx-via-different-portother-than-80)
+
+[Add nginx.exe as Windows system service (like Apache)?](https://stackoverflow.com/questions/10061191/add-nginx-exe-as-windows-system-service-like-apache)
+
+[Tomcat 配置和spring-framework MVC配置简介](https://www.cnblogs.com/zhenjing/archive/2013/01/18/tomcat_spring.html)
+
+[cordova - Refused to display a frame because it set 'X-Frame-Options' to 'sameorigin'](https://stackoverflow.com/questions/50028938/refused-to-display-a-frame-because-it-set-x-frame-options-to-sameorigin)
+
+[How to upload file in spring?](https://stackoverflow.com/questions/44128195/how-to-upload-file-in-spring)
+
+[How to add X-FRAME-OPTIONS to some pages in Spring Security headers (Spring version 4.2.0)?](https://stackoverflow.com/questions/42113927/how-to-add-x-frame-options-to-some-pages-in-spring-security-headers-spring-vers)
+
+[Disable X-FrameOptions response header for a URL Spring Security JAVA config](https://stackoverflow.com/questions/42257402/disable-x-frameoptions-response-header-for-a-url-spring-security-java-config)
+
+[springBoot springSecurty x-frame-options deny](https://blog.csdn.net/whiteForever/article/details/73201586)
+
+[Spring Security iFrame 'X-Frame-Options' to 'deny'](https://blog.csdn.net/qq_26115733/article/details/79647776)
+
+[Spring Security配置 解决X-Frame-Options deny 造成的页面空白 iframe调用问题](https://blog.csdn.net/xqhys/article/details/87166986)
+
+[权威分析@RequestParam和@RequestPart 的区别（官方文档）](https://blog.csdn.net/wd2014610/article/details/79727061)
+
+[wireshark过滤规则及使用方法](https://blog.csdn.net/wojiaopanpan/article/details/69944970)
+
+[spring的multipartResolver和java后端获取的MultipartHttpServletRequest方法对比 （附：遇到的坑）](https://blog.csdn.net/u012373815/article/details/72724084)
+
+[spring boot 上传文件出错，Required request part 'file' is not present](https://blog.csdn.net/a469517790/article/details/80395384)
+
+[springboot MultipartFile文件上传遇到的问题](https://blog.csdn.net/befroe_You/article/details/81325479)
+
+[springmvc文件上传报错](https://blog.csdn.net/qq_20079921/article/details/78159419)
+
+[Spring MVC通过MultipartResolver实现单文件，多文件上传的详细讲解。](https://blog.csdn.net/qq_36410795/article/details/72582882)
+
+[How to config "CommonsMultipartResolver" in spring4 without xml to upload file](https://stackoverflow.com/questions/26118099/how-to-config-commonsmultipartresolver-in-spring4-without-xml-to-upload-file)
+
+[Response JSON is surrounded with HTML...? 46 · twilson63/ngUpload](https://github.com/twilson63/ngUpload/issues/46)
+
+[解决ajax上传文件返回值中出现](https://blog.csdn.net/wuyanshen2012/article/details/75676157)
+
+[上传文件 返回值带](https://blog.csdn.net/hon_3y/article/details/77840735)
+
+[Spring MVC Image response content type set text/html](https://stackoverflow.com/questions/44261725/spring-mvc-image-response-content-type-set-text-html)
+
+[Returning HTML using Produces("text/html") causes 406 response 4846 · aspnet/AspNetCore](https://github.com/aspnet/AspNetCore/issues/4846)
+
+[@requestmapping参数produces,consumes](https://blog.csdn.net/u011649691/article/details/79441971)
+
+[@Consumes @Produces的作用](https://blog.csdn.net/qq_31896193/article/details/85256769)
+
+[Springmvc 4.x使用@ResponseBody出现406问题](https://blog.csdn.net/su_chunlong/article/details/72286720)
+
+[SpringMVC使用了@ResponseBody报406错误的问题(2)](https://blog.csdn.net/u013160932/article/details/50601476)
+
+[SpringMVC ajax 请求报错：406 Not Acceptable 的解决办法 使用@ResponseBody注解](https://blog.csdn.net/qq_27093465/article/details/70172057)
+
+[Who sets response content-type in Spring MVC (@ResponseBody)](https://stackoverflow.com/questions/3616359/who-sets-response-content-type-in-spring-mvc-responsebody)
+
+[sql - How to select particular range of values in MySQL table?](https://stackoverflow.com/questions/15573959/how-to-select-particular-range-of-values-in-mysql-table)
+
+[MySQL - SELECT ... WHERE id IN (..) - correct order](https://stackoverflow.com/questions/5090591/mysql-select-where-id-in-correct-order)
+
+[mybatis向mysql插入含有逗号的值报错](https://blog.csdn.net/zl544434558/article/details/37724297)
+
+[两层c:forEach循环嵌套](https://blog.csdn.net/weixin_38437243/article/details/75077745)
+
+[is it possible to iterate two items simultaneously using foreach in jstl?](https://stackoverflow.com/questions/4142631/is-it-possible-to-iterate-two-items-simultaneously-using-foreach-in-jstl)
+
+[arrays - Java: How to convert String\[\] to List or Set](https://stackoverflow.com/questions/11986593/java-how-to-convert-string-to-list-or-set)
+
+[Spring MVC: How to return image in @ResponseBody?](https://stackoverflow.com/questions/5690228/spring-mvc-how-to-return-image-in-responsebody)
+
+[Multipart File to File InputStream](https://stackoverflow.com/questions/35479290/multipart-file-to-file-inputstream)
+
+[date - How to get current timestamp in string format in Java? "yyyy.MM.dd.HH.mm.ss"](https://stackoverflow.com/questions/23068676/how-to-get-current-timestamp-in-string-format-in-java-yyyy-mm-dd-hh-mm-ss)
+
+[Java—以当前系统时间生成随机数](https://blog.csdn.net/Ge_zi327/article/details/79194178)
+
+[How to convert FileInputStream to InputStream?](https://stackoverflow.com/questions/11100677/how-to-convert-fileinputstream-to-inputstream)
+
+[springmvc中利用ResponseEntity进行文件下载](https://blog.csdn.net/qq_36722039/article/details/80795407)
+
+[SpringMVC 实现文件下载](https://blog.csdn.net/zhengxiangwen/article/details/68061784)
+
+[springboot下载文件](https://blog.csdn.net/h996666/article/details/87279230)
+
+[MultipartFile与File的一些事](https://blog.csdn.net/sdut406/article/details/85647982)
+
+[Java如何获取文件的内容类型？例如：image/gif](https://blog.csdn.net/testcs_dn/article/details/39209761)
+
+[Mybatis 在 insert 之后想获取自增的主键 id，但是总是返回1](https://segmentfault.com/q/1010000004352699)
+
+[Mybatis下insert语句后获取自增id](https://blog.csdn.net/zonghao123/article/details/78374169)
+
+[mybatis insert插入返回自增长id](https://blog.csdn.net/lv_hang515888/article/details/75736292)
+
+[mybatis - When to use $ vs #?](https://stackoverflow.com/questions/39954300/when-to-use-vs)
+
+[mybatis - There is no getter for property named 'tablename' in 'class java.lang.String'](https://stackoverflow.com/questions/38948298/there-is-no-getter-for-property-named-tablename-in-class-java-lang-string)
+
+[MyBatis String as Parameter](https://stackoverflow.com/questions/11760074/mybatis-string-as-parameter)
+
+[mybatis中传入String类型参数的问题](https://blog.csdn.net/zcl_love_wx/article/details/78601481)
+
+[mybatis 传入String 类型的参数](https://blog.csdn.net/leliyanga/article/details/50997247)
+
+[${\_parameter}mybatis中该参数的理解](https://blog.csdn.net/AinUser/article/details/81947211)
+
+[mybatis报Could not find result map java.lang.Integer之类的错误](https://blog.csdn.net/jia_zhengshen/article/details/78048700)
+
+[jdbc - MyBatis select statement returns null values](https://stackoverflow.com/questions/13936618/mybatis-select-statement-returns-null-values)
+
+[mybatis不可忽略的细节](https://www.cnblogs.com/xxyfhjl/p/4157988.html)
+
+[SpringMvc实现导出Excel视图](https://blog.csdn.net/qq_33543634/article/details/82831267)
+
+[SpringMVC-4.2+ExcelView视图进行Excel文件下载](https://blog.csdn.net/z69183787/article/details/82556630)
+
+[Exporting data to excel file using spring mvc](https://stackoverflow.com/questions/37132981/exporting-data-to-excel-file-using-spring-mvc)
+
+[Spring MVC, Excel file download, corrupts file](https://stackoverflow.com/questions/27017495/spring-mvc-excel-file-download-corrupts-file)
+
+[Exporting to Excel gives an error when opening the file 117 · highcharts/export-csv](https://github.com/highcharts/export-csv/issues/117)
+
+[APACHE POI - Not able to give background colour to a cell](https://stackoverflow.com/questions/48090619/apache-poi-not-able-to-give-background-colour-to-a-cell)
+
+[How to change Cellcolor in Apache POI](https://stackoverflow.com/questions/46484886/how-to-change-cellcolor-in-apache-poi)
+
+[How to apply bold text style for an entire row using Apache POI?](https://stackoverflow.com/questions/12286662/how-to-apply-bold-text-style-for-an-entire-row-using-apache-poi)
+
+[CellStyle share the same heap address apache poi](https://stackoverflow.com/questions/36975940/cellstyle-share-the-same-heap-address-apache-poi)
+
+[How to convert ordinary java Color to IndexedColors](https://stackoverflow.com/questions/28032550/how-to-convert-ordinary-java-color-to-indexedcolors)
+
+[excel - How to create hyperlink using Apache POI and Java?](https://stackoverflow.com/questions/48282807/how-to-create-hyperlink-using-apache-poi-and-java)
+
+[HTML Formatted Cell value from Excel using Apache POI](https://stackoverflow.com/questions/16610881/html-formatted-cell-value-from-excel-using-apache-poi)
+
+[org POI核心类](https://blog.csdn.net/QQ578473688/article/details/78220943)
+
+[Apache POI使用详解](https://blog.csdn.net/u014727260/article/details/55805666)
+
+[spring security - How to set redirection after successful login?](https://stackoverflow.com/questions/36243352/how-to-set-redirection-after-successful-login)
+
+[Spring Boot Redirect to requested URL after login](https://stackoverflow.com/questions/50732207/spring-boot-redirect-to-requested-url-after-login)
+
+[Spring Security: Referer always login page after authentication](https://stackoverflow.com/questions/53026801/spring-security-referer-always-login-page-after-authentication)
+
+[springboot security 自定义 AuthenticationEntryPoint 和 AccessDeineHandler](https://blog.csdn.net/jkjkjkll/article/details/79975975)
+
+[SpringSecurity学习四-自定义Login请求和返回的数据格式](https://blog.csdn.net/lee353086/article/details/52610205)
+
+[czytelny.com/Spring-and-Angular-handling-session-timeout.md](https://github.com/czytelny/czytelny.com/blob/c705781e8cddb925bffc1fec6d440d39540c41dc/content/post/Spring-and-Angular-handling-session-timeout.md)
+
+[quis-listing/ContinueEntryPoint.jav](https://github.com/tmanev/quis-listing/blob/cc898b6fb40b58733c1afde3f6ddbecc8d575bd7/src/main/java/com/manev/quislisting/security/ContinueEntryPoint.java)
+
+[powerauth-webflow/HomeController.java](https://github.com/wultra/powerauth-webflow/blob/4022076dc5183d83c348b3faed7a9852f23662e0/powerauth-webflow/src/main/java/io/getlime/security/powerauth/app/webflow/controller/HomeController.java)
+
+[spring security - how to extend LoginUrlAuthenticationEntryPoint or how to implement AuthenticationEntryPoint](https://stackoverflow.com/questions/8405831/how-to-extend-loginurlauthenticationentrypoint-or-how-to-implement-authenticatio)
+
+[How to return 401 for REST API call in Spring Security?](https://stackoverflow.com/questions/42358856/how-to-return-401-for-rest-api-call-in-spring-security)
+
+[authentication - Symfony 2: How do I check if a user is not logged in inside a template?](https://stackoverflow.com/questions/9660764/symfony-2-how-do-i-check-if-a-user-is-not-logged-in-inside-a-template)
+
+[JavaMail with Spring - Missing Imports](https://stackoverflow.com/questions/12097765/javamail-with-spring-missing-imports)
+
+[Which artifact for org.springframework.mail?](https://stackoverflow.com/questions/1367303/which-artifact-for-org-springframework-mail)
+
+[How to configure Spring JavaMailSender for SES using SMTP?](https://stackoverflow.com/questions/8917400/how-to-configure-spring-javamailsender-for-ses-using-smtp)
+
+[使用spring框架的JavaMailSender发送邮件工具类](https://blog.csdn.net/u014204541/article/details/79309040)
+
+[Spring MVC - Checking if User is already logged in via Spring Security?](https://stackoverflow.com/questions/12371770/spring-mvc-checking-if-user-is-already-logged-in-via-spring-security)
+
+[Sending Email in Android using JavaMail API without using the default/built-in app](https://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a)
+
+[spring - class file for javax.mail.internet.MimeMessage not found](https://stackoverflow.com/questions/20544245/class-file-for-javax-mail-internet-mimemessage-not-found)
+
+[Unrecognized SSL message, plaintext connection? Exception](https://stackoverflow.com/questions/6532273/unrecognized-ssl-message-plaintext-connection-exception)
+
+[Unable to Send Mail - javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?](https://stackoverflow.com/questions/36590597/unable-to-send-mail-javax-net-ssl-sslexception-unrecognized-ssl-message-plai)
+
+[Jenkins on Windows - Could not connect to SMTP host, "Unrecognized SSL message"](https://stackoverflow.com/questions/20588186/jenkins-on-windows-could-not-connect-to-smtp-host-unrecognized-ssl-message)
+
+[javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection](https://stackoverflow.com/questions/15983260/javax-net-ssl-sslexception-unrecognized-ssl-message-plaintext-connection)
+
+[Outgoing email not working 282 · joscha/play-authenticate](https://github.com/joscha/play-authenticate/issues/282)
+
+[Javamail Could not convert socket to TLS GMail](https://stackoverflow.com/questions/16115453/javamail-could-not-convert-socket-to-tls-gmail)
+
+[javamail中文乱码解决](https://blog.csdn.net/fengsigaoju/article/details/52864982)
+
+[Spring Security - Retaining URL parameters on redirect to login](https://stackoverflow.com/questions/14282569/spring-security-retaining-url-parameters-on-redirect-to-login)
+
+[spring security - SpringSecurity/Grails how to change loginFormUrl in LoginUrlAuthenticationEntryPoint dynamically at runtime?](https://stackoverflow.com/questions/24953410/springsecurity-grails-how-to-change-loginformurl-in-loginurlauthenticationentryp)
+
+[【Spring实战】----security4.1.3认证的过程以及原请求信息的缓存及恢复（RequestCache）](https://blog.csdn.net/honghailiang888/article/details/53671108)
+
+[spring security插件--获取 登录前被拦截的URL](https://blog.csdn.net/berty_love/article/details/9280353)
+
+[jsp - How come request.getPathInfo() in service method returns null?](https://stackoverflow.com/questions/3745275/how-come-request-getpathinfo-in-service-method-returns-null)
+
+[get - Servlet and path parameters like /xyz/{value}/test, how to map in web.xml?](https://stackoverflow.com/questions/8715474/servlet-and-path-parameters-like-xyz-value-test-how-to-map-in-web-xml)
+
+[PHP - url path as parameters](https://stackoverflow.com/questions/30873815/php-url-path-as-parameters)
+
+[Getting hash parameters from request url](https://stackoverflow.com/questions/8033537/getting-hash-parameters-from-request-url)
+
+[How to get an URL fragment (data after #)? 207 · ring-clojure/ring](https://github.com/ring-clojure/ring/issues/207)
+
+[How to set URL anchor (hash) in servlets?](https://stackoverflow.com/questions/27987762/how-to-set-url-anchor-hash-in-servlets)
+
+[spring-ldap/LdapTemplate.java](https://github.com/spring-projects/spring-ldap/blob/master/core/src/main/java/org/springframework/ldap/core/LdapTemplate.java)
+
+[Spring LDAP JPA - Limit number of result](https://stackoverflow.com/questions/34314108/spring-ldap-jpa-limit-number-of-result)
+
+[SPRING LDAP - ODManager query returning size limit exceeded](https://stackoverflow.com/questions/22672858/spring-ldap-odmanager-query-returning-size-limit-exceeded)
+
+[spring-ldap基本使用总结](https://blog.csdn.net/awj321000/article/details/78852876)
+
+[spring-ldap/LdapQueryBuilderTest.java](https://github.com/spring-projects/spring-ldap/blob/master/core/src/test/java/org/springframework/ldap/query/LdapQueryBuilderTest.java)
+
+[spring - LDAP template search by multiple attributes](https://stackoverflow.com/questions/32776541/ldap-template-search-by-multiple-attributes)
+
+[Spring LdapTemplate search on multiple bases with separate filters](https://stackoverflow.com/questions/37946940/spring-ldaptemplate-search-on-multiple-bases-with-separate-filters)
+
+[How to use like operator within LDAP query?](https://stackoverflow.com/questions/27481225/how-to-use-like-operator-within-ldap-query)
+
+[How to select a radio button by default?](https://stackoverflow.com/questions/5592345/how-to-select-a-radio-button-by-default)
+
+[jsp - Ternary operator in JSTL/EL](https://stackoverflow.com/questions/14482451/ternary-operator-in-jstl-el)
+
+[JSTL if tag for equal strings](https://stackoverflow.com/questions/10189963/jstl-if-tag-for-equal-strings)
+
+[jstl - How do I check two conditions in one](https://stackoverflow.com/questions/8355787/how-do-i-check-two-conditions-in-one-cif)
+
+[How do I compare if a string is not equal to?](https://stackoverflow.com/questions/12144466/how-do-i-compare-if-a-string-is-not-equal-to)
+
+[http - How to use Chrome's network debugger with redirects](https://stackoverflow.com/questions/10987453/how-to-use-chromes-network-debugger-with-redirects)
+
+[\_jspService is exceeding the 65535 bytes limit](https://stackoverflow.com/questions/5484253/jspservice-is-exceeding-the-65535-bytes-limit)
+
+[jsp - How to insert html code dynamically using JSTL?](https://stackoverflow.com/questions/51687563/how-to-insert-html-code-dynamically-using-jstl)
+
+[How to include HTML in JSP?](https://stackoverflow.com/questions/16376227/how-to-include-html-in-jsp)
+
+[jstl - Which one is better among](https://stackoverflow.com/questions/16169419/which-one-is-better-among-cimport-and-jspinclude-in-terms-of-performance)
+
+[mysql自增ID起始值修改方法](https://blog.csdn.net/hehaoyang666/article/details/41281113)
+
+[Convert object to map in java](https://stackoverflow.com/questions/52406467/convert-object-to-map-in-java)
+
+[gilmarsquinelato/i18n-manager: The app that will help to manage your app translations.](https://github.com/gilmarsquinelato/i18n-manager)
+
+[angular translate - i18n for your Angular apps, made easy.](https://angular-translate.github.io/)
+
+[sql优化之like模糊查询【亲测】](https://blog.csdn.net/qq_26929957/article/details/79349333)
+
+[Mybatis中的trim标签 介绍](https://blog.csdn.net/u011118321/article/details/68946027)
+
+[myBatis中查询条件的拼接](https://blog.csdn.net/sinat_36059653/article/details/73822168)
+
+[MyBatis - 分页中的小坑(limit 0.0 ,10)](https://blog.csdn.net/J080624/article/details/78794196)
+
+[mybatis if标签判断参数map中是否存在某个key](https://blog.csdn.net/xl_1803/article/details/83472576)
+
+[Mybatis类型转换介绍](https://blog.csdn.net/s20082043/article/details/46830439)
+
+[MyBatis之四：调用存储过程含分页、输入输出参数](https://www.cnblogs.com/wucj/p/5148824.html)
+
+[mybatis的if判断有坑](https://blog.csdn.net/u012780336/article/details/52921043)
+
+[使用limit查询的同时取得总的记录数：SQL\_CALC\_FOUND\_ROWS和FOUND\_ROWS()](https://blog.csdn.net/qq_27289001/article/details/77175077)
+
+[MyBatis，MySql存储过程分页查询](https://blog.csdn.net/Revivedsun/article/details/70544053)
+
+[mybatis一个select标签执行多个sql语句](https://blog.csdn.net/wenxingchen/article/details/78960721)
+
+[mysql - How to wrap multiple select queries into one query in Mybatis?](https://stackoverflow.com/questions/26107022/how-to-wrap-multiple-select-queries-into-one-query-in-mybatis)
+
+[MySQL高效分页解决方案集](https://www.cnblogs.com/chanedi/articles/4336013.html)
+
+[php - Wrong result with FOUND\_ROWS() in mySQL](https://stackoverflow.com/questions/5955471/wrong-result-with-found-rows-in-mysql)
+
+[mybatis一个select标签执行多个sql语句](https://blog.csdn.net/IBLiplus/article/details/82789078)
+
+[How to wrap multiple select queries into one query 274 · mybatis/mybatis-3](https://github.com/mybatis/mybatis-3/issues/274)
+
+[MySQL 中的 FOUND\_ROWS() 与 ROW\_COUNT() 函数 - digdeep](https://www.cnblogs.com/digdeep/p/4818660.html)
+
+[table表格 td设置固定宽度](https://blog.csdn.net/u011450110/article/details/77962336)
+
+[html中设置table的各个td的宽度](https://blog.csdn.net/qq1332479771/article/details/77369321)
+
+[angularjs - What's the difference between ng-model and ng-bind](https://stackoverflow.com/questions/12419619/whats-the-difference-between-ng-model-and-ng-bind)
+
+[jsp - Evaluate empty or null JSTL c tags](https://stackoverflow.com/questions/2811626/evaluate-empty-or-null-jstl-c-tags)
+
+[Python常用内置函数介绍【filter,map,reduce,apply,zip】](https://blog.csdn.net/Jerry_1126/article/details/41143579)
+
+[理解Python中列表，元组，字典，集合的区别](https://blog.csdn.net/Yeoman92/article/details/56289287)
+
+[Python3的多行输入](https://blog.csdn.net/sinat_37816910/article/details/79808026)
+
+[python一行写不下，变多行](https://blog.csdn.net/longshenlmj/article/details/9838377)
+
+[QstringList to Qstring conversion issues](https://stackoverflow.com/questions/36774694/qstringlist-to-qstring-conversion-issues)
+
+[regex - QRegExp not extracting text as expected](https://stackoverflow.com/questions/19258299/qregexp-not-extracting-text-as-expected)
+
+[在JAVA中，对List集合的加减操作](https://blog.csdn.net/u011407281/article/details/41546653)
+
+[使用AD(Active Directory)验证内网用户名密码](https://blog.csdn.net/lan_liang/article/details/52554476)
+
+[asp.net - How to authenticate users in C# LDAP](https://stackoverflow.com/questions/46345978/how-to-authenticate-users-in-c-sharp-ldap)
+
+[DirectoryEntry的使用 局域网内的计算机](https://blog.csdn.net/swort_177/article/details/4594588)
+
+[解决System.Runtime.Interopservices.COMException问题](https://blog.csdn.net/jcy472578/article/details/38085661)
+
+[DirectoryEntry配置IIS7出现ADSI Error：未知错误(0x80005000)](https://blog.csdn.net/Ts1030746080/article/details/8741399)
+
+[检测到在集成的托管管道模式下不适用的ASP.NET设置的解决方法（非简单设置为【经典】模式）。](https://www.cnblogs.com/catcherx/p/3330909.html)
+
+[System.DirectoryServices.DirectoryEntry 域用户验证](https://blog.csdn.net/editoryang/article/details/80352775)
+
+[操作Active Directory (AD)的操作类](https://blog.csdn.net/fox009521/article/details/77759301)
+
+[How can I make angularjs ngChange handler be called only when user finishes typing](https://stackoverflow.com/questions/22158063/how-can-i-make-angularjs-ngchange-handler-be-called-only-when-user-finishes-typi)
+
+[angularjs - Why can't I access this ng-model variable in my controller?](https://stackoverflow.com/questions/18757980/why-cant-i-access-this-ng-model-variable-in-my-controller)
+
+[\[AngularJS\] Angular 1.3: ng-model-options updateOn, debounce](https://blog.csdn.net/weixin_34194551/article/details/85671693)
+
+[debounce消抖函数](https://blog.csdn.net/mingqingyuefeng/article/details/79454641)
+
+[javascript - What is the correct syntax of ng-include?](https://stackoverflow.com/questions/13943471/what-is-the-correct-syntax-of-ng-include)
+
+[Spring Boot Configure and Use Two DataSources](https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-datasources)
+
+[How do I get the number of elements in a list in Python?](https://stackoverflow.com/questions/1712227/how-do-i-get-the-number-of-elements-in-a-list-in-python)
+
+[qt - How to replace '/' with '\\\\' using QString replace()?](https://stackoverflow.com/questions/11841961/how-to-replace-with-using-qstring-replace)
+
+[arcpy - Split and Count a Python String](https://stackoverflow.com/questions/22101086/split-and-count-a-python-string)
+
+[angularjs - Listen for a specific $includeContentLoaded](https://stackoverflow.com/questions/25481916/listen-for-a-specific-includecontentloaded)
+
+[angularjs - Call a function when ng-show is triggered?](https://stackoverflow.com/questions/21056037/call-a-function-when-ng-show-is-triggered)
+
+[Sometime file will be lost something(share formula?)after modified by qxlsx 32 · QtExcel/QXlsx](https://github.com/QtExcel/QXlsx/issues/32)
+
+[Qt中向单元格中写入日期数据](https://blog.csdn.net/xiexingshishu/article/details/44624573)
+
+[QT时间设置](https://blog.csdn.net/alada007/article/details/7839289)
+
+[QDateTime 本地时间和UTC时间转换问题](https://www.cnblogs.com/liushui-sky/p/8880127.html)
+
+[Qt新建文件，文件名加入时间](https://blog.csdn.net/tianyuzhixina/article/details/74373297)
+
+[VC++ 获取文件属性创建时间、修改时间和访问时间](https://www.cnblogs.com/chechen/p/5138604.html)
+
+[javascript - angular - ng-if - how to callback after ng-if template has been rendered](https://stackoverflow.com/questions/24437658/angular-ng-if-how-to-callback-after-ng-if-template-has-been-rendered)
+
+[javascript - how to call multi function in single ng-init directice using angularjs](https://stackoverflow.com/questions/28448149/how-to-call-multi-function-in-single-ng-init-directice-using-angularjs)
+
+[mybatis if-else(写法)](https://www.cnblogs.com/a8457013/p/8033263.html)
+
+[每天学点Python之bytes](https://blog.csdn.net/u013291394/article/details/50394324)
+
+[python - (unicode error) 'unicodeescape'](https://stackoverflow.com/questions/37400974/unicode-error-unicodeescape-codec-cant-decode-bytes-in-position-2-3-trunca)
+
+[利用python删除指定目录下，指定后缀名文件](https://blog.csdn.net/ily666666/article/details/79840118)
+
+[修改自标准库的copytree,可覆盖文件](https://gist.github.com/ladder1984/a063d3f1ca0d9be57a81)
+
+[python中shutil.copy()与shutil.copytree()的具体用法](https://blog.csdn.net/qq_25360769/article/details/80023656)
+
+[shutil模块（shell工具）--python复制、移动、改名和删除文件](http://www.51testing.com/html/72/502872-3720932.html)
+
+[python中shutil模块学习笔记](https://blog.csdn.net/sunjinjuan/article/details/79028828)
+
+[MyBatis mapping result to List](https://stackoverflow.com/questions/39957637/mybatis-mapping-result-to-liststring-in-mybatisrepository-and-annotations?rq=1)
+
+[Qt时区检测及语言加载](https://blog.csdn.net/sinat_34130812/article/details/80492748)
+
+[QDateTime时区的获取方法](https://blog.csdn.net/dazhi_1314/article/details/6255546)
+
+[QT QDateTime](https://blog.csdn.net/qq_24127015/article/details/83828325)
+
+[How can i show MessageBox in another thread Qt](https://stackoverflow.com/questions/23992178/how-can-i-show-messagebox-in-another-thread-qt)
+
+[Does the AND operator in MyBatis test expressions short-circuit during evaluation?](https://stackoverflow.com/questions/5702688/does-the-and-operator-in-mybatis-test-expressions-short-circuit-during-evaluatio)
+
+[令人难以置信的奇怪文件创建时间问题](https://codeday.me/bug/20180320/145376.html)
+
+[Qt中 文件对话框QFileDialog 的使用](https://blog.csdn.net/hufengvip/article/details/5766703)
+
+[关于Qt的QFileDialog的使用问题](https://blog.csdn.net/u012348774/article/details/49964105)
+
+[QFileDialog::getOpenFileName crashes when debugging, apparently caused by project name?](https://stackoverflow.com/questions/25270513/qfiledialoggetopenfilename-crashes-when-debugging-apparently-caused-by-projec)
+
+[Qt新对话框创建与销毁](https://blog.csdn.net/chchlh/article/details/18410987)
+
+[QDialog的accept函数和reject函数](https://blog.csdn.net/qq_33233768/article/details/79217466)
+
+[QtExcel/QXlsx: Excel file(\*.xlsx) reader/writer library using Qt5. Descendant of QtXlsx.](https://github.com/QtExcel/QXlsx)
+
+[Qt ISODate formatted date/time including timezone](https://stackoverflow.com/questions/21976264/qt-isodate-formatted-date-time-including-timezone)
+
+[QDateTime Isodate with timezone ?](https://stackoverflow.com/questions/18750569/qdatetime-isodate-with-timezone)
+链接:[近期问题查询记录](https://bbs.huaweicloud.com/blogs/b9308b8a723411e9bd5a7ca23e93a891)
