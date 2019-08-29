@@ -1,0 +1,86 @@
+### spring上下文看起来加载了两次的问题
+
+以前遇到过真的加载了两次的问题，在前面的有一篇博客里记录过;
+
+这次是把一个spring的非maven项目转换成maven项目，转换完了后发现所有控制器的映射都打印了两次,
+
+一开始也是以为是重复加载，--------------------------------
+
+\-----------------------------------后来在"Initializing Spring root WebApplicationContext"这个点打上了断点，
+
+执行了一次，打印了两条，才把问题的焦点移到了log4j的配置上面,
+
+移除logger name="org.springframework..这些多余的日志类后，正常了
+
+### 另一个问题
+
+升级完之后，发现login会无限重定向
+
+这个正常情况下是用来保留登录前url的功能的,但是登录设置了security="none"，正常情况下不会走"class ContinueEntryPoint extends LoginUrlAuthenticationEntryPoint"部分的逻辑----------------------以前遇到同样的情况是因为清理无用代码的时候误删了login的control,  
+
+这次的情况也是login进不了对应的control，但是实际上control是映射了的，后来发现
+
+<security:http security="none" pattern="/xx/login/" />加上上面这个就好了
+
+<security:http security="none" pattern="/xx/login" />
+
+但是问题在于在另一个项目里和没升级maven项目之前 表现是正常的，
+
+这个项目和另一个项目在登录这块的差异其实只有一点，就是这个项目配了两个security:authentication-provider,但是也不能解释为什么原项目一转换成maven项目就异常了;
+
+### 其他：
+
+*   [Eclipse中maven项目update project后项目编码会自动变成GBK的问题](https://blog.csdn.net/wudiyong22/article/details/78009523)
+    
+*   eclipse maven安装本地的jar
+    
+
+<plugin>
+   <groupId>org.apache.maven.plugins</groupId>
+   <artifactId>maven-install-plugin</artifactId>
+   <version>2.5.2</version>
+   <configuration>
+      <groupId>net.xxx</groupId>
+      <artifactId>xxx</artifactId>
+      <version>1.10</version>
+      <packaging>jar</packaging>
+      <file>D:\\Users\\cxxx-1.10.jar</file>
+   </configuration>
+   <executions>
+      <execution>
+         <id>install-jar-lib</id>
+         <goals>
+            <goal>install-file</goal>
+         </goals>
+         <phase>validate</phase>
+      </execution>
+   </executions>
+</plugin>
+
+然后maven build-->goal 填写install:install-file initialize
+
+*   maven附加jar源
+    
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>3.1.0</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                        <goal>test-jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+![spacer.gif](https://bbs.huaweicloud.com/static/ueditor/themes/default/images/spacer.gif)![image.png](https://bbs-img.huaweicloud.com/blogs/img/1565925117767310.png "1565925117767310.png")
+
+*   maven /tomcat7:run 的时候断点找不到源码时查看一下run configuration
+    
+
+![spacer.gif](https://bbs.huaweicloud.com/static/ueditor/themes/default/images/spacer.gif)![image.png](https://bbs-img.huaweicloud.com/blogs/img/1565925257956338.png "1565925257956338.png")
+链接:[spring上下文看起来加载了两次的问题](https://bbs.huaweicloud.com/blogs/9c1e05fcbfd211e9b759fa163e330718)

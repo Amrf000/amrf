@@ -1,0 +1,495 @@
+Angular 开发环境配置方式
+================
+
+*   基于 Angular Quickstart
+    
+
+https://github.com/angular/quickstart
+
+*   基于 Angular CLI
+    
+
+npm install -g @angular/cli
+
+我这次采用了第一种方式搭建环境  
+
+==================
+
+1.  下载项目包后解压
+    
+2.  使用vscode打开项目目录并执行npm install命令，也可以之间命令行进入目录执行npm install，安装相关依赖
+    
+3.  依赖安装完后vscode执行npm start命令启动项目
+    
+4.  项目启动完毕后，浏览器会弹出http://localhost:3000/，页面上显示了Hello Angular字样
+    
+
+![image.png](https://bbs-img.huaweicloud.com/blogs/img/1542265987575082.png "1542265987575082.png")
+
+看代码之前，先把Angular2语法快速指南挂上
+========================
+
+[Angular for TypeScript 语法快速指南 (基于2.0.0版本)](https://blog.csdn.net/shenlei19911210/article/details/53171370)[](https://blog.csdn.net/shenlei19911210/article/details/53171370)
+
+引导
+
+`import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';`
+
+`**platformBrowserDynamic().bootstrapModule**(AppModule);`
+
+使用JIT编译器引导一个AppModule模块定义的应用
+
+NgModules
+
+`import { NgModule } from '@angular/core';`
+
+`@**NgModule**({ declarations: ..., imports: ...,  
+     exports: ..., providers: ..., bootstrap: ...})  
+class MyModule {}`
+
+定义一个模块，其中包括组件、指令、管道和提供商。
+
+`**declarations:** [MyRedComponent, MyBlueComponent, MyDatePipe]`
+
+一个数组，包括从属于当前模块的组件、指令和管道。
+
+`**imports:** [BrowserModule, SomeOtherModule]`
+
+一个数组，包括被导入到当前模块中的所有模块。来自被导入模块的`declarations`也同样对当前模块有效。
+
+`**exports:** [MyRedComponent, MyDatePipe]`
+
+一个数组，包括对导入当前模块的模块可见的组件、指令、管道。
+
+`**providers:** [MyService, { provide: ... }]`
+
+一个数组，包括在对前模块及导入当前模块的模块中的内容物（组件、指令、管道、提供商等）可见的依赖注入提供商。
+
+`**bootstrap:** [MyAppComponent]`
+
+一个数组，包括由当前模块引导时应该引导的组件
+
+模板语法
+
+ 
+
+`<input **[value]**="firstName">`
+
+把属性`value`绑定到表达式`firstName`的结果。
+
+`<div **[attr.role]**="myAriaRole">`
+
+把`role`这个Attribute绑定到表达式`myAriaRole`的结果。
+
+`<div **[class.extra-sparkle]**="isDelightful">`
+
+把元素是否出现CSS类`extra-sparkle`，绑定到一个表达式`isDelightful`的结果是否为真。
+
+`<div **[style.width.px]**="mySize">`
+
+把样式的`width`属性绑定到表达式`mySize`的结果，以px为单位。这个单位是可选的。
+
+`<button **(click)**="readRainbow($event)">`
+
+当按钮(及其子元素)上的click事件被触发时，调用`readRainbow`方法，并把事件对象作为参数传入。
+
+`<div title="Hello **{{ponyName}}**">`
+
+把属性绑定到一个插值表达式字符串，比如 "Hello Seabiscuit"。它等价于：`<div [title]="'Hello ' + ponyName">`
+
+`<p>Hello **{{ponyName}}**</p>`
+
+把文本内容绑定到一个插值表达式，比如 "Hello Seabiscuit".
+
+`<my-cmp **[(title)]**="name">`
+
+设置双向数据绑定。等价于：`<my-cmp [title]="name" (titleChange)="name=$event">`
+
+`<video **#movieplayer** ...>  
+  <button **(click)**="movieplayer.play()">  
+</video>`
+
+创建一个局部变量`movieplayer`，它提供到`video`元素实例的访问，可用于当前模板中的数据绑定和事件绑定表达式中。
+
+`<p ***myUnless**="myExpression">...</p>`
+
+`*`符号表示当前元素将被转变成一个内嵌模板。等价于：`<template [myUnless]="myExpression"><p>...</p></template>`
+
+`<p>Card No.: **{{cardNumber | myCardNumberFormatter}}**</p>`
+
+通过名叫`myCardNumberFormatter`的管道，转换表达式的当前值`cardNumber`。
+
+`<p>Employer: **{{employer?.companyName}}**</p>`
+
+安全导航运算符(`?.`)表示`employer`字段是可选的，如果它是`undefined`，表达式剩下的部分将被忽略
+
+`<**svg:**rect x="0" y="0" width="100" height="100"/>`
+
+SVG模板需要在它们的根节点上带一个`svg:`前缀，以消除模板中HTML元素和SVG元素的歧义。
+
+`<**svg**>  
+  <rect x="0" y="0" width="100" height="100"/>  
+</**svg**>`
+
+`<svg>`元素在无需前缀的情况下，也能被自动检测为SVG。
+
+内置指令
+
+`import { CommonModule } from '@angular/common';`
+
+`<section ***ngIf**="showSection">`
+
+基于showSection表达式的值移除或重新创建部分DOM树。
+
+`<li ***ngFor**="let item of list">`
+
+把li元素及其内容转化成一个模板，并用它来为列表中的每个条目初始化视图。
+
+`<div **[ngSwitch]**="conditionExpression">  
+  <template **[**ngSwitchCase**]**="case1Exp">...</template>  
+  <template **ngSwitchCase**="case2LiteralString">...</template>  
+  <template **ngSwitchDefault**>...</template>  
+</div>`
+
+基于conditionExpression的当前值，从内嵌模板中选取一个，有条件的切换div的内容。
+
+`<div **[ngClass]**="{active: isActive, disabled: isDisabled}">`
+
+把一个元素上CSS类的出现与否，绑定到一个真值映射表上。右侧的表达式应该返回类似{class-name: true/false}的映射表。
+
+表单
+
+`import { FormsModule } from '@angular/forms';`
+
+`<input **[(ngModel)]**="userName">`
+
+提供双向绑定，为表单控件提供解析和验证。
+
+类装饰器
+
+`import { Directive, ... } from '@angular/core';`
+
+`**@Component({...})**  
+class MyComponent() {}`
+
+声明当前类是一个组件，并提供关于该组件的元数据。
+
+`**@Directive({...})**  
+class MyDirective() {}`
+
+声明当前类是一个指令，并提供关于该指令的元数据。
+
+`**@Pipe({...})**  
+class MyPipe() {}`
+
+声明当前类是一个管道，并且提供关于该管道的元数据。
+
+`**@Injectable()**  
+class MyService() {}`
+
+声明当前类有一些依赖，当依赖注入器创建该类的实例时，这些依赖应该被注入到构造函数中。
+
+指令配置
+
+`@Directive({ property1: value1, ... })`
+
+`**selector:** '.cool-button:not(a)'`
+
+指定一个CSS选择器，以便在模板中找出该指令。支持的选择器包括`element`,`[attribute]`,`.class`, 和`:not()`。
+
+不支持父子关系选择器。
+
+`**providers:** [MyService, { provide: ... }]`
+
+为当前指令及其子指令提供依赖注入的providers数组。
+
+组件配置
+
+`@Component`扩展了`@Directive`, 以便`@Directive`中的配置项也能用在组件上
+
+`**moduleId:** module.id`
+
+如果设置了，`templateUrl`和`styleUrl`会被解析成相对于组件的。
+
+`**viewProviders:** [MyService, { provide: ... }]`
+
+依赖注入provider的数组，局限于当前组件的视图中。
+
+`**template:** 'Hello {{name}}'  
+**templateUrl:** 'my-component.html'`
+
+当前组件视图的内联模板或外部模板地址
+
+`**styles:** ['.primary {color: red}']  
+**styleUrls:** ['my-component.css']`
+
+内联CSS样式或外部样式表URL的列表，用于给组件的视图添加样式。
+
+供指令类或组件类用的字段装饰器。
+
+`import { Input, ... } from '@angular/core';`
+
+`**@Input()** myProperty;`
+
+声明一个输入属性，以便我们可以通过属性绑定更新它。(比如：`<my-cmp [my-property]="someExpression">`).
+
+`**@Output()** myEvent = new EventEmitter();`
+
+声明一个输出属性，以便我们可以通过事件绑定进行订阅。(比如：`<my-cmp (my-event)="doSomething()">`).
+
+`**@HostBinding('[class.valid]')** isValid;`
+
+把宿主元素的属性(比如CSS类：valid)绑定到指令/组件的属性(比如：isValid)。
+
+`**@HostListener('click', ['$event'])** onClick(e) {...}`
+
+通过指令/组件的方法(例如onClick)订阅宿主元素的事件(例如click)，可选传入一个参数($event)。
+
+`**@ContentChild(myPredicate)** myChildComponent;`
+
+把组件内容查询(myPredicate)的第一个结果绑定到类的myChildComponent属性。
+
+`**@ContentChildren(myPredicate)** myChildComponents;`
+
+把组件内容查询(myPredicate)的全部结果，绑定到类的myChildComponents属性。
+
+`**@ViewChild(myPredicate)** myChildComponent;`
+
+把组件视图查询(myPredicate)的第一个结果绑定到类的myChildComponent属性。对指令无效。
+
+`**@ViewChildren(myPredicate)** myChildComponents;`
+
+把组件视图查询(myPredicate)的全部结果绑定到类的myChildComponents属性。对指令无效。
+
+指令和组件的变更检测与生命周期钩子
+
+(作为类方法实现)
+
+`**constructor(myService: MyService, ...)** { ... }`
+
+类的构造函数会在所有其它生命周期钩子之前调用。使用它来注入依赖，但是要避免用它做较重的工作。
+
+`**ngOnChanges(changeRecord)** { ... }`
+
+在输入属性每次变化了之后、开始处理内容或子视图之前被调用。
+
+`**ngOnInit()** { ... }`
+
+在执行构造函数、初始化输入属性、第一次调用完ngOnChanges之后调用。
+
+`**ngDoCheck()** { ... }`
+
+每当检查组件或指令的输入属性是否变化时调用。通过它，可以用自定义的检查方式来扩展变更检测逻辑。
+
+`**ngAfterContentInit()** { ... }`
+
+当组件或指令的内容已经初始化、ngOnInit完成之后调用。
+
+`**ngAfterContentChecked()** { ... }`
+
+在每次检查完组件或指令的内容之后调用。
+
+`**ngAfterViewInit()** { ... }`
+
+当组件的视图已经初始化完毕，每次ngAfterContentInit之后被调用。只适用于组件。
+
+`**ngAfterViewChecked()** { ... }`
+
+每次检查完组件的视图之后调用。只适用于组件。
+
+`**ngOnDestroy()** { ... }`
+
+在所属实例被销毁前，只调用一次。
+
+依赖注入配置
+
+ 
+
+`{ **provide**: MyService, **useClass**: MyMockService }`
+
+把MyService类的提供商设置或改写为MyMockService。
+
+`{ **provide**: MyService, **useFactory**: myFactory }`
+
+把MyService的提供商设置或改写为myFactory工厂函数。
+
+`{ **provide**: MyValue, **useValue**: 41 }`
+
+把MyValue的提供商设置或改写为值41。
+
+路由与导航
+
+`import { Routes, RouterModule, ... } from '@angular/router';`
+
+`const routes: **Routes** = [  
+  { path: '', component: HomeComponent },  
+  { path: 'path/:routeParam', component: MyComponent },  
+  { path: 'staticPath', component: ... },  
+  { path: '**', component: ... },  
+  { path: 'oldPath', redirectTo: '/staticPath' },  
+  { path: ..., component: ..., data: { message: 'Custom' } }  
+]);  
+  
+const routing = RouterModule.forRoot(routes);`
+
+为应用配置路由。支持静态、参数化、重定向和通配符路由。还支持自定义路由数据和解析。
+
+`  
+<**router-outlet**></**router-outlet**>  
+<**router-outlet** name="aux"></**router-outlet**>  
+`
+
+标记一个位置，用于加载当前激活路由的组件。
+
+`  
+<a routerLink="/path">  
+<a **[routerLink]**="[ '/path', routeParam ]">  
+<a **[routerLink]**="[ '/path', { matrixParam: 'value' } ]">  
+<a **[routerLink]**="[ '/path' ]" [queryParams]="{ page: 1 }">  
+<a **[routerLink]**="[ '/path' ]" fragment="anchor">  
+`
+
+基于路由指令创建指向不同视图的链接，由路由路径、必选参数、可选参数、查询参数和片段（fragment）组成。添加“/”前缀可以导航到根路由。添加“./”前缀可以导航到子路由。添加“../sibling”前缀可以导航到兄弟路由或父路由。
+
+`<a [routerLink]="[ '/path' ]" routerLinkActive="active">`
+
+当`routerLink`被激活时，就把指定的CSS类添加到该元素上。
+
+`class **CanActivate**Guard implements **CanActivate** {  
+    canActivate(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable<boolean>|Promise<boolean>|boolean { ... }  
+}  
+  
+{ path: ..., canActivate: [**CanActivate**Guard] }`
+
+一个用来定义类的接口，路由器会首先调用它来决定是否应该激活该组件。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。
+
+`class **CanDeactivate**Guard implements **CanDeactivate**<T> {  
+    canDeactivate(  
+      component: T,  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable<boolean>|Promise<boolean>|boolean { ... }  
+}  
+  
+{ path: ..., canDeactivate: [**CanDeactivate**Guard] }`
+
+一个用来定义类的接口，路由器在导航后会首先调用它来决定是否应该取消该组件的激活状态。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。
+
+`class **CanActivateChild**Guard implements **CanActivateChild** {  
+    canActivateChild(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable<boolean>|Promise<boolean>|boolean { ... }  
+}  
+  
+{ path: ..., canActivateChild: [CanActivateGuard],  
+    children: ... }`
+
+一个用来定义类的接口，路由器会首先调用它来决定是否应该激活该子路由。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。
+
+`class **Resolve**Guard implements **Resolve**<T> {  
+    resolve(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable<any>|Promise<any>|any { ... }  
+}  
+  
+{ path: ..., resolve: [**Resolve**Guard] }`
+
+一个用来定义类的接口，路由器会在渲染该路由之前先调用它来解析路由数据。应该返回一个值或能解析为值的可观察对象(Observable)或承诺(Promise)。
+
+`class **CanLoad**Guard implements **CanLoad** {  
+    canLoad(  
+      route: Route  
+    ): Observable<boolean>|Promise<boolean>|boolean { ... }  
+}  
+  
+{ path: ..., canLoad: [**CanLoad**Guard], loadChildren: ... }`
+
+一个用来定义类的接口，路由器会首先调用它来决定一个惰性加载的模块是否应该被加载。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。
+
+例子对应的代码如下
+---------
+
+###  1.app.component.ts
+
+import { Component } from '@angular/core';
+@Component({
+  selector: 'my-app',
+  template: \`<h1>Hello {{name}}</h1>\`,
+})
+export class AppComponent  {
+  name = 'Angular'; 
+}
+
+上面的代码定义了一个组件名为AppComponent
+
+### 2.app.module.ts
+
+import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent }  from './app.component';
+@NgModule({
+  imports:      \[ BrowserModule \],
+  declarations: \[ AppComponent \],
+  bootstrap:    \[ AppComponent \]
+})
+export class AppModule { }
+
+上面的代码在主视图中挂载了AppComponent组件
+
+[_NgModule_](https://bbs.huaweicloud.com/blogs/article#)
+
+[_https://blog.csdn.net/Wbiokr/article/details/73007192_](https://blog.csdn.net/Wbiokr/article/details/73007192)
+
+[_https://blog.csdn.net/qq\_15096707/article/details/54809805_](https://blog.csdn.net/qq_15096707/article/details/54809805)
+
+_angular应用的模块系统被称为angular模块或NgModule_
+
+*   _imports--angular模块把特性合并成离散单元的一种方式，当应用需要模块的特性时，将其添加到imports数组中，它告诉Angular应用需要它们来正常工作。_
+    
+*   _providers--创建的服务加入到当前模块中，如果是根模块，则可以用于应用任何部分。_
+    
+*   _declarations--声明当前module控制的组件，创建的指令和管道也要添加至declarations数组中。_
+    
+*   _exports--declarations 的子集，可用于其它模块的组件模板。_
+    
+*   _bootstrap--指定应用的主视图（称为根组件），它是所有其它视图的宿主。只有根模块才能设置bootstrap属性。_
+    
+
+### 3.main.ts
+
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppModule } from './app/app.module';
+platformBrowserDynamic().bootstrapModule(AppModule);
+
+使用JIT编译器引导一个AppModule模块定义的应用
+
+### 4.index.html
+
+<html>
+  <head>
+    <title>Angular QuickStart</title>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node\_modules/core-js/client/shim.min.js"></script>
+    <script src="node\_modules/zone.js/dist/zone.js"></script>
+    <script src="node\_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+      System.import('main.js').catch(function(err){ console.error(err); });
+    </script>
+  </head>
+  <body>
+    <my-app>Loading AppComponent content here ...</my-app>
+  </body>
+</html>
+
+在页面里加载main.ts
+链接:[Angular 测试和使用记录](https://bbs.huaweicloud.com/blogs/89424869e8aa11e8bd5a7ca23e93a891)

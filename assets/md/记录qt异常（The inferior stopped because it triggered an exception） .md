@@ -1,0 +1,29 @@
+网上查到的说的比较多的情况是存在野指针，断点也还在项目代码部分
+
+
+我遇到的这个情况断点断在了cored.dll里面了，把项目里所有new出来的对象都查了一遍处理了处理，还是出现
+
+后来发现问题出在这里，为了全局获取MainWindow,我用了如下这样的单例代码
+ 
+    static MainWindow& getInstance()
+
+    {
+
+        static MainWindow instance;// Guaranteed to be destroyed.
+
+        // Instantiated on first use.
+
+        return instance;
+
+    }
+ 析构过程有问题，换成下面这种时关闭窗口就没有上面的异常了
+     static MainWindow& getInstance()
+    {
+        // Guaranteed to be destroyed.
+        // Instantiated on first use.
+        if(instance==NULL){
+            instance = new MainWindow;
+        }
+        return \*instance;
+    }
+链接:[记录qt异常（The inferior stopped because it triggered an exception） ](https://bbs.huaweicloud.com/blogs/947c3363f79511e8bd5a7ca23e93a891)

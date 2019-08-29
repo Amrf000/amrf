@@ -1,0 +1,92 @@
+String\[\] mysqlFields = { "aa", "bb","cc","dd","ee" };
+
+MultiFieldQueryParser qp=new MultiFieldQueryParser(mysqlFields,analyzer);
+
+qp.setDefaultOperator(Operator.OR);
+
+//我以前一直用and 但是用and的时候需要所有的term都包含 让人感觉不够智能
+
+//以前的考虑是加上lucene的模糊逻辑 但是采用加~号模糊后 又发现模糊的太厉害了 准确率太低
+
+//后来我想到其实我需要的是当其中一些关键词没有的时候也能匹配
+
+//好比如总共有四个关键字 目标只有3个关键词的时候原来的逻辑是匹配不上的
+
+//用OR则能匹配上 但是包含一个关键词的时候在这种情况下也能匹配上
+
+//那么在结合lucene的得分机制滤出掉相关度过于低的匹配项
+
+IndexSearcher searcher = new IndexSearcher(reader);
+
+//final SortField sfield = new SortedNumericSortField("aa", SortField.Type.LONG,true);
+
+//final SortField iField = new SortField("bb",SortField.Type.STRING,true);
+
+query = qp.parse(QueryParserUtil.escape(queryStr\[0\]));
+
+qSet.add(trimHotQ(queryStr\[1\]));
+
+BooleanClause q1 = new BooleanClause(query, BooleanClause.Occur.SHOULD);
+
+BooleanClause q2 = null;
+
+BooleanClause q3 = null;
+
+BooleanClause q4 = null;
+
+if(queryStr1!=null){...}
+
+if(queryStr2!=null){...}
+
+if(queryStr3!=null){...}
+
+BooleanQuery booleanQuery = null;
+
+if(q2!=null && q3!=null && q4!=null) {
+
+booleanQuery = new BooleanQuery.Builder().add(q1).add(q2).add(q3).add(q4).build();
+
+}else if(q2!=null && q3!=null){
+
+booleanQuery = new BooleanQuery.Builder().add(q1).add(q2).add(q3).build();
+
+}else if(q2!=null) {
+
+booleanQuery = new BooleanQuery.Builder().add(q1).add(q2).build();
+
+}else{
+
+booleanQuery = new BooleanQuery.Builder().add(q1).build();
+
+}
+
+//原来的搜索采用了自定义的排序，这种时候score为NaN，需要使用多两个布尔参数的重载以让lucene计算分数
+
+//后来我考虑了一下 觉得这个自定义排序必要性不强 于是干脆去掉了 使用默认的得分排序
+
+TopDocs hits = searcher.search(booleanQuery,maxSearchResult);
+
+ScoreDoc\[\] sortedHits =hits.scoreDocs;
+
+float maxScore = hits.getMaxScore();
+
+List<Map<String,Object>> ret = null;
+
+for (int j = 0; j < sortedHits.length && j < 100; j++) {
+
+int docId = sortedHits\[j\].doc;
+
+float score = sortedHits\[j\].score/maxScore;//没有详细研究这个得分---这里只是与最大的得分的一个比值
+
+if(score<0.5) {
+
+continue;
+
+}
+
+Document doc = searcher.doc(docId);
+
+..
+
+}
+链接:[lucene MultiFieldQueryParser 模糊反思](https://bbs.huaweicloud.com/blogs/f236f91db3fd11e9b759fa163e330718)
