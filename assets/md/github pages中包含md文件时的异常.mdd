@@ -1,0 +1,7 @@
+Angular5项目发布到github page
+```
+npm install -g angular-cli-ghpages
+ng build --prod --base-href https://\[username\].github.io/\[repo\]/  ==>repo可以为空
+ngh --dir=dist/\[project-name\] ==>后面是ng build打包目标目录
+```
+当资源文件中包含.md后缀的资源文件时 ，github pages会检查.md文件的格式

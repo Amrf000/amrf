@@ -1,0 +1,416 @@
+spring 4 没有使用spring-boot，也不想退到spring3
+ldap manager的密码加密方案
+\---继承DefaultSpringSecurityContextSource，然后在里面使用 jasypt解密，感觉可行
+\---附件:jasypt工具
+参考文档:
+[https://stackoverflow.com/questions/22067552/encryption-decrypt-using-jasypt](https://stackoverflow.com/questions/22067552/encryption-decrypt-using-jasypt)
+[https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/DefaultSpringSecurityContextSource.html](https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/DefaultSpringSecurityContextSource.html)
+[http://www.sephiroth-j.de/java/spring-security-ltpa2/usage.html](http://www.sephiroth-j.de/java/spring-security-ltpa2/usage.html)
+[https://github.com/spring-projects/spring-security-kerberos](https://github.com/spring-projects/spring-security-kerberos)
+[https://github.com/spring-projects/spring-security-kerberos/blob/master/spring-security-kerberos-client/src/main/java/org/springframework/security/kerberos/client/ldap/KerberosLdapContextSource.java](https://github.com/spring-projects/spring-security-kerberos/blob/master/spring-security-kerberos-client/src/main/java/org/springframework/security/kerberos/client/ldap/KerberosLdapContextSource.java)
+[https://docs.spring.io/spring-security/site/docs/4.0.x/reference/html/ldap.html](https://docs.spring.io/spring-security/site/docs/4.0.x/reference/html/ldap.html)
+[https://spring.io/guides/gs/authenticating-ldap/](https://spring.io/guides/gs/authenticating-ldap/)
+[https://memorynotfound.com/spring-security-spring-ldap-authentication-example/](https://memorynotfound.com/spring-security-spring-ldap-authentication-example/)
+[https://stackoverflow.com/questions/20149939/encrypting-a-password-within-a-spring-configuration-file](https://stackoverflow.com/questions/20149939/encrypting-a-password-within-a-spring-configuration-file)
+[https://stackoverflow.com/questions/33952246/how-to-avoid-plain-text-ldap-password-in-spring-security](https://stackoverflow.com/questions/33952246/how-to-avoid-plain-text-ldap-password-in-spring-security)
+[https://serverfault.com/questions/271872/hudson-how-to-manually-encode-the-ldap-managerpassword](https://serverfault.com/questions/271872/hudson-how-to-manually-encode-the-ldap-managerpassword)
+[https://github.com/spring-projects/spring-security/blob/master/crypto/src/main/java/org/springframework/security/crypto/password/LdapShaPasswordEncoder.java](https://github.com/spring-projects/spring-security/blob/master/crypto/src/main/java/org/springframework/security/crypto/password/LdapShaPasswordEncoder.java)
+[https://www.mkyong.com/spring-security/spring-security-password-hashing-example/](https://www.mkyong.com/spring-security/spring-security-password-hashing-example/)
+[https://stackoverflow.com/questions/52647983/spring-security-without-ldap-password](https://stackoverflow.com/questions/52647983/spring-security-without-ldap-password)
+[https://blog.csdn.net/gdfsbingfeng/article/details/16886805](https://blog.csdn.net/gdfsbingfeng/article/details/16886805)
+[https://stackoverflow.com/questions/32244500/jasypt-with-spring-4-0](https://stackoverflow.com/questions/32244500/jasypt-with-spring-4-0)
+[http://www.jasypt.org/springsecurity.html](http://www.jasypt.org/springsecurity.html)
+[https://www.baeldung.com/spring-boot-jasypt](https://www.baeldung.com/spring-boot-jasypt)
+[https://stackoverflow.com/questions/23235314/spring-4-javaconfig-for-jasypt-and-profile](https://stackoverflow.com/questions/23235314/spring-4-javaconfig-for-jasypt-and-profile)
+[https://suryanarayanjena.wordpress.com/jasypt/](https://suryanarayanjena.wordpress.com/jasypt/)
+[https://monibu1548.github.io/2017/02/09/jasypt/](https://monibu1548.github.io/2017/02/09/jasypt/)
+[https://github.com/spring-projects/spring-security/blob/master/ldap/src/main/java/org/springframework/security/ldap/DefaultSpringSecurityContextSource.java](https://github.com/spring-projects/spring-security/blob/master/ldap/src/main/java/org/springframework/security/ldap/DefaultSpringSecurityContextSource.java)
+[https://github.com/ulisesbocchio/jasypt-spring-boot/issues/58](https://github.com/ulisesbocchio/jasypt-spring-boot/issues/58)
+[https://github.com/tfredrich/jasypt/issues/1](https://github.com/tfredrich/jasypt/issues/1)
+spring 配置多auth
+[https://www.programmergate.com/spring-boot-spring-security-oauth2/](https://www.programmergate.com/spring-boot-spring-security-oauth2/)
+[https://blog.csdn.net/li90hou/article/details/77851845](https://blog.csdn.net/li90hou/article/details/77851845)
+[https://geeks18.com/spring-security-password-configurations/](https://geeks18.com/spring-security-password-configurations/)
+[http://www.giuseppeurso.eu/en/multiple-authentication-providers-in-spring-security/](http://www.giuseppeurso.eu/en/multiple-authentication-providers-in-spring-security/)
+[https://coderanch.com/t/653951/frameworks/Spring-Boot-Security-Config-Multiple](https://coderanch.com/t/653951/frameworks/Spring-Boot-Security-Config-Multiple)
+[https://blog.csdn.net/wei\_ya\_wen/article/details/8529000](https://blog.csdn.net/wei_ya_wen/article/details/8529000)
+[https://guides.micronaut.io/micronaut-database-authentication-provider-groovy/guide/index.html](https://guides.micronaut.io/micronaut-database-authentication-provider-groovy/guide/index.html)
+[https://stackoverflow.com/questions/25729008/using-both-ldap-and-db-authentication-with-spring-security](https://stackoverflow.com/questions/25729008/using-both-ldap-and-db-authentication-with-spring-security)
+[https://stackoverflow.com/questions/22115493/pre-authentication-without-authorization-using-spring-security/25114782#25114782](https://stackoverflow.com/questions/22115493/pre-authentication-without-authorization-using-spring-security/25114782#25114782)
+[https://www.baeldung.com/spring-security-multiple-auth-providers](https://www.baeldung.com/spring-security-multiple-auth-providers)
+spring ldap配置
+web.xml中添加
+```
+<context-param>
+<param-name>contextConfigLocation</param-name>
+<param-value>/WEB-INF/spring/root-context.xml, /WEB-INF/spring/spring-security.xml</param-value>
+</context-param>
+<filter>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+    <filter-name>springSecurityFilterChain</filter-name>
+    <url-pattern>/\*</url-pattern>
+</filter-mapping>
+spring-security.xml  
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="...">
+    <!-- 注意要在 web.xml 中扫描此配置文件 -->
+    <!-- 读取错误提示属性文件，实现自定义提示。原文件位置 spring-security-core-4.2.3.RELEASE.jar 包中 org/springframework/security/messages\_zh\_CN.properties 
+         可以将其内容拷贝到自定义的属性文件中，修改相关的提示信息，将 basenames 属性值指向自定义属性文件
+    -->
+    <!-- <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames" value="classpath:org/springframework/security/messages\_zh\_CN"></property>
+    </bean> -->
+    <!-- security="none"：对指定的 URL 放行，不拦截。如一些静态文件。另外放行登录 URL 避免拦截，造成无法登录 -->
+    <security:http security="none" pattern="/xxx/login" />
+    <security:http security="none" pattern="/resources/\*\*" />
+    <security:http security="none" pattern="/\*\*/\*.js" />
+    <security:http security="none" pattern="/\*\*/\*.jsx" />
+    <security:http auto-config="false" use-expressions="true" access-decision-manager-ref="" entry-point-ref="authenticationEntryPoint">
+         <security:headers>
+           <security:frame-options
+                policy="SAMEORIGIN" />
+         </security:headers>
+        <!--
+            login-page：表示自定义登录页面
+            login-processing-url：表示登录时提交的地址
+            username-parameter：表示登录时用户名使用的是哪个参数
+            password-parameter：表示登录时密码使用的是哪个参数
+            default-target-url：
+                默认情况下，在登录成功后会返回到原本受限制的页面
+                如果用户是直接请求登录页面，登录成功后默认情况下会跳转到当前应用的根路径，即欢迎页面
+                default-target-url 属性可以指定，用户直接访问登录页面并登陆成功后跳转的页面
+                如果想让用户不管是直接请求登录页面，还是通过 Spring Security 引导过来的，登录之后都跳转到指定的页面，可以使用 always-use-default-target 属性为 true 来达到这一效果
+            authentication-success-handler-ref：
+                对应一个 AuthencticationSuccessHandler 实现类的引用
+                登录认证成功后会调用指定 AuthenticationSuccessHandler 的 onAuthenticationSuccess 方法，在此方法中进行登陆成功后的处理
+                此时 default-target-url 失效
+            authentication-failure-url：
+                指定登录认证失败后跳转的页面
+                默认情况下登录失败后会返回登录页面
+                登录失败后跳转的页面，也需放行，否则又会被重定向到登录页面。
+            authentication-failure-handler-ref：
+                对应一个用于处理认证失败的 AuthenticationFailureHandler 实现类。
+                指定了该属性，Spring Security 在认证失败后会调用指定 AuthenticationFailureHandler 的 onAuthenticationFailure 方法对认证失败进行处理
+                此时 authentication-failure-url 属性将不再发生作用。
+         -->
+        <security:form-login login-page="/xxx/login"
+                            login-processing-url="/xxx/employee-jsons/doLogin.action"
+                            username-parameter="username"
+                            password-parameter="password"
+                            authentication-success-handler-ref="authenticationSuccessHandlerImpl"
+                            authentication-failure-handler-ref="authenticationFailureHandlerImpl" />
+        <security:logout logout-success-url="/xxx/login"
+                        logout-url="/xxx/logout" 
+                        invalidate-session="true" 
+                        delete-cookies="JSESSIONID" />
+        <!-- 设置访问所有的 URL 都必须登录 -->
+        <security:intercept-url pattern="/\*\*" access="isAuthenticated()" />
+        <!-- 
+            access="hasRole('ROLE\_ADMIN')"：表示拥有 ADMIN 角色的用户可以访问，否则 403。
+                hasRole('ROLE\_ADMIN') 为 SpEL 表达式，必须以 ROLE\_ 开头
+         -->
+        <!--security:intercept-url pattern="/user/\*\*" access="hasRole('ROLE\_0')"/  -->
+        <!-- 指定登陆认证成功后，用户访问未授权的 URL 将跳转的 URL -->
+        <security:access-denied-handler error-page="/error/403"/>
+        <security:session-management session-fixation-protection="none">
+            <!-- 
+                max-sessions="1"：同一用户只能在一个浏览器登录，当尝试在其他浏览器登陆时将被拒绝
+                error-if-maximum-exceeded="true"：当设置了此属性，尝试在其他浏览器登录时，则原会话将被终止，将在新窗口建立新会话
+            -->
+            <security:concurrency-control max-sessions="1"/>
+        </security:session-management>
+        <security:csrf disabled="true" />
+    </security:http>
+    <bean id="authenticationEntryPoint" class="diary.security.ContinueEntryPoint">
+      <constructor-arg value="/xxx/login"/>
+    </bean>  
+    <!-- 认证成功后的处理类 -->
+    <bean id="authenticationSuccessHandlerImpl" class="diary.security.AuthenticationSuccessHandlerImpl"/>
+    <!-- 认证失败后的处理类 -->
+    <bean id="authenticationFailureHandlerImpl" class="diary.security.AuthenticationFailureHandlerImpl"/>
+    <!-- 登录认证 -->
+    <security:authentication-manager alias="authenticationManager">
+        <!-- 直接将用户名密码卸载配置文件中
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="user" authorities="ROLE\_USER" />
+                <security:user name="admin" password="admin" authorities="ROLE\_USER, ROLE\_ADMIN" />
+            </security:user-service> 
+        </security:authentication-provider>
+        -->
+        <security:authentication-provider ref='ldapAuthProvider'/>
+        <!-- 使用自定义的类对用户提交的密码进行加密操作，实现 AuthenticationSuccessHandler 接口 -->
+        <!--security:authentication-provider user-service-ref="userDetailsServiceImpl">
+            <security:password-encoder ref="myMessageDigestPasswordEncoder"/>
+        </security:authentication-provider -->
+    </security:authentication-manager>
+    <!-- bean id="myMessageDigestPasswordEncoder" class="diary.security.MyMessageDigestPasswordEncoder">
+        <constructor-arg name="algorithm" value="md5"/> 
+    </bean -->
+    <!--bean id="userDetailsServiceImpl" class="diary.security.UserDetailsServiceImpl"></bean  -->
+   <bean id="contextSource"
+       class="org.springframework.security.ldap.DefaultSpringSecurityContextSource">
+     <constructor-arg value="ldap://pekad01-dc.domain.com:389/dc=china,dc=huawei,dc=com"/>
+     <property name="userDn" value="xxxxxxx@domain.com"/>
+     <property name="password" value="xxxxxxx"/> 
+   </bean>
+    <bean id="ldapAuthProvider"
+       class="org.springframework.security.ldap.authentication.LdapAuthenticationProvider">
+     <constructor-arg>
+       <bean class="org.springframework.security.ldap.authentication.BindAuthenticator">
+           <constructor-arg ref="contextSource"/>
+           <property name="userDnPatterns"><list><value>sAMAccountName={0}</value></list></property>
+           <property name="userSearch">
+           <bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+           <constructor-arg index="0" value=""/>
+           <constructor-arg index="1" value="(sAMAccountName={0})"/>
+           <constructor-arg index="2" ref="contextSource" />
+           </bean>
+           </property>
+       </bean>
+     </constructor-arg>
+     <constructor-arg>
+        <bean
+            class="diary.security.CustomLdapAuthoritiesPopulator">
+        </bean>
+    </constructor-arg>
+     <!-- constructor-arg>
+       <bean class="org.springframework.security.ldap.userdetails.DefaultLdapAuthoritiesPopulator">
+           <constructor-arg ref="contextSource"/>
+           <constructor-arg value="ou=groups"/>
+           <property name="groupRoleAttribute" value="ou"/>
+       </bean>
+     </constructor-arg -->
+   </bean>
+<bean  id="ldapContextSource" 
+        class="org.springframework.ldap.core.support.LdapContextSource">
+    <property name="url" value="ldap://pekad01-dc.domain.com:389/dc=china,dc=huawei,dc=com" />
+    <property name="base" value="" />
+    <property name="userDn" value="xxxxxxx@domain.com" />
+    <property name="password" value="xxxxxxx" />
+    <property name="referral" value="follow" />
+</bean>
+<bean   id="ldapTemplate" 
+        class="org.springframework.ldap.core.LdapTemplate" 
+        depends-on="ldapContextSource">
+        <constructor-arg index="0" ref="ldapContextSource"  />
+        <property name="ignorePartialResultException" value="true"/>
+</bean>
+<bean id="LdapService" class="org.angularstudy.spring.services.LdapService">
+        <property name="ldapTemplate" ref="ldapTemplate" />
+</bean>
+</beans>
+```
+AuthenticationFailureHandlerImpl.java//认证失败后的回调
+```
+public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler{
+@Override
+public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+org.springframework.security.core.AuthenticationException exception) throws IOException, ServletException {
+   // AuthenticationException 存放着异常信息，获取出来，放到 Request 中，转发到登录页面。
+        request.setAttribute("error", exception.getMessage());
+        request.getRequestDispatcher("/xxx/login").forward(request, response);
+}
+}
+```
+AuthenticationSuccessHandlerImpl.java//认证成功后的回调
+```
+public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHandler {
+    @Resource
+    private UserMapper userMapper;
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
+        // UserDetails 中存放着用户名等信息
+        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        // 获取该用户信息，根据自己的业务规则写
+        //User user = this.userMapper.getUserByUserName(username);
+    List<GrantedAuthority> info = new ArrayList<GrantedAuthority>(((LdapUserDetailsImpl)authentication.getPrincipal()).getAuthorities());
+    User user = new User();
+    user.setMail(info.get(0).toString());
+    ...
+    if(info.size()<7) {
+       user.setId(info.get(3).toString().hashCode());
+    }else {
+       user.setId(Integer.parseInt(info.get(6).toString()));
+    }
+        // 将用户放到 Session
+    //userMapper.insert(user);
+        request.getSession().setAttribute("currUser", user);
+        // 跳转到主页
+        String redirect = request.getParameter("redirect");
+        if(redirect.contains("/xxx/index.html")) {
+        response.sendRedirect(request.getContextPath() + "/xxx/xxxHome.html#!/index");
+        }else {
+        redirect = UriUtils.decode(redirect, "UTF-8");
+        response.sendRedirect(redirect);//request.getContextPath() +
+        }
+    }
+}
+```
+ContinueEntryPoint.java//保存认证前请求的链接 以便认证成功后跳转 （有一点#hashcode要在前端转义）
+```
+public class ContinueEntryPoint extends LoginUrlAuthenticationEntryPoint {
+public ContinueEntryPoint(String loginFormUrl) {
+        super(loginFormUrl);
+    }
+    @Override
+    protected String determineUrlToUseForThisRequest(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException exception) {
+        String continueParamValue="";
+try {
+continueParamValue = UriUtils.encode(buildHttpReturnUrlForRequest(request),"UTF-8");
+} catch (UnsupportedEncodingException e) {
+e.printStackTrace();
+}//UrlUtils.buildRequestUrl
+        String redirect = super.determineUrlToUseForThisRequest(request, response, exception);//
+        String ret = UriComponentsBuilder.fromPath(redirect).queryParam("redirect", continueParamValue).toUriString();
+        return ret;
+    }
+    protected String buildHttpReturnUrlForRequest(HttpServletRequest request) {
+            RedirectUrlBuilder urlBuilder = new RedirectUrlBuilder();
+            urlBuilder.setScheme("http");
+            urlBuilder.setServerName(request.getServerName());
+            ....
+            return urlBuilder.getUrl();
+    }
+}
+```
+CustomLdapAuthoritiesPopulator.java//构造用户信息--这段代码有点挫
+```
+public class CustomLdapAuthoritiesPopulator implements LdapAuthoritiesPopulator {
+   @Resource
+   private UserMapper userMapper;
+   public Collection<GrantedAuthority> getGrantedAuthorities( DirContextOperations context, String username) {       
+        ArrayList<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        String mail=context.getStringAttribute("mail")!=null?context.getStringAttribute("mail"):"nonemail";
+       ...
+        list.add((new SimpleGrantedAuthority(mail)));
+        ....
+        if(id==null) {
+        User user = new User();
+        user.setMail(mail);
+        ...
+            // 将用户放到 Session
+        userMapper.insert(user);
+        id = user.getId();
+        }
+        list.add(new SimpleGrantedAuthority(String.valueOf(id)));
+        return list;        
+    }
+}
+```
+xxxcontroller.java//相关控制器
+```
+@RequestMapping(value="login" , method={ RequestMethod.GET, RequestMethod.POST }, name="login")
+public String login( ModelMap model,HttpServletRequest request) throws Exception {
+logger.info("params::::" + request.getRequestURI());
+String redirect=request.getParameter("redirect");
+model.addAttribute("redirect", redirect);
+return "xxx/employee-jsons/login";
+}
+@RequestMapping(value="employee-jsons/logout.action" , method=RequestMethod.POST, name="logout")
+@ResponseBody
+public Map<String,Object> logout( HttpServletRequest request, HttpServletResponse response) throws Exception {
+logger.info("params::::" + request.getRequestURI());
+    Map<String,Object> ret = new HashMap<String,Object>();
+    ret.put("ajaxResult","success");
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    if (auth != null){    
+        new SecurityContextLogoutHandler().logout(request, response, auth);
+    }
+    return ret;
+}
+```
+spring同时配置db和ldap验证  
+spring-security.xml中添加过滤器
+```
+      <security:custom-filter ref="captchaAuthenticaionFilter" after="FORM\_LOGIN\_FILTER"/>
+    <security:authentication-manager id="authenticationManager">
+        <security:authentication-provider ref='ldapAuthProvider'/>        
+        <security:authentication-provider user-service-ref="clientDetailsUserDetailsService">
+            <security:password-encoder ref="myMessageDigestPasswordEncoder"/>
+        </security:authentication-provider>
+    </security:authentication-manager>
+   <bean id="captchaAuthenticaionFilter" class="diary.security.TwoFactorAuthenticationFilter">
+    <property name="filterProcessesUrl" value="/rb/"/>
+    <property name="authenticationManager" ref="authenticationManager"/>
+    <property name="authenticationFailureHandler" ref="authenticationFailureHandlerImpl" />  
+    <property name="authenticationSuccessHandler" ref="authenticationSuccessHandlerImpl" />
+   </bean> 
+    <bean id="clientDetailsUserDetailsService" class="diary.security.clientDetailsUserDetailsService" />  
+    <bean id="myMessageDigestPasswordEncoder" class="diary.security.MyMessageDigestPasswordEncoder">
+        <constructor-arg name="algorithm" value="md5"/> 
+    </bean>
+```
+clientDetailsUserDetailsService.java
+```
+@Service
+public class clientDetailsUserDetailsService implements UserDetailsService {
+@Autowired
+protected LdapService LdapService;
+public UserDetails loadUserByUsername(String input) throws UsernameNotFoundException {   
+    String\[] split = input.split(":");
+    User user = null;
+    if(split.length>=4) {
+        String u = split\[0\];
+        String passwd = split\[1\];
+        String uid = split\[2\];
+        String uname = split\[3\];
+    UserDetails userDetails = null; 
+List<Map<String,Object>> info = null;
+if(uid!=null && !uid.isEmpty()) {
+info = LdapService.selectLdapUsersOri(uid);
+}
+if(info.size()>0) {
+user = new User();
+String mail = info.get(0).get("mail").toString();
+user.setMail(mail);
+....
+        list.add((new SimpleGrantedAuthority(mail)));
+                ....
+    user.setAuthorities(list);
+    return user;
+}
+    }
+    if(user == null)
+    {
+        throw new UsernameNotFoundException("Invalid username or corporate domain");
+    }
+return null; 
+}
+}
+TwoFactorAuthenticationFilter.java//我这块db验证的场景比较特殊 只有一个特定的账号信息放行
+public class TwoFactorAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    @Override
+    protected String obtainUsername(HttpServletRequest request)
+    {
+        String user = request.getParameter("user");
+        String passwd = request.getParameter("passwd");
+        String uid = xxx;
+        String uname = xxx;  
+        String combinedUsername = user + ":" + passwd + ":" + uid + ":" + uname;
+        request.setAttribute("username","...");
+        request.setAttribute("password","...");
+        return combinedUsername;
+    }
+}
+MyMessageDigestPasswordEncoder.java
+public class MyMessageDigestPasswordEncoder extends MessageDigestPasswordEncoder  {
+public MyMessageDigestPasswordEncoder(String algorithm) {
+        super(algorithm);
+    }
+    @Override
+public boolean isPasswordValid(String encPass, String rawPass, Object salt) {
+       /\* if(StringUtils.isEmpty(rawPass)) {
+            throw new BadCredentialsException("密码不能为空");
+        }
+        return encPass.equals(rawPass);\*/
+    return true;
+ }
+}
+```
+链接:[spring secrity ldap](https://bbs.huaweicloud.com/blogs/acc55fc3604f11e9bd5a7ca23e93a891)

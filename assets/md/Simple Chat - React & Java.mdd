@@ -1,0 +1,114 @@
+What we are building — Screenshot  
+Some time ago, I’ve decided to explore the vast abundance of software and services that the open source world offers. Purposefully, I used technologies I haven’t had too much hands-on experience before (such as Heroku, gh pages, java websockets, React). So if you want to learn about these and have 0 experience, worry not. This story is about the very positive outcome.
+TLDR; — if you want to go straight to full code — [backend](http://---%20%20https//github.com/jasofalcon/chat-ws-java%20%20%20%20---),[frontend](https://github.com/jasofalcon/chat-ws-client)
+We all know how interesting it is trying out something new, and seeing it succeed, and especially, how easy and elegant sometimes it is.
+Let’s see…
+* * *
+### Backend (Java):
+As mentioned before, I wanted to make the whole cut-through from development to deployment, because I was a bit sick of all the articles only telling one part of the story. So I went with build tool. Being Java guy, it will most likely be Gradle or Maven, I chose the latter.
+First, create a simple Maven project using Java (I used Java 8), and add java-websocket to your dependencies ([**java-websocket**](https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket/1.3.0)). I’ve also used Jackson for marshalling/unmarshalling JSON as dependency and log4j for logging.
+Second, create main class (I named it ChatServer) which will extend from**WebSocketServer.**In constructor, you will call_InetSocketAddress(port)_where ‘port’ is any port you wish to use for the communication (i.e.**9000**)
+What’s important to do in this class is override few methods:
+*   **_onOpen_:**when connection is received and established
+*   **_onMessage_**: when message is received (you would probably want to broadcast message received to all other chat users)
+*   **_replaceString_**: If something wrong happens
+*   **_onClose_:**…well, you get the idea:)
+The last thing you need to do is actually run the server.
+new ChatServer(port).start();
+It’s that simple.
+See full code on:[https://github.com/jasofalcon/chat-ws-java](https://github.com/jasofalcon/chat-ws-java)
+* * *
+### Frontend (React):
+I’ve mostly worked on comercial projects using Angular, so I wanted to explore React a bit, having in mind the vast usage around the globe. Turns out, it feels much more_lightweight_and_straight-forward_compared to Angular. At least on a first glance. I’ve also used**Redux**as I’ve noticed managing the state can be a bit cumbersome if app becomes even a bit more complex. But enough talk, let’s start. It’s a new kind of concept which works pretty well will React altogether.
+First, you need to invest some time scaffolding the app. Or you can invest next to nothing using[react-create-app](https://github.com/facebookincubator/create-react-app). So,
+> npm install -g create-react-app
+> create-react-app my-app
+> cd my-app
+> npm start
+Now we have our app in place, running on localhost:3000
+I will not go too deep into React workings, but you can imagine you will need few components._UserList — _where we will display active users,_ChatHistory_ — where we will show messages, and_SendMessage_ — where we will write and send the messages.
+Also, since I didn’t want to waste too much time CSS-ing and styling, I leveraged[material-ui](http://www.material-ui.com/#/)to quickly generate some fancy looking elements. It is integrated with React very easily and works smoothly.
+For WebSockets, I haven’t used any external framework (but you could try socket.io) but a simple[WebSocket API](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API).
+Working with web sockets on client side is even easier than backend. To open the connection with backend we created in Java, we just need to
+let socket = new WebSocket(host);
+where**_host_**is where your backend server is listening, in our example it would be:**ws://localhost:9000**
+Notice how we do not use http(s) protocol but ws (websocket) or wss (secured and recommended)
+Once the connection is established, we can easily send a message like so:
+// we have socket defined from lines above
+payload = {user: "me", message: "hello sockets"};
+socket.send(payload);
+So far so good.
+Now, since web sockets are used two ways communication (thus -> chat), we also want to listen when backend broadcast some messages to us. To achieve this, we need to register some listeners.
+// triggered when backend broadcasts a message
+.onmessage = (message) => {
+    // handle message from backend
+}
+.onopen = () => {
+    // do something after connection is opened
+}
+If you are not familiar with ES6 and lambdas, it is same as writing following:
+// triggered when backend broadcasts a message
+socket.onmessage = function(message) {
+    // handle message from backend
+}
+That’s all you need to know from perspective of websockets on frontend (for creating simple chat app, there’s more if you wish to build something more sophisticated)
+See full code on:[https://github.com/jasofalcon/chat-ws-client](https://github.com/jasofalcon/chat-ws-client)
+* * *
+### Build & Deploy
+Now, since we used Maven for Java project, we can now easily build, package and run our app as jar. To do this locally, you will need[Maven](https://maven.apache.org/install.html)installed, after which you will just navigate to root of your java project and:
+mvn clean package
+java -jar target/\[name-of-your-jar\].jar
+Voila. You have your backend app running. Now let’s run it on remote endpoint. You can use many different services such as AWS, MS Azure, Google Cloud, but there are very nice solutions which are completely free, one of the very famous ones which I used is[heroku](https://dashboard.heroku.com/login). I propose you create account at once and start playing with it, there’s a very simple example on how to deploy your first example java app.
+After you finished tutorial, you will understand how everything works and you will be deploying in no time. For my app, I had to dig a bit deeper to see how can I run it once it is published and I ran into two minor issues.
+First one was packaging. I noticed after packing there was an issue with running my jar. The answer is pretty simple, you need to tell Maven to make a_fat-jar,_meaning, you want to have all your classes and all your dependencies in the jar, not only your project. So, in pom.xml file, add following:
+<>
+    <>maven-assembly-plugin</>
+    <>
+        <>
+            <>
+                <>your.package.ChatServer</>
+            </>
+        </>
+        <>
+            <>jar-with-dependencies</>
+        </>
+    </>
+    <>
+        <>
+            <>make-assembly</> <>package</> <>
+                <>single</>
+            </>
+        </>
+    </>
+</>
+The second question I had was_‘How will I tell heroku to run my jar?’._Well, it turns out they provided a very easy solution to this. We only need to create a Procfile in our project root, and add something like so:
+web: java -jar target/chat-1.0-SNAPSHOT-jar-with-dependencies.jar
+Naturally, you will use your app name (I’ve just left it to be a SNAPSHOT for now..)
+* * *
+Now, when we have our backend up and running, only missing piece is to deploy our frontend app. We can also use many of existing web services, but why not use amazing[github pages](https://pages.github.com/), since we already host our code, hopefully:)
+To do this, easiest way I found is to install gh-pages. In a nutshell, a special branch will be created (gh-pages) which will be used to serve your ‘production-ready’ code.
+Fortunately, there are tools already in place that we can use to do it in no time.
+First, we will install gh pages ‘cli’, like so:
+npm install --save gh-pages
+Then, in your package.json, add the following:
+"homepage": "https://your-user-name.github.io",
+After this, we need to add two more lines under the ‘scripts’ section:
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build"
+and..
+npm run deploy
+Voila.
+In a few moments you can visit your frontend app via:  
+https://**_your-github-user_**.github.io/**_your-repo-name_**
+That’s all folks! Again, to see the entire project visit:
+*   Frontend:[https://github.com/jasofalcon/chat-ws-client](https://github.com/jasofalcon/chat-ws-client)
+*   Backend:[https://github.com/jasofalcon/chat-ws-java](https://github.com/jasofalcon/chat-ws-java)
+* * *
+#### \*\*Optional\*\*
+If you wish, you can add one more step to your deployment process, that’s CI build. I would propose again free services like[codeship](https://codeship.com/),[travis](https://travis-ci.org/),[circle-ci](http://circleci.com/). I’ve tried all three of those, and all are super-easy to setup and integrate with your github and deployment pipeline.
+*   [React](https://medium.com/tag/react?source=post)
+*   [Java8](https://medium.com/tag/java8?source=post)
+*   [Websocket](https://medium.com/tag/websocket?source=post)
+*   [Heroku](https://medium.com/tag/heroku?source=post)
+*   [Github Pages](https://medium.com/tag/github-pages?source=post)
+链接:[Simple Chat - React &amp; Java](https://bbs.huaweicloud.com/blogs/8a41ab35ecca11e8bd5a7ca23e93a891)

@@ -1,0 +1,136 @@
+[http://www.zyh1690.org/lua-with-c-call-each-other/](http://www.zyh1690.org/lua-with-c-call-each-other/)
+本文介绍如何在C++程序中使用Lua脚本，以及它们如何相互调用。在此，我们需要使用上篇文章[《Lua-5.3.1 源码编译》](http://www.zyh1690.org/lua-5-3-1-source-code-to-compile/)中生成的动态链接库，以及相关的头文件，它们分别是：
+x:\\x\\lua-5.3.1\\Debug目录下的lua5.3.1.lib以及lua5.3.1.dll以及x:\\x\\lua-5.3.1\\src目录下的lua.h，lualib.h，lauxlib.h，luaconf.h四个文件。
+首先新建一个控制台工程clua，在解决方案的根目录新建一个lua文件夹：
+然后在lua文件夹下创建两个子文件夹：include和lib，并将上面四个头文件复制到include文件夹，lua5.3.1.lib复制到lib文件夹。
+接着在项目属性页中进行以下配置：
+添加包含目录：
+添加附加库目录：
+添加附加依赖项：
+Lua调用C++：
+---------
+项目中新建cluac.cpp文件，其代码如下：
+```
+#
+include  < iostream >
+	using  namespace  std;#
+include  < stdio.h > #include  "lua.h"#
+include  "lualib.h"#
+include  "lauxlib.h"
+lua_State *  L;    //lua 的解释器
+//注意average的定义形式
+int  average(lua_State  * L)   {  
+	//返回栈中元素的个数  
+	int  n  =  lua_gettop(L);  
+	double  sum  =  0;  
+	int  i;  
+	for  (i  =  1;  i  <=  n;  i++)   {  
+		if  (!lua_isnumber(L,  i))    {  
+			lua_pushstring(L,  "Incorrect argument to 'average'");  
+			lua_error(L);  
+		}  
+		sum  +=  lua_tonumber(L,  i);  
+	}  
+	/* push 平均值 */
+	  
+	lua_pushnumber(L,  sum  /  n);  
+	/* push 总和 */
+	  
+	lua_pushnumber(L,  sum);  
+	/* return the number of results */
+	  
+	return  2;  
+}
+int  main() {
+	L  =  luaL_newstate();
+	/* 载入Lua基本库 */
+	luaL_openlibs(L);
+	/* 注册函数 */
+	lua_register(L,  "aver",  average); 
+	/* 运行脚本 */
+	luaL_dofile(L,  "test.lua");
+	lua_getglobal(L, "avg");  
+	cout << "avg is:" << lua_tointeger(L, -1) << endl;  
+	lua_pop(L, 1);  
+	lua_getglobal(L, "sum");  
+	cout << "sum is:" << lua_tointeger(L, -1) << endl;  
+	/* 清除Lua */
+	lua_close(L);
+	return  0;
+}
+```
+然后在项目目录下（也即cluac\\cluac\\目录下），添加test.lua文件，其代码如下：
+1
+avg,  sum  =  aver(10,  20,  30,  40,  50)
+然后F7编译，编译成功，但还不能运行，我们还需将lua5.3.1.dll放到Debug文件夹中（包含exe的），此时Ctrl+F5 运行可以看到结果：
+C++调用Lua：
+---------
+### 1.无参数传递（C++->Lua）
+同上方法，建立项目，新建脚本文件loop.lua如下：
+```
+#include  < stdio.h >
+#include  "lua.h"
+#include  "lualib.h"
+#include  "lauxlib.h"
+	/* the Lua interpreter */
+lua_State *  L;
+int  main ( int  argc,  char  * argv[] ) {
+	/* initialize Lua */
+	L  =  lua_open();
+	/* load Lua base libraries */
+	lua_baselibopen(L);
+	/* run the script */
+	lua_dofile(L,  "do-me.lua");
+	/* cleanup Lua */
+	lua_close(L);
+	return  0;
+}
+```
+输出结果：
+### 2.有参数传递（C++->Lua）
+同上方法，建立项目，新建add.lua文件：
+```
+function  add  (  x,  y  )
+return  x  +  y
+end
+```
+CPP代码为：
+C++
+```
+#include  < stdio.h > 
+#include  "lua.h"
+#include  "lualib.h"
+#include  "lauxlib.h"
+	/* the Lua interpreter */
+lua_State *  L;
+int  main ( int  argc,  char  * argv[] ) {
+	int  sum;
+	/* initialize Lua */
+	L  =  luaL_newstate();
+	/* load Lua base libraries */
+	luaL_openlibs(L);
+	/* load the script */
+	luaL_dofile(L,  "add.lua");
+	/* the function name */
+	lua_getglobal(L,  "add");
+	/* the first argument */
+	lua_pushnumber(L,  41 );
+	/* the second argument */
+	lua_pushnumber(L,  22 );
+	/* call the function with 2
+	  arguments, return 1 result */
+	lua_call(L,  2,  1);
+	/* get the result */
+	sum  =   (int) lua_tonumber(L,  -1);
+	lua_pop(L,  1);
+	/* print the result */
+	printf( "The result is %d\n",  sum );
+	/* cleanup Lua */
+	lua_close(L);
+	return  0;
+}
+```
+运行结果：
+[https://blog.csdn.net/bbhe_work/article/details/48950175](https://blog.csdn.net/bbhe_work/article/details/48950175)
+[https://www.kancloud.cn/thinkphp/lua-guide/43809](https://www.kancloud.cn/thinkphp/lua-guide/43809)
+链接:[lua 5.3和C++互相调用测试](https://bbs.huaweicloud.com/blogs/93610973f31a11e8bd5a7ca23e93a891)

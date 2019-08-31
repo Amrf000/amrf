@@ -1,5 +1,5 @@
 .book .book-summary, .book .book-body  {
-    font-family: Lato,  "Microsoft YaHei UI", "Microsoft Yahei", "PingFang SC", "Lantinghei SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "WenQuanYi Zen Hei", "Noto Sans CJK SC", "Microsoft JhengHei UI", "Microsoft JhengHei", "PingFang TC", "Lantinghei TC", "Noto Sans CJK TC", "Helvetica Neue", Helvetica, Arial,sans-serif;
+    font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif,Lato,  "Microsoft YaHei UI", "Microsoft Yahei", "PingFang SC", "Lantinghei SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "WenQuanYi Zen Hei", "Noto Sans CJK SC", "Microsoft JhengHei UI", "Microsoft JhengHei", "PingFang TC", "Lantinghei TC", "Noto Sans CJK TC", "Helvetica Neue", Helvetica, Arial,sans-serif;
 }
 .markdown-section {
     line-height: 2em;
@@ -21,7 +21,7 @@
     background-color: #ffffff;
 }
 .book-body{
-    background-color: #f4f6fa;
+    background-color: #ffffff;
 }
 .book .book-summary ul.summary li a, .book .book-summary ul.summary li span{
     background-color: #ffffff;

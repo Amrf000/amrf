@@ -1,0 +1,390 @@
+项目原来是基于一个挺老的项目基础做的迭代二次开发，原来使用的是庖丁分词，这个分词库已经很久没人更新了，而且和高版本的lucene也有兼容问题,所以处理同义词问题之前，我把原来使用的padding中文分词替换成word中文分词;
+同义词处理逻辑实际代码主要参考的这两个帖子:
+[https://blog.csdn.net/yax405/article/details/43246237](https://blog.csdn.net/yax405/article/details/43246237)
+[https://blog.csdn.net/winnerspring/article/details/37567739](https://blog.csdn.net/winnerspring/article/details/37567739)
+部分代码如下:
+```
+package org.apdplat.word.lucene;
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.Analyzer.TokenStreamComponents;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.Tokenizer;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
+import org.apache.lucene.analysis.util.FilesystemResourceLoader;
+import org.apache.lucene.util.Version;
+import org.apdplat.word.segmentation.Segmentation;
+import org.apdplat.word.segmentation.SegmentationAlgorithm;
+import org.apdplat.word.segmentation.SegmentationFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+public class SynonymsAnalyzer
+  extends Analyzer
+{
+  private static final Logger LOGGER = LoggerFactory.getLogger(ChineseWordAnalyzer.class);
+  private Segmentation segmentation = null;
+  
+  public SynonymsAnalyzer()
+  {
+    this.segmentation = SegmentationFactory.getSegmentation(SegmentationAlgorithm.BidirectionalMinimumMatching);
+  }
+  
+  public SynonymsAnalyzer(String segmentationAlgorithm)
+  {
+    try
+    {
+      SegmentationAlgorithm sa = SegmentationAlgorithm.valueOf(segmentationAlgorithm);
+      this.segmentation = SegmentationFactory.getSegmentation(sa);
+    }
+    catch (Exception e)
+    {
+      this.segmentation = SegmentationFactory.getSegmentation(SegmentationAlgorithm.BidirectionalMinimumMatching);
+    }
+  }
+  
+  public SynonymsAnalyzer(SegmentationAlgorithm segmentationAlgorithm)
+  {
+    this.segmentation = SegmentationFactory.getSegmentation(segmentationAlgorithm);
+  }
+  
+  public SynonymsAnalyzer(Segmentation segmentation)
+  {
+    this.segmentation = segmentation;
+  }
+  
+  private static SynonymFilterFactory factory = null;
+  
+  protected static SynonymFilterFactory getSynonymsFactory()
+  {
+    if (factory == null)
+    {
+      Map paramsMap = new HashMap();
+      
+      Version ver = Version.LUCENE\_5\_5\_1;
+      
+      paramsMap.put("luceneMatchVersion", ver.toString());
+      paramsMap.put("synonyms", "./synonyms.txt");
+      paramsMap.put("expand", "true");
+      factory = new SynonymFilterFactory(paramsMap);
+      try
+      {
+        FilesystemResourceLoader loader = new FilesystemResourceLoader(Paths.get("D:/RobotK/tomcat/synonyms", new String\[0\]));
+        factory.inform(loader);
+      }
+      catch (IOException e)
+      {
+        e.printStackTrace();
+      }
+    }
+    return factory;
+  }
+  
+  public static void reloadSynonymFilterFactory()
+  {
+    Map paramsMap = new HashMap();
+    
+    Version ver = Version.LUCENE\_5\_5\_1;
+    
+    paramsMap.put("luceneMatchVersion", ver.toString());
+    paramsMap.put("synonyms", "./synonyms.txt");
+    paramsMap.put("expand", "true");
+    factory = new SynonymFilterFactory(paramsMap);
+    try
+    {
+      FilesystemResourceLoader loader = new FilesystemResourceLoader(Paths.get("D:/RobotK/tomcat/synonyms", new String\[0\]));
+      factory.inform(loader);
+    }
+    catch (IOException e)
+    {
+      e.printStackTrace();
+    }
+  }
+  
+  private static LowerCaseFilterFactory caseFactory = null;
+  
+  public static LowerCaseFilterFactory getCaseFilterFactory()
+  {
+    if (caseFactory == null)
+    {
+      Version ver = Version.LUCENE\_5\_5\_1;
+      Map<String, String> filterArgs = new HashMap();
+      filterArgs.put("luceneMatchVersion", ver.toString());
+      caseFactory = new LowerCaseFilterFactory(filterArgs);
+    }
+    return caseFactory;
+  }
+  
+  protected Analyzer.TokenStreamComponents createComponents(String fieldName)
+  {
+    Tokenizer tokenizer = new ChineseWordTokenizer(this.segmentation);
+    TokenStream casefilter = getCaseFilterFactory().create(tokenizer);
+    TokenStream filter = getSynonymsFactory().create(casefilter);
+    return new Analyzer.TokenStreamComponents(tokenizer, filter);
+  }
+}
+```
+其他参考的帖子有:
+[https://blog.csdn.net/u011066470/article/details/60963439](https://blog.csdn.net/u011066470/article/details/60963439)
+[http://www.hankcs.com/program/java/lucene-synonymfilterfactory.html](http://www.hankcs.com/program/java/lucene-synonymfilterfactory.html)
+[https://blog.csdn.net/yax405/article/details/43246237](https://blog.csdn.net/yax405/article/details/43246237)
+[https://blog.csdn.net/liyantianmin/article/details/59485799](https://blog.csdn.net/liyantianmin/article/details/59485799)
+[https://github.com/ysc/word/blob/master/src/main/java/org/apdplat/word/lucene/ChineseWordAnalyzer.java](https://github.com/ysc/word/blob/master/src/main/java/org/apdplat/word/lucene/ChineseWordAnalyzer.java)
+[https://blog.csdn.net/winnerspring/article/details/37567739](https://blog.csdn.net/winnerspring/article/details/37567739)
+[https://my.oschina.net/apdplat/blog/228619](https://my.oschina.net/apdplat/blog/228619)
+[http://www.hankcs.com/program/java/lucene-synonymfilterfactory.html](http://www.hankcs.com/program/java/lucene-synonymfilterfactory.html)
+在Lucene4.6中通过SynonymFilterFactory实现中文同义词非常方便，只需几行代码和一个同义词词典。这个词典还能在Lucene中实现一定程度的拼写纠错，提升搜索体验。在下面这个例子中我们从磁盘载入一个同义词词典，并且对“其实hankcs似好人”这句话进行stream化以供索引，同时还对其中的拼写错误“似->是”做出纠正。
+首先是位于./data/synonyms.txt路径下的同义词词典：
+----------------------------------
+我,俺,hankcs似,is,are => 是好人,好心人,热心人
+可以看出上面有两种词典格式：
+### 通过,分割的可拓展同义词
+比如“我,俺,hankcs”代表着这三个词是同义词，并且任何一个词可以被expand（拓展）为其他三个。如果expand设为false的话，则这三个词都会被统一替换为第一个词，也就是“我”。
+### 通过=>收缩的不可拓展同义词
+比如“似,is,are=>是”代表这三个词同义，并且无视expand参数，统一会被替换为“是”
+然后是加载代码
+-------
+```
+package com.hankcs.test;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
+import org.apache.lucene.analysis.synonym.SynonymFilterFactory;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
+import org.apache.lucene.analysis.util.FilesystemResourceLoader;
+import org.apache.lucene.util.Version;
+import org.apache.uima.annotator.WhitespaceTokenizer; 
+import java.io.IOException;import java.io.StringReader;
+import java.util.HashMap;import java.util.Map; 
+/\*\* \* @author hankcs \*/
+public class TestSynonyms{    
+private static void displayTokens(TokenStream ts) throws IOException    {
+        CharTermAttribute termAttr = ts.addAttribute(CharTermAttribute.class);        
+        OffsetAttribute offsetAttribute = ts.addAttribute(OffsetAttribute.class);        
+        ts.reset();        
+        while (ts.incrementToken())        {  
+                  String token = termAttr.toString();            
+                  System.out.print(offsetAttribute.startOffset() + "-" + offsetAttribute.endOffset() + "[" + token + "] ");        
+        }        
+        System.out.println();        
+        ts.end();        
+        ts.close();    
+}     
+public static void main(String\[] args) throws Exception    {        
+String testInput = "其实 hankcs 似 好人";        
+Version ver = Version.LUCENE\_46;        
+Map<String, String> filterArgs = new HashMap<String, String>();        
+filterArgs.put("luceneMatchVersion", ver.toString());        
+filterArgs.put("synonyms", "./data/synonyms.txt");        
+filterArgs.put("expand", "true");        
+SynonymFilterFactory factory = new SynonymFilterFactory(filterArgs);        
+factory.inform(new FilesystemResourceLoader());        
+WhitespaceAnalyzer whitespaceAnalyzer = new WhitespaceAnalyzer(ver);        
+TokenStream ts = factory.create(whitespaceAnalyzer.tokenStream("someField", testInput));        
+displayTokens(ts);    
+}
+}]
+```
+输出：
+0-2\[其实\] 3-9\[我\] 3-9\[俺\] 3-9\[hankcs\] 10-11\[是\] 12-14\[好人\] 12-14\[好心人\] 12-14\[热心人\]
+由于 我 俺 hankcs 三个词是同一个意思，所以它们被视为同一个term，并且它们的偏移相同，都是3->9，这个长度取决于原来的词 hankcs 的长度。
+[https://blog.csdn.net/yax405/article/details/43246237](https://blog.csdn.net/yax405/article/details/43246237)
+[https://blog.csdn.net/u010366796/article/details/44937025](https://blog.csdn.net/u010366796/article/details/44937025)
+[http://www.voidcn.com/article/p-txqtdabn-bbo.html](http://www.voidcn.com/article/p-txqtdabn-bbo.html)
+[http://blog.csdn.net/winnerspring/article/details/37521101](http://blog.csdn.net/winnerspring/article/details/37521101)
+[http://www.voidcn.com/article/p-pjrzypvg-bbo.html](http://www.voidcn.com/article/p-pjrzypvg-bbo.html)
+[http://blog.csdn.net/winnerspring/article/details/37567739](http://blog.csdn.net/winnerspring/article/details/37567739)
+[http://blog.csdn.net/hu948162999/article/details/41283597](http://blog.csdn.net/hu948162999/article/details/41283597)
+[http://www.voidcn.com/article/p-xrordklc-bah.html](http://www.voidcn.com/article/p-xrordklc-bah.html)
+[https://iamyida.iteye.com/blog/2197355](https://iamyida.iteye.com/blog/2197355)
+[https://cloud.tencent.com/info/034aa996312ba4928c57ae831d6acedf.html](https://cloud.tencent.com/info/034aa996312ba4928c57ae831d6acedf.html)
+lucene 同义词的索引
+```
+public interface SynonymEngine {
+    String\[] getSynonyms(String key);
+}
+public class SynonymEngineImpl implements SynonymEngine {
+    
+    private static HashMap<String,String\[]> map = new HashMap<String ,String\[]>();
+    static {
+        map.put("quick",new String\[]{"fast","speedy"});
+        map.put("jumps",new String\[]{"leaps","hops"});
+        map.put("over",new String\[]{"above"});
+        map.put("lazy",new String\[]{"apathetic","sluggish"});
+        map.put("dog",new String\[]{"canine","pooch"});
+    }
+    @Override
+    public String\[] getSynonyms(String key) {
+        // TODO Auto-generated method stub
+        return map.get(key);
+    }
+}
+public class SynonymFilter extends TokenFilter {
+    private SynonymEngine engine;
+    private CharTermAttribute ct;
+    private PositionIncrementAttribute pt;
+    private Stack<String> stack;
+    private AttributeSource.State current;
+    protected SynonymFilter(TokenStream input,SynonymEngine engine) {
+        super(input);
+        this.engine = engine;
+        ct = this.addAttribute(CharTermAttribute.class);
+        pt = this.addAttribute(PositionIncrementAttribute.class);
+        stack  = new Stack<String>();
+    }
+    @Override
+    public boolean incrementToken() throws IOException {
+        if(stack.size()>0) {
+            this.restoreState(current);
+            String p = stack.pop();
+            ct.setEmpty();
+            ct.append(p);
+            pt.setPositionIncrement(0);
+            return true;
+        }
+        System.out.println("++++++"+ct);
+        if(!input.incrementToken()) return false;
+        System.out.println("------"+ct);
+        
+        if(addSynonym(ct.toString())) {
+            current = this.captureState();
+            
+        }
+        
+        
+        
+        
+        return true;
+    }
+    
+    private boolean addSynonym(String name) {
+        String\[] sa = engine.getSynonyms(name);
+        if(sa != null && sa.length>0) {
+            for(String s:sa) {
+                stack.push(s);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+public class SynonymAnalyzer extends Analyzer {
+    private SynonymEngine engine;
+    
+    public SynonymAnalyzer(SynonymEngine engine) {
+        this.engine = engine;
+    }
+    @Override
+    public TokenStream tokenStream(String s, Reader reader) {
+        // TODO Auto-generated method stub
+        return new SynonymFilter(new StopFilter(Version.LUCENE\_35,
+                new LowerCaseFilter(Version.LUCENE\_35,
+                        new StandardFilter(Version.LUCENE\_35,
+                                new StandardTokenizer(Version.LUCENE\_35,reader)))
+                ,StopAnalyzer.ENGLISH\_STOP\_WORDS\_SET),engine);
+    }
+}
+public class TestSynonym {
+    private RAMDirectory directory;
+    @Test
+    public void init() {
+        directory = new RAMDirectory();
+        SynonymEngine engine = new SynonymEngineImpl();
+        IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE\_35,new SynonymAnalyzer(engine));
+        String content = "The quick brown fox jumps over the lazy dog";
+        
+        try {
+            IndexWriter writer = new IndexWriter(directory,config);
+            Document doc = new Document();
+            doc.add(new Field("content",content,Field.Store.YES,Field.Index.ANALYZED));
+            writer.addDocument(doc);
+            writer.close();
+            
+            IndexReader reader = IndexReader.open(directory);
+            IndexSearcher searcher = new IndexSearcher(reader);
+            TopDocs docs = searcher.search(new TermQuery(new Term("content","pooch")),10);
+            for(ScoreDoc sd:docs.scoreDocs) {
+                Document d = searcher.doc(sd.doc);
+                System.out.println(d.get("content"));
+            }
+            
+        } catch (CorruptIndexException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (LockObtainFailedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+}
+```
+[http://www.itzk.com/b/1109/581983.shtml](http://www.itzk.com/b/1109/581983.shtml)
+Lucene的同义词分析器讲解
+===============
+**这个分析器用SynonymFilter过滤器对StandardAnalyzer类进行封装,当向这个过滤器输入各个项时,会对这些项进行缓冲,并使用栈存储这些项的同义词
+```
+public class SynonymFilter extends TokenFilter{  
+publicstatic final String TOKEN\_TYPE\_SYNONYM="SYNONYM";  
+privateStack synonymStack;  
+privateSynonynEngine engine;  
+publicSynonymFilter(TokenStream in,SynonymEngine engine){  
+super(in);  
+synonymStack=new Stack();//缓存同义词  
+this.engine=engine;  
+}  
+publicTOken next() throws IOException{  
+if (synonymStack.size()>0){//如何还有当前词的同义词没有输出,则输出  
+return (Token) synonymStack.pop();  
+}  
+Token token=input.next();//读取新词  
+if (token==null) {  
+return null;  
+}  
+addAliasesToStack(token);//存储新词的同义词  
+returntoken;  
+}  
+private voidaddAliasesToStack(Token token) throws IOException{  
+String\[] synonyms=engine.getSynonyms(token.termText());  
+if (synonyms==mull) return;  
+for (int i=0;i<synonyms.length;i++){  
+Token synToken=newToken(synonyms\[i\],token.startOffset(),token.endOffset(),TOKEN\_TYPE\_SYNONYM);  
+synToken.setPositionIncrement(0);  
+synonymStack.push(synToken);  
+}  
+}
+```
+以下这个接口是关键,可以自由实现,目的是返回s的同义词数组\
+```
+public interface SynonymEngine{  
+String[] getSynonyms(String s) throws IOException;  
+} 
+``` 
+[/code\]对于这个接口要小心使用,在查询时不必列出所有的同义词,如下例\[code\]Query query=QueryParser.parse("\\"foxjumps\\"","content",synonymAnalyzer);  
+Hits hits=searcher.search(query);[/code\]是会出错的,找不到任何结果,因为QueryParser不会区别位置增量,所以位置增量为0这一个表明同义的特征无法体现,会将"foxjumps"直接加上同义词解释为"fox jumps hops leaps"**  
+**[https://stackoverrun.com/cn/q/4705011](https://stackoverrun.com/cn/q/4705011)**
+我想弄清楚lucene的分析仪是如何工作的？ 我的问题是，lucene如何处理同义词？这里的情况是： 我们有一个词和多词
+单：富=酒吧 多的话：富巴= foobar的
+对于单个的词：
+*   是否Lucene的扩大索引记录或不？我猜如果一个查询有一个像“foo”这样的词，它也会在查询中添加“bar”。我不知道是否索引或不索引？
+对于多话：
+*   是否Lucene的扩大查询和索引？例如，如果我们有“富吧”，它是否将foobar添加到索引/查询？
+我的第二个问题是：Lucene使用一个标记流并将它们提供给小写过滤器之类的过滤器。我的问题是lucene如何找到多词？比如它是如何发现“foo bar”是一个多词的？
+[SynonymFilter](http://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/synonym/SynonymFilter.html)可任选，保持原有的单词，并添加同义词到的TokenStream中，通过设置`keepOrig`\=真（见[SynonymMap.Builder.add()](http://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/synonym/SynonymMap.Builder.html#add%28org.apache.lucene.util.CharsRef,%20org.apache.lucene.util.CharsRef,%20boolean%29)）。此行为可能会导致PhraseQueries等问题，请参阅`SynonymFilter`文档中的第注意事项。
+如果您使用相同的`Analyzer`进行查询和编制索引，那么写入索引的查询和文档当然都会以同样的方式处理。`SynonymFilter`与`keepOrig`设置为true是少数几个`Analyzers`之一，经常在查询和索引之间不合时宜地应用，但这完全取决于您的实现。
+至于如何实施，[source code](http://grepcode.com/file/repo1.maven.org/maven2/org.apache.lucene/lucene-analyzers-common/4.0.0/org/apache/lucene/analysis/synonym/SynonymFilter.java)可供您使用。
+[来源](https://stackoverflow.com/q/17283519)[分享](https://stackoverrun.com/cn/q/4705011#17283519)
+创建24 6月. 13[femtoRgon](https://stackoverflow.com/users/1628375/)
+0
+它是如何处理多个同义词的？像“纽约”=“纽约” 沃尔玛=沃尔玛=沃尔玛 ，因为它通过令牌执行过滤令牌。我不知道它是如何找到多个单词的同义词–[Mr.Boy](https://stackoverflow.com/users/2506210/)24 6月. 13
+0
+有没有你对它的行为感到困惑，或者你想知道实现如何处理令牌流？如果是后者，那就是为什么我提供了链接到源代码的原因。如果前者贪婪地搜索最长匹配，它可以从给定的位置（也就是说，如果你有规则'foo' - >'bar'，'foo bar' - >'foobar'，那么'foo bar'会变成'foobar'，而不是'bar bar'）。我不相信它支持'wal mart = wal-mart = walmart'这样的东西（同义词规则有一个输入和一个输出）。如果有什么特别的要问的话，继续。–[femtoRgon](https://stackoverflow.com/users/1628375/)24 6月. 13
+0
+我的问题是它如何处理令牌流？因为我猜同义词过滤器一个接一个地得到令牌，而且它是无状态的。例如，如果当前令牌为“新”，它如何检查下一个令牌以查看它是否是“约克”？
+链接:[Lucene 同义词](https://bbs.huaweicloud.com/blogs/c0af1882fee711e8bd5a7ca23e93a891)

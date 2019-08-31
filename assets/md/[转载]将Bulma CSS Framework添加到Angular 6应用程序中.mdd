@@ -1,0 +1,84 @@
+原文:  
+[https://medium.com/@edigleyssonsilva/adding-bulma-css-framework-to-your-angular-6-app-8e0b28ac2cf5](https://medium.com/@edigleyssonsilva/adding-bulma-css-framework-to-your-angular-6-app-8e0b28ac2cf5)
+作者:
+[Edigleysson Silva](https://medium.com/@edigleyssonsilva?source=post_header_lockup)
+Bulma是一个基于flexbox的CSS框架，受到Bootstrap的启发。它有常见的组件，如按钮，表单，导航栏等。此外，CSS Bulma具有简单且可用的网格系统，可动态地进行多种配置。
+在Bulma中，一切都是CSS。没错，只有CSS！有关Bulma的更多信息，请参阅[https://bulma.io](https://bulma.io/)
+嗯，这是关于布尔玛的简要介绍。现在让我们按照这篇文章的目的。所以让我们创建一个角度应用程序并添加CSS bulma。
+#### 第1步：角度设置
+为此，您必须安装Node.js.因此，请运行以下命令。
+npm install -g @ angular / cli @ latest
+之后，您可以通过运行以下方法检查安装版本：
+ng --version
+您将看到类似于此的输出：
+Angular CLI：6.0.8 
+节点：9.11.1 
+操作系统：linux x64 
+Angular：6.1.10 
+...动画，通用，编译器，编译器 -  cli，核心，表单
+... http，语言服务，平台浏览器
+..平台浏览器动态，路由器
+包版本
+------------------------------------------------ ----------- 
+ -devkit / architect 0.6.8 
+ -devkit / build-angular 0.6.8 
+ -devkit / build-optimizer 0.6.8 
+ -devkit / core 0.6。 8 
+ -devkit / schematics 0.6.8 
+                       6.0.8 
+                   6.0.8 
+                0.6.8 
+                 0.6.8 
+rxjs 6.3.3 typescript 
+2.7.2
+webpack 4.8.3
+所以，evereything工作！现在，要创建您的应用程序，您需要运行ng new：
+新的角度膨胀
+完成后，您可以看到angular-bulma目录。转移到它。在目录中，您可以运行应用程序以通过运行来查看它是否正常工作：
+cd angular-bulma＃moving 
+ng serve -o＃serving
+该命令的结果是：
+![1_q1TSYWJZC2SaOssUYyFWGg.png](https://bbs-img.huaweicloud.com/blogs/img/1545627080522984.png "1545627080522984.png")
+Image 01 - Angular app运行
+#### 第2步：安装Bulma CSS
+使用角度应用程序，您已经可以将Bulma添加到您的应用程序中。为此，您需要通过运行来安装它：
+npm install --save bulma
+现在安装了Bulma，但它仍然无法正常工作。让我们进入下一步，这样我们就可以将它导入到我们的项目中。
+#### 第3步：导入angular.json
+最后要做的是将bulma.min.css文件添加到angular.json中。您可以在项目的根目录中找到angular.json文件。
+打开此文件，您会看到有人喜欢
+```
+“projects”：{ 
+    “angular-bulma”：{ 
+      “root”：“”，
+      “sourceRoot”：“src”，
+      ... 
+      “schematics”：{}，
+      “architect”：{ 
+        “build”：{ 
+          “builder” ：“  -devkit / build-angular：browser”，
+          “options”：{ 
+            “outputPath”：“dist / angular-bulma”，
+            ... 
+            “tsConfig”：“src / tsconfig.app.json”，
+            “assets “：[ 
+              ”src / favicon.ico“，
+              ”src / assets“ 
+            ]，
+            “styles”：[ 
+              “src / styles.css” 
+            ]，
+```
+因此，在项目> angular-bulma> architect> build中，您可以找到样式数组。使用bulma.min.css的路径向其添加新项目。
+... 
+“styles”：[ 
+     “src / styles.css” 
+]，
+...
+现在我们已经完成了。使用ng服务再次执行app，你会看到这样的人。
+![1_RBlaaMnckJApMdbglTlGXQ.png](https://bbs-img.huaweicloud.com/blogs/img/1545627068654886.png "1545627068654886.png")
+Image 02 - 使用Bulma风格运行的Angular应用程序
+你可以看到Bulma工作。比较两个图像，看看差异。
+现在，您可以在应用中使用Bulma Componentes。
+拜拜！
+链接:[[转载]将Bulma CSS Framework添加到Angular 6应用程序中](https://bbs.huaweicloud.com/blogs/96b18704073711e9bd5a7ca23e93a891)

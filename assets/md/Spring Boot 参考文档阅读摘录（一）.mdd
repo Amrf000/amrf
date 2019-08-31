@@ -1,0 +1,658 @@
+原文地址：[https://docs.spring.io/spring-boot/docs/current/reference/html/](https://docs.spring.io/spring-boot/docs/current/reference/html/)
+
+部分章节摘录：  
+
+==========
+
+8.介绍Spring Boot
+---------------
+
+Spring Boot可以轻松创建可以运行的独立的，生产级的基于Spring的应用程序。我们对Spring平台和第三方库进行了一种自以为是的观点，这样您就可以轻松上手了。大多数Spring Boot应用程序只需要很少的Spring配置。
+
+您可以使用Spring Boot创建可以使用java -jar或更传统的war部署启动的Java应用程序 。我们还提供了一个运行“spring脚本”的命令行工具。
+
+我们的主要目标是：
+
+为所有Spring开发提供从根本上更快且可广泛访问的入门体验。
+
+开箱即用，但随着需求开始偏离默认值而迅速摆脱困境。
+
+提供大型项目（例如嵌入式服务器，安全性，度量标准，运行状况检查和外部化配置）通用的一系列非功能性功能。
+
+绝对没有代码生成，也不需要XML配置。
+
+10.1.1 Maven安装
+--------------
+
+Spring Boot与Apache Maven 3.3或更高版本兼容。如果您还没有安装Maven，可以按照maven.apache.org上的说明进行操作。
+
+以下清单显示了一个典型pom.xml文件：
+
+<？xml version =“1.0”encoding =“UTF-8”？> 
+<project  xmlns = “http://maven.apache.org/POM/4.0.0”  xmlns：xsi = “http：//www.w3 .org / 2001 / XMLSchema-instance“ 
+xsi：schemaLocation = ”http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd“ > 
+<modelVersion> 4.0.0 </ modelVersion>
+<groupId> com.example </ groupId> 
+<artifactId> myproject </ artifactId> 
+<version> 0.0.1-SNAPSHOT </ version>
+<！ - 继承默认值为Spring Boot  - > 
+<parent> 
+<groupId> org.springframework.boot </ groupId> 
+<artifactId> spring-boot-starter-parent </ artifactId> 
+<version> 2.1.0.RELEASE < / version> 
+</ parent>
+<！ - 添加Web应用程序的典型依赖项 - > 
+<dependencies> 
+<dependency> 
+<groupId> org.springframework.boot </ groupId> 
+<artifactId> spring-boot-starter-web </ artifactId> 
+</ dependency> 
+</依赖>
+<！ - 作为可执行jar的包 - > 
+<build> 
+<plugins> 
+<plugin> 
+<groupId> org.springframework.boot </ groupId> 
+<artifactId> spring-boot-maven-plugin </ artifactId> 
+</ plugin > 
+</ plugins> 
+</ build>
+</project>
+
+11.开发您的第一个Spring Boot应用程序
+-------------------------
+
+本节介绍如何开发一个简单的“Hello World！”Web应用程序，该应用程序突出了Spring Boot的一些主要功能。我们使用Maven来构建这个项目，因为大多数IDE都支持它。
+
+### 11.1创建POM
+
+我们需要从创建Maven pom.xml文件开始。本pom.xml是用来构建项目的配方。打开您喜欢的文本编辑器并添加以下内容：
+
+<？xml version =“1.0”encoding =“UTF-8”？> 
+<project  xmlns = “http://maven.apache.org/POM/4.0.0”  xmlns：xsi = “http：//www.w3 .org / 2001 / XMLSchema-instance“ 
+xsi：schemaLocation = ”http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd“ > 
+<modelVersion> 4.0.0 </ modelVersion>
+<groupId> com.example </ groupId> 
+<artifactId> myproject </ artifactId> 
+<version> 0.0.1-SNAPSHOT </ version>
+<parent> 
+<groupId> org.springframework.boot </ groupId> 
+<artifactId> spring-boot-starter-parent </ artifactId> 
+<version> 2.1.0.RELEASE </ version> 
+</ parent>
+<！ - 这里要添加的其他行......  - >
+</project>
+
+上面的清单应该为您提供有效的构建。您可以通过运行来测试它mvn package（现在，您可以忽略“jar将为空 - 没有内容标记为包含！”警告）。
+
+### 11.2添加类路径依赖关系
+
+Spring Boot提供了许多“Starters”，可以将jar添加到类路径中。我们的示例应用程序已经spring-boot-starter-parent在parent POM部分中使用过。这spring-boot-starter-parent是一个特殊的启动器，提供有用的Maven默认值。它还提供了一个 dependency-management 部分，以便您可以省略version“祝福”依赖项的标记。
+
+其他“Starters”提供了在开发特定类型的应用程序时可能需要的依赖项。由于我们正在开发Web应用程序，因此我们添加了 spring-boot-starter-web依赖项。在此之前，我们可以通过运行以下命令来查看当前的内容：
+
+$ mvn依赖：树
+
+\[INFO\] com.example：myproject：jar：0.0.1-SNAPSHOT
+
+该mvn dependency:tree命令打印项目依赖项的树表示。您可以看到它spring-boot-starter-parent本身不提供依赖关系。要添加必要的依赖项，请编辑pom.xml并spring-boot-starter-web在该parent部分的正下方添加 依赖项：
+
+<dependencies> 
+<dependency> 
+<groupId> org.springframework.boot </ groupId> 
+<artifactId> spring-boot-starter-web </ artifactId> 
+</ dependency> 
+</ dependencies>
+
+如果mvn dependency:tree再次运行，您会发现现在有许多其他依赖项，包括Tomcat Web服务器和Spring Boot本身。
+
+### 11.3编写代码
+
+要完成我们的应用程序，我们需要创建一个Java文件。默认情况下，Maven编译源代码src/main/java，因此您需要创建该文件夹结构，然后添加一个名为src/main/java/Example.java包含以下代码的文件：
+
+import org.springframework.boot.\*;
+import org.springframework.boot.autoconfigure.\*;
+import org.springframework.web.bind.annotation.\*;
+@RestController
+@EnableAutoConfiguration
+public class Example {
+@RequestMapping("/")
+String home() {
+return "Hello World!";
+}
+public static void main(String\[] args) throws Exception {
+SpringApplication.run(Example.class, args);
+}
+}
+
+虽然这里的代码不多，但还是有很多代码。我们将在接下来的几节中逐步介绍重要部分。
+
+**11.3.1 @RestController和@RequestMapping注释**
+
+我们Example班上的第一个注释是@RestController。这被称为 构造型注释。它为阅读代码的人提供了提示，而对于Spring来说，该类扮演着特定的角色。在这种情况下，我们的类是一个Web @Controller，因此Spring在处理传入的Web请求时会考虑它。
+
+该@RequestMapping注释提供“路由”的信息。它告诉Spring，任何带/路径的HTTP请求都应该映射到该home方法。该 @RestController注解告诉Spring使得到的字符串直接返回给调用者。
+
+\[注\]
+
+在@RestController与@RequestMapping注解是Spring MVC的注解。（它们不是特定于Spring Boot的。）有关更多详细信息，请参阅Spring参考文档中的MVC部分。
+
+**11.3.2 @EnableAutoConfiguration注释**
+
+第二个类级注释是@EnableAutoConfiguration。这个注释告诉Spring Boot根据你添加的jar依赖关系“猜测”你想要如何配置Spring。自从spring-boot-starter-web添加了Tomcat和Spring MVC 以来，自动配置假定您正在开发Web应用程序并相应地设置Spring。
+
+启动器和自动配置
+
+自动配置旨在与“启动器”配合使用，但这两个概念并不直接相关。您可以自由选择并在首发之外选择jar依赖项。Spring Boot仍然尽力自动配置您的应用程序。
+
+**11.3.3“main”方法**
+
+我们的应用程序的最后一部分是main方法。这只是遵循应用程序入口点的Java约定的标准方法。我们的main方法SpringApplication通过调用委托给Spring Boot的类run。 SpringApplication引导我们的应用程序，启动Spring，然后启动自动配置的Tomcat Web服务器。我们需要Example.class作为参数传递给run方法，以告诉SpringApplication哪个是主要的Spring组件。该 args数组也被传递以公开任何命令行参数。
+
+### 11.4运行示例
+
+此时，您的应用程序应该可以工作。由于您使用了 spring-boot-starter-parentPOM，run因此您可以使用一个有用的目标来启动应用程序。mvn spring-boot:run从根项目目录中键入以启动应用程序。您应该看到类似于以下内容的输出：
+
+$ mvn spring-boot：run
+
+如果您打开Web浏览器localhost:8080，您应该看到以下输出：
+
+你好，世界！
+
+13.5启动器
+-------
+
+启动器是一组方便的依赖关系描述符，您可以将其包含在应用程序中。您可以获得所需的所有Spring和相关技术的一站式服务，而无需查看示例代码和复制粘贴依赖描述符的负载。例如，如果要开始使用Spring和JPA进行数据库访问，请spring-boot-starter-data-jpa在项目中包含依赖项。
+
+启动器包含许多依赖项，这些依赖项是使项目快速启动和运行所需的依赖项，以及一组受支持的托管传递依赖项。
+
+名称是什么
+
+所有官方首发都遵循类似的命名模式; spring-boot-starter-\*，哪里\*是特定类型的应用程序。此命名结构旨在帮助您找到启动器。许多IDE中的Maven集成允许您按名称搜索依赖项。例如，安装了适当的Eclipse或STS插件后，您可以按下ctrl-spacePOM编辑器并输入“spring-boot-starter”以获取完整列表。
+
+正如“ 创建自己的启动器 ”一节中所述，第三方启动者不应该开头spring-boot，因为它是为官方Spring Boot工件保留的。相反，第三方启动器通常以项目名称开头。例如，thirdpartyproject通常会命名一个名为的第三方启动项目 thirdpartyproject-spring-boot-starter。
+
+以下应用程序启动程序由Spring Boot在org.springframework.boot组下提供 ：
+
+**Table13.1.Spring Boot application starters**
+
+Name
+
+Description
+
+Pom
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter)`spring-boot-starter`
+
+Core starter, including auto-configuration support, logging and YAML
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-activemq)`spring-boot-starter-activemq`
+
+Starter for JMS messaging using Apache ActiveMQ
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-activemq/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-amqp)`spring-boot-starter-amqp`
+
+Starter for using Spring AMQP and Rabbit MQ
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-amqp/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-aop)`spring-boot-starter-aop`
+
+Starter for aspect-oriented programming with Spring AOP and AspectJ
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-aop/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-artemis)`spring-boot-starter-artemis`
+
+Starter for JMS messaging using Apache Artemis
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-artemis/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-batch)`spring-boot-starter-batch`
+
+Starter for using Spring Batch
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-batch/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-cache)`spring-boot-starter-cache`
+
+Starter for using Spring Framework’s caching support
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-cache/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-cloud-connectors)`spring-boot-starter-cloud-connectors`
+
+Starter for using Spring Cloud Connectors which simplifies connecting to services in cloud platforms like Cloud Foundry and Heroku
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-cloud-connectors/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-cassandra)`spring-boot-starter-data-cassandra`
+
+Starter for using Cassandra distributed database and Spring Data Cassandra
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-cassandra/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-cassandra-reactive)`spring-boot-starter-data-cassandra-reactive`
+
+Starter for using Cassandra distributed database and Spring Data Cassandra Reactive
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-cassandra-reactive/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-couchbase)`spring-boot-starter-data-couchbase`
+
+Starter for using Couchbase document-oriented database and Spring Data Couchbase
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-couchbase/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-couchbase-reactive)`spring-boot-starter-data-couchbase-reactive`
+
+Starter for using Couchbase document-oriented database and Spring Data Couchbase Reactive
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-couchbase-reactive/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-elasticsearch)`spring-boot-starter-data-elasticsearch`
+
+Starter for using Elasticsearch search and analytics engine and Spring Data Elasticsearch
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-elasticsearch/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-jdbc)`spring-boot-starter-data-jdbc`
+
+Starter for using Spring Data JDBC
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-jdbc/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-jpa)`spring-boot-starter-data-jpa`
+
+Starter for using Spring Data JPA with Hibernate
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-jpa/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-ldap)`spring-boot-starter-data-ldap`
+
+Starter for using Spring Data LDAP
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-ldap/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-mongodb)`spring-boot-starter-data-mongodb`
+
+Starter for using MongoDB document-oriented database and Spring Data MongoDB
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-mongodb/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-mongodb-reactive)`spring-boot-starter-data-mongodb-reactive`
+
+Starter for using MongoDB document-oriented database and Spring Data MongoDB Reactive
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-mongodb-reactive/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-neo4j)`spring-boot-starter-data-neo4j`
+
+Starter for using Neo4j graph database and Spring Data Neo4j
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-neo4j/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-redis)`spring-boot-starter-data-redis`
+
+Starter for using Redis key-value data store with Spring Data Redis and the Lettuce client
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-redis/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-redis-reactive)`spring-boot-starter-data-redis-reactive`
+
+Starter for using Redis key-value data store with Spring Data Redis reactive and the Lettuce client
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-redis-reactive/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-rest)`spring-boot-starter-data-rest`
+
+Starter for exposing Spring Data repositories over REST using Spring Data REST
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-rest/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-solr)`spring-boot-starter-data-solr`
+
+Starter for using the Apache Solr search platform with Spring Data Solr
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-data-solr/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-freemarker)`spring-boot-starter-freemarker`
+
+Starter for building MVC web applications using FreeMarker views
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-freemarker/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-groovy-templates)`spring-boot-starter-groovy-templates`
+
+Starter for building MVC web applications using Groovy Templates views
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-groovy-templates/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-hateoas)`spring-boot-starter-hateoas`
+
+Starter for building hypermedia-based RESTful web application with Spring MVC and Spring HATEOAS
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-hateoas/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-integration)`spring-boot-starter-integration`
+
+Starter for using Spring Integration
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-integration/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jdbc)`spring-boot-starter-jdbc`
+
+Starter for using JDBC with the HikariCP connection pool
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jdbc/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jersey)`spring-boot-starter-jersey`
+
+Starter for building RESTful web applications using JAX-RS and Jersey. An alternative to[`spring-boot-starter-web`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-web)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jersey/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jooq)`spring-boot-starter-jooq`
+
+Starter for using jOOQ to access SQL databases. An alternative to[`spring-boot-starter-data-jpa`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-data-jpa)or[`spring-boot-starter-jdbc`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jdbc)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jooq/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-json)`spring-boot-starter-json`
+
+Starter for reading and writing json
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-json/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jta-atomikos)`spring-boot-starter-jta-atomikos`
+
+Starter for JTA transactions using Atomikos
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jta-atomikos/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jta-bitronix)`spring-boot-starter-jta-bitronix`
+
+Starter for JTA transactions using Bitronix
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jta-bitronix/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-mail)`spring-boot-starter-mail`
+
+Starter for using Java Mail and Spring Framework’s email sending support
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-mail/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-mustache)`spring-boot-starter-mustache`
+
+Starter for building web applications using Mustache views
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-mustache/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-oauth2-client)`spring-boot-starter-oauth2-client`
+
+Starter for using Spring Security’s OAuth2/OpenID Connect client features
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-oauth2-client/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-oauth2-resource-server)`spring-boot-starter-oauth2-resource-server`
+
+Starter for using Spring Security’s OAuth2 resource server features
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-oauth2-resource-server/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-quartz)`spring-boot-starter-quartz`
+
+Starter for using the Quartz scheduler
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-quartz/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-security)`spring-boot-starter-security`
+
+Starter for using Spring Security
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-security/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-test)`spring-boot-starter-test`
+
+Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-test/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-thymeleaf)`spring-boot-starter-thymeleaf`
+
+Starter for building MVC web applications using Thymeleaf views
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-thymeleaf/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-validation)`spring-boot-starter-validation`
+
+Starter for using Java Bean Validation with Hibernate Validator
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-validation/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-web)`spring-boot-starter-web`
+
+Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-web/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-web-services)`spring-boot-starter-web-services`
+
+Starter for using Spring Web Services
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-web-services/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-webflux)`spring-boot-starter-webflux`
+
+Starter for building WebFlux applications using Spring Framework’s Reactive Web support
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-webflux/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-websocket)`spring-boot-starter-websocket`
+
+Starter for building WebSocket applications using Spring Framework’s WebSocket support
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-websocket/pom.xml)
+
+In addition to the application starters, the following starters can be used to add_[production ready](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready.html "PartV.Spring Boot Actuator: Production-ready features")_features:
+
+**Table13.2.Spring Boot production starters**
+
+Name
+
+Description
+
+Pom
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-actuator)`spring-boot-starter-actuator`
+
+Starter for using Spring Boot’s Actuator which provides production ready features to help you monitor and manage your application
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-actuator/pom.xml)
+
+Finally, Spring Boot also includes the following starters that can be used if you want to exclude or swap specific technical facets:
+
+**Table13.3.Spring Boot technical starters**
+
+Name
+
+Description
+
+Pom
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-jetty)`spring-boot-starter-jetty`
+
+Starter for using Jetty as the embedded servlet container. An alternative to[`spring-boot-starter-tomcat`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-tomcat)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-jetty/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-log4j2)`spring-boot-starter-log4j2`
+
+Starter for using Log4j2 for logging. An alternative to[`spring-boot-starter-logging`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-logging)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-log4j2/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-logging)`spring-boot-starter-logging`
+
+Starter for logging using Logback. Default logging starter
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-logging/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-reactor-netty)`spring-boot-starter-reactor-netty`
+
+Starter for using Reactor Netty as the embedded reactive HTTP server.
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-reactor-netty/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-tomcat)`spring-boot-starter-tomcat`
+
+Starter for using Tomcat as the embedded servlet container. Default servlet container starter used by[`spring-boot-starter-web`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-web)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-tomcat/pom.xml)
+
+[](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-undertow)`spring-boot-starter-undertow`
+
+Starter for using Undertow as the embedded servlet container. An alternative to[`spring-boot-starter-tomcat`](https://docs.spring.io/spring-boot/docs/current/reference/html/using-boot-build-systems.html#spring-boot-starter-tomcat)
+
+[Pom](https://github.com/spring-projects/spring-boot/tree/v2.1.0.RELEASE/spring-boot-project/spring-boot-starters/spring-boot-starter-undertow/pom.xml)
+
+  
+15.配置类
+---------
+
+Spring Boot支持基于Java的配置。尽管可以使用 SpringApplicationXML源，但我们通常建议您的主要源是单个@Configuration类。通常，定义main方法的类是主要的候选者@Configuration。
+
+\[注\]
+
+许多Spring配置示例已在Internet上发布，使用XML配置。如果可能，请始终尝试使用等效的基于Java的配置。搜索Enable\*注释可能是一个很好的起点。
+
+### 15.1导入其他配置类
+
+你不需要把所有的@Configuration东西都放在一个班级里。所述@Import注释可以用于导入额外的配置类。或者，您可以使用 @ComponentScan自动获取所有Spring组件，包括 @Configuration类。
+
+### 15.2导入XML配置
+
+如果您绝对必须使用基于XML的配置，我们建议您仍然从一个@Configuration类开始。然后，您可以使用@ImportResource注释来加载XML配置文件。
+
+16.自动配置
+-------
+
+Spring Boot自动配置尝试根据您添加的jar依赖项自动配置Spring应用程序。例如，如果HSQLDB 在您的类路径中，并且您尚未手动配置任何数据库连接bean，则Spring Boot会自动配置内存数据库。
+
+您需要通过向其中一个类添加@EnableAutoConfiguration或 @SpringBootApplication注释来选择自动配置@Configuration。
+
+\[注\]
+
+您应该只添加一个@SpringBootApplication或@EnableAutoConfiguration 注释。我们通常建议您仅将一个或另一个添加到主 @Configuration类中。
+
+### 16.1逐步更换自动配置
+
+自动配置是非侵入性的。在任何时候，您都可以开始定义自己的配置以替换自动配置的特定部分。例如，如果添加自己的DataSourcebean，则默认的嵌入式数据库支持会退回。
+
+如果您需要了解当前正在应用的自动配置以及原因，请使用--debug交换机启动应用程序。这样做可以为选择的核心记录器启用调试日志，并将条件报告记录到控制台。
+
+### 16.2禁用特定的自动配置类
+
+如果发现正在应用您不需要的特定自动配置类，则可以使用exclude属性@EnableAutoConfiguration禁用它们，如以下示例所示：
+
+import org.springframework.boot.autoconfigure。\*;
+import org.springframework.boot.autoconfigure.jdbc。\*;
+import org.springframework.context.annotation。\*;
+@Configuration 
+@EnableAutoConfiguration（exclude = {DataSourceAutoConfiguration.class}）
+ public  class MyConfiguration {
+}
+
+如果类不在类路径上，则可以使用excludeName注释的属性并指定完全限定名称。最后，您还可以使用该spring.autoconfigure.exclude属性控制要排除的自动配置类列表 。
+
+\[注\]
+
+您可以在注释级别和使用属性定义排除项。
+
+17\. Spring Beans和依赖注入
+----------------------
+
+您可以自由地使用任何标准的Spring Framework技术来定义bean及其注入的依赖项。为简单起见，我们经常发现使用 @ComponentScan（找到你的bean）和使用@Autowired（做构造函数注入）效果很好。
+
+如果按照上面的建议构建代码（在根包中定位应用程序类），则可以添加@ComponentScan不带任何参数的代码。您的所有应用程序组件（的@Component，@Service，@Repository，@Controller等）自动注册为豆。
+
+以下示例显示了一个@Service使用构造函数注入来获取所需RiskAssessorbean的Bean：
+
+package com.example.service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+@Service
+ public  class DatabaseAccountService实现 AccountService {
+private final RiskAssessor riskAssessor;
+@Autowired
+ public DatabaseAccountService（RiskAssessor riskAssessor）{
+ this .riskAssessor = riskAssessor;
+}
+// ...
+}
+
+如果bean有一个构造函数，则可以省略@Autowired，如下例所示：
+
+@Service
+ public  class DatabaseAccountService实现 AccountService {
+private final RiskAssessor riskAssessor;
+public DatabaseAccountService（RiskAssessor riskAssessor）{
+ this .riskAssessor = riskAssessor;
+}
+// ...
+}
+
+\[注\]
+
+请注意使用构造函数注入如何将riskAssessor字段标记为 final，表示无法随后更改。
+
+18.使用@SpringBootApplication Annotation
+
+许多Spring Boot开发人员喜欢他们的应用程序使用自动配置，组件扫描，并能够在他们的“应用程序类”上定义额外的配置。@SpringBootApplication可以使用单个 注释来启用这三个功能，即：
+
+@EnableAutoConfiguration：启用Spring Boot的自动配置机制
+
+@ComponentScan：@Component在应用程序所在的程序包上启用扫描（请参阅最佳做法）
+
+@Configuration：允许在上下文中注册额外的bean或导入其他配置类
+
+的@SpringBootApplication注释是相当于使用@Configuration， @EnableAutoConfiguration以及@ComponentScan与他们的默认属性，如显示在下面的例子：
+
+package com.example.myapplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+@SpringBootApplication  //与@Configuration@EnableAutoConfiguration @ComponentScan 同
+public  class Application {
+public  static  void main（String [] args）{
+SpringApplication.run（Application .class，args）;
+}
+}
+
+\[注\]
+
+@SpringBootApplication还提供了别名定制的属性 @EnableAutoConfiguration和@ComponentScan。
+
+\[注\]
+
+这些功能都不是必需的，您可以选择通过它启用的任何功能替换此单个注释。例如，您可能不希望在应用程序中使用组件扫描：
+
+package com.example.myapplication;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+@Configuration 
+@EnableAutoConfiguration @Import 
+（{MyConfig.class，MyAnotherConfig.class}）
+ public  class Application {
+public  static  void main（String [] args）{
+SpringApplication.run（Application .class，args）;
+}
+}
+
+在此示例中，Application与任何其他Spring Boot应用程序一样，除了 @Component未自动检测到注释类并且显式导入用户定义的bean（请参阅参考资料@Import）。
+链接:[Spring Boot 参考文档阅读摘录（一）](https://bbs.huaweicloud.com/blogs/fd969a30e7b211e8bd5a7ca23e93a891)

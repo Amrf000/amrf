@@ -1,0 +1,368 @@
+原文：[https://www.bossable.com/1745/angularjs-material-design-contact-form/](https://www.bossable.com/1745/angularjs-material-design-contact-form/)
+如果您要创建我在视频中使用的相同应用，请参阅此系列中之前视频的列表：
+到目前为止的系列：
+---------
+1.  [设置MEAN.js 0.4.0](https://www.bossable.com/1180/install-mean-js-040/ "安装MEAN.js 0.4.0并使用Gulp运行")
+2.  [将MongoDB添加到您的应用程序](https://www.bossable.com/1153/mongodb-compose/ "使用Compose.io设置一个免费的MongoDB数据库")
+3.  [将Angular-Material添加到您的应用中](https://www.bossable.com/1231/material-design-meanjs/ "MEAN堆栈中的AngularJS材料设计")
+4.  [创建AngularJS材料入门应用程序](https://www.bossable.com/1263/meanjs-angular-material-starter-app/)
+5.  [AngularJS材料设计工具栏示例](https://www.bossable.com/1338/angular-material-design-toolbar-examples/)
+我们将从[AngularJS Material Design Toolbar提示和技巧](https://www.bossable.com/1338/angular-material-design-toolbar-examples/ "AngularJS材料设计工具栏提示和技巧")教程示例的末尾选择此视频。在那篇[文章中，](https://www.bossable.com/1338/angular-material-design-toolbar-examples/ "AngularJS材料设计工具栏提示和技巧")我们研究了使用[AngularJS Material Design](https://material.angularjs.org/#/)创建不同类型的工具栏（以及其他内容）。
+它看起来像这样：
+![标签-1](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-1-600x408.jpg)  
+（这里的口音已改为黄色）
+该[AngularJS材料设计](https://material.angularjs.org/#/)团队已经提到，选项卡已大量在即将到来的版本重新分解。因此，我们将对其进行测试，并与其他一些Material Design指令进行比较。  
+本教程中的代码基于0.8.x，并将在0.9发布时进行更新。
+以下是视频和此帖的简短概述：
+当我们这样做
+它看起来像这样
+当我们选择一个Tab时，内容区域应该使用[Angular ui-router进行](http://angular-ui.github.io/ui-router/site/#/api/ui.router)更改[](http://angular-ui.github.io/ui-router/site/#/api/ui.router)
+![标签-3-首页](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-3-Home-300x168.jpg)
+刷新页面时，应突出显示视图的相关选项卡
+![标签-4-联系](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-4-Contact-300x91.jpg)
+在表2中，我们将添加一个Material Design表单
+![标签-10-联系-MD-按钮](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-10-Contact-md-button-300x153.jpg)
+最后，我们将在提交新表单时显示Toast
+![标签-11-联系-MD-吐司](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-11-Contact-md-toast-300x214.jpg)
+选择选项卡时，让我们更改主要内容区域
+------------------
+要使Tabs实际“工作”，您可以将选项卡的内容放在选项卡标记中，如下所示：
+`<``md-tabs``>`
+`<``md-tab` `label``=``"one"``>`
+`<``md-content``>`
+`<``p``>This is the First Tab</``p``>`
+`</``md-content``>`
+`</``md-tab``>`
+`<``md-tab` `label``=``"two"``>`
+`<``md-content``>`
+`<``p``>This is the Second Tab</``p``>`
+`</``md-content``>`
+`</``md-tab``>`
+`</``md-tabs``>`
+看起来熟悉？这是[AngularJS Material Design](https://material.angularjs.org/#/)网站提升和简化的一个例子。这是一个很好的例子，但是当标签的内容位于单独的模板文件中时（因为它们确实应该是！）它没有用。
+还有其他方法可以使用AngularJS Material Design选项卡。
+当选择Tab时，我们将使用[Angular ui-router](http://angular-ui.github.io/ui-router/site/#/api/ui.router)来显示不同的模板（html视图），而不是将内容放在md-tabs中。
+为什么？  
+因为，标签位于header.client.view中，但我的内容不是。  
+### 这是header.client.view：
+当屏幕尺寸大于小（移动设备尺寸小）时，隐藏汉堡菜单。  
+![标签-2-标题](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-2-heading-600x75.jpg)
+`<``div` `data-ng-controller``=``"HeaderController"` `flex>`
+`<``md-toolbar` `layout``=``"row"` `layout-align``=``"center end"`
+`class``=``"md-tall"`
+`data-ng-controller``=``"HomeController as ul"``>`
+`<``div` `flex``flex-sm``=``"100"` `flex-gt-sm``=``"95"`
+`flex-gt-md``=``"80"` `layout``=``"column"``>`
+`<``span` `layout``=``"row"``>`
+`<``md-button` `class``=``"menu"` `hide-gt-sm`
+`ng-click``=``"ul.toggleList()"`
+`aria-label``=``"Show User List"``>`
+`<``md-icon` `md-svg-icon``=``"menu"` `></``md-icon``>`
+`</``md-button``>`
+`<``h2``> The Heading </``h2``>`
+`</``span``>`
+`<``span` `flex></``span``>`
+`<``md-tabs` `md-stretch-tabs``=``"always"`
+`class``=``"md-primary md-hue-2"``>`
+`<``md-tab``>`
+`<``md-tab-label``> Tab 1</``md-tab-label``>`
+`</``md-tab``>`
+`<``md-tab``>`
+`<``md-tab-label``> Tab 2</``md-tab-label``>`
+`</``md-tab``>`
+`</``md-tabs``>`
+`</``div``>`
+`</``md-toolbar``>`
+`</``div``>`
+### 第一个标签
+当选择第一个选项卡（选项卡1）时，我希望显示包含头像列表的现有主页。
+### 这是home.client.view：
+当屏幕尺寸大于小（移动设备尺寸小）时，会显示侧边栏。
+![标签-3-首页](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-3-Home-600x336.jpg)
+`<``div` `flex``layout``=``"row"` `data-ng-controller``=``"HomeController as ul"``>`
+ 
+`<!-- Container #3 -->`
+`<``md-sidenav` `md-is-locked-open``=``"$mdMedia('gt-sm')"`
+`md-component-id``=``"left"` `class``=``"md-whiteframe-z2"``>`
+`<``md-list``>`
+`<``md-list-item` `ng-repeat``=``"it in ul.users"``>`
+`<``md-button` `ng-click``=``"ul.selectUser(it)"`
+`ng-class``=``"{'selected' : it === ul.selected }"``>`
+`<``md-icon` `md-svg-icon``=``"{{it.avatar}}"`
+`class``=``"avatar"``></``md-icon``>`
+`{{it.name}}`
+`</``md-button``>`
+`</``md-list-item``>`
+`</``md-list``>`
+`</``md-sidenav``>`
+ 
+`<!-- Container #4 -->`
+`<``md-content` `flex``id``=``"content"``>`
+`<!-- User details sample -->`
+`<``md-icon` `md-svg-icon``=``"{{ul.selected.avatar}}"`
+`class``=``"avatar"``></``md-icon``>`
+`<``h2``>{{ul.selected.name}}</``h2``>`
+`<``p``>{{ul.selected.content}}</``p``>`
+ 
+`<``md-button` `class``=``"share"` `md-no-ink``ng-click``=``"ul.share($event)"`
+`aria-label``=``"Share"``>`
+`<``md-icon` `md-svg-icon``=``"share"` `></``md-icon``>`
+`</``md-button``>`
+`</``md-content``>`
+ 
+`</``div``>`
+您可以在此处找到其余代码，例如控制器和头像：[AngularJS Material Starter App](https://www.bossable.com/1263/meanjs-angular-material-starter-app/ "平均堆栈中的AngularJS材料入门应用程序")
+### 第二个标签
+当选择第二个选项卡（选项卡2）时，我想要显示一个新页面。我们称之为联系表格。  
+![标签-4-联系](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-4-Contact-600x181.jpg)
+#### 创建一个将由Tab 2“使用”的新视图
+这是contact-form.client.view：
+`<``div` `flex``layout``=``"row"``>`
+`<``h1``>The super duper awesome Contact Form will go here!</``h1``>`
+`</``div``>`
+所以，如果你还在我身边，我们有以下观点：
+*   一个标题，包含两个标签的UI部分（标签1和标签2）
+*   一个主页，其中包含一个头像列表 - 这将在选择选项卡1时显示。
+*   一个包含标题的新视图 - 选中标签2时将显示此视图。
+### 使用UI路由器
+现在我们已经有了一个新视图，让我们将它添加到我们的AngularJS路由中，以便我们可以通过引用它的状态来使用它。State是一个UI路由器概念 - 您可以[在此处阅读有关State的信息](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state)。
+#### 为新视图添加一个新的Angular Route（这在core.client.routes.js中）
+`// Home state routing`
+`$stateProvider.`
+`state(``'home'``, {`
+`url:``'/'``,`
+`templateUrl:``'modules/core/views/home.client.view.html'`
+`}).`
+`state(``'contact'``, {`
+`url:``'/contact'``,`
+`templateUrl:``'modules/core/views/contact-form.client.view.html'`
+`});`
+### 告诉你的标签你的路线
+现在我们有了我们的UI路由器路由，我们可以将它们与我们的选项卡连接起来。
+我们在这里使用ui-router指令：  
+`data-ui-sref`这是指我们在选择选项卡时要使用的路由的“状态”。
+我们目前的选择是“家”和“联系”。
+查看代码可能会有所帮助：
+`<``md-tabs` `md-stretch-tabs``=``"always"` `class``=``"md-primary md-hue-2"``>`
+`<``md-tab` `data-ui-sref``=``"home"``>`
+`<``md-tab-label``> Tab 1 </``md-tab-label``>`
+`</``md-tab``>`
+`<``md-tab` `data-ui-sref``=``"contact"``>`
+`<``md-tab-label``> Tab 2 </``md-tab-label``>`
+`</``md-tab``>`
+`</``md-tabs``>`
+请注意，如果您正在使用rawGit：AngularJS Material Design 0.9中的ui-router和选项卡目前存在已知问题 -[问题2344](https://github.com/angular/material/issues/2344)
+好的。现在测试一下。
+单击选项卡1.选项卡2.选项卡2.选项卡1.选项卡2。
+继续。我会等。
+### 嗯...当我选择Tab 2并刷新页面时，Tab 1会突出显示
+是啊。真是太遗憾了。
+幸运的是，我们有一个方便的小指令，可以清除它！
+`md-active`这是一个方便的小材料设计指令，当它设置为True时，将Tab显示为“活动”（即选中）。
+我们将md-active设置为true，并根据Ui-router状态激活Tab。特别是[$ state.is，你可以在这里阅读](http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state%23methods_is)。
+再看看那段代码：
+`<``md-tabs` `md-stretch-tabs``=``"always"`
+`class``=``"md-primary md-hue-2"``>`
+`<``md-tab` `data-ui-sref``=``"home"`
+`md-active``=``"$state.is('home')"``>`
+`<``md-tab-label``> Tab 1</``md-tab-label``>`
+`</``md-tab``>`
+`<``md-tab` `data-ui-sref``=``"contact"`
+`md-active``=``"$state.is('contact')"``>`
+`<``md-tab-label``> Tab 2</``md-tab-label``>`
+`</``md-tab``>`
+`</``md-tabs``>`
+现在，当您刷新页面时，Angular Ui-Router将设置State，并且基于匹配状态，活动Tab将在Tab的底部显示重音突出显示。
+如果在视图上使用$ state时遇到错误，请确保已将其包含在控制器中（[请参阅此处的标题控制器示例](https://www.bossable.com/1263/meanjs-angular-material-starter-app/ "平均堆栈中的AngularJS材料入门应用程序")）
+接下来，我们将把无聊的Tab 2变成一个简单的联系表单。当我们提交表格时，我们会展示一些吐司。
+创建联系表单
+------
+带回contact-form.client.view。
+现在，我们将通过一些材料设计指令对其进行爵士乐。
+我们将它集中在一起。把它放在一个白框中。让它变得漂亮。  
+### 集中内容
+使用行布局来居中内容`layout-align="center center"`。行有助于水平设置弹性框的大小。
+![标签-5联络中心](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-5-Contact-center.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``h1``>The super duper awesome Contact Form will go here!</``h1``>`
+`</``div``>`
+### 添加基本表单
+如果您之前使用过AngularJS，那么您将会熟悉`ng-submit`和`ng-model`指示。没有什么可疯狂的：
+![标签-6-联系形式](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-6-Contact-form.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"sendMail()"``>`
+`Name: <``input` `type``=``"text"` `data-ng-model``=``"contactName"``>`
+`Email: <``input` `type``=``"email"` `data-ng-model``=``"contactEmail"``>`
+`Message: <``textarea` `ng-model``=``"contactMsg"` `columns``=``"1"` `required></``textarea``>`
+`<``button` `type``=``"submit"``>Send</``button``>`
+`</``form``>`
+`</``div``>`
+让我们用Material Design指令进行爵士乐吧！  
+### 添加响应式白框
+这将“框架”我们的表单，并根据查看它的设备的大小显示不同的大小：
+![标签-7-联系-MD-whiteframe](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-7-Contact-md-whiteframe.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"90"` `flex-gt-md``=``"70"` `flex-gt-lg``=``"50"` `class``=``"md-whiteframe-z2"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"sendMail()"``>`
+`Name: <``input` `type``=``"text"` `data-ng-model``=``"contactName"``>`
+`Email: <``input` `type``=``"email"` `data-ng-model``=``"contactEmail"``>`
+`Message: <``textarea` `ng-model``=``"contactMsg"` `columns``=``"1"` `required></``textarea``>`
+`<``button` `type``=``"submit"``>Send</``button``>`
+`</``form``>`
+`</``div``>`
+`</``div``>`
+### 为表单添加内容区域
+这将为我们的形式提供一些漂亮的衬垫，以帮助它坐得很漂亮。
+![标签-8-联系-MD-内容](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-8-Contact-md-content.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"90"` `flex-gt-md``=``"70"` `flex-gt-lg``=``"50"` `class``=``"md-whiteframe-z2"``>`
+`<``md-content` `class``=``"md-padding"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"80"` `layout-sm``=``"column"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"sendMail()"``>`
+`Name: <``input` `type``=``"text"` `data-ng-model``=``"contactName"``>`
+`Email: <``input` `type``=``"email"` `data-ng-model``=``"contactEmail"``>`
+`Message: <``textarea` `ng-model``=``"contactMsg"` `columns``=``"1"` `required></``textarea``>`
+`<``button` `type``=``"submit"``>Send</``button``>`
+`</``form``>`
+`</``div``>`
+`</``md-content``>`
+`</``div``>`
+`</``div``>`
+### 材料设计的飞溅
+现在，我们将加入`md-input-container`，`label`指令..  
+![标签-9-联系-MD-容器](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-9-Contact-md-container.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"90"` `flex-gt-md``=``"70"` `flex-gt-lg``=``"50"` `class``=``"md-whiteframe-z2"``>`
+`<``md-content` `class``=``"md-padding"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"80"` `layout-sm``=``"column"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"sendMail()"``>`
+`<``md-input-container``>`
+`<``label``>Name:</``label``>`
+`<``input` `ng-model``=``"contactName"` `required>`
+`</``md-input-container``>`
+`<``md-input-container` `flex>`
+`<``label``>Email:</``label``>`
+`<``input` `type``=``"email"` `ng-model``=``"contactEmail"` `required>`
+`</``md-input-container``>`
+ 
+`<``md-input-container``>`
+`<``label``>Message:</``label``>`
+`<``textarea` `ng-model``=``"contactMsg"` `columns``=``"1"` `md-maxlength``=``"150"` `required></``textarea``>`
+`</``md-input-container``>`
+ 
+`<``button` `type``=``"submit"``>Send</``button``>`
+`</``form``>`
+`</``div``>`
+`</``md-content``>`
+`</``div``>`
+`</``div``>`
+而洒`md-button`指令的好运气。别忘了欣赏你的作品。
+![标签-10-联系-MD-按钮](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-10-Contact-md-button-600x305.jpg)
+`<``div` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"90"` `flex-gt-md``=``"70"` `flex-gt-lg``=``"50"` `class``=``"md-whiteframe-z2"``>`
+`<``md-content` `class``=``"md-padding"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"80"` `layout-sm``=``"column"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"sendMail()"``>`
+`<``md-input-container``>`
+`<``label``>Name:</``label``>`
+`<``input` `ng-model``=``"contactName"` `required>`
+`</``md-input-container``>`
+`<``md-input-container` `flex>`
+`<``label``>Email:</``label``>`
+`<``input` `type``=``"email"` `ng-model``=``"contactEmail"` `required>`
+`</``md-input-container``>`
+ 
+`<``md-input-container``>`
+`<``label``>Message:</``label``>`
+`<``textarea` `ng-model``=``"contactMsg"` `columns``=``"1"` `md-maxlength``=``"150"` `required></``textarea``>`
+`</``md-input-container``>`
+ 
+`<``md-button` `type``=``"submit"` `class``=``"md-primary"`
+`ng-class``=``"{'md-raised md-hue-1': (contactForm.$dirty && contactForm.$valid) }"`
+`aria-label``=``"Save Project"``>Send</``md-button``>`
+`</``form``>`
+`</``div``>`
+`</``md-content``>`
+`</``div``>`
+`</``div``>`
+我们祝酒吧！
+------
+当我们点击“发送”按钮时，让我们向用户显示一些祝酒词。
+![标签-11-联系-MD-吐司](https://www.bossable.com/wp-content/uploads/2015/04/Tabs-11-Contact-md-toast-600x428.jpg)
+### 添加控制器作为对表单顶部的引用
+`<``div` `data-ng-controller``=``"ContactFormController as cf"` `flex``layout``=``"row"` `layout-align``=``"center center"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"90"` `flex-gt-md``=``"70"` `flex-gt-lg``=``"50"` `class``=``"md-whiteframe-z2"``>`
+`<``md-content` `class``=``"md-padding"``>`
+`<``div` `flex-sm``=``"100"` `flex-gt-sm``=``"80"` `layout-sm``=``"column"``>`
+`<``form` `name``=``"contactForm"` `data-ng-submit``=``"cf.sendMail()"``>`
+`<``md-input-container``>`
+`<``label``>Name:</``label``>`
+`<``input` `ng-model``=``"cf.contactName"` `required>`
+`</``md-input-container``>`
+`<``md-input-container` `flex>`
+`<``label``>Email:</``label``>`
+`<``input` `type``=``"email"` `ng-model``=``"cf.contactEmail"` `required>`
+`</``md-input-container``>`
+ 
+`<``md-input-container``>`
+`<``label``>Message:</``label``>`
+`<``textarea` `ng-model``=``"cf.contactMsg"` `columns``=``"1"` `md-maxlength``=``"150"` `required></``textarea``>`
+`</``md-input-container``>`
+ 
+`<``md-button` `type``=``"submit"` `class``=``"md-primary"`
+`ng-class``=``"{'md-raised md-hue-1': (contactForm.$dirty && contactForm.$valid) }"`
+`aria-label``=``"Save Project"``>Send</``md-button``>`
+`</``form``>`
+`</``div``>`
+`</``md-content``>`
+`</``div``>`
+`</``div``>`
+### 创建一个新的Controller文件
+在此文件中：modules / core / client / controllers / contact-form.client.controller.js：
+### 将$ mdToast和$ animate作为依赖项添加到控制器：
+`'use strict'``;`
+ 
+`angular.module(``'core'``).controller(``'ContactFormController'``, [``'$scope'``,``'$mdToast'``,``'$animate'``,`
+`function``($scope, $mdToast, $animate) {`
+### 吐司！
+单击“发送”按钮后，我们将显示吐司：
+`angular.module(``'core'``).controller(``'ContactFormController'``, [``'$scope'``,``'$mdToast'``,``'$animate'``,`
+`function``($scope, $mdToast, $animate) {`
+ 
+`//3. we decide where the toast will display on the view`
+`$scope.toastPosition = {`
+`bottom:``false``,`
+`top:``true``,`
+`left:``false``,`
+`right:``true`
+`};`
+ 
+`//2. the method looks for the position that we want to display the toast`
+`$scope.getToastPosition =``function``() {`
+`return` `Object.keys($scope.toastPosition)`
+`.filter(``function``(pos) {``return` `$scope.toastPosition[pos]; })`
+`.join(``' '``);`
+`};`
+ 
+`//1. The send button will call this method`
+`this``.sendMail =``function``() {`
+`$mdToast.show(`
+`$mdToast.simple()`
+`.content(``'Thanks for your Message '` `+``this``.contactName +``' You Rock!'``)`
+`.position($scope.getToastPosition())`
+`.hideDelay(3000)`
+`);`
+`};`
+`}`
+`]);`
+您可以轻松地使用它在回调中显示错误或成功响应消息。
+哇哇，您刚刚完成了一大堆AngularJS和Angular Material Design概念，并将其震撼了！
+直到下一次！
+[https://www.bossable.com/1338/angular-material-design-toolbar-examples/](https://www.bossable.com/1338/angular-material-design-toolbar-examples/)
+==================================================================================================================================================
+[https://www.bossable.com/1263/meanjs-angular-material-starter-app/](https://www.bossable.com/1263/meanjs-angular-material-starter-app/)
+[https://www.bossable.com/1231/material-design-meanjs/](https://www.bossable.com/1231/material-design-meanjs/)
+[https://www.bossable.com/1153/mongodb-compose/](https://www.bossable.com/1153/mongodb-compose/)
+[https://www.bossable.com/1180/install-mean-js-040/](https://www.bossable.com/1180/install-mean-js-040/)
+[https://github.com/nodemailer/nodemailer](https://github.com/nodemailer/nodemailer)
+链接:[AngularJS Material Design Tabs, Forms &amp; Toasts](https://bbs.huaweicloud.com/blogs/1d2b9778ee6f11e8bd5a7ca23e93a891)

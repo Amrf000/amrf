@@ -1,0 +1,32 @@
+项目地址:  
+[https://github.com/ghiscoding/angular-markdown-editor](https://github.com/ghiscoding/angular-markdown-editor)
+测试步骤:
+1.  下载工程项目
+2.  npm install 安装相关依赖，bootstrap-markdown无法获取先打开package.json注释掉再次运行npm install
+3.  https://github.com/toopay/bootstrap-markdown/tags下载release包，并解压到node\_modules目录
+4.  使用vscode打开项目目录
+5.  在集成终端中输入ng serve启动项目，可以看到
+    ![image.png](https://bbs-img.huaweicloud.com/blogs/img/1542619391148101.png "1542619391148101.png")
+6.  不是很喜欢上下结构，改一改
+    打开template.componet.html
+    修改为
+```
+<div class="row">
+<div class="col-md-6">
+    <div class="editor">
+        <!--label>Editor (with French locale)</label-->
+        <angular-markdown-editor textareaId="editor1" \[locale\]="locale" \[options\]="editorOptions"
+            rows="42" name="markdownText" [(ngModel)]="markdownText" (onFullscreenExit)="hidePreview()">
+        </angular-markdown-editor>
+    </div>
+</div>
+<div class="col-md-6">
+    <div class="result-preview outline">
+        <markdown \[data\]="markdownText"></markdown>
+    </div>
+</div>
+</div>
+```
+展示效果为:
+![image.png](https://bbs-img.huaweicloud.com/blogs/img/1542619569244825.png "1542619569244825.png")   
+链接:[angular markdown editor项目测试](https://bbs.huaweicloud.com/blogs/471f0e06ebdd11e8bd5a7ca23e93a891)  

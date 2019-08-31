@@ -1,0 +1,323 @@
+非webdriver方案
+------------
+原文:skyzerblogger.blogspot.com/2013/01/google-reverse-image-search-scraping.html
+### Google Reverse Image Search scraping without API in PHP
+Probably some of you have used google reverse image search - that is when you drag image from your computer to the search field or paste image url after clicking on camera icon. But there is not API for that to get the results nicelyin JSON or XMLwithout any hassle. There was API for google image search which is now deprecated but it didn't provide the reverse image search functionality anyway.
+So I searched for other APIs. First one that I found and was recommended on the internet as alternative to Google is the TinEye. I tried uploading some pictures on their website but the results weren't so rich as Google Reverse Image Search.  
+Other alternative was the[Bing Search API](http://datamarket.azure.com/dataset/bing/search). I didn't find anything about reverse image search in the description, so I had setup quickly Bing Search API to test its functionality. All it had was just normal search API - no reverse search. So if you want usual search API for images then consider using bing search API.  
+Okay lets jump into the google reverse image search.  
+I bet you're wondering how could you automate the part when you have to drag an image to Google search box or what is the full URL when you upload image by URL. The full URL is  
+https://www.google.com/searchbyimage?&image\_url=<YOUR URL
+For example  
+https://www.google.com/searchbyimage?&image\_url=http://kaizern.com/blog/beautiful-landscapes-1.jpg
+If you go to the above address from your browser you will get the the search results and will see that the link is different. It was redirected. So if you use in your code something like  
+file\_get\_contents(https://www.google.com/searchbyimage?&image\_url=http://kaizern.com/blog/beautiful-landscapes-1.jpg);
+You will get to the first page with status 302. What you need is to follow the redirect chain. At this pont_cURL_comes to the rescue. The cURL below works like charm and opens the google's search results page.  
+function open\_url($full\_url)
+    {
+        $curl = curl\_init();
+        curl\_setopt($curl, CURLOPT\_URL, $full\_url);
+        curl\_setopt($curl, CURLOPT\_HEADER, 0);
+        curl\_setopt($curl, CURLOPT\_RETURNTRANSFER, 1);
+        curl\_setopt($curl, CURLOPT\_REFERER, 'http://www.kaizern.com');
+        curl\_setopt($curl, CURLOPT\_SSL\_VERIFYPEER, false);
+        curl\_setopt($curl, CURLOPT\_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11");
+        curl\_setopt($curl, CURLOPT\_FOLLOWLOCATION, true);
+        $content = utf8\_decode(curl\_exec($curl));
+        curl\_close($curl);
+        return $content;
+    }
+The$full\_urlvariable is the full URL for reverse image search likehttps://www.google.com/searchbyimage?&image\_url=http://kaizern.com/blog/beautiful-landscapes-1.jpg  
+Andopen\_urlfunction returns whole results page. Next step is probably dropping out unneeded html content, lets say we need everything from in <body> tags and <head> tag will be dropped.  
+function get\_tag\_content\_as\_dom($img\_res\_url, $tag\_name = 'body')
+    {
+        $dom = new DOMDocument();
+        $dom->strictErrorChecking = false;  // turn off warnings and errors when parsing
+        @$dom->loadHTML($img\_res\_url);
+        $body = $dom->getElementsByTagName($tag\_name);
+        $body = $body->item(0);
+        $new\_dom = new DOMDocument();
+        $node = $new\_dom->importNode($body, true);
+        $new\_dom->appendChild($node);
+        return $new\_dom;
+    }
+So lets sort out that function. First argument it takes is the result from theopen\_urlfunction and second argument is the html tag which contents we need. We use PHP's DOMDocument library. Next we get element by tag name 'body' and afterwards we make a new DOMDocument with all the childs notes recursively to traverse it later with xpath.  
+Now is the time to analyze the HTML structure of Google search result to write correct xpath query. Try playing around by uploading different pictures to Google Image search. You will see that google recognizes some images and writes a_best guess for this image_. What I did next is that I opened my Chrome debugger and wrote down the path where the best guess is. Here's the path:  
+<div id="main">  
+<div>    
+<div id="cnt">     
+ <div id="rcnt">       
+  <div id="center\_col">          
+  <div class="med" id="res" role="main">           
+ <div id="topstuff">
+The xpath query for that is  
+/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']/div\[@id='topstuff']
+My function for that is  
+function get\_xpath\_result($dom, $xpath\_query)
+    {
+        $dom\_xpath = new DOMXPath($dom);
+        return $dom\_xpath->query($xpath\_query);
+    }
+The first argument is the DOM document that you got with previous functionget\_tag\_content\_as\_domand second argument is the xpath query for the topstuff id in HTML  
+Don't worry if you don't grasp the whole picture now, I will write below in this post my whole class for that.  
+I have the xpath query in the class's scope as static variable  
+static $topstuff\_div\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']/div\[@id='topstuff']";
+In my class's constructor this part looks like  
+$topstuff\_div = $this->get\_xpath\_result($body\_dom, self::$topstuff\_div\_query);
+Next we need to get the text after_best guess for this image_  
+I chose a string parsing approach instead of xpath and this method  
+function get\_best\_guess($topstuff\_div)
+    {
+        $topstuff\_result = '';
+        foreach ($topstuff\_div as $val) {
+            $topstuff\_result .= $val->nodeValue . " ";
+        }
+        $best\_guess = $this->strstr\_after($topstuff\_result, 'Best guess for this image:');
+        return trim($best\_guess, ' ');
+    }
+This function's argument is the result of our previous functionget\_xpath\_resultas you can guess from the argument variable name andget\_best\_guessreturns the text that is after_best guess for this image_. In our example for the beautiful landscape image it issentieri del cuore.
+What if there is no_best guess_? Then there is no div with id topstuff. Then we have to jump into the search results. Again jump into the HTML of the search results and look how the results are structured. Here, I wrote it down for myself
+<div id="main">
+  <div>
+    <div id="cnt">
+      <div id="rcnt">
+        <div id="center\_col">
+          <div class="med" id="res" role="main">
+            <div id="topstuff">
+            <div id="search">
+              <div id="ires">
+                <ol id="rso">
+                  <li class="g">
+                  NOT<li id="imagebox\_bigimages">
+Each result is in list element with class g. In addition, the similar images are also in list with additional id imagebox\_bigimages. If you don't need the results of similar images, then exclude it in your xpath query.
+By going deeper in results HTML we see that each results title is in<h3>tag with class r and the description is in_<span>_element with class st. Here are my xpath queries for title and description for each search result with excluded_similar images_list element.
+static $title\_h3\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']/div\[@id='search']/div\[@id='ires']/ol\[@id='rso']/li\[not(@id='imagebox\_bigimages') and @class='g']/div\[@class='vsc']//h3\[@class='r']";
+static $span\_text\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']/div\[@id='search']/div\[@id='ires']/ol\[@id='rso']/li\[not(@id='imagebox\_bigimages') and @class='g']/div\[@class='vsc']//span\[@class='st']";
+We do here cleverly by using double slashes '//span' which means to match child element of any depth, whereas single slash '/div' means to match the next child element.  
+$titles = $this->get\_xpath\_result($body\_dom, self::$title\_h3\_query);
+$span\_texts = $this->get\_xpath\_result($body\_dom, self::$span\_text\_query);
+Here you got the titles and description as DomNodeList. At this point you need to know what you want to do with the results. For example I have Wordpress plugin that when I upload an image then it scrapes the information about that image, removes unneccessary words and suggests me title name for that.  
+You can traverse that the DomNodeList with a simple for loop. Here is example which concatenates all the titles together.  
+    function loop\_xpath\_res($xpath\_res)
+    {
+        foreach ($xpath\_res as $val) {
+            echo $val->nodeValue . " | ";
+        }
+        echo "\\n";
+    }
+Below is my whole class consisting of the functions I've written above. I don't pretend for the neatest and conventional code, because my priamry coding language isn't PHP :)  
+require\_once(ABSPATH . "wp-admin" . '/includes/image.php');
+require\_once(ABSPATH . "wp-admin" . '/includes/file.php');
+require\_once(ABSPATH . "wp-admin" . '/includes/media.php');
+class Import\_Script
+{
+    static $URL = 'https://www.google.com/searchbyimage?&image\_url=';
+    static $topstuff\_div\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']/div\[@id='topstuff']";
+    static $title\_h3\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']
+        /div\[@id='search']/div\[@id='ires']/ol\[@id='rso']/li\[not(@id='imagebox\_bigimages') and @class='g']/div\[@class='vsc']//h3\[@class='r']";
+    static $span\_text\_query = "/body/div\[@id='main']/div/div\[@id='cnt']/div\[@id='rcnt']/div\[@id='center\_col']/div\[@id='res']
+    /div\[@id='search']/div\[@id='ires']/ol\[@id='rso']/li\[not(@id='imagebox\_bigimages') and @class='g']/div\[@class='vsc']//span\[@class='st']";
+    
+ static $domains = array(".com", ".org", ".net", ".hu");
+    static $links = array("http://", "www");
+    static $picture\_file\_names = array(".jpg", ".jpeg", ".png");
+    public $img\_file\_name;
+    function \_\_construct($image\_url, $order)
+    {
+        try {
+            $full\_url = $this->compose\_url($image\_url);
+            $img\_res\_url = $this->open\_url($full\_url);
+            $body\_dom = $this->get\_tag\_content\_as\_dom($img\_res\_url);
+            $topstuff\_div = $this->get\_xpath\_result($body\_dom, self::$topstuff\_div\_query);
+            $best\_guess = $this->get\_best\_guess($topstuff\_div);
+            $titles = $this->get\_xpath\_result($body\_dom, self::$title\_h3\_query);
+            $span\_texts = $this->get\_xpath\_result($body\_dom, self::$span\_text\_query);
+            // if length is > 0 then search result isn't empty
+            if ($titles->length > 0 && $span\_texts->length > 0) {
+                $best\_guess = $this->sanitize\_best\_guess($best\_guess);
+                if ($best\_guess) {
+                    $this->img\_file\_name = strtolower($this->compose\_img\_file\_name($best\_guess));
+                } else {
+                    $this->img\_file\_name = strtolower($this->compose\_img\_file\_name($img\_name));
+                }
+            } else {
+                echo "Nothing found about the picture, url: " . $image\_url;
+            }
+        } catch (Exception $e) {
+            echo 'Exception caught: ',  $e->getMessage(), "<br />";
+            echo 'Exception for url: '.$image\_url."<br />";
+            sleep(10);
+        }
+    }
+    function loop\_xpath\_res($xpath\_res)
+    {
+        foreach ($xpath\_res as $val) {
+            echo $val->nodeValue . " | ";
+        }
+        echo "<br />";
+    }
+    function compose\_img\_file\_name($word)
+    {
+        return str\_replace(" ", "-", $word);
+    }
+    function sanitize\_best\_guess($best\_guess)
+    {
+        if ($best\_guess) $best\_guess = $this->filter\_out\_bad\_words($best\_guess);
+        return $best\_guess;
+    }
+    function filter\_out\_bad\_words($string)
+    {
+        $string = $this->remove\_containing\_word($string, self::$links);
+        $string = $this->remove\_containing\_word($string, self::$domains);
+        $string = $this->remove\_containing\_word($string, self::$picture\_file\_names);
+        $string = preg\_replace('/[^ -\\pL\]/', '', $string);
+        $string = preg\_replace("#[^a-zA-Z0-9 -]#", "", $string);
+        $string = trim($string, '-');
+        $string = trim($string, ' ');
+        $string = $this->remove\_specific\_word($string, '-');
+        $string = trim($string, '-');
+        $string = trim($string, ' ');
+        return $string;
+    }
+    function contains\_specific\_word($string, $specific\_word)
+    {
+        $string\_array = explode(" ", $string);
+        foreach ($string\_array as $element) {
+            if (strcasecmp($element, $specific\_word) == 0) return true;
+        }
+        return false;
+    }
+    function remove\_specific\_word($string, $bad\_words)
+    {
+        $string\_array = explode(" ", $string);
+        if (is\_array($bad\_words)) {
+            foreach ($string\_array as $index => $word) {
+                foreach ($bad\_words as $bad\_word) {
+                    if (strcasecmp($word, $bad\_word) == 0) unset($string\_array\[$index\]);
+                }
+            }
+        } else {
+            foreach ($string\_array as $index => $word) {
+                if (strcasecmp($word, $bad\_words) == 0) unset($string\_array\[$index\]);
+            }
+        }
+        return implode(" ", $string\_array);
+    }
+    function remove\_containing\_word($string, $word\_peaces)
+    {
+        $new\_string = $string;
+        foreach ($word\_peaces as $part\_of\_word) {
+            $word\_pos = strripos($new\_string, $part\_of\_word);
+            if ($word\_pos !== false) {
+                $words\_array = explode(" ", $new\_string);
+                foreach ($words\_array as $index => $word) {
+                    if (stripos($word, $part\_of\_word) !== false) {
+                        unset($words\_array\[$index\]);
+                    }
+                }
+                $new\_string = implode(" ", $words\_array);
+            }
+        }
+        return $new\_string;
+    }
+    function get\_best\_guess($topstuff\_div)
+    {
+        $topstuff\_result = '';
+        foreach ($topstuff\_div as $val) {
+            $topstuff\_result .= $val->nodeValue . " ";
+        }
+        $best\_guess = $this->strstr\_after($topstuff\_result, 'Best guess for this image:');
+        return trim($best\_guess, ' ');
+    }
+    function strstr\_after($haystack, $needle)
+    {
+        $pos = stripos($haystack, $needle);
+        if (is\_int($pos)) {
+            return substr($haystack, $pos + strlen($needle));
+        }
+        // Most likely false or null
+        return $pos;
+    }
+    function compose\_url($request)
+    {
+        $full\_url = self::$URL . $request;
+        return $full\_url;
+    }
+    function open\_url($full\_url)
+    {
+        $curl = curl\_init();
+        curl\_setopt($curl, CURLOPT\_URL, $full\_url);
+        curl\_setopt($curl, CURLOPT\_HEADER, 0);
+        curl\_setopt($curl, CURLOPT\_RETURNTRANSFER, 1);
+        curl\_setopt($curl, CURLOPT\_REFERER, 'http://localhost');
+        curl\_setopt($curl, CURLOPT\_SSL\_VERIFYPEER, false);
+        curl\_setopt($curl, CURLOPT\_USERAGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.97 Safari/537.11");
+        curl\_setopt($curl, CURLOPT\_FOLLOWLOCATION, true);
+        $content = utf8\_decode(curl\_exec($curl));
+        curl\_close($curl);
+        return $content;
+    }
+    function get\_tag\_content\_as\_dom($img\_res\_url, $tag\_name = 'body')
+    {
+        $dom = new DOMDocument();
+        $dom->strictErrorChecking = false; // turn off warnings and errors when parsing
+        @$dom->loadHTML($img\_res\_url);
+        $body = $dom->getElementsByTagName($tag\_name);
+        $body = $body->item(0);
+        $new\_dom = new DOMDocument();
+        $node = $new\_dom->importNode($body, true);
+        $new\_dom->appendChild($node);
+        return $new\_dom;
+    }
+    function get\_xpath\_result($dom, $xpath\_query)
+    {
+        $dom\_xpath = new DOMXPath($dom);
+        return $dom\_xpath->query($xpath\_query);
+    }
+}
+EDIT: GITHUB CODE IS[HERE](https://github.com/skyzer/google-reverse-image-search-scraper)  
+**UPDATE:**  
+Here is the update version with SimpleHTMLDom parsing library.  
+[https://gist.github.com/skyzer/24f80640e99070ec83bc](https://gist.github.com/skyzer/24f80640e99070ec83bc)  
+I included only the functions that need to be replaced from xpath selecting to simplehtmldom type selecting.  
+The$variable->find(...)is the simplehtmldom librarys selector that is choosing correctly
+webdriver 方案
+------------
+[https://gist.github.com/coffeejunk/1650653](https://gist.github.com/coffeejunk/1650653)
+require 'sinatra'
+require 'rest\_client'
+require 'selenium-webdriver'
+# to run this script headless install xvfb
+# Xvfb :99 -ac &
+# export DISPLAY=:99
+post '/' do
+  begin
+    puts params.inspect
+    rc = RestClient.post(
+      'http://images.google.com/searchbyimage/upload',
+      :image\_url => '',
+      :encoded\_image => params\['file'][:tempfile\],
+      :filename => params\['file'][:filename\],
+      :image\_content => '',
+      :hl => 'de',
+      :biw => 1916,
+      :bih => 437
+    ) {|response, request, result| response }
+    url = rc.match(/(?<=HREF=\\")http.\*(?=\\")/)\[0\]
+    image\_name = get\_image\_name "#{url}&hl=de"
+    puts image\_name
+    image\_name
+  rescue
+    puts ':('
+    'FFFFFF-'
+  end
+end
+def get\_image\_name url
+  driver = Selenium::WebDriver.for :firefox
+  driver.navigate.to url
+  element = driver.find\_element :id => 'topstuff'
+  txt = element.text
+  driver.quit
+  txt.match(/(?<=dieses\\sBild\\:\\s).\*/)\[0\]
+end
+链接:[图片反向检索【转载】](https://bbs.huaweicloud.com/blogs/d1355c9bbdc611e9b759fa163e330718)

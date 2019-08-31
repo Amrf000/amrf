@@ -1,0 +1,92 @@
+gitbook-convert
+可以将docx,pdf转换成gitbook markdown文件目录
+可以使用npm install gitbook-convert -g安装
+gitbook  
+是一个文档工具,可以将文档发布为静态网站、pdf、ebook等
+可以使用npm install gitbook-cli -g安装
+常用的指令是:
+gitbook install
+可以安装book.json 里的gitbook插件;
+gitbook build
+可以由markdown生成静态网页;
+gitbook serve
+可以运行一个静态网页的服务器
+book.json参考格式
+```
+{
+  "gitbook": "*",
+  "basePath": ".",
+  "language": "",
+  "theme": "default",
+  "title": "xxxx",
+  "description": "xxxx",
+  "plugins": [
+   "highlight",
+   "expandable-chapters",
+    "copy",
+  "search",
+   "lunr",
+   "sharing",
+   "fontsettings",
+   "add-js-css"
+  ],
+  "pluginsConfig": {
+"search": {},
+"lunr": {
+"maxIndexSize": 1000000,
+"ignoreSpecialCharacters": false
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"highlight": {},
+"copy": {},
+"expandableChapters": {
+"cssFile": ["expandable-chapters-theme.css"]
+},
+"sharing": {
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"expandable-chapters": {},
+    "add-js-css": {
+    "js": [
+    ],
+    "css": [
+      "./styles/style.css"
+    ]
+     }
+    }
+}
+```
+两个问题:
+（一）我的环境需要设置git代理
+1.设置git代理
+```
+git config --global https.proxy https://域账号:密码@xxxxx.com:8080
+git config --global http.proxy http://域账号:密码@xxxx.com:8080
+```
+如果密码中有特殊字符，可以使用chrome的consle，在其中输入:encodeURIComponent(密码)，查看转义后的内容，进行设置
+2、不支持git协议，使用https协议代替git协议: git config --global url."https://".insteadOf git://
+3、不验证ssl协议：git config --global http.sslVerify false
+（二）npm代理设置
+```
+no-proxy=.xxx.com---不需要代理的域
+registry=https://repo.xxxx.com/repository/npm/
+_auth="repository pass"----如果仓带auth验证
+always-auth=true
+proxy=http:///域账号:密码@xxxxx.com:port/
+https-proxy=http:///域账号:密码@xxxxx.com:port/
+prefix=npm本地仓路径--如果要放到非C盘下默认路径的时候指定
+```
+由于我的npm设置了prefix,所以后来在全局安装了gitbook后,直接运行gitbook命令还是找不到，需要将prefix路径加到环境变量或者直接到该路径执行指令
+参考:
+[https://blog.csdn.net/axi295309066/article/details/61420694](https://blog.csdn.net/axi295309066/article/details/61420694)
+链接:[gitbook使用记录](https://bbs.huaweicloud.com/blogs/9f03e5dd9d7311e9b759fa163e330718)
