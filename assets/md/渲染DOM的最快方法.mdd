@@ -1,0 +1,182 @@
+![渲染DOM的最快方法](https://medium.com/better-programming/the-fastest-way-to-render-the-dom-e3b226b15ca3)
+渲染DOM的最快方法
+==========
+
+Virtual DOM，Tagged Template Literals或Fine-Grained Observable是最快的吗？
+------------------------------------------------------------------
+
+[![瑞安卡尼亚托](https://miro.medium.com/fit/c/48/48/1*eMR1FyWRupD7Ex07HZykGA.jpeg)](/@ryansolid?source=post_page-----e3b226b15ca3----------------------)
+
+[瑞安卡尼亚托](/@ryansolid?source=post_page-----e3b226b15ca3----------------------)
+
+跟随
+
+[5月29日](/better-programming/the-fastest-way-to-render-the-dom-e3b226b15ca3?source=post_page-----e3b226b15ca3----------------------) · 10 分钟阅读
+
+![](https://miro.medium.com/max/30/1*GUzExY_rdzsppKwaA1wcnw.jpeg?q=20)
+
+![](https://miro.medium.com/max/2500/1*GUzExY_rdzsppKwaA1wcnw.jpeg)
+
+来自rawpixel.com
+
+在撰写[Solid时](https://github.com/ryansolid/solid)，我有机会看到许多不同的库试图在基准测试中实现最大化性能。事实上，DOM本身往往是最大的瓶颈。这意味着，当涉及到它时，大不相同的方法可以表现得相当。我看到每周都会出现新的图书馆，每个图书馆都会从这里和那里拿出一些东西来组合他们的完美组合，过了一段时间，很难趟过一些噪音。
+
+现在不要误会我的意思，我喜欢看到这些想法汇集在一起​​，但它们都有权衡和成本，有时候是人体工程学和大部分时间的表现。对这些决定的全部影响并不完全了解，但我想分享一些我观察到的内容。
+
+* * *
+
+比较
+==
+
+该[js框架基准](https://github.com/krausest/js-framework-benchmark)是JavaScript的UI框架的最好的通用标准。对于此测试，因为我正在玩变体，所以必须在本地运行所有内容而不是使用官方结果。结果因机器而异，因为我运行的是功能较弱的机器，正如我们测试的那样，性能将更加突出。
+
+我们将采用我认为最好的每种渲染方法来说明具体决策的开销。我将通过使用Solid支持多种渲染技术来兼顾不同的成本，因为我们更改不同的变量并将其与使用类似技术的库的最佳示例进行比较。让我们来看看竞争对手吧。
+
+固体变体：
+-----
+
+1.  [**solid**](https://github.com/ryansolid/solid)  \- 这是ES2015代理版本，具有简洁的setter语法，基于细粒度变化检测，可以提供DOM模板节点克隆。它通过预编译的JSX模板实现了这一点。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/solid/src/main.jsx)**）**
+2.  [**solid-signals**](https://github.com/ryansolid/solid)  \- 此版本与上述版本相同，但避免了原始信号代理的便利性。它使实现更重，但它留下了更小的捆绑和更高的性能。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/solid-signals/src/main.jsx)**）**
+3.  [**solid-lit**](https://github.com/ryansolid/solid) - 这个版本避开了JSX预编译的Just in Time Tagged Template Literal运行时编译，以实现DOM模板节点克隆。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/solid-lit/src/main.js)**）**
+4.  [**solid-h**](https://github.com/ryansolid/solid) - 此版本使用HyperScript即时转换`document.createElement`。但是否则使用与其他实体相同的Solid实现。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/solid-h/src/main.js)**）**
+
+其他图书馆：
+------
+
+1.  [**domc**](https://github.com/Freak613/domc) - 这个微渲染库旨在尽可能减少变更管理工作，同时最大化DOM模板节点，使用自定义运行时HTML String DSL，它是从index.html中提取的。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/tree/solid-variations/frameworks/keyed/domc)**）**
+2.  [**surplus**](https://github.com/adamhaile/surplus) - 这个库使用细粒度的变化检测和预编译的JSX模板来创建一系列`document.createElement`。Solid使用相同的基础更改管理库。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/tree/solid-variations/frameworks/keyed/surplus/src)**）**
+3.  [**ivi**](https://github.com/localvoid/ivi)  \- 您可能听说过Inferno，但这个库是Virtual DOM的真正顶峰。它使用带有Hook的HyperScript Helpers-esque API。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/ivi/src/main.js)**）**
+4.  [**lit-html**](https://github.com/Polymer/lit-html)  \- 不是第一个类型的库，但它表现最好。它在运行时使用标记模板文字来提供给DOM模板节点。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/blob/solid-variations/frameworks/keyed/lit-html/src/index.js)**）**
+5.  [**inferno**](https://github.com/infernojs/inferno)  \- 最快的React克隆和最快的Virtual DOM库之一。它使用带有特殊指令的JSX来指示如何获得最佳性能。**（**[**代码**](https://github.com/ryansolid/js-framework-benchmark/tree/solid-variations/frameworks/keyed/inferno/src)**）**
+
+您最喜欢的一些库可能不存在，但实质上这种组合反映了您将在这些库中看到的所有技术的高度优化版本。您可以将其视为今天图书馆最高潜力的最佳指标。如果您有兴趣看到热门库的比较，我推荐[这个比较](/@ajmeyghani/javascript-frameworks-performance-comparison-c566d19ab65b)。
+
+我希望添加的一个值得注意的缺席是Web Assembly条目。不幸的是，在这一点上，WASM条目基本上是没有更高级别数据驱动抽象的vanilla实现。最快的只有这个包中间的插槽。所以说WASM有一些潜力是安全的，但我们还没有。
+
+* * *
+
+结果
+==
+
+HyperScript（inferno，ivi，solid-h）
+--------------------------------
+
+HyperScript是一种将视图表示为函数组合的方式（通常是h或React.createElement）。例如：
+
+h（'div'，{id：'my-element'}，\[   
+ h（'span'，'Hello'），  
+ h（'span'，'John'）  
+\]）
+
+这是Virtual DOM库拥有的类别。即使他们最终使用JSX或其他模板DSL，它也会转换为每个元素渲染方法。这适合在每个渲染周期中在JS中构建虚拟DOM树，但是如此处所示它也可以用于在Solid的情况下构造Reactive依赖图。
+
+![](https://miro.medium.com/max/29/1*QmcWyqfVrlgsK_6cmgSn_g.png?q=20)
+
+![](https://miro.medium.com/max/1310/1*QmcWyqfVrlgsK_6cmgSn_g.png)
+
+如您所见，Virtual DOM库在这里要快得多。创建反应图的开销在这里会伤害Solid。注意基准＃1，＃2，＃7，＃8，＃9的差异。相反，在测量部分更新的剩余基准测试中，Solid稍微快一些。
+
+![](https://miro.medium.com/max/30/1*6yDVUECT3cBhRpUHixvi7g.png?q=20)
+
+![](https://miro.medium.com/max/1132/1*6yDVUECT3cBhRpUHixvi7g.png)
+
+记忆不太确定。Inferno和这个版本的Solid主要是颈部和颈部，而性能更高的ivi使用更多的记忆。这是Solid的内存密集型版本，但值得注意的是内存使用量是多少。
+
+这是经典的VDOM与细粒度比较。Fine-Grained可以提前完成更新。如果这是故事的结尾，那么很容易解释过去几年VDOM的主导地位。可以说，如果您使用的是精细粒度的HyperScript，那么最好使用Virtual DOM。
+
+字符串模板（domc，lit-html，实灯）
+-----------------------
+
+这里的每个图书馆都有一些共同点。它们基于克隆模板元素进行渲染，它们在运行时执行，不使用虚拟DOM。但是，每个人都有不同的看法。DomC和lit-html做类似于虚拟DOM的自顶向下漫射，而Solid使用细粒度反应图。Lit-html将模板分成几部分。DomC和Solid及时将模板编译成单独的代码路径以进行创建和更新。
+
+![](https://miro.medium.com/max/30/1*Se35vdDzgiSlHLmPtc-eHA.png?q=20)
+
+![](https://miro.medium.com/max/1324/1*Se35vdDzgiSlHLmPtc-eHA.png)
+
+这个类别具有最广泛的性能，DomC是最快的库之一，lit-html是最慢的。Solid Lit正好在包装的中间。DomC证明了保持代码简单可以带来令人难以置信的性能。它唯一的缺点是＃4，因为它通过在叶节点处进行扩散来工作，这在结构越深处越贵。它足够快，但我们需要验证它如何扩展。Solid Lit比Solid HyperScript更高效。在运行时，即时编译否定了创建反应图的大多数缺点，让它潜伏在最快的虚拟DOM库ivi前面（参见本文末尾的完整性能结果表）。
+
+![](https://miro.medium.com/max/30/1*O0hGe-PSi0k-9SPVxhYjew.png?q=20)
+
+![](https://miro.medium.com/max/1222/1*O0hGe-PSi0k-9SPVxhYjew.png)
+
+这一堆内存要好得多。在所有竞争对手中，DomC拥有最小的内存占用。通过克隆Template元素进行渲染可以节省大量的资金。
+
+这个组中最有趣的一点是，运行时代码生成与构建步骤中的预编译相比，性能成本最低。对于lit-html而言，这可能是一种不公平的比较，因为它没有利用这种技术，但可以公平地说，目前lit-html或类似的库如hyperHTML或lighterHTML，并不是最高效的使用方法。标记模板文字，即使在运行时没有Virtual DOM也可以获得非常好的性能。
+
+预编译的JSX（固态，固态信号，剩余）
+-------------------
+
+现在进入重量级课程。这些库使用在构建时编译的JSX，直到DOM和Reactive图形指令。与Fine-Grained库的最后两个类别不同，初始构造的开销几乎完全被删除，使其成为此类库的理想选择。模板确实可以是任何东西，但JSX提供了一个清晰的语法树，可以提供更好的工具和开发人员体验。
+
+![](https://miro.medium.com/max/29/1*pOK0LoIVBW6CH3KKUf9BAg.png?q=20)
+
+![](https://miro.medium.com/max/1320/1*pOK0LoIVBW6CH3KKUf9BAg.png)
+
+该组具有最接近的性能结果，但差异在这里非常重要。所有这三个库在[S.js中](https://github.com/adamhaile/S)使用相同的变更管理库。使用Solid Signals作为基线显示了使用模板元素克隆的观察功能如何提供最佳性能。Solid的标准实现增加了使用ES2015 Proxies的开销，这增加了所有基准测试的开销。另一方面`document.createElement`，剩余使用在测试创建许多行＃1，＃2，＃7，＃8的基准测试上有更多开销。
+
+![](https://miro.medium.com/max/30/1*H7hQ1HWm7ZrRRx9ncVek7g.png?q=20)
+
+![](https://miro.medium.com/max/1214/1*H7hQ1HWm7ZrRRx9ncVek7g.png)
+
+记忆也同样增加。但是，在这种情况下，代理的开销比模板元素克隆更多。
+
+这里要说的是代理具有真正的性能成本，而更多的库应该克隆模板元素。另一方面，您可以通过代理作为一项小额投资来获得这种性能。Solid的官方实现具有所有库的最小实现代码量，通过长达66行的权重，甚至比Svelte写入非空白字符少13％，Svelte是一个以编写更少代码而自豪的库。
+
+同类最佳（domc，ivi，固态信号，vanillajs）
+-----------------------------
+
+接下来，我们将获取每个类别的获奖者，并将它们与用普通的JavaScript编写的残酷高效的手工制作版本进行比较。这里最好的是每个类别中最好的代表了每种流行的变更管理方法。你甚至可以从这些图书馆中得到相似之处3. Solid→Vue，DomC→Angular，ivi→React。也就是说，如果你将它们剥离到渲染器并丢弃60-200kb的代码。
+
+那我们怎么公平？
+
+![](https://miro.medium.com/max/29/1*NCehudMdyE5Q8t7-HksT8w.png?q=20)
+
+![](https://miro.medium.com/max/1310/1*NCehudMdyE5Q8t7-HksT8w.png)
+
+DomC和Solid在这附近，ivi也没有懈怠，但DomC通常更快。它在vanilla版本上的开销非常小，但对于嵌套的部分更新效率较低。仅这一基准并不能最终将这些方法分开。声称虚拟DOM的人很慢或者有不必要的开销应该检查自己。大多数图书馆永远不会有这种表现。
+
+![](https://miro.medium.com/max/30/1*Ve6YFunf2wuR5JkS7I4T_w.png?q=20)
+
+![](https://miro.medium.com/max/1168/1*Ve6YFunf2wuR5JkS7I4T_w.png)
+
+有了内存，DomC再次展示了它拥有的占地面积。Fine-Grained Solid在内存使用方面领先Virtual DOM ivi。
+
+从这些结果中获得的最有趣的结果可能就是这些库与vanilla JavaScript版本的开销有多少，无论方法如何。这些库都非常快。
+
+捆绑尺寸
+----
+
+最后，我想暂时调出捆绑大小，因为我觉得这个领域太受关注了。最近的“现实世界”基准测试几乎全部关注这些指标。是的，捆绑大小很重要，并且性能之间存在直接关联，但它有多大差异。我怀疑代码加载开销的变化比大小有更大的影响。
+
+![](https://miro.medium.com/max/30/1*Ea0Ns22xOiBWeSzpNycI_Q.png?q=20)
+
+![](https://miro.medium.com/max/1418/1*Ea0Ns22xOiBWeSzpNycI_Q.png)
+
+* * *
+
+结论
+==
+
+像往常一样进行这些比较，结果永远不会是决定性的。这是重要的旅程，也是我们在此过程中学到的东西。在这种情况下，我们发现DOM本身是性能最前沿的最大瓶颈。这么多，以至于没有明确的最佳技术。
+
+> 但是只能有一个。
+
+![](https://miro.medium.com/max/30/1*RzPQRIy-WqyEbDsflcsfFw.jpeg?q=20)
+
+![](https://miro.medium.com/max/645/1*RzPQRIy-WqyEbDsflcsfFw.jpeg)
+
+Christoper Lambert饰演高地人
+
+不，这从来没有那么简单。DOM并不慢。虚拟DOM并不慢。但我认为一个好的转变应该得到另一个好转。我承认React关于Virtual DOM性能的言论让我首先进入了这个领域。无知的意见四处都是令人愤怒的。
+
+同样，最近的“虚拟DOM缓慢”的合唱也同样不明智。渲染一个虚拟DOM树并将其区分开来将是纯粹的开销，而不是这样做，但是没有这样做吗？如果你必须处理数据快照怎么办？
+
+我所看到的是，每个规则都有一个例外。通常，预编译是与Fine-Grained Reactive库配对时最快的方法，但是DomC与两者都不匹配。原生JavaScript方法，例如带有标记模板文字的模板元素克隆，可能是由lit-html中的主要公司（Google）支持的最高性能方法。但是，它是此批次中最慢的，甚至不是使用这些技术的最高性能方式。Svelte可能是围绕“优越”表现的最响亮的社区，图书馆甚至无法在这个人群中竞争。
+
+因此，即使Reactive编程赢得胜利，也不意味着所有Reactive库都很快或者基准测试就是一切。考虑到这种比较的深度，也许是矛盾的，我认为真正的好处是存在快速库和较慢的库。尽管我们希望将其归功于一些优秀的技术，但我们仍然受到所有物理学的限制。
+
+* * *
+
+在单个图表上测试的所有库：
+
+![](https://miro.medium.com/max/30/1*UTkJYuYKJw9TW2qGyRFY0Q.png?q=20)

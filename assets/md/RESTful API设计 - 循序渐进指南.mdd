@@ -1,0 +1,128 @@
+原文:![RESTful API Design — Step By Step Guide](https://medium.com/better-programming/restful-api-design-step-by-step-guide-2f2c9f9fcdbf)
+RESTful API设计 - 循序渐进指南
+======================
+构建更好的API的（Somewhat）权威指南
+-----------------------
+[
+![Tanmay Deshpande](https://miro.medium.com/fit/c/96/96/1*j-M9DGhudr7Vz_dobbuI0Q.jpeg)
+](/@tanmay.avinash.deshpande?source=post_page-----2f2c9f9fcdbf----------------------)
+[Tanmay Deshpande](/@tanmay.avinash.deshpande?source=post_page-----2f2c9f9fcdbf----------------------)
+跟随
+[2018年7月23日](/better-programming/restful-api-design-step-by-step-guide-2f2c9f9fcdbf?source=post_page-----2f2c9f9fcdbf----------------------) · 5 分钟阅读
+![](https://miro.medium.com/max/60/1*SEYbDEKtqgCpEr4D2IVrmw.jpeg?q=20)
+![](https://miro.medium.com/max/3500/1*SEYbDEKtqgCpEr4D2IVrmw.jpeg)
+![](https://miro.medium.com/max/7000/1*SEYbDEKtqgCpEr4D2IVrmw.jpeg)
+摄影：[Marius Masalar](https://unsplash.com/photos/CyFBmFEsytU?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)，[来自Unsplash](https://unsplash.com/search/photos/connectivity?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+作为软件开发人员，我们大多数人在日常生活中使用或构建[REST API](https://restfulapi.net/)。API是系统之间的默认通信方式。亚马逊是如何有效地使用API​​进行通信的最佳示例。
+在本文中，我将讨论如何更好地设计RESTful API以避免常见错误。
+* * *
+杰夫贝索斯（成功的关键）任务
+==============
+你们中的一些人可能已经知道了[Jeff Bezos对](https://en.wikipedia.org/wiki/Jeff_Bezos)亚马逊开发人员[的](https://en.wikipedia.org/wiki/Jeff_Bezos)授权。如果你没有机会听到它，以下几点是它的关键。
+1.  所有团队今后将通过服务接口公开他们的数据和功能。
+2.  团队必须通过这些接口相互通信。
+3.  不允许任何其他形式的进程间通信 - 没有直接链接，没有直接读取另一个团队的数据存储，没有共享内存模型，没有任何后门。允许的唯一通信是通过网络上的服务接口调用。
+4.  它们使用什么技术并不重要。HTTP，Corba，Pubsub，自定义协议 - 无所谓。贝索斯不在乎。
+5.  毫无例外地，所有服务接口必须从头开始设计为可外部化。也就是说，团队必须进行规划和设计，以便能够向外界的开发人员公开界面。没有例外。
+6.  **任何不这样做的人都会被解雇。**
+最终，这成为亚马逊成功的关键。亚马逊可以构建可扩展的系统，后来也可以提供像[**亚马逊网络服务**](https://aws.amazon.com/)这样的[**服务**](https://aws.amazon.com/)。
+* * *
+设计RESTful API的原则
+================
+现在让我们了解在设计RESTful API时应遵循的原则。
+把事情简单化
+------
+我们需要确保API的基本URL很简单。例如，如果我们要为产品设计API，则应将其设计为：
+```
+/ products   
+/ products / 12345
+```
+第一个API是获取所有产品，第二个API是获取特定产品。
+使用名词而不是动词
+---------
+很多开发人员犯了这个错误。他们通常忘记我们有HTTP方法可以更好地描述API，并最终在API URL中使用动词。例如，获取所有产品的API应为：
+```
+/products
+```
+而_不是_如下所示
+```
+/ getAllProducts
+```
+到目前为止，我已经看到了一些常见的URL模式。
+使用正确的HTTP方法
+-----------
+RESTful API有各种方法来指示我们将使用此API执行的操作类型。
+*   **获取** - 获取资源或资源集合。
+*   **POST** - 创建资源或资源集合。
+*   **PUT / PATCH** - 更新现有资源或资源集合。
+*   **DELETE** - 删除现有资源或资源集合。
+我们需要确保为给定的操作使用正确的HTTP方法。
+使用复数
+----
+这个话题有点争议。有些人喜欢用多个名字保留资源URL，而其他人喜欢保持单数。例如 -
+```
+/products
+/product
+```
+我喜欢保持复数，因为它避免了我们是否在谈论获得单一资源或集合的混淆。它还避免添加其他内容，例如将所有内容附加到基本URL，例如
+```
+/product/all
+```
+有些人可能不喜欢这样，但我唯一的建议是在整个项目中保持统一。
+使用参数
+----
+有时我们需要一个API，它应该讲述更多的故事而不仅仅是id。在这里，我们应该使用查询参数来设计API。
+*   `/products?name=’ABC’` 应该优先考虑 `/getProductsByName`
+*   `/products?type=’xyz’` 应该优先考虑 `/getProductsByType`
+这样，您可以避免设计简单的长URL。
+使用正确的HTTP代码
+-----------
+我们有[很多HTTP代码](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes)。我们大多数人最终只使用两个 - 200和500！这当然不是好习惯。以下是一些常用的HTTP代码。
+*   **200 OK** - 这是最常用的HTTP代码，用于显示所执行的操作是否成功。
+*   **201 CREATED** - 当您使用POST方法创建新资源时，可以使用此选项。
+*   **202 ACCEPTED** - 可用于确认发送到服务器的请求。
+*   **400 BAD REQUEST** - 当客户端输入验证失败时，可以使用此选项。
+*   **401 UNAUTHORIZED / 403 FORBIDDEN** - 如果用户或系统未被授权执行某项操作，则可以使用此选项。
+*   **404 NOT FOUND** - 如果您正在查找某个资源但在系统中不可用，则可以使用此功能。
+*   **500内部服务器错误** - 永远不应该明确抛出，但如果系统出现故障可能会发生。
+*   **502 BAD GATEWAY** - 如果服务器收到来自上游服务器的无效响应，则可以使用此选项。
+版本
+--
+API的版本控制非常重要。许多不同的公司以不同的方式使用版本。一些使用版本作为日期，而一些使用版本作为查询参数。我通常喜欢将它作为资源的前缀。例如：
+```
+/ v1 / products   
+/ v2 / products
+```
+我也想避免使用`/v1.2/products`，因为它意味着API会经常变化。此外，URL中可能不容易看到点（。）。所以保持简单。
+保持向后兼容性始终是一种好习惯，这样，如果您更改API版本，消费者就有足够的时间转移到下一个版本。
+使用分页
+----
+当您公开可能返回大量数据的API时，必须使用分页，如果没有进行适当的负载平衡，则消费者可能最终关闭服务。我们需要始终牢记API设计应该是完全证明和傻瓜证明。
+这里使用`limit` 和`offset` 推荐使用。例如，`/products?limit=25&offset=50`。还建议保持默认限制和默认偏移。
+支持的格式
+-----
+选择API的响应方式也很重要。大多数现代应用程序应该返回JSON响应，除非您有一个仍需要获得XML响应的遗留应用程序。
+使用正确的错误消息
+---------
+保留应用程序发送的一组错误消息并使用正确的id响应该错误消息始终是一种好习惯。例如，如果您使用Facebook图形API，如果出现错误，它会返回如下消息：
+```
+{   
+ “error”：{   
+ “message”：“（＃803）Some of the aliases you requested do not exist: products”，  
+ “type”：“OAuthException”，  
+ “code”：803，  
+ “fbtrace\_id”：“FOXX2AhLh80”   
+ }   
+}
+```
+我还看到了一些示例，其中人们返回带有错误消息的URL，它会告诉您有关错误消息以及如何处理错误消息的更多信息。
+使用OpenAPI规范
+-----------
+为了使贵公司的所有团队都遵守某些原则，使用[OpenAPI规范](https://swagger.io/resources/open-api/)会很有用。OpenAPI允许您首先设计API并以更简单的方式与消费者共享。
+结论
+--
+很明显，如果你想要更好地沟通，API就是你要走的路。但如果它们的设计很糟糕，那么它可能会增加混乱。所以尽最大努力设计好，剩下的就是实施。
+* * *
+谢谢你的阅读
+======
+如果您遇到了一些设计API的更好方法，请随时在评论部分分享。欢迎所有反馈！

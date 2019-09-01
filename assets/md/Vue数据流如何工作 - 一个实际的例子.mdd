@@ -1,0 +1,215 @@
+原文:![Vue数据流如何工作 - 一个实际的例子](https://medium.com/@davidmm1707/lets-learn-about-passing-data-in-vue-2d7ad9d896f)
+Vue数据流如何工作 - 一个实际的例子
+====================
+
+[![DavidMM](https://miro.medium.com/fit/c/96/96/2*fjnUZ1OB3U1KmSdwSTNueQ.jpeg)](/@davidmm1707?source=post_page-----2d7ad9d896f----------------------)
+
+[DavidMM](/@davidmm1707?source=post_page-----2d7ad9d896f----------------------)
+
+跟随
+
+[5月7日](/@davidmm1707/lets-learn-about-passing-data-in-vue-2d7ad9d896f?source=post_page-----2d7ad9d896f----------------------) · 7 分钟阅读
+
+![](https://miro.medium.com/max/60/0*wAgfjvxjDqxnj4BM?q=20)
+
+![](https://miro.medium.com/max/220/0*wAgfjvxjDqxnj4BM)
+
+![](https://miro.medium.com/max/440/0*wAgfjvxjDqxnj4BM)
+
+当我开始使用Vue时，我爱上了它。比Angular更容易，我正在使用的前端框架，并且使用起来很有趣。但是在我学习的过程中，我对Vue数据流的选项感到不知所措。如何将数据传递给兄弟组件？如何将数据传递给子组件？那些他们没有关系的另一个组件怎么样？
+
+让我们分析你可以在Vue中传递数据的所有方法，以及你应该使用哪个以及何时使用。
+
+_如果你需要一个技术性更小，概念性更强的解释，_[_这里就是一个_](https://letslearnabout.net/blog/let-learn-about-vue-data-flow/)_。如果您是Vue的初学者，请在阅读之前阅读_
+
+* * *
+
+我们的选择
+=====
+
+我们有4个选项可以在Vue中传递数据：
+
+*   在同一个组件中
+*   道具/ $放出
+*   EventBus
+*   Vuex商店
+
+所有4个都很有用。为了修理某些东西，有时你需要一把锤子，有时候需要鸭子带 没有“通用工具”可以购买并丢弃所有其他工具。你需要他们所有人学习他们的地方和使用方式。我们来学习它们吧。
+
+* * *
+
+我们的代码
+=====
+
+为了比较它们，我创建了一个小的Vue项目：一个购物车。
+
+没有什么花哨的，只是一个有两个部分的网站：一个列出要购买的商品，价格和可用金额，另一个列出您购买的商品，数量和总金额。
+
+![](https://miro.medium.com/max/60/0*NOULmkVIO-YGw3ZK?q=20)
+
+![](https://miro.medium.com/max/688/0*NOULmkVIO-YGw3ZK)
+
+![](https://miro.medium.com/max/1376/0*NOULmkVIO-YGw3ZK)
+
+是。设计简单。这是我能做的最好的事情。
+
+正如您所看到的，有一个带有四个链接的菜单：我之前提到的每个选项一次。
+
+在每种情况下，您都可以点击“+”符号将商品添加到购物车，然后将其从商店中删除。而' - '则相反。在每种情况下，您的购物车的“总数”将被重新计算。
+
+你可以在这里下载：[https](https://github.com/david1707/shopping-cart)：[//github.com/david1707/shopping-cart](https://github.com/david1707/shopping-cart)
+
+在同一组件之间共享数据
+===========
+
+第一种也是更简单的方法是将所有内容都放在同一个组件中。两个“项目”（包含要购买的所有项目）和“shoppingCart”（包含所有选定的项目）都在同一个Vue组件中，便于它们之间的交互。
+
+代码很清楚。_Items_和_ShoppingCart_是包含数据的数组，我们有一个计算变量，_totalShopping_计算你要花多少钱，_addItem_和_removeItem_方法做他们的名字所说的。
+
+即使您是一名新的Javascript程序员，也能理解那里发生的一切。
+
+代码在同一个组件中，很容易理解。
+
+* * *
+
+道具和$发射
+======
+
+![](https://miro.medium.com/max/60/0*AuwsK8ZtBd50Frg8?q=20)
+
+![](https://miro.medium.com/max/603/0*AuwsK8ZtBd50Frg8)
+
+![](https://miro.medium.com/max/1206/0*AuwsK8ZtBd50Frg8)
+
+但现在事情变得复杂了。当我们有一个4级组件Web应用程序时会发生什么？当我们有一个带有3个兄弟姐妹组件的容器组件时会怎么样？
+
+在这个例子中，我们有一个父组件，容器组件和两个子组件：一个Item Side组件和一个Total Side组件：
+
+![](https://miro.medium.com/max/60/0*udA8FU2aBeenbKr1?q=20)
+
+![](https://miro.medium.com/max/640/0*udA8FU2aBeenbKr1)
+
+![](https://miro.medium.com/max/1280/0*udA8FU2aBeenbKr1)
+
+到目前为止，方法和数据都在同一个组件中。现在它们是分开的，必须在它们之间进行交互。当我们点击“+”按钮时，我们必须从Item侧组件中删除该类型中的一个项目，但也要在Total侧组件中添加一个项目。但也通过了价格。
+
+遗憾的是，props和$ emit仅使用父/子关系：您不能将信息直接传递给另一个组件。Props将数据传递给子组件，$ emit将数据发送到其父组件。
+
+因此，如果我们想要将Item组件中的数据传递给Total组件，我们需要使用$ emit将数据从Item发送到父Container，然后通过props向下发送到Total组件。我们来看看相关代码：
+
+ItemSideComponent.vue：
+
+这里，_addItem_方法获取名称和价格，并使用'addItem'标志“发出”一个信号：任何听这个标志的组件都会注意到。
+
+让我们看一下应该监听的父组件Container：
+
+正如您所看到的，我们正在收听我们在_props-item-side_元素中发出的'addItem'信号，并且一旦收到任何内容，我们将调用将更改_item_对象的方法_addItem_。现在我们必须将它传递给props-total-side。为此，我们需要使用道具。
+
+<props-total-side：newItem =“item”/>将_项目_对象作为_newItem_发送，它将作为prop接收：
+
+现在我们执行方法的第二部分：将其添加到_shoppingCart_数组中。
+
+如您所见，该方法包含相同的代码，但它分为3个组件。我们必须这样做，因为我们正在影响不同的组件。
+
+现在您可能会想：如果我们必须将一些数据传递给组件内部组件内的组件内的组件......？我是否必须在每一个上使用道具和/或发射？
+
+答案是肯定的。除非我们使用EventBus。
+
+* * *
+
+EventBus
+========
+
+![](https://miro.medium.com/max/60/0*sM1Hd3O3o7cdBfRb?q=20)
+
+![](https://miro.medium.com/max/688/0*sM1Hd3O3o7cdBfRb)
+
+![](https://miro.medium.com/max/1376/0*sM1Hd3O3o7cdBfRb)
+
+如果我们的项目很复杂，有很多组件与数据交互，那么你会发疯的。想象一个包含12个组件的小项目，传递上下数据。这应该是更好的方法，对吧？
+
+幸运的是，确实如此。
+
+EventBus具有与props和$ emit相同的原则，但作为超级父级。
+
+每个组件都是Eventbus的子组件，因此无论两个组件共享数据有多远：它们总是将EventBus作为父组件。
+
+所以现在，我们只需要在发送数据的组件和接收数据的组件之间进行交互。EventBus只是充当“中间人”。
+
+我们来看看代码。首先，我们创建一个名为event-bus.js的根级文件：
+
+是的，就像那样。现在可以导入EventBus，我们可以使用它。这是我们的_ItemSideComponent_：
+
+就像使用props和$ emit一样，但不使用任何其他组件。现在，我们的_TotalSideComponent_：
+
+现在，如您所见，我们导入EventBus并开始收听'addItem'标志，如'created'所示。一旦我们得到一个信号，我们就会触发_addItem_方法。方式更简单。
+
+* * *
+
+Vuex
+====
+
+![](https://miro.medium.com/max/60/0*eXP8ObSyQiMZfJI_?q=20)
+
+![](https://miro.medium.com/max/688/0*eXP8ObSyQiMZfJI_)
+
+![](https://miro.medium.com/max/1376/0*eXP8ObSyQiMZfJI_)
+
+EventBus是一个改进，但我们仍然必须向EventBus发送信号，听取它们，如果我们的项目足够大，将会有点难以追逐到哪里。如果我们在两个或更多组件中使用方法，我们甚至可以使用重复的代码。
+
+Vuex解决了这个问题。
+
+Vuex是一个状态管理库，作为集中存储，是项目真实的唯一来源。
+
+好。让我解释。
+
+还记得我们如何传递和传递数据，使用一些方法等等？现在想象一下6个组件的项目。或者20.这会很疯狂，对吗？
+
+想象一下，您创建了一个商店，您可以在其中添加商品，然后将所述商品传递到购买页面，然后确认，然后......
+
+Vuex作为自己状态的单一事实来源。每个组件都从Vuex状态中提取数据。如果我们需要一些数据，我们将其从Vuex状态拉出来。不是来自其他组成部分，而只是国家。由于每个组件信息都是从Vuex状态获取的，因此没有冲突。
+
+我们来看看Vuex商店：
+
+很酷，现在我们在一个文件中拥有所有逻辑！这种方式当我们必须改变任何东西时，我们只需要转到store.js文件来修改它。不再追逐组件中的代码！
+
+此外，这确保我们遵循“不要重复自己”指令。
+
+现在，每个组件只需要访问每个方法和状态值。
+
+ItemSideComponent：
+
+TotalSideComponent：
+
+方式不那么复杂。如果您需要创建更多使用某些功能的组件，您只需要导入方法就可以了。
+
+当然，这会增加一些复杂性，因为您必须设置Vuex，商店，以及将store.js拆分为模块（auth.module.js，user.module.js等）所需的大型应用程序，但是它是值得的，因为它会为你节省很多痛苦。
+
+很酷......我应该使用哪一个？
+=================
+
+他们都是。认真。
+
+每个方面都有自己的位置，你只需要用自己的判断。但是，请允许我帮助你：
+
+*   简单组件：仅用于操作组件中已存在的数据。
+*   道具和$发射。用于在父/子组件之间传递/向上传递数据。您可以设法在不同级别的组件之间传递数据，但这是不必要的困难。仅当您使用共享组件作为自定义按钮等作为道具数据传递时才使用它（例如，导入组件时）。
+*   EventBus。用于在组件之间传递数据。距离在这里并不重要，因为您使用的EventBus组件充当每个组件的中间人。使用它在具有两个或更多分离度的组件之间传递数据或触发功能。
+*   Vuex。除非我正在做的事情超级简单，否则我的默认选择。单一的事实来源是伟大的，并且不可能丢失数据。此外，方法的可重用性很好。
+
+我不能强调这一点：每个选项都有其用途，了解所有选项并应用最适合您项目的选项。
+
+更多信息：
+=====
+
+我已经学会了Vue做了[100天的代码挑战](https://letslearnabout.net/100daysofcode/why-i-am-joining-100daysofcode/)。这就是我在做完之后学到的：[学习Vue：我的五个W](https://letslearnabout.net/100daysofcode/vue/100daysofcode-learning-vue-my-five-ws/)
+
+[在Twitter上联系我](https://twitter.com/DavidMM1707)
+
+[我的Youtube教程视频](https://www.youtube.com/channel/UC9OLm6YFRzr4yjlw4xNWYvg/videos)
+
+联系我：DavidMM1707@gmail.com
+
+* * *
+
+_最初于__2019年5月6日__在_[_https://letslearnabout.net_](https://letslearnabout.net/javascript/vue-javascript/how-vue-data-flow-works-practical-example/)_上__发表__。_

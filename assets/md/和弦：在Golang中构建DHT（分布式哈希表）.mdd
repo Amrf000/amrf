@@ -1,0 +1,140 @@
+![和弦：在Golang中构建DHT（分布式哈希表）](https://medium.com/techlog/chord-building-a-dht-distributed-hash-table-in-golang-67c3ce17417b)
+和弦：在Golang中构建DHT（分布式哈希表）
+========================
+
+[![法尔汉阿里汗](https://miro.medium.com/fit/c/48/48/0*HGAfdfyDuINjMw1u.jpg)](/@arriqaaq?source=post_page-----67c3ce17417b----------------------)
+
+[法尔汉阿里汗](/@arriqaaq?source=post_page-----67c3ce17417b----------------------)
+
+跟随
+
+[2018年9月11日](/techlog/chord-building-a-dht-distributed-hash-table-in-golang-67c3ce17417b?source=post_page-----67c3ce17417b----------------------) · 5 分钟阅读
+
+_在这一系列文章中，我将实现一些与分布式系统相关的着名论文，主​​要是在Golang中。（阅读上__一篇__关于_[_Consistent Hashing的文章_](https://hackernoon.com/consistent-hashing-with-bounded-loads-using-a-red-black-tree-b5aaf0d8540f)_，使用红黑树）_
+
+本文是Golang中[**CHORD DHT**](https://pdos.csail.mit.edu/papers/ton:chord/paper-ton.pdf)文件的简单实现。
+
+DHT简介
+=====
+
+![](https://miro.medium.com/max/30/0*XV4B_fIkmiIU7Gbp.png?q=20)
+
+![](https://miro.medium.com/max/500/0*XV4B_fIkmiIU7Gbp.png)
+
+分布式哈希表
+
+甲**分布式哈希表**（**DHT**）是一类分散的[分布式系统](https://en.wikipedia.org/wiki/Distributed_computing)，其提供类似于查找服务[哈希表](https://en.wikipedia.org/wiki/Hash_table)：（_键_，_值_）对存储在DHT中，并且任意参与[节点](https://en.wikipedia.org/wiki/Node_(networking))能够高效地检索与一个相关联的值给定的关键。维护从密钥到值的映射的责任在节点之间分配，使得参与者集合中的改变导致最小量的中断。这允许DHT [扩展](https://en.wikipedia.org/wiki/Scale_(computing))到极大数量的节点并处理连续的节点到达，离开和故障。
+
+DHT构成了可用于构建更复杂服务的基础架构，例如任[播](https://en.wikipedia.org/wiki/Anycast)，协作[Web缓存](https://en.wikipedia.org/wiki/Web_cache)，[分布式文件系统](https://en.wikipedia.org/wiki/Distributed_file_system)，[域名服务](https://en.wikipedia.org/wiki/Domain_name_system)，[即时消息传递](https://en.wikipedia.org/wiki/Instant_messaging)，[多播](https://en.wikipedia.org/wiki/Multicast)以及[对等](https://en.wikipedia.org/wiki/Peer-to-peer) [文件共享](https://en.wikipedia.org/wiki/File_sharing)和[内容分发](https://en.wikipedia.org/wiki/Content_distribution)系统。使用DHT的着名分布式网络包括[BitTorrent](https://en.wikipedia.org/wiki/BitTorrent_(protocol))的分布式跟踪器，[Coral内容分发网络](https://en.wikipedia.org/wiki/Coral_Content_Distribution_Network)，[Kad网络](https://en.wikipedia.org/wiki/Kad_network)，[Storm僵尸网络](https://en.wikipedia.org/wiki/Storm_botnet)，[Tox即时消息](https://en.wikipedia.org/wiki/Tox_(protocol))，[Freenet](https://en.wikipedia.org/wiki/Freenet)，[YaCy](https://en.wikipedia.org/wiki/YaCy)搜索引擎和[InterPlanetary文件系统](https://en.wikipedia.org/wiki/InterPlanetary_File_System)。
+
+DHT的属性
+======
+
+DHT特征强调以下属性：
+
+*   [自治和分散](https://en.wikipedia.org/wiki/Decentralized_computing)：节点共同形成系统，没有任何中央协调。
+*   [容错](https://en.wikipedia.org/wiki/Fault_tolerance)：即使节点连续加入，离开和失败，系统也应该是可靠的（在某种意义上）。
+*   [可扩展性](https://en.wikipedia.org/wiki/Scale_(computing))：即使有数千或数百万个节点，系统也应该高效运行。
+
+DHT协议和实现的示例：[Apache Cassandra，](https://en.wikipedia.org/wiki/Apache_Cassandra)[BATON Overlay，](https://en.wikipedia.org/wiki/BATON_Overlay) [CAN](https://en.wikipedia.org/wiki/Content_Addressable_Network)（内容可寻址网络），[Pastry，](https://en.wikipedia.org/wiki/Pastry_(DHT)) [Riak，](https://en.wikipedia.org/wiki/Riak) [Voldemort](https://en.wikipedia.org/wiki/Voldemort_(distributed_data_store))
+
+**什么是CHORD？**
+=============
+
+![](https://miro.medium.com/max/30/0*WqXs3F73o7NGlXuJ.png?q=20)
+
+![](https://miro.medium.com/max/250/0*WqXs3F73o7NGlXuJ.png)
+
+在[计算中](https://en.wikipedia.org/wiki/Computing)，**Chord**是用于[对等](https://en.wikipedia.org/wiki/Peer-to-peer)[分布式哈希表](https://en.wikipedia.org/wiki/Distributed_hash_table)的协议和[算法](https://en.wikipedia.org/wiki/Algorithm)。分布式哈希表通过将密钥分配给不同的计算机（称为“节点”）来存储[键值对](https://en.wikipedia.org/wiki/Associative_array)。节点将存储其负责的所有密钥的值。Chord指定如何将键分配给节点，以及节点如何通过首先定位负责该键的节点来发现给定键的值。[](https://en.wikipedia.org/wiki/Peer-to-peer)[](https://en.wikipedia.org/wiki/Distributed_hash_table)[](https://en.wikipedia.org/wiki/Associative_array)
+
+**Chord**是四种原始[分布式哈希表](https://en.wikipedia.org/wiki/Distributed_hash_table)协议之一，以及[CAN](https://en.wikipedia.org/wiki/Content_addressable_network)，[Tapestry](https://en.wikipedia.org/wiki/Tapestry_(DHT))和[Pastry](https://en.wikipedia.org/wiki/Pastry_(DHT))。它由[Ion Stoica](https://en.wikipedia.org/wiki/Ion_Stoica)，[Robert Morris](https://en.wikipedia.org/wiki/Robert_Tappan_Morris)，[David Karger](https://en.wikipedia.org/wiki/David_Karger)，[Frans Kaashoek](https://en.wikipedia.org/wiki/Frans_Kaashoek)和[Hari Balakrishnan](https://en.wikipedia.org/wiki/Hari_Balakrishnan)于2001年推出，并在[麻省理工学院](https://en.wikipedia.org/wiki/MIT)开发。有关详细信息，请参阅[原始论文](https://pdos.csail.mit.edu/papers/ton:chord/paper-ton.pdf)。
+
+Chord基于[**一致的散列**](https://hackernoon.com/consistent-hashing-with-bounded-loads-using-a-red-black-tree-b5aaf0d8540f)，这是我在之前的文章中实现的。
+
+**实施细节**
+========
+
+Chord协议只支持一个操作：给定一个键，它将确定负责存储密钥值的节点。Chord本身不存储密钥和值，但提供了允许更高层软件构建各种存储系统的原语; CFS就是Chord原语的一种用法。
+
+我将尝试使用wiki文章解释基本实现。
+
+1\. **基本查询**
+
+Chord协议的核心用法是从客户端（通常也是节点）查询密钥，即查找后继（k）。基本方法是将查询传递给节点的后继者，如果它无法在本地找到密钥。这将导致O（N）查询时间，其中N是环中机器的数量。为了避免上面的线性搜索，Chord通过要求每个节点保持一个包含多达m个条目的指针表来实现更快的搜索方法，回想一下m是散列键中的位数。
+
+![](https://miro.medium.com/max/30/0*ma9nP6ZPZ2OwEvvN.png?q=20)
+
+![](https://miro.medium.com/max/850/0*ma9nP6ZPZ2OwEvvN.png)
+
+节点n的i {th}条目将包含后继（（n + 2 ^ {i-1}）mod 2 ^ m）。finger表的第一个条目实际上是节点的直接后继（因此不需要额外的后继字段）。每次节点想要查找密钥k时，它会将查询传递给其手指表中k的最近的后继者或前任者（取决于手指表）（ID小于的圆上的“最大”者） k），直到节点发现密钥存储在其直接后继中。使用这样的指针表，在N节点网络中找到后继者必须联系的节点数是O（log N）
+
+2\. **节点加入**
+
+每当新节点加入时，应保持三个不变量（前两个确保正确性，最后一个保持快速查询）：
+
+1.  每个节点的后继者都正确指向其直接后继者。
+2.  每个密钥都存储在后继（k）中
+3.  每个节点的手指表应该是正确的。
+
+为了满足这些不变量，为每个节点维护一个_前驱_字段。
+
+由于后继是指针表的第一个条目，我们不再需要单独维护该字段。应该为新加入的节点n执行以下任务：
+
+1.  初始化节点n（前一个和指针表）。
+2.  通知其他节点更新其前任和指针表。
+3.  新节点从其后继者接管其负责的密钥。
+
+n的前身可以从后继者（n）的前身（在前一个圆圈中）中容易地获得。至于其指针表，有各种初始化方法。最简单的方法是对所有m个条目执行查找后继查询，从而产生O（M \\ log N）初始化时间。更好的方法是检查指针表中的第i个条目对于第（i + 1）个{th}条目是否仍然是正确的。这将导致O（log²N）。
+
+3\. **稳定**
+
+为确保正确查找，所有后继指针必须是最新的。因此，稳定协议在后台定期运行，更新指针表和后继指针。
+
+稳定协议的工作原理如下：
+
+*   Stabilize（）：n询问其前身p的继承者，并决定p是否应该是n的后继者（如果p最近加入了系统，则情况就是如此）。
+*   Notify（）：通知n的存在继承者，因此它可以将其前身改为n
+*   Fix\_fingers（）：更新手指表/ \*
+*   check\_predecessor（）：定期检查前任是否存活
+
+很多细节都可以在论文中找到。这是一个简单的GIF来演示和弦DHT的工作原理。
+
+![](https://miro.medium.com/freeze/max/30/1*4ScEqacqOK_hOWwQeFNgLw.gif?q=20)
+
+![](https://miro.medium.com/max/800/1*4ScEqacqOK_hOWwQeFNgLw.gif)
+
+如您所见，当一个节点关闭时，该节点的密钥将传输到后继节点。
+
+这是代码：
+
+[
+
+arriqaaq /和弦
+
+
+----------------
+
+### 
+
+和弦DHT（分布式哈希表）文件的实现 - arriqaaq / chord
+
+#### 
+
+github.com
+
+
+
+](https://github.com/arriqaaq/chord?source=post_page-----67c3ce17417b----------------------)
+
+如果有任何错误/更正，请随时发表评论并告诉我。
+
+_在GreedyGame，我们尝试帮助游戏开发者获利，而不会妨碍游戏玩家的游戏体验。我们致力于通过将原生广告引入移动游戏并创建广告人❤来创建更好的广告生态系统_
+
+**参考文献：**
+
+1.  [https://en.wikipedia.org/wiki/Distributed\_hash\_table](https://en.wikipedia.org/wiki/Distributed_hash_table)
+2.  [https://hackernoon.com/consistent-hashing-with-bounded-loads-using-a-red-black-tree-b5aaf0d8540f](https://hackernoon.com/consistent-hashing-with-bounded-loads-using-a-red-black-tree-b5aaf0d8540f)
+3.  [https://en.wikipedia.org/wiki/Chord\_(peer-to-peer）](https://en.wikipedia.org/wiki/Chord_(peer-to-peer))
+4.  [https://pdos.csail.mit.edu/papers/ton:chord/paper-ton.pdf](https://pdos.csail.mit.edu/papers/ton:chord/paper-ton.pdf)
+
+**通过**[**Telegram**](https://t.me/ravenprotocol)**与Raven团队联系**[](https://t.me/ravenprotocol)

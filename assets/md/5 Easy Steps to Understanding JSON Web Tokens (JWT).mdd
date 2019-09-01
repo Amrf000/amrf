@@ -1,0 +1,144 @@
+原文:![5 Easy Steps to Understanding JSON Web Tokens (JWT)](https://medium.com/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec)
+#### 最重要的
+
+![](https://miro.medium.com/max/30/1*LI654qGDaGGtqPMoQtIWsw.jpeg?q=20)
+
+![](https://miro.medium.com/max/2500/1*LI654qGDaGGtqPMoQtIWsw.jpeg)
+
+理解JSON Web令牌（JWT）的5个简单步骤
+========================
+
+[
+
+![Mikey Stecky-Efantis](https://miro.medium.com/fit/c/48/48/1*9STOKL2QnpWZRRm4ZU96RA.jpeg)
+
+](/@mikeysteckyefantis?source=post_page-----1164c0adfcec----------------------)
+
+[Mikey Stecky-Efantis](/@mikeysteckyefantis?source=post_page-----1164c0adfcec----------------------)
+
+跟随
+
+[2016年5月17日](/vandium-software/5-easy-steps-to-understanding-json-web-tokens-jwt-1164c0adfcec?source=post_page-----1164c0adfcec----------------------) · 7 分钟阅读
+
+在本文中，将解释JSON Web Tokens（JWT）的基本原理以及它们的使用原因。JWT是确保应用程序信任和安全的重要部分。JWT允许以安全的方式表示诸如用户数据之类的声明。
+
+为了解释JWT如何工作，让我们从一个抽象的定义开始。
+
+> JSON Web令牌（JWT）是一种[JSON对象](http://www.w3schools.com/json/)，在[RFC 7519中](https://tools.ietf.org/html/rfc7519)定义为表示双方之间的一组信息的安全方式。令牌由标头，有效负载和签名组成。
+
+简单地说，JWT只是一个具有以下格式的字符串：
+
+header.payload.signature
+
+_应该注意，双引号字符串实际上被认为是有效的JSON对象。_
+
+为了说明实际使用JWT的方式和原因，我们将使用一个简单的3实体示例（参见下图）。此示例中的实体是用户，应用程序服务器和身份验证服务器。验证服务器将向用户提供JWT。通过JWT，用户可以安全地与应用程序通信。
+
+![](https://miro.medium.com/max/30/1*SSXUQJ1dWjiUrDoKaaiGLA.png?q=20)
+
+![](https://miro.medium.com/max/2188/1*SSXUQJ1dWjiUrDoKaaiGLA.png)
+
+应用程序如何使用JWT验证用户的真实性。
+
+在该示例中，用户首先使用认证服务器的登录系统登录认证服务器（例如，用户名和密码，Facebook登录，Google登录等）。然后，身份验证服务器创建JWT并将其发送给用户。当用户对应用程序进行API调用时，用户将传递JWT以及API调用。在此设置中，应用程序服务器将配置为验证传入的JWT是否由身份验证服务器创建（稍后将更详细地解释验证过程）。因此，当用户使用附加的JWT进行API调用时，应用程序可以使用JWT来验证API调用是否来自经过身份验证的用户。
+
+现在，将更深入地研究JWT本身及其构建和验证方式。
+
+步骤1.创建**HEADER**
+================
+
+JWT的头部分包含有关如何计算JWT签名的信息。标头是以下格式的JSON对象：
+
+在此JSON中，“typ”键的值指定对象是JWT，“alg”键的值指定用于创建JWT签名组件的散列算法。在我们的示例中，我们使用HMAC-SHA256算法（一种使用密钥的散列算法）来计算签名（在步骤3中更详细地讨论）。
+
+第2步。创建PAYLOAD
+=============
+
+JWT的有效载荷组件是存储在JWT内的数据（该数据也称为JWT的“声明”）。在我们的示例中，身份验证服务器创建一个JWT，其中存储有用户信息，特别是用户ID。
+
+有效载荷内的数据称为令牌的“声明”。
+
+在我们的示例中，我们只将一个声明放入有效载荷中。您可以根据需要添加任意数量的声明。JWT有效载荷有几种不同的标准声明，例如“发布”发行者，“子”主题，“exp”到期时间。这些字段在创建JWT时很有用，但它们是可选的。有关JWT标准字段的更详细列表，请参阅JWT上的[维基百科页面](https://en.wikipedia.org/wiki/JSON_Web_Token#Standard_fields)。
+
+请记住，数据的大小将影响JWT的总体大小，这通常不是问题，但具有过大的JWT可能会对性能产生负面影响并导致延迟。
+
+第3步。创建SIGNATURE
+===============
+
+签名使用以下伪代码计算：
+
+//签名算法data = base64urlEncode（header）+“。”+ base64urlEncode（payload）hashedData = hash（data，secret）signature = base64urlEncode（hashedData）
+
+该算法所做的是[base64url](http://kjur.github.io/jsjws/tool_b64uenc.html)对在步骤1和2中创建的头和有效负载进行[编码](http://kjur.github.io/jsjws/tool_b64uenc.html)。然后，算法将得到的编码字符串与它们之间的句点（。）连接在一起。在我们的伪代码中，此连接字符串被分配给_数据_。该_数据_串[散列](https://en.wikipedia.org/wiki/Hash_function)用在JWT头中指定的哈希算法的秘密密钥。生成的散列数据将分配给_hashedData。_然后对该散列数据进行base64url编码以产生JWT签名。
+
+在我们的示例中，标头和有效负载都是base64url编码为：
+
+// header   
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9 //有效载荷  
+eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZhYi1jZWYZOTA0NjYwYmQifQ
+
+然后，在加入周期的编码头和编码有效载荷上应用带有密钥的指定签名算法，我们得到签名所需的散列数据。在我们的例子中，这意味着在_数据_字符串上应用HS256算法，并将密钥设置为字符串“secret”，以获取_hashedData_字符串_。_之后，通过base64url编码_hashedData_字符串，我们得到以下JWT签名：
+
+//签名\-xN\_h82PHVTCMA9vdoHrcZxH-x5mb11y1537t3rGzcM
+
+步骤4.将所有三个JWT组件放在一起
+==================
+
+现在我们已经创建了所有三个组件，我们可以创建JWT。记住JWT 的_header.payload.signature_结构，我们只需要组合组件，用句点（。）分隔它们。我们使用头部和有效载荷的base64url编码版本，以及我们在步骤3中得到的签名。
+
+// JWT Token   
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiJiMDhmODZhZi0zNWRhLTQ4ZjItOGZhYi1jZWYzOTA0NjYwYmQifQ.-xN\_h82PHVTCMA9vdoHrcZxH-x5mb11y1537t3rGzcM
+
+您可以尝试通过[jwt.io上](http://jwt.io)的浏览器创建自己的JWT 。
+
+回到我们的示例，身份验证服务器现在可以将此JWT发送给用户。
+
+JWT如何保护我们的数据？
+-------------
+
+重要的是要了解使用JWT的目的是什么 **不**以任何方式隐藏或隐藏数据。使用JWT的原因是为了证明发送的数据实际上是由真实的源创建的。
+
+如前面的步骤所示，JWT内的数据是经过**编码**和**签名的**，而不是**加密的**。编码数据的目的是转换数据的结构。签名数据允许数据接收器验证数据源的真实性。因此，编码和签名数据不会保护数据。另一方面，加密的主要目的是保护数据并防止未经授权的访问。有关编码和加密之间差异的更详细说明，以及有关散列如何工作的更多信息，请参阅[此文章](https://danielmiessler.com/study/encoding-encryption-hashing-obfuscation/#encoding)。
+
+> 由于JWT仅被签名和编码，并且由于JWT未加密，因此JWT不保证敏感数据的任何安全性。
+
+步骤5.验证JWT
+=========
+
+在我们简单的3实体示例中，我们使用的是由HS256算法签名的JWT，其中只有身份验证服务器和应用服务器知道密钥。当应用程序设置其身份验证过程时，应用程序服务器从身份验证服务器接收密钥。由于应用程序知道密钥，因此当用户对应用程序进行JWT附加的API调用时，应用程序可以执行与JWT上的步骤3相同的签名算法。然后，应用程序可以验证从其自己的哈希操作获得的签名是否与JWT本身上的签名匹配（即，它与由身份验证服务器创建的JWT签名匹配）。如果签名匹配，则表示JWT有效，表示API调用来自可信源。除此以外，如果签名不匹配，则表示收到的JWT无效，这可能是对应用程序的潜在攻击的指示。因此，通过验证JWT，应用程序在自身和用户之间添加了一层信任。
+
+结论
+==
+
+我们了解了JWT是什么，如何创建和验证它们，以及如何使用它们来确保应用程序与其用户之间的信任。这是了解JWT基础知识及其有用之处的起点。JWT只是确保应用程序中的信任和安全性的难题之一。
+
+* * *
+
+应该注意的是，本文中描述的JWT认证设置使用对称密钥算法（HS256）。您也可以以类似的方式设置JWT身份验证，除非使用非对称算法（例如RS256），其中身份验证服务器具有密钥，并且应用程序服务器具有公钥。[查看此Stack Overflow问题](https://stackoverflow.com/questions/39239051/rs256-vs-hs256-whats-the-difference)，了解使用对称和非对称算法之间差异的详细分类。
+
+还应该注意，JWT应该通过HTTPS连接（而不是HTTP）发送。拥有HTTPS有助于防止未经授权的用户通过使用它来窃取所发送的JWT，从而[无法拦截](https://en.wikipedia.org/wiki/HTTPS#Security)服务器和用户之间的通信。
+
+此外，在您的JWT有效载荷中过期，特别是短的有效载荷很重要，这样如果旧的JWT受到损害，它们将被视为无效并且不能再使用。
+
+* * *
+
+如果您喜欢本文并正在为AWS Lambda编写处理程序并正在实施JWT，请查看我们的项目：[Vandium](https://github.com/vandium-io/vandium-node)
+
+[
+
+Vandium：AWS Lamba的Node.js框架
+
+
+-------------------------------
+
+### 
+
+在过去几年中，最令人兴奋的新云技术之一就是亚马逊网络服务的出现......
+
+#### 
+
+medium.com
+
+
+
+](/vandium-software/vandium-the-node-js-framework-for-aws-lamba-cee6cc57a0b7?source=post_page-----1164c0adfcec----------------------)

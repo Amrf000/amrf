@@ -1,0 +1,332 @@
+原文:![强化学习：马尔可夫决策过程（第2部分）](https://towardsdatascience.com/reinforcement-learning-markov-decision-process-part-2-96837c936ec3)
+
+#OptimizingRL
+-------------
+
+强化学习：马尔可夫决策过程（第2部分）
+===================
+
+[![Ayush Singh](https://miro.medium.com/fit/c/48/48/2*LLEM023k23B67DFgleKLRw.jpeg)](/@thakur.ayu.7?source=post_page-----96837c936ec3----------------------)
+
+[Ayush Singh](/@thakur.ayu.7?source=post_page-----96837c936ec3----------------------)
+
+跟随
+
+[8月31日](/reinforcement-learning-markov-decision-process-part-2-96837c936ec3?source=post_page-----96837c936ec3----------------------) · 10 分钟阅读
+
+> 这个故事是继续前面的[_强化学习：马尔可夫决策过程（第1部分）的_](/introduction-to-reinforcement-learning-markov-decision-process-44c533ebf8da?source=friends_link&sk=9ecb7b106959a3ae34396f7924bec50d)故事，我们讨论了如何为特定环境定义MDP。我们还讨论了Bellman方程以及如何找到价值函数和政策国家的功能。**在这个故事中**，我们将向前迈**更深**，了解**贝尔曼期望方程**，我们如何找到**最优值**和**最优策略功能**对于一个给定的状态，然后，我们将定义**贝尔曼最优性方程**。
+
+![](https://miro.medium.com/freeze/max/30/1*5PGCR0jwd15kLhRCA09R1w.gif?q=20)
+
+![](https://miro.medium.com/max/345/1*5PGCR0jwd15kLhRCA09R1w.gif)
+
+谷歌的跑酷使用强化学习
+
+让我们快速浏览一下这个故事：
+
+*   Bellman期望方程
+*   最优政策
+*   状态值函数的Bellman最优性方程
+*   状态 - 值函数的Bellman最优性方程
+
+所以，一如既往地抓住你的咖啡，不要停止，直到你感到骄傲
+
+让我们先来看看，**贝尔曼期望方程是什么？**
+
+Bellman期望方程
+-----------
+
+我们在之前的故事中谈到的**贝尔曼方程的**快速回顾：
+
+![](https://miro.medium.com/max/30/0*p2EZAHDeVSZL23H4.png?q=20)
+
+![](https://miro.medium.com/max/379/0*p2EZAHDeVSZL23H4.png)
+
+价值函数的Bellman方程（状态值函数）
+
+从上面的**等式**，我们可以看到状态的值可以**分解**为立即奖励（**R \[t + 1\]**）**加上**后继状态的值（**v \[S（t + 1）\]**）和折扣因子（**γ**）。这仍然代表Bellman期望方程。但是现在我们正在做的是我们发现一个特定国家的价值**受到**一些政策（**π**）的影响。这是Bellman方程和Bellman期望方程之间的差异。
+
+在数学上我们可以将Bellman期望方程定义为：
+
+![](https://miro.medium.com/max/30/1*PfqQf6Sp9oXuuAJ90eb94Q.png?q=20)
+
+![](https://miro.medium.com/max/524/1*PfqQf6Sp9oXuuAJ90eb94Q.png)
+
+价值函数的Bellman期望方程（状态值函数）
+
+让我们称之为等式1.上面的等式告诉我们，当我们遵循某个策略（**π**）时，特定状态的值由直接奖励加上后继状态的值确定**。**
+
+同样，我们可以表达我们的状态 - 动作值函数（Q-Function），如下所示：
+
+![](https://miro.medium.com/max/30/1*4Fdbohxs6LedqarJjw65Qg.png?q=20)
+
+![](https://miro.medium.com/max/706/1*4Fdbohxs6LedqarJjw65Qg.png)
+
+状态 - 动作值函数的Bellman期望方程（Q-函数）
+
+让我们把这个等式2。在上述公式中，我们可以看到，一个国家的国家行动的价值可以分解到**立即回报**，我们得到有关执行状态（某种行动**小号**），并移动到另一种状态（**S'**）加上状态（**s'**）的状态 - 动作值的折扣值，**关于**我们的代理人将从该状态**进行**的某些动作（**a**）。
+
+**_深入了解Bellman期望方程：_**
+
+首先，让我们借助备份图了解Bellman期望方程的状态值函数：
+
+![](https://miro.medium.com/max/30/1*rvBTXXINBk4K7Y-ZGzb7zg.png?q=20)
+
+![](https://miro.medium.com/max/400/1*rvBTXXINBk4K7Y-ZGzb7zg.png)
+
+状态值函数的备份图
+
+此备份图描述了处于特定状态的值。从状态来看，我们有可能同时采取这两种行动。每个动作都有一个Q值（状态 - 动作值函数）。我们平均Q值，告诉我们在特定状态下有多好。基本上，它定义了**Vπ（s）。\[看方程式1\]**
+
+在数学上，我们可以将其定义如下：
+
+![](https://miro.medium.com/max/30/1*BHPIPkH4ecNGL-mqFdvOKQ.png?q=20)
+
+![](https://miro.medium.com/max/363/1*BHPIPkH4ecNGL-mqFdvOKQ.png)
+
+存在于一个州的价值
+
+该等式还告诉我们状态 - 值函数和状态 - 动作值函数之间的联系。
+
+现在，让我们看一下State-Action Value Function的备份图：
+
+![](https://miro.medium.com/max/30/1*vncwpTCOtrEN3ncpApPntg.png?q=20)
+
+![](https://miro.medium.com/max/459/1*vncwpTCOtrEN3ncpApPntg.png)
+
+状态 - 值函数的备份图
+
+这个备份图表示假设我们从采取某些行动（a）开始。因此，由于动作（a），代理可能被环境吹向任何这些状态。因此，我们在问这个问题，**_采取行动有多好（a）？_**
+
+我们再次对两个州的状态值进行平均，并立即给予奖励，告诉我们采取特定行动有多好（a）。这定义了我们的**qπ（s，a）。**
+
+在数学上，我们可以将其定义如下：
+
+![](https://miro.medium.com/max/30/1*VaTUGZR3_WHlVQrgcxzG1A.png?q=20)
+
+![](https://miro.medium.com/max/449/1*VaTUGZR3_WHlVQrgcxzG1A.png)
+
+定义在状态s中采取特定动作a有多好的公式
+
+其中P是过渡概率。
+
+现在让我们将这些备份图拼接在一起以定义状态值函数**Vπ（s）**：
+
+![](https://miro.medium.com/max/30/1*hY1sGpzmpKqM7o1b4_nygw.png?q=20)
+
+![](https://miro.medium.com/max/448/1*hY1sGpzmpKqM7o1b4_nygw.png)
+
+状态值函数的备份图
+
+从上图中，如果我们的代理处于某些**状态，**并且从该状态开始，假设我们的代理可以采取两个操作，因为哪个环境可能会将我们的代理带到任何**状态（s'）**。请注意，我们的代理人可能从州**s**采取的行动的概率由我们的政策加权，并且在采取该行动之后，我们在任何州（**s'**）降落的概率由环境加权。
+
+现在我们的问题是，在采取某些行动并登陆另一个州（s'）并遵循我们的政策（**π**）之后处于州的状态有多好？
+
+它类似于我们之前所做的，我们将用我们的政策加权一些转移概率（P）来平均后继状态（**s'**）的值。
+
+在数学上，我们可以将其定义如下：
+
+![](https://miro.medium.com/max/30/1*9Xh-HfapxEPc9jeuMn4gFg.png?q=20)
+
+![](https://miro.medium.com/max/633/1*9Xh-HfapxEPc9jeuMn4gFg.png)
+
+在备份图中处于状态S的状态值函数
+
+现在，让我们对State-Action Value Function，**qπ（s，a）**做同样的事情：
+
+![](https://miro.medium.com/max/30/1*IGxGBCJcGUa9cZtEH-VEqw.png?q=20)
+
+![](https://miro.medium.com/max/469/1*IGxGBCJcGUa9cZtEH-VEqw.png)
+
+状态 - 动作值函数的备份图
+
+它非常类似于我们在做**国家的价值功能**，只是它的倒数，所以这个图基本上说，我们的代理商采取一些行动（**一**），因为它的环境可能落在我们在任何国家（的**小号**），然后从该状态我们可以选择采取任何行动（**a'**）加权我们的政策概率（**π**）。同样，我们将它们平均在一起，这给了我们一直遵循特定政策（**π**）采取特定行动的好处。
+
+在数学上，这可以表示为：
+
+![](https://miro.medium.com/max/30/1*unJD42XiA1VqoqPxLGJcKg.png?q=20)
+
+![](https://miro.medium.com/max/667/1*unJD42XiA1VqoqPxLGJcKg.png)
+
+备份图中的状态 - 动作值功能
+
+因此，这就是我们如何为给定的MDP制定Bellman期望方程以找到它的状态值函数和状态 - 行为值函数。**_但是，它并没有告诉我们在MDP中表现的最佳方式_**。为此，我们来谈谈**最优价值**和**最优政策功能的**含义。
+
+最优价值函数
+------
+
+> **定义最优状态值函数**
+
+在MDP环境中，根据不同的策略有许多不同的价值功能。**_最优值函数是与所有其他值函数相比产生最大值的函数_**。当我们说我们正在解决MDP时，它实际上意味着我们正在寻找最佳价值函数。
+
+因此，数学上最优状态值函数可表示为：
+
+![](https://miro.medium.com/max/30/1*JgBQkp-t-vzn5cqjBw10hQ.png?q=20)
+
+![](https://miro.medium.com/max/299/1*JgBQkp-t-vzn5cqjBw10hQ.png)
+
+最优状态值函数
+
+在上面的公式中，v \*（s）告诉我们从系统中获得的最大回报是多少。
+
+> **定义最佳状态 - 动作值函数（Q函数）**
+
+同样，**最佳状态 - 行动价值函数**告诉我们，如果我们处于状态并且从那里开始采取行动，我们将获得最大的回报。
+
+在数学上，它可以定义为：
+
+![](https://miro.medium.com/max/30/1*HDT7YYHewp2mDc5jFAWw8w.png?q=20)
+
+![](https://miro.medium.com/max/358/1*HDT7YYHewp2mDc5jFAWw8w.png)
+
+最优状态 - 行动价值函数
+
+> **最佳状态值函数**：它是所有策略的最大值函数。
+> 
+> **最佳状态 - 动作值功能**：它是所有策略的最大动作 - 值功能。
+
+现在，让我们来看看，最优政策是什么意思？
+
+最优政策
+----
+
+在我们定义最优政策之前，让我们知道，**_一项政策对其他政策的意义是什么？_**
+
+我们知道，对于任何MDP，有政策（**π）**比任何其他政策（更好**π'）。但是怎么样？**
+
+我们说如果所有状态的策略**π**的值函数大于所有状态的策略**π'**的值函数，则一个策略（**π）**优于其他策略（**π'**）。直觉上，它可以表示为：
+
+![](https://miro.medium.com/max/30/1*dpJKumwuULjYKLaHjTxr7g.png?q=20)
+
+![](https://miro.medium.com/max/386/1*dpJKumwuULjYKLaHjTxr7g.png)
+
+现在，让我们定义**_最优政策：_**
+
+> **最优政策**是导致最优价值功能的政策。
+
+请注意，MDP中可以有多个最优策略。但是，**_所有最优策略都实现了相同的最优值函数和最优状态 - 动作值函数（Q函数）_**。
+
+现在，问题出现在我们如何找到最优政策。
+
+> **寻找最优政策：**
+
+我们通过最大化**_q_ \***（s，a）即最优状态 - 动作值函数来找到最优策略。我们求解q \*（s，a）然后我们选择给出最优状态 - 动作值函数的动作（ q \*（S，A））。
+
+以上陈述可表示为：
+
+![](https://miro.medium.com/max/30/1*nw_fIgyOoFm0BMIS4Wb-Aw.png?q=20)
+
+![](https://miro.medium.com/max/548/1*nw_fIgyOoFm0BMIS4Wb-Aw.png)
+
+寻找最优政策
+
+这就是说，对于状态s我们选择概率为1的动作a，如果它给出了最大q \*（s，a）。所以，如果我们知道q \*（s，a），我们可以从中获得最优政策。
+
+让我们用一个例子来理解它：
+
+![](https://miro.medium.com/max/30/1*cqudfnL1_iZPXeZTIPLGZw.png?q=20)
+
+![](https://miro.medium.com/max/753/1*cqudfnL1_iZPXeZTIPLGZw.png)
+
+最优政策的例子
+
+在此示例中，红色弧是**最优策略**，这意味着如果我们的代理遵循此路径，它将从此MDP **获得最大奖励**。此外，通过查看每个州的**q \***值，我们可以说我们的代理人将采取的行动产生最大的回报。因此，最优策略始终采用具有更高q \*值的行动（状态 - 动作值函数）。例如，在值为8的状态中，存在值为0和8的q \*。我们的代理选择具有更大**q \***值的那个，即8。
+
+现在，问题出现了，**_我们如何找到这些q \*（s，a）值？_**
+
+这就是贝尔曼最优性方程式发挥作用的地方。
+
+Bellman最优性方程
+------------
+
+> 最优值函数递归地与Bellman最优性方程相关。
+
+贝尔曼最优性方程与贝尔曼期望方程式相同，但唯一的区别在于不是采用我们的代理人可以采取的动作的平均值，而是采用最大值的动作。
+
+让我们在备份图的帮助下理解这一点：
+
+![](https://miro.medium.com/max/30/1*7p-nZZiF6v0u7shQleEVEQ.png?q=20)
+
+![](https://miro.medium.com/max/477/1*7p-nZZiF6v0u7shQleEVEQ.png)
+
+状态值函数的备份图
+
+假设我们的代理处于状态S，并且从该状态可以采取两个动作（a）。因此，我们查看每个动作的动作值，而**不像**贝尔曼期望方程式，**而不是**取**平均值，**我们的代理人采取具有**更大q \*值**的动作。这给了我们在州S的价值。
+
+在数学上，这可以表示为：
+
+![](https://miro.medium.com/max/30/1*ixfRgSvNluDW5DaeAbTckA.png?q=20)
+
+![](https://miro.medium.com/max/314/1*ixfRgSvNluDW5DaeAbTckA.png)
+
+状态值函数的Bellman最优性方程
+
+类似地，让我们为**状态 - 动作值函数（Q-函数）**定义Bellman最优性方程。
+
+让我们看一下状态 - 动作值函数的备份图（Q函数）：
+
+![](https://miro.medium.com/max/30/1*qGtg89UHLIy_SSIPFDbPYw.png?q=20)
+
+![](https://miro.medium.com/max/488/1*qGtg89UHLIy_SSIPFDbPYw.png)
+
+状态 - 动作值函数的备份图
+
+假设，我们的代理人在某些州采取了行动。现在，环境可能会让我们陷入任何这些状态（**s'**）。我们仍然取两个状态的平均值，但唯一的**区别**在于Bellman最优性方程我们知道每个状态的**最优值**。与Bellman期望方程不同，我们只知道状态的值。
+
+在数学上，这可以表示为：
+
+![](https://miro.medium.com/max/30/1*hEIbIonh4cbWu04MmMY5cw.png?q=20)
+
+![](https://miro.medium.com/max/489/1*hEIbIonh4cbWu04MmMY5cw.png)
+
+状态 - 行为价值函数的Bellman最优性方程
+
+让我们再次为状态值函数缝合这些备份图：
+
+![](https://miro.medium.com/max/30/1*6YVaMjuJV2IuZb6y_Zpo2w.png?q=20)
+
+![](https://miro.medium.com/max/529/1*6YVaMjuJV2IuZb6y_Zpo2w.png)
+
+状态值函数的备份图
+
+假设我们的代理人处于州和州，并采取了一些行动（a）采取该行动的可能性由政策**加权**。并且由于动作（a），代理可能被吹到任何状态（**s'**），其中概率由环境加权。**为了找到状态S的值，我们简单地平均状态的最优值（s'）**。这给了我们在州S的价值。
+
+在数学上，这可以表示为：
+
+![](https://miro.medium.com/max/30/1*Jntq2W9k565P-hLleMzlZA.png?q=20)
+
+![](https://miro.medium.com/max/562/1*Jntq2W9k565P-hLleMzlZA.png)
+
+状态值函数Bellman最优性方程的备用图
+
+等式中的最大值是因为我们正在最大化代理可以在上弧中采取的动作。该等式还显示了我们如何将V \*函数与其自身联系起来。
+
+现在，让我们看一下状态 - 动作值函数的Bellman最优性方程，q \*（s，a）：
+
+![](https://miro.medium.com/max/30/1*2bMhBw2bc4pcvETmIQ-NFQ.png?q=20)
+
+![](https://miro.medium.com/max/528/1*2bMhBw2bc4pcvETmIQ-NFQ.png)
+
+状态 - 动作值函数的备份图
+
+假设，我们的代理商在状态**小号**，并采取了一些措施（**一**）。由于这种行为，环境可能会将我们的代理人降落到任何州（**s'**），并且从这些状态我们可以**最大化**我们的代理人将采取的行动，即选择具有**最大q \*值**的行动。我们将它提升到顶部并告诉我们行动的价值a。
+
+在数学上，这可以表示为：
+
+![](https://miro.medium.com/max/30/1*ps4FtXzAHS8fqMkQ-hVogA.png?q=20)
+
+![](https://miro.medium.com/max/601/1*ps4FtXzAHS8fqMkQ-hVogA.png)
+
+状态 - 动作值函数的Bellman最优性方程 - 备用图
+
+让我们看一个更好地理解它的例子：
+
+![](https://miro.medium.com/max/30/1*lIIA5CczkzwXPWUmhK6DFA.png?q=20)
+
+![](https://miro.medium.com/max/803/1*lIIA5CczkzwXPWUmhK6DFA.png)
+
+Bellman最优性方程的例子
+
+看红色箭头，假设我们希望找到的**值**状态与价值6（**红色**），我们可以看到，我们取得的-1的奖励，如果我们的代理人选择的Facebook和奖励-2如果我们的代理选择研究。为了找到红色的状态值，我们将**贝尔曼最优性方程用于状态 - 值函数，**即_考虑到其他两个状态具有最优值，我们将采取平均值并最大化两个动作（选择一个给出最大值）_。因此，从图中我们可以看到，对于我们的红色状态，去Facebook会产生5的值，然后研究产生6的值，然后我们最大化两个，这给我们6个答案。
+
+现在，我们如何解决大型MDP的Bellman最优性方程。为了做到这一点，我们使用**动态编程算法，**如**政策迭代**和价值迭代，我们将在下一个故事和其他方法，如**Q-Learning**和**SARSA**，用于时间差异学习，我们将在未来的故事中介绍。

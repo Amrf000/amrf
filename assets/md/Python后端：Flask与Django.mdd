@@ -1,0 +1,158 @@
+![Python后端：Flask与Django](https://medium.com/better-programming/python-backends-flask-versus-django-5de314fa70ff)
+#### 最重要的
+
+Python后端：Flask与Django
+=====================
+
+什么是适合您的下一个项目？
+-------------
+
+[![SeattleDataGuy](https://miro.medium.com/fit/c/48/48/0*yQUyY8JtXeDsGnPR.jpg)](/@SeattleDataGuy?source=post_page-----5de314fa70ff----------------------)
+
+[SeattleDataGuy](/@SeattleDataGuy?source=post_page-----5de314fa70ff----------------------)
+
+跟随
+
+[7月26日](/better-programming/python-backends-flask-versus-django-5de314fa70ff?source=post_page-----5de314fa70ff----------------------) · 7 分钟阅读
+
+![](https://miro.medium.com/max/30/1*Na45YxJbn2e5O3XcpKszDA.jpeg?q=20)
+
+![](https://miro.medium.com/max/5184/1*Na45YxJbn2e5O3XcpKszDA.jpeg)
+
+照片来自[Jefferson Santos](https://unsplash.com/@jefflssantos?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)的[Unsplash](https://unsplash.com/search/photos/programmer?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText)
+
+您是否正在考虑使用Python开发网站？然后你可能听说过[Django](https://www.djangoproject.com/foundation/)和[Flask](http://flask.pocoo.org/docs/0.12/foreword/)。这两个是Python最流行的Web框架（当然还有更多）。现在的问题是你使用哪一个？
+
+本文旨在简要介绍两种框架的工作原理，它们的相同点和不同点，以及在选择框架时应考虑的一些要点。
+
+* * *
+
+I.快速介绍
+======
+
+基于Python的主要应用程序是使用命令行界面创建的，可以在命令提示符或shell脚本上运行。当然，人们希望使用Python做更多事情，而不仅仅是自动执行任务和管理工作流程。他们很快就需要Web框架。
+
+Django的
+-------
+
+![](https://miro.medium.com/max/30/1*eb8-mQvZgG48z10mDrbT9Q.jpeg?q=20)
+
+![](https://miro.medium.com/max/2182/1*eb8-mQvZgG48z10mDrbT9Q.jpeg)
+
+Django是一个Python Web框架，适合具有时间限制的完美主义者。Django提供功能齐全的模型 - 视图 - 控制器框架。它的开发基于“包含电池的方法”，使开发人员无需第三方库和工具即可创建网站。随着2005年7月15日的第一次发布，Django由[Django软件基金会（DSF](https://www.djangoproject.com/foundation/)）开发和管理。它是免费的，开源的，有更多的版本发布。
+
+烧瓶
+--
+
+![](https://miro.medium.com/max/30/1*0G5zu7CnXdMT9pGbYUTQLQ.png?q=20)
+
+![](https://miro.medium.com/max/438/1*0G5zu7CnXdMT9pGbYUTQLQ.png)
+
+Flask is a Python micro-framework based on doing one thing at a time and doing it well. With the first release on April 1st, 2010, Flask is developed by Armin Ronacher, an Austrian developer. As described in its [documentation forward](http://flask.pocoo.org/docs/0.12/foreword/#what-does-micro-mean), the _micro_ in _micro-framework_ implies that Flask aims to maintain its lightweight simplicity and still extensible usage. The true power of Flask is its ability to be flexible.
+
+* * *
+
+II. Comparison and Contrast, Flask Vs. Django
+=============================================
+
+Below is an in-depth comparison of Django and Flask, using factors like:
+
+*   Popularity: Usage and Use Cases
+*   Getting Started: Documentation and Navigation Ease
+*   Template Engine and System
+*   Routing system
+*   User Flexibility
+*   Availability of Admin system
+*   Speed of Development
+
+Popularity: Usage and Use Cases
+-------------------------------
+
+Several top websites use Django and Flask. Statistics from GitHub and other sites show Django is more popular than Flask. This popularity is only down to developers’ use of Django’s robust features to build and deploy complicated web applications rapidly. Similarly, developers use Flask to speed up the development of websites that use fixed content. Some well-known projects powered by Django (Bitbucket, Eventbrite, [Instagram](https://instagram-engineering.com/web-service-efficiency-at-instagram-with-python-4976d078e366), Pinterest, and more) and Flask (LinkedIn, Netflix, Twilio, Uber) use these frameworks actively.
+
+User Flexibility
+----------------
+
+One of the biggest differences between the two frameworks is flexibility.
+
+Django’s _batteries-included_ concept aids developers in creating a variety of web apps without third-party libraries and tools. However, Django lacks the options to effect changes to provided modules. Hence, developers create web applications using built-in features. This means if a developer wants to use a different library for a function that Django already provides, it won’t be easy.
+
+Conversely, Flask uses its extensible web framework to enable the flexible development of web applications using various web development libraries and tools. This allows more experienced developers the freedom to plug and play with the libraries and databases they are comfortable with.
+
+You’re not stuck with what the framework forces you to use. Instead, you can pivot into technical components you’re comfortable with.
+
+Documentation and Navigation Ease
+---------------------------------
+
+Flask makes extensive documentation available, which covers deployment, installation, QuickStart instructions, and detailed tutorials. Using Python’s package manager, installing Flask with pip is easy.
+
+_$ pip install flask_
+
+The pip command above installs Flask with its essential packages. Running codes on Flask is quite simple (for instance, displaying “Hi Welcome”). All it requires is creating an instance of the Flask class, followed by a route that displays the “Hi Welcome” string.
+
+from flask import Flask  
+app = Flask(\_\_name\_\_)@app.route("/")  
+    def hi\_welcome():  
+        return "Hi Welcome"if \_\_name\_\_ == "\_\_main\_\_":  
+    app.run()
+
+Django’s [documentation](https://docs.djangoproject.com/) is much more extensive than Flask’s, which is to be expected due to its complexity. Django can be installed quickly using pip as well.
+
+_$ pip install Django_
+
+Running code in Django involves the use of an in-built command to create a project, and another command for app creation. Its start-up commands are convenient since it engages a ready-to-use directory structure.
+
+Routing System
+--------------
+
+Essential to any web application or website is the Routing system, which creates URLs and determines what displays when the URL is loaded.
+
+Flask employs a simple, lightweight web framework with routing done by a `route()` decorator. Using the “Hello World” sample above, the first line is a decorator. Decorators are the function that takes a callable (a class) as a parameter, followed by modification before returning it. The string used also tells Flask what URL triggers its function. For example, use /(http://127.0.0.1:5000/\\), which loads the very first page when Flask is accessed using your browser.
+
+For Django, it applies a batteries-included approach, which makes it easier for developers to accomplish basic web development tasks like database schema migration, URL routing, and user authentication. Custom web application also experiences process acceleration in Django as it offers a bootstrapping tool, built-in template engine, and ORM system. Routing is handled using the `urls.py` file, which is created when running the in-built `djangoadmin startproject` command. To define a route entails importing the URL method from Django and creating an instance, specifying each parameter (keyword arguments, existing URLs module, and regex string). The in-built Django URL for the admin site comes by default in the `urls.py` file. It tells Django where you’re loading the URL from and the specified module.
+
+Availability of Admin system
+----------------------------
+
+![](https://miro.medium.com/max/30/1*TOBqtBwPW3VcC9YtAPNojg.png?q=20)
+
+Django uses an admin system that follows the Object Relational Mapper (ORM) directory structure and a database system. It adds to the all-inclusive experience when it comes to developing with Django as multiple projects have the same directory structure.
+
+Flask lacks these features and may require you to install custom modules to use an ORM as optional to the developer. These options include usage with MongoDB, SQLAlchemy, SQLite, and more. As you can see, this is a tradeoff between flexibility and ease of use. Where Django comes with most of the technical components required to build a website. Flask is more purely only the framework, allowing the end user to make more decisions.
+
+Speed of Development
+--------------------
+
+Django frameworks are known to offer fast speed of development for complex web applications. Since it offers full features, it provides all the necessary tools for implementation.
+
+Flask’s simplicity permits experienced developers to complete smaller applications within short timeframes. A significant advantage of the Django framework is the availability of an active community intended to help with solutions to scale your app or make your job easier with useful content. The Flask community is currently not as big, so finding useful information is not as easy.
+
+Template Engine and System
+--------------------------
+
+All web applications have a front-end (user interface) that supports user interaction. Since web apps are not static, they take different approaches to generate HTML dynamically. Django and Flask offer exciting templates engines.
+
+Flask is developed using the [Jinja2](http://jinja.pocoo.org/) template engine. It is a modern and design-friendly template, which allows developers to simulate dynamic web applications with the assistance of an integrated sandboxed environment. Jinja2 templates contain variables as well as tags. Another key characteristic of Flask templates is template inheritance. Below are examples of some commonly used Jinja2 syntax:
+
+_comments: {# … #}__variables: {{ … }}__statements: {% … %}_ (Similar to normal programming, Jinja2 statements find usage in a variety of cases, like if-else statements, imports, loops, and macros).
+
+Django uses a built-in template engine, which allows developers to define the web application’s user-facing layer effortlessly. Also, developers can use the Django template language (DTL) to write templates in creating custom user interface development. Templating syntax in Django includes:
+
+_single-line comments: {# … #}__multi-line comments: {% comment %} … {% endcomment %}__filters on variables: {{ variable|filter }}__tags: {% … %}__variables: {{ … }}_
+
+The jinja2 template takes inspiration from the Django template language, hence the similar syntax. Django templates feature template inheritance, and more information can be seen at Django template [official documentation](https://docs.djangoproject.com/en/1.11/ref/templates/language/).
+
+* * *
+
+Conclusion
+==========
+
+要开始使用Flask和Django框架，必须更深入地了解基础知识。每个框架所附带的差异和好处在于您希望实施哪种项目。主要对比包括：
+
+**_Flask_**提供灵活性，简单性和细粒度控制。Flask毫无疑问，让您决定如何实现应用程序。
+
+**_Django_**为您的Web应用程序开发提供管理面板，数据库接口，目录结构和ORM的全包体验。
+
+我们希望这有助于您对所选框架做出明确决定。
+
+祝你未来的项目顺利！
