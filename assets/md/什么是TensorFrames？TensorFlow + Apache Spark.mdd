@@ -1,0 +1,228 @@
+![什么是TensorFrames？TensorFlow + Apache Spark](https://towardsdatascience.com/what-is-tensorframes-tensorflow-apache-spark-a385ec4bc1d5)
+什么是TensorFrames？TensorFlow + Apache Spark
+=========================================
+
+[![阿迪波拉克](https://miro.medium.com/fit/c/48/48/2*aK-BSakOtnI7zrGyg99XuQ.png)](/@adipolak?source=post_page-----a385ec4bc1d5----------------------)
+
+[阿迪波拉克](/@adipolak?source=post_page-----a385ec4bc1d5----------------------)
+
+跟随
+
+[3月25日](/what-is-tensorframes-tensorflow-apache-spark-a385ec4bc1d5?source=post_page-----a385ec4bc1d5----------------------) · 9 分钟阅读
+
+![](https://miro.medium.com/max/30/1*OWBS9uQiG8TzkrFl20elKw.jpeg?q=20)
+
+**首先，TensorFrames是什么？**
+
+TensorFrames是由Apache Spark贡献者创建的开源。其功能和参数的名称与TensorFlow框架中的相同。在引擎盖下，它是Apache Spark DataFrames的Apache Spark DSL（特定于域的语言）包装器。它允许我们使用TensorFlow功能操作DataFrame。不，它**不是** [pandas DataFrame](https://www.tutorialspoint.com/python_pandas/python_pandas_dataframe.htm)，它基于Apache Spark DataFrame。
+
+**..但等等，什么是TensorFlow（TF）？**
+
+TensorFlow是一个开源软件库，用于在一系列任务中进行数据流和可区分编程。它是一个符号数学库，也用于机器学习应用程序，如神经网络。
+
+![](https://miro.medium.com/max/30/0*HUlDKdJEBnF3gbEr.jpeg?q=20)
+
+**..和Apache Spark？**
+
+Apache Spark是一个开源的分布式通用集群计算框架。
+
+![](https://miro.medium.com/max/30/0*tjXkt8QaQpbwZPVc.png?q=20)
+
+关于规模的一个词
+--------
+
+今天当我们提到规模时，我们通常谈论两种选择; 水平缩放，垂直缩放。
+
+*   **水平刻度** - 添加具有或多或少相同计算能力的其他计算机
+*   **垂直扩展** - 为我们目前正在使用的机器添加更多资源。它可以是从CPU升级到GPU，更多内存（RAM）等的处理器。
+
+使用TensorFrames，我们可以同时执行更多处理器计算能力和更多计算机。只有TensorFlow我们通常会专注于通过垂直扩展来增加更多功能，现在有了Apache Spark支持，我们可以纵向和横向扩展。但是，我们如何知道我们实际需要多少？要回答这个问题，我们需要了解我们的应用程序的完整用法并做出相应的计划。
+
+对于每次更改，例如添加计算机或从CPU升级到GPU，我们都有_停机时间。_在云中，调整群集大小或增加更多计算能力只需几分钟，而在我们需要处理添加新机器和升级机器处理器的本地时，这可能需要数天甚至数月。
+
+因此，更灵活的解决方案是公共云。
+
+在下图中，水平刻度是X轴，其中垂直刻度是Y轴。
+
+![](https://miro.medium.com/max/30/0*ftyhVsmFr9q_oLnb.png?q=20)
+
+\*\*在Apache Spark conf的Tim Hunter演示文稿中滑动
+
+在跳转到函数之前，让我们先了解一些重要的TensorFlow词汇表：
+==================================
+
+张量
+--
+
+一种静态类型的多维数组，其元素是泛型类型。
+
+GraphDef
+--------
+
+`Graph`或者`Computional Graph`是TensorFlow的核心概念来呈现计算。当我们使用TensorFlow时，我们首先创建自己`Computation Graph`的`Graph`TensorFlow 并将其传递给TensorFlow。`GraphDf`是序列化版本`Graph`。
+
+手术
+--
+
+在Tensors上执行计算的Graph节点。操作是a中的一个节点`Graph`，它将零或更多`Tensors`（由图中的其他操作生成）作为输入，并产生零个或多个`Tensor`s作为输出。
+
+身分
+--
+
+`tf.identity`当我们想要在设备之间显式传输张量（例如，从GPU到CPU）时使用。该操作将节点添加到图形中，当输入和输出的设备不同时，该节点进行复制。
+
+不变
+--
+
+常量具有以下参数，可以根据需要进行调整以获得所需的函数。它与变量相同，但其值不能更改。常数可以是：
+
+*   `value`：输出类型的常量值（或列表）`dtype`。
+*   `dtype`：结果张量元素的类型。
+*   `shape`：产生张量的可选尺寸。
+*   `name`：张量的可选名称。
+*   `verify_shape`：布尔值，用于验证值的形状。
+
+占位符
+---
+
+为数据分配存储（例如在馈送期间为图像像素数据）。初始值不是必需的（但可以设置，请参阅`tf.placeholder_with_default`）。与变量相对应，您需要声明初始值。\\
+
+一些Apache Spark词汇表
+=================
+
+数据帧
+---
+
+这是组织到命名列中的_分布式_数据集合，提供筛选，分组或计算聚合的操作。数据帧数据通常分布在多台机器上。它可以在内存数据中或在磁盘上。
+
+RelationalGroupedDataset
+------------------------
+
+用于聚合的一组方法`DataFrame`，由[groupBy](http://maxpumperla.com/java-book/api/scala/org/apache/spark/sql/Dataset.html#groupBy(col1:String,cols:String*):org.apache.spark.sql.RelationalGroupedDataset)，[cube](http://maxpumperla.com/java-book/api/scala/org/apache/spark/sql/Dataset.html#cube(col1:String,cols:String*):org.apache.spark.sql.RelationalGroupedDataset)或[rollup](http://maxpumperla.com/java-book/api/scala/org/apache/spark/sql/Dataset.html#rollup(col1:String,cols:String*):org.apache.spark.sql.RelationalGroupedDataset)创建。
+
+主要方法是`agg`函数，它有多个变体。此类还包含一些一阶统计信息，例如`mean`，`sum`为方便起见。
+
+现在我们更好地理解了术语，让我们来看看功能。
+
+功能 - TensorFlow版本0.6.0
+======================
+
+Apache Spark以大规模数据分析平台而闻名，与TensorFlow一起，我们得到TensorFrames，它有三类数据操作：
+
+让我们了解每个功能。
+
+\-1-映射
+
+映射操作将列转换和/或添加到给定的数据帧。
+
+每个功能都通过两个API访问，一个接收Operation，另一个接收DataFrame，GraphDef和ShapeDescription。
+
+暴露的API：
+
+MapRows
+-------
+
+`def mapRows(o0: Operation, os: Operation*): DataFrame`
+
+对于用户来说，这是更经常使用的功能，因为没有直接请求来创建GraphDef和ShapeDescription对象。对于有经验的TensorFlow开发人员来说，这种方式更具可读性：
+
+mapRows接收两个参数，operation和operation \*，这意味着第二个操作可以是一组操作。稍后它将它们转换为序列并将其转换为图形，它从图形中创建ShapeDiscription并将其与DataFrame一起发送到内部函数。它根据图中给出的变换逐行变换分布式数据。图中的所有输入都应填充来自给定DataFrame或常量的一些数据。意思是，我们不能使用null。在函数返回新架构新的数据帧结束，架构将包含原始模式**加**与图输出对应的新列。ShapeDiscription提供输出的形状，它在幕后使用，用于优化和绕过内核的限制。
+
+MapBlock
+--------
+
+`MapRows`但是，执行类似的任务，因为它针对compact进行了优化，它将数据块中的图形变换器应用于数据块，而不是逐行应用。
+
+`def mapBlocks(o0: Operation, os: Operation*): DataFrame`
+
+通常更常用的功能是：
+
+代码示例：我们创建_val df_，它是DataFrame类型，有两行，一行包含值1.0，第二行包含值2.0。列名是x。
+
+_val x_是输出占位符的声明，_y_是从CPU到GPU或从机器到机器传输张量的标识，它接收_val x_作为它的值。
+
+_z_是计算函数本身。这里，`df.MapBlock`函数获得两个操作_y_和_z_，并使用额外的列_z_重新调整名为_df2_的新DataFrame 。列_z_是_x + x_的总和_。_在输出中，_列x_是原始值，_列y_是标识值，_列z_是图的输出。
+
+MapBlocksTrimmed
+----------------
+
+这与`MapBlock`它相同，但它从结果DataFrame中删除了原始DataFrame列。这意味着输出DataFrame将仅包含计算列。
+
+`def mapBlocksTrimmed(o0: Operation, os: Operation*): DataFrame`
+
+我们来看看：
+
+代码示例：我们创建一个名为_df_的DataFrame，其中包含两行，值为3.0和4.0。**请注意**，我们使用值1.0和2.0 创建一个名为_out_的常量，此常量是模仿TensorFlow功能的TensorFrame dsl功能。然后我们打电话`df.MapBlocksTrimmed`。输出模式将只包含结果列，其名称为“out”，在我们的示例中，只保留1.0和2.0的常量值。
+
+**重要提示**在我们导入TesnorFrames dsl的第一行代码中，我们将其命名为tf，它代表TensorFlow，我们这样做是因为这是TesnorFlow用户使用它的方式，我们正在坚持TensorFlow的最佳实践。
+
+\-2-减少
+
+缩减操作合并一对或一组行并将它们转换为单行，它会重复相同的操作，直到剩下一行。在引擎盖下，TensorFrames通过首先减少每台计算机上的所有行，然后通过网络发送剩余部分来执行最后的减少，从而最大限度地减少计算机之间的数据传输。
+
+`f(f(a, b), c) == f(a, f(b, c))`
+
+变换函数必须被归类为[态射](https://en.wikipedia.org/wiki/Morphism)：它们的完成顺序无关紧要。在数学方面，给予一定的功能`f`，有些功能的输入`a`，`b`，`c`，下面必须持有：
+
+![](https://miro.medium.com/max/30/0*HVRLXNzSYxrrGBQc.png?q=20)
+
+由[Christopher Scherb](https://www.researchgate.net/profile/Christopher_Scherb)映射减少模式[](https://www.researchgate.net/profile/Christopher_Scherb)
+
+reduce功能API，与其余功能相同，我们为每个功能提供2个API，接收Operation的功能更直观，但是，在TensorFlow中没有直接减少行操作，相反，有许多减少操作，如`tf.math.reduce_sum`和`tf.reduce_sum`。
+
+ReduceRows
+----------
+
+此功能使用TensorFlow操作将两行合并在一起，直到剩下一行。它接收datafram，graph和ShapeDescription。
+
+`def reduceRows(o0: Operation, os: Operation*): Row`
+
+用户界面：
+
+在下一个代码示例中。我们创建一个DataFrame，其中包含一个名为_in_和两行的列。dtype和x-的x1和x2占位符，它是x1和x2的添加操作。reduceRows，返回值为3的行，它是1.0和2.0的总和。
+
+ReduceBlocks
+------------
+
+工作方式相同`ReduceRows`，但是，它在行向量上执行，而不是逐行执行。
+
+`def reduceBlocks(o0: Operation, os: Operation*): Row`
+
+更常用的功能：
+
+代码示例：这里我们创建一个包含两列的DataFrame - _key2_和_x_。一个占位符命名为_x1_，一个名为_x的_ reduce\_sum TensorFlow操作。的降低的功能根据该reduce\_sum命名其为所需的列返回数据帧的行的总和_X_。
+
+\-3-聚合
+
+`def aggregate(data: RelationalGroupedDataset, graph: GraphDef, shapeHints: ShapeDescription): DataFrame`
+
+聚合是Apache Spark和TensorFlow的额外操作。它与TensorFlow中的聚合功能不同，并与RelationalGroupedDataset一起使用。API功能：
+
+Aggregate接收一个RelationalGroupedDataset，它是一个Apache Spark对象，它包装DataFrame并添加聚合功能，一系列表达式和一个组类型。
+
+聚合函数接收图和ShareDescriptiom。它使用对分组数据的减少转换将行聚合在一起。当数据已按键分组时，这很有用。目前，仅支持数值数据。
+
+代码示例：在示例中，我们有一个包含两列，_key_和_x_的DataFrame 。_x1_作为占位符，_x_作为名为_x_的reduce\_sum功能。
+
+使用_groupby_功能，我们按键对行进行分组，之后，我们将_聚合_与操作一起调用。我们可以在输出中看到聚合是根据_键_计算的，对于值为1的键，我们收到2.1作为_列x_的值，对于值为2的键，我们收到2.0作为_列x_的值。
+
+TensorFrames基本流程
+================
+
+![](https://miro.medium.com/max/30/0*AMdUqo5WZz93E-dj.png?q=20)
+
+在所有TensorFrames功能中，DataFrame与计算图一起发送。DataFrame表示分布式数据，这意味着在每台机器中都有一大块数据将通过图形操作/转换。这将在具有相关数据的每台机器中发生。Tungsten二进制格式是经过转换的实际二进制内存数据，首先是Apache Spark Java对象，然后将其发送到TensorFlow Jave API进行图形计算。这一切都发生在Spark Worker进程中，Spark工作进程可以旋转许多任务，这意味着在内存数据上同时进行各种计算。
+
+值得注意的
+=====
+
+*   带有scala的DataFrame **目前**是一个实验版本。
+*   Scala DSL仅具有TensorFlow变换的子集。
+*   TensorFrames是开源的，可以在[这里](https://github.com/databricks/tensorframes)得到支持。
+*   Python是TensorFlow支持的第一种客户端语言，目前支持最多的功能。越来越多的功能被移植到TensorFlow的核心（用C ++实现）并通过[C API](https://www.tensorflow.org/code/tensorflow/c/c_api.h)公开。后来通过其他语言API公开，例如Java和JavaScript。
+*   有兴趣与Keras合作？查看[Elephas：使用Keras和Spark进行分布式深度学习](https://github.com/maxpumperla/elephas)。
+*   对公共云上的TensorFrames项目感兴趣？检查[这个](https://docs.microsoft.com/en-us/learn/paths/azure-fundamentals/?WT.mc_id=devto-blog-adpolak)和[这个](/get-started-with-apache-spark-and-tensorflow-on-azure-databricks-163eb3fdb8f3)。
+
+**既然您对TensorFrames有了更多了解，那么您将如何推进呢？**
+
+在[Twitter上](https://twitter.com/AdiPolak)关注我，很高兴听取您对主题的建议。

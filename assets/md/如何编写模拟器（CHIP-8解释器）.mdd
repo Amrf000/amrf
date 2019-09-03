@@ -1,0 +1,474 @@
+![如何编写模拟器（CHIP-8解释器）](https://medium.com/@anikamimi47/how-to-write-an-emulator-chip-8-interpreter-5787c2aac7b3)
+如何编写模拟器（CHIP-8解释器）
+==================
+
+[![Shanzida Anika Mim](https://miro.medium.com/fit/c/48/48/2*HaoUe0gFNBnwbzn9cjpuIQ.jpeg)](/@anikamimi47?source=post_page-----5787c2aac7b3----------------------)
+
+[Shanzida Anika Mim](/@anikamimi47?source=post_page-----5787c2aac7b3----------------------)
+
+跟随
+
+[8月16日](/@anikamimi47/how-to-write-an-emulator-chip-8-interpreter-5787c2aac7b3?source=post_page-----5787c2aac7b3----------------------) · 14 分钟阅读
+
+本指南希望您具备计算机系统的一些基本知识，并假设您了解程序语言，对于对仿真感兴趣的人来说，它也应该是一本有趣的读物。
+
+当我得知您可以使用模拟器在PC上运行控制台游戏时，我感到非常惊喜。
+
+模拟器
+===
+
+我认为首先要了解模拟器是什么和不是什么是很重要的。
+
+仿真器是一种模拟计算机系统（系统A）的内部设计和功能的计算机程序。它允许用户在完全不同的计算机系统或体系结构（系统B）上运行为此特定系统（Sytem A）设计的软件。
+
+通常人们会将模拟器与模拟器混淆，反之亦然。请记住，这些单词不是同义词。
+
+让我们来看看下面的例子：  
+[Pong](http://en.wikipedia.org/wiki/Pong)是一款2D网球游戏，由[Atari](http://www.atari.com/)开发并在自己的硬件上运行。然而，该游戏不仅适用于Atari系统，还适用于Amstrad，Amiga和C64等竞争对手。
+
+由于不是每个Pong游戏都被Atari许可在这些平台上运行，这也意味着并非每个游戏都运行Atari的代码。基本上发生的事情是人们创建了自己的游戏Pong实现（克隆）。在这种情况下，他们_模拟_了Pong的外观和游戏行为。
+
+在模拟器的情况下，我们选择不为我们的原生系统重新实现Pong游戏。相反，我们使用计算机程序重新创建环境，该程序允许我们运行Pong的原始机器代码。这样做的好处是它不仅允许我们运行Pong，还允许我们运行为该平台开发的任何其他应用程序。
+
+![](https://miro.medium.com/max/30/1*1sf9Y3MP7BFwXc0AN-KxoQ.png?q=20)
+
+![](https://miro.medium.com/max/643/1*1sf9Y3MP7BFwXc0AN-KxoQ.png)
+
+什么是CHIP-8？
+==========
+
+Chip 8实际上从来就不是一个真正的系统，而更像是70年代由Joseph Weisbecker开发的虚拟机（VM）。使用Chip 8语言编写的游戏可以在具有Chip 8解释器的系统上轻松运行。
+
+为什么要从CHIP-8仿真器开始？
+=================
+
+编写Chip 8仿真器可能是您可以进行的最简单的仿真项目。由于[操作码](http://en.wikipedia.org/wiki/Opcode)数量较少（芯片8共有35个），并且在更先进的[CPU](http://en.wikipedia.org/wiki/Central_processing_unit)中使用了大量指令这一事实，这样的项目具有教育意义（更好地了解CPU的工作原理以及机器代码的方式）执行），可管理（少量的操作码实现），而不是太耗时（项目可以在几天内完成）。
+
+![](https://miro.medium.com/max/30/1*AYE8s4xThecrg3n9r1-bLg.png?q=20)
+
+![](https://miro.medium.com/max/659/1*AYE8s4xThecrg3n9r1-bLg.png)
+
+在你开始之前…
+=======
+
+*   选择您熟悉的编程语言（C / C ++或Java很常见）。  
+    以下示例将使用C / C ++
+*   不要将此项目用作学习如何编程的方法。  
+    （如果[按位操作](http://en.wikipedia.org/wiki/Bitwise_operation)让您[感到](http://en.wikipedia.org/wiki/Bitwise_operation)困惑，请先研究它们）
+*   您可能需要使用第三方库来处理音频/视频输出和用户输入（[GLUT](http://www.opengl.org/resources/libraries/glut/) / [SDL](http://www.libsdl.org/) / [DirectX](http://www.microsoft.com/directx)）
+*   好，出发！
+
+CPU规格
+=====
+
+当您开始编写模拟器时，请务必找到有关要模拟的系统的尽可能多的信息。尝试找出系统中使用了多少内存和寄存器，使用了什么体系结构，看看是否可以获取描述指令集的技术文档。
+
+在Chip 8的情况下，我建议你看一下维基百科上的[Chip 8描述](http://en.wikipedia.org/wiki/CHIP-8#Virtual_machine_description)。
+
+我将简要介绍Chip 8系统以及如何实现基本部分的一些提示：
+
+：芯片8有[35个操作码](http://en.wikipedia.org/wiki/CHIP-8#Opcode_table)，全部是两个字节长。要存储当前的操作码，我们需要一种允许我们存储两个字节的数据类型。
+
+：Chip 8总共有4K内存
+
+：CPU寄存器：芯片8有15个8位通用寄存器，名为V0，V1至VE。第16个寄存器用于'进位标志
+
+：有一个索引寄存器I和一个程序计数器（pc），其值可以`0x000`是`0xFFF`
+
+：图形系统：芯片8有一条指令将精灵绘制到屏幕上。绘图在XOR模式下完成，如果由于绘图而关闭像素，则设置VF寄存器。这用于碰撞检测。
+
+：Chip 8的图形为黑白，屏幕总共有2048像素（64 x 32）。这可以使用保持像素状态（1或0）的数组轻松实现
+
+：中断和硬件寄存器。芯片8没有，但有两个定时器寄存器，计数为60 Hz。当设置为零以上时，它们将倒数至零。
+
+：只要声音计时器达到零，系统的蜂鸣器就会发出声音。
+
+重要的是要知道Chip 8指令集具有允许程序跳转到某个地址或调用子程序的操作码。虽然规范没有提到堆栈，但您需要自己实现一个作为解释器的一部分。堆栈用于在执行跳转之前记住当前位置。因此，无论何时执行跳转或调用子例程，都要在继续之前将程序计数器存储在堆栈中。系统有16级堆栈，为了记住使用堆栈的哪个级别，您需要实现堆栈指针（sp）。
+
+最后，Chip 8有一个基于HEX的键盘（`0x0-0xF`），你可以使用一个数组来存储键的当前状态
+
+游戏循环
+====
+
+为了让您了解如何设计模拟器，我做了一个布局的小例子。它没有教你如何使用GLUT或SDL来处理图形和输入，而只是告诉你模拟器的流程应该如何
+
+#include   
+#include // OpenGL图形和输入  
+#include“chip8.h”//你的cpu核心实现  
+   
+chip8 myChip8;   
+   
+int main（int argc，char \*\* argv）  
+{   
+ //设置渲染系统和寄存器输入回调  
+ setupGraphics（）;   
+ setupInput（）;   
+   
+ //初始化Chip8系统并将游戏加载到内存   
+ myChip8.initialize（）;   
+ myChip8.loadGame（ “乒乓”）;   
+   
+ //   
+ （;;）的 模拟循环  
+ {   
+//模拟一个循环  
+ myChip8.emulateCycle（）;   
+   
+ //如果设置了绘制标志，请更新屏幕  
+ if（myChip8.drawFlag）  
+ drawGraphics（）;   
+   
+ //存储按键状态（按下并释放）  
+ myChip8.setKeys（）;   
+ }   
+   
+ return 0;   
+}
+
+*   第3-5行：在本例中，我们假设您将创建一个单独的类来处理操作码。
+*   第10-11行：设置图形（窗口大小，显示模式等）和输入系统（绑定回调）
+*   第14行：清除内存，寄存器和屏幕
+*   第15行：将程序复制到内存中
+*   第21行：模拟系统的一个循环
+*   第24行：由于系统没有绘制每个周期，我们应该在需要更新屏幕时设置绘制标记。只有两个操作码应设置此标志：
+*   `0x00E0` - 清除屏幕
+*   `0xDXYN` - 在屏幕上绘制一个精灵
+*   第28行：如果我们按下或释放键，我们应该将此状态存储在模拟键盘的部分中
+
+仿真周期
+====
+
+接下来我们将研究仿真周期。
+
+void chip8 :: initialize（）  
+{   
+ //初始化寄存器和内存一次  
+}   
+   
+void chip8 :: emulateCycle（）  
+{   
+ //获取操作码  
+ //解码操作码  
+ //执行操作码  
+   
+ //更新定时器  
+}
+
+在每个循环中，调用方法_emulateCycle_，它模拟Chip 8 CPU的一个周期。在此周期中，仿真器将获取，解码和执行一个操作码。
+
+**获取操作码**  
+在此步骤中，系统将从程序计数器（pc）指定的位置从存储器中获取一个操作码。在我们的Chip 8仿真器中，数据存储在一个数组中，每个地址包含一个字节。由于一个操作码长度为2个字节，我们需要获取两个连续的字节并合并它们以获得实际的操作码。
+
+为了演示这是如何工作的，我们将使用操作码`0xA2F0`。
+
+//假设如下：  
+memory \[pc\] == 0xA2   
+memory \[pc + 1\] == 0xF0
+
+为了合并两个字节并将它们存储在`unsigned short`（2字节数据类型）中，我们将使用按位OR运算：
+
+opcode = memory \[pc\] << 8 | 记忆\[pc + 1\];
+
+那实际发生了什么？  
+首先，我们`0xA2`向左移动了8位，这增加了8个零。
+
+0xA2 0xA2 << 8 = 0xA200 HEX   
+10100010 1010001000000000 BIN
+
+接下来，我们使用按位OR运算来合并它们：
+
+1010001000000000 | // 0xA200   
+ 11110000 = // 0xF0（0x00F0）  
+\------------------   
+1010001011110000 // 0xA2F0
+
+**解码操作码**  
+由于我们已经存储了当前的操作码，我们需要解码操作码并检查操作码表以查看它的含义。我们将继续使用相同的操作码：
+
+0xA2F0 //汇编：mvi 2F0h
+
+如果我们看一下[操作码表](http://en.wikipedia.org/wiki/CHIP-8#Opcode_table)，它会告诉我们以下内容：
+
+*   ANNN：将I设置为地址NNN
+
+我们需要将索引寄存器I设置为NNN（0x2F0）的值。
+
+**执行操作码**  
+现在我们知道如何处理操作码，我们可以在我们的模拟器中执行操作码。对于我们的示例指令，`0xA2F0`它意味着我们需要将值存储`0x2F0`到索引寄存器I中。由于只有12位包含我们需要存储的值，我们使用按位AND运算符（＆）来摆脱前四位（半字节） ）：
+
+1010001011110000＆// 0xA2F0（操作码）  
+0000111111111111 = // 0x0FFF   
+\------------------   
+0000001011110000 // 0x02F0（0x2F0）
+
+结果代码：
+
+I =操作码＆0x0FFF;   
+pc + = 2;
+
+因为每条指令都是2个字节长，所以我们需要在每个执行的操作码之后将程序计数器递增2。除非您跳转到内存中的某个地址或者调用子程序（在这种情况下需要将程序计数器存储在堆栈中），否则这是正确的。如果应跳过下一个操作码，请将程序计数器增加4。
+
+**定时器**  
+除了执行操作码之外，Chip 8还有两个需要实现的定时器。如上所述，如果定时器（延迟定时器和声音定时器）已设置为大于零的值，则它们都会倒计时到零。由于这些定时器倒计时为60 Hz，您可能希望实现一些会降低仿真周期的速度（在一秒钟内执行60个操作码）。
+
+入门
+==
+
+现在您已经了解了仿真的基础知识以及系统的工作原理，现在是时候将所有部分组合在一起并开始编写仿真器。
+
+**初始化系统**  
+在运行第一个仿真周期之前，您需要准备系统状态。开始清除存储器并将寄存器重置为零。虽然Chip 8实际上没有[BIOS](http://en.wikipedia.org/wiki/BIOS)或固件，但它确实有一个存储在内存中的基本字体集。此字体集应加载到内存位置`0x50 == 80`及以后。有关字体集如何工作的更多详细信息，请参阅本指南的末尾。  
+另一个需要记住的重要事项是系统需要在内存位置加载应用程序`0x200`。这意味着您的程序计数器也应设置为此位置。
+
+void chip8 :: initialize（）  
+{   
+ pc = 0x200; //程序计数器从0x200   
+ opcode = 0开始; //重置当前操作码   
+ I = 0; //复位索引寄存器  
+ sp = 0; //重置堆栈指针  
+   
+ //清除显示   
+ //清除堆栈  
+ //清除寄存器V0-VF   
+ //清除内存  
+   
+ //加载字体集  
+ （int i = 0; i <80; ++ i）  
+ memory \[i\] = chip8\_fontset \[一世\];   
+   
+ //重置计时器  
+}
+
+**将程序加载到内存中**  
+初始化模拟器后，将程序加载到内存中（在二进制模式下使用fopen）并开始在以下位置填充内存：`0x200 == 512`。
+
+for（int i = 0; i <bufferSize; ++ i）  
+ memory \[i + 512\] = buffer \[i\];
+
+**开始仿真**  
+我们的系统现在已准备好执行其第一个操作码。如上所述，我们应该获取，解码和执行操作码。在这个例子中，我们首先读取当前操作码的前4位，以找出操作码是什么以及模拟器需要做什么：
+
+void chip8 :: emulateCycle（）  
+{   
+ //获取操作  
+ 码操作码=内存\[pc\] << 8 | 记忆\[pc + 1\];   
+   
+ //解码操作码  
+ 开关（操作码和0xF000）  
+ {   
+ //一些操作码//   
+   
+ 大小写0xA000：// ANNN：将I设置为地址NNN   
+ //执行操作码  
+ I =操作码＆0x0FFF;   
+ pc + = 2;   
+ 打破;   
+   
+ //更多操作码//   
+   
+ default：  
+ printf（“未知操作码：0x％X **\\ n** ”，操作码）;   
+ }   
+   
+ //更新定时器  
+ if（delay\_timer> 0）--   
+ delay\_timer;   
+   
+ if（sound\_timer> 0）  
+ {   
+ if（sound\_timer == 1）  
+ printf（“BEEP！**\\ n**“）;   
+ --sound\_timer;   
+ }   
+}
+
+在某些情况下，我们不能仅依靠前四位来查看操作码的含义。例如，`0x00E0`并且`0x00EE`都开始`0x0`。在这种情况下，我们添加一个额外的开关并比较最后四位：
+
+//解码操作码  
+开关（操作码和0xF000）  
+{   
+ 情况0x0000：  
+ 开关（操作码和0x000F）  
+ {   
+ 情况0x0000：// 0x00E0：清除屏幕   
+ //执行操作码  
+ 中断;   
+   
+ case 0x000E：// 0x00EE：从子程序返回   
+ //执行操作码  
+ 中断;   
+   
+ default：  
+ printf（“未知操作码\[0x0000\]：0x％X **\\ n** ”，操作码）;   
+ }   
+ 打破;   
+   
+ //更多操作数//   
+}
+
+处理图形和输入
+=======
+
+**绘制像素**  
+负责绘制到我们显示器的操作码是`0xDXYN`。维基百科的描述告诉我们以下内容：
+
+*   在坐标（VX，VY）处绘制一个精灵，其宽度为8像素，高度为N像素。从存储器位置I开始，每行8个像素被读取为位编码; 执行该指令后，I值不会改变。如上所述，如果在绘制精灵时将任何屏幕像素从设置翻转为未设置，则将VF设置为1，如果不发生，则将VF设置为0。
+
+正如操作码的描述告诉我们的那样，Chip 8实际上通过绘制精灵来绘制屏幕。它将给出我们需要绘制精灵的位置（操作码告诉我们需要检查哪个V寄存器以获取X和Y坐标）和行数（N）。每个子画面的宽度是固定的（8位/ 1字节）。通过使用按位XOR运算来设置每个像素的状态。这意味着它会将当前像素状态与内存中的当前值进行比较。如果当前值与存储器中的值不同，则位值将为1.如果两个值匹配，则位值将为0。
+
+01000101 ^   
+11110011 =   
+\----------   
+10110110
+
+让我们假设它是操作码`0xD003`。这意味着它想要在3行高的位置0,0处绘制一个精灵。在内存位置I，设置了以下值：
+
+记忆\[I\] = 0x3C;   
+记忆\[I + 1\] = 0xC3;   
+记忆\[I + 2\] = 0xFF;
+
+这3个字节如何表示精灵？看一下每个字节的二进制值：
+
+HEX BIN Sprite   
+0x3C 00111100 \*\*\*\*   
+0xC3 11000011 \*\* \*\*   
+0xFF 11111111 \*\*\*\*\*\*\*\*
+
+您应该使用二进制表示来填充您的数组（`gfx[]`）。但是，在`gfx[]`使用XOR运算符设置值之前，还需要检查是否有任何像素从1更改为0.如果是这种情况，则应将VF寄存器设置为1（这基本上是对碰撞检测）。
+
+操作码的实现示例`0xDXYN`
+
+case 0xD000：   
+{   
+ unsigned short x = V \[（opcode＆0x0F00）>> 8\];   
+ unsigned short y = V \[（opcode＆0x00F0）>> 4\];   
+ unsigned short height =操作码＆0x000F;   
+ 无符号短像素;   
+   
+ V \[0xF\] = 0;   
+ for（int yline = 0; yline <height; yline ++）  
+ {   
+ pixel = memory \[I + yline\];   
+ for（int xline = 0; xline <8; xline ++）  
+ {   
+ if（（pixel＆（0x80 >> xline））！= 0）  
+ {   
+ if（gfx \[（x + xline +（（y + yline）\* 64）） \] == 1）  
+ V \[0xF\] = 1;   
+ gfx \[x + xline +（（y + yline）\* 64）\] ^ = 1;   
+ }   
+ }   
+ }   
+   
+ 图形，drawflag = TRUE;   
+ pc + = 2;  
+}   
+打破;
+
+*   第3-4行：获取精灵的位置和高度
+*   第5行：像素值
+*   第8行：复位寄存器VF
+*   第9行：遍历每一行
+*   第11行：从位置I开始从存储器中获取像素值
+*   第12行：循环超过一行的8位
+*   第14行：检查当前评估的像素是否设置为1（注意`0x80 >> xline`扫描字节，当时是一位）
+*   第16-17行：检查显示器上的像素是否设置为1.如果已设置，我们需要通过设置VF寄存器来注册冲突
+*   第18行：使用XOR设置像素值
+*   第23行：我们更改了`gfx[]`数组，因此需要更新屏幕。
+*   第24行：更新程序计数器以移至下一个操作码
+
+**输入**  
+Chip 8系统使用简单的HEX键盘，允许用户与系统进行交互。对于我们的模拟器，这意味着我们需要实现一个方法，该方法将设置处理关键状态的变量中每个键的状态。每个周期都应检查键输入状态并将其存储`key[]`。
+
+它实际上不要紧，你什么保存价值，因为操作码`0xEX9E`和`0xEXA1`当某个键被按下或不按只检查。操作码`0xFX0A`只等待按键，当它接收到按键时，它将键名存储在寄存器中而不是键状态。
+
+case 0xE000：  
+ switch（opcode＆0x00FF）  
+ {   
+ // EX9E：跳过下一条指令  
+ //如果按下存储在VX中的密钥，则为  
+ 0x009E：  
+ if（key \[V \[（opcode＆0x0F00）>> 8\]\]！= 0 ）  
+ pc + = 4;   
+ 别人  
+ pc + = 2;   
+ 打破;
+
+您可以在下面找到原始键盘布局的示例。实现密钥映射并不重要，但我建议在右侧进行操作。
+
+键盘键盘  
+\+  -  +  -  +  -  +  -  + +  -  +  -  +  -  +  -  +   
+| 1 | 2 | 3 | C | | 1 | 2 | 3 | 4 |   
+\+  -  +  -  +  -  +  -  + +  -  +  -  +  -  +  -  +   
+| 4 | 5 | 6 | D | | Q | W |电子| R |   
+\+  -  +  -  +  -  +  -  + => +  -  +  -  +  -  +  -  +   
+| 7 | 8 | 9 | E | | A | S | d | F |   
+\+  -  +  -  +  -  +  -  + +  -  +  -  +  -  +  -  +   
+| A | 0 | B | F | | Z | X | C | V |   
+\+  -  +  -  +  -  +  -  + +  -  +  -  +  -  +  -  +
+
+CHIP-8字体集
+=========
+
+这是Chip 8字体集。每个数字或字符宽4像素，高5像素。
+
+unsigned char chip8\_fontset \[80\] =   
+{ 0xF0,0x90,0x90,0x90,0xF0   
+ ，// 0   
+ 0x20,0x60,0x20,0x20,0x70，// 1   
+ 0xF0,0x10,0xF0,0x80,0xF0，// 2   
+ 0xF0,0x10 ，0xF0,0x10,0xF0，// 3   
+ 0x90,0x90,0xF0,0x10,0x10，// 4   
+ 0xF0,0x80,0xF0,0x10,0xF0，// 5   
+ 0xF0,0x80,0xF0,0x90,0xF0，// 6   
+ 0xF0 ，0x10,0x20,0x40,0x40，// 7   
+ 0xF0,0x90,0xF0,0x90,0xF0，// 8   
+ 0xF0,0x90,0xF0,0x10,0xF0，// 9   
+ 0xF0,0x90,0xF0,0x90,0x90，// A   
+ 0xE0,0x90,0xE0,0x90,0xE0，// B   
+ 0xF0,0x80,0x80,0x80,0xF0，// C   
+ 0xE0,0x90,0x90,0x90,0xE0，// D   
+ 0xF0,0x80,0xF0,0x80,0xF0， // E   
+ 0xF0,0x80,0xF0,0x80,0x80 /​​/ F   
+};
+
+它可能看起来像一个随机数组，但仔细看看以下内容：
+
+DEC HEX BIN RESULT DEC HEX BIN RESULT   
+240 0xF0 1111 0000 \*\*\*\* 240 0xF0 1111 0000 \*\*\*\*   
+144 0x90 1001 0000 \* \* 16 0x10 0001 0000 \*   
+144 0x90 1001 0000 \* \* 32 0x20 0010 0000 \*   
+144 0x90 1001 0000 \* \* 64 0x40 0100 0000 \*   
+240 0xF0 1111 0000 \*\*\*\* 64 0x40 0100 0000 \*
+
+看左边的例子我们正在绘制数字0.你可以看到它看到它由5个值组成。在每个值中，我们使用二进制表示来绘制。请注意，只有前四位（半字节）用于绘制数字或字符
+
+![](https://miro.medium.com/max/30/1*DNtKiwyxkkw7zq5TF-NN_g.png?q=20)
+
+![](https://miro.medium.com/max/616/1*DNtKiwyxkkw7zq5TF-NN_g.png)
+
+资源
+==
+
+*   [http://en.wikipedia.org/wiki/CHIP-8](http://en.wikipedia.org/wiki/CHIP-8) - 系统信息
+*   [Cowgod的Chip-8技术参考v1.0](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM) - 推荐
+*   [Chip8教程](http://www.multigesture.net/wp-content/uploads/mirror/goldroad/chip8.shtml) - Goldroad.co.uk（镜像）
+*   [（S）芯片8指令集](http://www.multigesture.net/wp-content/uploads/mirror/goldroad/chip8_instruction_set.shtml) - Goldroad.co.uk（镜像）
+*   [David Winter的CHIP-8仿真页面](http://www.pong-story.com/chip8/) - 包含一些游戏
+*   [（S）CHIP-8指令集概述](http://devernay.free.fr/hacks/chip8/schip.txt) - （Erik Bryntse）
+*   [Emutalk上的Chip8仿真器主题](http://www.emutalk.net/threads/19894-Chip-8)
+*   [NGemu上的Chip8仿真器主题](http://forums.ngemu.com/web-development-programming/114578-chip8-thread.html)
+
+高级模拟器资源
+=======
+
+*   [Zilmar的Emubook](http://emubook.emulation64.com)
+*   [Emubook CPU仿真章节](http://emubook.emulation64.com/cpu.htm)
+*   [Emubook内存仿真章节](http://emubook.emulation64.com/memory.htm)
+*   Zenogais仿真教程 - （离线，但可通过[Archive.org获得](http://replay.waybackmachine.org/20060107221912/http://www.zenogais.net/projects/tutorials/)）
+*   [Zenogais的仿真教程](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/Tutorials.htm) - （镜像）
+*   [动态重编译器](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/Dynamic%20Recompiler.html) - （镜像）
+*   [功能指针数组](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/FunctionPointers.htm) - （镜像）
+*   [仿真简介第1部分](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/EmuDoc1.htm) - （镜像）
+*   [仿真简介第2部分](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/EmuDoc2.html) - （镜像）
+*   [为仿真器奠定基础](http://www.multigesture.net/wp-content/uploads/mirror/zenogais/GroundWork.html) - （镜像）

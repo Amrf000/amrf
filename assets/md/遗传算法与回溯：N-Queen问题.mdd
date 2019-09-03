@@ -1,0 +1,147 @@
+![遗传算法与回溯：N-Queen问题](https://towardsdatascience.com/genetic-algorithm-vs-backtracking-n-queen-problem-cdf38e15d73f)
+遗传算法与回溯：N-Queen问题
+=================
+
+回溯求解器与遗传算法性能的比较。
+----------------
+
+[![希拉德巴巴延](https://miro.medium.com/fit/c/48/48/1*R44AhVBaBs5HCCzdONDfuw@2x.jpeg)](/@hirad.babayan?source=post_page-----cdf38e15d73f----------------------)
+
+[希拉德巴巴延](/@hirad.babayan?source=post_page-----cdf38e15d73f----------------------)
+
+跟随
+
+[5月15日](/genetic-algorithm-vs-backtracking-n-queen-problem-cdf38e15d73f?source=post_page-----cdf38e15d73f----------------------) · 6 分钟阅读
+
+几个月前，我熟悉了遗传算法。我开始阅读它，我很惊讶它。遗传算法解决的最着名问题之一是[n-queen问题](https://en.wikipedia.org/wiki/Eight_queens_puzzle)。我使用python 3实现了我的遗传求解器和着名的旧回溯求解器。我实现了一个Chess类（回溯求解器）和一个GeneticChess类（遗传求解器）。这些类都有一个属性板，它是一个二维列表。列表的每一行都填充N个零。
+
+回溯求解器
+=====
+
+如你所知，回溯求解器是一个简单的函数，它通过在棋盘的第一行放置一个女王并试图以不会与第一行冲突的方式将第二个王后放在第二行上来解决问题。它继续逐行将棋子放在棋盘上，直到它将最后一个放在第n行。如果它无法填充行上的任何图块，它将回溯并更改前一行的女王的位置。
+
+以下树描述了回溯算法如何解决4-queen问题。
+
+![](https://miro.medium.com/max/30/1*89khR1bWFu0Tc0TY44_vFw.png?q=20)
+
+4皇后回溯解决方案
+
+回溯求解器将为我们找到解决方案。但随着N的增加，它会变慢。如果N = 25，找到解决方案需要322.89秒，当N = 26时，它将需要永远！因此需要一种可以更快地找到解决方案的方法。这是回溯方法：
+
+**def solveBackTracking（self，col）：****如果col> = self.size：  
+ self.solutions.append（self.board）  
+****在范围内  
+  
+  
+  
+** **返回True** **（self.size）：** **if self.isSafe（i，col）：** **self。 board \[i\] \[col\] = 1** **如果self.solveBackTracking（col + 1）== True：** **返回True****self.board \[i\] \[col\] = 0** **返回False**
+
+GA求解器
+=====
+
+一种方法是使用遗传算法解决问题。那么遗传算法如何运作？
+
+基本理念来自于自然界中发生的事情。在一个环境中，存在一些染色体（或一族）。这些染色体结合在一起，在环境中创造了一些孩子。新的染色体是其父母DNA的组合，也是它自身的变异。当然，环境有人口限制。由于每条染色体与其他染色体不同，因此可以理解其中一些染色体比其他染色体更强。根据自然规律，较强壮的生物将成为下一代，而较弱的生物将死亡。因此，我们期望每一代都包含更强的染色体。这就是遗传算法的工作原理。
+
+应采取以下步骤来实现遗传算法：
+
+1.  创建染色体表示
+2.  创建实用程序功能
+3.  创建交叉功能
+4.  创建变异函数
+5.  创造环境
+
+现在让我们跳到这些步骤来创建我们的遗传算法。
+
+步骤1：染色体
+-------
+
+基本上，染色体（也称为gen）是解决方案的表示，无论它是否有效。我们如何代表一个n-queen解决方案？一种方法是创建一个填充为0的2维列表，然后用表示女王位置的N个填充它。这可能是第一件事情，但实际上并不好。更好和更简单的表示是染色体是长度为N的列表。每个索引指定一个板的列。每个索引的值介于0和N-1之间，表示列中的后排行。
+
+![](https://miro.medium.com/max/30/1*R-8u2VJ3OX4WTF8KHMEx7A.jpeg?q=20)
+
+Gen表示示例：4-queen问题
+
+第2步：效用函数
+--------
+
+效用函数是确定解决方案有多好的函数。因此该函数将gen作为其参数并返回一个数字，即实用程序。在这种情况下，我们的效用函数将根据女王位置评估冲突的数量。它是每个女王左侧冲突数量的总和。因此，如果效用函数返回0，我们知道板上没有冲突，因此，我们有解决方案。
+
+**def utilityFunction（self，gen）：** **hits = 0   
+ board = self.createBoard（self.size）  
+ self.setBoard（board，gen）  
+ col = 0** **for gen in dna：  
+ try：  
+ for i in range（col-1，-1） ，-1）：  
+ 如果board \[dna\] \[i\] == 1： i为i   
+ = 1   
+   
+，j为zip（范围（dna-1，-1，-1），范围（col-1，-1， - ） 1））：  
+ 如果board \[i\] \[j\] == 1： i为i   
+ = 1   
+，j为zip（范围（dna + 1，self.size，1）），范围（col-1，-1，-1） ））：  
+ 如果board \[i\] \[j\] == 1：  
+ 命中+ = 1   
+ col + = 1   
+ 返回命中**
+
+第3步：交叉功能
+--------
+
+正如我所说，儿童染色体是其父母DNA的组合。此过程称为**Crossover**。此功能是使遗传算法比回溯求解器更快的关键功能。存在许多交叉功能，您甚至可以实现自己的功能。该函数将两条染色体作为参数。这些是父母，他们将创造新的儿童染色体。每当其中一个列表中的两个元素的差异小于2时，我决定将第一个列表的元素与第二个列表的元素交换。
+
+**def crossOverGens（self，firstGen，secondGen）：  
+  
+ 对于范围内的i（1，len（firstGen））：  
+ 如果abs（firstGen \[i-1\]  -  firstGen \[i\]）<2：  
+ firstGen \[i\]，secondGen \[i\] = secondGen \[i\]，firstGen \[i\]   
+ 如果abs（secondGen \[i-1\]  -  secondGen \[i\]）<2：  
+ firstGen \[i\]，secondGen \[i\] = secondGen \[i\]，firstGen \[i\]**
+
+第4步：突变功能
+--------
+
+在交叉过程之后，创建子项。现在孩子试图以某种方式改变自己以降低效用价值。在交叉之后，一些元素在gen中可能是多余的（例如\[1,1,2,3\]）。突变功能将删除多余的元素，并用gen中未使用的元素填充它们。此外，将从染色体的左侧和右侧选择两个随机元素，它们将被交换。该方法可能会降低效用。
+
+**def MutantGen（self，gen）：** **bound = self.size // 2   
+ 来自随机导入randint作为rand   
+ leftSideIndex = rand（0，bound）  
+ RightSideIndex = rand（bound + 1，self.size-1）  
+ newGen = \[\]   
+ 表示dna在gen中：  
+ 如果dna不在newGen中：  
+ newGen.append（dna）  
+ for i in range（self.size）：  
+ 如果我不在newGen中：  
+ newGen.append（i）** **gen = newGen   
+ gen \[leftSideIndex\]，gen \[RightSideIndex\] = gen \[RightSideIndex\]，gen \[leftSideIndex\]   
+ 返回gen**
+
+第五步：环境
+------
+
+现在我们有了我们的功能，让我们创建我们的环境及其无情的规则。首先，我们初始化第一代染色体，它们只是一些随机染色体。之后，检查所有染色体以确定溶液是否已经存在。如果它不存在，染色体开始创造孩子。由于群体超过其极限，因此计算每条染色体的效用。具有较高实用程序（较高冲突）的那些将从环境中删除，并且将选择具有较低实用程序的那些。现在创建了第二代。此循环继续创建下一代，直到找到解决方案。
+
+**def solveGA（self）：  
+ self.initializeFirstGenereation（）  
+ for gen in self.env：  
+ if self.isGoalGen（gen）：  
+ return gen   
+ 而True：  
+ self.crossOverAndMutant（）  
+ self.env = self.makeSelection（）  
+ if self.goalIndex> = 0：  
+ 尝试：  
+ 返回self.goal，  
+ 但IndexError：  
+ print（self.goalIndex）  
+ else：  
+ continue**
+
+结果
+==
+
+正如我所提到的，回溯解算器只能解决最大N = 25的问题，大约需要322.89秒来找到答案。GA解算器在1.83秒内找到了N = 25的解。我实现的交叉和变异功能不是最好的算法，但我得到的结果非常快。我测试了GA解算器从N = 4到N = 66，并且算法解决问题所花费的最大时间是125.93秒，N = 66。我甚至尝试过N = 80并在122.82秒内获得解决方案！这真太了不起了！该算法基于随机数。看起来它可能比回溯求解器更糟糕，但结果非常吸引人。  
+我非常建议您自己实现B-Solver和GA-Solver，以了解遗传算法的神奇之处。您可以在我的[Github链接中](https://github.com/hiradbaba/GANQ)找到我的代码。
+
+希望您觉得这篇文章有用！

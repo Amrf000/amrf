@@ -1,0 +1,147 @@
+![不要跳过伪代码](https://medium.com/@felixthedev/dont-skip-the-pseudocode-a786187e4f3d)
+不要跳过伪代码
+=======
+
+使用伪代码编写计算机程序的好处
+---------------
+
+[![菲利克斯卡布雷拉](https://miro.medium.com/fit/c/48/48/1*O1sVmL3sorLo_pDGJg9_aA.jpeg)](/@felixthedev?source=post_page-----a786187e4f3d----------------------)
+
+[菲利克斯卡布雷拉](/@felixthedev?source=post_page-----a786187e4f3d----------------------)
+
+跟随
+
+[9月3日](/@felixthedev/dont-skip-the-pseudocode-a786187e4f3d?source=post_page-----a786187e4f3d----------------------) · 4 分钟阅读
+
+![](https://miro.medium.com/max/30/0*x0UcAUrSJRyvXQbU?q=20)
+
+摄影：[Danial RiCaRoS](https://unsplash.com/@ricaros?utm_source=medium&utm_medium=referral)在[Unsplash上](https://unsplash.com?utm_source=medium&utm_medium=referral)
+
+S顶！在你阅读之前不要跳过写伪代码...
+
+当我开始学习如何编码时，我开始学习编写伪代码。起初，我开始认为这是一个乏味的过程，我开始感到不耐烦，并希望立即编写代码。
+
+当我开始忽略编写伪代码时，我开始注意到我不会对我必须编写的计算机程序有一个明确的计划。所以，我会花很多时间努力编写代码，但没有达到预期的结果。因此，欣赏编写伪代码然后使用编程语言实现解决方案的价值。
+
+所以，今天，我将定义什么是伪代码，并分享我的经验，了解我是如何在编写代码时实现的。此外，我将分享我在旅途中学到的一些东西，你也可以在编码过程中使用它。
+
+因此，不用多说，让我们开始吧。
+
+* * *
+
+什么是伪代码？
+=======
+
+伪代码是您的代码所做的[详细书面描述](https://whatis.techtarget.com/definition/pseudocode)。它不必使用任何与任何编程语言相关的语法。只需用英语单词来表达您的计算机程序功能的信息。
+
+这是一个简单的例子：
+
+![](https://miro.medium.com/max/30/0*J_jbc6D2foWNNTtW.png?q=20)
+
+在第一行，将数字设置为1，变量num初始化为1.在第二行，DOWHILE num <= 10，它传达**重复结构**的概念。此外，它表示do-while循环的概念，就像在[Java](https://www.tutorialspoint.com/java/java_do_while_loop.htm)和[C ++](https://www.tutorialspoint.com/cplusplus/cpp_do_while_loop.htm)等编程语言中一样。
+
+The **sequence of statements** in blue, the print message, num and add 1 to num, are going to be repeated until the condition is false. Again, just like we use a do while in a programming language, however, we describe the lines using the English language.
+
+* * *
+
+Why Use Pseudocode?
+===================
+
+When I was learning how to code, I used to jump right to write the code. I did not organize my thoughts and not establish a plan to write the solution to a coding problem. I noticed that **I would have bugs in my code** and invest a lot of time to find, also, fix the error in my code. Furthermore, I realized that these errors **were in the logic** and **reasoning behind the approach** I used to solve the coding problem.
+
+但是，在我开始花时间编写伪代码后，我**会节省**修复代码中的错误的**时间**。此外，由于我在编写代码之前反复使用编写伪代码的方法，因此我更善于使用此技能。因此，随着时间的推移，这个过程更加直截了当。
+
+* * *
+
+你可以用它作为蓝图
+=========
+
+![](https://miro.medium.com/max/30/0*tXUFBkiLdbdEWkJZ.png?q=20)
+
+多年来，我将伪代码视为**解决编码问题**或算法的**蓝图**。此外，我开始将其视为可用于编写代码的地图。此外，尽管使用编程语言与其他人**沟通您的解决方案**，您可能决定将来使用。即使是对编码知之甚少的人，您也可以使用伪代码来表达您的解决方案背后的想法。
+
+使用伪代码作为蓝图的另一个好处是，**您可以使用相同的伪代码**将您的解决方案转换为不同的编程语言。
+
+例如，使用我们之前的示例，这里是解决方案在Java中的样子。我们有num变量的初始化; do-while循环和消息与num变量的值一起显示。
+
+我知道这是一个简单的解决方案; 但是，您可以使用相同的方法编写更复杂的算法。
+
+* * *
+
+最后的想法
+=====
+
+在编码之旅的开始，我只是想编写代码。我想跳过编写伪代码，因为我会不耐烦，直接将我的思想转化为代码而没有适当的组织。尽管如此，经过很多麻烦，我开始欣赏使用伪代码。它可以帮助您组织您的想法，然后将它们转换为代码。
+
+在我的旅程中，经过反复使用伪代码后，它开始变得更加舒适。这也可能发生在你身上。
+
+你有它，我在使用伪代码时学到的东西，所以你可以在编码过程中使用这些见解。
+
+我希望这有帮助！
+
+* * *
+
+_如果你喜欢这篇文章，我想你也可能对这些文章感兴趣：_
+
+[
+
+没有经验我应该加入我的简历？
+
+
+------------------
+
+### 
+
+找到创造性的方法，脱颖而出，创造机会
+
+#### 
+
+medium.com
+
+
+
+](/better-programming/what-should-i-add-to-my-resume-with-no-experience-8e66095178f3?source=post_page-----a786187e4f3d----------------------)
+
+[
+
+如何在家中学习编码而不失动机？
+
+
+-------------------
+
+### 
+
+学习自己在家编码时失去动力？读这个 …
+
+#### 
+
+medium.com
+
+
+
+](/@felixthedev/how-can-i-learn-to-code-at-home-without-losing-motivation-e37a3caa27d3?source=post_page-----a786187e4f3d----------------------)
+
+[
+
+每个软件开发人员应具备的最有价值的技能
+
+
+-----------------------
+
+### 
+
+有一项技能胜过其余的......
+
+#### 
+
+medium.com
+
+
+
+](/@felixthedev/the-most-valuable-skill-every-software-developer-should-have-fa3264b8f3e6?source=post_page-----a786187e4f3d----------------------)
+
+**_免责声明：_**_结果可能有所不同。这些提示和建议是基于我作为前本科计算机科学系学生，导师，教师和软件开发人员的经验和意见。每个人都不一样，因此，本文中分享的建议可能适用于您，也可能不适合您。_
+
+* * *
+
+_最初发布于_[_https://yadielcabrera.com_](https://yadielcabrera.com/2019/09/03/dont-skip-the-pseudocode/)_。_

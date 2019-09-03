@@ -1,0 +1,247 @@
+![数据科学变得简单：使用Orange的交互式数据可视化](https://towardsdatascience.com/data-science-made-easy-interactive-data-visualization-using-orange-de8d5f6b7f2b)
+数据科学变得简单：使用Orange的交互式数据可视化
+==========================
+
+[![吴伟丰](https://miro.medium.com/fit/c/48/48/2*-SKWRuh2Yn7dE1C9PXsd5g.jpeg)](/@ngwaifoong92?source=post_page-----de8d5f6b7f2b----------------------)
+
+[吴伟丰](/@ngwaifoong92?source=post_page-----de8d5f6b7f2b----------------------)
+
+跟随
+
+[8月7日](/data-science-made-easy-interactive-data-visualization-using-orange-de8d5f6b7f2b?source=post_page-----de8d5f6b7f2b----------------------) · 8 分钟阅读
+
+开源机器学习和数据可视化工具，无需编写单个代码即可加速数据分析！
+
+![](https://miro.medium.com/max/30/1*68q52Bz6Z0usaDCQgB97eA.png?q=20)
+
+从官方[Orange网站](https://orange.biolab.si)拍摄的图像[](https://orange.biolab.si)
+
+今天的主题是使用名为Orange的开源软件执行简单的数据可视化。如果您正在寻找无代码可视化数据集的替代方案，Orange是您的正确选择！官方[Github](https://github.com/biolab/orange3)页面说明了这一点
+
+> Orange是一种基于组件的数据挖掘软件。它包括一系列数据可视化，探索，预处理和建模技术。它可以通过一个漂亮而直观的用户界面使用，或者对于更高级的用户，可以作为Python编程语言的模块使用。
+
+换句话说，Orange在处理数据科学任务时适合新手和专家。本教程共有3个部分：
+
+1.  设置和安装
+2.  小工具
+3.  结论
+
+* * *
+
+\[第1节\]设置和安装
+============
+
+首先，有许多方法可以安装Orange。最常见的方法是通过独立安装程序，Anaconda或Pip。我们来看看它们中的每一个。
+
+独立安装程序（Windows，macOS）
+---------------------
+
+转到以下[链接](https://orange.biolab.si/download/#windows)并选择所需的操作系统。
+
+![](https://miro.medium.com/max/30/1*wWt-3lwvsXe6OtLRi1lCjQ.png?q=20)
+
+单击“ **下载橙色** ”按钮开始下载。完成后，双击安装程序进行安装。
+
+Linux的/来源
+---------
+
+没有为Linux / Source提供安装程序。您必须从[GitHub](https://github.com/biolab/orange3)克隆官方存储库或下载[源代码tarball](https://github.com/biolab/orange3/archive/stable.tar.gz)。之后，您可以按照[README.md中](https://github.com/biolab/orange3/blob/stable/README.md)的说明进行[操作](https://github.com/biolab/orange3/blob/stable/README.md)。完成后，您可以通过以下命令开始运行Orange Canvas：
+
+python -m Orange.canvas
+
+蟒蛇
+--
+
+如果您已经拥有Anaconda，则可以通过以下命令开始将conda-forge添加到您的频道：
+
+conda config --add channels conda-forge
+
+然后，运行以下命令安装橙色：
+
+conda安装orange3
+
+GUI需要一些conda-forge不包含或提供的依赖项。让我们通过在终端中键入以下命令并运行它来添加它们：
+
+conda install -c defaults pyqt = 5 qt
+
+还可以安装其他附加组件：
+
+conda install orange3- <addon name>
+
+或者，您可以在“ **选项”**菜单中找到加载项管理器。
+
+果仁
+--
+
+如果您决定使用Python包索引，则可能需要分发提供的其他系统包。您可能希望在安装Orange之前创建自己的虚拟环境。完成所有设置后，运行以下命令：
+
+pip安装orange3
+
+同样，您需要为GUI包含其他依赖项：
+
+pip安装PyQt5 PyQtWebEngine
+
+让我们继续下一部分，了解有关Orange的更多信息。
+
+* * *
+
+\[第2节\]小部件
+==========
+
+打开橙色，您应该能够看到以下用户界面：
+
+![](https://miro.medium.com/max/30/1*J1syrn27SRGzzc07OGl9JA.png?q=20)
+
+Orange的主要用户界面
+
+您可以注意到工具箱位于左侧，白色工作区域是画布。工具箱包含可以移动到画布的所有小部件。
+
+![](https://miro.medium.com/max/30/1*NmJgYvmZjDzi9jCafxta5A.png?q=20)
+
+小部件的示例
+
+有三种方法可以将小部件添加到画布：
+
+1.  双击小部件。
+2.  将小部件拖到画布上。
+3.  右键单击画布上的小部件菜单。
+
+![](https://miro.medium.com/max/19/1*IQ4-oU0IVqvWci7pdrHAHQ.png?q=20)
+
+小部件菜单
+
+* * *
+
+文件和数据表
+------
+
+如果它们兼容，您可以将两个小部件连接在一起。我们来试试吧：
+
+![](https://miro.medium.com/freeze/max/30/1*gIvnErCh2NUjFX6laq3ldA.gif?q=20)
+
+1.  将“ **文件”**窗口小部件拖到画布上。
+2.  将“ **数据表”**窗口小部件拖到画布上。
+3.  在“ **文件”**小组件的右侧，有一个半圆形状。将鼠标放在上面并将其拖到“ **数据表”**小部件中。
+4.  请注意，两个窗口小部件之间都有一个链接，顶部是_Data_。
+5.  不要担心**文件**小部件顶部的错误标记，因为我们还没有加载数据。
+
+在画布中，双击“文件”小部件将其打开。然后，您可以加载自己的数据集或从自定义文档数据集中浏览它。让我们通过自定义文档数据集使用iris.tab进行尝试。Orange接受以下任何格式：
+
+*   制表符分隔值
+*   以逗号分隔的值
+*   篮子文件
+*   Microsoft Excel电子表格
+*   腌橙色数据
+
+您应该能够看到以下屏幕。
+
+![](https://miro.medium.com/max/30/1*8RrE69OWwjx4oUrM4uLtAA.png?q=20)
+
+完成后，使用右上角的X标记关闭弹出窗口。如果您发现“ **应用”**按钮显示为灰色，请不要惊慌。它旨在在您修改或编辑数据的**类型**或**角色**后应用更改。接下来，双击Data Table小部件。您应该能够看到数据集。您可以检查左侧的变量以显示数字。检查完所有选项后，您应该能够看到以下屏幕。
+
+![](https://miro.medium.com/max/30/1*e_v8Yrs1Hq6HBnpiDv2Q0w.png?q=20)
+
+* * *
+
+分配
+--
+
+您可以通过一些Visualize小部件轻松地可视化数据。分布是识别数据集重要特征的最佳小部件之一。您可以轻松地查看数据集是否分离得很好。让我们从上一步继续。
+
+![](https://miro.medium.com/freeze/max/30/1*TPnvjJRut-fC9ehimJqXAQ.gif?q=20)
+
+1.  将“ **分布”**窗口小部件拖到画布上。
+2.  将文件小部件连接到**分发**小部件。
+3.  双击“ **分发”**小组件以查看可视化。
+4.  在左上角，选择其他变量并检查分发结果。
+
+![](https://miro.medium.com/max/30/1*TDF6okZ_jJ3hUIpfI-ZZGg.png?q=20)
+
+* * *
+
+散点图
+---
+
+散点图是另一个可视化小部件，它将两个特征一起绘制以识别它们之间的投影。我们试一试吧！
+
+![](https://miro.medium.com/freeze/max/30/1*yMurTKm5ky4_z5nOr2pJ3Q.gif?q=20)
+
+1.  将**Scatter Plot**小部件拖到画布中。
+2.  将**File**小部件连接到**Scatter Plot**小部件。该步骤与**分发**窗口小部件的步骤类似。
+3.  双击**Scatter Plot**小部件以查看可视化。
+4.  您可以根据可用功能更改x轴和y轴。
+
+![](https://miro.medium.com/max/30/1*Y7Lzp2TYtV2NcssOK8pRAA.png?q=20)
+
+如果您不确定要选择哪些功能，请单击“查找信息预测”，您将看到以下界面。
+
+![](https://miro.medium.com/max/18/1*5sZOJ-iLBk1CEl6fhsmFOw.png?q=20)
+
+单击“开始”，然后从列表中选择任何项目。散点图将根据您的选择进行修改。
+
+![](https://miro.medium.com/max/18/1*3-nSXZdNUPKYuFlHb-JI_Q.png?q=20)
+
+* * *
+
+FreeViz
+-------
+
+FreeViz小部件使用从粒子物理学中借用的范例。虽然这些点不能移动但锚可以移动。这使我们能够可视化彼此吸引的特征和相互排斥的特征。它配有一个优化按钮，可以执行爬山优化，使其达到平衡。在继续之前，让我们清楚一些小部件，以保持它的整洁。删除小部件有两种方法：
+
+1.  右键单击它，将出现一个菜单。选择“ **删除”**选项。您也可以通过这种方式或通过F2快捷方式重命名窗口小部件。
+2.  通过左键单击选择它，然后单击键盘上的“ **删除** ”按钮。可以多选小部件并一起删除所有小部件。
+
+![](https://miro.medium.com/freeze/max/30/1*MwxhM4IS1qASLNXNXoJcnQ.gif?q=20)
+
+完成后，请按照以下说明继续操作：
+
+![](https://miro.medium.com/freeze/max/30/1*hNQFETKAIaY_RF5D-2AIWg.gif?q=20)
+
+1.  将**FreeViz**小部件拖放到画布上。
+2.  将**文件**小部件连接到**FreeViz**小部件。
+3.  将**数据表**小部件拖放到画布上。
+4.  将**FreeViz**小部件连接到**Data Table**小部件。
+
+如果您想知道为什么我们将**Data Table**小部件与**FreeViz**小部件而不是**File**小部件连接起来。原因是您可以在任何**Visualize**小部件界面中选择数据点，并且选定的点将输出到“ **数据表”**小部件。让我们看看下面的gif，了解更多关于如何移动锚点并为FreeViz界面选择数据点的信息。
+
+![](https://miro.medium.com/freeze/max/30/1*MI-TCc86rOLOoKEQ8SsPNw.gif?q=20)
+
+或者，您可以继续按下优化按钮，直到达到平衡。您可以使用此小组件找到有关这些功能之间关系的更多信息。我们来看一下官方文档中的以下示例。
+
+![](https://miro.medium.com/max/30/0*fCcghKqxkDAilcWz.png?q=20)
+
+只需一目了然，我们就可以确定：
+
+*   产卵的生物更容易产生羽毛。
+*   水生生物更容易产生鳍。
+*   生产牛奶的生物更容易生发。
+*   生蛋的生物不会产奶
+
+FreeViz是一个非常强大的小部件，可帮助您从数据集中提取重要信息。可以使用更多小部件来可视化数据集。随意尝试一下。
+
+* * *
+
+\[第3节\]结论
+=========
+
+让我们回顾一下我们今天学到的东西。我们首先了解了在计算机中设置和安装橙色的三种方法。然后，我们在Orange中探索了用户界面和widget的概念。此外，我们还测试了三种方法来将小部件添加到画布。如果小部件兼容，则小部件可以相互连接。例如，File小部件可以连接到Data Table小部件。最重要的部分是可视化我们已加载的数据集。我们使用自定义Iris数据集尝试了Distribution，Scatter Plot和FreeViz小部件。感谢您阅读**Data Science Made Easy**教程的第1部分。在下一部分中，我将介绍使用Orange的数据处理。❤️
+
+* * *
+
+数据科学变得容易
+========
+
+1.  [交互式数据可视化](/data-science-made-easy-interactive-data-visualization-using-orange-de8d5f6b7f2b)
+2.  [数据处理](/data-science-made-easy-data-processing-using-orange-cb00476a7861)
+3.  [测试和评估](/data-science-made-easy-test-and-evaluation-using-orange-d74e554d9021)
+4.  [数据建模和预测](/data-science-made-easy-data-modeling-and-prediction-using-orange-f451f17061fa)
+5.  图像分析
+
+* * *
+
+参考
+==
+
+1.  [https://orange.biolab.si/](https://orange.biolab.si/)
+2.  [https://github.com/biolab/orange3](https://github.com/biolab/orange3)
+3.  [https://orange.biolab.si/docs/](https://orange.biolab.si/docs/)

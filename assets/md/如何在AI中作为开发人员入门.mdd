@@ -1,0 +1,248 @@
+![如何在AI中作为开发人员入门](https://towardsdatascience.com/how-to-get-started-as-a-developer-in-ai-9116a2326d5f)
+如何在AI中作为开发人员入门
+==============
+
+梦想与AI有关的工作？本指南是您必读的内容。
+----------------------
+
+[![Oleksii Kharkovyna](https://miro.medium.com/fit/c/48/48/1*GfL34oZT9toWlXesrzHgyw.png)](/@oleksii_kh?source=post_page-----9116a2326d5f----------------------)
+
+[Oleksii Kharkovyna](/@oleksii_kh?source=post_page-----9116a2326d5f----------------------)
+
+跟随
+
+[8月10日](/how-to-get-started-as-a-developer-in-ai-9116a2326d5f?source=post_page-----9116a2326d5f----------------------) · 12 分钟阅读
+
+![](https://miro.medium.com/max/30/0*U2AZ8ehElEg5g7I9?q=20)
+
+人工智能。嗯，看起来这种尖端技术现在是最受欢迎的，同时也是人类最具决定性的技术。我们对AI功能及其在几乎任何行业中的有效使用方式都不断惊叹。机器人现在就像100年前的飞机一样。下一个是什么？这个问题从很大的兴趣，鼓励，成为这个过程的一部分的愿望开始，并以恐惧，完全的混乱和无知结束。但是什么阻止你坐在人工智能开发的一个前排座位而不是一个被动的观察者呢？
+
+您可能认为开始作为AI中的开发人员是一条漫长而艰难的道路。嗯，是的，但这并不意味着你无法处理它。让我对那些怀疑的人说一句话。即使您没有任何编程，数学，工程方面的经验，您也可以从头开始学习人工智能，并开始在实践中应用您的知识，创建简单的机器学习解决方案，并为您的新职业迈出第一步。
+
+几年前，Kaggle的用户调查表明，在该领域工作的人中，只有30％的人将机器学习或数据科学作为正规教育的一部分。相反，66％的受访者认为自己是自学成才。超过一半的受访者表示他们使用在线课程来学习新的学科。所以，它只意味着一件事：
+
+> **停止做梦并开始做！**
+
+如果您决定这样做，这篇文章将是您迈出第一步的绝佳工具。在这里，我将展示成为AI开发人员的最有效的学习途径。你知道，有很多选择，但我尝试区分真正重要的东西。
+
+你准备好了吗？
+
+第一部分，首先，获得开始学习AI所需的基本技能
+=======================
+
+![](https://miro.medium.com/max/30/0*pYPsMmbeAvin0QZK?q=20)
+
+至于人工智能研究是最复杂的研究之一，最好是正确地学习。我的意思是，你需要为学习做好准备，并首先获得一些基本技能。如果你已经知道了什么，你可以避免它。但在其他情况下，我建议至少花几天时间或弱点来获得有关上述内容的某些知识。
+
+与此同时，你不需要成为一切的主人。只需花一些时间来发现什么是什么的一般信息。如果你想在以后看到深刻的结果，现在不要急于求成。无论如何，它将帮助您将来更少的细节。
+
+**＃1抽象思维**
+
+抽象思维对于变得更聪明并具有解决问题的能力非常重要。你是一个抽象的思想家吗？如果没有，是时候改变这种情况了。
+
+良好的解决问题的能力和逻辑推理能力是您的首要任务。机器学习围绕着寻找数据模式。例如，数据科学家花费更多的时间来创建假设，准备和进行无休止的数据阵列实验，而不是设计服务架构和调试它们。
+
+在专家的脑海中，道路和谷歌地图交叉点变成图表，以及ATM上现金提取的统计数据 - 在分析系统的时间序列中。人们离不开以抽象形式表达普通事物的技巧。因此，在思考时，深度优先是最佳选择。
+
+怎么学这么想？开始询问您看到的所有内容。也许提高抽象思维技能的最佳方法是增加你的心理承受力并开始更多地思考问题。以下是一些可能对您有帮助的无聊视频：
+
+*   [什么是思想？大脑如何创造新的想法](https://www.youtube.com/watch?v=oJfFMoAgbv8)
+*   [关于抽象对象的4种思考方式](https://www.youtube.com/watch?v=CIyHZ1FvHUM)
+*   [创造性思维 - 如何开箱即用并产生想法](https://www.youtube.com/watch?v=bEusrD8g-dM)
+
+顺便说一句，培养你的数学技能也有助于数学是一种抽象的思维方式。试图在统计数据中找到模式也可以提高你在这方面的能力。所以，要注意下一个技能。
+
+**＃2普通数学素养**
+
+![](https://miro.medium.com/max/30/0*4QSijfMOB3DmH0tz?q=20)
+
+人工智能和机器学习的职业需要一般的数学素养。这里的关键词是一般的。您需要阅读或更新基础理论。无需阅读整个教程，只关注关键概念：
+
+*   用于数据分析的线性代数：标量，向量，矩阵和张量
+*   数学分析：衍生物和梯度
+*   概率论基础
+
+为了快速学习线性代数和数学分析，我建议这些课程：
+
+*   [可汗学院](https://www.khanacademy.org/math/linear-algebra)提供关于线性代数和数学分析的简短实践课程
+*   [MIT OpenCourseWare](https://ocw.mit.edu/courses/mathematics/18-657-mathematics-of-machine-learning-fall-2015/)为ML学习数学提供了很好的课程
+*   [人工智能：机器学习和预测分析](https://dzone.com/guides/artificial-intelligence-machine-learning-and-predi)轻松地引导人工智能的无限可能性
+
+**＃3物理如果你想使用机器人技术**
+
+![](https://miro.medium.com/max/30/0*H9wy3Tu0wblOMOsI?q=20)
+
+对所有工程分支都有扎实的科学理解。物理学特别有用，因为它提供了能量，电路，力学，材料科学和机器人技术的其他关键主题的基础知识。然而，所有科学都是有用的，因为他们教授如何将数学应用于现实世界的问题。
+
+在哪里学习物理？不要惊慌。这是一个很棒的[YouTube](https://www.youtube.com/channel/UC0ubeFQpRGEdSVDno3jZizg)频道，可以学习工程物理。请享用！
+
+**＃4统计方法**
+
+![](https://miro.medium.com/max/30/0*uLaj0dRj-xE2e-3D?q=20)
+
+统计方法是实现对机器学习算法行为的更深入理解所需的重要数学基础领域。主要用于分析数据和数据集的技术：
+
+*   意思
+*   标准偏差
+*   回归分析
+*   样本量测定
+*   假设检验
+
+[关于EdX的免费统计分析课程](https://www.edx.org/course?search_query=statistical+analysis)
+
+[回归的关键类型：使用哪一种？](/key-types-of-regressions-which-one-to-use-c1f25407a8a4)
+
+[](https://machinelearningmastery.com/statistics_for_machine_learning/)Jason Brownlee的[机器学习统计方法](https://machinelearningmastery.com/statistics_for_machine_learning/)
+
+**＃5算法，一路走来！**
+
+![](https://miro.medium.com/max/30/0*B08Dmn_2mlHRja2G?q=20)
+
+注意！我们现在已经开始学习人工智能最基本的东西了。算法不仅仅是必须的。如果您想成为AI域的候选者，您必须成为广泛算法的专家。你应该精通极好的解决问题和分析技能，所以不要避免以前的步骤。它将帮助您以有效的方式执行给定的任务。
+
+算法可能看起来太无聊和复杂，需要掌握。嗯，在某种程度上，这是事实。但是，如果你真的，疯狂地，非常想成为AI专家，你必须提高你的知识，没有别的办法。您可以使用我以前的一篇文章 - [数据科学的十大机器学习算法](/top-10-machine-learning-algorithms-for-data-science-cdb0400a25f9) - 简化此任务\- 在这里，我用简单的单词解释了10种最常见算法的核心原理。
+
+但这还不够，所以我还建议更进一步。看看这样有用的东西：
+
+*   [](https://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1848000693)Steven S Skiena [的算法设计手册](https://www.amazon.com/Algorithm-Design-Manual-Steven-Skiena/dp/1848000693)
+*   [机器学习算法：](https://dzone.com/articles/machine-learning-algorithms-which-one-to-choose-fo) Daniil Korbut [为您的问题选择哪一个](https://dzone.com/articles/machine-learning-algorithms-which-one-to-choose-fo)
+*   [](https://dzone.com/articles/visualizing-algorithms-before-implementation)Daniel P. Clark [在实施之前可视化算法](https://dzone.com/articles/visualizing-algorithms-before-implementation)
+
+以上所有内容都像准备一样。如果你已经掌握了所有这些基本技能，你可以自信地去教学机器。
+
+第二部分。开始学习AI - 最重要的部分
+====================
+
+![](https://miro.medium.com/max/30/0*3YY4Ub9az2UC2zru?q=20)
+
+就这样，我们来到最有趣的部分。拥有学习人工智能所需的累积知识库，您可以自信地吸收以下几点，让小宝宝步骤更贴近您的梦想。是的，确切地说，这些是婴儿步骤。这里不可能指望快速的结果，还记得吗？
+
+**＃1计算机科学，编程（注重Python）**
+
+![](https://miro.medium.com/max/30/0*TV2P718aLq6HnWgd?q=20)
+
+AI开发人员工作的一个重要部分是处理基于计算机科学的应用程序，其中包括Python和编码等编程语言。所以，在这一步，请耐心等待，让自己获得超级关注和专注，因为你必须学习很多东西。
+
+为何选择Python？根据所有民意调查，Python现在是人工智能和数据科学领域最受欢迎的语言。而且，这个工具很容易与学习相处。您现在可以在网上找到大量的图书馆，培训课程和材料。因此，您可以选择符合您的喜好，激动人心的生活和学习机会的格式。
+
+绝对初学者的资源和必须学习的东西：
+
+*   [Python初学者数据科学](/a-beginners-guide-to-python-for-data-science-60ef022b7b67)指南 - 综合指南，也适合那些梦想在AI领域工作的人。
+*   [使用Python自动化无聊的东西](https://automatetheboringstuff.com/) - 本书证明了编程中的主要内容不是语法知识，而是了解如何使机器执行指令。
+*   [如何像计算机科学家一样思考](http://openbookproject.net/thinkcs/python/english3e/) - 另一个良好的开放式书籍项目，指导您像专业人士一样进行编程。
+*   [以艰难的方式学习Python](https://learnpythonthehardway.org/) - 一本精彩的手工书，解释了基础知识和更复杂的应用程序。
+*   [Python教程](https://docs.python.org/3/tutorial/) - 官方文档。
+
+您还可以学习其他语言，如C ++ / R / Java，但就我个人而言，Python是最适合AI和数据科学的工具。想知道为什么吗？阅读我之前的文章，在这里我详细解释了这个问题：[Python vs R.选择人工智能，ML和数据科学的最佳工具](https://medium.com/datadriveninvestor/python-vs-r-choosing-the-best-tool-for-ai-ml-data-science-7e0c2295e243)。
+
+**＃2学习AI本身**
+
+![](https://miro.medium.com/max/30/0*0I4Wz4_X-zWf1tCy?q=20)
+
+_由Francesco Corea开发的AI知识地图_
+
+想象一下你如何理解上面的方案，我会像Andrew Ng一样说“如果你不理解，不要担心它”。只需要看到整个画面并理解每个元素的位置。顺便说一句，安德鲁是人工智能领域最有影响力的人之一，你会多次遇到这个名字。他共同创办了在线机器学习网站Coursera，现在是斯坦福大学的兼职教授。
+
+所以，我们可以回到主题，AI是一个广泛的研究领域，包括许多理论，方法，技术和实践，以及以下基本概念：
+
+![](https://miro.medium.com/max/30/0*YKuf8auisohZB9Pb?q=20)
+
+**机器学习。**机器学习是实施人工智能的过程。这是计算机无需人为干预即可学习的能力。人工智能可以在没有机器学习的情况下实现，但这需要一百万行具有复杂规则和条件的代码。换句话说，不是写下每个特定任务的详细指令，而是使用一种算法来学习自己找到解决方案。
+
+机器学习有四种主要类型：监督，无监督，半监督和强化学习。在有监督的机器学习中，算法通过处理和分类大量标记数据来学习识别数据。在无监督的机器学习中，该算法识别大量未标记数据中的模式和类别 - 通常比人类大脑更快。
+
+在哪里以及学习内容：
+
+*   [Python初学者机器学习指南](/beginners-guide-to-machine-learning-with-python-b9ff35bc9c51)
+*   [机器学习简介](https://www.udacity.com/course/intro-to-machine-learning--ud120) - Udacity的免费课程
+*   [如何成为机器学习工程师：15个步骤](https://www.wikihow.com/Become-a-Machine-Learning-Engineer)
+
+**神经网络**
+
+![](https://miro.medium.com/max/30/0*hUjAs2bFn3ZGE6d6?q=20)
+
+迄今为止，人工智能中增长最快的部分可能是神经网络。神经网络和人工智能的研究应该从两个数学分支的发展开始 - 线性代数和概率论。这是一项强制性的最低要求，是人工智能不可动摇的支柱。神经网络是一种机器学习，它帮助智能机器找到正确的连接来纠正任务或在特定情况下做出预定的决定。
+
+以下是一些很好的演练：
+
+*   [Python中的神经网络](https://www.amazon.com/Neural-Network-Projects-Python-ultimate/dp/1789138906) - 这是一个很棒的教程，您可以从头开始构建一个简单的神经网络。您将找到有用的插图，并了解梯度下降的工作原理。
+*   [如何在Python中从头开始构建自己的神经网络](/how-to-build-your-own-neural-network-from-scratch-in-python-68998a08e4f6)
+*   [用Python从头开始实现神经网络 - 简介。](http://www.wildml.com/2015/09/implementing-a-neural-network-from-scratch/)
+*   [初学者的机器学习：神经网络简介](https://victorzhou.com/blog/intro-to-neural-networks/) - 一个关于神经网络如何工作以及如何在Python中从头开始实现神经网络的更好的简单解释。
+
+**深度学习。**深度学习试图模拟新皮层中神经元层的活动。人工神经网络（ANNs） - 似乎已经这样做的算法。ANN由相互作用的人工神经元组成。它们按层排列 - 每层在识别图像时对某些符号作出反应，例如图形的弯曲和边界。由于层数众多，学习被称为深层次。
+
+[6个月内深度学习的实用指南](https://blog.paperspace.com/a-practical-guide-to-deep-learning-in-6-months/)
+
+[Yann LeCun和其他人的高效BackProp](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
+
+**认知计算**
+
+AI使用认知计算来模拟人类通常执行的过程，解释图像和语言，然后可以响应地说话和行动。人工智能和机器学习充满了生物灵感的例子。而且，虽然早期的AI专注于构建模仿人类大脑的机器的宏伟目标，但认知计算正在努力实现这一目标。
+
+基于神经网络和深度学习的认知计算正在应用来自认知科学的知识来构建模拟人类思维过程的系统。然而，认知计算不是专注于一组单一技术，而是涉及多个学科，包括机器学习，自然语言处理，视觉和人机交互。
+
+[认知计算：Peter Fingar的游戏改变者简介](https://www.amazon.com/Cognitive-Computing-Brief-Guide-Changers/dp/0929652517)
+
+**计算机视觉**
+
+![](https://miro.medium.com/max/30/0*HsOuKqW1aT-djtOv?q=20)
+
+AI依赖于图像识别和对图像或视频中发生的事情的深入研究。当机器能够处理，分析和理解图像时，他们可以单独解释它们并提供有关材料处理和使用的自己的决定。
+
+[计算机视觉中的多视图几何](https://www.amazon.com/Multiple-View-Geometry-Computer-Vision/dp/0521540518/ref=as_li_ss_tl?_encoding=UTF8&psc=1&refRID=D3KAKQ6RAYTHZKNC8X7R&linkCode=sl1&tag=inspiredalgor-20&linkId=ddee98ca55e5cdf59df34039f578a504&language=en_US)
+
+[计算机视觉：模型，学习和推理](https://www.amazon.com/Computer-Vision-Models-Learning-Inference/dp/1107011795/ref=as_li_ss_tl?_encoding=UTF8&psc=1&refRID=D3KAKQ6RAYTHZKNC8X7R&linkCode=sl1&tag=inspiredalgor-20&linkId=17dcc8453f99eb7c5bb585e4e188d7f8&language=en_US)
+
+[初学者计算机视觉指南](https://medium.com/readers-writers-digest/beginners-guide-to-computer-vision-23606224b720)
+
+AI的主题非常深刻，到目前为止我们只是触及了表面。现在是时候走向实践了。
+
+第三部分。练习你的技能
+===========
+
+![](https://miro.medium.com/max/30/0*9EeRfg7oyzv9Vpzp?q=20)
+
+好吧，如果你已经能够做到这么长的路，我的祝贺！现在球在球场上。就我个人而言，现阶段最有效的解决方案有两种方式：参加**Kaggle**比赛，选择要处理的数据集并练习该过程。
+
+*   **参加Kaggle比赛**
+
+Kaggle经常举行数据分析竞赛。我建议先参加没有奖品的比赛，因为他们是最容易和更适合初学者的。随着时间的推移，您可以转向更复杂的任务。如果这种练习方法适合您，请阅读有关如何参加Kaggle比赛[的指南 - Kaggle初学者指南](https://elitedatascience.com/beginner-kaggle)。
+
+*   **数据集实践：**
+
+[使用小内存数据集练习机器学习](https://machinelearningmastery.com/practice-machine-learning-with-small-in-memory-datasets-from-the-uci-machine-learning-repository/)
+
+[现实世界机器学习问题之旅](https://machinelearningmastery.com/tour-of-real-world-machine-learning-problems/)
+
+[研究对您来说很重要的机器学习问题](https://machinelearningmastery.com/work-on-machine-learning-problems-that-matter-to-you/)
+
+[拥有免费数据集的十大优秀网站](/top-10-great-sites-with-free-data-sets-581ac8f6334)
+
+适度的外卖和一点动机
+==========
+
+![](https://miro.medium.com/max/30/0*SqtEuBjPGF7-mud0?q=20)
+
+你可能已经猜到了，你有很多东西值得学习。但是如果你有自己的目标并且对这些东西真的很感兴趣，那么你会很高兴有这么艰难的学习之路。
+
+现在，让我们记住您需要专注于研究AI的所有关键点：
+
+*   准备和获取知识库
+*   学习关于AI的关键事项
+*   练习技巧
+*   感觉像一个胜利者
+
+最后，多一点动力，因为永远不会有太多的动力，对吧？
+
+> _每个人都受到戒指的恐惧。你感到害怕。你的对手很害怕。_
+> 
+> _嗯，真正的区别是有人会前进，有人会后退一步。_
+
+当然，您的任务是选择第一个选项。为此，利用您的恐惧，将其投入到对您有价值的事物中。例如，恐惧可以作为做更多事情或做得更好，前进和不断改进的杰出推动力。以这种方式，你会让你的恐惧成为朋友。
+
+_鼓励学习更多关于AI，ML和数据科学的知识？_
+
+_欢迎来到我的_[_Instagram_](https://www.instagram.com/miallez/)_和_[_Medium_](https://medium.com/@oleksii_kh)_博客_
+
+_干杯_

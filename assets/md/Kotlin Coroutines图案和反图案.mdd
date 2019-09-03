@@ -1,0 +1,103 @@
+![Kotlin Coroutines图案和反图案](https://proandroiddev.com/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+Kotlin Coroutines图案和反图案
+=======================
+
+[![Dmytro Danylyk](https://miro.medium.com/fit/c/48/48/1*kDK0N87pULvC4xe-BU-G7w.png)](/@dmytrodanylyk?source=post_page-----f9d12984c68e----------------------)
+
+[Dmytro Danylyk](/@dmytrodanylyk?source=post_page-----f9d12984c68e----------------------)
+
+跟随
+
+[2018年12月3日](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e?source=post_page-----f9d12984c68e----------------------) · 3 分钟阅读
+
+![](https://miro.medium.com/max/30/1*pGUMoNsqG5Wh5up0w94EdA.png?q=20)
+
+![](https://miro.medium.com/max/1752/1*pGUMoNsqG5Wh5up0w94EdA.png)
+
+目录
+==
+
+*   介绍
+*   [使用coroutineScope包装异步调用或使用SupervisorJob处理异常](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+*   [首选主协调程序用于根协程](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+*   [避免使用不必要的异步/等待](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+*   [避免取消范围作业](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+*   [避免使用隐式调度程序编写挂起函数](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+*   [避免使用全局范围](/kotlin-coroutines-patterns-anti-patterns-f9d12984c68e)
+
+介绍
+--
+
+决定写一些我认为在使用Kotlin协同程序时你应该和不应该做_（或至少试图避免）的_事情。
+
+使用coroutineScope包装异步调用或使用SupervisorJob处理异常
+------------------------------------------
+
+❌如果_异步_块可能抛出异常，请不要依赖于使用_try / catch_块包装它。
+
+在上面的示例中，_doWork_函数启动新的协同程序_（1）_，它可能会抛出未处理的异常。如果你尝试用_try / catch_块_（2）_包装_doWork_，它仍然会崩溃。
+
+发生这种情况是因为任何工作的孩子的失败都会导致其父母立即失败。
+
+✅避免崩溃的一种方法是使用[_SupervisorJob_](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-supervisor-job.html) _（1）_。
+
+> 儿童的失败或取消不会导致主管工作失败，也不会影响其他子女。
+
+注意：只有在使用_SupervisorJob_在coroutine作用域上显式运行_async时_，这才有效_。_因此，下面的代码仍会使您的应用程序崩溃，因为_异步_是在父协同程序_（1）_的范围内启动的。
+
+✅另一种避免崩溃的方法，最好是使用_coroutineScope（1）_包装_异步__。_现在当_异步_发生异常时，它将取消在此范围内创建的所有其他协同程序，而不会触及外部作用域。_（2）_
+
+或者，您可以处理_异步_块内的异常。
+
+首选主协调程序用于根协程
+------------
+
+❌如果您需要在根协同程序中执行后台工作并更新_UI_，请不要使用非_主_调度程序启动它。
+
+在上面的示例中，我们使用带有_Default_ dispatcher _（1）_的作用域启动根协同程序。通过这种方法，每当我们需要触摸用户界面时，我们就必须切换上下文_（2）_。
+
+✅在大多数情况下，最好使用_Main_调度程序创建范围，这会导致代码更简单，上下文切换更少。
+
+避免使用不必要的异步/等待
+-------------
+
+❌如果您使用_异步_功能，然后立即_等待，_您应该停止这样做。
+
+✅如果要切换协程上下文并立即挂起父协同程序_withContext_是一种更好的方法。
+
+性能方面它不是一个大问题_（甚至认为async创建新协程来完成工作）_但语义_异步_意味着你想在后台启动几个协同程序，然后_等待_它们。
+
+避免取消范围作业
+--------
+
+❌如果需要取消协程，请不要首先取消范围作业。
+
+上述代码的问题是，当我们取消作业时，我们将其置于已_完成_状态。在_完成的_工作范围内启动的协同程序将不会被执行_（1）_。
+
+✅如果要取消特定范围的所有协同程序，可以使用[_cancelChildren_](https://github.com/Kotlin/kotlinx.coroutines/issues/787)函数。此外，提供取消个人工作的可能性是一种很好的做法（2）。
+
+避免使用隐式调度程序编写挂起函数
+----------------
+
+❌不要写依赖于特定协程调度员的执行的暂停功能。
+
+在上面的示例中，_login_函数是一个挂起函数，如果从使用非_Main_调度程序的coroutine执行它，它将崩溃。
+
+> CalledFromWrongThreadException：只有创建视图层次结构的原始线程才能触及其视图。
+
+✅以可从任何协程调度程序执行的方式设计暂停功能。
+
+现在我们可以从任何调度员调用我们的_登录_功能。
+
+避免使用全局范围
+--------
+
+❌如果您在_Android_应用程序中的任何地方使用[_GlobalScope_](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/)  ，您应该停止这样做。
+
+> 全局范围用于启动顶级协同程序，这些协同程序在整个应用程序生命周期内运行，并且不会过早取消。
+> 
+> 应用程序代码通常应该使用应用程序定义的[CoroutineScope](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-coroutine-scope/index.html)，非常不鼓励使用[异步](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/async.html)或在[GlobalScope](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/index.md)实例上[启动](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/launch.html)。[](https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/-global-scope/index.md)
+
+✅在_Android的_协程可容易地作用域_活动_，_片段_，_查看O_ - \[R _视图模型_的生命周期。
+
+特别感谢：_Andrey Mischenko，Louis CAD，Bradyn Poulsen，Tolriq，Dave A._

@@ -1,0 +1,142 @@
+![数据科学家的自动版本控制](https://towardsdatascience.com/automatic-version-control-for-data-scientists-fc4968bef8f)
+数据科学家的自动版本控制
+============
+
+[![乔治赛义夫](https://miro.medium.com/fit/c/48/48/1*NXT3Mow_MRFaL68T5Cq2HA.png)](/@george.seif94?source=post_page-----fc4968bef8f----------------------)
+
+[乔治赛义夫](/@george.seif94?source=post_page-----fc4968bef8f----------------------)
+
+跟随
+
+[8月23日](/automatic-version-control-for-data-scientists-fc4968bef8f?source=post_page-----fc4968bef8f----------------------) · 6 分钟阅读
+
+关于数据科学最好的部分之一是完成整个项目的冒险，端到端。从数据清理，可视化到功能构建，最后培训机器学习模型。伟大的数据科学家的技能需求很高，[工资](https://www.saturncloud.io/yourpub/georgeseif94/data-science-jobs-/Data/ds_jobs.ipynb?source=gs-2)很高。
+
+所有这一切的主要挑战是_组织_。
+
+如今，数据科学家们正在每个至少有几个成员的小团队中工作。他们每个人都在玩相同的数据，建立在彼此的工作基础上。
+
+![](https://miro.medium.com/max/30/1*lIGiPQQ6562KSNuSt8KWlg.png?q=20)
+
+![](https://miro.medium.com/max/471/1*lIGiPQQ6562KSNuSt8KWlg.png)
+
+伟大的数据科学的许多不同组成部分
+
+不幸的是，Data Science团队成员经常在他们自己的迷你孤岛中工作。他们创建自己的代码库，运行自己的[Jupyter笔记本](/easy-devops-for-data-science-with-saturn-cloud-notebooks-d19e8c4d1772)，并显示自己的可视化。一些如何，他们匆匆将所有这些混合在一起以创建最终报告。至少可以说，这是一个不那么出色的协调。
+
+但必须有更好的方法。某种系统或工具允许广泛使用数据和图形工作的人员，数据科学家，有效地与团队的其他成员合作，在彼此工作的基础上进行工作。该系统需要灵活，易于使用，并且不会中断数据科学工作流程。
+
+让我们看看我们能做些什么......
+
+git如何适用于数据科学
+============
+
+在一个普通的旧软件工程团队中，[Git](https://medium.com/@george.seif94/a-full-tutorial-on-how-to-use-github-88466bac7d42)是一个用于组织代码，项目和团队协作的常用工具。团队成员使用他们自己的本地代码，但始终使用中央存储库同步他们的进度和新开发。
+
+这可确保每个人都是最新且同步的。这是让团队的工作相互结合而不是冲突的好方法，这会带来更高的产出。
+
+![](https://miro.medium.com/max/30/1*k0kFbUGVhO5Uwxxte_xQZA.png?q=20)
+
+Git流。团队成员在他们自己的“ _功能”_分支上工作，然后在“开发”分支中同步。一旦Develop分支很好并且完美，代码的生产版本就会与Master同步。
+
+数据科学有点棘手，因为很多是研究和软件工程的结合：
+
+*   数据本身很大，因此共享存储可能具有挑战性。Git-LFS有帮助，但使用起来很慢。
+*   大多数情况下，代码更改很小，但可视化看起来完全不同。Git不允许显示从提交到提交的图形更改
+*   数据科学家通常使用Jupyter笔记本电脑。在GitHub上可视化笔记本中的更改非常**糟糕**。它显示了.ipynb文件中的差异，但不显示我们在笔记本中发现有用的图表上的实际代码。
+
+综上所述，我们可以开始了解数据科学的优秀版本控制系统应该是什么样子。
+
+首先，我们正在寻找易用性。[DevOps](https://en.wikipedia.org/wiki/DevOps)和后端工程师可能对git非常熟练，但数据科学往往更多地在研究方面而不是工程方面。处理代码冲突应该特别顺利。
+
+我们还想看看数据科学项目中的_实际_变化。看到代码更改很好，但它并没有说明完整的故事。如果团队在视觉上使用Jupyter笔记本，那么尤其如此，代码太复杂，无法告诉我们有关某些图形或数据操作如何变化的信息。
+
+最后，中央数据存储或工作平台可能非常有用。如果没有中央存储，数据科学家将不得不下载并准备他们自己的数据副本 - 对于大型数据集而言效率极低。
+
+考虑到这些，我们现在可以研究解决方案
+
+在数据科学中使用Git的平台
+==============
+
+为数据科学建立版本控制系统的一个很好的选择是[土星云平台](https://www.saturncloud.io/?source=gs-2)。有了它，多个数据科学家可以使用相同的数据集在同一个Jupyter笔记本上工作，但可以在自己的机器上运行。
+
+数据科学合作
+------
+
+首先，我们将创建自己的[托管Jupyter笔记本](https://www.saturncloud.io/docs/jupyter?source=gs-2)，任何有链接的人都可以访问。创建帐户后，下面的视频会向您展示如何完成帐户。
+
+![](https://miro.medium.com/freeze/max/30/1*gzwMb5MopT3cSzPEg4rL2Q.gif?q=20)
+
+![](https://miro.medium.com/max/800/1*gzwMb5MopT3cSzPEg4rL2Q.gif)
+
+创建托管的Jupyter Notebook
+
+一旦我们启动并运行，我们就可以继续启动Jupyter实验室。打开后，您应该已经设置了项目文件夹。
+
+对于这个实验，我们将使用[2018年Kaggle ML和DS Survey](https://www.kaggle.com/kaggle/kaggle-survey-2018)数据集。该数据集包含超过23,000个多项选择答案，针对数据科学家和机器学习从业者提出的有关薪酬的一系列问题。
+
+数据集中的一些有趣事实：
+
+*   “数据科学家”的薪酬最高，高于“数据工程师”和“研究科学家”
+*   技术公司支付最多，其次是营销和财务
+*   更多的经验和更高的教育增加了报酬
+*   美国的赔偿率最高，其次是瑞士和澳大利亚
+
+您可以[在此处](https://www.saturncloud.io/yourpub/georgeseif94/data-science-jobs-/Data/ds_jobs.ipynb?source=gs-2)查看完整的Jupyter笔记本以获取Data Science补偿。
+
+![](https://miro.medium.com/max/30/1*K7f6k5DhvXgJZZJBvc_pwg.png?q=20)
+
+![](https://miro.medium.com/max/1617/1*K7f6k5DhvXgJZZJBvc_pwg.png)
+
+数据科学家补偿
+
+要开始团队协作，请转到您的仪表板并单击_协作者_链接。在其中，您将找到通过Saturn Cloud用户名将协作者添加到项目的功能。
+
+将用户添加到项目会向他们发送一封个人电子邮件，邀请他们在项目上进行协作。一旦他们接受邀请，他们自己的云实例将使用完全相同的设置，库和软件创建。
+
+用户（Data Scientist）可以立即访问他们自己的项目Jupyter笔记本和数据集版本。这允许多个数据科学家在相同的环境中工作，具有相同的数据，并且笔记本电脑的起点相同！
+
+![](https://miro.medium.com/freeze/max/30/1*hDfRCnr3E4yf6ANvquv_hw.gif?q=20)
+
+![](https://miro.medium.com/max/800/1*hDfRCnr3E4yf6ANvquv_hw.gif)
+
+数据科学家的合作
+
+数据科学版本控制
+--------
+
+现在我们可以进入Saturn Cloud的版本控制系统。
+
+在实例上打开Jupyter Lab后，您将看到您的工作界面。在屏幕的左侧有一个项目文件夹。在该项目文件夹中创建和保存的_任何_ Jupyter笔记本将自动启用版本控制。我已将[_ds\_jobs.ipynb_](https://www.saturncloud.io/yourpub/georgeseif94/data-science-jobs-/Data/ds_jobs.ipynb?source=gs-2)  Notebook放入项目文件夹中以对其启用版本控制。
+
+为了展示版本控制的工作原理，我们将修改一些数据可视化。我们假装我们只对来自欧洲国家的数据感兴趣并过滤掉其他所有数据。更改可视化后，我们将能够将更改推送到远程git存储库。下面的45秒视频显示了它是如何完成的！
+
+![](https://miro.medium.com/freeze/max/30/1*74veN8-comyNgz_cM0iofg.gif?q=20)
+
+![](https://miro.medium.com/max/800/1*74veN8-comyNgz_cM0iofg.gif)
+
+数据科学版本控制
+
+大！
+
+我们能够对Jupyter笔记本进行一些快速简便的修改。所有项目合作者（数据科学家）都可以访问该笔记本。因此，无论何时登录，他们都能看到您已做出更改，并可选择拉出这些更改，以便他们保持最新状态！
+
+数据科学随需应变 - 复卷
+-------------
+
+这里另一个很棒的功能是_倒带_功能。它的工作方式类似于**git reset**，它基本上只是恢复我们的更改，因此我们可以返回到更早的状态。如果您觉得自己犯了错误，想要回滚或只是想看看以前的样子，这非常有用。
+
+假设我们想要回滚到我们的可视化，其中显示了用于数据科学补偿的所有区域。我们再次点击右下方的_git_按钮。这一次，单击_您可以回滚此存储库_链接。弹出一个滑块，您可以在其中选择要回滚的时间。设置完成后，您将能够看到旧代码和图形！
+
+![](https://miro.medium.com/freeze/max/30/1*-1OlwKKCRl5mOAz_jB6xcQ.gif?q=20)
+
+重绕Jupyter笔记本
+
+现在，这是控制！
+
+* * *
+
+喜欢学习？
+=====
+
+在[Twitter](https://twitter.com/GeorgeSeif94)上关注我，我发布了有关最新和最好的AI，技术和科学的所有内容！也可以在[LinkedIn](https://www.linkedin.com/in/georgeseif/)上与我联系！

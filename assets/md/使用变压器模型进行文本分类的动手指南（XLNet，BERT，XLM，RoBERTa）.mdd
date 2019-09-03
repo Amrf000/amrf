@@ -1,0 +1,175 @@
+![使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）](https://medium.com/@chaturangarajapakshe/https-medium-com-chaturangarajapakshe-text-classification-with-transformer-models-d370944b50ca)
+使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）
+==========================================
+
+关于使用Transformer Models进行文本分类任务的分步教程。了解如何使用Pytorch-Transformers库加载，微调和评估文本分类任务。包括BERT，XLNet，XLM和RoBERTa型号的即用型代码。
+---------------------------------------------------------------------------------------------------------------
+
+[![Thilina Rajapakse](https://miro.medium.com/fit/c/48/48/2*oBM4rR-W3VS_mtPKrbcIpA.jpeg)](/@chaturangarajapakshe?source=post_page-----d370944b50ca----------------------)
+
+[Thilina Rajapakse](/@chaturangarajapakshe?source=post_page-----d370944b50ca----------------------)
+
+跟随
+
+[9月3日](/@chaturangarajapakshe/https-medium-com-chaturangarajapakshe-text-classification-with-transformer-models-d370944b50ca?source=post_page-----d370944b50ca----------------------) · 7 分钟阅读
+
+![](https://miro.medium.com/max/30/0*EnutlfSRSOOI7lhy?q=20)
+
+![](https://miro.medium.com/max/7952/0*EnutlfSRSOOI7lhy)
+
+照片来自[Arseny Togulev](https://unsplash.com/@tetrakiss?utm_source=medium&utm_medium=referral)在[Unsplash上](https://unsplash.com?utm_source=medium&utm_medium=referral)
+
+**_我强烈建议您在_****_本文中_****_克隆_**[**_Github repo_**](https://github.com/ThilinaRajapakse/pytorch-transformers-classification)**_并在遵循指南时运行代码。它应该可以帮助您更好地理解指南和代码。阅读很棒，但编码更好。_**😉
+
+特别感谢HuggingFace为他们的Pytorch-Transformers库提供了轻松有趣的变换器模型！
+
+1.简介
+====
+
+变形金刚模型已经风靡自然语言处理世界，改变（抱歉！）这个领域的突飞猛进。新的，更大的，更好的模型几乎每个月都会出现，为各种各样的任务设定了新的基准。
+
+本文旨在作为利用这些令人敬畏的模型进行文本分类任务的简单指南。因此，我不会谈论网络背后的理论，或者它们如何在幕后工作。如果你有兴趣在潜入变压器的基本事实，我的建议是周杰伦Alammar画报指南[这里](http://jalammar.github.io/illustrated-transformer/)。
+
+这也是我之前关于[使用BERT进行二进制文本分类的](/swlh/a-simple-guide-on-using-bert-for-text-classification-bbf041ac8d04)指南的更新。我将使用我最后一次使用的相同数据集（Yelp评论），以避免必须下载新数据集，因为我很懒，我的网络很糟糕。更新背后的动机可归结为几个原因，包括我之前指南中使用的HuggingFace库的更新，以及多个新的Transformer模型的发布，这些模型已经成功地击败了BERT。
+
+在背景设置下，让我们来看看我们将要做什么。
+
+1.  使用HuggingFace的Pytorch-Transformers库设置开发环境。
+2.  将_.csv_数据集转换为HuggingFace库使用的_.tsv_格式。
+3.  设置预先训练的模型。
+4.  将数据转换为要素。
+5.  微调模型。
+6.  评价。
+
+我将使用两个Jupyter笔记本，一个用于数据准备，一个用于培训和评估。
+
+你的分数
+====
+
+让我们设置环境。
+--------
+
+1.  在安装和使用各种Python库时，强烈建议使用虚拟环境。我个人最喜欢的是Anaconda，但你可以使用你想要的任何东西。_请注意，指南中可能还有其他未安装的软件包。__如果遇到丢失的软件包，只需通过conda或pip安装即可。_  
+    `conda create -n transformers python pytorch pandas tqdm jupyter  
+    conda activate transformers  
+    conda install -c anaconda scikit-learn  
+    pip install pytorch-transformers  
+    pip install tensorboardX  
+    `
+2.  Linux用户可以在[此处](https://github.com/ThilinaRajapakse/pytorch-transformers-classification/blob/master/data_download.sh)使用shell脚本下载并提取Yelp Reviews Polarity数据集。其他人可以手动下载它[这里](https://course.fast.ai/datasets)在fast.ai. 另外，[直接下载链接](https://s3.amazonaws.com/fast-ai-nlp/yelp_review_polarity_csv.tgz)。  
+    我将`train.csv`  和`test.csv`  文件放在一个名为的目录中`_data_`_。  
+    _`<starting_directory>/data/`
+
+3.设定
+====
+
+是时候为Transformer模型准备好数据了。
+------------------------
+
+大多数在线数据集通常采用`.csv`格式。遵循规范，Yelp数据集包含两个`csv`文件`train.csv`和`test.csv`。
+
+开始我们的第一个（数据准备）笔记本，让我们`csv`用Pandas 加载文件。
+
+然而，这里使用的标签通过1和2而不是通常的0和1来打破常规。我只是为了一点反叛，但这只是让我失望。让我们解决这个问题，使标签分别为0和1，分别表示不好的评论和良好的评论。
+
+在我们为Pytorch-Transformer模型准备好数据之前，我们需要做一些最后的修饰。数据需要采用`tsv`格式，有四列，没有标题。
+
+*   guid：行的ID。
+*   label：行的标签（应为int）。
+*   alpha：所有行的相同字母列。不用于分类但仍需要。
+*   text：行的文本。
+
+所以，让我们按顺序获取数据，并以`tsv`格式保存。
+
+这标志着数据准备笔记本的结束，我们将继续下一节的培训笔记本。
+
+去！（几乎）
+======
+
+从文本到功能。
+-------
+
+在我们开始实际训练之前，我们需要将数据从文本转换为可以输入神经网络的数值。对于Transformer模型，数据将表示为`InputFeature`对象。
+
+为了使我们的数据准备好Transformer，我们将使用文件中的类和函数`utils.py`。（支撑自己，一堵代码传入！）
+
+让我们看一下重要的部分。
+
+本`InputExample`类代表了数据集的一个样本;
+
+*   `guid`：唯一的ID
+*   `text_a`：我们的实际文字
+*   `text_b`：不用于分类
+*   `label`：样本的标签
+
+在`DataProcessor`和`BinaryProcessor`类用于从数据读取`tsv`文件，并转换成`InputExamples`。
+
+的`InputFeature`类表示可以被馈送到一个变压器的纯的，数值数据。
+
+这三个功能`convert_example_to_feature`，`convert_examples_to_features`，`_truncate_seq_pair`用来转换`InputExamples`成`InputFeatures`其最终将被发送到变压器模型。
+
+转换过程包括_标记化_，并将所有句子转换为给定的_序列长度_（截断较长的序列，并填充较短的序列）。在标记化期间，句子中的每个单词被分成更小和更小的标记（单词片段），直到变换器识别出数据集中的所有标记。
+
+作为一个人为的例子，假设我们有_理解_这个词。我们使用的Transformer没有用于_理解_的令牌，但它具有用于_理解_和识别的单独令牌_。_然后，单词_理解_将被分解为令牌_理解_和_ing。_的_序列长度_是该序列中这样的令牌的数量。
+
+该`convert_example_to_feature`函数采用_单个_数据样本并将其转换为`InputFeature`。该`convert_examples_to_features`函数采用一个_列表_的例子，并返回一个_列表_的`InputFeatures`使用`convert_example_to_feature`功能。有两个独立功能的原因是允许我们在转换过程中使用多处理。默认情况下，我将进程计数设置为`cpu_count() - 2`，但您可以通过`process_count`在`convert_examples_to_features`函数中传递参数值来更改它。
+
+现在，我们可以访问我们的培训笔记本并导入我们将使用的内容并配置我们的培训选项。
+
+通过走`args`字典仔细注意你可以配置培训不同的设置。就我而言，我正在使用fp16培训来降低内存使用率并加快培训速度。如果您没有安装Nvidia Apex，则必须通过将其设置为False来关闭fp16。
+
+在本指南中，我使用序列长度为128的XL-Net模型。
+
+现在，我们已准备好加载我们的模型进行培训。
+
+关于Pytorch-Transformers库的最酷的事情是你可以使用`MODEL_CLASSES`上面的任何一个，只需更改参数字典中的`model_type`和`model_name`。所有模型的微调和评估过程基本相同。所有欢呼HuggingFace！
+
+接下来，我们有定义如何加载数据，训练模型和评估模型的函数。
+
+最后，我们已准备好对数据进行标记并训练模型。
+
+去！（真）
+=====
+
+训练。
+---
+
+从这里开始应该相当简单。
+
+这会将数据转换为功能并开始培训过程。已转换的功能将自动缓存，如果您要运行相同的实验，可以稍后重复使用它们。但是，如果您更改类似的内容`max_seq_length`，则需要重新处理数据。改变使用的模型也是如此。要重新处理数据，只需在字典中设置`reprocess_input_data`即可。`True``args`
+
+_为了进行比较，这个数据集在我的Ryzen 2700x上进行标记化大约需要一个小时，在我的RTX 2080上进行大约3个小时的训练。_
+
+培训完成后，我们可以保存所有内容。
+
+6.回头看
+=====
+
+评价。
+---
+
+评估也很容易。
+
+没有任何参数调整，并且有一个训练时期，我的结果如下。
+
+INFO：\_\_ main \_\_：\*\*\*\*\* Eval结果\*\*\*\*\*   
+INFO：\_\_ main\_\_：fn = 1238   
+INFO：\_\_ main\_\_：fp = 809   
+INFO：\_\_ main\_\_：mcc = 0.8924906867291726   
+INFO：\_\_ main\_\_：tn = 18191   
+INFO：\_\_ main\_\_：tp = 17762
+
+不是太寒酸！
+
+7.结束
+====
+
+变压器模型在处理各种自然语言处理任务方面表现出令人难以置信的实力。在这里，我们研究了如何将它们用于最常见的任务之一，即序列分类。
+
+HuggingFace的Pytorch-Transformers库使得利用这些庞大模型的力量几乎是微不足道的！
+
+8.最后的想法
+=======
+
+*   使用您自己的数据集时，我建议您编辑`data_prep.ipynb`笔记本以将数据文件另存为`tsv`文件。在大多数情况下，你应该能够通过简单地确保包含正确的列得到的东西运行_文本_和_标签_被传递到`train_df`和`dev_df`构造。您还可以定义自己的类继承自文件中的`DataProcessor`类`utils.py`，但我觉得第一种方法更简单。
+*   请使用[Github repo](https://github.com/ThilinaRajapakse/pytorch-transformers-classification)，而不是复制和粘贴帖子。任何修复或额外功能都将添加到Github仓库中，除非是一个重大变化，否则不太可能在此处添加。代码使用Gists嵌入到Medium中，因此，它们不会自动与repo代码同步。
