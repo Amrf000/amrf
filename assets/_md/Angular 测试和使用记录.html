@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="active" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="angular-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F">Angular 开发环境配置方式 <a class="heading-anchor-permalink" href="#angular-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F" aria-hidden="true">#</a></h1>
+<ul>
+<li>基于 Angular Quickstart
+<a href="https://github.com/angular/quickstart">https://github.com/angular/quickstart</a></li>
+<li>基于 Angular CLI
+npm install -g @angular/cli
+我这次采用了第一种方式搭建环境<br>
+==================</li>
+</ul>
+<ol>
+<li>下载项目包后解压</li>
+<li>使用vscode打开项目目录并执行npm install命令，也可以之间命令行进入目录执行npm install，安装相关依赖</li>
+<li>依赖安装完后vscode执行npm start命令启动项目</li>
+<li>项目启动完毕后，浏览器会弹出http://localhost:3000/，页面上显示了Hello Angular字样
+<img src="https://bbs-img.huaweicloud.com/blogs/img/1542265987575082.png" alt="image.png" title="1542265987575082.png">
+看代码之前，先把Angular2语法快速指南挂上
+========================
+<a href="https://blog.csdn.net/shenlei19911210/article/details/53171370">Angular for TypeScript 语法快速指南 (基于2.0.0版本)</a><a href="https://blog.csdn.net/shenlei19911210/article/details/53171370"></a>
+引导
+<code>import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';</code>
+<code>**platformBrowserDynamic().bootstrapModule**(AppModule);</code>
+使用JIT编译器引导一个AppModule模块定义的应用
+NgModules</li>
+</ol>
+<pre><code>import { NgModule } from '@angular/core';`
+@**NgModule**({ declarations: ..., imports: ...,  
+     exports: ..., providers: ..., bootstrap: ...})  
+class MyModule {}
+</code></pre>
+<p>定义一个模块，其中包括组件、指令、管道和提供商。
+<code>**declarations:** [MyRedComponent, MyBlueComponent, MyDatePipe]</code>
+一个数组，包括从属于当前模块的组件、指令和管道。
+<code>**imports:** [BrowserModule, SomeOtherModule]</code>
+一个数组，包括被导入到当前模块中的所有模块。来自被导入模块的<code>declarations</code>也同样对当前模块有效。
+<code>**exports:** [MyRedComponent, MyDatePipe]</code>
+一个数组，包括对导入当前模块的模块可见的组件、指令、管道。
+<code>**providers:** [MyService, { provide: ... }]</code>
+一个数组，包括在对前模块及导入当前模块的模块中的内容物（组件、指令、管道、提供商等）可见的依赖注入提供商。
+<code>**bootstrap:** [MyAppComponent]</code>
+一个数组，包括由当前模块引导时应该引导的组件
+模板语法
+ 
+<code>&lt;input **[value]**=&quot;firstName&quot;&gt;</code>
+把属性<code>value</code>绑定到表达式<code>firstName</code>的结果。
+<code>&lt;div **[attr.role]**=&quot;myAriaRole&quot;&gt;</code>
+把<code>role</code>这个Attribute绑定到表达式<code>myAriaRole</code>的结果。
+<code>&lt;div **[class.extra-sparkle]**=&quot;isDelightful&quot;&gt;</code>
+把元素是否出现CSS类<code>extra-sparkle</code>，绑定到一个表达式<code>isDelightful</code>的结果是否为真。
+<code>&lt;div **[style.width.px]**=&quot;mySize&quot;&gt;</code>
+把样式的<code>width</code>属性绑定到表达式<code>mySize</code>的结果，以px为单位。这个单位是可选的。
+<code>&lt;button **(click)**=&quot;readRainbow($event)&quot;&gt;</code>
+当按钮(及其子元素)上的click事件被触发时，调用<code>readRainbow</code>方法，并把事件对象作为参数传入。
+<code>&lt;div title=&quot;Hello **{{ponyName}}**&quot;&gt;</code>
+把属性绑定到一个插值表达式字符串，比如 “Hello Seabiscuit”。它等价于：<code>&lt;div [title]=&quot;'Hello ' + ponyName&quot;&gt;</code>
+<code>&lt;p&gt;Hello **{{ponyName}}**&lt;/p&gt;</code>
+把文本内容绑定到一个插值表达式，比如 “Hello Seabiscuit”.
+<code>&lt;my-cmp **[(title)]**=&quot;name&quot;&gt;</code>
+设置双向数据绑定。等价于：<code>&lt;my-cmp [title]=&quot;name&quot; (titleChange)=&quot;name=$event&quot;&gt;</code></p>
+<pre><code>&lt;video **#movieplayer** ...&gt;  
+  &lt;button **(click)**=&quot;movieplayer.play()&quot;&gt;  
+&lt;/video&gt;
+</code></pre>
+<p>创建一个局部变量<code>movieplayer</code>，它提供到<code>video</code>元素实例的访问，可用于当前模板中的数据绑定和事件绑定表达式中。
+<code>&lt;p ***myUnless**=&quot;myExpression&quot;&gt;...&lt;/p&gt;</code>
+<code>*</code>符号表示当前元素将被转变成一个内嵌模板。等价于：<code>&lt;template [myUnless]=&quot;myExpression&quot;&gt;&lt;p&gt;...&lt;/p&gt;&lt;/template&gt;</code>
+<code>&lt;p&gt;Card No.: **{{cardNumber | myCardNumberFormatter}}**&lt;/p&gt;</code>
+通过名叫<code>myCardNumberFormatter</code>的管道，转换表达式的当前值<code>cardNumber</code>。
+<code>&lt;p&gt;Employer: **{{employer?.companyName}}**&lt;/p&gt;</code>
+安全导航运算符(<code>?.</code>)表示<code>employer</code>字段是可选的，如果它是<code>undefined</code>，表达式剩下的部分将被忽略
+<code>&lt;**svg:**rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;100&quot;/&gt;</code>
+SVG模板需要在它们的根节点上带一个<code>svg:</code>前缀，以消除模板中HTML元素和SVG元素的歧义。</p>
+<pre><code>&lt;**svg**&gt;  
+  &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;100&quot; height=&quot;100&quot;/&gt;  
+&lt;/**svg**&gt;
+</code></pre>
+<p><code>&lt;svg&gt;</code>元素在无需前缀的情况下，也能被自动检测为SVG。
+内置指令
+<code>import { CommonModule } from '@angular/common';</code>
+<code>&lt;section ***ngIf**=&quot;showSection&quot;&gt;</code>
+基于showSection表达式的值移除或重新创建部分DOM树。
+<code>&lt;li ***ngFor**=&quot;let item of list&quot;&gt;</code>
+把li元素及其内容转化成一个模板，并用它来为列表中的每个条目初始化视图。</p>
+<pre><code>&lt;div **[ngSwitch]**=&quot;conditionExpression&quot;&gt;  
+  &lt;template **[**ngSwitchCase**]**=&quot;case1Exp&quot;&gt;...&lt;/template&gt;  
+  &lt;template **ngSwitchCase**=&quot;case2LiteralString&quot;&gt;...&lt;/template&gt;  
+  &lt;template **ngSwitchDefault**&gt;...&lt;/template&gt;  
+&lt;/div&gt;
+</code></pre>
+<p>基于conditionExpression的当前值，从内嵌模板中选取一个，有条件的切换div的内容。
+<code>&lt;div **[ngClass]**=&quot;{active: isActive, disabled: isDisabled}&quot;&gt;</code>
+把一个元素上CSS类的出现与否，绑定到一个真值映射表上。右侧的表达式应该返回类似{class-name: true/false}的映射表。
+表单
+<code>import { FormsModule } from '@angular/forms';</code>
+<code>&lt;input **[(ngModel)]**=&quot;userName&quot;&gt;</code>
+提供双向绑定，为表单控件提供解析和验证。
+类装饰器
+<code>import { Directive, ... } from '@angular/core';</code>
+<code>**@Component({...})** class MyComponent() {}</code>
+声明当前类是一个组件，并提供关于该组件的元数据。
+<code>**@Directive({...})** class MyDirective() {}</code>
+声明当前类是一个指令，并提供关于该指令的元数据。
+<code>**@Pipe({...})** class MyPipe() {}</code>
+声明当前类是一个管道，并且提供关于该管道的元数据。
+<code>**@Injectable()** class MyService() {}</code>
+声明当前类有一些依赖，当依赖注入器创建该类的实例时，这些依赖应该被注入到构造函数中。
+指令配置
+<code>@Directive({ property1: value1, ... })</code>
+<code>**selector:** '.cool-button:not(a)'</code>
+指定一个CSS选择器，以便在模板中找出该指令。支持的选择器包括<code>element</code>,<code>[attribute]</code>,<code>.class</code>, 和<code>:not()</code>。
+不支持父子关系选择器。
+<code>**providers:** [MyService, { provide: ... }]</code>
+为当前指令及其子指令提供依赖注入的providers数组。
+组件配置
+<code>@Component</code>扩展了<code>@Directive</code>, 以便<code>@Directive</code>中的配置项也能用在组件上
+<code>**moduleId:** module.id</code>
+如果设置了，<code>templateUrl</code>和<code>styleUrl</code>会被解析成相对于组件的。
+<code>**viewProviders:** [MyService, { provide: ... }]</code>
+依赖注入provider的数组，局限于当前组件的视图中。
+<code>**template:** 'Hello {{name}}' **templateUrl:** 'my-component.html'</code>
+当前组件视图的内联模板或外部模板地址
+<code>**styles:** ['.primary {color: red}'] **styleUrls:** ['my-component.css']</code>
+内联CSS样式或外部样式表URL的列表，用于给组件的视图添加样式。
+供指令类或组件类用的字段装饰器。
+<code>import { Input, ... } from '@angular/core';</code>
+<code>**@Input()** myProperty;</code>
+声明一个输入属性，以便我们可以通过属性绑定更新它。(比如：<code>&lt;my-cmp [my-property]=&quot;someExpression&quot;&gt;</code>).
+<code>**@Output()** myEvent = new EventEmitter();</code>
+声明一个输出属性，以便我们可以通过事件绑定进行订阅。(比如：<code>&lt;my-cmp (my-event)=&quot;doSomething()&quot;&gt;</code>).
+<code>**@HostBinding('[class.valid]')** isValid;</code>
+把宿主元素的属性(比如CSS类：valid)绑定到指令/组件的属性(比如：isValid)。
+<code>**@HostListener('click', ['$event'])** onClick(e) {...}</code>
+通过指令/组件的方法(例如onClick)订阅宿主元素的事件(例如click)，可选传入一个参数($event)。
+<code>**@ContentChild(myPredicate)** myChildComponent;</code>
+把组件内容查询(myPredicate)的第一个结果绑定到类的myChildComponent属性。
+<code>**@ContentChildren(myPredicate)** myChildComponents;</code>
+把组件内容查询(myPredicate)的全部结果，绑定到类的myChildComponents属性。
+<code>**@ViewChild(myPredicate)** myChildComponent;</code>
+把组件视图查询(myPredicate)的第一个结果绑定到类的myChildComponent属性。对指令无效。
+<code>**@ViewChildren(myPredicate)** myChildComponents;</code>
+把组件视图查询(myPredicate)的全部结果绑定到类的myChildComponents属性。对指令无效。
+指令和组件的变更检测与生命周期钩子
+(作为类方法实现)
+<code>**constructor(myService: MyService, ...)** { ... }</code>
+类的构造函数会在所有其它生命周期钩子之前调用。使用它来注入依赖，但是要避免用它做较重的工作。
+<code>**ngOnChanges(changeRecord)** { ... }</code>
+在输入属性每次变化了之后、开始处理内容或子视图之前被调用。
+<code>**ngOnInit()** { ... }</code>
+在执行构造函数、初始化输入属性、第一次调用完ngOnChanges之后调用。
+<code>**ngDoCheck()** { ... }</code>
+每当检查组件或指令的输入属性是否变化时调用。通过它，可以用自定义的检查方式来扩展变更检测逻辑。
+<code>**ngAfterContentInit()** { ... }</code>
+当组件或指令的内容已经初始化、ngOnInit完成之后调用。
+<code>**ngAfterContentChecked()** { ... }</code>
+在每次检查完组件或指令的内容之后调用。
+<code>**ngAfterViewInit()** { ... }</code>
+当组件的视图已经初始化完毕，每次ngAfterContentInit之后被调用。只适用于组件。
+<code>**ngAfterViewChecked()** { ... }</code>
+每次检查完组件的视图之后调用。只适用于组件。
+<code>**ngOnDestroy()** { ... }</code>
+在所属实例被销毁前，只调用一次。
+依赖注入配置
+ 
+<code>{ **provide**: MyService, **useClass**: MyMockService }</code>
+把MyService类的提供商设置或改写为MyMockService。
+<code>{ **provide**: MyService, **useFactory**: myFactory }</code>
+把MyService的提供商设置或改写为myFactory工厂函数。
+<code>{ **provide**: MyValue, **useValue**: 41 }</code>
+把MyValue的提供商设置或改写为值41。
+路由与导航</p>
+<pre><code>import { Routes, RouterModule, ... } from '@angular/router';`
+const routes: **Routes** = [  
+  { path: '', component: HomeComponent },  
+  { path: 'path/:routeParam', component: MyComponent },  
+  { path: 'staticPath', component: ... },  
+  { path: '**', component: ... },  
+  { path: 'oldPath', redirectTo: '/staticPath' },  
+  { path: ..., component: ..., data: { message: 'Custom' } }  
+]);  
+const routing = RouterModule.forRoot(routes);
+</code></pre>
+<p>为应用配置路由。支持静态、参数化、重定向和通配符路由。还支持自定义路由数据和解析。</p>
+<pre><code>&lt;**router-outlet**&gt;&lt;/**router-outlet**&gt;  
+&lt;**router-outlet** name=&quot;aux&quot;&gt;&lt;/**router-outlet**&gt;  
+</code></pre>
+<p>标记一个位置，用于加载当前激活路由的组件。</p>
+<pre><code>&lt;a routerLink=&quot;/path&quot;&gt;  
+&lt;a **[routerLink]**=&quot;[ '/path', routeParam ]&quot;&gt;  
+&lt;a **[routerLink]**=&quot;[ '/path', { matrixParam: 'value' } ]&quot;&gt;  
+&lt;a **[routerLink]**=&quot;[ '/path' ]&quot; [queryParams]=&quot;{ page: 1 }&quot;&gt;  
+&lt;a **[routerLink]**=&quot;[ '/path' ]&quot; fragment=&quot;anchor&quot;&gt;  
+</code></pre>
+<p>基于路由指令创建指向不同视图的链接，由路由路径、必选参数、可选参数、查询参数和片段（fragment）组成。添加“/”前缀可以导航到根路由。添加“./”前缀可以导航到子路由。添加“…/sibling”前缀可以导航到兄弟路由或父路由。
+<code>&lt;a [routerLink]=&quot;[ '/path' ]&quot; routerLinkActive=&quot;active&quot;&gt;</code>
+当<code>routerLink</code>被激活时，就把指定的CSS类添加到该元素上。</p>
+<pre><code>class **CanActivate**Guard implements **CanActivate** {  
+    canActivate(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable&lt;boolean&gt;|Promise&lt;boolean&gt;|boolean { ... }  
+}  
+{ path: ..., canActivate: [**CanActivate**Guard] }
+</code></pre>
+<p>一个用来定义类的接口，路由器会首先调用它来决定是否应该激活该组件。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。</p>
+<pre><code>class **CanDeactivate**Guard implements **CanDeactivate**&lt;T&gt; {  
+    canDeactivate(  
+      component: T,  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable&lt;boolean&gt;|Promise&lt;boolean&gt;|boolean { ... }  
+}  
+{ path: ..., canDeactivate: [**CanDeactivate**Guard] }
+</code></pre>
+<p>一个用来定义类的接口，路由器在导航后会首先调用它来决定是否应该取消该组件的激活状态。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。</p>
+<pre><code>class **CanActivateChild**Guard implements **CanActivateChild** {  
+    canActivateChild(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable&lt;boolean&gt;|Promise&lt;boolean&gt;|boolean { ... }  
+}  
+{ path: ..., canActivateChild: [CanActivateGuard],  
+    children: ... }
+</code></pre>
+<p>一个用来定义类的接口，路由器会首先调用它来决定是否应该激活该子路由。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。</p>
+<pre><code>class **Resolve**Guard implements **Resolve**&lt;T&gt; {  
+    resolve(  
+      route: ActivatedRouteSnapshot,  
+      state: RouterStateSnapshot  
+    ): Observable&lt;any&gt;|Promise&lt;any&gt;|any { ... }  
+}  
+{ path: ..., resolve: [**Resolve**Guard] }
+</code></pre>
+<p>一个用来定义类的接口，路由器会在渲染该路由之前先调用它来解析路由数据。应该返回一个值或能解析为值的可观察对象(Observable)或承诺(Promise)。</p>
+<pre><code>class **CanLoad**Guard implements **CanLoad** {  
+    canLoad(  
+      route: Route  
+    ): Observable&lt;boolean&gt;|Promise&lt;boolean&gt;|boolean { ... }  
+}  
+{ path: ..., canLoad: [**CanLoad**Guard], loadChildren: ... }
+</code></pre>
+<h2 id="%E4%B8%80%E4%B8%AA%E7%94%A8%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BC%9A%E9%A6%96%E5%85%88%E8%B0%83%E7%94%A8%E5%AE%83%E6%9D%A5%E5%86%B3%E5%AE%9A%E4%B8%80%E4%B8%AA%E6%83%B0%E6%80%A7%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%A8%A1%E5%9D%97%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E8%A2%AB%E5%8A%A0%E8%BD%BD%E3%80%82%E5%BA%94%E8%AF%A5%E8%BF%94%E5%9B%9E%E5%B8%83%E5%B0%94%E5%80%BC%E6%88%96%E8%83%BD%E8%A7%A3%E6%9E%90%E4%B8%BA%E5%B8%83%E5%B0%94%E5%80%BC%E7%9A%84%E5%8F%AF%E8%A7%82%E5%AF%9F%E5%AF%B9%E8%B1%A1(observable)%E6%88%96%E6%89%BF%E8%AF%BA(promise)%E3%80%82%E4%BE%8B%E5%AD%90%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B">一个用来定义类的接口，路由器会首先调用它来决定一个惰性加载的模块是否应该被加载。应该返回布尔值或能解析为布尔值的可观察对象(Observable)或承诺(Promise)。
+例子对应的代码如下 <a class="heading-anchor-permalink" href="#%E4%B8%80%E4%B8%AA%E7%94%A8%E6%9D%A5%E5%AE%9A%E4%B9%89%E7%B1%BB%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%B7%AF%E7%94%B1%E5%99%A8%E4%BC%9A%E9%A6%96%E5%85%88%E8%B0%83%E7%94%A8%E5%AE%83%E6%9D%A5%E5%86%B3%E5%AE%9A%E4%B8%80%E4%B8%AA%E6%83%B0%E6%80%A7%E5%8A%A0%E8%BD%BD%E7%9A%84%E6%A8%A1%E5%9D%97%E6%98%AF%E5%90%A6%E5%BA%94%E8%AF%A5%E8%A2%AB%E5%8A%A0%E8%BD%BD%E3%80%82%E5%BA%94%E8%AF%A5%E8%BF%94%E5%9B%9E%E5%B8%83%E5%B0%94%E5%80%BC%E6%88%96%E8%83%BD%E8%A7%A3%E6%9E%90%E4%B8%BA%E5%B8%83%E5%B0%94%E5%80%BC%E7%9A%84%E5%8F%AF%E8%A7%82%E5%AF%9F%E5%AF%B9%E8%B1%A1(observable)%E6%88%96%E6%89%BF%E8%AF%BA(promise)%E3%80%82%E4%BE%8B%E5%AD%90%E5%AF%B9%E5%BA%94%E7%9A%84%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B" aria-hidden="true">#</a></h2>
+<h3 id="1.app.component.ts">1.app.component.ts <a class="heading-anchor-permalink" href="#1.app.component.ts" aria-hidden="true">#</a></h3>
+<pre><code>import { Component } from '@angular/core';
+@Component({
+  selector: 'my-app',
+  template: \`&lt;h1&gt;Hello {{name}}&lt;/h1&gt;\`,
+})
+export class AppComponent  {
+  name = 'Angular'; 
+}
+</code></pre>
+<p>上面的代码定义了一个组件名为AppComponent</p>
+<h3 id="2.app.module.ts">2.app.module.ts <a class="heading-anchor-permalink" href="#2.app.module.ts" aria-hidden="true">#</a></h3>
+<pre><code>import { NgModule }      from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent }  from './app.component';
+@NgModule({
+  imports:      [ BrowserModule ],
+  declarations: [ AppComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+</code></pre>
+<p>上面的代码在主视图中挂载了AppComponent组件
+<a href="https://bbs.huaweicloud.com/blogs/article#"><em>NgModule</em></a>
+<a href="https://blog.csdn.net/Wbiokr/article/details/73007192"><em>https://blog.csdn.net/Wbiokr/article/details/73007192</em></a>
+<a href="https://blog.csdn.net/qq_15096707/article/details/54809805"><em>https://blog.csdn.net/qq_15096707/article/details/54809805</em></a>
+<em>angular应用的模块系统被称为angular模块或NgModule</em></p>
+<ul>
+<li><em>imports–angular模块把特性合并成离散单元的一种方式，当应用需要模块的特性时，将其添加到imports数组中，它告诉Angular应用需要它们来正常工作。</em></li>
+<li><em>providers–创建的服务加入到当前模块中，如果是根模块，则可以用于应用任何部分。</em></li>
+<li><em>declarations–声明当前module控制的组件，创建的指令和管道也要添加至declarations数组中。</em></li>
+<li><em>exports–declarations 的子集，可用于其它模块的组件模板。</em></li>
+<li><em>bootstrap–指定应用的主视图（称为根组件），它是所有其它视图的宿主。只有根模块才能设置bootstrap属性。</em></li>
+</ul>
+<h3 id="3.main.ts">3.main.ts <a class="heading-anchor-permalink" href="#3.main.ts" aria-hidden="true">#</a></h3>
+<p>import { platformBrowserDynamic } from ‘@angular/platform-browser-dynamic’;
+import { AppModule } from ‘./app/app.module’;
+platformBrowserDynamic().bootstrapModule(AppModule);
+使用JIT编译器引导一个AppModule模块定义的应用</p>
+<h3 id="4.index.html">4.index.html <a class="heading-anchor-permalink" href="#4.index.html" aria-hidden="true">#</a></h3>
+<pre><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Angular QuickStart&lt;/title&gt;
+    &lt;base href=&quot;/&quot;&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;
+    &lt;!-- Polyfill(s) for older browsers --&gt;
+    &lt;script src=&quot;node\_modules/core-js/client/shim.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;node\_modules/zone.js/dist/zone.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;node\_modules/systemjs/dist/system.src.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;systemjs.config.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+      System.import('main.js').catch(function(err){ console.error(err); });
+    &lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;my-app&gt;Loading AppComponent content here ...&lt;/my-app&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>在页面里加载main.ts
+链接:<a href="https://bbs.huaweicloud.com/blogs/89424869e8aa11e8bd5a7ca23e93a891">Angular 测试和使用记录</a></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

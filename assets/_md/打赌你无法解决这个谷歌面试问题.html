@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="active" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="%E5%8E%9F%E6%96%87%3A%E6%89%93%E8%B5%8C%E4%BD%A0%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E8%B0%B7%E6%AD%8C%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E3%80%82">原文:<img src="https://medium.com/free-code-camp/bet-you-cant-solve-this-google-interview-question-4a6e5a4dc8ee" alt="打赌你无法解决这个谷歌面试问题">
+打赌你无法解决这个谷歌面试问题。 <a class="heading-anchor-permalink" href="#%E5%8E%9F%E6%96%87%3A%E6%89%93%E8%B5%8C%E4%BD%A0%E6%97%A0%E6%B3%95%E8%A7%A3%E5%86%B3%E8%BF%99%E4%B8%AA%E8%B0%B7%E6%AD%8C%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E3%80%82" aria-hidden="true">#</a></h1>
+<h2 id="%E5%B0%86%E6%A3%98%E6%89%8B%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3%E6%88%90%E5%B0%8F%E5%9D%97%E3%80%82">将棘手的问题分解成小块。 <a class="heading-anchor-permalink" href="#%E5%B0%86%E6%A3%98%E6%89%8B%E7%9A%84%E9%97%AE%E9%A2%98%E5%88%86%E8%A7%A3%E6%88%90%E5%B0%8F%E5%9D%97%E3%80%82" aria-hidden="true">#</a></h2>
+<p><a href="/@Sawtaytoes?source=post_page-----4a6e5a4dc8ee----------------------"><img src="https://miro.medium.com/fit/c/48/48/1*KKkffE-4Vl34Fe29KJWUcw.jpeg" alt="凯文加迪尼"></a></p>
+<p><a href="/@Sawtaytoes?source=post_page-----4a6e5a4dc8ee----------------------">凯文加迪尼</a></p>
+<p>跟随</p>
+<p><a href="/free-code-camp/bet-you-cant-solve-this-google-interview-question-4a6e5a4dc8ee?source=post_page-----4a6e5a4dc8ee----------------------">4月29日</a> · 15 分钟阅读</p>
+<p><em>我想看到其他人对软件工程的看法，并开始在YouTube上狂热地观看TechLead。接下来的几天，我在谷歌工作时提出的一个面试问题提出了各种解决方案。</em></p>
+<h1 id="%E8%BF%99%E4%B8%AA%E8%A7%86%E9%A2%91%E8%AE%A9%E6%88%91%E5%85%B4%E5%A5%8B">这个视频让我兴奋 <a class="heading-anchor-permalink" href="#%E8%BF%99%E4%B8%AA%E8%A7%86%E9%A2%91%E8%AE%A9%E6%88%91%E5%85%B4%E5%A5%8B" aria-hidden="true">#</a></h1>
+<p>通过TechLead模拟谷歌面试（软件工程师的工作）</p>
+<p>TechLead <strong>在</strong> <strong>Google的****100多次采访中</strong>提出了一个<strong>问题</strong>。让我好奇想在RxJS中想出一个解决方案。本文将讨论传统方法。</p>
+<p>他的问题的真正目标是从受访者那里获取信息。他们会在编码前问正确的问题吗？该解决方案是否符合项目准则？他甚至指出，如果你得到正确答案，那根本不重要。他想弄清楚你的想法，以及你是否能够理解这个问题。</p>
+<p>他谈到了一些解决方案，一个是递归的（受堆栈大小限制），另一个是迭代的（受内存大小限制）。我们将研究这两个以及更多！</p>
+<h1 id="techlead%E7%9A%84%E9%97%AE%E9%A2%98">TechLead的问题 <a class="heading-anchor-permalink" href="#techlead%E7%9A%84%E9%97%AE%E9%A2%98" aria-hidden="true">#</a></h1>
+<p>在他的问题中，他要求我们采用这个项目网格，并获得所有颜色相同的最大连续块的计数。</p>
+<p><img src="https://miro.medium.com/max/30/1*uake3YsUeGzRiPGEt3RuSA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2006/1*uake3YsUeGzRiPGEt3RuSA.png" alt=""></p>
+<p><img src="https://miro.medium.com/max/30/1*WmODExHDGW4i23Cwg6-27Q.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2002/1*WmODExHDGW4i23Cwg6-27Q.png" alt=""></p>
+<p>当我听到他的问题并看到图片时，我在想“哦，伙计，我必须做一些2D图像建模才能弄明白”。在采访中听起来几乎不可能回答。</p>
+<p>但在他解释得更多之后，事实并非如此。您正在处理已捕获的数据，而不是解析图像。我现在意识到，这个形象实际上是用词不当。</p>
+<h1 id="%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1">数据建模 <a class="heading-anchor-permalink" href="#%E6%95%B0%E6%8D%AE%E5%BB%BA%E6%A8%A1" aria-hidden="true">#</a></h1>
+<p>在编写任何代码之前，您需要定义数据模型。_我不能强调这一点。_在编写任何此类高级代码之前，首先要弄清楚您正在使用的内容并收集业务需求。</p>
+<p>在我们的案例中，TechLead为我们定义了很多这些要求：</p>
+<ul>
+<li>我们称之为彩色方块或“节点”的概念。</li>
+<li>我们的数据集中有10K个节点。</li>
+<li>节点被组织成列和行（2D）。</li>
+<li>列数和行数可能不均匀。</li>
+<li>节点有颜色和某种方式来表示邻接。</li>
+</ul>
+<p>我们还可以从我们的数据中获得更多信息：</p>
+<ul>
+<li>没有两个节点会重叠。</li>
+<li>节点永远不会与自己相邻。</li>
+<li>节点永远不会有重复的邻接关系。</li>
+<li>位于侧面和角落的节点将分别缺少一个或两个邻接。</li>
+</ul>
+<p>我们不知道的是：</p>
+<ul>
+<li>行与列的比率</li>
+<li>可能的颜色数量。</li>
+<li>只有一种颜色的机会。</li>
+<li>粗糙的颜色分布。</li>
+</ul>
+<p>您作为开发人员的级别越高，您就会知道的问题越多。这也不是经验问题。虽然这有帮助，但如果你不能挑出未知数，它就不会让你变得更好。</p>
+<p>我不指望大多数人会发现这些未知数。在我开始研究算法之前，我也不知道它们。未知数需要时间来弄明白。这是一个很多的讨论，并与商界人士来回寻找所有的纠结。</p>
+<p>看着他的形象，似乎分布是随机的。他只用了3种颜色，从来没有说过什么，所以我们也会这样做。我们还假设所有颜色都可能是相同的。</p>
+<p>由于它可以杀死我们的算法，我将假设我们正在使用100x100网格。这样，我们就不必处​​理1行和10K列的奇怪情况。</p>
+<p>在典型的设置中，我会在数据发现的前几个小时内询问所有这些问题。这就是TechLead真正关心的。你会从编码随机解决方案开始，还是要找出问题所在？</p>
+<p>你将在你的数据模型中犯错误。我知道我在第一次写这篇文章时做过，但如果你提前计划，这些问题将更容易管理。因为它，我最终只需要重写代码的一小部分。</p>
+<h1 id="%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B">创建数据模型 <a class="heading-anchor-permalink" href="#%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%9E%8B" aria-hidden="true">#</a></h1>
+<p>我们需要知道数据是如何进入的以及我们想要处理它的格式。</p>
+<p>由于我们没有适当的系统来处理数据，我们需要自己提供可视化。</p>
+<p>我们数据的基本构建块：</p>
+<ul>
+<li>颜色</li>
+<li>ID</li>
+<li>X</li>
+<li>ÿ</li>
+</ul>
+<p>我们为什么需要身份证？因为我们可以不止一次地遇到同一个项目。我们想要防止无限循环，所以我们需要标记我们在这些情况下的位置。</p>
+<p>此外，通常会为此类数据分配某种ID，哈希值或其他值。它是一个唯一的标识符，因此我们可以通过某种方式识别该特定节点。如果我们想知道最大的连续块，我们需要知道该块中的哪些节点。</p>
+<p>由于他在网格中对数据进行了整形，我将假设我们将使用X和Y值来获取数据。使用这些属性，我能够生成一些HTML，以确保我们生成的内容看起来像他给我们的东西。</p>
+<p>这是使用绝对定位完成的，就像他的例子一样：</p>
+<p><img src="https://miro.medium.com/max/30/1*waDXrVIZHjYIHAEVWin54w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/400/1*waDXrVIZHjYIHAEVWin54w.png" alt=""></p>
+<p>答案：3</p>
+<p>它甚至适用于更大的数据集：</p>
+<p><img src="https://miro.medium.com/max/30/1*9vrgCN2D53GLsxAHB_Xx4Q.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1001/1*9vrgCN2D53GLsxAHB_Xx4Q.png" alt=""></p>
+<p>答案：18</p>
+<p>他是生成节点的代码：</p>
+<p>我们获取列和行，从项目数中创建一维数组，然后从该数据生成我们的节点。</p>
+<p>而不是<code>color</code>，我正在使用<code>colorId</code>。首先，因为随机化更清洁。其次，我们通常必须自己查找颜色值。</p>
+<p>虽然他从未明确说过，但他只使用了3种颜色值。我将数据集限制为3种颜色。只知道它可能是数百种颜色，最终的算法不需要改变。</p>
+<p>作为一个更简单的例子，这是一个2x2节点列表：</p>
+<h1 id="%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86">数据处理 <a class="heading-anchor-permalink" href="#%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86" aria-hidden="true">#</a></h1>
+<p>无论我们将使用哪种方法，我们都想知道每个节点的邻接关系。X和Y值不会削减它。</p>
+<p>因此，给定X和Y，我们需要弄清楚如何找到相邻的X和Y值。这很简单。我们只是在X和Y上找到节点加减1。</p>
+<p>我为这段逻辑编写了一个辅助函数：</p>
+<p>我们生成节点的方式实际上是一种数学方法来计算相邻节点的ID。相反，我将假设节点将以随机顺序进入我们的系统。</p>
+<p>我通过第二遍传递所有节点以添加邻接：</p>
+<p>我避免在这个预处理器代码中进行任何不必要的优化。它不会影响我们的最终性能统计数据，只会有助于简化我们的算法。</p>
+<p>我继续前进，改成了<code>colorId</code>一个<code>color</code>。这对我们的算法来说完全没必要，但我想让它更容易可视化。</p>
+<p>我们呼吁<code>getNodeAtLocation</code>每个组相邻的X和Y值，并找到我们的<code>northId</code>，<code>eastId</code>，<code>southId</code>，和<code>westId</code>。我们不会传递我们的X和Y值，因为它们不再需要。</p>
+<p>获取我们的基本ID后，我们将它们转换为单个<code>adjacentIds</code>数组，其中仅包含具有值的数组。这样，如果我们有角和边，我们不必担心检查这些ID是否为空。它还允许我们循环数组而不是手动记录我们的算法中的每个基数ID。</p>
+<p>这是使用一组新节点运行的另一个2x2示例<code>addAdjacencies</code>：</p>
+<h1 id="%E9%A2%84%E5%A4%84%E7%90%86%E4%BC%98%E5%8C%96">预处理优化 <a class="heading-anchor-permalink" href="#%E9%A2%84%E5%A4%84%E7%90%86%E4%BC%98%E5%8C%96" aria-hidden="true">#</a></h1>
+<p>我想大大简化本文的算法，所以我添加了另一个优化过程。这个删除与当前节点的颜色不匹配的相邻ID。</p>
+<p>重写我们的<code>addAdjacencies</code>功能后，这就是我们现在拥有的：</p>
+<p>我<code>addAdjacencies</code>在添加更多功能的同时精简了。</p>
+<p>通过删除颜色不匹配的节点，我们的算法可以100％确定<code>adjacentIds</code>支柱中的任何ID 都是连续的节点。</p>
+<p>最后，我删除了没有相同颜色邻接的任何节点。这进一步简化了我们的算法，并且我们将总节点缩减到只有我们关心的那些节点。</p>
+<h1 id="%E9%94%99%E8%AF%AF%E7%9A%84%E6%96%B9%E5%BC%8F---%E9%80%92%E5%BD%92">错误的方式 - 递归 <a class="heading-anchor-permalink" href="#%E9%94%99%E8%AF%AF%E7%9A%84%E6%96%B9%E5%BC%8F---%E9%80%92%E5%BD%92" aria-hidden="true">#</a></h1>
+<p>TechLead表示我们无法递归地执行此算法，因为我们遇到了堆栈溢出。</p>
+<p>虽然他部分正确，但有几种方法可以缓解这个问题。迭代或使用尾递归。我们将进入迭代示例，但JavaScript不再将尾递归作为本机语言功能。</p>
+<p>虽然我们仍然可以在JavaScript中模拟尾递归，但我们将保持这种简单并创建一个典型的递归函数。</p>
+<p>在我们点击代码之前，我们需要弄清楚我们的算法。对于递归，使用<a href="https://en.wikipedia.org/wiki/Depth-first_search">深度优先搜索</a>是有意义的。不要担心知道计算机科学术语。当我向他展示我提出的不同解决方案时，一位同事说道。</p>
+<h2 id="%E7%AE%97%E6%B3%95">算法 <a class="heading-anchor-permalink" href="#%E7%AE%97%E6%B3%95" aria-hidden="true">#</a></h2>
+<p>我们将从一个节点开始，尽可能地直到我们遇到一个端点。然后我们将回来并采取下一个分支路径，直到我们扫描整个连续块。</p>
+<p>这是它的一部分。我们还必须跟踪我们去过的地方以及最大的连续区块的长度。</p>
+<p>我所做的是将我们的功能分为两部分。一个人将保持最大列表和先前扫描的ID，同时至少循环每个节点一次。另一个将从未扫描的根节点开始并进行深度优先遍历。</p>
+<p>这些是这些函数的样子：</p>
+<p>疯了吧？我甚至辩论过显示代码，因为它变得如此粗糙。</p>
+<p>为了减少这种情况，让我们一步一步走。</p>
+<h2 id="%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0">递归函数 <a class="heading-anchor-permalink" href="#%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0" aria-hidden="true">#</a></h2>
+<p><code>getContiguousIds</code>是我们的递归函数。每个节点调用一次。每次返回时，都会获得连续节点的更新列表。</p>
+<p>此函数中只有一个条件：_我们的节点是否已在列表中？_如果没有，请<code>getContiguousIds</code>再次致电。当它返回时，我们将有一个连续节点的更新列表，它返回到我们的reducer并用作下一个节点的状态<code>adjacentId</code>。</p>
+<p>您可能想知道我们在哪里添加值<code>contiguousIds</code>。当我们<code>concat</code>当前节点进入时会发生这种情况<code>contiguousIds</code>。每次我们进一步递归时，我们都要确保将当前节点添加到<code>contiguousIds</code>循环之前的列表中<code>adjacentIds</code>。</p>
+<p>始终添加当前节点可确保我们不会无限递归。</p>
+<h2 id="%E5%BE%AA%E7%8E%AF">循环 <a class="heading-anchor-permalink" href="#%E5%BE%AA%E7%8E%AF" aria-hidden="true">#</a></h2>
+<p>此函数的后半部分也会遍历每个节点一次。</p>
+<p>我们有减速器围绕递归函数。这个检查我们的代码是否被扫描过。如果是这样，请继续循环，直到我们找到一个没有或直到我们退出循环的节点。</p>
+<p>如果我们的节点尚未扫描，请致电<code>getContiguousIds</code>并等待完成。这是同步的，但可能需要一些时间。</p>
+<p>一旦它返回列表<code>contiguousIds</code>，请检查列表中的那些<code>largestContiguousIds</code>。如果更大，则存储该值。</p>
+<p>与此同时，我们将把这些添加<code>contiguousIds</code>到我们的<code>scannedIds</code>列表中以标记我们曾经去过的地方。</p>
+<p>当你看到它全部布局时，这很简单。</p>
+<h2 id="%E6%89%A7%E8%A1%8C">执行 <a class="heading-anchor-permalink" href="#%E6%89%A7%E8%A1%8C" aria-hidden="true">#</a></h2>
+<p>即使有10K项目，也没有遇到3种随机颜色的堆栈溢出问题。如果我改变所有内容以使用单一颜色，我就能够遇到堆栈溢出。那是因为我们的递归函数经历了10K递归。</p>
+<h1 id="%E9%A1%BA%E5%BA%8F%E8%BF%AD%E4%BB%A3">顺序迭代 <a class="heading-anchor-permalink" href="#%E9%A1%BA%E5%BA%8F%E8%BF%AD%E4%BB%A3" aria-hidden="true">#</a></h1>
+<p>由于内存大于函数调用堆栈，我的下一个想法是在一个循环中完成整个事情。</p>
+<p>我们将跟踪节点列表列表。我们将不断添加它们并将它们链接在一起，直到我们退出循环。</p>
+<p>此方法要求我们将所有可能的节点列表保留在内存中，直到我们完成循环。在递归示例中，我们只将最大的列表保存在内存中。</p>
+<p>另一个疯狂的。让我们从顶部打破这个。我们循环每个节点一次。但现在我们必须检查我们的id是否在节点列表列表中：<code>contiguousIdsList</code>。</p>
+<p>如果它不在任何列表中<code>contiguousIds</code>，我们将添加它和它<code>adjacentIds</code>。这样，在循环时，其他东西将链接到它。</p>
+<p>如果我们的节点在其中一个列表中，那么它可能就在其中的一些列表中。我们希望将所有这些链接在一起，并从中删除未链接的<code>contiguousIdsList</code>。</p>
+<p>而已。</p>
+<p>在我们提出节点列表列表之后，我们检查哪一个是最大的，我们就完成了。</p>
+<h2 id="%E6%89%A7%E8%A1%8C-2">执行 <a class="heading-anchor-permalink" href="#%E6%89%A7%E8%A1%8C-2" aria-hidden="true">#</a></h2>
+<p>与递归版本不同，当所有10K项目的颜色相同时，此版本_会_完成。</p>
+<p>除此之外，它很慢; 比我原先预期的要慢得多。我忘了考虑在我的绩效评估中循环列表列表，这显然会对性能产生影响。</p>
+<h1 id="%E9%9A%8F%E6%9C%BA%E8%BF%AD%E4%BB%A3">随机迭代 <a class="heading-anchor-permalink" href="#%E9%9A%8F%E6%9C%BA%E8%BF%AD%E4%BB%A3" aria-hidden="true">#</a></h1>
+<p>我想采用递归方法背后的方法并迭代地应用它。</p>
+<p>我花了一大晚的时间试图记住如何动态地改变循环中的索引然后我记得<code>while(true)</code>。我编写传统循环已经很久了，我完全忘记了它。</p>
+<p>既然我拿到了我的武器，我就开始进攻了。由于我花了很多时间试图加速可观察的版本（稍后更多），我决定进入懒惰和老派变数数据。</p>
+<p>这个算法的目标是只打一次每个节点，只存储最大的连续块：</p>
+<p>即使我像大多数人一样写这篇文章，但它是迄今为止最不可读的。我甚至不能告诉你它是什么，如果没有自己首先从上到下。</p>
+<p>我们没有添加到先前扫描的ID列表，而是从我们的<code>remainingNodes</code>数组中拼接出值。</p>
+<p>懒！我不会建议你自己这样做，但我在绳子的最后创建这些样本，并想尝试不同的东西。</p>
+<h2 id="%E7%BB%86%E5%88%86">细分 <a class="heading-anchor-permalink" href="#%E7%BB%86%E5%88%86" aria-hidden="true">#</a></h2>
+<p>我把它分成3个由<code>if</code>块分隔的部分。</p>
+<p>让我们从中间部分开始。我们正在检查<code>queuedIds</code>。如果我们有一些，我们在排队的项目中进行另一个循环，看看它们是否属于我们的<code>remainingNodes</code>。</p>
+<p>在第三部分，它取决于第二部分的结果。如果我们没有任何<code>queuedIds</code>，并<code>remainingNodesIndex</code>是<code>-1</code>，然后我们把这个节点列表完成，我们需要一个新的根节点开始。新的根节点始终处于索引状态，<code>0</code>因为我们正在拼接我们的节点<code>remainingNodes</code>。</p>
+<p>回到循环的顶部，我可以使用<code>while(true)</code>，但我想要一个出路以防出现问题。这在调试时很有用，因为无限循环可能很难理解。</p>
+<p>在那之后，我们正在拼接我们的节点。我们将它添加到我们的列表中<code>contiguousIds</code>，并将其添加<code>adjacentIds</code>到队列中。</p>
+<h2 id="%E6%89%A7%E8%A1%8C-3">执行 <a class="heading-anchor-permalink" href="#%E6%89%A7%E8%A1%8C-3" aria-hidden="true">#</a></h2>
+<p>这最终几乎与递归版本一样快。当所有节点都是相同颜色时，它是所有算法中最快的。</p>
+<h1 id="%E7%89%B9%E5%AE%9A%E4%BA%8E%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%98%E5%8C%96">特定于数据的优化 <a class="heading-anchor-permalink" href="#%E7%89%B9%E5%AE%9A%E4%BA%8E%E6%95%B0%E6%8D%AE%E7%9A%84%E4%BC%98%E5%8C%96" aria-hidden="true">#</a></h1>
+<h2 id="%E5%88%86%E7%BB%84%E7%9B%B8%E4%BC%BC%E7%9A%84%E9%A2%9C%E8%89%B2">分组相似的颜色 <a class="heading-anchor-permalink" href="#%E5%88%86%E7%BB%84%E7%9B%B8%E4%BC%BC%E7%9A%84%E9%A2%9C%E8%89%B2" aria-hidden="true">#</a></h2>
+<p>由于我们只知道蓝调与蓝调一致，我们可以将类似颜色的节点组合在一起用于顺序迭代版本。</p>
+<p>将其拆分为3个较小的阵列可以降低我们的内存占用量以及我们需要在列表列表中执行的循环量。尽管如此，这并没有解决所有颜色都相同的情况，所以这不会修复我们的递归版本。</p>
+<p>这也意味着我们可以对操作进行多线程处理，将执行时间缩短近三分之一。</p>
+<p>如果我们按顺序执行这些，我们只需要先运行三个中最大的一个。如果最大值大于其他两个，则无需检查它们。</p>
+<h2 id="%E6%9C%80%E5%A4%A7%E5%8F%AF%E8%83%BD%E7%9A%84%E5%A4%A7%E5%B0%8F">最大可能的大小 <a class="heading-anchor-permalink" href="#%E6%9C%80%E5%A4%A7%E5%8F%AF%E8%83%BD%E7%9A%84%E5%A4%A7%E5%B0%8F" aria-hidden="true">#</a></h2>
+<p>我们可以检查每次迭代，而不是检查我们是否在某个时间间隔内有最大的列表。</p>
+<p>如果最大集合大于或等于可用节点的一半（5K或更高），那么很明显我们已经拥有最大的节点。</p>
+<p>使用随机迭代版本，我们可以找到目前为止最大的列表大小，并查看剩余的节点数。如果小于最大的尺寸，我们已经获得了最大的尺寸。</p>
+<h2 id="%E4%BD%BF%E7%94%A8%E9%80%92%E5%BD%92">使用递归 <a class="heading-anchor-permalink" href="#%E4%BD%BF%E7%94%A8%E9%80%92%E5%BD%92" aria-hidden="true">#</a></h2>
+<p>虽然递归有其局限性，但我们仍然可以使用它。我们所要做的就是检查剩余节点的数量。如果它低于堆栈限制，我们可以切换到更快的递归版本。冒险，但随着你在循环中的进一步发展，它肯定会改善执行时间。</p>
+<h2 id="%E4%BD%BF%E7%94%A8%60for%60%E5%BE%AA%E7%8E%AF">使用`for`循环 <a class="heading-anchor-permalink" href="#%E4%BD%BF%E7%94%A8%60for%60%E5%BE%AA%E7%8E%AF" aria-hidden="true">#</a></h2>
+<p>由于我们知道我们的最大项目数，因此将<code>reduce</code>功能切换到传统<code>for</code>循环会有一个小小的好处。</p>
+<p>无论出于何种原因，<a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d">与</a><a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d">循环</a><a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d">相比</a>，<code>Array.prototype</code>方法<a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d">非常慢</a>。<code>[for](https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d)</code><a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d"></a></p>
+<h2 id="%E4%BD%BF%E7%94%A8%E5%B0%BE%E9%80%92%E5%BD%92">使用尾递归 <a class="heading-anchor-permalink" href="#%E4%BD%BF%E7%94%A8%E5%B0%BE%E9%80%92%E5%BD%92" aria-hidden="true">#</a></h2>
+<p>同样，我没有仔细阅读这篇特别文章中的可观察版本，我认为尾递归需要一篇自己的文章。</p>
+<p>这是一个有很多要解释的重要主题，但是虽然它允许递归版本运行，但它可能不会<code>while</code>像你期望的那样比循环更快。</p>
+<h1 id="rxjs%EF%BC%9A%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD">RxJS：可维护性与性能 <a class="heading-anchor-permalink" href="#rxjs%EF%BC%9A%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD" aria-hidden="true">#</a></h1>
+<p>有一些方法可以重写这些功能，您可以更轻松地理解和维护它们。我想出的主要解决方案是使用Redux-Observable风格的RxJS，但没有Redux。</p>
+<p>这实际上是我对这篇文章的挑战。我想用常规方法编码，然后使用RxJS流式传输数据，看看我能推动多远。</p>
+<p>我在RxJS中制作了3个版本并采取了一些自由来加快执行时间。与我的传感器文章不同，即使我增加行和列，所有三个都会变慢。</p>
+<p>那个星期我花了我的夜晚梦想可能的解决方案并梳理每一寸代码。我甚至会躺在地上，闭上眼睛，想想想想。每一次，我都提出了更好的想法，但仍然受到JavaScript速度的限制。</p>
+<p>我可以完成一整套优化，但代价是代码可读性。我不想那样（反正仍然使用过）。</p>
+<p>我终于得到了一个可观察的解决方案 - 现在最快 - 在一半的时间内运行。这是总体上最好的改进。</p>
+<p>我唯一能用可观察量击败内存繁重的连续迭代的时候是每个节点都是相同的颜色。那是唯一的一次。从技术上来说，它也会击败递归的，因为它在那种情况下会溢出。</p>
+<p>在完成所有工作以确定如何使用RxJS传输数据之后，我意识到这对于这篇文章来说太过分了。期待未来的文章详细介绍这些代码示例。</p>
+<p>如果你想早点看代码，你可以在GitHub上看到它：<a href="https://github.com/Sawtaytoes/JavaScript-Performance-Interview-Question">https</a>：<br>
+<a href="https://github.com/Sawtaytoes/JavaScript-Performance-Interview-Question">//github.com/Sawtaytoes/JavaScript-Performance-Interview-Question</a></p>
+<h1 id="%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE">最终统计数据 <a class="heading-anchor-permalink" href="#%E6%9C%80%E7%BB%88%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE" aria-hidden="true">#</a></h1>
+<p>通常，最大的连续块平均为30-80个节点。</p>
+<p>这些是我的数字：</p>
+<p>无论我进行多少次测试，每种方法的相对位置都保持不变。</p>
+<p>当所有节点都是相同颜色时，Redux-Observable Concurrent方法受到影响。我试了很多东西让它更快，但没有任何效果：/。</p>
+<h1 id="%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91">游戏开发 <a class="heading-anchor-permalink" href="#%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91" aria-hidden="true">#</a></h1>
+<p>我在职业生涯中两次遇到过这段代码。在Lua，它的规模要小得多，并且在<a href="https://pulsengame.com/game">我的独立游戏Pulsen</a>上工作时发生了。</p>
+<p>在一种情况下，我正在制作世界地图。它有一个预定义的节点列表，我实时处理了这个列表。这使得击球<code>[LEFT]</code>，<code>[RIGHT]</code>，<code>[UP]</code>，和<code>[DOWN]</code>你走动的世界地图，即使是角度稍微偏离。</p>
+<p>我还为具有X和Y值的未知项目列表编写了一个节点生成器。听起来有点熟？我还必须将屏幕中心放在屏幕上。在HTML中，这比使用游戏引擎更容易。虽然，以一堆绝对定位的div为中心也不容易。</p>
+<p>在这两种解决方案中，实时执行时间并不是什么大问题，因为我在加载游戏时进行了大量的预处理。</p>
+<p>我想强调，TechLead的问题可能是你在职业生涯中遇到的问题; 也许，但很少有速度成为典型JavaScript应用程序中的一个因素。</p>
+<p>根据TechLeads的其他视频，他在谷歌使用Java。我假设他采访的职位关心执行速度。他们可能有一堆工作任务处理大量数据，所以这样的解决方案可能是必要的。</p>
+<p>但是，它可能是一个致力于HTML和CSS的工作，他只是在拖拉受访者; 谁知道！</p>
+<h1 id="%E7%BB%93%E8%AE%BA">结论 <a class="heading-anchor-permalink" href="#%E7%BB%93%E8%AE%BA" aria-hidden="true">#</a></h1>
+<p>正如您在最终统计数据中所看到的那样，最糟糕的代码几乎是最快的并且完成了我们所有的要求。祝你好运！</p>
+<p>根据我自己的经验，我花了更长的时间来开发非RxJS版本。我认为这是因为更快的版本需要全面思考。Redux-Observable允许您以小块进行思考。</p>
+<p>这是一个非常有趣且令人沮丧的问题。起初看起来真的很难，但是在把它分成几块之后，这些碎片都聚集在一起:)。</p>
+<h1 id="%E6%9B%B4%E5%A4%9A%E9%98%85%E8%AF%BB">更多阅读 <a class="heading-anchor-permalink" href="#%E6%9B%B4%E5%A4%9A%E9%98%85%E8%AF%BB" aria-hidden="true">#</a></h1>
+<p>如果您想了解有关JavaScript性能的更多信息，请查看我的其他文章：</p>
+<ul>
+<li><a href="https://itnext.io/speed-up-javascript-array-processing-8d601c57bb0d">加快JavaScript阵列处理速度</a></li>
+<li><a href="https://itnext.io/using-transducers-to-speed-up-javascript-arrays-92677d000096">使用Transducers加速JavaScript数组</a></li>
+</ul>
+<p>如果你喜欢你所读的内容，请查看我关于类似开眼话题的其他文章：</p>
+<ul>
+<li><a href="https://itnext.io/the-definitive-guide-to-callbacks-in-javascript-44a39c065292">回调：权威指南</a></li>
+<li><a href="https://itnext.io/promises-the-definitive-guide-6a49e0dbf3b7">承诺：权威指南</a></li>
+<li><a href="https://itnext.io/feature-flags-be-truly-agile-820ff50294c">功能标志：真正敏捷</a></li>
+<li><a href="https://itnext.io/an-emoji-lovers-guide-to-functional-programming-part-1-241d8d4c9223">从食物Emojis制作大便</a></li>
+</ul>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

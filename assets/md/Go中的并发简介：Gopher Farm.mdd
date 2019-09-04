@@ -1,0 +1,41 @@
+![Go中的并发简介：Gopher Farm](https://medium.com/@olena_stoliarova/introduction-to-concurrency-in-go-gopher-farm-3aa23f253420)
+Go中的并发简介：Gopher Farm
+====================
+
+[![Olena Stoliarova](https://miro.medium.com/fit/c/48/48/0*1a_fZ3kxVMVhLfE-)](/@olena_stoliarova?source=post_page-----3aa23f253420----------------------)
+
+[Olena Stoliarova](/@olena_stoliarova?source=post_page-----3aa23f253420----------------------)
+
+跟随
+
+[4月12日](/@olena_stoliarova/introduction-to-concurrency-in-go-gopher-farm-3aa23f253420?source=post_page-----3aa23f253420----------------------) · 4 分钟阅读
+
+![](https://miro.medium.com/max/30/1*YWqrXXCLAePH_Hqb8TvZCQ.jpeg?q=20)
+
+![](https://miro.medium.com/max/1920/1*YWqrXXCLAePH_Hqb8TvZCQ.jpeg)
+
+对于初学者来说，并发可能非常棘手。阅读关于[地鼠加载矿石](/@trevor4e/learning-gos-concurrency-through-illustrations-8c4aff603b3)和观看[代表goroutines的动画的文章，](https://divan.dev/posts/go_concurrency_visualize/)这对我开始学习Go的过程有很大帮​​助。但是，这些适合初学者的文章与实际项目之间存在差距，您通常无法使用熟悉的类比。我完全同意，练习是学习东西的最佳方式，在你阅读了一些理论之后，你应该自己尝试新的东西。这就是我喜欢[编程kata的原因](https://en.wikipedia.org/wiki/Kata_(programming))。今天我想描述一个逐步解决方案，以解决在求职面试中我必须解决的一个非常有趣的问题。
+
+任务如下：你收到一个JSON字符串，代表一个农场，其中有地鼠居住（实际上是睡觉和吃东西），以及这些地鼠在谷仓中的单位食物数量（也许是克，因为地鼠是小动物）。由于农场里没有更多的食物，我们的地鼠会在没有食物的情况下一个接一个地死去。如果这对你来说太难过了，请随意编写第2章，食品卡车进入农场并进行繁殖。
+
+首先，我们需要转换_inputJson_进入我们稍后将使用的结构。“gophers”数组中的每个元素具有相同的结构。让我们把它变成一个Gopher类型。这取决于你如何命名字段，但最好在JSON字段之后命名它们以获得更好的代码可读性。字段声明后的JSON标记是可选的，但我强烈建议您使用它们，以防您要解组的结构中具有相同类型的不同字段顺序。检查结构字段是否已导出（例如，以大写字母开头），因为json包中的标准Unmarshal函数无法更改未导出字段的值。原因在于，仅当未导出结构，变量，函数等时，Go可见性仅限于当前包。这些未导出的对象仍然可以从外部更改，但您需要为此编写[特殊方法](https://www.ardanlabs.com/blog/2014/03/exportedunexported-identifiers-in-go.html)。Type Farm表示整个inputJson。我们将把类型声明放在main函数之外，以便从其他函数访问它们。
+
+json.Unmarshal接受一个\[\]字节和一个我们想要填充值的结构。因此，让我们初始化一个类型为Farm的变量gopherFarm，并将inputJson转换为\[\] byte。记录错误是一种非常好的做法，因为它们有助于在出现问题时进行调试。在现实世界的应用程序中使用了许多自定义Go记录器，但对于这个小型kata，日志包就足够了。
+
+地鼠来到农场，将独立生活在那里。这意味着我们需要为每个地鼠分别设置goroutine（显然）gophers应该能够生存（gopherLive功能）。让我们填充农场并为gopher生命周期编写样板。
+
+接下来最具挑战性的任务是为地鼠提供农场食品。这是新的eatFood函数和更新的gopherLive函数。
+
+我们可以在main函数的末尾运行这段代码（添加time.Sleep（time.Second \* 20））来查看日志输出。可能一切都会好起来......或者不会。这段代码的问题在于，两个或更多的地鼠（goroutines）可能会同时尝试读取和更改农场的食物数量。这种情况称为数据竞争。要检查数据争用，只需使用-race标志运行应用程序：
+
+$ go run -race main.go
+
+您将看到类似的输出：
+
+以下是来自_同步_包的一个很酷的功能：互斥锁，互斥锁。它将阻止来自多个gophers的Farm的同时读/写操作。我们将向Farm类型添加一个类型为sync.Mutex的字段，并在gopher查看是否还有剩余食物时将其锁定。请注意，我们使用_延迟_。Defer是一种Go方式，用于告知函数必须在周围函数结束之前执行_，并_在执行_return_ _之后_执行。即使此功能发生恐慌，也会执行延迟。
+
+我们差不多完成了！最后一点是添加关于地鼠生活的更多信息，因为我们也想知道地鼠何时死亡。我们将制作一个接受字符串的通道_消息_，并在每次gopher死亡之前向该通道_发送消息_，然后停止（_返回_）相应的goroutine。现在我们可以从这个频道中读取并直到所有goroutines都发送了一条消息。
+
+您可以在我的[GitHub存储库中](https://github.com/Olena23/gopher-farm/blob/master/main.go)找到完整代码或在[Go](https://play.golang.org/p/bREYCpKC8gd) Playground 上运行它。
+
+我希望它有用而有趣。要有创意，继续练习！

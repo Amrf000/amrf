@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="active" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="https%3A%2F%2Fgithub.com%2Fvoduytuan%2Frestful-aiml-bot%2Fblob%2Fmaster%2Fsrc%2Fserver.jshttps%3A%2F%2Fgist.github.com%2Fonlurking%2Ff6431e672cfa202c09a7c7cf92ac8a8bhttps%3A%2F%2Fgithub.com%2Fpenguinmenac3%2Falice-aihttps%3A%2F%2Fgithub.com%2Fpandorabots%2Frosiehttps%3A%2F%2Fgithub.com%2Fhlcfan%2Factive-alicehttps%3A%2F%2Fgithub.com%2Fcsu%2Falicechatapi%2Fblob%2Fmaster%2Faiml-dir%2Fpickup.aimlhttps%3A%2F%2Fgithub.com%2Faimlang%2Faiml-bots%2Ftree%2Fmaster%2Fbots%2Falice2%2Fmapshttps%3A%2F%2Fgithub.com%2Faimlang%2Faiml-java-interpreterhttps%3A%2F%2Fgithub.com%2Fpatrickschur%2Faiml2-chatbot-prototypehttps%3A%2F%2Fgithub.com%2Fpandorabots%2Ffree-aiml%2Fblob%2Fmaster%2Fbotcompare.aimlhttps%3A%2F%2Fgithub.com%2Fpandorabots%2Fpandorabots.github.iohttps%3A%2F%2Fgithub.com%2Fhosford42%2Faiml_sets%2Fblob%2Fmaster%2Faiml_sets%2Fstandard%2Fstd-hello.aiml%E9%A1%B9%E7%9B%AE%E6%97%A9%E6%9C%9F%E7%94%A8%E7%9A%84aiml1%2C%E8%BF%99%E9%87%8C%E4%B8%BB%E8%A6%81%E7%9C%8B%E7%9C%8Baiml2https%3A%2F%2Fcode.google.com%2Farchive%2Fp%2Fprogram-ab%2Fwikisprogram-ab---terminalinteraction.wiki"><a href="https://github.com/voduytuan/restful-aiml-bot/blob/master/src/server.js">https://github.com/voduytuan/restful-aiml-bot/blob/master/src/server.js</a>
+<a href="https://gist.github.com/onlurking/f6431e672cfa202c09a7c7cf92ac8a8b">https://gist.github.com/onlurking/f6431e672cfa202c09a7c7cf92ac8a8b</a>
+<a href="https://github.com/penguinmenac3/alice-ai">https://github.com/penguinmenac3/alice-ai</a>
+<a href="https://github.com/pandorabots/rosie">https://github.com/pandorabots/rosie</a>
+<a href="https://github.com/hlcfan/active-alice">https://github.com/hlcfan/active-alice</a>
+<a href="https://github.com/csu/ALICEChatAPI/blob/master/aiml-dir/pickup.aiml">https://github.com/csu/ALICEChatAPI/blob/master/aiml-dir/pickup.aiml</a>
+<a href="https://github.com/AIMLang/aiml-bots/tree/master/bots/alice2/maps">https://github.com/AIMLang/aiml-bots/tree/master/bots/alice2/maps</a>
+<a href="https://github.com/AIMLang/aiml-java-interpreter">https://github.com/AIMLang/aiml-java-interpreter</a>
+<a href="https://github.com/patrickschur/aiml2-chatbot-prototype">https://github.com/patrickschur/aiml2-chatbot-prototype</a>
+<a href="https://github.com/pandorabots/Free-AIML/blob/master/botcompare.aiml">https://github.com/pandorabots/Free-AIML/blob/master/botcompare.aiml</a>
+<a href="https://github.com/pandorabots/pandorabots.github.io">https://github.com/pandorabots/pandorabots.github.io</a>
+<a href="https://github.com/hosford42/AIML_Sets/blob/master/aiml_sets/standard/std-hello.aiml">https://github.com/hosford42/AIML_Sets/blob/master/aiml_sets/standard/std-hello.aiml</a>
+项目早期用的aiml1,这里主要看看aiml2
+<a href="https://code.google.com/archive/p/program-ab/wikis">https://code.google.com/archive/p/program-ab/wikis</a>
+program-ab - TerminalInteraction.wiki <a class="heading-anchor-permalink" href="#https%3A%2F%2Fgithub.com%2Fvoduytuan%2Frestful-aiml-bot%2Fblob%2Fmaster%2Fsrc%2Fserver.jshttps%3A%2F%2Fgist.github.com%2Fonlurking%2Ff6431e672cfa202c09a7c7cf92ac8a8bhttps%3A%2F%2Fgithub.com%2Fpenguinmenac3%2Falice-aihttps%3A%2F%2Fgithub.com%2Fpandorabots%2Frosiehttps%3A%2F%2Fgithub.com%2Fhlcfan%2Factive-alicehttps%3A%2F%2Fgithub.com%2Fcsu%2Falicechatapi%2Fblob%2Fmaster%2Faiml-dir%2Fpickup.aimlhttps%3A%2F%2Fgithub.com%2Faimlang%2Faiml-bots%2Ftree%2Fmaster%2Fbots%2Falice2%2Fmapshttps%3A%2F%2Fgithub.com%2Faimlang%2Faiml-java-interpreterhttps%3A%2F%2Fgithub.com%2Fpatrickschur%2Faiml2-chatbot-prototypehttps%3A%2F%2Fgithub.com%2Fpandorabots%2Ffree-aiml%2Fblob%2Fmaster%2Fbotcompare.aimlhttps%3A%2F%2Fgithub.com%2Fpandorabots%2Fpandorabots.github.iohttps%3A%2F%2Fgithub.com%2Fhosford42%2Faiml_sets%2Fblob%2Fmaster%2Faiml_sets%2Fstandard%2Fstd-hello.aiml%E9%A1%B9%E7%9B%AE%E6%97%A9%E6%9C%9F%E7%94%A8%E7%9A%84aiml1%2C%E8%BF%99%E9%87%8C%E4%B8%BB%E8%A6%81%E7%9C%8B%E7%9C%8Baiml2https%3A%2F%2Fcode.google.com%2Farchive%2Fp%2Fprogram-ab%2Fwikisprogram-ab---terminalinteraction.wiki" aria-hidden="true">#</a></h1>
+<h1 id="%E7%A8%8B%E5%BA%8Fab%E7%BB%88%E7%AB%AF%E4%BA%A4%E4%BA%92">程序AB终端交互 <a class="heading-anchor-permalink" href="#%E7%A8%8B%E5%BA%8Fab%E7%BB%88%E7%AB%AF%E4%BA%A4%E4%BA%92" aria-hidden="true">#</a></h1>
+<h2 id="%E5%AF%B9%E4%BA%8E%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%BC%8F%E6%88%96%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%A8%8B%E5%BA%8Fab%E5%B0%9D%E8%AF%95%E7%A1%AE%E5%AE%9A%E6%9C%80%E5%90%8E%E4%BF%AE%E6%94%B9%E4%BA%86%E5%93%AA%E4%B8%AA%E7%9B%AE%E5%BD%95%EF%BC%9Aaiml%E6%88%96aimlif%E3%80%82%E5%A6%82%E6%9E%9Caiml-%2F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E8%BE%83%E6%96%B0%EF%BC%8C%E5%88%99%E4%BB%8E%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BDbot%E3%80%82%E5%A6%82%E6%9E%9Caimlif-%2F%E6%9B%B4%E6%96%B0%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%8A%A0%E8%BD%BD%E5%AE%83%E4%BB%AC%E3%80%82%EF%BC%88%E5%9C%A8%E8%BF%90%E8%A1%8Cab%E4%B9%8B%E5%89%8D%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E4%B8%8D%E8%A6%81%E7%BC%96%E8%BE%91%E4%B8%A4%E4%B8%AAaiml%E5%92%8Caimlif%E6%96%87%E4%BB%B6%EF%BC%89%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E5%AE%83%E6%89%93%E5%BC%80%E4%BB%BB%E4%BD%95.csv%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E5%8A%A1%E5%BF%85%E5%85%B3%E9%97%AD%E7%94%B5%E5%AD%90%E8%A1%A8%E6%A0%BC%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88excel%EF%BC%89%E3%80%82%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%91%BD%E4%BB%A4%EF%BC%9A">对于聊天模式或模式建议模式，程序AB尝试确定最后修改了哪个目录：aiml或aimlif。如果aiml /中的文件较新，则从这些文件加载bot。如果aimlif /更新，它会加载它们。（在运行AB之前，请注意不要编辑两个aiml和aimlif文件）如果使用它打开任何.csv文件，请务必关闭电子表格编辑器（Excel）。
+交互式命令： <a class="heading-anchor-permalink" href="#%E5%AF%B9%E4%BA%8E%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%BC%8F%E6%88%96%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%A8%8B%E5%BA%8Fab%E5%B0%9D%E8%AF%95%E7%A1%AE%E5%AE%9A%E6%9C%80%E5%90%8E%E4%BF%AE%E6%94%B9%E4%BA%86%E5%93%AA%E4%B8%AA%E7%9B%AE%E5%BD%95%EF%BC%9Aaiml%E6%88%96aimlif%E3%80%82%E5%A6%82%E6%9E%9Caiml-%2F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E8%BE%83%E6%96%B0%EF%BC%8C%E5%88%99%E4%BB%8E%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E5%8A%A0%E8%BD%BDbot%E3%80%82%E5%A6%82%E6%9E%9Caimlif-%2F%E6%9B%B4%E6%96%B0%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%8A%A0%E8%BD%BD%E5%AE%83%E4%BB%AC%E3%80%82%EF%BC%88%E5%9C%A8%E8%BF%90%E8%A1%8Cab%E4%B9%8B%E5%89%8D%EF%BC%8C%E8%AF%B7%E6%B3%A8%E6%84%8F%E4%B8%8D%E8%A6%81%E7%BC%96%E8%BE%91%E4%B8%A4%E4%B8%AAaiml%E5%92%8Caimlif%E6%96%87%E4%BB%B6%EF%BC%89%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8%E5%AE%83%E6%89%93%E5%BC%80%E4%BB%BB%E4%BD%95.csv%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E5%8A%A1%E5%BF%85%E5%85%B3%E9%97%AD%E7%94%B5%E5%AD%90%E8%A1%A8%E6%A0%BC%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88excel%EF%BC%89%E3%80%82%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%91%BD%E4%BB%A4%EF%BC%9A" aria-hidden="true">#</a></h2>
+<h3 id="%E4%BB%8E%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%BC%8F%EF%BC%9A">从聊天模式： <a class="heading-anchor-permalink" href="#%E4%BB%8E%E8%81%8A%E5%A4%A9%E6%A8%A1%E5%BC%8F%EF%BC%9A" aria-hidden="true">#</a></h3>
+<p>|q |退出而不保存|| - |：--------------------- ||wq |编写AIML和AIMLIF（.csv）文件并退出||ab |输入catgeory browser / pattern suggestor mde |</p>
+<h3 id="%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E5%99%A8%EF%BC%88%E7%B1%BB%E5%88%AB%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%89%E6%A8%A1%E5%BC%8F%EF%BC%9A">模式建议器（类别浏览器）模式： <a class="heading-anchor-permalink" href="#%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E5%99%A8%EF%BC%88%E7%B1%BB%E5%88%AB%E6%B5%8F%E8%A7%88%E5%99%A8%EF%BC%89%E6%A8%A1%E5%BC%8F%EF%BC%9A" aria-hidden="true">#</a></h3>
+<p>Program AB的Pattern Suggestor（类别浏览器）功能扫描文件中的大量会话数据样本（当前设置为c：/ab/data/sample.txt）并自动查找新模式，botmaster可以从中快速创建新的AIML类别。
+注意：此数据文件未随免提供程序AB。您可以创建自己的数据文件，也可以使用<a href="http://alicebot.org/superbot.html">AIML Superbot Development Kit</a>。
+另请注意：要试验提供的sample.txt文件，请创建一个名为（例如）blankbot的新机器人，并创建空目录：<code>bots/blankbot/aiml bots/blankbot/aimlif bots/blankbot/sets bots/blankbot/maps bots/blankbot/config</code>您可以训练一个空白机器人，并将模式建议应用于sample.txt。
+提供的sample.txt文件是从<a href="http://www.answerdevices.com/index.php?/blog/2/entry-13-1000-questions-every-mobile-assistant-should-be-able-to-answer/">每个Mobile Assistant应该能够回答的1000个问题中</a>复制的。机器人/超级中提供的机器人SUPER已经包含对sample.txt中大多数输入的响应。
+文件sample.txt包含1000个输入，但更大的样本通常更好。在我们的测试中，我们使用了500,000个输入的样本。应该对文件sample.txt进行预规范化，以减少运行模式建议器算法的时间。
+请参阅配套文档<a href="https://docs.google.com/document/d/1WJ3HsFR6k3Z8XdNVS9EownhIxoiUe7DbNZwNr7yVYc8/pub">AIML类别浏览器 - 模式建议器</a>。
+|q |退出而不保存文件|| - |：--------------------------- ||wq |编写AIML和AIMLIF文件并退出||<code>&lt;Enter&gt;</code>或跳过|跳过此类||d |删除此模式||x |使用<code>&lt;sraix&gt;</code>模式创建一个类别- 保存在sraix.aiml中||p |不当内容 - 创建一个类别<code>&lt;srai&gt;FILTER INAPPROPRIATE&lt;/srai&gt;</code>- 保存在impro.aiml中|f |亵渎 - 创建一个类别<code>&lt;srai&gt;FILTER PROFANITY&lt;/srai&gt;</code>- 保存在profanity.aiml ||我|侮辱 - 创建一个类别<code>&lt;srai&gt;FILTER INSULT&lt;/srai&gt;</code>- 保存在insult.aiml |</p>
+<h3 id="%E7%BC%96%E5%86%99%E6%A8%A1%E6%9D%BF%EF%BC%9A">编写模板： <a class="heading-anchor-permalink" href="#%E7%BC%96%E5%86%99%E6%A8%A1%E6%9D%BF%EF%BC%9A" aria-hidden="true">#</a></h3>
+<h1 id="%E5%A6%82%E6%9E%9Ccatgeory%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%8D%E6%98%AF%E4%B8%8A%E9%9D%A2%E5%88%97%E5%87%BA%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B9%8B%E4%B8%80%EF%BC%8C%E5%88%99%E5%93%8D%E5%BA%94%E5%B0%86%E8%A2%AB%E8%A7%86%E4%B8%BA%E6%96%B0%E7%9A%84aiml%E6%A8%A1%E6%9D%BF%E3%80%82%E6%82%A8%E6%97%A0%E9%9C%80%E8%BE%93%E5%85%A5%3Ctemplate%3E%E6%A0%87%E7%AD%BE%E3%80%82%E7%A8%8B%E5%BA%8Fab%E5%B0%9D%E8%AF%95%E7%8C%9C%E6%B5%8B%E6%96%B0%E7%B1%BB%E5%88%AB%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E3%80%82%7C%E6%A8%A1%E6%9D%BFconatins%7C%E7%B1%BB%E5%88%AB%E4%BF%9D%E5%AD%98%E5%9C%A8%7C%7C%EF%BC%9A-----------------------%7C%EF%BC%9A-----------------------%7C%7C%3Csrai%3E%7C-reductions_update.aiml-%7C%7C%3Csraix%3E%7Csraix.aiml-%7C%7C%3Coob%3E%7Coob.aiml-%7C%7C%3Cset-name%7Cclient_profile.aiml-%7C%7C%3Cget-name%EF%BC%88%E9%99%A4%E4%BA%86%3Cget-name%3D%E2%80%9Dname%E2%80%9D%2F%3E%EF%BC%89%7Cclient_profile.aiml-%7C%7C%E5%88%AB%E7%9A%84%E4%BB%80%E4%B9%88personality.aiml-%7C%E6%88%96%E8%80%85%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%86%99%3Cpattern%3Esome-pattern%3C%2Fpattern%3E-response%E5%AE%83%E5%B0%86%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B8%A6%E6%9C%89%E6%A8%A1%E5%BC%8Fsome-pattern%E5%92%8C%E6%A8%A1%E6%9D%BF%E2%80%9Cresponse%E2%80%9D%E7%9A%84%E7%B1%BB%E5%88%AB%E3%80%82program-ab---runningab.wiki">如果Catgeory浏览器的输入不是上面列出的命令之一，则响应将被视为新的AIML模板。您无需输入<code>&lt;template&gt;</code>标签。
+程序AB尝试猜测新类别的文件名。
+|<strong>模板conatins</strong>|<strong>类别保存在</strong>||：---------------------- |：---------------------- ||<code>&lt;srai&gt;</code>| reductions_update.aiml ||<code>&lt;sraix&gt;</code>|sraix.aiml ||<code>&lt;oob&gt;</code>|oob.aiml ||<code>&lt;set name</code>|client_profile.aiml ||<code>&lt;get name</code>（除了<code>&lt;get name=”name”/&gt;</code>）|client_profile.aiml ||别的什么personality.aiml |
+或者，你可以写
+<code>&lt;pattern&gt;SOME PATTERN&lt;/pattern&gt; response</code>
+它将创建一个带有模式SOME PATTERN和模板“response”的类别。
+program-ab - RunningAB.wiki <a class="heading-anchor-permalink" href="#%E5%A6%82%E6%9E%9Ccatgeory%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E8%BE%93%E5%85%A5%E4%B8%8D%E6%98%AF%E4%B8%8A%E9%9D%A2%E5%88%97%E5%87%BA%E7%9A%84%E5%91%BD%E4%BB%A4%E4%B9%8B%E4%B8%80%EF%BC%8C%E5%88%99%E5%93%8D%E5%BA%94%E5%B0%86%E8%A2%AB%E8%A7%86%E4%B8%BA%E6%96%B0%E7%9A%84aiml%E6%A8%A1%E6%9D%BF%E3%80%82%E6%82%A8%E6%97%A0%E9%9C%80%E8%BE%93%E5%85%A5%3Ctemplate%3E%E6%A0%87%E7%AD%BE%E3%80%82%E7%A8%8B%E5%BA%8Fab%E5%B0%9D%E8%AF%95%E7%8C%9C%E6%B5%8B%E6%96%B0%E7%B1%BB%E5%88%AB%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E3%80%82%7C%E6%A8%A1%E6%9D%BFconatins%7C%E7%B1%BB%E5%88%AB%E4%BF%9D%E5%AD%98%E5%9C%A8%7C%7C%EF%BC%9A-----------------------%7C%EF%BC%9A-----------------------%7C%7C%3Csrai%3E%7C-reductions_update.aiml-%7C%7C%3Csraix%3E%7Csraix.aiml-%7C%7C%3Coob%3E%7Coob.aiml-%7C%7C%3Cset-name%7Cclient_profile.aiml-%7C%7C%3Cget-name%EF%BC%88%E9%99%A4%E4%BA%86%3Cget-name%3D%E2%80%9Dname%E2%80%9D%2F%3E%EF%BC%89%7Cclient_profile.aiml-%7C%7C%E5%88%AB%E7%9A%84%E4%BB%80%E4%B9%88personality.aiml-%7C%E6%88%96%E8%80%85%EF%BC%8C%E4%BD%A0%E5%8F%AF%E4%BB%A5%E5%86%99%3Cpattern%3Esome-pattern%3C%2Fpattern%3E-response%E5%AE%83%E5%B0%86%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%B8%A6%E6%9C%89%E6%A8%A1%E5%BC%8Fsome-pattern%E5%92%8C%E6%A8%A1%E6%9D%BF%E2%80%9Cresponse%E2%80%9D%E7%9A%84%E7%B1%BB%E5%88%AB%E3%80%82program-ab---runningab.wiki" aria-hidden="true">#</a></h1>
+<h1 id="ab%E8%AE%A1%E5%88%92">AB计划 <a class="heading-anchor-permalink" href="#ab%E8%AE%A1%E5%88%92" aria-hidden="true">#</a></h1>
+<h1 id="program-ab%E6%98%AFalice-ai-foundation%E6%8F%90%E4%BE%9B%E7%9A%84aiml-2.0%E7%9A%84%E5%85%8D%E8%B4%B9%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0%E3%80%82%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85">Program AB是ALICE AI Foundation提供的AIML 2.0的免费参考实现。
+下载并安装 <a class="heading-anchor-permalink" href="#program-ab%E6%98%AFalice-ai-foundation%E6%8F%90%E4%BE%9B%E7%9A%84aiml-2.0%E7%9A%84%E5%85%8D%E8%B4%B9%E5%8F%82%E8%80%83%E5%AE%9E%E7%8E%B0%E3%80%82%E4%B8%8B%E8%BD%BD%E5%B9%B6%E5%AE%89%E8%A3%85" aria-hidden="true">#</a></h1>
+<h1 id="%E6%B3%A8%E6%84%8F%EF%BC%9A%E5%A6%82%E6%9E%9C%E5%B0%9A%E6%9C%AA%E5%AE%89%E8%A3%85java%EF%BC%8C%E5%88%99%E5%BF%85%E9%A1%BB%E5%85%88%E5%AE%89%E8%A3%85java%E3%80%82%E8%AF%B7%E5%8F%82%E9%98%85oracle-free-java-download%E3%80%82%E5%9C%A8%E8%AF%A5%E9%A1%B9%E7%9B%AE%E4%B8%BB%E9%A1%B5%E7%9A%84%E2%80%9C%E4%B8%8B%E8%BD%BD%E7%A8%8B%E5%BA%8Fab%E2%80%9D%E9%93%BE%E6%8E%A5%E4%B8%8B%E4%B8%8B%E8%BD%BDzip%E6%96%87%E4%BB%B6%E3%80%82%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%B0%86%E6%AD%A4%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%88%B0%E6%82%A8%E5%B8%8C%E6%9C%9B%E7%9A%84%E4%BB%BB%E4%BD%95%E7%9B%AE%E5%BD%95%E4%B8%AD%EF%BC%8C%E4%BD%86%E6%98%AF%E5%87%BA%E4%BA%8E%E6%9C%AC%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%AE%E7%9A%84%EF%BC%8C%E6%88%91%E4%BB%AC%E5%81%87%E8%AE%BE%E6%82%A8%E5%B0%86.zip%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%88%B0%E5%90%8D%E4%B8%BAc%EF%BC%9A%2F-ab%E7%9A%84%E7%9B%AE%E5%BD%95%E4%B8%AD%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E5%85%B6%E4%BB%96%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%8C%E8%AF%B7%E5%B0%86%E4%BB%A5%E4%B8%8B%E6%96%87%E6%9C%AC%E4%B8%AD%E7%9A%84c%EF%BC%9A%2F-ab%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%A0%B9%E7%9B%AE%E5%BD%95%E3%80%82%E5%B1%95%E5%BC%80.zip%E6%96%87%E4%BB%B6%E6%97%B6%EF%BC%8C%E6%82%A8%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%BB%A5%E4%B8%8B%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6%EF%BC%9A%7Cc%EF%BC%9A%2F-ab-%2F-bots-%7Caiml%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%9B%E5%85%A5%E8%BF%99%E4%B8%AA%E7%9B%AE%E5%BD%95%7C%7C%EF%BC%9A------------%7C%EF%BC%9A------------------------------------%7C%7Cc%EF%BC%9A%2F-ab-%2F-lib-%7C%E8%BF%90%E8%A1%8C%E6%AD%A4%E4%BB%A3%E7%A0%81%E6%89%80%E9%9C%80%E7%9A%84java%E5%BA%93%7Cc%EF%BC%9A%2F-ab-%2F-out-%7Cjava%E7%B1%BB%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%7C%7Cc%EF%BC%9A%2Fab%2Frun.bat-%7C%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8Fab-%7C%E7%A8%8B%E5%BA%8Fab%E9%99%84%E5%B8%A6%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAalice-2.0%E7%9A%84%E6%A0%B7%E6%9C%AC%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E4%BD%8D%E4%BA%8Ebots-%2F-alice2%E7%9B%AE%E5%BD%95%E4%B8%AD%E3%80%82bot%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84">注意：如果尚未安装Java，则必须先安装Java。请参阅<a href="http://www.java.com/en/download/index.jsp">Oracle Free Java Download</a>。
+在该项目主页的“下载程序AB”链接下下载zip文件。您可以将此文件下载到您希望的任何目录中，但是出于本文档的目的，我们假设您将.zip文件扩展到名为c：/ ab的目录中。如果您使用的是其他根目录，请将以下文本中的c：/ ab替换为根目录。
+展开.zip文件时，您应该看到以下目录和文件：
+|c：/ ab / bots |AIML机器人进入这个目录||：----------- |：----------------------------------- ||c：/ ab / lib |运行此代码所需的Java库|c：/ ab / out |Java类文件目录||c：/ab/run.bat |批处理文件运行程序AB |
+程序AB附带了一个名为ALICE 2.0的样本机器人，位于bots / alice2目录中。
+Bot目录结构 <a class="heading-anchor-permalink" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A%E5%A6%82%E6%9E%9C%E5%B0%9A%E6%9C%AA%E5%AE%89%E8%A3%85java%EF%BC%8C%E5%88%99%E5%BF%85%E9%A1%BB%E5%85%88%E5%AE%89%E8%A3%85java%E3%80%82%E8%AF%B7%E5%8F%82%E9%98%85oracle-free-java-download%E3%80%82%E5%9C%A8%E8%AF%A5%E9%A1%B9%E7%9B%AE%E4%B8%BB%E9%A1%B5%E7%9A%84%E2%80%9C%E4%B8%8B%E8%BD%BD%E7%A8%8B%E5%BA%8Fab%E2%80%9D%E9%93%BE%E6%8E%A5%E4%B8%8B%E4%B8%8B%E8%BD%BDzip%E6%96%87%E4%BB%B6%E3%80%82%E6%82%A8%E5%8F%AF%E4%BB%A5%E5%B0%86%E6%AD%A4%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E5%88%B0%E6%82%A8%E5%B8%8C%E6%9C%9B%E7%9A%84%E4%BB%BB%E4%BD%95%E7%9B%AE%E5%BD%95%E4%B8%AD%EF%BC%8C%E4%BD%86%E6%98%AF%E5%87%BA%E4%BA%8E%E6%9C%AC%E6%96%87%E6%A1%A3%E7%9A%84%E7%9B%AE%E7%9A%84%EF%BC%8C%E6%88%91%E4%BB%AC%E5%81%87%E8%AE%BE%E6%82%A8%E5%B0%86.zip%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%88%B0%E5%90%8D%E4%B8%BAc%EF%BC%9A%2F-ab%E7%9A%84%E7%9B%AE%E5%BD%95%E4%B8%AD%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E4%BD%BF%E7%94%A8%E7%9A%84%E6%98%AF%E5%85%B6%E4%BB%96%E6%A0%B9%E7%9B%AE%E5%BD%95%EF%BC%8C%E8%AF%B7%E5%B0%86%E4%BB%A5%E4%B8%8B%E6%96%87%E6%9C%AC%E4%B8%AD%E7%9A%84c%EF%BC%9A%2F-ab%E6%9B%BF%E6%8D%A2%E4%B8%BA%E6%A0%B9%E7%9B%AE%E5%BD%95%E3%80%82%E5%B1%95%E5%BC%80.zip%E6%96%87%E4%BB%B6%E6%97%B6%EF%BC%8C%E6%82%A8%E5%BA%94%E8%AF%A5%E7%9C%8B%E5%88%B0%E4%BB%A5%E4%B8%8B%E7%9B%AE%E5%BD%95%E5%92%8C%E6%96%87%E4%BB%B6%EF%BC%9A%7Cc%EF%BC%9A%2F-ab-%2F-bots-%7Caiml%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%BF%9B%E5%85%A5%E8%BF%99%E4%B8%AA%E7%9B%AE%E5%BD%95%7C%7C%EF%BC%9A------------%7C%EF%BC%9A------------------------------------%7C%7Cc%EF%BC%9A%2F-ab-%2F-lib-%7C%E8%BF%90%E8%A1%8C%E6%AD%A4%E4%BB%A3%E7%A0%81%E6%89%80%E9%9C%80%E7%9A%84java%E5%BA%93%7Cc%EF%BC%9A%2F-ab-%2F-out-%7Cjava%E7%B1%BB%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%7C%7Cc%EF%BC%9A%2Fab%2Frun.bat-%7C%E6%89%B9%E5%A4%84%E7%90%86%E6%96%87%E4%BB%B6%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8Fab-%7C%E7%A8%8B%E5%BA%8Fab%E9%99%84%E5%B8%A6%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAalice-2.0%E7%9A%84%E6%A0%B7%E6%9C%AC%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E4%BD%8D%E4%BA%8Ebots-%2F-alice2%E7%9B%AE%E5%BD%95%E4%B8%AD%E3%80%82bot%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84" aria-hidden="true">#</a></h1>
+<h1 id="c%EF%BC%9A%2F-ab-%2F-bots%E7%9B%AE%E5%BD%95%E5%8C%85%E5%90%AB%E6%82%A8%E7%9A%84aiml%E6%9C%BA%E5%99%A8%E4%BA%BA%E3%80%82%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%9C%89%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAbotname%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E9%82%A3%E4%B9%88%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E7%9B%AE%E5%BD%95%EF%BC%9A%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-aiml-%7C%E5%B0%86%E6%82%A8%E7%9A%84aiml%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%9C%A8%E6%AD%A4%E5%A4%84%7C%7C%EF%BC%9A-------------------------%7C%EF%BC%9A-----------------------------%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-aimlif-%7C%E7%A8%8B%E5%BA%8Fab%E5%9C%A8%E8%BF%99%E9%87%8C%E5%AD%98%E5%82%A8aimlif%E6%96%87%E4%BB%B6%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-config-%7Cbot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-sets-%7Caiml%E9%9B%86%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-maps-%7Caiml%E5%9C%B0%E5%9B%BE%7C%E6%9C%89%E5%85%B3%E4%B8%BA%E7%A8%8B%E5%BA%8Fab%E9%85%8D%E7%BD%AE%E7%9A%84%E7%A4%BA%E4%BE%8Baiml-2.0-bot%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85%E9%85%8D%E5%A5%97%E9%A1%B9%E7%9B%AEsuper-aiml-bot%E3%80%82%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8Fab">c：/ ab / bots目录包含您的AIML机器人。如果你有一个名为<strong>botname</strong>的机器人，那么你应该创建以下目录：
+|c：/ ab / bots / botname / aiml |将您的AIML文件存储在此处||：------------------------ |：---------------------- ----- ||c：/ ab / bots / botname / aimlif |程序AB在这里存储AIMLIF文件|c：/ ab / bots / botname / config |Bot配置文件||c：/ ab / bots / botname / sets |AIML集||c：/ ab / bots / botname / maps |AIML地图|
+有关为程序AB配置的示例AIML 2.0 bot，请参阅配套项目<a href="https://code.google.com/p/aiml-en-us-foundation-super/">SUPER AIML Bot</a>。
+运行程序AB <a class="heading-anchor-permalink" href="#c%EF%BC%9A%2F-ab-%2F-bots%E7%9B%AE%E5%BD%95%E5%8C%85%E5%90%AB%E6%82%A8%E7%9A%84aiml%E6%9C%BA%E5%99%A8%E4%BA%BA%E3%80%82%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%9C%89%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAbotname%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%EF%BC%8C%E9%82%A3%E4%B9%88%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%88%9B%E5%BB%BA%E4%BB%A5%E4%B8%8B%E7%9B%AE%E5%BD%95%EF%BC%9A%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-aiml-%7C%E5%B0%86%E6%82%A8%E7%9A%84aiml%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%9C%A8%E6%AD%A4%E5%A4%84%7C%7C%EF%BC%9A-------------------------%7C%EF%BC%9A-----------------------------%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-aimlif-%7C%E7%A8%8B%E5%BA%8Fab%E5%9C%A8%E8%BF%99%E9%87%8C%E5%AD%98%E5%82%A8aimlif%E6%96%87%E4%BB%B6%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-config-%7Cbot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-sets-%7Caiml%E9%9B%86%7C%7Cc%EF%BC%9A%2F-ab-%2F-bots-%2F-botname-%2F-maps-%7Caiml%E5%9C%B0%E5%9B%BE%7C%E6%9C%89%E5%85%B3%E4%B8%BA%E7%A8%8B%E5%BA%8Fab%E9%85%8D%E7%BD%AE%E7%9A%84%E7%A4%BA%E4%BE%8Baiml-2.0-bot%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85%E9%85%8D%E5%A5%97%E9%A1%B9%E7%9B%AEsuper-aiml-bot%E3%80%82%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8Fab" aria-hidden="true">#</a></h1>
+<h2 id="%E8%A7%86%E7%AA%97">视窗 <a class="heading-anchor-permalink" href="#%E8%A7%86%E7%AA%97" aria-hidden="true">#</a></h2>
+<h2 id="%E6%A0%B9%E6%8D%AE%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9run.bat%E6%96%87%E4%BB%B6%E3%80%82%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9%E6%98%AF%7Caction-%3D-chat-%7C%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B6%E8%81%8A%E5%A4%A9%7C%7C%EF%BC%9A-------------%7C%EF%BC%9A-----------------------------%7C%7Caction-%3D-ab-%7C%E8%BF%90%E8%A1%8C%E5%AE%9E%E9%AA%8C%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E8%80%85%7C%7Caction-%3D-csv2aiml-%7C%E5%B0%86aimlif%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BAaiml-%7C%7Caction-%3D-aiml2csv-%7C%E5%B0%86aiml%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BAaimlif-%7C%7Cbot-%3D-botname-%7C%E8%BF%90%E8%A1%8Cbotname%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84bot%7Ctrace-%3D-true-%7C%E6%89%93%E5%8D%B0%E5%87%BA%E6%9C%89%E7%94%A8%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%BF%A1%E6%81%AF%7Cmac%E6%88%96linux">根据需要修改run.bat文件。命令行选项是
+|action = chat |运行机器人并聊天||：------------ |：---------------------------- ||action = ab |运行实验模式建议者||action = csv2aiml |将AIMLIF文件转换为AIML ||action = aiml2csv |将AIML文件转换为AIMLIF ||bot = botname |运行botname目录中的bot|trace = true |打印出有用的跟踪信息|
+Mac或Linux <a class="heading-anchor-permalink" href="#%E6%A0%B9%E6%8D%AE%E9%9C%80%E8%A6%81%E4%BF%AE%E6%94%B9run.bat%E6%96%87%E4%BB%B6%E3%80%82%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%80%89%E9%A1%B9%E6%98%AF%7Caction-%3D-chat-%7C%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B9%B6%E8%81%8A%E5%A4%A9%7C%7C%EF%BC%9A-------------%7C%EF%BC%9A-----------------------------%7C%7Caction-%3D-ab-%7C%E8%BF%90%E8%A1%8C%E5%AE%9E%E9%AA%8C%E6%A8%A1%E5%BC%8F%E5%BB%BA%E8%AE%AE%E8%80%85%7C%7Caction-%3D-csv2aiml-%7C%E5%B0%86aimlif%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BAaiml-%7C%7Caction-%3D-aiml2csv-%7C%E5%B0%86aiml%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E4%B8%BAaimlif-%7C%7Cbot-%3D-botname-%7C%E8%BF%90%E8%A1%8Cbotname%E7%9B%AE%E5%BD%95%E4%B8%AD%E7%9A%84bot%7Ctrace-%3D-true-%7C%E6%89%93%E5%8D%B0%E5%87%BA%E6%9C%89%E7%94%A8%E7%9A%84%E8%B7%9F%E8%B8%AA%E4%BF%A1%E6%81%AF%7Cmac%E6%88%96linux" aria-hidden="true">#</a></h2>
+<h1 id="%E4%B8%8Ewindows%E7%9B%B8%E5%90%8C%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8run.sh%E8%80%8C%E4%B8%8D%E6%98%AFrun.bat%E3%80%82program-ab---setsmaps.wiki">与Windows相同，但使用run.sh而不是run.bat。
+program-ab - SetsMaps.wiki <a class="heading-anchor-permalink" href="#%E4%B8%8Ewindows%E7%9B%B8%E5%90%8C%EF%BC%8C%E4%BD%86%E4%BD%BF%E7%94%A8run.sh%E8%80%8C%E4%B8%8D%E6%98%AFrun.bat%E3%80%82program-ab---setsmaps.wiki" aria-hidden="true">#</a></h1>
+<h1 id="%E5%9C%A8%E7%A8%8B%E5%BA%8Fab%E4%B8%AD%E5%AE%9A%E4%B9%89%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84">在程序AB中定义集合和映射 <a class="heading-anchor-permalink" href="#%E5%9C%A8%E7%A8%8B%E5%BA%8Fab%E4%B8%AD%E5%AE%9A%E4%B9%89%E9%9B%86%E5%90%88%E5%92%8C%E6%98%A0%E5%B0%84" aria-hidden="true">#</a></h1>
+<h1 id="%E5%AF%B9%E4%BA%8E%E5%90%8D%E4%B8%BAbotname%E7%9A%84bot%EF%BC%8C%E7%9B%AE%E5%BD%95bot-%2F-botname-%2F-sets%E5%92%8Cbot-%2F-botname-%2F-maps%E5%88%86%E5%88%AB%E5%8C%85%E5%90%ABaiml%E9%9B%86%E5%92%8C%E6%98%A0%E5%B0%84%E7%9A%84%E5%AE%9A%E4%B9%89%E3%80%82%E7%BB%86%E8%8A%82">对于名为botname的bot，目录bot / botname / sets和bot / botname / maps分别包含AIML集和映射的定义。
+细节 <a class="heading-anchor-permalink" href="#%E5%AF%B9%E4%BA%8E%E5%90%8D%E4%B8%BAbotname%E7%9A%84bot%EF%BC%8C%E7%9B%AE%E5%BD%95bot-%2F-botname-%2F-sets%E5%92%8Cbot-%2F-botname-%2F-maps%E5%88%86%E5%88%AB%E5%8C%85%E5%90%ABaiml%E9%9B%86%E5%92%8C%E6%98%A0%E5%B0%84%E7%9A%84%E5%AE%9A%E4%B9%89%E3%80%82%E7%BB%86%E8%8A%82" aria-hidden="true">#</a></h1>
+<h1 id="%E6%9C%89%E5%85%B3%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85aiml-2.0%E4%B8%AD%E7%9A%84%E9%85%8D%E5%A5%97%E6%96%87%E6%A1%A3%E9%9B%86%E5%92%8C%E6%98%A0%E5%B0%84%E3%80%82program-ab---compileab.wiki">有关详细信息，请参阅<a href="https://docs.google.com/document/d/1DWHiOOcda58CflDZ0Wsm1CgP3Es6dpicb4MBbbpwzEk/pub">AIML 2.0中</a>的配套文档<a href="https://docs.google.com/document/d/1DWHiOOcda58CflDZ0Wsm1CgP3Es6dpicb4MBbbpwzEk/pub">集和映射</a>。
+program-ab - CompileAB.wiki <a class="heading-anchor-permalink" href="#%E6%9C%89%E5%85%B3%E8%AF%A6%E7%BB%86%E4%BF%A1%E6%81%AF%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85aiml-2.0%E4%B8%AD%E7%9A%84%E9%85%8D%E5%A5%97%E6%96%87%E6%A1%A3%E9%9B%86%E5%92%8C%E6%98%A0%E5%B0%84%E3%80%82program-ab---compileab.wiki" aria-hidden="true">#</a></h1>
+<h1 id="%E7%BC%96%E8%AF%91%E5%92%8C%E6%9E%84%E5%BB%BA%E7%A8%8B%E5%BA%8Fab">编译和构建程序AB <a class="heading-anchor-permalink" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E6%9E%84%E5%BB%BA%E7%A8%8B%E5%BA%8Fab" aria-hidden="true">#</a></h1>
+<h2 id="%E7%A8%8B%E5%BA%8Fab%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAorg.alicebot.ab%E7%9A%84java%E5%8C%85%E3%80%82%E6%BA%90%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%9C%A8src-%2F-org-%2F-alicebot-%2F-ab%E4%B8%AD%E3%80%82%E8%BF%98%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E4%B8%AA%E9%A2%9D%E5%A4%96%E7%9A%84%E7%B1%BBsrc-%2F-main.java%E3%80%82%E7%A8%8B%E5%BA%8Fab%E6%98%AF%E4%BD%9C%E4%B8%BAjetbrains-intellij-idea%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%9A%84%E3%80%82%E5%88%86%E5%8F%91%E5%8C%85%E6%8B%AC%E6%A8%A1%E5%9D%97%E6%96%87%E4%BB%B6ab.iml%E5%92%8C.idea%E7%9B%AE%E5%BD%95%E3%80%82%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96">程序AB定义了一个名为org.alicebot.ab的Java包。源文件存储在src / org / alicebot / ab中。还提供了一个额外的类src / Main.java。
+程序AB是作为<a href="http://www.jetbrains.com/idea/">JetBrains IntelliJ IDEA中</a>的项目开发的。分发包括模块文件Ab.iml和.idea目录。
+内存优化 <a class="heading-anchor-permalink" href="#%E7%A8%8B%E5%BA%8Fab%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAorg.alicebot.ab%E7%9A%84java%E5%8C%85%E3%80%82%E6%BA%90%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E5%9C%A8src-%2F-org-%2F-alicebot-%2F-ab%E4%B8%AD%E3%80%82%E8%BF%98%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E4%B8%AA%E9%A2%9D%E5%A4%96%E7%9A%84%E7%B1%BBsrc-%2F-main.java%E3%80%82%E7%A8%8B%E5%BA%8Fab%E6%98%AF%E4%BD%9C%E4%B8%BAjetbrains-intellij-idea%E4%B8%AD%E7%9A%84%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%9A%84%E3%80%82%E5%88%86%E5%8F%91%E5%8C%85%E6%8B%AC%E6%A8%A1%E5%9D%97%E6%96%87%E4%BB%B6ab.iml%E5%92%8C.idea%E7%9B%AE%E5%BD%95%E3%80%82%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96" aria-hidden="true">#</a></h2>
+<h2 id="%E7%A8%8B%E5%BA%8Fab%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%EF%BC%8C%E5%8C%85%E6%8B%ACaimlif%E6%A0%BC%E5%BC%8F%EF%BC%8C%E8%8A%82%E7%82%B9%E5%8D%87%E7%BA%A7%E5%92%8C%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%9C%A8%E9%85%8D%E5%A5%97%E6%96%87%E6%A1%A3%E4%B8%AD%E8%BF%9B%E8%A1%8C%E4%BA%86%E6%8F%8F%E8%BF%B0%E3%80%82%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8Fab%E9%9C%80%E8%A6%81java%E5%BA%93">程序AB中使用的内存优化，包括AIMLIF格式，节点升级和快捷方式，在<a href="https://docs.google.com/document/d/1Y-rzwTOvMQqvKHVwR35rebJxhJ4gTL7-cLphHuXTGoE/pub">配套文档中</a>进行了描述。
+编译程序AB需要Java库 <a class="heading-anchor-permalink" href="#%E7%A8%8B%E5%BA%8Fab%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96%EF%BC%8C%E5%8C%85%E6%8B%ACaimlif%E6%A0%BC%E5%BC%8F%EF%BC%8C%E8%8A%82%E7%82%B9%E5%8D%87%E7%BA%A7%E5%92%8C%E5%BF%AB%E6%8D%B7%E6%96%B9%E5%BC%8F%EF%BC%8C%E5%9C%A8%E9%85%8D%E5%A5%97%E6%96%87%E6%A1%A3%E4%B8%AD%E8%BF%9B%E8%A1%8C%E4%BA%86%E6%8F%8F%E8%BF%B0%E3%80%82%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8Fab%E9%9C%80%E8%A6%81java%E5%BA%93" aria-hidden="true">#</a></h2>
+<p>编译程序AB需要一些Java库。这些库不包含在此源代码分发中。</p>
+<ul>
+<li>JGoodies数据-common.jar</li>
+<li>JGoodies数据，forms.jar</li>
+<li>JSON-20090211.jar</li>
+<li>sanmoku-0.0.5.jar</li>
+<li>sanmoku-功能ex.0.0.1.jar
+httpcomponents客户端-4.2.1：</li>
+<li>公地编解码器1.6.jar</li>
+<li>共享记录-1.1.1.jar</li>
+<li>流利-HC-4.2.1.jar</li>
+<li>HttpClient的-4.2.1.jar</li>
+<li>HttpClient的缓存-4.2.1.jar</li>
+<li>的HttpCore-4.2.1.jar</li>
+<li>httpmime-4.2.1.jar
+program-ab - EditingAIMLIF.wiki
+===============================
+AIML中间格式
+========
+AIMLIF（AIML中间格式）目录以电子表格格式包含存储在AIML目录中的信息的并行副本。您可以使用MS Excel，Google Docs或任何其他能够读取和写入CSV格式的电子表格编辑器编辑此目录中的CSV文件。
+AIMLIF将每个AIML类别转换为单行文本。这些行由以“，”字符分隔的字段组成。字段（或列）的顺序是：
+激活计数，输入模式，该模式，主题模式，模板，文件名。
+AIMLIF不是XML格式。输入模式，该模式和主题模式的字段不包含AIML标记<code>&lt;pattern&gt;</code>，<code>&lt;that&gt;</code>或<code>&lt;topic&gt;</code>。该<code>&lt;category&gt;</code>标签也省略。这种简化有助于提高AIML的编写效率，避免重复键入这些标记。
+但是，模板列确实包含XML格式的AIML模板。AIML是电子表格式数据（六列激活计数，输入模式，该模式，主题模式，模板，文件名）和模板中的分层XML数据的混合体。
+我们来看几个例子。此AIML类别来自文件reductions.aiml：
+<code>&lt;category&gt; &lt;pattern&gt;DO YOU THINK YOU WILL *&lt;/pattern&gt; &lt;template&gt;&lt;srai&gt;WILL YOU &lt;star/&gt;&lt;/srai&gt; &lt;/template&gt; &lt;/category&gt;</code>
+有一个中间格式表示
+<code>0,DO YOU THINK YOU WILL *,*,*,&lt;srai&gt;WILL YOU &lt;star/&gt;&lt;/srai&gt;,reductions.aiml</code>
+激活计数为0.模式是你认为你会**。该模式和主题模式都是**。模板是<code>&lt;srai&gt;WILL YOU &lt;star/&gt;&lt;/srai&gt;</code>，文件名是reductions.aiml。
+如果文件personality.aiml包含该类别
+<code>&lt;category&gt;&lt;pattern&gt;HI&lt;/pattern&gt; &lt;template&gt;&lt;random&gt; &lt;li&gt;Hi, nice to see you!&lt;/li&gt; &lt;li&gt;Hi it's great to see you!&lt;/li&gt; &lt;li&gt;Hi how are you?&lt;/li&gt; &lt;li&gt;Hi! I can really feel your smile today.&lt;/li&gt; &lt;li&gt;Hi! It's delightful to see you.&lt;/li&gt; &lt;/random&gt;&lt;/template&gt;</code>
+它将在AIMLIF文件personality.aiml.csv中表示为
+<code>0,HI,*,*,&lt;random&gt;#Newline&lt;li&gt;Hi#Comma nice to see you!&lt;/li&gt;#Newline&lt;li&gt;Hi it's great to see you!&lt;/li&gt;#Newline&lt;li&gt;Hi how are you?&lt;/li&gt;#Newline&lt;li&gt;Hi! I can really feel your smile today.&lt;/li&gt;#Newline&lt;li&gt;Hi! It's delightful to see you.&lt;/li&gt;#Newline&lt;/random&gt;,personality.aiml</code>
+一切都在一条线上。
+特殊字符</li>
+</ul>
+<hr>
+<h2 id="%E7%94%B1%E4%BA%8Eaimlif%E8%A1%A8%E7%A4%BA%E4%BD%BF%E7%94%A8%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E8%BF%99%E4%BA%9B%E5%AD%97%E6%AE%B5%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%81%BF%E5%85%8D%E5%9C%A8aiml%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%E2%80%9C%EF%BC%8C%E2%80%9D%E5%AD%97%E7%AC%A6%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%E3%80%82%EF%BC%88%E6%B3%A8%E6%84%8F%EF%BC%9Aaiml%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%B8%BB%E9%A2%98%E6%88%96%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E4%B8%AD%E4%B8%8D%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E2%80%9C%EF%BC%8C%E2%80%9D%EF%BC%89%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%E7%BC%96%E8%BE%91aimlif%E6%96%87%E4%BB%B6%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%9C%A8%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%BC%96%E5%86%99%E2%80%9C%EF%BC%8C%E2%80%9D%EF%BC%8C%E8%AF%B7%E4%BD%BF%E7%94%A8%E5%AE%8F%23comma%E3%80%82%E7%94%B1%E4%BA%8Eaimlif%E8%A1%A8%E7%A4%BA%E6%AF%8F%E4%B8%AA%E7%B1%BB%E5%88%AB%E4%BB%85%E4%BD%BF%E7%94%A8%E4%B8%80%E8%A1%8C%E6%96%87%E6%9C%AC%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%81%BF%E5%85%8Daiml%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E6%8D%A2%E8%A1%8C%E4%B9%9F%E5%BE%88%E9%87%8D%E8%A6%81%E3%80%82%EF%BC%88%E6%B3%A8%E6%84%8F%EF%BC%9Aaiml%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%B8%BB%E9%A2%98%E6%88%96%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E4%B8%AD%E4%B8%8D%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E6%8D%A2%E8%A1%8C%E7%AC%A6%EF%BC%89%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%E7%BC%96%E8%BE%91aimlif%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E4%BD%BF%E7%94%A8%E5%AE%8F%23newline%E8%80%8C%E4%B8%8D%E6%98%AF%E8%BE%93%E5%85%A5%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82csv2aiml.bat%E7%A8%8B%E5%BA%8F%E5%B0%86%23comma%E8%BD%AC%E6%8D%A2%E4%B8%BA%E2%80%9C%EF%BC%8C%E2%80%9D%E5%B9%B6%E5%B0%86%23newline%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82%E7%9B%B8%E5%8F%8D%EF%BC%8Caiml2csv.bat%E7%A8%8B%E5%BA%8F%E5%B0%86%E4%BB%BB%E4%BD%95%E2%80%9C%EF%BC%8C%E2%80%9D%E8%BD%AC%E6%8D%A2%E4%B8%BA%23comma%E5%92%8C%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%B8%BA%23newline%E3%80%82%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0">由于AIMLIF表示使用逗号分隔这些字段，因此避免在AIML模板中使用“，”字符非常重要。（注意：AIML模式，主题或文件名字段中不允许使用“，”）。如果您正在编辑AIMLIF文件，而不是在模板中编写“，”，请使用宏#Comma。
+由于AIMLIF表示每个类别仅使用一行文本，因此避免AIML模板中的换行也很重要。（注意：AIML模式，主题或文件名字段中不允许使用换行符）。如果您正在编辑AIMLIF文件，请使用宏#Newline而不是输入换行符。
+csv2aiml.bat程序将#Comma转换为“，”并将#Newline转换为换行符。相反，aiml2csv.bat程序将任何“，”转换为#Comma和换行符为#Newline。
+激活计数 <a class="heading-anchor-permalink" href="#%E7%94%B1%E4%BA%8Eaimlif%E8%A1%A8%E7%A4%BA%E4%BD%BF%E7%94%A8%E9%80%97%E5%8F%B7%E5%88%86%E9%9A%94%E8%BF%99%E4%BA%9B%E5%AD%97%E6%AE%B5%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%81%BF%E5%85%8D%E5%9C%A8aiml%E6%A8%A1%E6%9D%BF%E4%B8%AD%E4%BD%BF%E7%94%A8%E2%80%9C%EF%BC%8C%E2%80%9D%E5%AD%97%E7%AC%A6%E9%9D%9E%E5%B8%B8%E9%87%8D%E8%A6%81%E3%80%82%EF%BC%88%E6%B3%A8%E6%84%8F%EF%BC%9Aaiml%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%B8%BB%E9%A2%98%E6%88%96%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E4%B8%AD%E4%B8%8D%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E2%80%9C%EF%BC%8C%E2%80%9D%EF%BC%89%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%E7%BC%96%E8%BE%91aimlif%E6%96%87%E4%BB%B6%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%9C%A8%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%BC%96%E5%86%99%E2%80%9C%EF%BC%8C%E2%80%9D%EF%BC%8C%E8%AF%B7%E4%BD%BF%E7%94%A8%E5%AE%8F%23comma%E3%80%82%E7%94%B1%E4%BA%8Eaimlif%E8%A1%A8%E7%A4%BA%E6%AF%8F%E4%B8%AA%E7%B1%BB%E5%88%AB%E4%BB%85%E4%BD%BF%E7%94%A8%E4%B8%80%E8%A1%8C%E6%96%87%E6%9C%AC%EF%BC%8C%E5%9B%A0%E6%AD%A4%E9%81%BF%E5%85%8Daiml%E6%A8%A1%E6%9D%BF%E4%B8%AD%E7%9A%84%E6%8D%A2%E8%A1%8C%E4%B9%9F%E5%BE%88%E9%87%8D%E8%A6%81%E3%80%82%EF%BC%88%E6%B3%A8%E6%84%8F%EF%BC%9Aaiml%E6%A8%A1%E5%BC%8F%EF%BC%8C%E4%B8%BB%E9%A2%98%E6%88%96%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E4%B8%AD%E4%B8%8D%E5%85%81%E8%AE%B8%E4%BD%BF%E7%94%A8%E6%8D%A2%E8%A1%8C%E7%AC%A6%EF%BC%89%E3%80%82%E5%A6%82%E6%9E%9C%E6%82%A8%E6%AD%A3%E5%9C%A8%E7%BC%96%E8%BE%91aimlif%E6%96%87%E4%BB%B6%EF%BC%8C%E8%AF%B7%E4%BD%BF%E7%94%A8%E5%AE%8F%23newline%E8%80%8C%E4%B8%8D%E6%98%AF%E8%BE%93%E5%85%A5%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82csv2aiml.bat%E7%A8%8B%E5%BA%8F%E5%B0%86%23comma%E8%BD%AC%E6%8D%A2%E4%B8%BA%E2%80%9C%EF%BC%8C%E2%80%9D%E5%B9%B6%E5%B0%86%23newline%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82%E7%9B%B8%E5%8F%8D%EF%BC%8Caiml2csv.bat%E7%A8%8B%E5%BA%8F%E5%B0%86%E4%BB%BB%E4%BD%95%E2%80%9C%EF%BC%8C%E2%80%9D%E8%BD%AC%E6%8D%A2%E4%B8%BA%23comma%E5%92%8C%E6%8D%A2%E8%A1%8C%E7%AC%A6%E4%B8%BA%23newline%E3%80%82%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0" aria-hidden="true">#</a></h2>
+<h2 id="%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0%E5%88%97%E6%98%BE%E7%A4%BA%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%AF%8F%E4%B8%AA%E7%B1%BB%E5%88%AB%E7%9A%84%E6%BF%80%E6%B4%BB%E6%AC%A1%E6%95%B0%E3%80%82%E7%A8%8B%E5%BA%8Fab%E4%B8%8D%E6%8F%90%E4%BE%9B%E6%AD%A4%E6%95%B0%E6%8D%AE%E3%80%82%E4%BF%AE%E6%94%B9%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%AD%96%E7%95%A5%E6%98%AF%E9%A6%96%E5%85%88%E4%BD%BF%E7%94%A8%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0%E6%9C%80%E9%AB%98%E7%9A%84%E7%B1%BB%E5%88%AB%E3%80%82%E8%BF%99%E5%B0%86%E6%9C%89%E5%8A%A9%E4%BA%8E%E5%BF%AB%E9%80%9F%E5%8C%BA%E5%88%86%E6%82%A8%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AA%E6%80%A7%E4%B8%8E%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E4%BA%BA%E3%80%82%E6%96%87%E4%BB%B6%E5%90%8D">激活计数列显示样本数据中每个类别的激活次数。程序AB不提供此数据。修改机器人的一个好策略是首先使用激活计数最高的类别。这将有助于快速区分您的机器人个性与其他机器人。
+文件名 <a class="heading-anchor-permalink" href="#%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0%E5%88%97%E6%98%BE%E7%A4%BA%E6%A0%B7%E6%9C%AC%E6%95%B0%E6%8D%AE%E4%B8%AD%E6%AF%8F%E4%B8%AA%E7%B1%BB%E5%88%AB%E7%9A%84%E6%BF%80%E6%B4%BB%E6%AC%A1%E6%95%B0%E3%80%82%E7%A8%8B%E5%BA%8Fab%E4%B8%8D%E6%8F%90%E4%BE%9B%E6%AD%A4%E6%95%B0%E6%8D%AE%E3%80%82%E4%BF%AE%E6%94%B9%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E4%B8%80%E4%B8%AA%E5%A5%BD%E7%AD%96%E7%95%A5%E6%98%AF%E9%A6%96%E5%85%88%E4%BD%BF%E7%94%A8%E6%BF%80%E6%B4%BB%E8%AE%A1%E6%95%B0%E6%9C%80%E9%AB%98%E7%9A%84%E7%B1%BB%E5%88%AB%E3%80%82%E8%BF%99%E5%B0%86%E6%9C%89%E5%8A%A9%E4%BA%8E%E5%BF%AB%E9%80%9F%E5%8C%BA%E5%88%86%E6%82%A8%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E4%B8%AA%E6%80%A7%E4%B8%8E%E5%85%B6%E4%BB%96%E6%9C%BA%E5%99%A8%E4%BA%BA%E3%80%82%E6%96%87%E4%BB%B6%E5%90%8D" aria-hidden="true">#</a></h2>
+<h1 id="%E6%AF%8F%E4%B8%AAaimlif%E6%96%87%E4%BB%B6%E9%83%BD%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E3%80%82%E6%9C%80%E5%88%9D%EF%BC%8C%E6%AD%A4%E5%AD%97%E6%AE%B5%E5%80%BC%E5%B0%86%E4%B8%8E%E8%BD%AC%E6%8D%A2aimlif%E6%96%87%E4%BB%B6%E7%9A%84aiml%E6%96%87%E4%BB%B6%E7%9B%B8%E5%90%8C%E3%80%82%E6%82%A8%E5%8F%AF%E4%BB%A5%E6%9B%B4%E6%94%B9aimlif%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BB%BB%E4%BD%95%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%88%AB%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E5%80%BC%E3%80%82%E5%B0%86csv%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E5%9B%9Eaiml%E6%97%B6%EF%BC%8C%E7%B1%BB%E5%88%AB%E5%B0%86%E4%BF%9D%E5%AD%98%E5%9C%A8%E6%9C%80%E5%90%8E%E4%B8%80%E5%88%97%E5%80%BC%E6%8C%87%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%EF%BC%8C%E6%97%A0%E8%AE%BA%E5%AE%83%E6%9D%A5%E8%87%AA%E5%93%AA%E4%B8%AAaimlif%E6%96%87%E4%BB%B6%E3%80%82program-ab---extendingaiml.wiki">每个AIMLIF文件都包含一个文件名字段。最初，此字段值将与转换AIMLIF文件的AIML文件相同。您可以更改AIMLIF文件中任何特定类别的文件名值。将CSV文件转换回AIML时，类别将保存在最后一列值指定的文件名中，无论它来自哪个AIMLIF文件。
+program-ab - ExtendingAIML.wiki <a class="heading-anchor-permalink" href="#%E6%AF%8F%E4%B8%AAaimlif%E6%96%87%E4%BB%B6%E9%83%BD%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E6%96%87%E4%BB%B6%E5%90%8D%E5%AD%97%E6%AE%B5%E3%80%82%E6%9C%80%E5%88%9D%EF%BC%8C%E6%AD%A4%E5%AD%97%E6%AE%B5%E5%80%BC%E5%B0%86%E4%B8%8E%E8%BD%AC%E6%8D%A2aimlif%E6%96%87%E4%BB%B6%E7%9A%84aiml%E6%96%87%E4%BB%B6%E7%9B%B8%E5%90%8C%E3%80%82%E6%82%A8%E5%8F%AF%E4%BB%A5%E6%9B%B4%E6%94%B9aimlif%E6%96%87%E4%BB%B6%E4%B8%AD%E4%BB%BB%E4%BD%95%E7%89%B9%E5%AE%9A%E7%B1%BB%E5%88%AB%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E5%80%BC%E3%80%82%E5%B0%86csv%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E5%9B%9Eaiml%E6%97%B6%EF%BC%8C%E7%B1%BB%E5%88%AB%E5%B0%86%E4%BF%9D%E5%AD%98%E5%9C%A8%E6%9C%80%E5%90%8E%E4%B8%80%E5%88%97%E5%80%BC%E6%8C%87%E5%AE%9A%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E4%B8%AD%EF%BC%8C%E6%97%A0%E8%AE%BA%E5%AE%83%E6%9D%A5%E8%87%AA%E5%93%AA%E4%B8%AAaimlif%E6%96%87%E4%BB%B6%E3%80%82program-ab---extendingaiml.wiki" aria-hidden="true">#</a></h1>
+<h1 id="aimlprocessorextension">AIMLProcessorExtension <a class="heading-anchor-permalink" href="#aimlprocessorextension" aria-hidden="true">#</a></h1>
+<p>程序AB定义了一个名为AIMLProcessorExtension的Java接口，可用于定义新的AIML标记。
+实现AIMLProcessorExtension的类必须提供：</p>
+<ul>
+<li>一组标签名称。</li>
+<li>用于递归评估与新标记关联的每个节点的XML分析树的函数。
+Program AB源包括一个名为<a href="https://code.google.com/p/program-ab/source/browse/src/org/alicebot/ab/PCAIMLProcessorExtension.java">PCAIMLProcessorExtension</a>的此接口的示例实现，它定义了一组模拟联系人数据库的标记。
+细节
+==
+通过定义函数extensionTagSet（）来为AIMLProcessor提供扩展标记名称列表：<code>public Set&lt;String&gt; extensionTagSet();</code>它返回一组扩展标记名称。
+定义一个函数<code>public String recursEval(Node node, ParseState ps);</code>来递归计算XML解析树。由于您的自定义标记本身可能包含普通的AIML 2.0标记，因此评估函数<code>AIMLProcessor.evalTagContent(node, parseState ignoreAttributes);</code>应用于评估任何标记或子标记内容。
+<code>public String recursEval(Node node, ParseState ps);</code>该函数应返回评估标记内容的结果。
+如果定义AIMLProcessorExtension类，例如PCAIMLProcessorExtension，则需要在AIMLProcessor中设置静态变量扩展：
+<code>AIMLProcessorExtension.extension = new PCAIMLProcessorExtension();</code>
+program-ab - ProgrammingInterface.wiki
+======================================
+链接到Ab.jar
+=========
+将Ab.jar库添加到您的应用程序中。在Java文件中，使用
+<code>import org.alicebot.ab.*;</code>
+创建一个机器人
+=======
+创建一个机器人
+<code>String botname=&quot;mybot&quot;; Bot bot = new Bot(botname);</code>
+您还可以使用指定机器人文件的根路径
+<code>String botname=&quot;mybot&quot;; String path=&quot;c:/example&quot;; Bot bot = new Bot(botname, path);</code>
+如果Program AB bot文件位于c：/ example目录中，那么名为<strong>mybot</strong>的bot应该使用以下目录：
+|目录|内容||：---------- |：--------- ||c：/ example / bots / mybot / aiml |AIML文件||c：/ example / bots / mybot / aimlif |AIMLIF格式文件||c：/ example / bots / mybot / config |Bot配置文件||c：/ example / bots / mybot / sets |AIML集||c：/ example / bots / mybot / maps |AIML地图|
+构造函数方法将加载所有bot的类别，替换，配置文件以及set和map定义。
+创建聊天会话
+======
+使用创建客户端聊天会话
+<code>Chat chatSession = new Chat(bot);</code>
+与机器人聊天
+======
+使用multisentenceResponse方法获取机器人对多句（一个或多个句子）输入的回复：
+<code>String request = &quot;Hello. Are you alive? What is your name?&quot; String response = chatSession.multisentenceRespond(request); System.out.println(response);</code>
+program-ab - Configuration.wiki
+===============================
+配置文件
+====
+正常化</li>
+</ul>
+<hr>
+<h2 id="%E5%AF%B9%E4%BA%8E%E5%90%8D%E4%B8%BAbotname%E7%9A%84bot%EF%BC%8C%E8%A7%84%E8%8C%83%E5%8C%96%E6%96%87%E4%BB%B6%E4%BD%8D%E4%BA%8Ebots-%2F-botname-%2F-config-%2F-normal.txt%E4%B8%AD%E3%80%82%E6%9B%BF%E6%8D%A2%E6%AF%8F%E8%A1%8C%E5%86%99%E4%B8%80%E4%B8%AA%EF%BC%8C%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%9B%B4%E7%BB%95%E8%BF%99%E4%B8%A4%E4%B8%AA%E6%9C%AF%E8%AF%AD%E3%80%82%E8%AF%A5%E7%A8%8B%E5%BA%8F%E6%AD%A3%E5%9C%A8%E5%AF%BB%E6%89%BE%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%8C%22%5C%22(.*%3F)%5C%22%2C%5C%22(.*%3F)%5C%22%22%E4%BE%8B%E5%A6%82%22-haven't-%22%2C%22-have-not-%22-%22-realy-%22%2C%22-really-%22-%22.uk-%22%2C%22-dot-uk-%22%E8%AE%B8%E5%A4%9A%E6%9B%BF%E6%8D%A2%E4%BB%A5%E7%A9%BA%E6%A0%BC%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F%E3%80%82%E8%BF%99%E6%98%AF%E4%B8%BA%E4%BA%86%E7%A1%AE%E4%BF%9D%E5%85%A8%E5%AD%97%E6%9B%BF%E6%8D%A2%E3%80%82%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E5%9C%A8%E6%AF%8F%E4%B8%AA%E5%8F%A5%E5%AD%90%E7%9A%84%E5%BC%80%E5%A4%B4%E5%92%8C%E7%BB%93%E5%B0%BE%E9%99%84%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%A9%BA%E6%A0%BC%EF%BC%8C%E5%BA%94%E7%94%A8%E6%89%80%E6%9C%89%E6%9B%BF%E6%8D%A2%EF%BC%8C%E7%84%B6%E5%90%8E%E4%BF%AE%E5%89%AA%E5%89%8D%E5%AF%BC%E5%92%8C%E7%BB%93%E6%9D%9F%E7%A9%BA%E6%A0%BC%E3%80%82%E4%B8%80%E4%B8%AA%E7%89%B9%E6%AE%8A%E7%9A%84%E4%BE%8B%E5%AD%90%E6%98%AF%22%22%22%2C%22-%22%E5%8F%8C%E5%BC%95%E5%8F%B7%E4%B8%8D%E5%BF%85%E8%BD%AC%E4%B9%89%E4%BB%A5%E5%8C%B9%E9%85%8D%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%82%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC">对于名为botname的bot，规范化文件位于bots / botname / config / normal.txt中。
+替换每行写一个，双引号围绕这两个术语。该程序正在寻找与正则表达式匹配的输入，<code>&quot;\&quot;(.*?)\&quot;,\&quot;(.*?)\&quot;&quot;</code>例如<code>&quot; haven't &quot;,&quot; have not &quot; &quot; realy &quot;,&quot; really &quot; &quot;.uk &quot;,&quot; dot uk &quot;</code>许多替换以空格开始和结束。这是为了确保全字替换。预处理器在每个句子的开头和结尾附加一个空格，应用所有替换，然后修剪前导和结束空格。
+一个特殊的例子是<code>&quot;&quot;&quot;,&quot; &quot;</code>
+双引号不必转义以匹配正则表达式。
+谓词默认值 <a class="heading-anchor-permalink" href="#%E5%AF%B9%E4%BA%8E%E5%90%8D%E4%B8%BAbotname%E7%9A%84bot%EF%BC%8C%E8%A7%84%E8%8C%83%E5%8C%96%E6%96%87%E4%BB%B6%E4%BD%8D%E4%BA%8Ebots-%2F-botname-%2F-config-%2F-normal.txt%E4%B8%AD%E3%80%82%E6%9B%BF%E6%8D%A2%E6%AF%8F%E8%A1%8C%E5%86%99%E4%B8%80%E4%B8%AA%EF%BC%8C%E5%8F%8C%E5%BC%95%E5%8F%B7%E5%9B%B4%E7%BB%95%E8%BF%99%E4%B8%A4%E4%B8%AA%E6%9C%AF%E8%AF%AD%E3%80%82%E8%AF%A5%E7%A8%8B%E5%BA%8F%E6%AD%A3%E5%9C%A8%E5%AF%BB%E6%89%BE%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%8C%22%5C%22(.*%3F)%5C%22%2C%5C%22(.*%3F)%5C%22%22%E4%BE%8B%E5%A6%82%22-haven't-%22%2C%22-have-not-%22-%22-realy-%22%2C%22-really-%22-%22.uk-%22%2C%22-dot-uk-%22%E8%AE%B8%E5%A4%9A%E6%9B%BF%E6%8D%A2%E4%BB%A5%E7%A9%BA%E6%A0%BC%E5%BC%80%E5%A7%8B%E5%92%8C%E7%BB%93%E6%9D%9F%E3%80%82%E8%BF%99%E6%98%AF%E4%B8%BA%E4%BA%86%E7%A1%AE%E4%BF%9D%E5%85%A8%E5%AD%97%E6%9B%BF%E6%8D%A2%E3%80%82%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8%E5%9C%A8%E6%AF%8F%E4%B8%AA%E5%8F%A5%E5%AD%90%E7%9A%84%E5%BC%80%E5%A4%B4%E5%92%8C%E7%BB%93%E5%B0%BE%E9%99%84%E5%8A%A0%E4%B8%80%E4%B8%AA%E7%A9%BA%E6%A0%BC%EF%BC%8C%E5%BA%94%E7%94%A8%E6%89%80%E6%9C%89%E6%9B%BF%E6%8D%A2%EF%BC%8C%E7%84%B6%E5%90%8E%E4%BF%AE%E5%89%AA%E5%89%8D%E5%AF%BC%E5%92%8C%E7%BB%93%E6%9D%9F%E7%A9%BA%E6%A0%BC%E3%80%82%E4%B8%80%E4%B8%AA%E7%89%B9%E6%AE%8A%E7%9A%84%E4%BE%8B%E5%AD%90%E6%98%AF%22%22%22%2C%22-%22%E5%8F%8C%E5%BC%95%E5%8F%B7%E4%B8%8D%E5%BF%85%E8%BD%AC%E4%B9%89%E4%BB%A5%E5%8C%B9%E9%85%8D%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E3%80%82%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC" aria-hidden="true">#</a></h2>
+<h2 id="%E6%96%87%E4%BB%B6config-%2F-predicates.txt%E5%8C%85%E5%90%AB%E4%BB%BB%E4%BD%95%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%82%E6%A0%BC%E5%BC%8F%E6%98%AFpredicate%3Avalue%E4%BE%8B%E5%A6%82%EF%BC%9Aage%3Ahow-many-baby%3Awho-bestfriend%3Awho-birthday%3Awhen-birthplace%3Awhere-boyfriend%3Awho-brother%3Awho-cat%3Awhat-city%3Awhich-country%3Awhich-county%3Awhich-customname%3Aunknown-daughter%3Awho-dialnumber%3Aunknown-dog%3Awho%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B1%9E%E6%80%A7">文件config / predicates.txt包含任何谓词默认值。格式是
+<code>predicate:value</code>
+例如：
+<code>age:how many baby:who bestfriend:who birthday:when birthplace:where boyfriend:who brother:who cat:what city:which country:which county:which customname:unknown daughter:who dialnumber:unknown dog:who</code>
+机器人属性 <a class="heading-anchor-permalink" href="#%E6%96%87%E4%BB%B6config-%2F-predicates.txt%E5%8C%85%E5%90%AB%E4%BB%BB%E4%BD%95%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC%E3%80%82%E6%A0%BC%E5%BC%8F%E6%98%AFpredicate%3Avalue%E4%BE%8B%E5%A6%82%EF%BC%9Aage%3Ahow-many-baby%3Awho-bestfriend%3Awho-birthday%3Awhen-birthplace%3Awhere-boyfriend%3Awho-brother%3Awho-cat%3Awhat-city%3Awhich-country%3Awhich-county%3Awhich-customname%3Aunknown-daughter%3Awho-dialnumber%3Aunknown-dog%3Awho%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%B1%9E%E6%80%A7" aria-hidden="true">#</a></h2>
+<h2 id="%E6%96%87%E4%BB%B6config-%2F-properties.txt%E5%8C%85%E5%90%ABbot%E5%B1%9E%E6%80%A7%E3%80%82%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E6%A0%BC%E5%BC%8F%E7%9B%B8%E5%90%8C%E3%80%82%E4%BE%8B%E5%A6%82%EF%BC%9Aurl%3Ahttp%3A%2F%2Fwww.alicebot.org-name%3Asuper-email%3Acallmom-info%40pandorabots.com-gender%3Amale-botmaster%3Adr.-richard-s.-wallace-organization%3Aalice-ai-foundation-version%3A0.0.4%E6%8D%A2%E4%BA%BA">文件config / properties.txt包含bot属性。格式与谓词默认值的格式相同。例如：
+<code>url:http://www.alicebot.org name:SUPER email:callmom-info@pandorabots.com gender:male botmaster:Dr. Richard S. Wallace organization:ALICE AI Foundation version:0.0.4</code>
+换人 <a class="heading-anchor-permalink" href="#%E6%96%87%E4%BB%B6config-%2F-properties.txt%E5%8C%85%E5%90%ABbot%E5%B1%9E%E6%80%A7%E3%80%82%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%B0%93%E8%AF%8D%E9%BB%98%E8%AE%A4%E5%80%BC%E7%9A%84%E6%A0%BC%E5%BC%8F%E7%9B%B8%E5%90%8C%E3%80%82%E4%BE%8B%E5%A6%82%EF%BC%9Aurl%3Ahttp%3A%2F%2Fwww.alicebot.org-name%3Asuper-email%3Acallmom-info%40pandorabots.com-gender%3Amale-botmaster%3Adr.-richard-s.-wallace-organization%3Aalice-ai-foundation-version%3A0.0.4%E6%8D%A2%E4%BA%BA" aria-hidden="true">#</a></h2>
+<h2 id="%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9F%90%E4%BA%9Baiml%E6%A0%87%E8%AE%B0%E7%9A%84%E6%9B%BF%E6%8D%A2%E3%80%82%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%A7%84%E8%8C%83%E5%8C%96%E6%9B%BF%E6%8D%A2%E7%9A%84%E6%A0%BC%E5%BC%8F%E7%9B%B8%E5%90%8C%E3%80%82%E4%BB%A5%E4%B8%8B%E6%98%AFperson.txt%E7%9A%84%E7%A4%BA%E4%BE%8B%EF%BC%9A%22-with-you-%22%2C%22-with-me2-%22-%22-with-me-%22%2C%22-with-you2-%22-%22-to-you-%22%2C%22-to-me2-%22-%22-to-me-%22%2C%22-to-you2-%22-%22-of-you-%22%2C%22-of-me2-%22-%22-of-me-%22%2C%22-of-you2-%22%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E4%BE%9D%E6%AC%A1%E5%BA%94%E7%94%A8%E6%9B%BF%E6%8D%A2%E3%80%82%E4%B8%8B%E8%A1%A8%E6%80%BB%E7%BB%93%E4%BA%86%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87%EF%BC%9A%7C%E6%A1%A3%E6%A1%88%7Caiml%E6%A0%87%E7%AD%BE%7C%7C%EF%BC%9A----------%7C%EF%BC%9A--------------%7C%7Cnormal.txt-%7C%3Cnormalize%3E%7C%7Cperson.txt-%7C%3Cperson%3E%7C%7Cperson2.txt-%7C%3Cperson2%3E%7C%7Cgender.txt-%7C%3Cgender%3E%7C%E7%89%88%E6%9D%83">这些文件存储某些AIML标记的替换。格式与规范化替换的格式相同。以下是person.txt的示例：
+<code>&quot; with you &quot;,&quot; with me2 &quot; &quot; with me &quot;,&quot; with you2 &quot; &quot; to you &quot;,&quot; to me2 &quot; &quot; to me &quot;,&quot; to you2 &quot; &quot; of you &quot;,&quot; of me2 &quot; &quot; of me &quot;,&quot; of you2 &quot;</code>
+从上到下依次应用替换。
+下表总结了替换文件的组织：
+|<strong>档案</strong>|<strong>AIML标签</strong>||：--------- |：------------- ||normal.txt |<code>&lt;normalize&gt;</code>||person.txt |<code>&lt;person&gt;</code>||person2.txt |<code>&lt;person2&gt;</code>||gender.txt |<code>&lt;gender&gt;</code>|
+版权 <a class="heading-anchor-permalink" href="#%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E6%9F%90%E4%BA%9Baiml%E6%A0%87%E8%AE%B0%E7%9A%84%E6%9B%BF%E6%8D%A2%E3%80%82%E6%A0%BC%E5%BC%8F%E4%B8%8E%E8%A7%84%E8%8C%83%E5%8C%96%E6%9B%BF%E6%8D%A2%E7%9A%84%E6%A0%BC%E5%BC%8F%E7%9B%B8%E5%90%8C%E3%80%82%E4%BB%A5%E4%B8%8B%E6%98%AFperson.txt%E7%9A%84%E7%A4%BA%E4%BE%8B%EF%BC%9A%22-with-you-%22%2C%22-with-me2-%22-%22-with-me-%22%2C%22-with-you2-%22-%22-to-you-%22%2C%22-to-me2-%22-%22-to-me-%22%2C%22-to-you2-%22-%22-of-you-%22%2C%22-of-me2-%22-%22-of-me-%22%2C%22-of-you2-%22%E4%BB%8E%E4%B8%8A%E5%88%B0%E4%B8%8B%E4%BE%9D%E6%AC%A1%E5%BA%94%E7%94%A8%E6%9B%BF%E6%8D%A2%E3%80%82%E4%B8%8B%E8%A1%A8%E6%80%BB%E7%BB%93%E4%BA%86%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87%EF%BC%9A%7C%E6%A1%A3%E6%A1%88%7Caiml%E6%A0%87%E7%AD%BE%7C%7C%EF%BC%9A----------%7C%EF%BC%9A--------------%7C%7Cnormal.txt-%7C%3Cnormalize%3E%7C%7Cperson.txt-%7C%3Cperson%3E%7C%7Cperson2.txt-%7C%3Cperson2%3E%7C%7Cgender.txt-%7C%3Cgender%3E%7C%E7%89%88%E6%9D%83" aria-hidden="true">#</a></h2>
+<h2 id="%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E7%9B%AE%E5%BD%95config-%2F%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAcopyright.txt%E7%9A%84%E6%96%87%E4%BB%B6%E3%80%82%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F%E5%B0%86%E8%AF%BB%E5%8F%96%E6%AD%A4%E6%96%87%E4%BB%B6%E5%B9%B6%E5%B0%86%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E6%94%BE%E5%9C%A8%E6%AF%8F%E4%B8%AAaiml%E6%96%87%E4%BB%B6%E9%A1%B6%E9%83%A8%E7%9A%84xml%E6%B3%A8%E9%87%8A%E4%B8%AD%E3%80%82copyright.txt%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E5%8C%85%E5%90%AB%E4%B8%80%E4%BA%9B%E5%AE%8F%E5%91%BD%E4%BB%A4%EF%BC%8C%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F%E5%B0%86%E6%A0%B9%E6%8D%AE%E4%B8%8B%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%89%A9%E5%B1%95%E3%80%82%E8%BF%99%E4%BA%9B%E5%AE%8F%E5%8F%AF%E5%B8%AE%E5%8A%A9%E6%82%A8%E7%BC%96%E5%86%99%E9%80%82%E7%94%A8%E4%BA%8E%E6%82%A8%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E3%80%82%7C%E5%AE%8F%7C%E6%89%A9%E5%BC%A0%7C%7C%EF%BC%9A-------%7C%EF%BC%9A------------%7C%7C%5Burl%5D%7C%E7%94%B1%E6%96%87%E4%BB%B6properties.txt-%7C%E4%B8%AD%E7%9A%84bot%E5%B1%9E%E6%80%A7url%E6%8C%87%E5%AE%9A%E7%9A%84url%7C%5Bdate%5D%7C%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%7C%7C%5Byyyy%5D%7C%E5%BD%93%E5%89%8D%E6%97%A5%E5%8E%86%E5%B9%B4%7C%7C%5Bversion%5D%7C%E6%9D%A5%E8%87%AAproperties.txt-%7C%E7%9A%84bot%E5%B1%9E%E6%80%A7%E7%89%88%E6%9C%AC%7C%5Bbotname%5D%7Cproperties.txt%E4%B8%AD%E7%9A%84botname%E5%B1%9E%E6%80%A7%7C%5Bbotmaster%5D%7C%E6%9D%A5%E8%87%AAproperties.txt-%7C%E7%9A%84botmaster%E5%B1%9E%E6%80%A7%7C%5Borganization%5D%7C%E6%9D%A5%E8%87%AAproperties.txt%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%9E%E6%80%A7api%E5%AF%86%E9%92%A5">版权声明
+目录config /包含一个名为copyright.txt的文件。转换程序将读取此文件并将版权声明放在每个AIML文件顶部的XML注释中。copyright.txt文件可能包含一些宏命令，转换程序将根据下表进行扩展。这些宏可帮助您编写适用于您的机器人的自定义版权声明。
+|宏|扩张||：------ |：----------- ||<code>[url]</code>|由文件properties.txt |中的bot属性url指定的URL|<code>[date]</code>|当前日期||<code>[YYYY]</code>|当前日历年||<code>[version]</code>|来自properties.txt |的bot属性版本|<code>[botname]</code>|properties.txt中的botname属性|<code>[botmaster]</code>|来自properties.txt |的botmaster属性|<code>[organization]</code>|来自properties.txt的组织属性
+API密钥 <a class="heading-anchor-permalink" href="#%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E7%9B%AE%E5%BD%95config-%2F%E5%8C%85%E5%90%AB%E4%B8%80%E4%B8%AA%E5%90%8D%E4%B8%BAcopyright.txt%E7%9A%84%E6%96%87%E4%BB%B6%E3%80%82%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F%E5%B0%86%E8%AF%BB%E5%8F%96%E6%AD%A4%E6%96%87%E4%BB%B6%E5%B9%B6%E5%B0%86%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E6%94%BE%E5%9C%A8%E6%AF%8F%E4%B8%AAaiml%E6%96%87%E4%BB%B6%E9%A1%B6%E9%83%A8%E7%9A%84xml%E6%B3%A8%E9%87%8A%E4%B8%AD%E3%80%82copyright.txt%E6%96%87%E4%BB%B6%E5%8F%AF%E8%83%BD%E5%8C%85%E5%90%AB%E4%B8%80%E4%BA%9B%E5%AE%8F%E5%91%BD%E4%BB%A4%EF%BC%8C%E8%BD%AC%E6%8D%A2%E7%A8%8B%E5%BA%8F%E5%B0%86%E6%A0%B9%E6%8D%AE%E4%B8%8B%E8%A1%A8%E8%BF%9B%E8%A1%8C%E6%89%A9%E5%B1%95%E3%80%82%E8%BF%99%E4%BA%9B%E5%AE%8F%E5%8F%AF%E5%B8%AE%E5%8A%A9%E6%82%A8%E7%BC%96%E5%86%99%E9%80%82%E7%94%A8%E4%BA%8E%E6%82%A8%E7%9A%84%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%88%E6%9D%83%E5%A3%B0%E6%98%8E%E3%80%82%7C%E5%AE%8F%7C%E6%89%A9%E5%BC%A0%7C%7C%EF%BC%9A-------%7C%EF%BC%9A------------%7C%7C%5Burl%5D%7C%E7%94%B1%E6%96%87%E4%BB%B6properties.txt-%7C%E4%B8%AD%E7%9A%84bot%E5%B1%9E%E6%80%A7url%E6%8C%87%E5%AE%9A%E7%9A%84url%7C%5Bdate%5D%7C%E5%BD%93%E5%89%8D%E6%97%A5%E6%9C%9F%7C%7C%5Byyyy%5D%7C%E5%BD%93%E5%89%8D%E6%97%A5%E5%8E%86%E5%B9%B4%7C%7C%5Bversion%5D%7C%E6%9D%A5%E8%87%AAproperties.txt-%7C%E7%9A%84bot%E5%B1%9E%E6%80%A7%E7%89%88%E6%9C%AC%7C%5Bbotname%5D%7Cproperties.txt%E4%B8%AD%E7%9A%84botname%E5%B1%9E%E6%80%A7%7C%5Bbotmaster%5D%7C%E6%9D%A5%E8%87%AAproperties.txt-%7C%E7%9A%84botmaster%E5%B1%9E%E6%80%A7%7C%5Borganization%5D%7C%E6%9D%A5%E8%87%AAproperties.txt%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%9E%E6%80%A7api%E5%AF%86%E9%92%A5" aria-hidden="true">#</a></h2>
+<h2 id="%E5%A6%82%E6%9E%9C%E6%82%A8%E8%AE%A1%E5%88%92%E4%BD%BF%E7%94%A8pannous-web%E6%9C%8D%E5%8A%A1%E6%9C%89%3Csraix%3E%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85%E7%8F%8D%E5%A6%AEapi%E4%BB%A5%E8%8E%B7%E5%8F%96%E7%99%BB%E5%BD%95%E5%92%8Capikey%E3%80%82%E7%A8%8B%E5%BA%8Fab%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%A5%E6%89%BE%E8%BF%99%E4%BA%9B%E5%80%BC%EF%BC%9Aconfig-%2F-pannous-login.txt-config-%2F-pannous-apikey.txt%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%EF%BC%8C%E7%A8%8B%E5%BA%8F%E5%B0%86%E5%88%86%E9%85%8D%E9%BB%98%E8%AE%A4%E5%80%BCpannous_api_key-%3D-%22guest%22-pannous_login-%3D-%22test-user%22aiml---%E5%9C%A8aiml-2.0%E4%B8%AD%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%98%A0%E5%B0%84">如果您计划使用<a href="https://demo.pannous.com/">Pannous Web服务</a>有<code>&lt;sraix&gt;</code>，请参阅<a href="https://www.mashape.com/pannous/jeannie#pricing">珍妮API</a>以获取登录和apikey。程序AB在文件中查找这些值：
+config / pannous-login.txt config / pannous-apikey.txt
+如果没有这些文件，程序将分配默认值
+<code>pannous_api_key = &quot;guest&quot; pannous_login = &quot;test-user&quot;</code>
+AIML - 在AIML 2.0中设置和映射 <a class="heading-anchor-permalink" href="#%E5%A6%82%E6%9E%9C%E6%82%A8%E8%AE%A1%E5%88%92%E4%BD%BF%E7%94%A8pannous-web%E6%9C%8D%E5%8A%A1%E6%9C%89%3Csraix%3E%EF%BC%8C%E8%AF%B7%E5%8F%82%E9%98%85%E7%8F%8D%E5%A6%AEapi%E4%BB%A5%E8%8E%B7%E5%8F%96%E7%99%BB%E5%BD%95%E5%92%8Capikey%E3%80%82%E7%A8%8B%E5%BA%8Fab%E5%9C%A8%E6%96%87%E4%BB%B6%E4%B8%AD%E6%9F%A5%E6%89%BE%E8%BF%99%E4%BA%9B%E5%80%BC%EF%BC%9Aconfig-%2F-pannous-login.txt-config-%2F-pannous-apikey.txt%E5%A6%82%E6%9E%9C%E6%B2%A1%E6%9C%89%E8%BF%99%E4%BA%9B%E6%96%87%E4%BB%B6%EF%BC%8C%E7%A8%8B%E5%BA%8F%E5%B0%86%E5%88%86%E9%85%8D%E9%BB%98%E8%AE%A4%E5%80%BCpannous_api_key-%3D-%22guest%22-pannous_login-%3D-%22test-user%22aiml---%E5%9C%A8aiml-2.0%E4%B8%AD%E8%AE%BE%E7%BD%AE%E5%92%8C%E6%98%A0%E5%B0%84" aria-hidden="true">#</a></h2>
+<p>AIML 2.0草案标准包括用于表示集合和地图的新功能。AIML集是单词和短语的集合，AIML映射是将一个集合的元素转换为另一个集合的元素的函数。例如，我们可以定义一组动物{狗，蛇，袋鼠，马}以及从动物到腿数的地图{dog：4，snake：0，kangaroo：2，horse：4}。
+集合和地图功能对机器人学习和推理具有重要意义。它们还减少了botmaster的工作量。在<set>存在之前，botmaster可能必须为集合中的每个成员编写不同的类别。现在，可以将大量类别的效果压缩为单个类别。
+模式侧&lt;set&gt;
+AIML 2.0定义了模式端<set>标记。<pattern>（或<that>）元素中<set>的含义与<template>元素中<set>的含义完全不同。在模板方面，<set name =“age”> 40 &lt;/ set&gt;表示将名为“age”的谓词设置为40.在模式方面，<set>标记没有属性。模式端<set>包含集的名称，如：</p>
+<ul>
+<li><set> color &lt;/ set&gt; -一组颜色</li>
+<li><set> company &lt;/ set&gt; -一组公司</li>
+<li><set> verb3sp &lt;/ set&gt; -一组第三人称动词，简单形式，现在时。
+AIML 2.0草案标准没有规定这些集合的定义。这个细节留给了AIML解释器的实现。在程序AB中，每个机器人都有一个名为sets /的子目录，其中集合在文本文件中定义。这些文件的格式为每行文本一个元素，例如文件color.txt以：
+空军蓝色
+爱丽丝蓝
+茜素深红
+杏仁
+苋菜
+琥珀色
+美国玫瑰
+紫晶
+…
+在模式匹配中，<set>元素的工作方式与通配符元素_或*非常相似。特别，</li>
+</ul>
+<ol>
+<li>- <set>元素可以匹配一个或多个单词</li>
+<li>- 如果在集合中找不到输入的单词，则匹配失败。</li>
+<li>- AIML匹配订单修改如下：</li>
+<li>首先尝试下划线_。</li>
+<li>尝试找到确切的单词匹配。</li>
+<li>尝试找到<set>匹配 -此步骤与AIML 1.1不同</li>
+<li>试试明星*最后。</li>
+<li>- 与通配符匹配的情况一样，AIML模式匹配器首先尝试一个单词集匹配，然后是两个单词匹配，然后是三个单词，依此类推，直到没有更多输入单词。这意味着当一个集合元素是另一个元素的前缀时，较短的匹配优先于较长的匹配。例如，应该注意一组包含“给”和“放弃”的动词 - “给”将首先匹配。</li>
+<li>- 匹配<set>元素的单词可以在<template>中使用<star />访问，就好像<set>元素是另一个通配符一样。
+让我们使用<set>查看一些简单的类别，以了解这些规则的应用方式。
+<category> <pattern> MY FAVORITE COLOR <set> color &lt;/ set&gt; &lt;/ pattern&gt;
+&lt;模板&gt;
+<set name =“favoritecolor”> <formal> <star /> &lt;/ formal&gt; &lt;/ set&gt;是一个不错的颜色。
+<think> <set name =“it”> <set name =“topic”> <star /> &lt;/ set&gt; &lt;/ set&gt; &lt;/ think&gt;
+&lt;/模板&gt;
+&lt;/类别&gt;
+<category> <pattern> MY FAVORITE COLOR IS * &lt;/ pattern&gt;
+<template>我没有将<star />识别为颜色。&lt;/ template&gt;
+&lt;/类别&gt;
+<category> <pattern>我最喜欢的颜色是绿色&lt;/ pattern&gt;
+<template> <set name =“favoritecolor”>绿色&lt;/ set&gt;也是我最喜欢的颜色！<think> <set name =“it”> <set name =“topic”>绿色&lt;/ set&gt; &lt;/ set&gt; &lt;/ think&gt; &lt;/ template&gt;
+&lt;/类别&gt;
+<category> <pattern>我喜欢<set> color &lt;/ set&gt; &lt;/ pattern&gt;
+<template> <srai>我最喜欢的颜色是<star /> &lt;/ srai&gt; &lt;/ template&gt;
+&lt;/类别&gt;
+这些类别允许以下示例对话框。
+人：我最喜欢的颜色是红色
+机器人：红色是一种很好的颜色。
+注释：输入匹配模式MY FAVORITE COLOR IS <set> color &lt;/ set&gt;。机器人能够通过<star />标签访问“Red”。
+人类：我最喜欢的颜色是空军蓝色
+机器人：空军蓝色是一个很好的颜色。
+注释：该集可能包含多个单词的短语。短语“Air Force Blue”在颜色集中。
+人：我最喜欢的颜色是绿色
+机器人：绿色也是我最喜欢的颜色！
+评论：还有另一个类别，模式MY FAVORITE COLOR IS GREEN。由于精确单词匹配优先于<set>匹配，因此输入“我最喜欢的颜色为绿色”与此更具体的模式匹配。机器人响应“绿色也是我最喜欢的颜色！”
+人类：我最喜欢的颜色是春天的巴黎
+机器人：我在春天不认识巴黎是一种颜色。
+评论：“春天的巴黎”这个短语不在颜色集中。<set>匹配失败，模式匹配器移动到具有MY FAVORITE COLOR IS *模式的类别。
+人：我喜欢紫蓝色
+机器人：紫罗兰色是一种很好的颜色。
+注释：只要用户说“我喜欢X”并且X是颜色的名称，最终类别就会应用缩减。
+模板端<map>
+AIML <map>标记将一个元素的元素转换为另一个元素的元素。第一组称为地图的域，第二组称为范围。（请注意，AIML <map>标记与AIML <oob> <map>标记不同.OOB <map>标记在地图上查找位置.AIML 2.0 <map>标记具有指定的属性“name”地图的名称。
+<oob> <map>洛杉矶&lt;/ map&gt; &lt;/ oob&gt;- 表示打开地图应用程序并显示洛杉矶。
+<map name =“city2state”\>洛杉矶&lt;/ map&gt;- 查找名为“city2state”的地图，并返回“洛杉矶”的地图，大概是“加利福尼亚”。
+与模式端<set>的情况一样，AIML 2.0草案规范没有说明如何定义地图。这取决于实施。在程序AB中，机器人具有关联的地图/子目录，其中地图在文本文件中定义。这些文件的格式是每行一个映射对，用冒号分隔，例如：
+state2capital set：
+缅因州：奥古斯塔
+加利福尼亚州：萨克拉门托
+纽约：奥尔巴尼
+伊利诺伊州：斯普林菲尔德
+简单的目标：
+&lt;类别&gt;
+<pattern> <set> state &lt;/ set&gt; &lt;/ pattern&gt;的大写是什么？
+<template> <map name =“state2capital”> <star /> &lt;/ map&gt; &lt;/ template&gt;
+&lt;/类别&gt;
+模板侧<map>元素使用属性“name”来指定命名映射。
+如果命名映射不存在，<map>将返回默认值（程序AB中的“未知”）。如果映射存在，则解释器尝试在映射域中查找指定的元素。如果元素不在域中，则<map>返回另一个默认值（当前在程序AB中也是“未知”）。
+如果地图存在且找到了domain元素，则<map>标记将返回地图范围中的关联元素。
+要了解<map>的工作原理，让我们看一下测试类别：
+<category> <pattern> * <set> verb2sp &lt;/ set&gt; * &lt;/ pattern&gt;
+<template>谁<star index =“2”/> <star index =“3”/>？&lt;星/&gt;。
+<star /> <map name =“verb2sp2verb1sp”> <star index =“2”/> &lt;/ map&gt;是什么？<star index =“3”/>。
+&lt;/模板&gt;
+pattern-side <set>和template-side <map>的含义：
+<set> verb2sp &lt;/ set&gt; -匹配的单词是一组名为verb2sp的成员，在sets /目录中定义。[这里的符号约定意味着第二人称动词（2），简单形式，现在时（p）]。
+<map name =“verb2sp2verb1sp”> X &lt;/ map&gt; -使用地图“verb2sp2verb1sp”，返回键X的地图条目。
+地图在maps /目录中定义。
+<star index =“2”/> -可以访问集合中找到的匹配单词，就好像<set> &lt;/ set&gt;是另一个*。
+简单的演示对话：
+人：乔确实有效
+机器人：谁工作？乔。
+乔做什么？工作。
+人类：简似乎很累
+机器人：谁似乎累了？简。
+简看起来是什么？累。
+人类：史蒂夫认为AIML设置和地图很酷。
+机器人：谁认为AIML套装和地图很酷？史蒂夫。
+史蒂夫怎么想？AIML集和地图很酷。
+set verb2sp是
+具有
+不
+说
+得到
+品牌
+去
+知道
+需要
+看到
+来
+想
+容貌
+希望
+给
+使用
+认定
+告诉
+问
+作品
+似乎
+感觉
+尝试
+树叶
+电话
+地图verb2sp2verb1sp是
+有：有
+确实做
+说：说
+获得：获得
+使得：使
+云：走
+知道：知道
+需要：取
+看：看
+来自：来
+认为：认为
+看：看
+希望：希望
+给：给
+用途：使用
+发现：发现
+讲述：告诉
+问：问
+工作原理：工作
+似乎是：似乎
+感觉：感觉
+尝试：尝试
+叶：离开
+电话：电话
+上面的简化类别不包含<learn>或<learnf>标记，但是它们的模板说明了改进bot学习的潜力。
+逆转AIML
+Charles Chevallier创造了“Reversed AIML”一词来指代机器人可以将事实陈述转换为新的AIML类别的特征。例如，根据“Joe确实有效”的说法，机器人可以编写新的AIML类别来回答“Joe做什么？”和“谁工作？”这一问题。新的AIML是输入语句的“反向”。使用集合和映射，botmaster可以更轻松地编写反向AIML类别。通过使用<learn>标签构建新类别，机器人可以回答新问题：
+人：乔做的。
+机器人：我会记得乔做的。
+人：谁工作？
+机器人：乔。
+人：乔做什么？
+机器人：工作。
+乔赚钱。→谁赚钱？
+梅赛德斯生产汽车。→是什么让汽车？
+练习：将<learnf>表达式写入本节中的示例类别，以便机器人可以实际回答新问题。
+答：这是一种方法：
+<category> <pattern> QUESTIONWORD <set> name &lt;/ set&gt; &lt;/ pattern&gt;
+&lt;模板&gt;谁&lt;/模板&gt;
+&lt;/类别&gt;
+<category> <pattern> QUESTIONWORD <set> name &lt;/ set&gt; * &lt;/ pattern&gt;
+&lt;模板&gt;谁&lt;/模板&gt;
+&lt;/类别&gt;
+<category> <pattern> QUESTIONWORD * &lt;/ pattern&gt;
+&lt;模板&gt;什么&lt;/模板&gt;
+&lt;/类别&gt;
+<category> <pattern> * <set> verb2sp &lt;/ set&gt; * &lt;/ pattern&gt;
+&lt;模板&gt; &lt;认为&gt;
+<set name =“learnpattern”> <srai> QUESTIONWORD <star /> &lt;/ srai&gt; <star index =“2”/> <person> <star index =“3”/> &lt;/ person&gt; &lt;/ set&gt;？
+<set name =“learntemplate”> <star /> &lt;/ set&gt;。
+<LEARNF>
+&lt;类别&gt;
+<pattern> <eval> <get name =“learnpattern”/> &lt;/ eval&gt; &lt;/ pattern&gt;
+<template> <eval> <get name =“learntemplate”/> &lt;/ eval&gt; &lt;/ template&gt;
+&lt;/类别&gt;
+&lt;/ LEARNF&gt;
+&lt;/认为&gt;
+现在你可以问我：“<get name =”learnpattern“/>？”
+&lt;认为&gt;
+<set name =“learnpattern”> <star /> <map name =“verb2sp2verb1sp”> <star index =“2”/> &lt;/ map&gt; &lt;/ set&gt;是什么？
+<set name =“learntemplate”> <person> <star index =“3”/> &lt;/ person&gt; &lt;/ set&gt;。
+<LEARNF>
+&lt;类别&gt;
+<pattern> <eval> <get name =“learnpattern”/> &lt;/ eval&gt; &lt;/ pattern&gt;
+<template> <eval> <get name =“learntemplate”/> &lt;/ eval&gt; &lt;/ template&gt;
+&lt;/类别&gt;
+&lt;/ LEARNF&gt;
+&lt;/认为&gt;
+和“<get name =”learnpattern“/>？”&lt;/ template&gt;
+&lt;/类别&gt;
+外部（远程）设置和地图
+对于具有数千到数十万成员的大型集合和地图，可能不希望花费在小型设备上加载该集合所需的存储器资源。作为替代方案，程序AB允许使用远程服务器指定外部集和映射。
+远程设置
+构建和使用外部集的步骤如下：
+1.编写一个AIML文件，其中包含set setName的每个成员setMember的类别，其中模式指定为
+“ISA”+ setName +“”+ setMember
+而模板是
+“<template> true &lt;/ template&gt;”
+例如，如果setName是“color”，则“red”的类别将是
+<category><br>
+<pattern> ISACOLOR RED &lt;/ pattern&gt;<br>
+<template> true &lt;/ template&gt;<br>
+&lt;/ category&gt;
+请注意，编写一个可以读取set成员文件并编写AIML类别文件的程序（几乎任何语言）都相当简单。
+2.再添加一个类别以指示集合中未找到的任何内容不是成员，例如：
+<category><br>
+<pattern> ISACOLOR * &lt;/ pattern&gt;<br>
+<template> false &lt;/ template&gt;<br>
+&lt;/ category&gt;
+3.在Pandorabots服务器上创建Pandorabot并上传AIML文件。发布机器人，并记下主机名和机器人ID。
+4.在Program AB sets /目录中，创建一个文本文件，其中包含该名称，如color.txt。在该文件中添加一行，以“external：”开头，其格式如下：
+外部：www.pandorabots.com:8e3fc4b44e342400:4</li>
+</ol>
+<ul>
+<li>“external”关键字表示这是一个外部集。</li>
+<li>“<a href="http://www.pandorabots.com">www.pandorabots.com</a>”指定主机名。</li>
+<li>数字4是该组中任何成员的最大长度（以字为单位）。此参数通过省略对组中太长而无法进行检查的短语来节省处理和网络资源。
+5.当程序AB加载sets /目录中的集合时，它会检测外部集合。
+6.通常在模式表达式中使用<set>标记。如果颜色是外部设置，
+<pattern> IS <set> color &lt;/ set&gt; A COLOR &lt;/ pattern&gt;
+将检查“IS”和“COLOR”之间的输入词是否是外部集的成员。
+远程地图
+定义远程地图的步骤几乎与远程地图的步骤相同。
+1.在map mapName中为每个对domainElement，rangeElement编写一个包含类别的AIML文件，其中模式被指定为
+mapName +“”+ domainElement
+而模板是
+“<template>”+ rangeElement +“&lt;/ template&gt;”
+例如，如果setName是“zip2city”，则“94618”的类别将是
+<category><br>
+<pattern> ZIP2CITY 94618 &lt;/ pattern&gt;<br>
+<template>加利福尼亚州奥克兰&lt;/ template&gt;<br>
+&lt;/ category&gt;
+请注意，与集合的情况一样，编写一个程序（几乎任何语言）都可以读取集合成员的文件并写入AIML类别的文件。
+2.再添加一个类别以指示对于域中未找到的任何内容，映射是未知的。
+<category><br>
+<pattern> ZIP2CITY * &lt;/ pattern&gt;<br>
+<template> unknown &lt;/ template&gt;<br>
+&lt;/ category&gt;
+3.在Pandorabots服务器上创建Pandorabot并上传AIML文件。发布机器人，并记下主机名和机器人ID。（您可以使用与套装相同的机器人）。
+4.在Program AB maps /目录中，创建一个带有地图名称的文本文件，如zip2city.txt。在该文件中添加一行，以“external：”开头，其格式如下：
+外部：<a href="http://www.pandorabots.com">www.pandorabots.com</a>：8e3fc4b44e342400</li>
+<li>“external”关键字表示这是一个外部集。</li>
+<li>“<a href="http://www.pandorabots.com">www.pandorabots.com</a>”指定主机名。</li>
+<li>请注意，不需要为映射指定最大元素长度，也不需要为集合指定。这是因为<pattern>元素可以比<template>侧的<map>元素更频繁地激活<pattern>元素。
+5.当程序AB从maps /目录加载地图时，它会检测外部地图。
+6.通常在模式表达式中使用<map>标记。如果zip2city是外部设置，
+<template> 94618的城市是<map name =“zip2city”> 94618 &lt;/ set&gt; &lt;/ pattern&gt;
+将向“远程服务器”发送“ZIP2CITY 94618”形式的请求，如果一切正常，远程服务器将返回“Oakland，CA”。
+内置集和地图
+解释器内置了一些AIML集和映射：</li>
+<li>number- 自然数{0,1,2，…}的集合</li>
+<li>后继- 函数f（x）= x + 1.（如果x不是数字，则返回“unknown”）</li>
+<li>前身- 函数f（x）= x -1。（如果x不是数字，则返回“unknown”）</li>
+<li>单数- 从复数名词到其单数形式的映射（仅英文）</li>
+<li>复数- 从单数名词到复数形式的映射（仅英文）
+===
+链接:<a href="https://bbs.huaweicloud.com/blogs/ddbc0a4eed7011e8bd5a7ca23e93a891">aiml 2  查询记录</a></li>
+</ul>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

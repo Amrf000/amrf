@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="active" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="%E5%89%8D%E7%AB%AFjs%E5%BC%80%E5%8F%91%E6%B2%A1%E6%9C%89%E9%80%8F%E6%98%8E%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81"><img src="https://medium.com/better-programming/bye-bye-transpile-3e4413f7f590" alt="前端JS开发没有透明的源代码">
+前端JS开发没有透明的源代码 <a class="heading-anchor-permalink" href="#%E5%89%8D%E7%AB%AFjs%E5%BC%80%E5%8F%91%E6%B2%A1%E6%9C%89%E9%80%8F%E6%98%8E%E7%9A%84%E6%BA%90%E4%BB%A3%E7%A0%81" aria-hidden="true">#</a></h1>
+<h2 id="%E4%BD%BF%E7%94%A8google-chrome%EF%BC%8Ces%E6%A8%A1%E5%9D%97%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9C%B0%E5%9B%BE">使用Google Chrome，ES模块和导入地图 <a class="heading-anchor-permalink" href="#%E4%BD%BF%E7%94%A8google-chrome%EF%BC%8Ces%E6%A8%A1%E5%9D%97%E5%92%8C%E5%AF%BC%E5%85%A5%E5%9C%B0%E5%9B%BE" aria-hidden="true">#</a></h2>
+<p><a href="/@ftaioli?source=post_page-----3e4413f7f590----------------------"><img src="https://miro.medium.com/fit/c/48/48/2*S9rbJQ5i29eUBsVM0a11Vg.jpeg" alt="法比亚诺泰利"></a></p>
+<p><a href="/@ftaioli?source=post_page-----3e4413f7f590----------------------">法比亚诺泰利</a></p>
+<p>跟随</p>
+<p><a href="/better-programming/bye-bye-transpile-3e4413f7f590?source=post_page-----3e4413f7f590----------------------">7月10日</a> · 9 分钟阅读</p>
+<p><img src="https://miro.medium.com/max/30/1*XEnEE7B_IYvKobT0vmaG7A.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/4288/1*XEnEE7B_IYvKobT0vmaG7A.jpeg" alt=""></p>
+<p>照片由<a href="https://unsplash.com/@euwars?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Farzad Nazifi拍摄</a>于<a href="https://unsplash.com/search/photos/source-code?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+<hr>
+<h1 id="%E4%BB%80%E4%B9%88%E6%98%AFtranspiling%EF%BC%9F">什么是Transpiling？ <a class="heading-anchor-permalink" href="#%E4%BB%80%E4%B9%88%E6%98%AFtranspiling%EF%BC%9F" aria-hidden="true">#</a></h1>
+<p><a href="https://scotch.io/tutorials/javascript-transpilers-what-they-are-why-we-need-them">Transpiling</a>正在缩进从编程语言中引导某些源代码并在另一种编程语言（或同一语言的两种不同方言/版本）中生成等效代码的过程。</p>
+<p>在前端浏览器开发中，转换主要用于使用JS以外的语言开发应用程序，并将原始代码转换为JavaScript（例如<a href="https://www.typescriptlang.org/">TypeScript</a>，<a href="https://coffeescript.org/">CoffeeScript</a>，<a href="https://developers.google.com/closure/compiler/">Closure</a>，Java，<a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/">C＃</a>等）。</p>
+<p>另一个用例是将您的本机JavaScript代码从一个版本转换为另一个版本（<a href="https://en.wikipedia.org/wiki/ECMAScript">ECMAScript版本</a>），这样您就可以使用浏览器（或其中一些<a href="https://en.wikipedia.org/wiki/ECMAScript">版本</a>）尚不支持的功能。</p>
+<hr>
+<h1 id="%E9%80%8F%E6%98%8E%E5%BA%A6%E7%9A%84%E6%88%90%E6%9C%AC">透明度的成本 <a class="heading-anchor-permalink" href="#%E9%80%8F%E6%98%8E%E5%BA%A6%E7%9A%84%E6%88%90%E6%9C%AC" aria-hidden="true">#</a></h1>
+<p>在开发过程中使用转换可能非常诱人; 所有这些功能完整的语言和语法糖可供选择！</p>
+<p>所有这些都承诺让您在更短的时间内以更少的错误开发更好的应用程序。但这些承诺是真的吗？那是多少钱？</p>
+<p>JavaScript的语言很糟糕，尤其是构建复杂的大型应用程序。但是近年来JavaScript已经发展了很多，并且随着每个新的语言规范版本（<a href="https://en.wikipedia.org/wiki/ECMAScript">ECMAScript版本</a>）变得越来越好。</p>
+<p>浏览器采用新功能的速度比以往更快，您无需等待很长时间才能看到Google Chrome和其他浏览器支持的重要新功能。</p>
+<p>最后，今天的JavaScript是一种强大而可靠的语言。</p>
+<p>JavaScript是一种解释动态语言。与编译语言（如TypeScript，Java，Closure，C＃等）相比，您无需等待编译即可查看应用程序的运行和调试。</p>
+<p>当您开始开发新应用时，这可以被视为一个微不足道的时间，但随着您的应用变得越来越大，越来越复杂，它将会增长和增长。如果你选择转变，你会失去这种优势，而不仅仅是这种优势。</p>
+<p>转换的另一个问题是浏览器运行的代码不是您编写的代码。因此，调试和优化性能可能变得非常棘手。是的，你有源地图，但它不是一回事。</p>
+<p>源映射映射代码中的位置，但它们不映射两个变量名称如何相互关联。优化可以使编译的源代码与您所编写的代码所期望的行为不匹配.¹</p>
+<p><a href="https://developers.google.com/web/tools/chrome-devtools/">Google Chrome Inspector</a>是目前最强大，最高效的软件调试程序之一，使用源映射为其添加不必要的复杂性并且不会直接在您编写的代码上释放其功能真是一种耻辱。</p>
+<p>在开发过程中使用的基于转换的许多项目之后，我可以向您保证，直接在Inspector中处理原始代码（没有源地图中介或其他翻译）是一种更好的体验。</p>
+<p>今天，可以直接在Google Chrome中编写，运行和调试前端JavaScript代码，并仅在生产和交付时进行转换。</p>
+<p>那么，你说在没有转换的情况下开发我的前端会更好但是我怎么做到这一点？我如何使用非ES-ready依赖项？如果我想进行静态打字检查怎么办？</p>
+<p>让我们看一个使用<a href="https://reactjs.org/">React</a> / <a href="https://reactjs.org/docs/introducing-jsx.html">JSX</a>的例子- The Endgame应用程序。</p>
+<hr>
+<h1 id="google-chrome%E4%B8%AD%E7%9A%84es%E6%A8%A1%E5%9D%97">Google Chrome中的ES模块 <a class="heading-anchor-permalink" href="#google-chrome%E4%B8%AD%E7%9A%84es%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h1>
+<p>今天，Chrome在您的JavaScript代码中了解导入/导出没有任何问题。您可以将应用程序拆分为ES模块文件，并直接在浏览器上运行它，没有任何问题。</p>
+<p>当您想要使用第三方库时会出现问题。</p>
+<p>JavaScript依赖关系管理的事实标准来自<a href="https://nodejs.org/api/modules.html">Node.js中的</a>包管理。</p>
+<p>您可以使用包实用程序（如<a href="https://yarnpkg.com/lang/en/">Yarn</a>，<a href="https://www.npmjs.com/">npm</a>等）来要求您的库并使主题在本地文件夹中可用（通常<code>node_modules</code>）。</p>
+<p>不幸的是，并非所有可用的软件包都支持ES。大多数软件包使用<a href="https://nodejs.org/">Node.js</a>模块语法（它们使用“require”而不是“import”）。即使是ES-ready模块也可能依赖于非ES模块。</p>
+<p>为了避免这种不便并能够直接使用所有现有的包，我们可以在等效的ES模块（我们称之为_Web模块_）中转换我们的依赖关系。</p>
+<p>这种转换仅对依赖关系（不是我们的源代码）产生影响，并且仅在我们添加新库时才执行一次。</p>
+<hr>
+<h1 id="es%E5%8F%A0%E5%8A%A0">ES叠加 <a class="heading-anchor-permalink" href="#es%E5%8F%A0%E5%8A%A0" aria-hidden="true">#</a></h1>
+<p>并非所有依赖项都可以自动转换为ES模块。在某些情况下，我们必须编写如何将lib移植到ES模块（手动命名导出）的程序。</p>
+<p>为此，我们创建了中间件包，用于导入所需的lib（任何有效的Node.js lib）并将其导出为ES。</p>
+<p>然后，我们使用<a href="https://rollupjs.org/guide/en/">汇总</a>将ES中间件依赖项转换为Web模块，准备在Chrome中使用。</p>
+<p>为了简化这一步，我们开发了几个实用程序脚本：覆盖和网络模块（随意根据您的需要调整它们）。</p>
+<p><img src="https://miro.medium.com/max/30/1*O3raMvIEXk5yuqDBo431ww.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/953/1*O3raMvIEXk5yuqDBo431ww.png" alt=""></p>
+<p>由于HTML中声明的导入映射，Chrome会从web_modules文件夹中加载ES模块，其名称为“react”。创建ES覆盖模块并用于为不准备ES的包构建Web模式。</p>
+<p>请注意，对于已经ES兼容的软件包，ES覆盖不是必需的。有关已兼容软件包的列表，请参阅<a href="https://www.pika.dev/">pika列表</a>。</p>
+<hr>
+<h1 id="%E5%8F%A0%E5%8A%A0%E8%84%9A%E6%9C%AC">叠加脚本 <a class="heading-anchor-permalink" href="#%E5%8F%A0%E5%8A%A0%E8%84%9A%E6%9C%AC" aria-hidden="true">#</a></h1>
+<p>第一个脚本覆盖（<a href="https://github.com/FbN/endgame/blob/master/scripts/overlay.js">脚本源代码</a>）用于初始化我们的中间件ES模块。</p>
+<p>例如，在我们的项目中，我们想要使用React，因此我们开始使用Yarn将它添加到依赖项：</p>
+<p>$ yarn add react<br>
+$ yarn add react-dom</p>
+<p>此时，这两个依赖关系在其中声明<code>package.json</code>并且在本地可用，<code>node_modules</code>但我们无法在ES模块中使用它们。</p>
+<p>像这样的代码不起作用，因为React不是ES模块，我们没有告诉浏览器在哪里搜索它。</p>
+<p>现在，我们将为两个库进行叠加。</p>
+<p>$ yarn run overlay  -  pkg react<br>
+$ yarn run overlay  -  pkg react-dom</p>
+<p>该实用程序做两件事：</p>
+<ul>
+<li>在<code>@es</code>文件夹中创建中间件包文件。每个包都由a <code>package.json</code>和a组成<code>index.js</code>。这些文件很好（默认情况下它们从原始dep导出所有内容），但在某些情况下，您必须编辑<code>index.js</code>并手动指定命名导入/导出。</li>
+<li>在叠加包添加到<code>package.json</code>下<code>“webmodules”</code>属性。</li>
+</ul>
+<p>每个中间件ES模块都由一个<code>package.json</code>文件组成，该文件在文件中声明原始依赖项，该<code>index.js</code>文件导入/导出所有原始依赖项名称。</p>
+<p>例如：</p>
+<p>此表单适用于大多数包。对于某些包，您可能被迫手动声明要导入/导出的名称。</p>
+<hr>
+<h1 id="web%E6%A8%A1%E5%9D%97%E8%84%9A%E6%9C%AC">Web模块脚本 <a class="heading-anchor-permalink" href="#web%E6%A8%A1%E5%9D%97%E8%84%9A%E6%9C%AC" aria-hidden="true">#</a></h1>
+<p>现在我们已经声明了我们的ES模块，我们希望它们被转换为可用的模块。为此，我们运行一个Web模块脚本（<a href="https://github.com/FbN/endgame/blob/master/scripts/web-modules.js">脚本源代码</a>）。</p>
+<p>这个脚本的源代码是对pika / web项目的破解²。</p>
+<p>与鼠兔的不同之处在于我们可以管理各种依赖，而不仅仅是那些准备就绪的依赖。</p>
+<p>$ yarn运行web-modules</p>
+<p>该脚本读取有关需要从中进行转换的Web模块的信息<code>package.json</code>。</p>
+<p>然后，使用<a href="https://yarnpkg.com/lang/en/docs/cli/link/">Yarn链接功能</a>（如果您愿意，可以轻松地将其更改为使用npm）使ES中间件模块（由覆盖脚本生成）可用于Node脚本，并将其链接在内部<code>node_modules</code>。</p>
+<p>最后，脚本运行汇总以转换模块并将它们输出到<code>web_modules</code>文件夹中。</p>
+<hr>
+<h1 id="%E5%91%8A%E8%AF%89chrome%E5%9C%A8%E4%BD%95%E5%A4%84%E6%9F%A5%E6%89%BE%E6%A8%A1%E5%9D%97">告诉Chrome在何处查找模块 <a class="heading-anchor-permalink" href="#%E5%91%8A%E8%AF%89chrome%E5%9C%A8%E4%BD%95%E5%A4%84%E6%9F%A5%E6%89%BE%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h1>
+<p>此时，我们已准备好以<code>web_modules</code>正确的ES模块格式在内部使用我们的依赖项。</p>
+<p>但是，当我们使用<a href="https://github.com/WICG/import-maps#bare-specifiers">裸</a>注释器导入时，Chrome将如何知道从哪里搜索？（例如从’react’导入React）？</p>
+<p>我们将使用一种新的（仍然是实验性的）谷歌Chrome功能，称为_导入地图_ ³⁴。</p>
+<p>要启用它，请打开Goog​​le Chrome的标记配置页（通过键入此URL :) <code>chrome://flags</code>并启用“内置模块infra和导入地图”。</p>
+<p><img src="https://miro.medium.com/max/30/1*b4E87H78OGopPvMf6Gb6Ig.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1166/1*b4E87H78OGopPvMf6Gb6Ig.png" alt=""></p>
+<p>使用导入映射，您可以告诉浏览器在哪里查找裸导入，并在HTML中的特殊脚本标记中声明它们。</p>
+<p>为方便起见，我们的<code>web-modules</code>脚本会自动更新所有HTML文件中的导入映射选项卡。</p>
+<p>index.html中的导入映射声明示例</p>
+<hr>
+<h1 id="%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC">服务脚本 <a class="heading-anchor-permalink" href="#%E6%9C%8D%E5%8A%A1%E8%84%9A%E6%9C%AC" aria-hidden="true">#</a></h1>
+<p>我们需要一个网络服务器，以便将所有文件提供给Chrome并运行我们的应用。</p>
+<p>我们创建了一个<code>serve</code>脚本，该脚本使用<a href="https://www.browsersync.io/">Browsersync</a>启动本地Web服务器并将项目发布到<code>localhost:3000</code>。</p>
+<p>如果您查看<code>serve.js</code>下面的内容，我们已将<code>‘/web_modules’</code>URL 映射到我们的<code>web_modules</code>文件夹。</p>
+<hr>
+<h1 id="%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8jsx">如何使用JSX <a class="heading-anchor-permalink" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8jsx" aria-hidden="true">#</a></h1>
+<p>JSX是一种语法糖，可以在JS文件中编写类似HTML的语句，而不是直接调用React <code>createElement</code>函数。需要转换使用JSX的文件。</p>
+<p>要使用JSX但保持项目的主文件不被转换，我们将JSX用法与我们称之为<code>views</code>文件的内容隔离开来。</p>
+<p>我们创建一个<code>views</code>文件夹并将我们的JSX文件放入其中。然后，我们添加一个脚本来转换所有JSX文件并将输出（有效的ES模块）放在一个<code>./tmp</code>文件夹中。</p>
+<p>该<code>.tmp</code>文件夹在Browsersync中声明，因为它是辅助根文件夹，因此在主根（app文件夹）中找不到的路径将在文件夹中搜索<code>.tmp</code>。</p>
+<p>通过这样做，我们现在可以将已转换的JSX文件导入到主要的非转换源代码中。</p>
+<p>重要的是要理解，仅当我们在JSX中更改某些内容并且仅针对JSX文件时才会发生转换。</p>
+<hr>
+<h1 id="%E6%9C%80%E7%BB%88%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">最终项目结构 <a class="heading-anchor-permalink" href="#%E6%9C%80%E7%BB%88%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84" aria-hidden="true">#</a></h1>
+<p><img src="https://miro.medium.com/max/7/1*7Mz70xqkst3FWETgtvXfkw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/281/1*7Mz70xqkst3FWETgtvXfkw.png" alt=""></p>
+<ul>
+<li><code>.tmp</code>：临时文件夹，未修订。包含已转换的JSX文件。由Browsersync服务器搜索为辅助根。</li>
+<li><code>@es</code>：包含我们的中间件ES模块，用于将非ES节点模块转换为适用于Web的ES。修改过的文件夹。由覆盖脚本生成，可在需要时使用自定义代码。文件夹内容<code>node_modules</code>通过Yarn链接（或npm链接）链接到文件夹内。</li>
+<li><code>app</code>：包含应用程序源文件和资产。所有文件都已修订。该文件夹是Browsersync服务器发布的主根。此处的所有源文件都不会被转换。</li>
+<li><code>scripts</code>：Node.js脚本文件，用作管理项目的实用工具。该目录已修订。</li>
+<li><code>views</code>：JSX修改过的文件。JSX在这里被转换成<code>.tmp</code>文件夹</li>
+<li><code>.babelrc</code>：<a href="https://babeljs.io/">Babel</a>配置文件。包含JSX转换的配置。请注意，Babel仅用于JSX。</li>
+</ul>
+<p>其余内容应该是显而易见的。</p>
+<hr>
+<h1 id="%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%9Aendgame">运行示例应用程序：Endgame <a class="heading-anchor-permalink" href="#%E8%BF%90%E8%A1%8C%E7%A4%BA%E4%BE%8B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%EF%BC%9Aendgame" aria-hidden="true">#</a></h1>
+<p>非常简单：</p>
+<ul>
+<li>克隆它（Git clone：<a href="https://github.com/FbN/endgame.git">https</a>：<a href="https://github.com/FbN/endgame.git">//github.com/FbN/endgame.git</a> ./endgame）</li>
+<li>输入克隆项目（cd endgame）</li>
+<li>纱线安装</li>
+<li>纱线跑 <code>web-modules</code></li>
+<li>纱线JSX</li>
+<li>纱线服务</li>
+</ul>
+<hr>
+<h1 id="%E6%8A%8A%E5%AE%83%E5%B8%A6%E5%88%B0%E7%94%9F%E4%BA%A7">把它带到生产 <a class="heading-anchor-permalink" href="#%E6%8A%8A%E5%AE%83%E5%B8%A6%E5%88%B0%E7%94%9F%E4%BA%A7" aria-hidden="true">#</a></h1>
+<p>本文针对您的应用程序的开发阶段。但是将其发布用于生产呢？</p>
+<p>目前，进口地图无法用于生产; 您必须将项目转换为更受支持的JavaScript表单。但这不是一件难事。</p>
+<p>您可以使用Babel和汇总或<a href="https://webpack.js.org/">webpack</a>将源代码像往常一样转换为目标浏览器功能级别。生产运输不是问题; 在发展过程中不断转变是问题所在。</p>
+<hr>
+<h1 id="%E5%A6%82%E6%9E%9C%E6%88%91%E6%83%B3%E8%A6%81%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F">如果我想要静态类型检查怎么办？ <a class="heading-anchor-permalink" href="#%E5%A6%82%E6%9E%9C%E6%88%91%E6%83%B3%E8%A6%81%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F" aria-hidden="true">#</a></h1>
+<p>信不信由你，可以让TypeScript检查你的本机JavaScript源代码，并在你的IDE中拥有所有TypeScript优势而不放弃原始JavaScript。</p>
+<p>我现在正在做这个，我正在计划一个快速的方法，很快就会在<a href="https://devdocs.io/jsdoc/">JSDoc</a>和<a href="https://atom.io/">Atom</a>集成中使用TypeScript 。</p>
+<hr>
+<h1 id="%E7%BB%93%E8%AE%BA">结论 <a class="heading-anchor-permalink" href="#%E7%BB%93%E8%AE%BA" aria-hidden="true">#</a></h1>
+<p>开发和直接查看在Chrome上运行的原始代码是一件非常愉快的事情。</p>
+<p>Chrome Inspector是一款令人难以置信的调试器，绕过源地图使其无与伦比。</p>
+<p>优化代码并毫无顾虑地放置断点。保存修改后的代码以在浏览器中查看结果，而无需等待任何额外的构建时间，这非常棒。</p>
+<p>通过正确的设置，您甚至可以使用TypeScript验证代码，并让IDE完成代码而无需放弃纯JavaScript。</p>
+<p>缺点？您必须为非本机ES-ready的软件包创建和维护ES覆盖模块，但实际上只需要很少的努力。</p>
+<hr>
+<h1 id="%E6%BA%90%E4%BB%A3%E7%A0%81">源代码 <a class="heading-anchor-permalink" href="#%E6%BA%90%E4%BB%A3%E7%A0%81" aria-hidden="true">#</a></h1>
+<p>最终的示例项目在GitHub上可用：</p>
+<p><a href="https://github.com/FbN/endgame">https://github.com/FbN/endgame</a></p>
+<hr>
+<h1 id="%E5%BC%95%E6%96%87%E5%92%8C%E9%93%BE%E6%8E%A5">引文和链接 <a class="heading-anchor-permalink" href="#%E5%BC%95%E6%96%87%E5%92%8C%E9%93%BE%E6%8E%A5" aria-hidden="true">#</a></h1>
+<p>[1] Matt Zeunert：源地图如何运作？<br>
+<a href="https://www.mattzeunert.com/2016/02/14/how-do-source-maps-work.html">https://www.mattzeunert.com/2016/02/14/how-do-source-maps-work.html</a></p>
+<p>[2] Pika Web Project<br>
+<a href="https://github.com/pikapkg/web">https://github.com/pikapkg/web</a></p>
+<p>[3] Google Chrome导入地图状态<br>
+<a href="https://chromestatus.com/feature/5315286962012160">https://chromestatus.com/feature/5315286962012160</a></p>
+<p>[4] Google Chrome导入地图设计规范<br>
+<a href="https://docs.google.com/document/d/1vFQzbmxg9ilpg8CT_P8roEYcpTfZ06Q5N4J9-ZQqqZo/edit">https://chromestatus.com/feature/5315286962012160</a></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

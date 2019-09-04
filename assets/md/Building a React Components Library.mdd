@@ -1,0 +1,338 @@
+![Building a React Components Library](https://medium.com/better-programming/lets-build-react-components-library-part-3-b2e7aec478a2)
+Building a React Components Library
+===================================
+
+Part 3 — Bundling and publishing the library to the NPM
+-------------------------------------------------------
+
+[![Tomasz Fiechowski](https://miro.medium.com/fit/c/96/96/1*xjQv8kiqyZ8cFYz5cDSy3Q.jpeg)](/@tomasz.fiechowski?source=post_page-----b2e7aec478a2----------------------)
+
+[Tomasz Fiechowski](/@tomasz.fiechowski?source=post_page-----b2e7aec478a2----------------------)
+
+Follow
+
+[Sep 2](/better-programming/lets-build-react-components-library-part-3-b2e7aec478a2?source=post_page-----b2e7aec478a2----------------------) · 8 min read
+
+![](https://miro.medium.com/max/60/1*bmaWfveszbEa8yJBxuiBjg.jpeg?q=20)
+
+![](https://miro.medium.com/max/2400/1*bmaWfveszbEa8yJBxuiBjg.jpeg)
+
+![](https://miro.medium.com/max/4800/1*bmaWfveszbEa8yJBxuiBjg.jpeg)
+
+NPM and Rollup
+
+In the previous parts, we [built the library with components](/better-programming/building-a-react-components-library-f5a390d5973d) and [tested](/better-programming/building-a-react-components-library-6a05c2bca538) them. Now, we are ready to publish the library and make it publicly available.
+
+* * *
+
+Entrypoint to the Library
+=========================
+
+To make our library work, the first thing we need to do is to configure how it should be used and accessed by other projects.
+
+In order to do that, we need to specify the `main` field in the `package.json` file. [It’s the primary entrypoint to the program](https://docs.npmjs.com/files/package.json#main). This points to the bundled file that we will generate, not to the sources.
+
+Let’s set it to `lib/index.js`. This file will be the output file for the bundler.
+
+package.json
+
+We need to add one more file, which will actually define what is exported from the library and what users can import. We are building a components library, so let’s export the `Button` component we previously created. Create a `src/index.js` file, and type the following code:
+
+src/index.js
+
+Those two, `src/index.js` and `lib/index.js`, are respectively the input and output files for the bundler.
+
+* * *
+
+Bundling the Library
+====================
+
+We’ll be using the [Rollup](https://rollupjs.org/guide/en/) module bundler. Obviously, the first step is to install it, along with a few important plugins:
+
+npm i -D rollup rollup-plugin-commonjs rollup-plugin-babel
+
+The first plugin will enable CommonJS modules to be included in the bundle, and the second is for seamless integration with the existing Babel config.
+
+Let’s create the Rollup configuration file, `rollup.config.js`:
+
+rollup.config.js
+
+You can see two fields: `input` and `output`. This is the place where we tell Rollup to bundle `src/index.js` to `lib/index.js`. The output module will be in CommonJS format. We will cover other types later. Let’s add build script — `"build": "rollup -c"` — to `package.json`and run it. We should see something like:
+
+./src/index.js → lib/index.js...  
+(!) Unresolved dependencies  
+...  
+react (imported by src/components/Button.js)  
+[@emotion/styled](http://twitter.com/emotion/styled) (imported by src/components/Button.js)  
+[@emotion/core](http://twitter.com/emotion/core) (imported by src/config/styles.js)  
+created lib/index.js in 1.3s
+
+Rollup warns us about unresolved dependencies_._ What does this mean? Rollup will only resolve _relative_ module IDs by default. This means that an import statement like `import X from 'Y';` won’t result in `X` being included in your bundle. Instead, it will be an external dependency that is required at runtime.
+
+It would work if the user had `Y` already installed in the project, but that is not a convenient way to build libraries meant to be shared.
+
+* * *
+
+Resolving Modules
+-----------------
+
+There is a plugin for resolving third-party modules and including them in the bundle. Let’s install `npm i -D rollup-plugin-node-resolve`, and add it to the Rollup config file.
+
+rollup.config.js
+
+Run the build again and …
+
+$ npm run build./src/index.js → lib/index.js...  
+\[!\] Error: 'createContext' is not exported by node\_modules/react/index.js
+
+Now we have a problem with external libraries.
+
+* * *
+
+Handling Peer Dependencies
+--------------------------
+
+In the first part of the tutorial, we added React and Emotion as the peer dependencies of the project. Those dependencies should be provided by the consumer of the library and not bundled directly into the code.
+
+There is an`external` option in the Rollup config for specifying the libraries that should be treated as peer dependencies. Obviously, this is already specified in the `package.json` in the `peerDependecies` field, so we will use another Rollup plugin to automatically process and add that list to the config.
+
+Let’s install it — `npm i -D rollup-plugin-peer-deps-external` — and add it to Rollup config:
+
+Let’s rebuild the bundle and inspect `lib/index.js`. We can see our `Button` component bundled and peer dependencies properly imported.
+
+At this point, the library would be already usable. Having it published, for example, under `react-sample-components-library`, you or other people could use the `Button` in their projects in the following way:
+
+`import { Button } from 'react-sample-components-library';`
+
+* * *
+
+How Can I Check It Locally?
+===========================
+
+Well, it would be cumbersome to publish the library every time we make a small change to see if everything works in the related projects.
+
+Fortunately, we have a command called `link` (`[yarn link](https://yarnpkg.com/lang/en/docs/cli/link/)` or `[npm link](https://docs.npmjs.com/cli/link)`).
+
+Let’s assume that our library is named `react-sample-components-library` (the `name` in `package.json`), and we have stored it locally under `~/library`.  
+We also have some separate project that uses the library. The project is located in the `~/project` directory. Now we can do the following (I encourage you to use `yarn` here, as it gives copy paste-able hints).
+
+$ cd ~/library  
+$ yarn linksuccess Registered "react-sample-components-library".  
+info You can now run \`yarn link "react-sample-components-library"\` in the projects ...  
+  
+$ cd ~/project  
+$ yarn link "react-sample-components-library"
+
+Now, your project will be using the library from the local directory. It uses the generated bundles, so remember to rebuild them after making changes to the library itself.
+
+* * *
+
+Minification
+============
+
+Without minification, the bundle should weigh around `1.8kB`. That’s small, but remember that we only have one component in the library. As soon as the library grows, every byte starts to count.
+
+To minify our bundle, we will use the Uglify plugin. Let’s install it — `npm i -D rollup-plugin-uglify` — and add it to the config. We will split our configuration into two now: one for normal bundle and one for minified. We will also add a small helper function `minifyExtension` to append `.min` to the minified files output paths:
+
+rollup.config.js
+
+Let’s run the build and check the contents of the `lib` directory:
+
+1.4K  index.min.js  
+1.8K  index.js
+
+Nice, we saved `0.4k` with minification! ⚖
+
+* * *
+
+Other Module Types: UMD, ES
+===========================
+
+Besides CommonJS module format, there are also [UMD](https://github.com/umdjs/umd) and [ES](https://nodejs.org/api/esm.html) formats. The first acronym stands for _Universal Module Definition._ It’s capable of working everywhere, be it in the client, on the server, or elsewhere. ES are really ECMAScript modules and are [the official standard format](https://tc39.github.io/ecma262/#sec-modules) to package JavaScript code.
+
+Similar to the `main` field in `package.json` that specified the output file path for CommonJS module type, we also have:
+
+*   `browser`: for the UMD build and browser usage
+*   `module`: for the ES bundle format (usable for ES-module aware tools)
+
+It’s best to make the library as accessible as possible, so we will generate bundles in all those module types.
+
+Let’s modify our `package.json` by adding `browser` and `module` fields:
+
+{  
+  ...  
+  "main": "lib/index.js",  
+  "browser": "lib/index.umd.js",  
+  "module": "lib/index.es.js",  
+  ...  
+}
+
+And to update the config, let’s start with the UMD part:
+
+rollup.config.js
+
+Besides changing `output.format` and `output.file` to read the`browser` field, there are also several other changes:
+
+*   To tell Rollup how to access given dependencies, there’s a new `[output.globals](https://rollupjs.org/guide/en/)` field
+*   To minify UMD/ES code, we need `terser` instead of `uglify`. Install `rollup-plugin-terser`
+
+Now, for the ES part:
+
+rollup.config.js
+
+Let’s run the build and see the output now:
+
+1.5K  index.es.js  
+827B  index.es.min.js  
+1.8K  index.js  
+1.4K  index.min.js  
+2.3K  index.umd.js  
+1.2K  index.umd.min.js
+
+We have the bundle in several formats now, ready to be used by a variety of different tools.
+
+* * *
+
+Last Preparations Before Publishing
+===================================
+
+Before publishing the bundle, let’s add some helper scripts to `package.json`:
+
+"prepublishOnly": "rm -rf lib && npm run build",  
+"postbuild": "npm pack && tar -xvzf \*.tgz && rm -rf package \*.tgz"
+
+With `prepublishOnly`, each time we want to publish the bundle, the `lib` directory will be cleaned up and source files rebuilt. That’s a very good sanity check that will prevent us from accidentally publishing old files.
+
+The command in `postbuild` will show us the contents of the package that would be published to the NPM.
+
+**Note:** The `name` property in the `package.json` is the name of your package and _must be unique_. Check NPM to see if the name you want to get is free.
+
+* * *
+
+Publishing the Package to the NPM
+=================================
+
+In order to publish the package to the NPM, you should have an account at [www.npmjs.com](http://www.npmjs.com). Create it if you don’t have it yet.
+
+Let’s jump to the terminal and log in to NPM by running `npm login`.  
+If everything went successfully, you should see something like this:
+
+$ npm login  
+Username: tfiechowski  
+Password: \*\*\*  
+Email: (this IS public) [tomasz.fiechowski@gmail.com](mailto:tomasz.fiechowski@gmail.com)  
+Logged in as tfiechowski on [https://registry.npmjs.org/](https://registry.npmjs.org/).
+
+Finally, run `npm publish`.
+
+Given everything went fine, you can enter `npmjs.com/package/<package-name>`, and open a beer.
+
+**Note:** You can check out the`part3-first-publish` tag to see the repository at this stage of the article (just `git checkout part3-first-publish`).
+
+Let’s have a step back and see the output of the `npm publish` command.  
+Wait, what’s that?
+
+* * *
+
+Optimising the Package
+======================
+
+When you take a look at the file list in the output of the `npm publish`, there is literally a file from your repository:
+
+\=== Tarball Contents ===   
+1.4kB package.json                   
+121B  .babelrc                       
+68B   jest.config.js                 
+408B  README.md                      
+2.3kB rollup.config.js               
+204B  styleguide.config.js           
+1.6kB lib/index.es.js                
+827B  lib/index.es.min.js            
+1.8kB lib/index.js                   
+1.4kB lib/index.min.js               
+2.3kB lib/index.umd.js               
+1.2kB lib/index.umd.min.js           
+309B  src/components/Button.js       
+103B  src/components/Button.md       
+887B  src/components/Button.test.js  
+328B  src/config/styles.js           
+55B   src/index.js                   
+66B   src/setupTests.js
+
+That’s not elegant. We don’t need a majority of those files. Let’s improve that.
+
+We can specify the `files` field in the `package.json`. [It basically whitelists files that will be included in the package.](https://docs.npmjs.com/files/package.json#files) By default it accepts all the files from the repository (respects `.gitignore` ) that we have already seen.
+
+**Note:** There is a possibility to add `.npmignore` to your blacklisted files, but [for the love of God, don’t use it](/@jdxcode/for-the-love-of-god-dont-use-npmignore-f93c08909d8d).
+
+Let’s modify `files` to only include our bundled files:
+
+{  
+  ...  
+  "files": \[  
+    "/lib"  
+  \],  
+  ...  
+}
+
+**Note:** Without the `/` prefix before `lib`, all nested `lib` directories, for example `abc/def/lib`, would be included as well.
+
+Now, let’s use our `postbuild` helper to check the package contents without actually publishing it:
+
+$ npm run build\=== Tarball Contents ===   
+1.4kB package.json          
+408B  README.md             
+1.6kB lib/index.es.js       
+827B  lib/index.es.min.js   
+1.8kB lib/index.js          
+1.4kB lib/index.min.js      
+2.3kB lib/index.umd.js      
+1.2kB lib/index.umd.min.js
+
+Sweet, we’re getting only required files, nothing extra.
+
+**Note:** If your bundle size is becoming suspiciously large or you just want to analyse its contents, there are two great plugins that can help you with that:  
+`[rollup-plugin-analyzer](https://github.com/doesdev/rollup-plugin-analyzer)` and `[rollup-plugin-](https://github.com/btd/rollup-plugin-visualizer)visualizer` .
+
+Versioning the library
+----------------------
+
+Use [semantic versioning](https://docs.npmjs.com/about-semantic-versioning) for specifying the updates to your package.
+
+We optimised the package, so it would be good to publish the new version. Bump up `version` in `package.json` to `1.0.1`, and run `npm publish` again.
+
+That’s it. You and others can now import your library to your respective projects!
+
+Generating source maps
+----------------------
+
+Finally, we can add the source map to the bundle to enable users to inspect the sources if necessary and debug the library easily.
+
+To generate source maps, just set `output.sourcemap` to `true` in your Rollup config, for example:
+
+output: {  
+  file: packageJSON.main,  
+  format: "cjs",  
+  sourcemap: true  
+}
+
+* * *
+
+Summary
+=======
+
+We set up Rollup to bundle our code and added minification to the process. Later we added more types of generated modules: UMD and ES. Then we published the initial version of the library and also optimised the contents of the package in order to keep the bundle as light as possible.
+
+Full code is available in the [GitHub repository](https://github.com/tfiechowski/react-sample-components-library). You can checkout the `part3` tag (`git checkout part3`) to see the full example from this part.
+
+Next parts
+----------
+
+In the next and final part, we take care of deploying the documentation to GitHub pages automatically. Stay tuned.
+
+Important note about `_@emotion/styled_`
+----------------------------------------
+
+If you want to use cool features of Emotion, like components as selectors, you need to install a Babel plugin that will take care of preprocessing those. It’s named `babel-plugin-emotion`.
+
+Please also check the size of the bundle when playing with Emotion. I had some big issues with the bundle being enormously heavy. Finally, I noticed some very big blocks of blob text in the bundle. and it turned out the source maps were included in the bundles. Keep an eye on that.

@@ -1,0 +1,67 @@
+![使用RESTful API实现GraphQL的强大功能 - 满足Hypnos](https://medium.com/better-programming/apollo-graphql-rest-api-hypnos-f7a7dfd3df47)
+**使用RESTful API实现GraphQL的强大功能 - 满足Hypnos**
+==========================================
+
+用于沙盒的桌面应用程序类似GraphQL的调用和对RESTful API端点的响应
+-----------------------------------------
+
+[![威尔罗宾逊](https://miro.medium.com/fit/c/48/48/2*SKDuWqmQqXSygpE2NMhYgA.jpeg)](/@Will_Robinson_?source=post_page-----f7a7dfd3df47----------------------)
+
+[威尔罗宾逊](/@Will_Robinson_?source=post_page-----f7a7dfd3df47----------------------)
+
+跟随
+
+[8月15日](/better-programming/apollo-graphql-rest-api-hypnos-f7a7dfd3df47?source=post_page-----f7a7dfd3df47----------------------) · 3 分钟阅读
+
+![](https://miro.medium.com/max/30/1*qmprXdZ-fUeOPebe4DFJZQ.png?q=20)
+
+![](https://miro.medium.com/max/2252/1*qmprXdZ-fUeOPebe4DFJZQ.png)
+
+没有谈论另一个，很难讨论[GraphQL](https://graphql.org/)或[Apollo](https://www.apollographql.com/)。自2016年成立以来，Apollo已成为在应用程序中[利用](https://techcrunch.com/2019/06/12/apollo-raises-22m-for-its-graphql-platform/) GraphQL 的主要客户之一。
+
+[Airbnb](/airbnb-engineering/how-airbnb-is-moving-10x-faster-at-scale-with-graphql-and-apollo-aa4ec92d69e2)，奥迪，CNBC和Expedia是Apollo的工程团队之一，他们采用了这项技术。
+
+GraphQL因其速度和声明性查询而受到称赞; 与REST API不同，GraphQL查询可以准确地返回客户端向单个端点请求的内容，从而提高互联网连接较差或功能较弱的客户端的性能。
+
+但是要实现查询语言，必须进行API大修以适当地提供GraphQL请求。为了测试查询，开发人员必须启动快速应用程序或编写GraphQL后端。
+
+现有的游乐场很有用，但它们可能没有开发人员有意义的数据或错误。虽然GraphQL非常强大，但即使使用Apollo Client层，错误也不具描述性。
+
+这就是[Hypnos的](https://github.com/oslabs-beta/hypnos)用武之地。
+
+**什么是Hypnos？**
+==============
+
+Hypnos是一个端点测试程序，利用Apollo的link-rest软件包对经过身份验证或未经过身份验证的RESTful API进行GraphQL结构化查询。
+
+进行正确查询后，将在屏幕上呈现响应对象，其中包含客户端指定的字段。
+
+* * *
+
+**它是如何工作的？**
+============
+
+使用link-rest包，Apollo客户端会对给定的API和路径发出获取请求。收到响应后，客户端会通过对结构数据的响应进行分析，该结构数据类似于从GraphQL端点返回的内容。
+
+虽然引擎盖下的操作是通过REST API的正常提取，而不是使用与客户端无关的字段的繁琐的JSON格式对象，但是根据查询规范解析数据。
+
+* * *
+
+**Hypnos如何帮助**
+==============
+
+Apollo本身并不以声明方式处理错误。它允许开发人员以他们选择的方式使用[apollo-link-error](https://www.apollographql.com/docs/react/features/error-handling/)包捕获错误。
+
+但是，如果未正确写入GraphQL错误（例如在前端），则反馈可能不清楚。Hypnos捕获语法错误并清楚地描述查询构造中的错误。
+
+![](https://miro.medium.com/freeze/max/30/1*Xm-WlWSx-ZS_Pwn7ebCi8w.gif?q=20)
+
+![](https://miro.medium.com/max/2336/1*Xm-WlWSx-ZS_Pwn7ebCi8w.gif)
+
+在Hypnos中运行查询
+
+对于GraphQL，如果查询正确地构造到有效端点，它将始终运行并返回信息和`200`状态代码，即使声明的查询字段返回null。
+
+为了解决这个问题，Hypnos解析响应数据以检查空值。由于REST API可能具有故意空值，因此仍会显示整个响应，以及存在空值的堆栈跟踪。
+
+Hypnos团队（[Dillon Garrett](https://github.com/dillon-garrett)，[Sophie Nye](https://github.com/SophieNye)和[Will Robinson](https://github.com/wrobinson91)）为他们的首次发布感到非常自豪。如果您对Hypnos（v0.0.1-beta）感兴趣，请查看我们的[GitHub页面](https://github.com/oslabs-beta/hypnos/)，并[试用我们的应用程序](https://github.com/oslabs-beta/hypnos/releases)。

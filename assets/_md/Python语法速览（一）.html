@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="active" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="https%3A%2F%2Fwklchris.github.io%2Fpy3-basic.html%23%25e9%259b%2586%25e5%2590%2588set"><a href="https://wklchris.github.io/Py3-basic.html#%E9%9B%86%E5%90%88set">https://wklchris.github.io/Py3-basic.html#%E9%9B%86%E5%90%88set</a> <a class="heading-anchor-permalink" href="#https%3A%2F%2Fwklchris.github.io%2Fpy3-basic.html%23%25e9%259b%2586%25e5%2590%2588set" aria-hidden="true">#</a></h1>
+<h1 id="python-%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81">Python 中文编码 <a class="heading-anchor-permalink" href="#python-%E4%B8%AD%E6%96%87%E7%BC%96%E7%A0%81" aria-hidden="true">#</a></h1>
+<h1 id="python%E4%B8%AD%E9%BB%98%E8%AE%A4%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E6%98%AF-ascii-%E6%A0%BC%E5%BC%8F%EF%BC%8C%E5%9C%A8%E6%B2%A1%E4%BF%AE%E6%94%B9%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E6%97%B6%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%89%93%E5%8D%B0%E6%B1%89%E5%AD%97%EF%BC%8C%E6%89%80%E4%BB%A5%E5%9C%A8%E8%AF%BB%E5%8F%96%E4%B8%AD%E6%96%87%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E4%B8%BA%E5%8F%AA%E8%A6%81%E5%9C%A8%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4%E5%8A%A0%E5%85%A5-%23----coding%3A-utf-8----%E6%88%96%E8%80%85-%23coding%3Dutf-8-%E5%B0%B1%E8%A1%8C%E4%BA%86-%E6%88%96%E8%80%85%23----coding%3A-cp936----%E7%A1%AE%E4%BF%9D%E8%A6%81%E5%92%8C%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E7%B1%BB%E5%9E%8B%E4%B8%80%E8%87%B4-%E6%B3%A8%E6%84%8F%EF%BC%9Apython3.x-%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8utf-8%E7%BC%96%E7%A0%81%EF%BC%8C%E6%89%80%E4%BB%A5%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E8%A7%A3%E6%9E%90%E4%B8%AD%E6%96%87%EF%BC%8C%E6%97%A0%E9%9C%80%E6%8C%87%E5%AE%9A-utf-8-%E7%BC%96%E7%A0%81%E3%80%82python-%E4%BF%9D%E7%95%99%E5%AD%97%E7%AC%A6">Python中默认的编码格式是 ASCII 格式，在没修改编码格式时无法正确打印汉字，所以在读取中文时会报错。 解决方法为只要在文件开头加入 # -<em>- coding: UTF-8 -</em>- 或者 #coding=utf-8 就行了 或者# -<em>- coding: cp936 -</em>- 确保要和文件编码类型一致 注意：Python3.X 源码文件默认使用utf-8编码，所以可以正常解析中文，无需指定 UTF-8 编码。
+Python 保留字符 <a class="heading-anchor-permalink" href="#python%E4%B8%AD%E9%BB%98%E8%AE%A4%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E6%98%AF-ascii-%E6%A0%BC%E5%BC%8F%EF%BC%8C%E5%9C%A8%E6%B2%A1%E4%BF%AE%E6%94%B9%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E6%97%B6%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%89%93%E5%8D%B0%E6%B1%89%E5%AD%97%EF%BC%8C%E6%89%80%E4%BB%A5%E5%9C%A8%E8%AF%BB%E5%8F%96%E4%B8%AD%E6%96%87%E6%97%B6%E4%BC%9A%E6%8A%A5%E9%94%99%E3%80%82-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95%E4%B8%BA%E5%8F%AA%E8%A6%81%E5%9C%A8%E6%96%87%E4%BB%B6%E5%BC%80%E5%A4%B4%E5%8A%A0%E5%85%A5-%23----coding%3A-utf-8----%E6%88%96%E8%80%85-%23coding%3Dutf-8-%E5%B0%B1%E8%A1%8C%E4%BA%86-%E6%88%96%E8%80%85%23----coding%3A-cp936----%E7%A1%AE%E4%BF%9D%E8%A6%81%E5%92%8C%E6%96%87%E4%BB%B6%E7%BC%96%E7%A0%81%E7%B1%BB%E5%9E%8B%E4%B8%80%E8%87%B4-%E6%B3%A8%E6%84%8F%EF%BC%9Apython3.x-%E6%BA%90%E7%A0%81%E6%96%87%E4%BB%B6%E9%BB%98%E8%AE%A4%E4%BD%BF%E7%94%A8utf-8%E7%BC%96%E7%A0%81%EF%BC%8C%E6%89%80%E4%BB%A5%E5%8F%AF%E4%BB%A5%E6%AD%A3%E5%B8%B8%E8%A7%A3%E6%9E%90%E4%B8%AD%E6%96%87%EF%BC%8C%E6%97%A0%E9%9C%80%E6%8C%87%E5%AE%9A-utf-8-%E7%BC%96%E7%A0%81%E3%80%82python-%E4%BF%9D%E7%95%99%E5%AD%97%E7%AC%A6" aria-hidden="true">#</a></h1>
+<h1 id="andexecnotassertfinallyorbreakforpassclassfromprintcontinueglobalraisedefifreturndelimporttryelifinwhileelseiswithexceptlambdayield%E8%A1%8C%E5%92%8C%E7%BC%A9%E8%BF%9B">and
+exec
+not
+assert
+finally
+or
+break
+for
+pass
+class
+from
+print
+continue
+global
+raise
+def
+if
+return
+del
+import
+try
+elif
+in
+while
+else
+is
+with
+except
+lambda
+yield
+行和缩进 <a class="heading-anchor-permalink" href="#andexecnotassertfinallyorbreakforpassclassfromprintcontinueglobalraisedefifreturndelimporttryelifinwhileelseiswithexceptlambdayield%E8%A1%8C%E5%92%8C%E7%BC%A9%E8%BF%9B" aria-hidden="true">#</a></h1>
+<h1 id="%E5%AD%A6%E4%B9%A0-python-%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E6%9C%80%E5%A4%A7%E7%9A%84%E5%8C%BA%E5%88%AB%E5%B0%B1%E6%98%AF%EF%BC%8Cpython-%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%A4%A7%E6%8B%AC%E5%8F%B7-%7B%7D-%E6%9D%A5%E6%8E%A7%E5%88%B6%E7%B1%BB%EF%BC%8C%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E3%80%82python-%E6%9C%80%E5%85%B7%E7%89%B9%E8%89%B2%E7%9A%84%E5%B0%B1%E6%98%AF%E7%94%A8%E7%BC%A9%E8%BF%9B%E6%9D%A5%E5%86%99%E6%A8%A1%E5%9D%97%E3%80%82-%E7%BC%A9%E8%BF%9B%E7%9A%84%E7%A9%BA%E7%99%BD%E6%95%B0%E9%87%8F%E6%98%AF%E5%8F%AF%E5%8F%98%E7%9A%84%EF%BC%8C%E4%BD%86%E6%98%AF%E6%89%80%E6%9C%89%E4%BB%A3%E7%A0%81%E5%9D%97%E8%AF%AD%E5%8F%A5%E5%BF%85%E9%A1%BB%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E7%9A%84%E7%BC%A9%E8%BF%9B%E7%A9%BA%E7%99%BD%E6%95%B0%E9%87%8F%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%BF%85%E9%A1%BB%E4%B8%A5%E6%A0%BC%E6%89%A7%E8%A1%8C%E3%80%82%E5%A4%9A%E8%A1%8C%E8%AF%AD%E5%8F%A5">学习 Python 与其他语言最大的区别就是，Python 的代码块不使用大括号 {} 来控制类，函数以及其他逻辑判断。python 最具特色的就是用缩进来写模块。 缩进的空白数量是可变的，但是所有代码块语句必须包含相同的缩进空白数量，这个必须严格执行。
+多行语句 <a class="heading-anchor-permalink" href="#%E5%AD%A6%E4%B9%A0-python-%E4%B8%8E%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E6%9C%80%E5%A4%A7%E7%9A%84%E5%8C%BA%E5%88%AB%E5%B0%B1%E6%98%AF%EF%BC%8Cpython-%E7%9A%84%E4%BB%A3%E7%A0%81%E5%9D%97%E4%B8%8D%E4%BD%BF%E7%94%A8%E5%A4%A7%E6%8B%AC%E5%8F%B7-%7B%7D-%E6%9D%A5%E6%8E%A7%E5%88%B6%E7%B1%BB%EF%BC%8C%E5%87%BD%E6%95%B0%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E3%80%82python-%E6%9C%80%E5%85%B7%E7%89%B9%E8%89%B2%E7%9A%84%E5%B0%B1%E6%98%AF%E7%94%A8%E7%BC%A9%E8%BF%9B%E6%9D%A5%E5%86%99%E6%A8%A1%E5%9D%97%E3%80%82-%E7%BC%A9%E8%BF%9B%E7%9A%84%E7%A9%BA%E7%99%BD%E6%95%B0%E9%87%8F%E6%98%AF%E5%8F%AF%E5%8F%98%E7%9A%84%EF%BC%8C%E4%BD%86%E6%98%AF%E6%89%80%E6%9C%89%E4%BB%A3%E7%A0%81%E5%9D%97%E8%AF%AD%E5%8F%A5%E5%BF%85%E9%A1%BB%E5%8C%85%E5%90%AB%E7%9B%B8%E5%90%8C%E7%9A%84%E7%BC%A9%E8%BF%9B%E7%A9%BA%E7%99%BD%E6%95%B0%E9%87%8F%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%BF%85%E9%A1%BB%E4%B8%A5%E6%A0%BC%E6%89%A7%E8%A1%8C%E3%80%82%E5%A4%9A%E8%A1%8C%E8%AF%AD%E5%8F%A5" aria-hidden="true">#</a></h1>
+<h1 id="python%E8%AF%AD%E5%8F%A5%E4%B8%AD%E4%B8%80%E8%88%AC%E4%BB%A5%E6%96%B0%E8%A1%8C%E4%BD%9C%E4%B8%BA%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BB%93%E6%9D%9F%E7%AC%A6%E3%80%82-%E4%BD%86%E6%98%AF%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%96%9C%E6%9D%A0%EF%BC%88-%5C%EF%BC%89%E5%B0%86%E4%B8%80%E8%A1%8C%E7%9A%84%E8%AF%AD%E5%8F%A5%E5%88%86%E4%B8%BA%E5%A4%9A%E8%A1%8C%E6%98%BE%E7%A4%BA-%E8%AF%AD%E5%8F%A5%E4%B8%AD%E5%8C%85%E5%90%AB-%5B%5D%2C-%7B%7D-%E6%88%96-()-%E6%8B%AC%E5%8F%B7%E5%B0%B1%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%A4%9A%E8%A1%8C%E8%BF%9E%E6%8E%A5%E7%AC%A6%E3%80%82python-%E5%BC%95%E5%8F%B7">Python语句中一般以新行作为语句的结束符。 但是我们可以使用斜杠（ \）将一行的语句分为多行显示 语句中包含 [], {} 或 () 括号就不需要使用多行连接符。
+Python 引号 <a class="heading-anchor-permalink" href="#python%E8%AF%AD%E5%8F%A5%E4%B8%AD%E4%B8%80%E8%88%AC%E4%BB%A5%E6%96%B0%E8%A1%8C%E4%BD%9C%E4%B8%BA%E8%AF%AD%E5%8F%A5%E7%9A%84%E7%BB%93%E6%9D%9F%E7%AC%A6%E3%80%82-%E4%BD%86%E6%98%AF%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E6%96%9C%E6%9D%A0%EF%BC%88-%5C%EF%BC%89%E5%B0%86%E4%B8%80%E8%A1%8C%E7%9A%84%E8%AF%AD%E5%8F%A5%E5%88%86%E4%B8%BA%E5%A4%9A%E8%A1%8C%E6%98%BE%E7%A4%BA-%E8%AF%AD%E5%8F%A5%E4%B8%AD%E5%8C%85%E5%90%AB-%5B%5D%2C-%7B%7D-%E6%88%96-()-%E6%8B%AC%E5%8F%B7%E5%B0%B1%E4%B8%8D%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8%E5%A4%9A%E8%A1%8C%E8%BF%9E%E6%8E%A5%E7%AC%A6%E3%80%82python-%E5%BC%95%E5%8F%B7" aria-hidden="true">#</a></h1>
+<h1 id="python-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%BC%95%E5%8F%B7(-%E2%80%99-)%E3%80%81%E5%8F%8C%E5%BC%95%E5%8F%B7(-%22-)%E3%80%81%E4%B8%89%E5%BC%95%E5%8F%B7(-%E2%80%98%E2%80%99%E2%80%99-%E6%88%96-%E2%80%9C%E2%80%9D%22-)-%E6%9D%A5%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%BC%95%E5%8F%B7%E7%9A%84%E5%BC%80%E5%A7%8B%E4%B8%8E%E7%BB%93%E6%9D%9F%E5%BF%85%E9%A1%BB%E7%9A%84%E7%9B%B8%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E3%80%82-%E5%85%B6%E4%B8%AD%E4%B8%89%E5%BC%95%E5%8F%B7%E5%8F%AF%E4%BB%A5%E7%94%B1%E5%A4%9A%E8%A1%8C%E7%BB%84%E6%88%90%EF%BC%8C%E7%BC%96%E5%86%99%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E7%9A%84%E5%BF%AB%E6%8D%B7%E8%AF%AD%E6%B3%95%EF%BC%8C%E5%B8%B8%E7%94%A8%E4%BA%8E%E6%96%87%E6%A1%A3%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%9C%A8%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E5%AE%9A%E5%9C%B0%E7%82%B9%EF%BC%8C%E8%A2%AB%E5%BD%93%E5%81%9A%E6%B3%A8%E9%87%8A%E3%80%82python%E6%B3%A8%E9%87%8A">Python 可以使用引号( ’ )、双引号( &quot; )、三引号( ‘’’ 或 “”&quot; ) 来表示字符串，引号的开始与结束必须的相同类型的。 其中三引号可以由多行组成，编写多行文本的快捷语法，常用于文档字符串，在文件的特定地点，被当做注释。
+Python注释 <a class="heading-anchor-permalink" href="#python-%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%BC%95%E5%8F%B7(-%E2%80%99-)%E3%80%81%E5%8F%8C%E5%BC%95%E5%8F%B7(-%22-)%E3%80%81%E4%B8%89%E5%BC%95%E5%8F%B7(-%E2%80%98%E2%80%99%E2%80%99-%E6%88%96-%E2%80%9C%E2%80%9D%22-)-%E6%9D%A5%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%BC%95%E5%8F%B7%E7%9A%84%E5%BC%80%E5%A7%8B%E4%B8%8E%E7%BB%93%E6%9D%9F%E5%BF%85%E9%A1%BB%E7%9A%84%E7%9B%B8%E5%90%8C%E7%B1%BB%E5%9E%8B%E7%9A%84%E3%80%82-%E5%85%B6%E4%B8%AD%E4%B8%89%E5%BC%95%E5%8F%B7%E5%8F%AF%E4%BB%A5%E7%94%B1%E5%A4%9A%E8%A1%8C%E7%BB%84%E6%88%90%EF%BC%8C%E7%BC%96%E5%86%99%E5%A4%9A%E8%A1%8C%E6%96%87%E6%9C%AC%E7%9A%84%E5%BF%AB%E6%8D%B7%E8%AF%AD%E6%B3%95%EF%BC%8C%E5%B8%B8%E7%94%A8%E4%BA%8E%E6%96%87%E6%A1%A3%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%9C%A8%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E5%AE%9A%E5%9C%B0%E7%82%B9%EF%BC%8C%E8%A2%AB%E5%BD%93%E5%81%9A%E6%B3%A8%E9%87%8A%E3%80%82python%E6%B3%A8%E9%87%8A" aria-hidden="true">#</a></h1>
+<h1 id="python%E4%B8%AD%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A%E9%87%87%E7%94%A8-%23-%E5%BC%80%E5%A4%B4%E3%80%82-python-%E4%B8%AD%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A%E4%BD%BF%E7%94%A8%E4%B8%89%E4%B8%AA%E5%8D%95%E5%BC%95%E5%8F%B7(%E2%80%99%E2%80%99%E2%80%99)%E6%88%96%E4%B8%89%E4%B8%AA%E5%8F%8C%E5%BC%95%E5%8F%B7(%22%22%22)%E3%80%82%E7%AD%89%E5%BE%85%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5">python中单行注释采用 # 开头。 python 中多行注释使用三个单引号(’’’)或三个双引号(&quot;&quot;&quot;)。
+等待用户输入 <a class="heading-anchor-permalink" href="#python%E4%B8%AD%E5%8D%95%E8%A1%8C%E6%B3%A8%E9%87%8A%E9%87%87%E7%94%A8-%23-%E5%BC%80%E5%A4%B4%E3%80%82-python-%E4%B8%AD%E5%A4%9A%E8%A1%8C%E6%B3%A8%E9%87%8A%E4%BD%BF%E7%94%A8%E4%B8%89%E4%B8%AA%E5%8D%95%E5%BC%95%E5%8F%B7(%E2%80%99%E2%80%99%E2%80%99)%E6%88%96%E4%B8%89%E4%B8%AA%E5%8F%8C%E5%BC%95%E5%8F%B7(%22%22%22)%E3%80%82%E7%AD%89%E5%BE%85%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5" aria-hidden="true">#</a></h1>
+<h1 id="%E4%B8%8B%E9%9D%A2%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E5%90%8E%E5%B0%B1%E4%BC%9A%E7%AD%89%E5%BE%85%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%EF%BC%8C%E6%8C%89%E5%9B%9E%E8%BD%A6%E9%94%AE%E5%90%8E%E5%B0%B1%E4%BC%9A%E9%80%80%E5%87%BA%EF%BC%9A!%2Fusr%2Fbin%2Fpython">下面的程序执行后就会等待用户输入，按回车键后就会退出：
+!/usr/bin/python <a class="heading-anchor-permalink" href="#%E4%B8%8B%E9%9D%A2%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%89%A7%E8%A1%8C%E5%90%8E%E5%B0%B1%E4%BC%9A%E7%AD%89%E5%BE%85%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%EF%BC%8C%E6%8C%89%E5%9B%9E%E8%BD%A6%E9%94%AE%E5%90%8E%E5%B0%B1%E4%BC%9A%E9%80%80%E5%87%BA%EF%BC%9A!%2Fusr%2Fbin%2Fpython" aria-hidden="true">#</a></h1>
+<h1 id="---coding%3A-utf-8---">-<em>- coding: UTF-8 -</em>- <a class="heading-anchor-permalink" href="#---coding%3A-utf-8---" aria-hidden="true">#</a></h1>
+<h1 id="raw_input(%E2%80%9D%E6%8C%89%E4%B8%8B-enter-%E9%94%AE%E9%80%80%E5%87%BA%EF%BC%8C%E5%85%B6%E4%BB%96%E4%BB%BB%E6%84%8F%E9%94%AE%E6%98%BE%E7%A4%BA%E2%80%A6%5Cn%E2%80%9D)%E5%90%8C%E4%B8%80%E8%A1%8C%E6%98%BE%E7%A4%BA%E5%A4%9A%E6%9D%A1%E8%AF%AD%E5%8F%A5">raw_input(”按下 enter 键退出，其他任意键显示…\n”)
+同一行显示多条语句 <a class="heading-anchor-permalink" href="#raw_input(%E2%80%9D%E6%8C%89%E4%B8%8B-enter-%E9%94%AE%E9%80%80%E5%87%BA%EF%BC%8C%E5%85%B6%E4%BB%96%E4%BB%BB%E6%84%8F%E9%94%AE%E6%98%BE%E7%A4%BA%E2%80%A6%5Cn%E2%80%9D)%E5%90%8C%E4%B8%80%E8%A1%8C%E6%98%BE%E7%A4%BA%E5%A4%9A%E6%9D%A1%E8%AF%AD%E5%8F%A5" aria-hidden="true">#</a></h1>
+<h1 id="python%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%90%8C%E4%B8%80%E8%A1%8C%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E6%9D%A1%E8%AF%AD%E5%8F%A5%EF%BC%8C%E8%AF%AD%E5%8F%A5%E4%B9%8B%E9%97%B4%E4%BD%BF%E7%94%A8%E5%88%86%E5%8F%B7(%3B)%E5%88%86%E5%89%B2print-%E8%BE%93%E5%87%BA">Python可以在同一行中使用多条语句，语句之间使用分号(;)分割
+Print 输出 <a class="heading-anchor-permalink" href="#python%E5%8F%AF%E4%BB%A5%E5%9C%A8%E5%90%8C%E4%B8%80%E8%A1%8C%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E6%9D%A1%E8%AF%AD%E5%8F%A5%EF%BC%8C%E8%AF%AD%E5%8F%A5%E4%B9%8B%E9%97%B4%E4%BD%BF%E7%94%A8%E5%88%86%E5%8F%B7(%3B)%E5%88%86%E5%89%B2print-%E8%BE%93%E5%87%BA" aria-hidden="true">#</a></h1>
+<h1 id="print-%E9%BB%98%E8%AE%A4%E8%BE%93%E5%87%BA%E6%98%AF%E6%8D%A2%E8%A1%8C%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E8%A6%81%E5%AE%9E%E7%8E%B0%E4%B8%8D%E6%8D%A2%E8%A1%8C%E9%9C%80%E8%A6%81%E5%9C%A8%E5%8F%98%E9%87%8F%E6%9C%AB%E5%B0%BE%E5%8A%A0%E4%B8%8A%E9%80%97%E5%8F%B7-%2C%E5%A4%9A%E4%B8%AA%E8%AF%AD%E5%8F%A5%E6%9E%84%E6%88%90%E4%BB%A3%E7%A0%81%E7%BB%84">print 默认输出是换行的，如果要实现不换行需要在变量末尾加上逗号 ,
+多个语句构成代码组 <a class="heading-anchor-permalink" href="#print-%E9%BB%98%E8%AE%A4%E8%BE%93%E5%87%BA%E6%98%AF%E6%8D%A2%E8%A1%8C%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E8%A6%81%E5%AE%9E%E7%8E%B0%E4%B8%8D%E6%8D%A2%E8%A1%8C%E9%9C%80%E8%A6%81%E5%9C%A8%E5%8F%98%E9%87%8F%E6%9C%AB%E5%B0%BE%E5%8A%A0%E4%B8%8A%E9%80%97%E5%8F%B7-%2C%E5%A4%9A%E4%B8%AA%E8%AF%AD%E5%8F%A5%E6%9E%84%E6%88%90%E4%BB%A3%E7%A0%81%E7%BB%84" aria-hidden="true">#</a></h1>
+<h1 id="%E7%BC%A9%E8%BF%9B%E7%9B%B8%E5%90%8C%E7%9A%84%E4%B8%80%E7%BB%84%E8%AF%AD%E5%8F%A5%E6%9E%84%E6%88%90%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%8C%E6%88%91%E4%BB%AC%E7%A7%B0%E4%B9%8B%E4%BB%A3%E7%A0%81%E7%BB%84%E3%80%82-%E5%83%8Fif%E3%80%81while%E3%80%81def%E5%92%8Cclass%E8%BF%99%E6%A0%B7%E7%9A%84%E5%A4%8D%E5%90%88%E8%AF%AD%E5%8F%A5%EF%BC%8C%E9%A6%96%E8%A1%8C%E4%BB%A5%E5%85%B3%E9%94%AE%E5%AD%97%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%BB%A5%E5%86%92%E5%8F%B7(-%3A-)%E7%BB%93%E6%9D%9F%EF%BC%8C%E8%AF%A5%E8%A1%8C%E4%B9%8B%E5%90%8E%E7%9A%84%E4%B8%80%E8%A1%8C%E6%88%96%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%9E%84%E6%88%90%E4%BB%A3%E7%A0%81%E7%BB%84%E3%80%82-%E6%88%91%E4%BB%AC%E5%B0%86%E9%A6%96%E8%A1%8C%E5%8F%8A%E5%90%8E%E9%9D%A2%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BB%84%E7%A7%B0%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%AD%90%E5%8F%A5(clause)%E3%80%82python-%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B">缩进相同的一组语句构成一个代码块，我们称之代码组。 像if、while、def和class这样的复合语句，首行以关键字开始，以冒号( : )结束，该行之后的一行或多行代码构成代码组。 我们将首行及后面的代码组称为一个子句(clause)。
+Python 变量类型 <a class="heading-anchor-permalink" href="#%E7%BC%A9%E8%BF%9B%E7%9B%B8%E5%90%8C%E7%9A%84%E4%B8%80%E7%BB%84%E8%AF%AD%E5%8F%A5%E6%9E%84%E6%88%90%E4%B8%80%E4%B8%AA%E4%BB%A3%E7%A0%81%E5%9D%97%EF%BC%8C%E6%88%91%E4%BB%AC%E7%A7%B0%E4%B9%8B%E4%BB%A3%E7%A0%81%E7%BB%84%E3%80%82-%E5%83%8Fif%E3%80%81while%E3%80%81def%E5%92%8Cclass%E8%BF%99%E6%A0%B7%E7%9A%84%E5%A4%8D%E5%90%88%E8%AF%AD%E5%8F%A5%EF%BC%8C%E9%A6%96%E8%A1%8C%E4%BB%A5%E5%85%B3%E9%94%AE%E5%AD%97%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%BB%A5%E5%86%92%E5%8F%B7(-%3A-)%E7%BB%93%E6%9D%9F%EF%BC%8C%E8%AF%A5%E8%A1%8C%E4%B9%8B%E5%90%8E%E7%9A%84%E4%B8%80%E8%A1%8C%E6%88%96%E5%A4%9A%E8%A1%8C%E4%BB%A3%E7%A0%81%E6%9E%84%E6%88%90%E4%BB%A3%E7%A0%81%E7%BB%84%E3%80%82-%E6%88%91%E4%BB%AC%E5%B0%86%E9%A6%96%E8%A1%8C%E5%8F%8A%E5%90%8E%E9%9D%A2%E7%9A%84%E4%BB%A3%E7%A0%81%E7%BB%84%E7%A7%B0%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%AD%90%E5%8F%A5(clause)%E3%80%82python-%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B" aria-hidden="true">#</a></h1>
+<ul>
+<li>变量赋值 Python 中的变量赋值不需要类型声明。 每个变量在内存中创建，都包括变量的标识，名称和数据这些信息。 每个变量在使用前都必须赋值，变量赋值以后该变量才会被创建。 等号（=）用来给变量赋值。 等号（=）运算符左边是一个变量名,等号（=）运算符右边是存储在变量中的值。</li>
+<li>多个变量赋值 Python允许你同时为多个变量赋值 a = b = c = 1 a, b, c = 1, 2, “john”</li>
+<li>标准数据类型 Numbers String List Tuple Dictionary</li>
+<li>Python数字 数字数据类型用于存储数值。 他们是不可改变的数据类型，这意味着改变数字数据类型会分配一个新的对象 您也可以使用del语句删除一些对象的引用。</li>
+</ul>
+<ol>
+<li>Python支持四种不同的数字类型：</li>
+<li>int（有符号整型）</li>
+<li>long（长整型[也可以代表八进制和十六进制]）</li>
+<li>float（浮点型）</li>
+<li>complex（复数） 注意：long 类型只存在于 Python2.X 版本中，在 2.2 以后的版本中，int 类型数据溢出后会自动转为long类型。在 Python3.X 版本中 long 类型被移除，使用 int 替代。
+Python字符串</li>
+</ol>
+<hr>
+<h1 id="python%E7%9A%84%E5%AD%97%E4%B8%B2%E5%88%97%E8%A1%A8%E6%9C%892%E7%A7%8D%E5%8F%96%E5%80%BC%E9%A1%BA%E5%BA%8F%3A-1.-%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A40%E5%BC%80%E5%A7%8B%E7%9A%84%EF%BC%8C%E6%9C%80%E5%A4%A7%E8%8C%83%E5%9B%B4%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E5%B0%911-2.-%E4%BB%8E%E5%8F%B3%E5%88%B0%E5%B7%A6%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4-1%E5%BC%80%E5%A7%8B%E7%9A%84%EF%BC%8C%E6%9C%80%E5%A4%A7%E8%8C%83%E5%9B%B4%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BC%80%E5%A4%B4%E5%A6%82%E6%9E%9C%E4%BD%A0%E8%A6%81%E5%AE%9E%E7%8E%B0%E4%BB%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%8E%B7%E5%8F%96%E4%B8%80%E6%AE%B5%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%AF%9D%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%E6%9D%A5%E6%88%AA%E5%8F%96%E7%9B%B8%E5%BA%94%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%B8%8B%E6%A0%87%E6%98%AF%E4%BB%8E-0-%E5%BC%80%E5%A7%8B%E7%AE%97%E8%B5%B7%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%98%AF%E6%AD%A3%E6%95%B0%E6%88%96%E8%B4%9F%E6%95%B0%EF%BC%8C%E4%B8%8B%E6%A0%87%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%E8%A1%A8%E7%A4%BA%E5%8F%96%E5%88%B0%E5%A4%B4%E6%88%96%E5%B0%BE%E3%80%82-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%A4%B4%E4%B8%8B%E6%A0%87%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E4%BD%86%E4%B8%8D%E5%8C%85%E5%90%AB%E5%B0%BE%E4%B8%8B%E6%A0%87%E7%9A%84%E5%AD%97%E7%AC%A6-s-%3D-%E2%80%98abcdef%E2%80%99-s%5B1%3A5%5D-%E2%80%98bcde%E2%80%99-%E5%8A%A0%E5%8F%B7%EF%BC%88%2B%EF%BC%89%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%98%9F%E5%8F%B7%EF%BC%88*%EF%BC%89%E6%98%AF%E9%87%8D%E5%A4%8D%E6%93%8D%E4%BD%9C-print-str-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6-print-str%5B2%3A5%5D-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%BA%94%E4%B8%AA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str-*-2-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%A4%E6%AC%A1-print-str-%2B-%E2%80%9Ctest%E2%80%9D-%23-%E8%BE%93%E5%87%BA%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2python%E5%88%97%E8%A1%A8">python的字串列表有2种取值顺序: 1. 从左到右索引默认0开始的，最大范围是字符串长度少1 2. 从右到左索引默认-1开始的，最大范围是字符串开头<img src="http://www.runoob.com/wp-content/uploads/2013/11/python-string-slice.png" alt="runoob">如果你要实现从字符串中获取一段子字符串的话，可以使用 [头下标:尾下标] 来截取相应的字符串，其中下标是从 0 开始算起，可以是正数或负数，下标可以为空表示取到头或尾。 [头下标:尾下标] 获取的子字符串包含头下标的字符，但不包含尾下标的字符 s = ‘abcdef’ s[1:5] ‘bcde’ 加号（+）是字符串连接运算符，星号（*）是重复操作 print str # 输出完整字符串 print str[0] # 输出字符串中的第一个字符 print str[2:5] # 输出字符串中第三个至第五个之间的字符串 print str[2:] # 输出从第三个字符开始的字符串 print str * 2 # 输出字符串两次 print str + “TEST” # 输出连接的字符串
+Python列表 <a class="heading-anchor-permalink" href="#python%E7%9A%84%E5%AD%97%E4%B8%B2%E5%88%97%E8%A1%A8%E6%9C%892%E7%A7%8D%E5%8F%96%E5%80%BC%E9%A1%BA%E5%BA%8F%3A-1.-%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A40%E5%BC%80%E5%A7%8B%E7%9A%84%EF%BC%8C%E6%9C%80%E5%A4%A7%E8%8C%83%E5%9B%B4%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E9%95%BF%E5%BA%A6%E5%B0%911-2.-%E4%BB%8E%E5%8F%B3%E5%88%B0%E5%B7%A6%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4-1%E5%BC%80%E5%A7%8B%E7%9A%84%EF%BC%8C%E6%9C%80%E5%A4%A7%E8%8C%83%E5%9B%B4%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%BC%80%E5%A4%B4%E5%A6%82%E6%9E%9C%E4%BD%A0%E8%A6%81%E5%AE%9E%E7%8E%B0%E4%BB%8E%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E8%8E%B7%E5%8F%96%E4%B8%80%E6%AE%B5%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E8%AF%9D%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%E6%9D%A5%E6%88%AA%E5%8F%96%E7%9B%B8%E5%BA%94%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%85%B6%E4%B8%AD%E4%B8%8B%E6%A0%87%E6%98%AF%E4%BB%8E-0-%E5%BC%80%E5%A7%8B%E7%AE%97%E8%B5%B7%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%98%AF%E6%AD%A3%E6%95%B0%E6%88%96%E8%B4%9F%E6%95%B0%EF%BC%8C%E4%B8%8B%E6%A0%87%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%E8%A1%A8%E7%A4%BA%E5%8F%96%E5%88%B0%E5%A4%B4%E6%88%96%E5%B0%BE%E3%80%82-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%E8%8E%B7%E5%8F%96%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8C%85%E5%90%AB%E5%A4%B4%E4%B8%8B%E6%A0%87%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E4%BD%86%E4%B8%8D%E5%8C%85%E5%90%AB%E5%B0%BE%E4%B8%8B%E6%A0%87%E7%9A%84%E5%AD%97%E7%AC%A6-s-%3D-%E2%80%98abcdef%E2%80%99-s%5B1%3A5%5D-%E2%80%98bcde%E2%80%99-%E5%8A%A0%E5%8F%B7%EF%BC%88%2B%EF%BC%89%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%98%9F%E5%8F%B7%EF%BC%88*%EF%BC%89%E6%98%AF%E9%87%8D%E5%A4%8D%E6%93%8D%E4%BD%9C-print-str-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6-print-str%5B2%3A5%5D-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%89%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%BA%94%E4%B8%AA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%BC%80%E5%A7%8B%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2-print-str-*-2-%23-%E8%BE%93%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%A4%E6%AC%A1-print-str-%2B-%E2%80%9Ctest%E2%80%9D-%23-%E8%BE%93%E5%87%BA%E8%BF%9E%E6%8E%A5%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2python%E5%88%97%E8%A1%A8" aria-hidden="true">#</a></h1>
+<h1 id="list%EF%BC%88%E5%88%97%E8%A1%A8%EF%BC%89-%E6%98%AF-python-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%9C%80%E9%A2%91%E7%B9%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E5%88%97%E8%A1%A8%E5%8F%AF%E4%BB%A5%E5%AE%8C%E6%88%90%E5%A4%A7%E5%A4%9A%E6%95%B0%E9%9B%86%E5%90%88%E7%B1%BB%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E3%80%82%E5%AE%83%E6%94%AF%E6%8C%81%E5%AD%97%E7%AC%A6%EF%BC%8C%E6%95%B0%E5%AD%97%EF%BC%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%94%9A%E8%87%B3%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E5%88%97%E8%A1%A8%EF%BC%88%E5%8D%B3%E5%B5%8C%E5%A5%97%EF%BC%89%E3%80%82-%E5%88%97%E8%A1%A8%E7%94%A8-%5B-%5D-%E6%A0%87%E8%AF%86%EF%BC%8C%E6%98%AF-python-%E6%9C%80%E9%80%9A%E7%94%A8%E7%9A%84%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%82-%E5%88%97%E8%A1%A8%E4%B8%AD%E5%80%BC%E7%9A%84%E5%88%87%E5%89%B2%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%88%B0%E5%8F%98%E9%87%8F-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%88%AA%E5%8F%96%E7%9B%B8%E5%BA%94%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4-0-%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%BB%8E%E5%8F%B3%E5%88%B0%E5%B7%A6%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4--1-%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%B8%8B%E6%A0%87%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%E8%A1%A8%E7%A4%BA%E5%8F%96%E5%88%B0%E5%A4%B4%E6%88%96%E5%B0%BE%E3%80%82-%E5%8A%A0%E5%8F%B7-%2B-%E6%98%AF%E5%88%97%E8%A1%A8%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%98%9F%E5%8F%B7-*-%E6%98%AF%E9%87%8D%E5%A4%8D%E6%93%8D%E4%BD%9C%E3%80%82-print-list-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%88%97%E8%A1%A8-print-list%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%88%97%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0-print-list%5B1%3A3%5D-%23-%E8%BE%93%E5%87%BA%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%85%83%E7%B4%A0-print-list%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%BC%80%E5%A7%8B%E8%87%B3%E5%88%97%E8%A1%A8%E6%9C%AB%E5%B0%BE%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0-print-tinylist-*-2-%23-%E8%BE%93%E5%87%BA%E5%88%97%E8%A1%A8%E4%B8%A4%E6%AC%A1-print-list-%2B-tinylist-%23-%E6%89%93%E5%8D%B0%E7%BB%84%E5%90%88%E7%9A%84%E5%88%97%E8%A1%A8python%E5%85%83%E7%BB%84">List（列表） 是 Python 中使用最频繁的数据类型 列表可以完成大多数集合类的数据结构实现。它支持字符，数字，字符串甚至可以包含列表（即嵌套）。 列表用 [ ] 标识，是 python 最通用的复合数据类型。 列表中值的切割也可以用到变量 [头下标:尾下标] ，就可以截取相应的列表，从左到右索引默认 0 开始，从右到左索引默认 -1 开始，下标可以为空表示取到头或尾。 加号 + 是列表连接运算符，星号 * 是重复操作。 print list # 输出完整列表 print list[0] # 输出列表的第一个元素 print list[1:3] # 输出第二个至第三个元素 print list[2:] # 输出从第三个开始至列表末尾的所有元素 print tinylist * 2 # 输出列表两次 print list + tinylist # 打印组合的列表
+Python元组 <a class="heading-anchor-permalink" href="#list%EF%BC%88%E5%88%97%E8%A1%A8%EF%BC%89-%E6%98%AF-python-%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%9C%80%E9%A2%91%E7%B9%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%E5%88%97%E8%A1%A8%E5%8F%AF%E4%BB%A5%E5%AE%8C%E6%88%90%E5%A4%A7%E5%A4%9A%E6%95%B0%E9%9B%86%E5%90%88%E7%B1%BB%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%AE%9E%E7%8E%B0%E3%80%82%E5%AE%83%E6%94%AF%E6%8C%81%E5%AD%97%E7%AC%A6%EF%BC%8C%E6%95%B0%E5%AD%97%EF%BC%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%94%9A%E8%87%B3%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E5%88%97%E8%A1%A8%EF%BC%88%E5%8D%B3%E5%B5%8C%E5%A5%97%EF%BC%89%E3%80%82-%E5%88%97%E8%A1%A8%E7%94%A8-%5B-%5D-%E6%A0%87%E8%AF%86%EF%BC%8C%E6%98%AF-python-%E6%9C%80%E9%80%9A%E7%94%A8%E7%9A%84%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E3%80%82-%E5%88%97%E8%A1%A8%E4%B8%AD%E5%80%BC%E7%9A%84%E5%88%87%E5%89%B2%E4%B9%9F%E5%8F%AF%E4%BB%A5%E7%94%A8%E5%88%B0%E5%8F%98%E9%87%8F-%5B%E5%A4%B4%E4%B8%8B%E6%A0%87%3A%E5%B0%BE%E4%B8%8B%E6%A0%87%5D-%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%88%AA%E5%8F%96%E7%9B%B8%E5%BA%94%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E4%BB%8E%E5%B7%A6%E5%88%B0%E5%8F%B3%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4-0-%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%BB%8E%E5%8F%B3%E5%88%B0%E5%B7%A6%E7%B4%A2%E5%BC%95%E9%BB%98%E8%AE%A4--1-%E5%BC%80%E5%A7%8B%EF%BC%8C%E4%B8%8B%E6%A0%87%E5%8F%AF%E4%BB%A5%E4%B8%BA%E7%A9%BA%E8%A1%A8%E7%A4%BA%E5%8F%96%E5%88%B0%E5%A4%B4%E6%88%96%E5%B0%BE%E3%80%82-%E5%8A%A0%E5%8F%B7-%2B-%E6%98%AF%E5%88%97%E8%A1%A8%E8%BF%9E%E6%8E%A5%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%98%9F%E5%8F%B7-*-%E6%98%AF%E9%87%8D%E5%A4%8D%E6%93%8D%E4%BD%9C%E3%80%82-print-list-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%88%97%E8%A1%A8-print-list%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%88%97%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0-print-list%5B1%3A3%5D-%23-%E8%BE%93%E5%87%BA%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%85%83%E7%B4%A0-print-list%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%BC%80%E5%A7%8B%E8%87%B3%E5%88%97%E8%A1%A8%E6%9C%AB%E5%B0%BE%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0-print-tinylist-*-2-%23-%E8%BE%93%E5%87%BA%E5%88%97%E8%A1%A8%E4%B8%A4%E6%AC%A1-print-list-%2B-tinylist-%23-%E6%89%93%E5%8D%B0%E7%BB%84%E5%90%88%E7%9A%84%E5%88%97%E8%A1%A8python%E5%85%83%E7%BB%84" aria-hidden="true">#</a></h1>
+<h1 id="%E5%85%83%E7%BB%84%E6%98%AF%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%8C%E7%B1%BB%E4%BC%BC%E4%BA%8Elist%EF%BC%88%E5%88%97%E8%A1%A8%EF%BC%89%E3%80%82-%E5%85%83%E7%BB%84%E7%94%A8%22()%22%E6%A0%87%E8%AF%86%E3%80%82%E5%86%85%E9%83%A8%E5%85%83%E7%B4%A0%E7%94%A8%E9%80%97%E5%8F%B7%E9%9A%94%E5%BC%80%E3%80%82%E4%BD%86%E6%98%AF%E5%85%83%E7%BB%84%E4%B8%8D%E8%83%BD%E4%BA%8C%E6%AC%A1%E8%B5%8B%E5%80%BC%EF%BC%8C%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%8F%AA%E8%AF%BB%E5%88%97%E8%A1%A8%E3%80%82-print-tuple-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%85%83%E7%BB%84-print-tuple%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%85%83%E7%BB%84%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0-print-tuple%5B1%3A3%5D-%23-%E8%BE%93%E5%87%BA%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%B8%89%E4%B8%AA%E7%9A%84%E5%85%83%E7%B4%A0-print-tuple%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%BC%80%E5%A7%8B%E8%87%B3%E5%88%97%E8%A1%A8%E6%9C%AB%E5%B0%BE%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0-print-tinytuple-*-2-%23-%E8%BE%93%E5%87%BA%E5%85%83%E7%BB%84%E4%B8%A4%E6%AC%A1-print-tuple-%2B-tinytuple-%23-%E6%89%93%E5%8D%B0%E7%BB%84%E5%90%88%E7%9A%84%E5%85%83%E7%BB%84python-%E5%AD%97%E5%85%B8">元组是另一个数据类型，类似于List（列表）。 元组用&quot;()&quot;标识。内部元素用逗号隔开。但是元组不能二次赋值，相当于只读列表。 print tuple # 输出完整元组 print tuple[0] # 输出元组的第一个元素 print tuple[1:3] # 输出第二个至第三个的元素 print tuple[2:] # 输出从第三个开始至列表末尾的所有元素 print tinytuple * 2 # 输出元组两次 print tuple + tinytuple # 打印组合的元组
+Python 字典 <a class="heading-anchor-permalink" href="#%E5%85%83%E7%BB%84%E6%98%AF%E5%8F%A6%E4%B8%80%E4%B8%AA%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%8C%E7%B1%BB%E4%BC%BC%E4%BA%8Elist%EF%BC%88%E5%88%97%E8%A1%A8%EF%BC%89%E3%80%82-%E5%85%83%E7%BB%84%E7%94%A8%22()%22%E6%A0%87%E8%AF%86%E3%80%82%E5%86%85%E9%83%A8%E5%85%83%E7%B4%A0%E7%94%A8%E9%80%97%E5%8F%B7%E9%9A%94%E5%BC%80%E3%80%82%E4%BD%86%E6%98%AF%E5%85%83%E7%BB%84%E4%B8%8D%E8%83%BD%E4%BA%8C%E6%AC%A1%E8%B5%8B%E5%80%BC%EF%BC%8C%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%8F%AA%E8%AF%BB%E5%88%97%E8%A1%A8%E3%80%82-print-tuple-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E5%85%83%E7%BB%84-print-tuple%5B0%5D-%23-%E8%BE%93%E5%87%BA%E5%85%83%E7%BB%84%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%83%E7%B4%A0-print-tuple%5B1%3A3%5D-%23-%E8%BE%93%E5%87%BA%E7%AC%AC%E4%BA%8C%E4%B8%AA%E8%87%B3%E7%AC%AC%E4%B8%89%E4%B8%AA%E7%9A%84%E5%85%83%E7%B4%A0-print-tuple%5B2%3A%5D-%23-%E8%BE%93%E5%87%BA%E4%BB%8E%E7%AC%AC%E4%B8%89%E4%B8%AA%E5%BC%80%E5%A7%8B%E8%87%B3%E5%88%97%E8%A1%A8%E6%9C%AB%E5%B0%BE%E7%9A%84%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0-print-tinytuple-*-2-%23-%E8%BE%93%E5%87%BA%E5%85%83%E7%BB%84%E4%B8%A4%E6%AC%A1-print-tuple-%2B-tinytuple-%23-%E6%89%93%E5%8D%B0%E7%BB%84%E5%90%88%E7%9A%84%E5%85%83%E7%BB%84python-%E5%AD%97%E5%85%B8" aria-hidden="true">#</a></h1>
+<h1 id="%E5%AD%97%E5%85%B8(dictionary)%E6%98%AF%E9%99%A4%E5%88%97%E8%A1%A8%E4%BB%A5%E5%A4%96python%E4%B9%8B%E4%B8%AD%E6%9C%80%E7%81%B5%E6%B4%BB%E7%9A%84%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E5%9E%8B%E3%80%82%E5%88%97%E8%A1%A8%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88%EF%BC%8C%E5%AD%97%E5%85%B8%E6%98%AF%E6%97%A0%E5%BA%8F%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88%E3%80%82-%E4%B8%A4%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%E5%9C%A8%E4%BA%8E%EF%BC%9A%E5%AD%97%E5%85%B8%E5%BD%93%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E6%98%AF%E9%80%9A%E8%BF%87%E9%94%AE%E6%9D%A5%E5%AD%98%E5%8F%96%E7%9A%84%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E9%80%9A%E8%BF%87%E5%81%8F%E7%A7%BB%E5%AD%98%E5%8F%96%E3%80%82-%E5%AD%97%E5%85%B8%E7%94%A8%22%7B-%7D%22%E6%A0%87%E8%AF%86%E3%80%82%E5%AD%97%E5%85%B8%E7%94%B1%E7%B4%A2%E5%BC%95(key)%E5%92%8C%E5%AE%83%E5%AF%B9%E5%BA%94%E7%9A%84%E5%80%BCvalue%E7%BB%84%E6%88%90%E3%80%82-print-dict%5B%E2%80%98one%E2%80%99%5D-%23-%E8%BE%93%E5%87%BA%E9%94%AE%E4%B8%BA%E2%80%99one%E2%80%99-%E7%9A%84%E5%80%BC-print-dict%5B2%5D-%23-%E8%BE%93%E5%87%BA%E9%94%AE%E4%B8%BA-2-%E7%9A%84%E5%80%BC-print-tinydict-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AD%97%E5%85%B8-print-tinydict.keys()-%23-%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E9%94%AE-print-tinydict.values()-%23-%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E5%80%BCpython%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2">字典(dictionary)是除列表以外python之中最灵活的内置数据结构类型。列表是有序的对象集合，字典是无序的对象集合。 两者之间的区别在于：字典当中的元素是通过键来存取的，而不是通过偏移存取。 字典用&quot;{ }&quot;标识。字典由索引(key)和它对应的值value组成。 print dict[‘one’] # 输出键为’one’ 的值 print dict[2] # 输出键为 2 的值 print tinydict # 输出完整的字典 print tinydict.keys() # 输出所有键 print tinydict.values() # 输出所有值
+Python数据类型转换 <a class="heading-anchor-permalink" href="#%E5%AD%97%E5%85%B8(dictionary)%E6%98%AF%E9%99%A4%E5%88%97%E8%A1%A8%E4%BB%A5%E5%A4%96python%E4%B9%8B%E4%B8%AD%E6%9C%80%E7%81%B5%E6%B4%BB%E7%9A%84%E5%86%85%E7%BD%AE%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E7%B1%BB%E5%9E%8B%E3%80%82%E5%88%97%E8%A1%A8%E6%98%AF%E6%9C%89%E5%BA%8F%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88%EF%BC%8C%E5%AD%97%E5%85%B8%E6%98%AF%E6%97%A0%E5%BA%8F%E7%9A%84%E5%AF%B9%E8%B1%A1%E9%9B%86%E5%90%88%E3%80%82-%E4%B8%A4%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%E5%9C%A8%E4%BA%8E%EF%BC%9A%E5%AD%97%E5%85%B8%E5%BD%93%E4%B8%AD%E7%9A%84%E5%85%83%E7%B4%A0%E6%98%AF%E9%80%9A%E8%BF%87%E9%94%AE%E6%9D%A5%E5%AD%98%E5%8F%96%E7%9A%84%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E9%80%9A%E8%BF%87%E5%81%8F%E7%A7%BB%E5%AD%98%E5%8F%96%E3%80%82-%E5%AD%97%E5%85%B8%E7%94%A8%22%7B-%7D%22%E6%A0%87%E8%AF%86%E3%80%82%E5%AD%97%E5%85%B8%E7%94%B1%E7%B4%A2%E5%BC%95(key)%E5%92%8C%E5%AE%83%E5%AF%B9%E5%BA%94%E7%9A%84%E5%80%BCvalue%E7%BB%84%E6%88%90%E3%80%82-print-dict%5B%E2%80%98one%E2%80%99%5D-%23-%E8%BE%93%E5%87%BA%E9%94%AE%E4%B8%BA%E2%80%99one%E2%80%99-%E7%9A%84%E5%80%BC-print-dict%5B2%5D-%23-%E8%BE%93%E5%87%BA%E9%94%AE%E4%B8%BA-2-%E7%9A%84%E5%80%BC-print-tinydict-%23-%E8%BE%93%E5%87%BA%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AD%97%E5%85%B8-print-tinydict.keys()-%23-%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E9%94%AE-print-tinydict.values()-%23-%E8%BE%93%E5%87%BA%E6%89%80%E6%9C%89%E5%80%BCpython%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2" aria-hidden="true">#</a></h1>
+<h1 id="%E6%9C%89%E6%97%B6%E5%80%99%EF%BC%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%86%85%E7%BD%AE%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%BD%AC%E6%8D%A2%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2%EF%BC%8C%E4%BD%A0%E5%8F%AA%E9%9C%80%E8%A6%81%E5%B0%86%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%90%8D%E5%8D%B3%E5%8F%AF%E3%80%82-%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E5%86%85%E7%BD%AE%E7%9A%84%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E6%89%A7%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%E3%80%82%E8%BF%99%E4%BA%9B%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%A1%A8%E7%A4%BA%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%80%BC%E3%80%82int(x-%5B%2Cbase%5D)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0long(x-%5B%2Cbase%5D-)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%95%BF%E6%95%B4%E6%95%B0float(x)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E5%88%B0%E4%B8%80%E4%B8%AA%E6%B5%AE%E7%82%B9%E6%95%B0complex(real-%5B%2Cimag%5D)%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%A4%8D%E6%95%B0str(x)%E5%B0%86%E5%AF%B9%E8%B1%A1-x-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2repr(x)%E5%B0%86%E5%AF%B9%E8%B1%A1-x-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%97%E7%AC%A6%E4%B8%B2eval(str)%E7%94%A8%E6%9D%A5%E8%AE%A1%E7%AE%97%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%9C%89%E6%95%88python%E8%A1%A8%E8%BE%BE%E5%BC%8F%2C%E5%B9%B6%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1tuple(s)%E5%B0%86%E5%BA%8F%E5%88%97-s-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%85%83%E7%BB%84list(s)%E5%B0%86%E5%BA%8F%E5%88%97-s-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8set(s)%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88dict(d)%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E5%85%B8%E3%80%82d-%E5%BF%85%E9%A1%BB%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97-(key%2Cvalue)%E5%85%83%E7%BB%84%E3%80%82frozenset(s)%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88chr(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6unichr(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BAunicode%E5%AD%97%E7%AC%A6ord(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AE%83%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%BChex(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2oct(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%85%AB%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2python-%E8%BF%90%E7%AE%97%E7%AC%A6">有时候，我们需要对数据内置的类型进行转换，数据类型的转换，你只需要将数据类型作为函数名即可。 以下几个内置的函数可以执行数据类型之间的转换。这些函数返回一个新的对象，表示转换的值。
+int(x [,base])
+将x转换为一个整数
+long(x [,base] )
+将x转换为一个长整数
+float(x)
+将x转换到一个浮点数
+complex(real [,imag])
+创建一个复数
+str(x)
+将对象 x 转换为字符串
+repr(x)
+将对象 x 转换为表达式字符串
+eval(str)
+用来计算在字符串中的有效Python表达式,并返回一个对象
+tuple(s)
+将序列 s 转换为一个元组
+list(s)
+将序列 s 转换为一个列表
+set(s)
+转换为可变集合
+dict(d)
+创建一个字典。d 必须是一个序列 (key,value)元组。
+frozenset(s)
+转换为不可变集合
+chr(x)
+将一个整数转换为一个字符
+unichr(x)
+将一个整数转换为Unicode字符
+ord(x)
+将一个字符转换为它的整数值
+hex(x)
+将一个整数转换为一个十六进制字符串
+oct(x)
+将一个整数转换为一个八进制字符串
+Python 运算符 <a class="heading-anchor-permalink" href="#%E6%9C%89%E6%97%B6%E5%80%99%EF%BC%8C%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%86%85%E7%BD%AE%E7%9A%84%E7%B1%BB%E5%9E%8B%E8%BF%9B%E8%A1%8C%E8%BD%AC%E6%8D%A2%EF%BC%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%BD%AC%E6%8D%A2%EF%BC%8C%E4%BD%A0%E5%8F%AA%E9%9C%80%E8%A6%81%E5%B0%86%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%BD%9C%E4%B8%BA%E5%87%BD%E6%95%B0%E5%90%8D%E5%8D%B3%E5%8F%AF%E3%80%82-%E4%BB%A5%E4%B8%8B%E5%87%A0%E4%B8%AA%E5%86%85%E7%BD%AE%E7%9A%84%E5%87%BD%E6%95%B0%E5%8F%AF%E4%BB%A5%E6%89%A7%E8%A1%8C%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%E3%80%82%E8%BF%99%E4%BA%9B%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%A1%A8%E7%A4%BA%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%80%BC%E3%80%82int(x-%5B%2Cbase%5D)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0long(x-%5B%2Cbase%5D-)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E9%95%BF%E6%95%B4%E6%95%B0float(x)%E5%B0%86x%E8%BD%AC%E6%8D%A2%E5%88%B0%E4%B8%80%E4%B8%AA%E6%B5%AE%E7%82%B9%E6%95%B0complex(real-%5B%2Cimag%5D)%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%A4%8D%E6%95%B0str(x)%E5%B0%86%E5%AF%B9%E8%B1%A1-x-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2repr(x)%E5%B0%86%E5%AF%B9%E8%B1%A1-x-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AD%97%E7%AC%A6%E4%B8%B2eval(str)%E7%94%A8%E6%9D%A5%E8%AE%A1%E7%AE%97%E5%9C%A8%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E6%9C%89%E6%95%88python%E8%A1%A8%E8%BE%BE%E5%BC%8F%2C%E5%B9%B6%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1tuple(s)%E5%B0%86%E5%BA%8F%E5%88%97-s-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%85%83%E7%BB%84list(s)%E5%B0%86%E5%BA%8F%E5%88%97-s-%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%88%97%E8%A1%A8set(s)%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88dict(d)%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E5%85%B8%E3%80%82d-%E5%BF%85%E9%A1%BB%E6%98%AF%E4%B8%80%E4%B8%AA%E5%BA%8F%E5%88%97-(key%2Cvalue)%E5%85%83%E7%BB%84%E3%80%82frozenset(s)%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%8D%E5%8F%AF%E5%8F%98%E9%9B%86%E5%90%88chr(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6unichr(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BAunicode%E5%AD%97%E7%AC%A6ord(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AE%83%E7%9A%84%E6%95%B4%E6%95%B0%E5%80%BChex(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2oct(x)%E5%B0%86%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%85%AB%E8%BF%9B%E5%88%B6%E5%AD%97%E7%AC%A6%E4%B8%B2python-%E8%BF%90%E7%AE%97%E7%AC%A6" aria-hidden="true">#</a></h1>
+<ul>
+<li>Python算术运算符</li>
+</ul>
+<ul>
+<li></li>
+</ul>
+<p>加 - 两个对象相加
+a + b 输出结果 30
+-
+减 - 得到负数或是一个数减去另一个数
+a - b 输出结果 -10
+*
+乘 - 两个数相乘或是返回一个被重复若干次的字符串
+a * b 输出结果 200
+/
+除 - x除以y
+b / a 输出结果 2
+%
+取模 - 返回除法的余数
+b % a 输出结果 0
+**
+幂 - 返回x的y次幂
+a**b 为10的20次方， 输出结果 100000000000000000000
+//
+取整除 - 返回商的整数部分（向下取整）
+9//2 4 -9//2 -5
+注意：Python2.x 里，整数除整数，只能得出整数。如果要得到小数部分，把其中一个数改成浮点数即可。 * Python比较运算符
+==
+等于 - 比较对象是否相等
+(a == b) 返回 False。
+!=
+不等于 - 比较两个对象是否不相等
+(a != b) 返回 true.
+&lt;&gt;
+不等于 - 比较两个对象是否不相等
+(a &lt;&gt; b) 返回 true。这个运算符类似 != 。</p>
+<blockquote></blockquote>
+<p>大于 - 返回x是否大于y
+(a &gt; b) 返回 False。
+&lt;
+小于 - 返回x是否小于y。所有比较运算符返回1表示真，返回0表示假。这分别与特殊的变量True和False等价。
+(a &lt; b) 返回 true。</p>
+<blockquote>
+<p>=
+大于等于 - 返回x是否大于等于y。
+(a &gt;= b) 返回 False。
+&lt;=
+小于等于 - 返回x是否小于等于y。
+(a &lt;= b) 返回 true。
+Python赋值运算符
+===========
+=
+简单的赋值运算符
+c = a + b 将 a + b 的运算结果赋值为 c
++=
+加法赋值运算符
+c += a 等效于 c = c + a
+-=
+减法赋值运算符
+c -= a 等效于 c = c - a
+*=
+乘法赋值运算符
+c *= a 等效于 c = c * a
+/=
+除法赋值运算符
+c /= a 等效于 c = c / a
+%=
+取模赋值运算符
+c %= a 等效于 c = c % a
+**=
+幂赋值运算符
+c **= a 等效于 c = c ** a
+//=
+取整除赋值运算符
+c //= a 等效于 c = c // a
+Python位运算符
+==========
+按位运算符是把数字看作二进制来进行计算的。
+&amp;
+按位与运算符：参与运算的两个值,如果两个相应位都为1,则该位的结果为1,否则为0
+(a &amp; b) 输出结果 12 ，二进制解释： 0000 1100
+|
+按位或运算符：只要对应的二个二进位有一个为1时，结果位就为1。
+(a | b) 输出结果 61 ，二进制解释： 0011 1101
+^
+按位异或运算符：当两对应的二进位相异时，结果为1
+(a ^ b) 输出结果 49 ，二进制解释： 0011 0001
+~
+按位取反运算符：对数据的每个二进制位取反,即把1变为0,把0变为1 。~x 类似于 -x-1
+(~a ) 输出结果 -61 ，二进制解释： 1100 0011，在一个有符号二进制数的补码形式。
+&lt;&lt;
+左移动运算符：运算数的各二进位全部左移若干位，由 &lt;&lt; 右边的数字指定了移动的位数，高位丢弃，低位补0。
+a &lt;&lt; 2 输出结果 240 ，二进制解释： 1111 0000</p>
+<blockquote></blockquote>
+</blockquote>
+<h1 id="%E5%8F%B3%E7%A7%BB%E5%8A%A8%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A%E6%8A%8A%E2%80%9D%3E%3E%E2%80%9D%E5%B7%A6%E8%BE%B9%E7%9A%84%E8%BF%90%E7%AE%97%E6%95%B0%E7%9A%84%E5%90%84%E4%BA%8C%E8%BF%9B%E4%BD%8D%E5%85%A8%E9%83%A8%E5%8F%B3%E7%A7%BB%E8%8B%A5%E5%B9%B2%E4%BD%8D%EF%BC%8C%3E%3E-%E5%8F%B3%E8%BE%B9%E7%9A%84%E6%95%B0%E5%AD%97%E6%8C%87%E5%AE%9A%E4%BA%86%E7%A7%BB%E5%8A%A8%E7%9A%84%E4%BD%8D%E6%95%B0a-%3E%3E-2-%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C-15-%EF%BC%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A7%A3%E9%87%8A%EF%BC%9A-0000-1111python%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">右移动运算符：把”&gt;&gt;”左边的运算数的各二进位全部右移若干位，&gt;&gt; 右边的数字指定了移动的位数
+a &gt;&gt; 2 输出结果 15 ，二进制解释： 0000 1111
+Python逻辑运算符 <a class="heading-anchor-permalink" href="#%E5%8F%B3%E7%A7%BB%E5%8A%A8%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%9A%E6%8A%8A%E2%80%9D%3E%3E%E2%80%9D%E5%B7%A6%E8%BE%B9%E7%9A%84%E8%BF%90%E7%AE%97%E6%95%B0%E7%9A%84%E5%90%84%E4%BA%8C%E8%BF%9B%E4%BD%8D%E5%85%A8%E9%83%A8%E5%8F%B3%E7%A7%BB%E8%8B%A5%E5%B9%B2%E4%BD%8D%EF%BC%8C%3E%3E-%E5%8F%B3%E8%BE%B9%E7%9A%84%E6%95%B0%E5%AD%97%E6%8C%87%E5%AE%9A%E4%BA%86%E7%A7%BB%E5%8A%A8%E7%9A%84%E4%BD%8D%E6%95%B0a-%3E%3E-2-%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%9C-15-%EF%BC%8C%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A7%A3%E9%87%8A%EF%BC%9A-0000-1111python%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6" aria-hidden="true">#</a></h1>
+<h1 id="andx-and-y%E5%B8%83%E5%B0%94%E2%80%9D%E4%B8%8E%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-false%EF%BC%8Cx-and-y-%E8%BF%94%E5%9B%9E-false%EF%BC%8C%E5%90%A6%E5%88%99%E5%AE%83%E8%BF%94%E5%9B%9E-y-%E7%9A%84%E8%AE%A1%E7%AE%97%E5%80%BC%E3%80%82(a-and-b)-%E8%BF%94%E5%9B%9E-20%E3%80%82orx-or-y%E5%B8%83%E5%B0%94%E2%80%9D%E6%88%96%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E6%98%AF%E9%9D%9E-0%EF%BC%8C%E5%AE%83%E8%BF%94%E5%9B%9E-x-%E7%9A%84%E5%80%BC%EF%BC%8C%E5%90%A6%E5%88%99%E5%AE%83%E8%BF%94%E5%9B%9E-y-%E7%9A%84%E8%AE%A1%E7%AE%97%E5%80%BC%E3%80%82(a-or-b)-%E8%BF%94%E5%9B%9E-10%E3%80%82notnot-x%E5%B8%83%E5%B0%94%E2%80%9D%E9%9D%9E%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-true%EF%BC%8C%E8%BF%94%E5%9B%9E-false-%E3%80%82%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-false%EF%BC%8C%E5%AE%83%E8%BF%94%E5%9B%9E-true%E3%80%82not(a-and-b)-%E8%BF%94%E5%9B%9E-falsepython%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6">and
+x and y
+布尔”与” - 如果 x 为 False，x and y 返回 False，否则它返回 y 的计算值。
+(a and b) 返回 20。
+or
+x or y
+布尔”或” - 如果 x 是非 0，它返回 x 的值，否则它返回 y 的计算值。
+(a or b) 返回 10。
+not
+not x
+布尔”非” - 如果 x 为 True，返回 False 。如果 x 为 False，它返回 True。
+not(a and b) 返回 False
+Python成员运算符 <a class="heading-anchor-permalink" href="#andx-and-y%E5%B8%83%E5%B0%94%E2%80%9D%E4%B8%8E%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-false%EF%BC%8Cx-and-y-%E8%BF%94%E5%9B%9E-false%EF%BC%8C%E5%90%A6%E5%88%99%E5%AE%83%E8%BF%94%E5%9B%9E-y-%E7%9A%84%E8%AE%A1%E7%AE%97%E5%80%BC%E3%80%82(a-and-b)-%E8%BF%94%E5%9B%9E-20%E3%80%82orx-or-y%E5%B8%83%E5%B0%94%E2%80%9D%E6%88%96%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E6%98%AF%E9%9D%9E-0%EF%BC%8C%E5%AE%83%E8%BF%94%E5%9B%9E-x-%E7%9A%84%E5%80%BC%EF%BC%8C%E5%90%A6%E5%88%99%E5%AE%83%E8%BF%94%E5%9B%9E-y-%E7%9A%84%E8%AE%A1%E7%AE%97%E5%80%BC%E3%80%82(a-or-b)-%E8%BF%94%E5%9B%9E-10%E3%80%82notnot-x%E5%B8%83%E5%B0%94%E2%80%9D%E9%9D%9E%E2%80%9D---%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-true%EF%BC%8C%E8%BF%94%E5%9B%9E-false-%E3%80%82%E5%A6%82%E6%9E%9C-x-%E4%B8%BA-false%EF%BC%8C%E5%AE%83%E8%BF%94%E5%9B%9E-true%E3%80%82not(a-and-b)-%E8%BF%94%E5%9B%9E-falsepython%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6" aria-hidden="true">#</a></h1>
+<h1 id="%E9%99%A4%E4%BA%86%E4%BB%A5%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E8%BF%90%E7%AE%97%E7%AC%A6%E4%B9%8B%E5%A4%96%EF%BC%8Cpython%E8%BF%98%E6%94%AF%E6%8C%81%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%BE%8B%E4%B8%AD%E5%8C%85%E5%90%AB%E4%BA%86%E4%B8%80%E7%B3%BB%E5%88%97%E7%9A%84%E6%88%90%E5%91%98%EF%BC%8C%E5%8C%85%E6%8B%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%88%97%E8%A1%A8%E6%88%96%E5%85%83%E7%BB%84%E3%80%82in%E5%A6%82%E6%9E%9C%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%AD%E6%89%BE%E5%88%B0%E5%80%BC%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82x-%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD-%2C-%E5%A6%82%E6%9E%9C-x-%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD%E8%BF%94%E5%9B%9E-true%E3%80%82not-in%E5%A6%82%E6%9E%9C%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%AD%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E5%80%BC%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82x-%E4%B8%8D%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD-%2C-%E5%A6%82%E6%9E%9C-x-%E4%B8%8D%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD%E8%BF%94%E5%9B%9E-true%E3%80%82python%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6">除了以上的一些运算符之外，Python还支持成员运算符，测试实例中包含了一系列的成员，包括字符串，列表或元组。
+in
+如果在指定的序列中找到值返回 True，否则返回 False。
+x 在 y 序列中 , 如果 x 在 y 序列中返回 True。
+not in
+如果在指定的序列中没有找到值返回 True，否则返回 False。
+x 不在 y 序列中 , 如果 x 不在 y 序列中返回 True。
+Python身份运算符 <a class="heading-anchor-permalink" href="#%E9%99%A4%E4%BA%86%E4%BB%A5%E4%B8%8A%E7%9A%84%E4%B8%80%E4%BA%9B%E8%BF%90%E7%AE%97%E7%AC%A6%E4%B9%8B%E5%A4%96%EF%BC%8Cpython%E8%BF%98%E6%94%AF%E6%8C%81%E6%88%90%E5%91%98%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%8C%E6%B5%8B%E8%AF%95%E5%AE%9E%E4%BE%8B%E4%B8%AD%E5%8C%85%E5%90%AB%E4%BA%86%E4%B8%80%E7%B3%BB%E5%88%97%E7%9A%84%E6%88%90%E5%91%98%EF%BC%8C%E5%8C%85%E6%8B%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%88%97%E8%A1%A8%E6%88%96%E5%85%83%E7%BB%84%E3%80%82in%E5%A6%82%E6%9E%9C%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%AD%E6%89%BE%E5%88%B0%E5%80%BC%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82x-%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD-%2C-%E5%A6%82%E6%9E%9C-x-%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD%E8%BF%94%E5%9B%9E-true%E3%80%82not-in%E5%A6%82%E6%9E%9C%E5%9C%A8%E6%8C%87%E5%AE%9A%E7%9A%84%E5%BA%8F%E5%88%97%E4%B8%AD%E6%B2%A1%E6%9C%89%E6%89%BE%E5%88%B0%E5%80%BC%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82x-%E4%B8%8D%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD-%2C-%E5%A6%82%E6%9E%9C-x-%E4%B8%8D%E5%9C%A8-y-%E5%BA%8F%E5%88%97%E4%B8%AD%E8%BF%94%E5%9B%9E-true%E3%80%82python%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6" aria-hidden="true">#</a></h1>
+<h1 id="%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%E7%94%A8%E4%BA%8E%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83isis-%E6%98%AF%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E6%A0%87%E8%AF%86%E7%AC%A6%E6%98%AF%E4%B8%8D%E6%98%AF%E5%BC%95%E7%94%A8%E8%87%AA%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1x-is-y%2C-%E7%B1%BB%E4%BC%BC-id(x)-%3D%3D-id(y)-%2C-%E5%A6%82%E6%9E%9C%E5%BC%95%E7%94%A8%E7%9A%84%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falseis-notis-not-%E6%98%AF%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E6%A0%87%E8%AF%86%E7%AC%A6%E6%98%AF%E4%B8%8D%E6%98%AF%E5%BC%95%E7%94%A8%E8%87%AA%E4%B8%8D%E5%90%8C%E5%AF%B9%E8%B1%A1x-is-not-y-%EF%BC%8C-%E7%B1%BB%E4%BC%BC-id(a)-!%3D-id(b)%E3%80%82%E5%A6%82%E6%9E%9C%E5%BC%95%E7%94%A8%E7%9A%84%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%88%99%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82python%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7">身份运算符用于比较两个对象的存储单元
+is
+is 是判断两个标识符是不是引用自一个对象
+x is y, 类似 id(x) == id(y) , 如果引用的是同一个对象则返回 True，否则返回 False
+is not
+is not 是判断两个标识符是不是引用自不同对象
+x is not y ， 类似 id(a) != id(b)。如果引用的不是同一个对象则返回结果 True，否则返回 False。
+Python运算符优先级 <a class="heading-anchor-permalink" href="#%E8%BA%AB%E4%BB%BD%E8%BF%90%E7%AE%97%E7%AC%A6%E7%94%A8%E4%BA%8E%E6%AF%94%E8%BE%83%E4%B8%A4%E4%B8%AA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83isis-%E6%98%AF%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E6%A0%87%E8%AF%86%E7%AC%A6%E6%98%AF%E4%B8%8D%E6%98%AF%E5%BC%95%E7%94%A8%E8%87%AA%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1x-is-y%2C-%E7%B1%BB%E4%BC%BC-id(x)-%3D%3D-id(y)-%2C-%E5%A6%82%E6%9E%9C%E5%BC%95%E7%94%A8%E7%9A%84%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falseis-notis-not-%E6%98%AF%E5%88%A4%E6%96%AD%E4%B8%A4%E4%B8%AA%E6%A0%87%E8%AF%86%E7%AC%A6%E6%98%AF%E4%B8%8D%E6%98%AF%E5%BC%95%E7%94%A8%E8%87%AA%E4%B8%8D%E5%90%8C%E5%AF%B9%E8%B1%A1x-is-not-y-%EF%BC%8C-%E7%B1%BB%E4%BC%BC-id(a)-!%3D-id(b)%E3%80%82%E5%A6%82%E6%9E%9C%E5%BC%95%E7%94%A8%E7%9A%84%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA%E5%AF%B9%E8%B1%A1%E5%88%99%E8%BF%94%E5%9B%9E%E7%BB%93%E6%9E%9C-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82python%E8%BF%90%E7%AE%97%E7%AC%A6%E4%BC%98%E5%85%88%E7%BA%A7" aria-hidden="true">#</a></h1>
+<p>**
+指数 (最高优先级)
+~ + -
+按位翻转, 一元加号和减号 (最后两个的方法名为 +@ 和 -@)
+* / % //
+乘，除，取模和取整除
++ -
+加法减法</p>
+<blockquote>
+<blockquote>
+<p>&lt;&lt;
+右移，左移运算符
+&amp;
+位 ‘AND’
+^ |
+位运算符
+&lt;= &lt; &gt; &gt;=
+比较运算符
+&lt;&gt; == !=
+等于运算符
+= %= /= //= -= += *= **=
+赋值运算符
+is is not
+身份运算符
+in not in
+成员运算符
+not and or
+逻辑运算符
+Python 条件语句
+===========
+if 判断条件： 执行语句…… else： 执行语句……
+if 判断条件1: 执行语句1…… elif 判断条件2: 执行语句2…… elif 判断条件3: 执行语句3…… else: 执行语句4……
+if ( var == 100 ) : print ”变量 var 的值为100”
+Python 循环语句
+===========
+while 循环
+在给定的判断条件为 true 时执行循环体，否则退出循环体。
+for 循环
+重复执行语句
+嵌套循环
+你可以在while循环体中嵌套for循环
+break 语句
+在语句块执行过程中终止循环，并且跳出整个循环
+continue 语句
+在语句块执行过程中终止当前循环，跳出该次循环，执行下一次循环。
+pass 语句
+pass是空语句，是为了保持程序结构的完整性。</p>
+</blockquote>
+</blockquote>
+<ul>
+<li>Python While 循环语句 while 判断条件： 执行语句……<img src="http://www.runoob.com/wp-content/uploads/2013/11/loop-over-python-list-animation.gif" alt="runoob"></li>
+</ul>
+<ol>
+<li>无限循环 var = 1 while var == 1 : # 该条件永远为true，循环将无限执行下去 num = raw_input(“Enter a number :”) print &quot;You entered: &quot;, num</li>
+<li>循环使用 else 语句 count = 0 while count &lt; 5: print count, &quot; is less than 5&quot; count = count + 1 else: print count, &quot; is not less than 5&quot;</li>
+<li>简单语句组 flag = 1 while (flag): print ‘Given flag is really true!’
+Python for 循环语句 Python for循环可以遍历任何序列的项目，如一个列表或者一个字符串。 for iterating_var in sequence: statements(s) for letter in ‘Python’: # 第一个实例 print ‘当前字母 :’, letter
+fruits = [‘banana’, ‘apple’, ‘mango’] for fruit in fruits: # 第二个实例 print ‘当前水果 :’, fruit 1. 通过序列索引迭代 fruits = [‘banana’, ‘apple’, ‘mango’] for index in range(len(fruits)): print ‘当前水果 :’, fruits[index] 2. 循环使用 else 语句 在 python 中，for … else 表示这样的意思，for 中的语句和普通的没有区别，else 中的语句会在循环正常执行完（即 for 不是通过 break 跳出而中断的）的情况下执行，while … else 也是一样。 for num in range(10,20): # 迭代 10 到 20 之间的数字 for i in range(2,num): # 根据因子迭代 if num%i == 0: # 确定第一个因子 j=num/i # 计算第二个因子 print ‘%d 等于 %d * %d’ % (num,i,j) break # 跳出当前循环 else: # 循环的 else 部分 print num, ‘是一个质数’ * Python 循环嵌套 Python for 循环嵌套语法： for iterating_var in sequence: for iterating_var in sequence: statements(s) statements(s) Python while 循环嵌套语法： while expression: while expression: statement(s) statement(s) i = 2 while(i &lt; 100): j = 2 while(j &lt;= (i/j)): if not(i%j): break j = j + 1 if (j &gt; i/j) : print i, &quot; 是素数&quot; i = i + 1 * Python break 语句 Python break语句，就像在C语言中，打破了最小封闭for或while循环。 break语句用来终止循环语句，即循环条件没有False条件或者序列还没被完全递归完，也会停止执行循环语句。 break语句用在while和for循环中。 如果您使用嵌套循环，break语句将停止执行最深层的循环，并开始执行下一行代码。 * Python continue 语句 Python continue 语句跳出本次循环，而break跳出整个循环。 continue 语句用来告诉Python跳过当前循环的剩余语句，然后继续进行下一轮循环。 continue语句用在while和for循环中。 * Python pass 语句 Python pass是空语句，是为了保持程序结构的完整性。 pass 不做任何事情，一般用做占位语句。
+Python Number(数字)
+=================
+数据类型是不允许改变的,这就意味着如果改变 Number 数据类型的值，将重新分配内存空间 您也可以使用del语句删除一些 Number 对象引用 * Python Number 类型转换
+int(x [,base ])
+将x转换为一个整数
+long(x [,base ])
+将x转换为一个长整数
+float(x )
+将x转换到一个浮点数
+complex(real [,imag ])
+创建一个复数
+str(x )
+将对象 x 转换为字符串
+repr(x )
+将对象 x 转换为表达式字符串
+eval(str )
+用来计算在字符串中的有效Python表达式,并返回一个对象
+tuple(s )
+将序列 s 转换为一个元组
+list(s )
+将序列 s 转换为一个列表
+chr(x )
+将一个整数转换为一个字符
+unichr(x )
+将一个整数转换为Unicode字符
+ord(x )
+将一个字符转换为它的整数值
+hex(x )
+将一个整数转换为一个十六进制字符串
+oct(x )
+将一个整数转换为一个八进制字符串</li>
+</ol>
+<ul>
+<li>Python math 模块、cmath 模块<br>
+Python math 模块提供了许多对浮点数的数学运算函数。 Python cmath 模块包含了一些用于复数运算的函数。 cmath 模块的函数跟 math 模块函数基本一致，区别是 cmath 模块运算的是复数，math 模块运算的是数学运算。 要使用 math 或 cmath 函数必须先导入： import math 查看 math 查看包中的内容: import math dir(math) import cmath dir(cmath)</li>
+<li>Python数学函数
+abs(x)
+返回数字的绝对值，如abs(-10) 返回 10
+ceil(x)
+返回数字的上入整数，如math.ceil(4.1) 返回 5
+cmp(x, y)
+如果 x &lt; y 返回 -1, 如果 x == y 返回 0, 如果 x &gt; y 返回 1
+exp(x)
+返回e的x次幂(ex),如math.exp(1) 返回2.718281828459045
+fabs(x)
+返回数字的绝对值，如math.fabs(-10) 返回10.0
+floor(x)
+返回数字的下舍整数，如math.floor(4.9)返回 4
+log(x)
+如math.log(math.e)返回1.0,math.log(100,10)返回2.0
+log10(x)
+返回以10为基数的x的对数，如math.log10(100)返回 2.0
+max(x1, x2,…)
+返回给定参数的最大值，参数可以为序列。
+min(x1, x2,…)
+返回给定参数的最小值，参数可以为序列。
+modf(x)
+返回x的整数部分与小数部分，两部分的数值符号与x相同，整数部分以浮点型表示。
+pow(x, y)
+x**y 运算后的值。
+round(x [,n])
+返回浮点数x的四舍五入值，如给出n值，则代表舍入到小数点后的位数。
+sqrt(x)
+返回数字x的平方根</li>
+<li>Python随机数函数
+choice(seq)
+从序列的元素中随机挑选一个元素，比如random.choice(range(10))，从0到9中随机挑选一个整数。
+randrange ([start,] stop [,step])
+从指定范围内，按指定基数递增的集合中获取一个随机数，基数缺省值为1
+random()
+随机生成下一个实数，它在[0,1)范围内。
+seed([x])
+改变随机数生成器的种子seed。如果你不了解其原理，你不必特别去设定seed，Python会帮你选择seed。
+shuffle(lst)
+将序列的所有元素随机排序
+uniform(x, y)
+随机生成下一个实数，它在[x,y]范围内。</li>
+<li>Python三角函数
+acos(x)
+返回x的反余弦弧度值。
+asin(x)
+返回x的反正弦弧度值。
+atan(x)
+返回x的反正切弧度值。
+atan2(y, x)
+返回给定的 X 及 Y 坐标值的反正切值。
+cos(x)
+返回x的弧度的余弦值。
+hypot(x, y)
+返回欧几里德范数 sqrt(x*x + y*y)。
+sin(x)
+返回的x弧度的正弦值。
+tan(x)
+返回x弧度的正切值。
+degrees(x)
+将弧度转换为角度,如degrees(math.pi/2) ， 返回90.0
+radians(x)
+将角度转换为弧度</li>
+<li>Python数学常量
+pi
+数学常量 pi（圆周率，一般以π来表示）
+e
+数学常量 e，e即自然常数（自然常数）。
+Python 字符串
+==========</li>
+</ul>
+<ol>
+<li>Python访问字符串中的值 var1 = ‘Hello World!’ var2 = “Python Runoob” print &quot;var1[0]: &quot;, var1[0] print &quot;var2[1:5]: &quot;, var2[1:5]</li>
+<li>Python字符串更新 你可以对已存在的字符串进行修改，并赋值给另一个变量</li>
+<li>Python转义字符 在需要在字符中使用特殊字符时，python用反斜杠(\)转义字符
+\(在行尾时)
+续行符
+\\
+反斜杠符号
+\’
+单引号
+\”
+双引号
+\a
+响铃
+\b
+退格(Backspace)
+\e
+转义
+\000
+空
+\n
+换行
+\v
+纵向制表符
+\t
+横向制表符
+\r
+回车
+\f
+换页
+\oyy
+八进制数，yy代表的字符，例如：\o12代表换行
+\xyy
+十六进制数，yy代表的字符，例如：\x0a代表换行
+\other
+其它的字符以普通格式输出</li>
+</ol>
+<ul>
+<li>Python字符串运算符</li>
+</ul>
+<ul>
+<li></li>
+</ul>
+<p>字符串连接
+a + b ‘HelloPython’
+*
+重复输出字符串
+a * 2 ‘HelloHello’
+[]
+通过索引获取字符串中字符
+a[1] ‘e’
+[ : ]
+截取字符串中的一部分
+a[1:4] ‘ell’
+in
+成员运算符 - 如果字符串中包含给定的字符返回 True
+“H” in a &gt;&gt;&gt; True
+not in
+成员运算符 - 如果字符串中不包含给定的字符返回 True
+“M” not in a &gt;&gt;&gt; True
+r/R
+原始字符串 - 原始字符串：所有的字符串都是直接按照字面的意思来使用，没有转义特殊或不能打印的字符。 原始字符串除在字符串的第一个引号前加上字母”r”（可以大小写）以外，与普通字符串有着几乎完全相同的语法。
+print r’\n’ \n;print R’\n’ \n
+%
+格式字符串
+请看下一章节</p>
+<ul>
+<li>Python 字符串格式化 Python 支持格式化字符串的输出 。尽管这样可能会用到非常复杂的表达式，但最基本的用法是将一个值插入到一个有字符串格式符 %s 的字符串中。 在 Python 中，字符串格式化使用与 C 中 sprintf 函数一样的语法。 print “My name is %s and weight is %d kg!” % (‘Zara’, 21) python字符串格式化符号:
+%c
+格式化字符及其ASCII码
+%s
+格式化字符串
+%d
+格式化整数
+%u
+格式化无符号整型
+%o
+格式化无符号八进制数
+%x
+格式化无符号十六进制数
+%X
+格式化无符号十六进制数（大写）
+%f
+格式化浮点数字，可指定小数点后的精度
+%e
+用科学计数法格式化浮点数
+%E
+作用同%e，用科学计数法格式化浮点数
+%g
+%f和%e的简写
+%G
+%f 和 %E 的简写
+%p
+用十六进制数格式化变量的地址
+格式化操作符辅助指令:
+*
+定义宽度或者小数点精度
+-
+用做左对齐</li>
+</ul>
+<ul>
+<li></li>
+</ul>
+<p>在正数前面显示加号( + )
+<sp>
+在正数前面显示空格</p>
+<h1 id=""> <a class="heading-anchor-permalink" href="#" aria-hidden="true">#</a></h1>
+<h1 id="%E5%9C%A8%E5%85%AB%E8%BF%9B%E5%88%B6%E6%95%B0%E5%89%8D%E9%9D%A2%E6%98%BE%E7%A4%BA%E9%9B%B6(%E2%80%990%E2%80%99)%EF%BC%8C%E5%9C%A8%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E5%89%8D%E9%9D%A2%E6%98%BE%E7%A4%BA%E2%80%990x%E2%80%99%E6%88%96%E8%80%85%E2%80%990x%E2%80%99(%E5%8F%96%E5%86%B3%E4%BA%8E%E7%94%A8%E7%9A%84%E6%98%AF%E2%80%99x%E2%80%99%E8%BF%98%E6%98%AF%E2%80%99x%E2%80%99)0%E6%98%BE%E7%A4%BA%E7%9A%84%E6%95%B0%E5%AD%97%E5%89%8D%E9%9D%A2%E5%A1%AB%E5%85%85%E2%80%990%E2%80%99%E8%80%8C%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E7%9A%84%E7%A9%BA%E6%A0%BC%25%E2%80%99%25%25%E2%80%99%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E5%8D%95%E4%B8%80%E7%9A%84%E2%80%99%25%E2%80%99(var)%E6%98%A0%E5%B0%84%E5%8F%98%E9%87%8F(%E5%AD%97%E5%85%B8%E5%8F%82%E6%95%B0)m.n.m-%E6%98%AF%E6%98%BE%E7%A4%BA%E7%9A%84%E6%9C%80%E5%B0%8F%E6%80%BB%E5%AE%BD%E5%BA%A6%2Cn-%E6%98%AF%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E7%9A%84%E4%BD%8D%E6%95%B0(%E5%A6%82%E6%9E%9C%E5%8F%AF%E7%94%A8%E7%9A%84%E8%AF%9D)python2.6-%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%96%B0%E5%A2%9E%E4%BA%86%E4%B8%80%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%87%BD%E6%95%B0-str.format()%EF%BC%8C%E5%AE%83%E5%A2%9E%E5%BC%BA%E4%BA%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E5%8A%9F%E8%83%BD%E3%80%82-*-python%E4%B8%89%E5%BC%95%E5%8F%B7%EF%BC%88triple-quotes%EF%BC%89-python%E4%B8%AD%E4%B8%89%E5%BC%95%E5%8F%B7%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%A4%8D%E6%9D%82%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9B%E8%A1%8C%E5%A4%8D%E5%88%B6%3A-python%E4%B8%89%E5%BC%95%E5%8F%B7%E5%85%81%E8%AE%B8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%B7%A8%E5%A4%9A%E8%A1%8C%EF%BC%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%81%E5%88%B6%E8%A1%A8%E7%AC%A6%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E3%80%82-%E4%B8%89%E5%BC%95%E5%8F%B7%E7%9A%84%E8%AF%AD%E6%B3%95%E6%98%AF%E4%B8%80%E5%AF%B9%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8D%95%E5%BC%95%E5%8F%B7%E6%88%96%E8%80%85%E5%8F%8C%E5%BC%95%E5%8F%B7%EF%BC%88%E9%80%9A%E5%B8%B8%E9%83%BD%E6%98%AF%E6%88%90%E5%AF%B9%E7%9A%84%E7%94%A8%EF%BC%89%E3%80%82-hi-%3D-%E2%80%98%E2%80%99%E2%80%98hi-there%E2%80%99%E2%80%99%E2%80%99-hi-%23-repr()-%E2%80%98hi%5Cnthere%E2%80%99-print-hi-%23-str()-hi-there%E4%B8%89%E5%BC%95%E5%8F%B7%E8%AE%A9%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BB%8E%E5%BC%95%E5%8F%B7%E5%92%8C%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%B3%A5%E6%BD%AD%E9%87%8C%E9%9D%A2%E8%A7%A3%E8%84%B1%E5%87%BA%E6%9D%A5%EF%BC%8C%E8%87%AA%E5%A7%8B%E8%87%B3%E7%BB%88%E4%BF%9D%E6%8C%81%E4%B8%80%E5%B0%8F%E5%9D%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%98%AF%E6%89%80%E8%B0%93%E7%9A%84wysiwyg%EF%BC%88%E6%89%80%E8%A7%81%E5%8D%B3%E6%89%80%E5%BE%97%EF%BC%89%E6%A0%BC%E5%BC%8F%E7%9A%84%E3%80%82-%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84%E7%94%A8%E4%BE%8B%E6%98%AF%EF%BC%8C%E5%BD%93%E4%BD%A0%E9%9C%80%E8%A6%81%E4%B8%80%E5%9D%97html%E6%88%96%E8%80%85sql%E6%97%B6%EF%BC%8C%E8%BF%99%E6%97%B6%E5%BD%93%E7%94%A8%E4%B8%89%E5%BC%95%E5%8F%B7%E6%A0%87%E8%AE%B0%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E4%BD%93%E7%B3%BB%E5%B0%86%E5%8D%81%E5%88%86%E8%B4%B9%E7%A5%9E%E3%80%82-*-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2-python-%E4%B8%AD%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%99%AE%E9%80%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%80%E6%A0%B7%E7%AE%80%E5%8D%95%EF%BC%9A-u%E2%80%99hello-world-!%E2%80%99-%E5%BC%95%E5%8F%B7%E5%89%8D%E5%B0%8F%E5%86%99%E7%9A%84%22u%22%E8%A1%A8%E7%A4%BA%E8%BF%99%E9%87%8C%E5%88%9B%E5%BB%BA%E7%9A%84%E6%98%AF%E4%B8%80%E4%B8%AA-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AA%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-python-%E7%9A%84-unicode-escape-%E7%BC%96%E7%A0%81-u%E2%80%99hello%5Cu0020world-!%E2%80%99-%E8%A2%AB%E6%9B%BF%E6%8D%A2%E7%9A%84-%5Cu0020-%E6%A0%87%E8%AF%86%E8%A1%A8%E7%A4%BA%E5%9C%A8%E7%BB%99%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5%E7%BC%96%E7%A0%81%E5%80%BC%E4%B8%BA-0x0020-%E7%9A%84-unicode-%E5%AD%97%E7%AC%A6%EF%BC%88%E7%A9%BA%E6%A0%BC%E7%AC%A6%EF%BC%89-*-python%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0string.capitalize()%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%A4%A7%E5%86%99string.center(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B1%85%E4%B8%AD%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.count(str%2C-beg%3D0%2C-end%3Dlen(string))%E8%BF%94%E5%9B%9E-str-%E5%9C%A8-string-%E9%87%8C%E9%9D%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BC%8C%E5%A6%82%E6%9E%9C-beg-%E6%88%96%E8%80%85-end-%E6%8C%87%E5%AE%9A%E5%88%99%E8%BF%94%E5%9B%9E%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85-str-%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0string.decode(encoding%3D%E2%80%99utf-8%E2%80%99%2C-errors%3D%E2%80%99strict%E2%80%99)%E4%BB%A5-encoding-%E6%8C%87%E5%AE%9A%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%A7%A3%E7%A0%81-string%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%87%BA%E9%94%99%E9%BB%98%E8%AE%A4%E6%8A%A5%E4%B8%80%E4%B8%AA-valueerror-%E7%9A%84-%E5%BC%82-%E5%B8%B8-%EF%BC%8C-%E9%99%A4%E9%9D%9E-errors-%E6%8C%87-%E5%AE%9A-%E7%9A%84-%E6%98%AF-%E2%80%98ignore%E2%80%99-%E6%88%96-%E8%80%85%E2%80%99replace%E2%80%99string.encode(encoding%3D%E2%80%99utf-8%E2%80%99%2C-errors%3D%E2%80%99strict%E2%80%99)%E4%BB%A5-encoding-%E6%8C%87%E5%AE%9A%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E7%BC%96%E7%A0%81-string%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%87%BA%E9%94%99%E9%BB%98%E8%AE%A4%E6%8A%A5%E4%B8%80%E4%B8%AAvalueerror-%E7%9A%84%E5%BC%82%E5%B8%B8%EF%BC%8C%E9%99%A4%E9%9D%9E-errors-%E6%8C%87%E5%AE%9A%E7%9A%84%E6%98%AF%E2%80%99ignore%E2%80%99%E6%88%96%E8%80%85%E2%80%99replace%E2%80%99string.endswith(obj%2C-beg%3D0%2C-end%3Dlen(string))%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%BB%A5-obj-%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A6%82%E6%9E%9Cbeg-%E6%88%96%E8%80%85-end-%E6%8C%87%E5%AE%9A%E5%88%99%E6%A3%80%E6%9F%A5%E6%8C%87%E5%AE%9A%E7%9A%84%E8%8C%83%E5%9B%B4%E5%86%85%E6%98%AF%E5%90%A6%E4%BB%A5-obj-%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%EF%BC%8C%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.expandtabs(tabsize%3D8)%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2-string-%E4%B8%AD%E7%9A%84-tab-%E7%AC%A6%E5%8F%B7%E8%BD%AC%E4%B8%BA%E7%A9%BA%E6%A0%BC%EF%BC%8Ctab-%E7%AC%A6%E5%8F%B7%E9%BB%98%E8%AE%A4%E7%9A%84%E7%A9%BA%E6%A0%BC%E6%95%B0%E6%98%AF-8%E3%80%82string.find(str%2C-beg%3D0%2C-end%3Dlen(string))%E6%A3%80%E6%B5%8B-str-%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8-string-%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C-beg-%E5%92%8C-end-%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%EF%BC%8C%E5%88%99%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E8%BF%94%E5%9B%9E%E5%BC%80%E5%A7%8B%E7%9A%84%E7%B4%A2%E5%BC%95%E5%80%BC%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-1string.format()%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2string.index(str%2C-beg%3D0%2C-end%3Dlen(string))%E8%B7%9Ffind()%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8F%AA%E4%B8%8D%E8%BF%87%E5%A6%82%E6%9E%9Cstr%E4%B8%8D%E5%9C%A8-string%E4%B8%AD%E4%BC%9A%E6%8A%A5%E4%B8%80%E4%B8%AA%E5%BC%82%E5%B8%B8.string.isalnum()%E5%A6%82%E6%9E%9C-string-%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isalpha()%E5%A6%82%E6%9E%9C-string-%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E5%88%99%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isdecimal()%E5%A6%82%E6%9E%9C-string-%E5%8F%AA%E5%8C%85%E5%90%AB%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true-%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.isdigit()%E5%A6%82%E6%9E%9C-string-%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true-%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.islower()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8C%85%E5%90%AB%E8%87%B3%E5%B0%91%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E8%BF%99%E4%BA%9B(%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84)%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%B0%8F%E5%86%99%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isnumeric()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isspace()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E7%A9%BA%E6%A0%BC%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.istitle()%E5%A6%82%E6%9E%9C-string-%E6%98%AF%E6%A0%87%E9%A2%98%E5%8C%96%E7%9A%84(%E8%A7%81-title())%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isupper()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8C%85%E5%90%AB%E8%87%B3%E5%B0%91%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E8%BF%99%E4%BA%9B(%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84)%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%A4%A7%E5%86%99%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.join(seq)%E4%BB%A5-string-%E4%BD%9C%E4%B8%BA%E5%88%86%E9%9A%94%E7%AC%A6%EF%BC%8C%E5%B0%86-seq-%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84%E5%85%83%E7%B4%A0(%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A1%A8%E7%A4%BA)%E5%90%88%E5%B9%B6%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2string.ljust(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B7%A6%E5%AF%B9%E9%BD%90%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.lower()%E8%BD%AC%E6%8D%A2-string-%E4%B8%AD%E6%89%80%E6%9C%89%E5%A4%A7%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%BA%E5%B0%8F%E5%86%99.string.lstrip()%E6%88%AA%E6%8E%89-string-%E5%B7%A6%E8%BE%B9%E7%9A%84%E7%A9%BA%E6%A0%BCstring.maketrans(intab%2C-outtab%5D)maketrans()-%E6%96%B9%E6%B3%95%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E6%98%A0%E5%B0%84%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A1%A8%EF%BC%8C%E5%AF%B9%E4%BA%8E%E6%8E%A5%E5%8F%97%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E8%A1%A8%E7%A4%BA%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A1%A8%E7%A4%BA%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%9B%AE%E6%A0%87%E3%80%82max(str)%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2-str-%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E5%AD%97%E6%AF%8D%E3%80%82min(str)%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2-str-%E4%B8%AD%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%97%E6%AF%8D%E3%80%82string.partition(str)%E6%9C%89%E7%82%B9%E5%83%8F-find()%E5%92%8C-split()%E7%9A%84%E7%BB%93%E5%90%88%E4%BD%93%2C%E4%BB%8E-str-%E5%87%BA%E7%8E%B0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%E8%B5%B7%2C%E6%8A%8A-%E5%AD%97-%E7%AC%A6-%E4%B8%B2-string-%E5%88%86-%E6%88%90-%E4%B8%80-%E4%B8%AA-3-%E5%85%83-%E7%B4%A0-%E7%9A%84-%E5%85%83-%E7%BB%84-(string_pre_str%2Cstr%2Cstring_post_str)%2C%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E4%B8%8D%E5%8C%85%E5%90%ABstr-%E5%88%99-string_pre_str-%3D%3D-string.string.replace(str1%2C-str2%2C-num%3Dstring.count(str1))%E6%8A%8A-string-%E4%B8%AD%E7%9A%84-str1-%E6%9B%BF%E6%8D%A2%E6%88%90-str2%2C%E5%A6%82%E6%9E%9C-num-%E6%8C%87%E5%AE%9A%EF%BC%8C%E5%88%99%E6%9B%BF%E6%8D%A2%E4%B8%8D%E8%B6%85%E8%BF%87-num-%E6%AC%A1.string.rfind(str%2C-beg%3D0%2Cend%3Dlen(string)-)%E7%B1%BB%E4%BC%BC%E4%BA%8E-find()%E5%87%BD%E6%95%B0%EF%BC%8C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B%E6%9F%A5%E6%89%BE.string.rindex(-str%2C-beg%3D0%2Cend%3Dlen(string))%E7%B1%BB%E4%BC%BC%E4%BA%8E-index()%EF%BC%8C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B.string.rjust(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%B3%E5%AF%B9%E9%BD%90%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.rpartition(str)%E7%B1%BB%E4%BC%BC%E4%BA%8E-partition()%E5%87%BD%E6%95%B0%2C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B%E6%9F%A5%E6%89%BEstring.rstrip()%E5%88%A0%E9%99%A4-string-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%AB%E5%B0%BE%E7%9A%84%E7%A9%BA%E6%A0%BC.string.split(str%3D%E2%80%9D%E2%80%9D%2C-num%3Dstring.count(str))%E4%BB%A5-str-%E4%B8%BA%E5%88%86%E9%9A%94%E7%AC%A6%E5%88%87%E7%89%87-string%EF%BC%8C%E5%A6%82%E6%9E%9C-num%E6%9C%89%E6%8C%87%E5%AE%9A%E5%80%BC%EF%BC%8C%E5%88%99%E4%BB%85%E5%88%86%E9%9A%94-num-%E4%B8%AA%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2string.splitlines(%5Bkeepends%5D)%E6%8C%89%E7%85%A7%E8%A1%8C(%E2%80%99%5C%5Cr%E2%80%99%2C-%E2%80%99%5C%5Cr%5C%5Cn%E2%80%99%2C-%5C%5Cn%E2%80%99)%E5%88%86%E9%9A%94%EF%BC%8C%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E5%90%84%E8%A1%8C%E4%BD%9C%E4%B8%BA%E5%85%83%E7%B4%A0%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%8F%82%E6%95%B0-keepends-%E4%B8%BA-false%EF%BC%8C%E4%B8%8D%E5%8C%85%E5%90%AB%E6%8D%A2%E8%A1%8C%E7%AC%A6%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%BA-true%EF%BC%8C%E5%88%99%E4%BF%9D%E7%95%99%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82string.startswith(obj%2C-beg%3D0%2Cend%3Dlen(string))%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5-obj-%E5%BC%80%E5%A4%B4%EF%BC%8C%E6%98%AF%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82%E5%A6%82%E6%9E%9Cbeg-%E5%92%8C-end-%E6%8C%87%E5%AE%9A%E5%80%BC%EF%BC%8C%E5%88%99%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E6%A3%80%E6%9F%A5.string.strip(%5Bobj%5D)%E5%9C%A8-string-%E4%B8%8A%E6%89%A7%E8%A1%8C-lstrip()%E5%92%8C-rstrip()string.swapcase()%E7%BF%BB%E8%BD%AC-string-%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99string.title()%E8%BF%94%E5%9B%9E%E2%80%9D%E6%A0%87%E9%A2%98%E5%8C%96%E2%80%9D%E7%9A%84-string%2C%E5%B0%B1%E6%98%AF%E8%AF%B4%E6%89%80%E6%9C%89%E5%8D%95%E8%AF%8D%E9%83%BD%E6%98%AF%E4%BB%A5%E5%A4%A7%E5%86%99%E5%BC%80%E5%A7%8B%EF%BC%8C%E5%85%B6%E4%BD%99%E5%AD%97%E6%AF%8D%E5%9D%87%E4%B8%BA%E5%B0%8F%E5%86%99(%E8%A7%81-istitle())string.translate(str%2C-del%3D%E2%80%9D%E2%80%9D)%E6%A0%B9%E6%8D%AE-str-%E7%BB%99%E5%87%BA%E7%9A%84%E8%A1%A8(%E5%8C%85%E5%90%AB-256-%E4%B8%AA%E5%AD%97%E7%AC%A6)%E8%BD%AC%E6%8D%A2-string-%E7%9A%84%E5%AD%97%E7%AC%A6%2C%E8%A6%81%E8%BF%87%E6%BB%A4%E6%8E%89%E7%9A%84%E5%AD%97%E7%AC%A6%E6%94%BE%E5%88%B0-del-%E5%8F%82%E6%95%B0%E4%B8%ADstring.upper()%E8%BD%AC%E6%8D%A2-string-%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99string.zfill(width)%E8%BF%94%E5%9B%9E%E9%95%BF%E5%BA%A6%E4%B8%BA-width-%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2-string-%E5%8F%B3%E5%AF%B9%E9%BD%90%EF%BC%8C%E5%89%8D%E9%9D%A2%E5%A1%AB%E5%85%850python-%E5%88%97%E8%A1%A8(list)">在八进制数前面显示零(’0’)，在十六进制前面显示’0x’或者’0X’(取决于用的是’x’还是’X’)
+0
+显示的数字前面填充’0’而不是默认的空格
+%
+’%%’输出一个单一的’%’
+(var)
+映射变量(字典参数)
+m.n.
+m 是显示的最小总宽度,n 是小数点后的位数(如果可用的话)
+Python2.6 开始，新增了一种格式化字符串的函数 str.format()，它增强了字符串格式化的功能。 * Python三引号（triple quotes） python中三引号可以将复杂的字符串进行复制: python三引号允许一个字符串跨多行，字符串中可以包含换行符、制表符以及其他特殊字符。 三引号的语法是一对连续的单引号或者双引号（通常都是成对的用）。 hi = ‘’‘hi there’’’ hi # repr() ‘hi\nthere’ print hi # str() hi there<br>
+三引号让程序员从引号和特殊字符串的泥潭里面解脱出来，自始至终保持一小块字符串的格式是所谓的WYSIWYG（所见即所得）格式的。 一个典型的用例是，当你需要一块HTML或者SQL时，这时当用三引号标记，使用传统的转义字符体系将十分费神。 * Unicode 字符串 Python 中定义一个 Unicode 字符串和定义一个普通字符串一样简单： u’Hello World !’ 引号前小写的&quot;u&quot;表示这里创建的是一个 Unicode 字符串。如果你想加入一个特殊字符，可以使用 Python 的 Unicode-Escape 编码 u’Hello\u0020World !’ 被替换的 \u0020 标识表示在给定位置插入编码值为 0x0020 的 Unicode 字符（空格符） * python的字符串内建函数
+string.capitalize()
+把字符串的第一个字符大写
+string.center(width)
+返回一个原字符串居中,并使用空格填充至长度 width 的新字符串
+string.count(str, beg=0, end=len(string))
+返回 str 在 string 里面出现的次数，如果 beg 或者 end 指定则返回指定范围内 str 出现的次数
+string.decode(encoding=’UTF-8’, errors=’strict’)
+以 encoding 指定的编码格式解码 string，如果出错默认报一个 ValueError 的 异 常 ， 除非 errors 指 定 的 是 ‘ignore’ 或 者’replace’
+string.encode(encoding=’UTF-8’, errors=’strict’)
+以 encoding 指定的编码格式编码 string，如果出错默认报一个ValueError 的异常，除非 errors 指定的是’ignore’或者’replace’
+string.endswith(obj, beg=0, end=len(string))
+检查字符串是否以 obj 结束，如果beg 或者 end 指定则检查指定的范围内是否以 obj 结束，如果是，返回 True,否则返回 False.
+string.expandtabs(tabsize=8)
+把字符串 string 中的 tab 符号转为空格，tab 符号默认的空格数是 8。
+string.find(str, beg=0, end=len(string))
+检测 str 是否包含在 string 中，如果 beg 和 end 指定范围，则检查是否包含在指定范围内，如果是返回开始的索引值，否则返回-1
+string.format()
+格式化字符串
+string.index(str, beg=0, end=len(string))
+跟find()方法一样，只不过如果str不在 string中会报一个异常.
+string.isalnum()
+如果 string 至少有一个字符并且所有字符都是字母或数字则返回 True,否则返回 False
+string.isalpha()
+如果 string 至少有一个字符并且所有字符都是字母则返回 True,否则返回 False
+string.isdecimal()
+如果 string 只包含十进制数字则返回 True 否则返回 False.
+string.isdigit()
+如果 string 只包含数字则返回 True 否则返回 False.
+string.islower()
+如果 string 中包含至少一个区分大小写的字符，并且所有这些(区分大小写的)字符都是小写，则返回 True，否则返回 False
+string.isnumeric()
+如果 string 中只包含数字字符，则返回 True，否则返回 False
+string.isspace()
+如果 string 中只包含空格，则返回 True，否则返回 False.
+string.istitle()
+如果 string 是标题化的(见 title())则返回 True，否则返回 False
+string.isupper()
+如果 string 中包含至少一个区分大小写的字符，并且所有这些(区分大小写的)字符都是大写，则返回 True，否则返回 False
+string.join(seq)
+以 string 作为分隔符，将 seq 中所有的元素(的字符串表示)合并为一个新的字符串
+string.ljust(width)
+返回一个原字符串左对齐,并使用空格填充至长度 width 的新字符串
+string.lower()
+转换 string 中所有大写字符为小写.
+string.lstrip()
+截掉 string 左边的空格
+string.maketrans(intab, outtab])
+maketrans() 方法用于创建字符映射的转换表，对于接受两个参数的最简单的调用方式，第一个参数是字符串，表示需要转换的字符，第二个参数也是字符串表示转换的目标。
+max(str)
+返回字符串 str 中最大的字母。
+min(str)
+返回字符串 str 中最小的字母。
+string.partition(str)
+有点像 find()和 split()的结合体,从 str 出现的第一个位置起,把 字 符 串 string 分 成 一 个 3 元 素 的 元 组 (string_pre_str,str,string_post_str),如果 string 中不包含str 则 string_pre_str == string.
+string.replace(str1, str2, num=string.count(str1))
+把 string 中的 str1 替换成 str2,如果 num 指定，则替换不超过 num 次.
+string.rfind(str, beg=0,end=len(string) )
+类似于 find()函数，不过是从右边开始查找.
+string.rindex( str, beg=0,end=len(string))
+类似于 index()，不过是从右边开始.
+string.rjust(width)
+返回一个原字符串右对齐,并使用空格填充至长度 width 的新字符串
+string.rpartition(str)
+类似于 partition()函数,不过是从右边开始查找
+string.rstrip()
+删除 string 字符串末尾的空格.
+string.split(str=””, num=string.count(str))
+以 str 为分隔符切片 string，如果 num有指定值，则仅分隔 num 个子字符串
+string.splitlines([keepends])
+按照行(’\\r’, ’\\r\\n’, \\n’)分隔，返回一个包含各行作为元素的列表，如果参数 keepends 为 False，不包含换行符，如果为 True，则保留换行符。
+string.startswith(obj, beg=0,end=len(string))
+检查字符串是否是以 obj 开头，是则返回 True，否则返回 False。如果beg 和 end 指定值，则在指定范围内检查.
+string.strip([obj])
+在 string 上执行 lstrip()和 rstrip()
+string.swapcase()
+翻转 string 中的大小写
+string.title()
+返回”标题化”的 string,就是说所有单词都是以大写开始，其余字母均为小写(见 istitle())
+string.translate(str, del=””)
+根据 str 给出的表(包含 256 个字符)转换 string 的字符,要过滤掉的字符放到 del 参数中
+string.upper()
+转换 string 中的小写字母为大写
+string.zfill(width)
+返回长度为 width 的字符串，原字符串 string 右对齐，前面填充0
+Python 列表(List) <a class="heading-anchor-permalink" href="#%E5%9C%A8%E5%85%AB%E8%BF%9B%E5%88%B6%E6%95%B0%E5%89%8D%E9%9D%A2%E6%98%BE%E7%A4%BA%E9%9B%B6(%E2%80%990%E2%80%99)%EF%BC%8C%E5%9C%A8%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E5%89%8D%E9%9D%A2%E6%98%BE%E7%A4%BA%E2%80%990x%E2%80%99%E6%88%96%E8%80%85%E2%80%990x%E2%80%99(%E5%8F%96%E5%86%B3%E4%BA%8E%E7%94%A8%E7%9A%84%E6%98%AF%E2%80%99x%E2%80%99%E8%BF%98%E6%98%AF%E2%80%99x%E2%80%99)0%E6%98%BE%E7%A4%BA%E7%9A%84%E6%95%B0%E5%AD%97%E5%89%8D%E9%9D%A2%E5%A1%AB%E5%85%85%E2%80%990%E2%80%99%E8%80%8C%E4%B8%8D%E6%98%AF%E9%BB%98%E8%AE%A4%E7%9A%84%E7%A9%BA%E6%A0%BC%25%E2%80%99%25%25%E2%80%99%E8%BE%93%E5%87%BA%E4%B8%80%E4%B8%AA%E5%8D%95%E4%B8%80%E7%9A%84%E2%80%99%25%E2%80%99(var)%E6%98%A0%E5%B0%84%E5%8F%98%E9%87%8F(%E5%AD%97%E5%85%B8%E5%8F%82%E6%95%B0)m.n.m-%E6%98%AF%E6%98%BE%E7%A4%BA%E7%9A%84%E6%9C%80%E5%B0%8F%E6%80%BB%E5%AE%BD%E5%BA%A6%2Cn-%E6%98%AF%E5%B0%8F%E6%95%B0%E7%82%B9%E5%90%8E%E7%9A%84%E4%BD%8D%E6%95%B0(%E5%A6%82%E6%9E%9C%E5%8F%AF%E7%94%A8%E7%9A%84%E8%AF%9D)python2.6-%E5%BC%80%E5%A7%8B%EF%BC%8C%E6%96%B0%E5%A2%9E%E4%BA%86%E4%B8%80%E7%A7%8D%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E5%87%BD%E6%95%B0-str.format()%EF%BC%8C%E5%AE%83%E5%A2%9E%E5%BC%BA%E4%BA%86%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A0%BC%E5%BC%8F%E5%8C%96%E7%9A%84%E5%8A%9F%E8%83%BD%E3%80%82-*-python%E4%B8%89%E5%BC%95%E5%8F%B7%EF%BC%88triple-quotes%EF%BC%89-python%E4%B8%AD%E4%B8%89%E5%BC%95%E5%8F%B7%E5%8F%AF%E4%BB%A5%E5%B0%86%E5%A4%8D%E6%9D%82%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BF%9B%E8%A1%8C%E5%A4%8D%E5%88%B6%3A-python%E4%B8%89%E5%BC%95%E5%8F%B7%E5%85%81%E8%AE%B8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%B7%A8%E5%A4%9A%E8%A1%8C%EF%BC%8C%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E5%8F%AF%E4%BB%A5%E5%8C%85%E5%90%AB%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%81%E5%88%B6%E8%A1%A8%E7%AC%A6%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E3%80%82-%E4%B8%89%E5%BC%95%E5%8F%B7%E7%9A%84%E8%AF%AD%E6%B3%95%E6%98%AF%E4%B8%80%E5%AF%B9%E8%BF%9E%E7%BB%AD%E7%9A%84%E5%8D%95%E5%BC%95%E5%8F%B7%E6%88%96%E8%80%85%E5%8F%8C%E5%BC%95%E5%8F%B7%EF%BC%88%E9%80%9A%E5%B8%B8%E9%83%BD%E6%98%AF%E6%88%90%E5%AF%B9%E7%9A%84%E7%94%A8%EF%BC%89%E3%80%82-hi-%3D-%E2%80%98%E2%80%99%E2%80%98hi-there%E2%80%99%E2%80%99%E2%80%99-hi-%23-repr()-%E2%80%98hi%5Cnthere%E2%80%99-print-hi-%23-str()-hi-there%E4%B8%89%E5%BC%95%E5%8F%B7%E8%AE%A9%E7%A8%8B%E5%BA%8F%E5%91%98%E4%BB%8E%E5%BC%95%E5%8F%B7%E5%92%8C%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%B3%A5%E6%BD%AD%E9%87%8C%E9%9D%A2%E8%A7%A3%E8%84%B1%E5%87%BA%E6%9D%A5%EF%BC%8C%E8%87%AA%E5%A7%8B%E8%87%B3%E7%BB%88%E4%BF%9D%E6%8C%81%E4%B8%80%E5%B0%8F%E5%9D%97%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%A0%BC%E5%BC%8F%E6%98%AF%E6%89%80%E8%B0%93%E7%9A%84wysiwyg%EF%BC%88%E6%89%80%E8%A7%81%E5%8D%B3%E6%89%80%E5%BE%97%EF%BC%89%E6%A0%BC%E5%BC%8F%E7%9A%84%E3%80%82-%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84%E7%94%A8%E4%BE%8B%E6%98%AF%EF%BC%8C%E5%BD%93%E4%BD%A0%E9%9C%80%E8%A6%81%E4%B8%80%E5%9D%97html%E6%88%96%E8%80%85sql%E6%97%B6%EF%BC%8C%E8%BF%99%E6%97%B6%E5%BD%93%E7%94%A8%E4%B8%89%E5%BC%95%E5%8F%B7%E6%A0%87%E8%AE%B0%EF%BC%8C%E4%BD%BF%E7%94%A8%E4%BC%A0%E7%BB%9F%E7%9A%84%E8%BD%AC%E4%B9%89%E5%AD%97%E7%AC%A6%E4%BD%93%E7%B3%BB%E5%B0%86%E5%8D%81%E5%88%86%E8%B4%B9%E7%A5%9E%E3%80%82-*-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2-python-%E4%B8%AD%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%92%8C%E5%AE%9A%E4%B9%89%E4%B8%80%E4%B8%AA%E6%99%AE%E9%80%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%80%E6%A0%B7%E7%AE%80%E5%8D%95%EF%BC%9A-u%E2%80%99hello-world-!%E2%80%99-%E5%BC%95%E5%8F%B7%E5%89%8D%E5%B0%8F%E5%86%99%E7%9A%84%22u%22%E8%A1%A8%E7%A4%BA%E8%BF%99%E9%87%8C%E5%88%9B%E5%BB%BA%E7%9A%84%E6%98%AF%E4%B8%80%E4%B8%AA-unicode-%E5%AD%97%E7%AC%A6%E4%B8%B2%E3%80%82%E5%A6%82%E6%9E%9C%E4%BD%A0%E6%83%B3%E5%8A%A0%E5%85%A5%E4%B8%80%E4%B8%AA%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-python-%E7%9A%84-unicode-escape-%E7%BC%96%E7%A0%81-u%E2%80%99hello%5Cu0020world-!%E2%80%99-%E8%A2%AB%E6%9B%BF%E6%8D%A2%E7%9A%84-%5Cu0020-%E6%A0%87%E8%AF%86%E8%A1%A8%E7%A4%BA%E5%9C%A8%E7%BB%99%E5%AE%9A%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5%E7%BC%96%E7%A0%81%E5%80%BC%E4%B8%BA-0x0020-%E7%9A%84-unicode-%E5%AD%97%E7%AC%A6%EF%BC%88%E7%A9%BA%E6%A0%BC%E7%AC%A6%EF%BC%89-*-python%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%86%85%E5%BB%BA%E5%87%BD%E6%95%B0string.capitalize()%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%A4%A7%E5%86%99string.center(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B1%85%E4%B8%AD%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.count(str%2C-beg%3D0%2C-end%3Dlen(string))%E8%BF%94%E5%9B%9E-str-%E5%9C%A8-string-%E9%87%8C%E9%9D%A2%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BC%8C%E5%A6%82%E6%9E%9C-beg-%E6%88%96%E8%80%85-end-%E6%8C%87%E5%AE%9A%E5%88%99%E8%BF%94%E5%9B%9E%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85-str-%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0string.decode(encoding%3D%E2%80%99utf-8%E2%80%99%2C-errors%3D%E2%80%99strict%E2%80%99)%E4%BB%A5-encoding-%E6%8C%87%E5%AE%9A%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E8%A7%A3%E7%A0%81-string%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%87%BA%E9%94%99%E9%BB%98%E8%AE%A4%E6%8A%A5%E4%B8%80%E4%B8%AA-valueerror-%E7%9A%84-%E5%BC%82-%E5%B8%B8-%EF%BC%8C-%E9%99%A4%E9%9D%9E-errors-%E6%8C%87-%E5%AE%9A-%E7%9A%84-%E6%98%AF-%E2%80%98ignore%E2%80%99-%E6%88%96-%E8%80%85%E2%80%99replace%E2%80%99string.encode(encoding%3D%E2%80%99utf-8%E2%80%99%2C-errors%3D%E2%80%99strict%E2%80%99)%E4%BB%A5-encoding-%E6%8C%87%E5%AE%9A%E7%9A%84%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F%E7%BC%96%E7%A0%81-string%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%87%BA%E9%94%99%E9%BB%98%E8%AE%A4%E6%8A%A5%E4%B8%80%E4%B8%AAvalueerror-%E7%9A%84%E5%BC%82%E5%B8%B8%EF%BC%8C%E9%99%A4%E9%9D%9E-errors-%E6%8C%87%E5%AE%9A%E7%9A%84%E6%98%AF%E2%80%99ignore%E2%80%99%E6%88%96%E8%80%85%E2%80%99replace%E2%80%99string.endswith(obj%2C-beg%3D0%2C-end%3Dlen(string))%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%BB%A5-obj-%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A6%82%E6%9E%9Cbeg-%E6%88%96%E8%80%85-end-%E6%8C%87%E5%AE%9A%E5%88%99%E6%A3%80%E6%9F%A5%E6%8C%87%E5%AE%9A%E7%9A%84%E8%8C%83%E5%9B%B4%E5%86%85%E6%98%AF%E5%90%A6%E4%BB%A5-obj-%E7%BB%93%E6%9D%9F%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%EF%BC%8C%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.expandtabs(tabsize%3D8)%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2-string-%E4%B8%AD%E7%9A%84-tab-%E7%AC%A6%E5%8F%B7%E8%BD%AC%E4%B8%BA%E7%A9%BA%E6%A0%BC%EF%BC%8Ctab-%E7%AC%A6%E5%8F%B7%E9%BB%98%E8%AE%A4%E7%9A%84%E7%A9%BA%E6%A0%BC%E6%95%B0%E6%98%AF-8%E3%80%82string.find(str%2C-beg%3D0%2C-end%3Dlen(string))%E6%A3%80%E6%B5%8B-str-%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8-string-%E4%B8%AD%EF%BC%8C%E5%A6%82%E6%9E%9C-beg-%E5%92%8C-end-%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%EF%BC%8C%E5%88%99%E6%A3%80%E6%9F%A5%E6%98%AF%E5%90%A6%E5%8C%85%E5%90%AB%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%98%AF%E8%BF%94%E5%9B%9E%E5%BC%80%E5%A7%8B%E7%9A%84%E7%B4%A2%E5%BC%95%E5%80%BC%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-1string.format()%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2string.index(str%2C-beg%3D0%2C-end%3Dlen(string))%E8%B7%9Ffind()%E6%96%B9%E6%B3%95%E4%B8%80%E6%A0%B7%EF%BC%8C%E5%8F%AA%E4%B8%8D%E8%BF%87%E5%A6%82%E6%9E%9Cstr%E4%B8%8D%E5%9C%A8-string%E4%B8%AD%E4%BC%9A%E6%8A%A5%E4%B8%80%E4%B8%AA%E5%BC%82%E5%B8%B8.string.isalnum()%E5%A6%82%E6%9E%9C-string-%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E6%88%96%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isalpha()%E5%A6%82%E6%9E%9C-string-%E8%87%B3%E5%B0%91%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%AD%97%E6%AF%8D%E5%88%99%E8%BF%94%E5%9B%9E-true%2C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isdecimal()%E5%A6%82%E6%9E%9C-string-%E5%8F%AA%E5%8C%85%E5%90%AB%E5%8D%81%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true-%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.isdigit()%E5%A6%82%E6%9E%9C-string-%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%88%99%E8%BF%94%E5%9B%9E-true-%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.islower()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8C%85%E5%90%AB%E8%87%B3%E5%B0%91%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E8%BF%99%E4%BA%9B(%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84)%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%B0%8F%E5%86%99%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isnumeric()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E6%95%B0%E5%AD%97%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isspace()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8F%AA%E5%8C%85%E5%90%AB%E7%A9%BA%E6%A0%BC%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false.string.istitle()%E5%A6%82%E6%9E%9C-string-%E6%98%AF%E6%A0%87%E9%A2%98%E5%8C%96%E7%9A%84(%E8%A7%81-title())%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.isupper()%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E5%8C%85%E5%90%AB%E8%87%B3%E5%B0%91%E4%B8%80%E4%B8%AA%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E5%B9%B6%E4%B8%94%E6%89%80%E6%9C%89%E8%BF%99%E4%BA%9B(%E5%8C%BA%E5%88%86%E5%A4%A7%E5%B0%8F%E5%86%99%E7%9A%84)%E5%AD%97%E7%AC%A6%E9%83%BD%E6%98%AF%E5%A4%A7%E5%86%99%EF%BC%8C%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-falsestring.join(seq)%E4%BB%A5-string-%E4%BD%9C%E4%B8%BA%E5%88%86%E9%9A%94%E7%AC%A6%EF%BC%8C%E5%B0%86-seq-%E4%B8%AD%E6%89%80%E6%9C%89%E7%9A%84%E5%85%83%E7%B4%A0(%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A1%A8%E7%A4%BA)%E5%90%88%E5%B9%B6%E4%B8%BA%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2string.ljust(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B7%A6%E5%AF%B9%E9%BD%90%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.lower()%E8%BD%AC%E6%8D%A2-string-%E4%B8%AD%E6%89%80%E6%9C%89%E5%A4%A7%E5%86%99%E5%AD%97%E7%AC%A6%E4%B8%BA%E5%B0%8F%E5%86%99.string.lstrip()%E6%88%AA%E6%8E%89-string-%E5%B7%A6%E8%BE%B9%E7%9A%84%E7%A9%BA%E6%A0%BCstring.maketrans(intab%2C-outtab%5D)maketrans()-%E6%96%B9%E6%B3%95%E7%94%A8%E4%BA%8E%E5%88%9B%E5%BB%BA%E5%AD%97%E7%AC%A6%E6%98%A0%E5%B0%84%E7%9A%84%E8%BD%AC%E6%8D%A2%E8%A1%A8%EF%BC%8C%E5%AF%B9%E4%BA%8E%E6%8E%A5%E5%8F%97%E4%B8%A4%E4%B8%AA%E5%8F%82%E6%95%B0%E7%9A%84%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%82%E6%95%B0%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E8%A1%A8%E7%A4%BA%E9%9C%80%E8%A6%81%E8%BD%AC%E6%8D%A2%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BC%8C%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%8F%82%E6%95%B0%E4%B9%9F%E6%98%AF%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%A1%A8%E7%A4%BA%E8%BD%AC%E6%8D%A2%E7%9A%84%E7%9B%AE%E6%A0%87%E3%80%82max(str)%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2-str-%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E5%AD%97%E6%AF%8D%E3%80%82min(str)%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2-str-%E4%B8%AD%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%97%E6%AF%8D%E3%80%82string.partition(str)%E6%9C%89%E7%82%B9%E5%83%8F-find()%E5%92%8C-split()%E7%9A%84%E7%BB%93%E5%90%88%E4%BD%93%2C%E4%BB%8E-str-%E5%87%BA%E7%8E%B0%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%E8%B5%B7%2C%E6%8A%8A-%E5%AD%97-%E7%AC%A6-%E4%B8%B2-string-%E5%88%86-%E6%88%90-%E4%B8%80-%E4%B8%AA-3-%E5%85%83-%E7%B4%A0-%E7%9A%84-%E5%85%83-%E7%BB%84-(string_pre_str%2Cstr%2Cstring_post_str)%2C%E5%A6%82%E6%9E%9C-string-%E4%B8%AD%E4%B8%8D%E5%8C%85%E5%90%ABstr-%E5%88%99-string_pre_str-%3D%3D-string.string.replace(str1%2C-str2%2C-num%3Dstring.count(str1))%E6%8A%8A-string-%E4%B8%AD%E7%9A%84-str1-%E6%9B%BF%E6%8D%A2%E6%88%90-str2%2C%E5%A6%82%E6%9E%9C-num-%E6%8C%87%E5%AE%9A%EF%BC%8C%E5%88%99%E6%9B%BF%E6%8D%A2%E4%B8%8D%E8%B6%85%E8%BF%87-num-%E6%AC%A1.string.rfind(str%2C-beg%3D0%2Cend%3Dlen(string)-)%E7%B1%BB%E4%BC%BC%E4%BA%8E-find()%E5%87%BD%E6%95%B0%EF%BC%8C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B%E6%9F%A5%E6%89%BE.string.rindex(-str%2C-beg%3D0%2Cend%3Dlen(string))%E7%B1%BB%E4%BC%BC%E4%BA%8E-index()%EF%BC%8C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B.string.rjust(width)%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%8F%B3%E5%AF%B9%E9%BD%90%2C%E5%B9%B6%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E5%A1%AB%E5%85%85%E8%87%B3%E9%95%BF%E5%BA%A6-width-%E7%9A%84%E6%96%B0%E5%AD%97%E7%AC%A6%E4%B8%B2string.rpartition(str)%E7%B1%BB%E4%BC%BC%E4%BA%8E-partition()%E5%87%BD%E6%95%B0%2C%E4%B8%8D%E8%BF%87%E6%98%AF%E4%BB%8E%E5%8F%B3%E8%BE%B9%E5%BC%80%E5%A7%8B%E6%9F%A5%E6%89%BEstring.rstrip()%E5%88%A0%E9%99%A4-string-%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%AB%E5%B0%BE%E7%9A%84%E7%A9%BA%E6%A0%BC.string.split(str%3D%E2%80%9D%E2%80%9D%2C-num%3Dstring.count(str))%E4%BB%A5-str-%E4%B8%BA%E5%88%86%E9%9A%94%E7%AC%A6%E5%88%87%E7%89%87-string%EF%BC%8C%E5%A6%82%E6%9E%9C-num%E6%9C%89%E6%8C%87%E5%AE%9A%E5%80%BC%EF%BC%8C%E5%88%99%E4%BB%85%E5%88%86%E9%9A%94-num-%E4%B8%AA%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2string.splitlines(%5Bkeepends%5D)%E6%8C%89%E7%85%A7%E8%A1%8C(%E2%80%99%5C%5Cr%E2%80%99%2C-%E2%80%99%5C%5Cr%5C%5Cn%E2%80%99%2C-%5C%5Cn%E2%80%99)%E5%88%86%E9%9A%94%EF%BC%8C%E8%BF%94%E5%9B%9E%E4%B8%80%E4%B8%AA%E5%8C%85%E5%90%AB%E5%90%84%E8%A1%8C%E4%BD%9C%E4%B8%BA%E5%85%83%E7%B4%A0%E7%9A%84%E5%88%97%E8%A1%A8%EF%BC%8C%E5%A6%82%E6%9E%9C%E5%8F%82%E6%95%B0-keepends-%E4%B8%BA-false%EF%BC%8C%E4%B8%8D%E5%8C%85%E5%90%AB%E6%8D%A2%E8%A1%8C%E7%AC%A6%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%BA-true%EF%BC%8C%E5%88%99%E4%BF%9D%E7%95%99%E6%8D%A2%E8%A1%8C%E7%AC%A6%E3%80%82string.startswith(obj%2C-beg%3D0%2Cend%3Dlen(string))%E6%A3%80%E6%9F%A5%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E6%98%AF%E4%BB%A5-obj-%E5%BC%80%E5%A4%B4%EF%BC%8C%E6%98%AF%E5%88%99%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E5%90%A6%E5%88%99%E8%BF%94%E5%9B%9E-false%E3%80%82%E5%A6%82%E6%9E%9Cbeg-%E5%92%8C-end-%E6%8C%87%E5%AE%9A%E5%80%BC%EF%BC%8C%E5%88%99%E5%9C%A8%E6%8C%87%E5%AE%9A%E8%8C%83%E5%9B%B4%E5%86%85%E6%A3%80%E6%9F%A5.string.strip(%5Bobj%5D)%E5%9C%A8-string-%E4%B8%8A%E6%89%A7%E8%A1%8C-lstrip()%E5%92%8C-rstrip()string.swapcase()%E7%BF%BB%E8%BD%AC-string-%E4%B8%AD%E7%9A%84%E5%A4%A7%E5%B0%8F%E5%86%99string.title()%E8%BF%94%E5%9B%9E%E2%80%9D%E6%A0%87%E9%A2%98%E5%8C%96%E2%80%9D%E7%9A%84-string%2C%E5%B0%B1%E6%98%AF%E8%AF%B4%E6%89%80%E6%9C%89%E5%8D%95%E8%AF%8D%E9%83%BD%E6%98%AF%E4%BB%A5%E5%A4%A7%E5%86%99%E5%BC%80%E5%A7%8B%EF%BC%8C%E5%85%B6%E4%BD%99%E5%AD%97%E6%AF%8D%E5%9D%87%E4%B8%BA%E5%B0%8F%E5%86%99(%E8%A7%81-istitle())string.translate(str%2C-del%3D%E2%80%9D%E2%80%9D)%E6%A0%B9%E6%8D%AE-str-%E7%BB%99%E5%87%BA%E7%9A%84%E8%A1%A8(%E5%8C%85%E5%90%AB-256-%E4%B8%AA%E5%AD%97%E7%AC%A6)%E8%BD%AC%E6%8D%A2-string-%E7%9A%84%E5%AD%97%E7%AC%A6%2C%E8%A6%81%E8%BF%87%E6%BB%A4%E6%8E%89%E7%9A%84%E5%AD%97%E7%AC%A6%E6%94%BE%E5%88%B0-del-%E5%8F%82%E6%95%B0%E4%B8%ADstring.upper()%E8%BD%AC%E6%8D%A2-string-%E4%B8%AD%E7%9A%84%E5%B0%8F%E5%86%99%E5%AD%97%E6%AF%8D%E4%B8%BA%E5%A4%A7%E5%86%99string.zfill(width)%E8%BF%94%E5%9B%9E%E9%95%BF%E5%BA%A6%E4%B8%BA-width-%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BC%8C%E5%8E%9F%E5%AD%97%E7%AC%A6%E4%B8%B2-string-%E5%8F%B3%E5%AF%B9%E9%BD%90%EF%BC%8C%E5%89%8D%E9%9D%A2%E5%A1%AB%E5%85%850python-%E5%88%97%E8%A1%A8(list)" aria-hidden="true">#</a></h1>
+<p>Python有6个序列的内置类型，但最常见的是列表和元组。 序列都可以进行的操作包括索引，切片，加，乘，检查成员。 * 访问列表中的值 使用下标索引来访问列表中的值，同样你也可以使用方括号的形式截取字符 * 更新列表 你可以对列表的数据项进行修改或更新，你也可以使用append()方法来添加列表项 * 删除列表元素 可以使用 del 语句来删除列表的元素 * Python列表脚本操作符 列表对 + 和 * 的操作符与字符串相似。+ 号用于组合列表，* 号用于重复列表。
+len([1, 2, 3])
+3
+长度
+[1, 2, 3] + [4, 5, 6]
+[1, 2, 3, 4, 5, 6]
+组合
+[’Hi!’] * 4
+[’Hi!’, ‘Hi!’, ‘Hi!’, ‘Hi!’]
+重复
+3 in [1, 2, 3]
+True
+元素是否存在于列表中
+for x in [1, 2, 3]: print x,
+1 2 3
+迭代</p>
+<ul>
+<li>Python列表截取
+L[2]
+‘Taobao’
+读取列表中第三个元素
+L[-2]
+‘Runoob’
+读取列表中倒数第二个元素
+L[1:]
+[’Runoob’, ‘Taobao’]
+从第二个元素开始截取列表</li>
+<li>Python列表函数和方法
+cmp(list1, list2)
+比较两个列表的元素
+len(list)
+列表元素个数
+max(list)
+返回列表元素最大值
+min(list)
+返回列表元素最小值
+list(seq)
+将元组转换为列表
+list.append(obj)
+在列表末尾添加新的对象
+list.count(obj)
+统计某个元素在列表中出现的次数
+list.extend(seq)
+在列表末尾一次性追加另一个序列中的多个值（用新列表扩展原来的列表）
+list.index(obj)
+从列表中找出某个值第一个匹配项的索引位置
+list.insert(index, obj)
+将对象插入列表
+list.pop([index=-1])
+移除列表中的一个元素（默认最后一个元素），并且返回该元素的值
+list.remove(obj)
+移除列表中某个值的第一个匹配项
+list.reverse()
+反向列表中元素
+list.sort(cmp=None, key=None, reverse=False)
+对原列表进行排序
+Python 元组
+=========
+Python的元组与列表类似，不同之处在于元组的元素不能修改。 元组使用小括号，列表使用方括号。 元组创建很简单，只需要在括号中添加元素，并使用逗号隔开即可 * 访问元组 元组可以使用下标索引来访问元组中的值 * 修改元组 元组中的元素值是不允许修改的，但我们可以对元组进行连接组合 * 删除元组 元组中的元素值是不允许删除的，但我们可以使用del语句来删除整个元组 * 元组运算符 与字符串一样，元组之间可以使用 + 号和 * 号进行运算。这就意味着他们可以组合和复制，运算后会生成一个新的元组。 * 元组索引，截取</li>
+<li>无关闭分隔符 任意无符号的对象，以逗号隔开，默认为元组</li>
+<li>元组内置函数 Python元组包含了以下内置函数
+cmp(tuple1, tuple2)
+比较两个元组元素。
+len(tuple)
+计算元组元素个数。
+max(tuple)
+返回元组中元素最大值。
+min(tuple)
+返回元组中元素最小值。
+tuple(seq)
+将列表转换为元组。
+Python 字典(Dictionary)
+=====================
+字典是另一种可变容器模型，且可存储任意类型对象。 字典的每个键值 key=&gt;value 对用冒号 : 分割，每个键值对之间用逗号 , 分割，整个字典包括在花括号 {} 中 ,格式如下所示： d = {key1 : value1, key2 : value2 } 键一般是唯一的，如果重复最后的一个键值对会替换前面的，值不需要唯一。 可以取任何数据类型，但键必须是不可变的，如字符串，数字或元组。 * 访问字典里的值 把相应的键放入熟悉的方括弧 * 修改字典 向字典添加新内容的方法是增加新的键/值对，修改或删除已有键/值 dict = {‘Name’: ‘Zara’, ‘Age’: 7, ‘Class’: ‘First’} dict[‘Age’] = 8 # 更新 dict[‘School’] = “RUNOOB” # 添加 * 删除字典元素 能删单一的元素也能清空字典，清空只需一项操作。 显示删除一个字典用del命令 dict = {‘Name’: ‘Zara’, ‘Age’: 7, ‘Class’: ‘First’} del dict[‘Name’] # 删除键是’Name’的条目 dict.clear() # 清空词典所有条目 del dict # 删除词典 * 字典键的特性 字典值可以没有限制地取任何python对象，既可以是标准的对象，也可以是用户定义的，但键不行。 两个重要的点需要记住： 1）不允许同一个键出现两次。创建时如果同一个键被赋值两次，后一个值会被记住 2）键必须不可变，所以可以用数字，字符串或元组充当，所以用列表就不行 * 字典内置函数和方法
+cmp(dict1, dict2)
+比较两个字典元素。
+len(dict)
+计算字典元素个数，即键的总数。
+str(dict)
+输出字典可打印的字符串表示。
+type(variable)
+返回输入的变量类型，如果变量是字典就返回字典类型。
+dict.clear()
+删除字典内所有元素
+dict.copy()
+返回一个字典的浅复制
+dict.fromkeys(seq[, val])
+创建一个新字典，以序列 seq 中元素做字典的键，val 为字典所有键对应的初始值
+dict.get(key, default=None)
+返回指定键的值，如果值不在字典中返回default值
+dict.has_key(key)
+如果键在字典dict里返回true，否则返回false
+dict.items()
+以列表返回可遍历的(键, 值) 元组数组
+dict.keys()
+以列表返回一个字典所有的键
+dict.setdefault(key, default=None)
+和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default
+dict.update(dict2)
+把字典dict2的键/值对更新到dict里
+dict.values()
+以列表返回字典中的所有值
+pop(key[,default])
+删除字典给定键 key 所对应的值，返回值为被删除的值。key值必须给出。 否则，返回default值。
+popitem()
+随机返回并删除字典中的一对键和值。
+链接:<a href="https://bbs.huaweicloud.com/blogs/335f6c29fdb111e8bd5a7ca23e93a891">Python语法速览（一）</a></li>
+</ul>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

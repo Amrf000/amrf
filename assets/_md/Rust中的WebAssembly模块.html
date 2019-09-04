@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="active" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="rust%E4%B8%AD%E7%9A%84webassembly%E6%A8%A1%E5%9D%97%EF%BC%9A%E7%AE%80%E4%BB%8B"><img src="https://medium.com/@rossbulat/webassembly-modules-an-introduction-5554b8982402" alt="Rust中的WebAssembly模块">
+Rust中的WebAssembly模块：简介 <a class="heading-anchor-permalink" href="#rust%E4%B8%AD%E7%9A%84webassembly%E6%A8%A1%E5%9D%97%EF%BC%9A%E7%AE%80%E4%BB%8B" aria-hidden="true">#</a></h1>
+<h2 id="%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%92%8C%E6%9E%84%E5%BB%BAwasm%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%85%B6%E5%AF%BC%E5%85%A5react%E9%A1%B9%E7%9B%AE">如何生成和构建Wasm模块，并将其导入React项目 <a class="heading-anchor-permalink" href="#%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E5%92%8C%E6%9E%84%E5%BB%BAwasm%E6%A8%A1%E5%9D%97%EF%BC%8C%E5%B9%B6%E5%B0%86%E5%85%B6%E5%AF%BC%E5%85%A5react%E9%A1%B9%E7%9B%AE" aria-hidden="true">#</a></h2>
+<p><a href="/@rossbulat?source=post_page-----5554b8982402----------------------"><img src="https://miro.medium.com/fit/c/48/48/1*49Z_ce0CnC1mH7xtlmAkSg.jpeg" alt="罗斯布拉特"></a></p>
+<p><a href="/@rossbulat?source=post_page-----5554b8982402----------------------">罗斯布拉特</a></p>
+<p>跟随</p>
+<p><a href="/@rossbulat/webassembly-modules-an-introduction-5554b8982402?source=post_page-----5554b8982402----------------------">9月2日</a> · 13 分钟阅读</p>
+<p><img src="https://miro.medium.com/max/30/1*9hFW7f_3s3gEcPoG05f4KA.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1200/1*9hFW7f_3s3gEcPoG05f4KA.jpeg" alt=""></p>
+<h2 id="webassembly%EF%BC%8C%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9C%AA%E6%9D%A5%EF%BC%9F">WebAssembly，网络的未来？ <a class="heading-anchor-permalink" href="#webassembly%EF%BC%8C%E7%BD%91%E7%BB%9C%E7%9A%84%E6%9C%AA%E6%9D%A5%EF%BC%9F" aria-hidden="true">#</a></h2>
+<p><a href="https://developer.mozilla.org/en-US/docs/WebAssembly">WebAssembly</a>被称为Web _的_未来技术，能够以接近本机的速度在浏览器中运行代码。WebAssembly（通常缩写为wasm）是一种紧凑的二进制格式，它使用C和C ++等语言编译，以及Rust - 我们将在本文中演示的语言。</p>
+<p>Rust是一种相对较新的语言，它已经为WebAssembly中的模块开发，编译和发布提供了大量支持，主要由Mozilla Foundation领导。Rust和WebAssembly的开发正在进行中，尽管Rust处于更成熟的状态。尽管如此，我们可以预期本文中讨论的API会随着时间的推移而发生变化，我们会在发布版本时尝试及时更新。</p>
+<p><a href="https://github.com/AssemblyScript/assemblyscript"><em>AssemblyScript</em></a><em>是Typescript的一个严格子集，是另一种有趣的语言，旨在让Javascript开发人员开始采用Wasm，前端开发人员的学习曲线比Rust或C ++更小。这是WebAssembly生态系统中创新的一个很好的例子。</em></p>
+<p>在这篇文章中，我们将发布一个向Github发出获取请求的wasm模块，并返回生成的JSON。然后将在Create React App项目中从Javascript调用此编译的wasm函数。</p>
+<p>可以<a href="https://github.com/rossbulat/wasm-fetch-example">在Github</a>上找到与此作品相符的完整项目。</p>
+<h2 id="rust-webassembly%E5%B7%A5%E5%85%B7">Rust WebAssembly工具 <a class="heading-anchor-permalink" href="#rust-webassembly%E5%B7%A5%E5%85%B7" aria-hidden="true">#</a></h2>
+<p>要使用Rust构建一个wasm模块，我们将利用两个框架来打包模块并使编译的WebAssembly与浏览器进行交互：</p>
+<ul>
+<li><code>[**wasm-pack**](https://rustwasm.github.io/docs/wasm-pack/)</code>（<a href="https://github.com/rustwasm/wasm-pack">Github</a>）：用于为网络编译基于Rust的WebAssembly的“一站式服务”。<code>wasm-pack</code>是一个CLI工具，可以构建，测试和发布WebAssembly模块</li>
+<li><code>[**wasm-bindgen**](https://rustwasm.github.io/docs/wasm-bindgen/)</code>  （<a href="https://github.com/rustwasm/wasm-bindgen">Github</a>）<strong>：</strong> Rust库和CLI工具，用于促进与Javascript和DOM的交互。事实上，<code>wasm-bindgen</code>为所有Web API提供绑定的底层API，可以操作DOM，监听事件，调用获取请求，websockets等等 - 所有这些都是用Rust编译的</li>
+</ul>
+<p>重要的是要强调WebAssembly不能直接访问DOM。毫无疑问，这将在1 - 2年内有所不同，现在开发的<a href="https://github.com/WebAssembly/proposals">各种提案</a>将解决<a href="https://github.com/webassembly/threads/blob/master/proposals/threads/Overview.md">多线程</a>和直接DOM操作等功能，这是目前存在的WebAssembly采用的两个主要瓶颈。</p>
+<p>目前，<code>wasm-bindgen</code>它充当了与Javascript API交互的桥梁，所有这些API都在库中具有Rust绑定。这是通过两个底层依赖项来完成的<code>wasm-bindgen</code>：<code>[js-sys](https://docs.rs/js-sys/0.3.27/js_sys/)</code>crate和<code>[web-sys](https://docs.rs/web-sys/0.3.27/web_sys/)</code>crate，分别将整个Javascript标准库和Web API库暴露给Rust和WebAssembly。</p>
+<p>总结一下这个介绍，我们在短期内最有可能期待的是：</p>
+<ul>
+<li><code>wasm-bindgen</code>随着更多WebAssembly提案的实施和支持在浏览器中推出，大大加快。我们还可以期望更小的模块尺寸，因为样板代码变得不必要了</li>
+<li><code>wasm-bindgen</code>将在功能推出时尝试维护其顶级API，但<code>web-sys</code>随着直接DOM操作的推出，底层无疑会发生重大变化</li>
+<li><code>js-sys</code>仍然会出现与Javascript标准库和Javascript模块进行交互的目的，<strong>这两种语言将携手合作</strong></li>
+</ul>
+<p>最后一点很可能是短期内WebAssembly的主要用例。在Javascript中已经建立了模块库（以及整个Web应用程序），没有什么动力将整个项目重新构建到WebAssembly中。</p>
+<p>但是，我们可以期待的是基于WebAssembly的模块，它可以很好地完成特定的事情，包含在NPM模块中并导入到Javascript项目中。模块如：</p>
+<ul>
+<li><strong>计算成本高昂的</strong> **东西，**如处理数字，渲染3D对象或运行机器学习算法。在wasm中的这些任务将比它们的Javascript对应程序快一个数量级</li>
+<li><strong>区块链轻客户端和分布式网络协议</strong>。使用区块链客户端，特别是Parity的以太网和Substrate框架，很明显将其现有源代码编译到WebAssembly中将具有充分意义，让客户端客户端作为导入模块在浏览器中运行。这些还将利用速度和效率，同时从您的UX代码模块化协议级API</li>
+<li>借助Rust内置的内存安全性和严格的打字功能，我们还可以将安全功能和实时聊天/实时Web环境等<strong>关键任务工具</strong>实现为WebAssembly模块，并注重稳定性</li>
+</ul>
+<h2 id="javascript%E4%B8%8D%E4%BC%9A%E5%8E%BB%E4%BB%BB%E4%BD%95%E5%9C%B0%E6%96%B9">Javascript不会去任何地方 <a class="heading-anchor-permalink" href="#javascript%E4%B8%8D%E4%BC%9A%E5%8E%BB%E4%BB%BB%E4%BD%95%E5%9C%B0%E6%96%B9" aria-hidden="true">#</a></h2>
+<p>这些在Javascript方面意味着什么？在这一点上，很难看到没有Javascript成为网络主导语言的未来。Javascript不会随处可见，而WebAssembly很可能是对Javascript的补充，而不是替代，加速了应用程序的某些部分，并提供了更多方法来使其他语言的代码库在浏览器中运行。</p>
+<p>有了这个理解，让我们现在跳进一个真实世界的例子。我们将稍微修改Github上托管的<a href="https://github.com/rustwasm/wasm-bindgen/tree/master/examples">示例中</a>的<a href="https://github.com/rustwasm/wasm-bindgen/tree/master/examples/fetch">获取请求示例</a>。<code>wasm-bindgen</code><a href="https://github.com/rustwasm/wasm-bindgen/tree/master/examples"></a></p>
+<p>然后，我们将异步导入此模块到Create React App项目中，并在React组件中调用我们的wasm函数，为webpack提供了在过程中识别基于wasm的模块而无需弹出项目的方法。</p>
+<hr>
+<h1 id="%E5%AE%89%E8%A3%85wasm-pack">安装Wasm Pack <a class="heading-anchor-permalink" href="#%E5%AE%89%E8%A3%85wasm-pack" aria-hidden="true">#</a></h1>
+<p>为了便于讨论，我们将克隆与此部分重合的<a href="https://github.com/rossbulat/wasm-fetch-example">git存储库</a>，其中包含一个<code>wasm-pack</code>生成的Rust项目，其中包含获取请求代码。我们还将介绍一些基本的设置步骤。</p>
+<h2 id="%E5%85%B3%E4%BA%8Evs%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AF%B4%E6%98%8E">关于VS代码的说明 <a class="heading-anchor-permalink" href="#%E5%85%B3%E4%BA%8Evs%E4%BB%A3%E7%A0%81%E7%9A%84%E8%AF%B4%E6%98%8E" aria-hidden="true">#</a></h2>
+<p>Visual Studio代码对<a href="https://marketplace.visualstudio.com/items?itemName=rust-lang.rust">RLS</a>扩展的Rust提供了很好的支持。此外，<a href="https://marketplace.visualstudio.com/items?itemName=dtsvet.vscode-wasm">WebAssembly</a>扩展还可用于强制语法突出显示和轻松预览wasm二进制文件的功能。</p>
+<p><em>以下说明假定您已在系统上安装了Rust。如果没有，请转到</em><a href="https://www.rust-lang.org/tools/install"><em>Rust Installation页面</em></a><em>并下载</em><code>_rustup_</code><em>。</em></p>
+<p>让我们首先为我们的esm努力安装所需的CLI工具，从开始<code>wasm-pack</code>。最新的安装说明将在其<a href="https://rustwasm.github.io/wasm-pack/installer/">安装页面上</a>，但安装软件包只需要一个curl请求：</p>
+<p>**#install wasm-pack<br>
+** curl <a href="https://rustwasm.github.io/wasm-pack/installer/init.sh">https://rustwasm.github.io/wasm-pack/installer/init.sh</a> -sSf | SH</p>
+<p>一个<code>wasm-pack</code>二进制文件将安装在您的<code>~/.cargo/bin</code>目录中。该程序包含<code>new</code>，<code>build</code>，<code>test</code>和<code>publish</code>命令的文件，其中可以发现<a href="https://rustwasm.github.io/docs/wasm-pack/commands/index.html">在这里</a>。</p>
+<h2 id="%E7%86%9F%E6%82%89wasm-bindgen">熟悉wasm-bindgen <a class="heading-anchor-permalink" href="#%E7%86%9F%E6%82%89wasm-bindgen" aria-hidden="true">#</a></h2>
+<p>还建议克隆整个<code>wasm-bindgen</code>存储库，并在系统上显示所有示例代码以进行测试：</p>
+<p><strong>#clim wasm-bindgen</strong><br>
+git clone <a href="https://github.com/rustwasm/wasm-bindgen">https://github.com/rustwasm/wasm-bindgen</a></p>
+<p>该<code>[examples/](https://github.com/rustwasm/wasm-bindgen/tree/master/examples)</code>文件夹包含一系列项目，虽然未配置为构建为模块。每个示例都可以在线查看，并附有专门的文档页面。请参阅每个示例的<code>README.md</code>文件以获取实时演示和文档的链接。</p>
+<p>最简单的<code>wasm-bindgen</code>例子是<code>[console_log](https://github.com/rustwasm/wasm-bindgen/tree/master/examples/console_log)</code>项目，展示了如何将<code>console.log()</code>Javascript函数绑定到Rust函数 - 最简单的实现如下：</p>
+<p><strong>＃[wasm_bindgen]</strong><br>
+extern“C”{ <strong>＃[wasm_bindgen（js_namespace = console）]</strong> fn log（s：＆str）; }</p>
+<p>我们必须注释所有的wasm块和函数，<code>#[wasm_bindgen]</code>让编译器知道这个代码块将被编译成WebAssembly。这是一种<a href="https://doc.rust-lang.org/reference/conditional-compilation.html">条件编译</a>，<code>wasm_bindgen</code>称为属性。</p>
+<p><strong><em>注意：</em></strong><em>您可能会看到一些WebAssembly示例包含在内</em><code>_extern {}_</code><em>，而其他__示例__则包含在其中</em><code>_extern “C” {}_</code><em>。目前两者之间没有任何意义。一位有关开发人员__为这种差异</em><a href="https://github.com/rustwasm/wasm-bindgen/issues/422"><em>打开了一个问题</em></a><em>，这似乎源于其自动格式化功能</em><code>rustfmt</code><em>。</em></p>
+<h2 id="%E8%AE%BF%E9%97%AE%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91">访问条件编译 <a class="heading-anchor-permalink" href="#%E8%AE%BF%E9%97%AE%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91" aria-hidden="true">#</a></h2>
+<p>Rust内置了一系列条件编译属性，例如<code>[#cfg](https://doc.rust-lang.org/reference/conditional-compilation.html#the-cfg-attribute)</code>用于确定是否应该基于变量编译代码块的属性，一些是内置的，例如程序正在编译的平台。以下是从文档中获取的几个示例：</p>
+<p><strong>//此函数仅在编译macOS时编译</strong><br>
+＃[cfg（target_os =“macos”）]<br>
+fn macos_only（）{<br>
+// …<br>
+} <strong>//只有在定义了foo或bar时编译此函数</strong>＃[cfg （任何（foo，bar））]<br>
+fn needs_foo_or_bar（）{<br>
+// …<br>
+}</p>
+<p>在第一个示例中，<code>[target_os](https://doc.rust-lang.org/reference/conditional-compilation.html#target_os)</code>是一些<a href="https://doc.rust-lang.org/reference/conditional-compilation.html#set-configuration-options">设置配置选项之一</a>，它确定我们正在编译的平台。我们甚至可以定义平台特定的依赖关系<code>Cargo.toml</code>; 如果我只想在该平台上支持macOS核心库，我可以在以下方面执行以下操作<code>Cargo.toml</code>：</p>
+<p><strong>#Cargo.toml</strong> <strong>[target.‘cfg（target_os =“macos”）’。dependencies]</strong><br>
+cocoa =“0.18.4”<br>
+core-foundation =“0.6”<br>
+core-graphics =“0.17.3”<br>
+…</p>
+<p>您可能也注意到<code>#[test]</code>Rust项目中的属性 - 阻止编译注释的代码<code>#[test]</code>，并与之一起运行<code>cargo test</code>。</p>
+<p>所以，<code>#[wasm]</code>并且<code>#[wasm-bindgen]</code>是专门用于编译到WebAssembly的自定义注释。重新访问该<code>console.log</code>示例，我们还使用属性参数来指定Javascript名称空间以将我们的函数绑定到：</p>
+<p><strong>＃[wasm_bindgen（js_namespace = console）]</strong><br>
+fn log（s：＆str）;<br>
+…</p>
+<p>在上面的例子中，我们的目标是将<code>log()</code>函数绑定到<code>console.log()</code>Javascript函数。</p>
+<p>关于条件编译的主题，WebAssembly项目通常也使用<code>feature</code> <code>cfg</code>参数，进一步过滤基于我们定义的特征编译的内容<code>Cargo.toml</code>：</p>
+<p>[功能]<br>
+默认= [“super_mode”]</p>
+<p>这些功能可以在以下内容中使用<code>#[cfg]</code>：</p>
+<p>＃[cfg（feature =“super_mode”）]<br>
+fn super_execute（s：＆str;）{<br>
+…<br>
+}</p>
+<p>使用属性可以很有趣，为代码增加灵活性，同时适应您可能遇到的边缘情况 - 例如针对特定客户的自定义构建。双方<code>wasm-pack</code>并<code>wasm-bindgen</code>在很大程度上依赖于定制汇编成WASM的功能。在<a href="https://doc.rust-lang.org/reference/attributes.html#attributes">此处</a>阅读有关Rust中属性的更多信息。</p>
+<p>回到<code>console.log</code>演示，该演示还记录了<code>console.log()</code>多态的方式，并且可以接受多个参数。因此，我们还可以绑定多个签名，同时确保<code>console.log()</code>仍然使用<code>js_name</code>属性参数调用该函数：</p>
+<p><strong>＃一个带有无符号整数的日志函数</strong>＃[wasm_bindgen（js_namespace = console，<strong>js_name = log</strong>）]<br>
+fn log_u32（a：u32）;</p>
+<p>这是Rust如何绑定到Javascript的一个很好的例子，与我们尝试使用我们的fetch示例相反，旨在从Javascript端调用Rust编译的wasm。</p>
+<p>除了从存储库运行这些示例之外，最好将功能从它们复制到您自己的<code>wasm-pack</code>项目中，记住要包含所需的依赖项<code>Cargo.toml</code>以与函数一致。</p>
+<p>随着一些Rust理解的巩固，让我们现在转到我们的wasm fetch演示。</p>
+<hr>
+<h1 id="wasm%E8%8E%B7%E5%8F%96%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84">Wasm获取项目结构 <a class="heading-anchor-permalink" href="#wasm%E8%8E%B7%E5%8F%96%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84" aria-hidden="true">#</a></h1>
+<p>克隆以下存储库以获取我们接下来将要介绍的示例演示，其中包含Rust模块和React应用程序客户端：</p>
+<p>git clone <a href="https://github.com/rossbulat/wasm-fetch-example">https://github.com/rossbulat/wasm-fetch-example</a></p>
+<p>该<code>wasm-module</code>目录包含Rust项目，而该<code>client</code>目录包含React客户端。</p>
+<p><em>为方便起见，我已将两个项目打包到一个存储库中。建议他们在顶层（分成独立的仓库，并有每个项目的配置文件</em><code>_Cargo.toml_</code><em>，</em><code>_package.json_</code><em>等等）。</em></p>
+<h2 id="%E5%86%85%E9%83%A8%E7%9A%84%E6%A8%A1%E5%9D%97">内部的模块 <a class="heading-anchor-permalink" href="#%E5%86%85%E9%83%A8%E7%9A%84%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h2>
+<p><code>wasm-pack new</code>已运行以生成项目结构，并且已将<a href="https://github.com/rustwasm/wasm-bindgen/tree/master/examples/fetch">fetch</a>功能插入到我们的<code>lib.rs</code>。</p>
+<p>在调用<code>call_fetch()</code>函数（我们将在Javascript中执行）时，将向Github <code>wasm-bindgen</code>存储库调用获取请求，从repo获取最新的提交。返回生成的JSON，然后可以在Javascript端解构。</p>
+<p>文件夹结构很简单，我们的Rust源文件在<code>src/</code>目录中，并<code>Cargo.toml</code>概述了项目依赖项（以Cargo <a href="https://crates.io/">crates</a>的形式），以及一些初始配置：</p>
+<p>#Rust <strong>项目结构</strong> src /<br>
+<a href="http://fetch.rs">fetch.rs</a><br>
+<a href="http://lib.rs">lib.rs</a><br>
+<a href="http://utils.rs">utils.rs</a> .gitignore<br>
+Cargo.toml<br>
+…</p>
+<p>这些是我们感兴趣的文件。让我们深入了解这个项目包含的内容：</p>
+<ul>
+<li>该<code>src/</code>文件夹包含要编译的Rust代码。该项目的内容是<code>[lib.rs](https://github.com/rossbulat/wasm-fetch-example/blob/master/wasm-module/src/lib.rs)</code>，<code>call_fetch()</code>我们希望在Javascript中调用函数。此文件包含一系列use语句，可将各种库纳入范围，包括所需的<code>wasm_bindgen</code>Javascript绑定和类型</li>
+<li><code>[src/fetch.rs](https://github.com/rossbulat/wasm-fetch-example/blob/master/wasm-module/src/fetch.rs)</code>只包含一些将用于存储返回的获取数据的结构。在<a href="https://github.com/rustwasm/wasm-bindgen/blob/master/examples/fetch/src/lib.rs">原始的</a> <code>wasm-bindgen</code> fetch示例中，这些结构也在lib.rs中定义，以及示例代码的其余部分。为了便于阅读，我选择将它们与主执行分开</li>
+<li><code>[Cargo.toml](https://github.com/rossbulat/wasm-fetch-example/blob/master/wasm-module/Cargo.toml)</code>是一个要理解的关键文件，定义项目中使用的依赖项和“功能”。我们将访问这些工作如何进一步发展</li>
+</ul>
+<p>在将返回的Promise转换为Rust Future之前，内部的执行流程<code>call_fetch()</code>调用来自<code>wasm-bindgen</code>绑定的Javascript获取请求- Rust承诺的Rust等价物。一旦从Github收到响应，它就会通过定义的结构进行持久化和格式化<code>fetch.rs</code>。</p>
+<p>这是完整的执行流程：</p>
+<p>#fetch <strong>请求执行流程</strong> - &gt; JS调用call_fetch（）- &gt;通过wasm-bindgen绑定调用获取请求，返回promise - &gt; JS Promise转换为Rust Future - &gt; Await Github响应并通过提供的结构存储- &gt; Rust Future转换回到JS Promise - &gt;返回在JS中使用的响应</p>
+<p>正如我们之前探讨的那样，随着WebAssembly规范变得更强大，这个过程将变得更加简化。</p>
+<h2 id="%E4%BD%BF%E7%94%A8wasm-pack%E6%9E%84%E5%BB%BA%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9D%97">使用wasm-pack构建构建模块 <a class="heading-anchor-permalink" href="#%E4%BD%BF%E7%94%A8wasm-pack%E6%9E%84%E5%BB%BA%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h2>
+<p>运行时<code>wasm-pack build</code>，编译结果将输出到<code>pkg/</code>项目文件夹中的目录。事实上我们现在可以这样做来检查结果：</p>
+<p>#build <strong>project</strong> cd wasm-fetch-example wasm-pack build &gt; [INFO]：🎯检查Wasm目标…<br>
+&gt; [INFO]：🌀编译为Wasm …<br>
+&gt;编译proc-macro2 v0.4.30<br>
+…</p>
+<p>项目构建时间取决于您的系统。生成的<code>pkg/</code>文件夹将包含我们编译的模块：</p>
+<p>#pkg <strong>contents</strong> pkg /<br>
+<a href="http://README.md">README.md</a><br>
+wasm_fetch_example.d.ts<br>
+wasm_fetch_example_bg.d.ts<br>
+package.json<br>
+wasm_fetch_example.js<br>
+wasm_fetch_example_bg.wasm</p>
+<p>我们可以看到，<code>wasm-pack</code>它不仅仅<code>.wasm</code>为我们输出二进制文件：</p>
+<ul>
+<li><code>package.json</code>已生成A ，将此目录视为模块本身，准备发布到NPM或其他目录（我们将简要介绍如何将模块发布到私有注册表中）</li>
+<li><code>.d.ts</code>在将模块导入基于Typescript的项目时，已为模块和周围绑定函数生成类型定义文件。这些文件包含每个<code>export</code>wasm模块的类型- 这些类型可以是常量，函数类等</li>
+<li><code>wasm_fetch_example.js</code> 包含与wasm模块本身的Javascript绑定</li>
+<li>您<code>README.md</code>也将被复制到包中，以提供有关该模块的文档</li>
+</ul>
+<p><code>wasm-pack</code>已完成格式化项目的工作，准备作为模块发布，并支持Javascript及其Typescript超集。编译后，您可能会在控制台中看到此警告：</p>
+<p>&gt; Cargo.toml中缺少可选字段：‘description’，‘repository’和’license’。这些不是必需的，但建议使用</p>
+<p><code>wasm-pack</code>将尝试从此<code>Cargo.toml</code>填充此信息<code>package.json</code>。您确实可以在<code>Cargo.toml</code>以下<code>[package]</code>部分中输入此信息：</p>
+<p><strong>#Cargo.toml</strong> [package]<br>
+description =“一个基于Rust的WebAssembly项目，通过wasm-bindgen实现获取请求。”<br>
+license =“MIT”<br>
+repository =“ <strong>&lt;your_repo_url&gt;”</strong>，<br>
+…</p>
+<p><strong><em>注意：</em></strong><em>后续构建要快得多，只需重新编译您所做的更改。</em></p>
+<hr>
+<h1 id="%E5%8F%91%E5%B8%83wasm%E6%A8%A1%E5%9D%97">发布wasm模块 <a class="heading-anchor-permalink" href="#%E5%8F%91%E5%B8%83wasm%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h1>
+<p>如果您希望公开发布WebAssembly模块，您可以使用<code>[pack](https://rustwasm.github.io/wasm-pack/book/commands/pack-and-publish.html)</code><a href="https://rustwasm.github.io/wasm-pack/book/commands/pack-and-publish.html">和</a><code>[publish](https://rustwasm.github.io/wasm-pack/book/commands/pack-and-publish.html)</code><a href="https://rustwasm.github.io/wasm-pack/book/commands/pack-and-publish.html">命令</a> <code>wasm-pack</code>提供：</p>
+<ul>
+<li><code>wasm-pack pack</code>从<code>pkg/</code>目录创建一个tarball</li>
+<li><code>wasm-pack publish</code>从<code>pkg/</code>目录创建一个tarball ，然后将其发布到公共NPM注册表</li>
+</ul>
+<p><em>该</em><code>_publish_</code><em>命令只是指向命令的指针，该</em><code>_npm publish_</code><em>命令是发布到NPM注册表的官方方式。因此，所有可用的标志</em><code>_npm publish_</code><em>也可用</em><code>_wasm-pack publish_</code><em>。</em></p>
+<p>**＃发布到公共npm注册表<br>
+** wasm-pack build</p>
+<p>您可能希望将模块私有地发布到私有注册表。我已经发布了一篇关于如何使用私有代理注册表Verdaccio设置此类注册表的文章。请阅读以下文章中的操作方法：</p>
+<p>[</p>
+<p>使用Proxy Registry Verdaccio发布私有NPM包</p>
+<hr>
+<h3 id=""> <a class="heading-anchor-permalink" href="#" aria-hidden="true">#</a></h3>
+<p>如何在保持对公共npm注册表的访问权限的同时私下发布包</p>
+<h4 id="-2"> <a class="heading-anchor-permalink" href="#-2" aria-hidden="true">#</a></h4>
+<p><a href="http://medium.com">medium.com</a></p>
+<p>](/@rossbulat/publish-private-npm-packages-with-proxy-registry-verdaccio-56b769bca659?source=post_page-----5554b8982402----------------------)</p>
+<p>设置私有注册表后，只需提供带有<code>--registry</code>标志的URL ：</p>
+<p>**＃发布到私有注册表<br>
+** wasm-pack publish --registry“http：// &lt;your_registry_ip_or_domain&gt;”</p>
+<p>这提供了一种在内部测试WebAssembly库的方法 - 对于随着规范的发展而迭代开发WebAssembly模块的组织而言，这是一种更现实的方案。</p>
+<p><code>wasm-pack</code>现在已经发挥了作用，它的作用在发布过程之后停止，我们的模块准备作为依赖项添加到项目中。现在让我们探讨如何在React项目中使用wasm模块。</p>
+<hr>
+<h1 id="%E5%AF%BC%E5%85%A5wasm%E6%A8%A1%E5%9D%97">导入wasm模块 <a class="heading-anchor-permalink" href="#%E5%AF%BC%E5%85%A5wasm%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h1>
+<p>为了测试获取功能，我在这篇文章的随附存储库中包含了一个基本的<a href="https://github.com/rossbulat/wasm-fetch-example/tree/master/client">Create React App项目</a>。</p>
+<p>为了保护读者不要发布wasm模块本身用于这个项目，我将它包含在内部<code>node_modules</code>，忽略了除此模块之外的整个目录：</p>
+<p><strong>// .gitignore</strong> client / node_modules / *<br>
+！/ client / node_modules / wasm-fetch-example<br>
+…</p>
+<h2 id="%E4%BF%AE%E6%94%B9create-react-app%E4%BB%A5%E6%94%AF%E6%8C%81wasm%E6%A8%A1%E5%9D%97">修改Create React App以支持wasm模块 <a class="heading-anchor-permalink" href="#%E4%BF%AE%E6%94%B9create-react-app%E4%BB%A5%E6%94%AF%E6%8C%81wasm%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h2>
+<p>Create React App当前不支持Webpack配置中基于WebAssembly的模块。</p>
+<p><strong><em>注意：</em></strong><a href="https://github.com/webassembly/esm-integration"><em>ECMA脚本模块集成</em></a><em>目前是一个活跃的WebAssembly提议 - 一旦这些功能最终确定并推出，我们可以期待更简化的集成过程。</em><a href="https://github.com/webassembly/esm-integration"></a></p>
+<p>这也很可能是短期问题，并且随着WebAssembly获得更多采用而得到解决 - 但是有一个解决方案。</p>
+<p>为了支持我们新发布的模块，我们需要修改Create React App的Webpack配置，添加一个wasm loader。我们确实可以在没有弹出CRA的情况下使用一个名为的包<code>[react-app-rewired](https://www.npmjs.com/package/react-app-rewired)</code>，同时<code>[wasm-loader](https://www.npmjs.com/package/wasm-loader)</code>向Webpack添加WebAssembly支持。</p>
+<p>这些已作为dev依赖项安装：</p>
+<p>yarn add react-app-rewired wasm-loader --dev</p>
+<p><code>[config-overrides.js](https://github.com/rossbulat/wasm-fetch-example/blob/master/client/config-overrides.js)</code>已在客户端的根目录中定义了一个脚本，该脚本插入了对基于wasm的模块的支持。</p>
+<p>这里的最后一个修改是在<code>package.json</code>我们调用的地方，<code>react-app-rewired</code>而不是<code>react-scripts</code>在编译和运行应用程序时：</p>
+<p><strong><a href="//xn--package-vk1r.json">//的package.json</a></strong> “脚本”：{<br>
+“开始”： “ <strong>反应-APP-重新布线</strong>开始”，<br>
+“ 建立”： “ <strong>反应-APP-重新布线</strong>的构建”，<br>
+“ 测试”： “ <strong>反应-APP-重新布线</strong>测试”，<br>
+。…<br>
+}</p>
+<h2 id="%E5%BC%82%E6%AD%A5%E5%AF%BC%E5%85%A5wasm%E6%A8%A1%E5%9D%97">异步导入wasm模块 <a class="heading-anchor-permalink" href="#%E5%BC%82%E6%AD%A5%E5%AF%BC%E5%85%A5wasm%E6%A8%A1%E5%9D%97" aria-hidden="true">#</a></h2>
+<p><code>App.tsx</code> 演示了如何异步导入wasm模块并将其加载到组件的状态。</p>
+<p>这是完整的解决方案：</p>
+<hr>
+<h1 id="%E7%BB%BC%E4%B8%8A%E6%89%80%E8%BF%B0">综上所述 <a class="heading-anchor-permalink" href="#%E7%BB%BC%E4%B8%8A%E6%89%80%E8%BF%B0" aria-hidden="true">#</a></h1>
+<p>本文旨在介绍从Rust构建WebAsssembly模块的过程，<code>wasm-pack</code>以及生成和编译最终模块的方法。我们已经确定：</p>
+<ul>
+<li>这<code>wasm-bindgen</code>为我们提供了对Javascript标准库和标准Web API库的绑定，使我们能够访问调用Javascript，操作DOM，获取窗口和事件数据等 - 所有这些都来自我们的Rust wasm模块</li>
+<li><code>wasm-pack</code> 是一个有用的工具，用于生成基于Rust的WebAssembly项目，并自动编译wasm的过程并准备将结果包作为模块发布</li>
+<li>默认情况下，创建React App当前不支持其Webpack配置中的.wasm模块扩展。要将WebAssembly放入组件中，<code>react-app-rewired</code>可以使用该软件包将wasm-loader插入Webpack配置，扩展CRA配置，而无需弹出项目</li>
+<li>通过Promises异步导入wasm模块不会中断您的应用程序流。可以使用加载指示符或提示让用户知道您的模块正在加载到状态</li>
+</ul>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

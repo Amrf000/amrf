@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="active" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="https%3A%2F%2Fwww.cnblogs.com%2Fxia-weiwen%2Fp%2F6806709.htmlhttps%3A%2F%2Fblog.csdn.net%2Fxiaoaid01%2Farticle%2Fdetails%2F17998013http%3A%2F%2Fshouce.jb51.net%2Fqt-beginning%2F28.html%E7%AC%AC23%E7%AF%87-%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E4%B8%89%EF%BC%89%E5%88%A9%E7%94%A8qsqlquery%E7%B1%BB%E6%89%A7%E8%A1%8Csql%E8%AF%AD%E5%8F%A5"><a href="https://www.cnblogs.com/xia-weiwen/p/6806709.html">https://www.cnblogs.com/xia-weiwen/p/6806709.html</a><br>
+<a href="https://blog.csdn.net/xiaoaid01/article/details/17998013">https://blog.csdn.net/xiaoaid01/article/details/17998013</a>
+<a href="http://shouce.jb51.net/qt-beginning/28.html">http://shouce.jb51.net/qt-beginning/28.html</a>
+第23篇 数据库（三）利用<code>QSqlQuery</code>类执行SQL语句 <a class="heading-anchor-permalink" href="#https%3A%2F%2Fwww.cnblogs.com%2Fxia-weiwen%2Fp%2F6806709.htmlhttps%3A%2F%2Fblog.csdn.net%2Fxiaoaid01%2Farticle%2Fdetails%2F17998013http%3A%2F%2Fshouce.jb51.net%2Fqt-beginning%2F28.html%E7%AC%AC23%E7%AF%87-%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88%E4%B8%89%EF%BC%89%E5%88%A9%E7%94%A8qsqlquery%E7%B1%BB%E6%89%A7%E8%A1%8Csql%E8%AF%AD%E5%8F%A5" aria-hidden="true">#</a></h1>
+<h2 id="%E5%AF%BC%E8%AF%AD">导语 <a class="heading-anchor-permalink" href="#%E5%AF%BC%E8%AF%AD" aria-hidden="true">#</a></h2>
+<h2 id="sql%E5%8D%B3%E7%BB%93%E6%9E%84%E5%8C%96%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80%EF%BC%8C%E6%98%AF%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A0%87%E5%87%86%E8%AF%AD%E8%A8%80%E3%80%82%E5%89%8D%E9%9D%A2%E4%B8%A4%E8%8A%82%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%9C%A8qt%E9%87%8C%E5%88%A9%E7%94%A8qsqlquery%E7%B1%BB%E6%89%A7%E8%A1%8C%E4%BA%86sql%E8%AF%AD%E5%8F%A5%EF%BC%8C%E8%BF%99%E4%B8%80%E8%8A%82%E6%88%91%E4%BB%AC%E5%B0%86%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E8%AF%A5%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%82%E9%9C%80%E8%A6%81%E8%AF%B4%E6%98%8E%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E9%87%8D%E5%9C%A8%E8%AE%B2%E8%A7%A3qt%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8%EF%BC%8C%E8%80%8C%E9%9D%9E%E4%B8%93%E4%B8%9A%E7%9A%84%E8%AE%B2%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B8%8D%E4%BC%9A%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E8%BF%9B%E8%A1%8C%E6%B7%B1%E5%85%A5%E8%AE%B2%E8%A7%A3%E3%80%82%E7%8E%AF%E5%A2%83%EF%BC%9Awindows-xp-%2B-qt-4.8.4%2Bqt-creator2.6.2%E7%9B%AE%E5%BD%95">SQL即结构化查询语言，是关系数据库的标准语言。前面两节中已经在Qt里利用<code>QSqlQuery</code>类执行了SQL语句，这一节我们将详细讲解该类的使用。需要说明，因为我们重在讲解Qt中的数据库使用，而非专业的讲解数据库知识，所以不会对数据库中的一些知识进行深入讲解。
+环境：Windows Xp + Qt 4.8.4+Qt Creator2.6.2
+目录 <a class="heading-anchor-permalink" href="#sql%E5%8D%B3%E7%BB%93%E6%9E%84%E5%8C%96%E6%9F%A5%E8%AF%A2%E8%AF%AD%E8%A8%80%EF%BC%8C%E6%98%AF%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%A0%87%E5%87%86%E8%AF%AD%E8%A8%80%E3%80%82%E5%89%8D%E9%9D%A2%E4%B8%A4%E8%8A%82%E4%B8%AD%E5%B7%B2%E7%BB%8F%E5%9C%A8qt%E9%87%8C%E5%88%A9%E7%94%A8qsqlquery%E7%B1%BB%E6%89%A7%E8%A1%8C%E4%BA%86sql%E8%AF%AD%E5%8F%A5%EF%BC%8C%E8%BF%99%E4%B8%80%E8%8A%82%E6%88%91%E4%BB%AC%E5%B0%86%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3%E8%AF%A5%E7%B1%BB%E7%9A%84%E4%BD%BF%E7%94%A8%E3%80%82%E9%9C%80%E8%A6%81%E8%AF%B4%E6%98%8E%EF%BC%8C%E5%9B%A0%E4%B8%BA%E6%88%91%E4%BB%AC%E9%87%8D%E5%9C%A8%E8%AE%B2%E8%A7%A3qt%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8%EF%BC%8C%E8%80%8C%E9%9D%9E%E4%B8%93%E4%B8%9A%E7%9A%84%E8%AE%B2%E8%A7%A3%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%EF%BC%8C%E6%89%80%E4%BB%A5%E4%B8%8D%E4%BC%9A%E5%AF%B9%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E7%9F%A5%E8%AF%86%E8%BF%9B%E8%A1%8C%E6%B7%B1%E5%85%A5%E8%AE%B2%E8%A7%A3%E3%80%82%E7%8E%AF%E5%A2%83%EF%BC%9Awindows-xp-%2B-qt-4.8.4%2Bqt-creator2.6.2%E7%9B%AE%E5%BD%95" aria-hidden="true">#</a></h2>
+<ul>
+<li>一、创建数据库连接</li>
+<li>二、操作结果集</li>
+<li>三、在SQL语句中使用变量</li>
+<li>四、批处理操作</li>
+<li>五、事务操作
+正文
+–
+一、创建数据库连接
+前面我们是在主函数中创建数据库连接，然后打开并使用。实际中为了明了方便，一般将数据库连接单独放在一个头文件中。下面来看一个例子。
+1．新建Qt Gui应用，项目名称为<code>myquery</code>，基类为<code>QMainWindow</code>，类名为<code>MainWindow</code>。完成后打开<code>myquery.pro</code>并将第一行代码更改为：
+QT       += coregui sql
+然后保存该文件。
+2．向项目中添加新的C++头文件，名称为<code>connection.</code>h，然后打开该文件，更改如下：</li>
+</ul>
+<pre><code>#ifndef CONNECTION\_H#define CONNECTION\_H
+#include &lt;QMessageBox&gt;
+#include &lt;QSqlDatabase&gt;
+#include &lt;QSqlQuery&gt;
+static bool createConnection(){
+    QSqlDatabase db = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;);
+    db.setDatabaseName(&quot;:memory:&quot;);    if (!db.open()) {
+       QMessageBox::critical(0, qApp-&gt;tr(&quot;Cannot open database&quot;),
+           qApp-&gt;tr(&quot;Unable to establisha database connection.&quot;
+                     ), QMessageBox::Cancel);       return false;
+    }
+    QSqlQuery query;
+    query.exec(&quot;create table student (id int primary key, &quot;
+               &quot;name varchar(20))&quot;);
+    query.exec(&quot;insert into student values(0, 'first')&quot;);
+    query.exec(&quot;insert into student values(1, 'second')&quot;);
+    query.exec(&quot;insert into student values(2, 'third')&quot;);
+    query.exec(&quot;insert into student values(3, 'fourth')&quot;);
+    query.exec(&quot;insert into student values(4, 'fifth')&quot;);    return true;
+}#endif // CONNECTION\_H
+</code></pre>
+<p>在这个头文件中我们添加了一个建立连接的函数，使用这个头文件的目的就是要简化主函数中的内容。这里先创建了一个SQLite数据库的默认连接，设置数据库名称时使用了<code>“:memory:”</code>，表明这个是建立在内存中的数据库，也就是说该数据库只在程序运行期间有效，等程序运行结束时就会将其销毁。当然，大家也可以将其改为一个具体的数据库名称，比如<code>“my.db”</code>，这样就会在项目目录中创建该数据库文件了。下面使用<code>open()</code>函数将数据库打开，如果打开失败，则弹出提示对话框。最后使用<code>QSqlQuery</code>创建了一个<code>student</code>表，并插入了包含<code>id</code>和<code>name</code>两个属性的五条记录，如下图所示。其中，<code>id</code>属性是<code>int</code>类型的，<code>“primary key”</code>表明该属性是主键，它不能为空，而且不能有重复的值；而<code>name</code>属性是<code>varchar</code>类型的，并且不大于20个字符。这里使用的SQL语句都要包含在双引号中，如果一行写不完，那么分行后，每一行都要使用两个双引号引起来。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-1.jpg" alt="">
+需要注意，代码中的<code>query</code>没有进行任何指定就可以操作前面打开的数据库，这是因为现在只有一个数据库连接，它就是默认连接，这时候所有的操作都是针对该连接的。但是如果要同时操作多个数据库连接，就需要进行指定了，这方面内容可以参考《Qt Creator快速入门》的第17章。
+3．下面我们到<code>main.cpp</code>中调用连接函数。
+#include “mainwindow.h”#include <QApplication>#include &quot;connection.h&quot;int main(int argc, char *argv[]){    QApplication a(argc, argv);    if (!createConnection())           return 1;
+    MainWindow w;
+    w.show();    return a.exec();
+}
+4．我们往界面上添加一个按钮来实现查询操作。双击<code>mainwindow.ui</code>文件进入设计模式。然后将一个<code>Push Button</code>拖到界面上，并修改其显示文本为“查询”。效果如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-2.jpg" alt="">
+5．在查询按钮上点击鼠标右键，选择“转到槽”，然后选择<code>clicked()</code>单击信号槽并点击确定，如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-3.jpg" alt="">
+6．将槽的内容更改如下：</p>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery query;
+    query.exec(&quot;select \* from student&quot;);    while(query.next())
+    {
+       qDebug() &lt;&lt; query.value(0).toInt()
+                                      &lt;&lt; query.value(1).toString();
+    }
+}
+</code></pre>
+<p>7．在<code>mainwindow.cpp</code>文件中添加头文件：
+#include <QSqlQuery>#include <QDebug>
+8．运行程序，然后按下查询按钮，在应用程序输出窗口将会输出结果，效果如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-4.jpg" alt="">
+二、操作结果集
+在前面的程序中，我们使用<code>query.exec(&quot;select * from student&quot;);</code>查询出表中所有的内容。其中的SQL语句<code>“select * from student”</code>中<code>“*”</code>号表明查询表中记录的所有属性。而当<code>query.exec(&quot;select * from student&quot;);</code>这条语句执行完后，我们便获得了相应的执行结果，因为获得的结果可能不止一条记录，所以称之为结果集。
+结果集其实就是查询到的所有记录的集合，在<code>QSqlQuery</code>类中提供了多个函数来操作这个集合，需要注意这个集合中的记录是从0开始编号的。最常用的操作有：</p>
+<ul>
+<li><code>seek(int n)</code>：<code>query</code>指向结果集的第n条记录；</li>
+<li><code>first()</code>：<code>query</code>指向结果集的第一条记录；</li>
+<li><code>last()</code>：<code>query</code>指向结果集的最后一条记录；</li>
+<li><code>next()</code>：<code>query</code>指向下一条记录，每执行一次该函数，便指向相邻的下一条记录；</li>
+<li><code>previous()</code>：<code>query</code>指向上一条记录，每执行一次该函数，便指向相邻的上一条记录；</li>
+<li><code>record()</code>：获得现在指向的记录；</li>
+<li><code>value(int n)</code>：获得属性的值。其中<code>n</code>表示你查询的第n个属性，比方上面我们使用<code>“select * from student</code>”就相当于<code>“select id, name from student”</code>，那么<code>value(0)</code>返回<code>id</code>属性的值，<code>value(1)</code>返回<code>name</code>属性的值。该函数返回<code>QVariant</code>类型的数据，关于该类型与其他类型的对应关系，可以在帮助中查看QVariant。</li>
+<li><code>at()</code>：获得现在<code>query</code>指向的记录在结果集中的编号。
+需要特别注意，刚执行完<code>query.exec(&quot;select *from student&quot;);</code>这行代码时，<code>query</code>是指向结果集以外的，我们可以利用<code>query.next()</code>使得<code>query</code>指向结果集的第一条记录。当然我们也可以利用<code>seek(0)</code>函数或者<code>first()</code>函数使<code>query</code>指向结果集的第一条记录。但是为了节省内存开销，推荐的方法是，在<code>query.exec(&quot;select * from student&quot;);</code>这行代码前加上<code>query.setForwardOnly(true);</code>这条代码，此后只能使用<code>next()</code>和<code>seek()</code>函数。
+下面我们通过例子来演示一下这些函数的使用。将槽更改如下：</li>
+</ul>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery query;
+    query.exec(&quot;select \* from student&quot;);
+    qDebug() &lt;&lt; &quot;exec next() :&quot;;    //开始就先执行一次next()函数，那么query指向结果集的第一条记录
+    if(query.next())
+    {       //获取query所指向的记录在结果集中的编号
+       int rowNum = query.at();       //获取每条记录中属性（即列）的个数
+       int columnNum = query.record().count();       //获取&quot;name&quot;属性所在列的编号，列从左向右编号，最左边的编号为0
+       int fieldNo = query.record().indexOf(&quot;name&quot;);       //获取id属性的值，并转换为int型
+       int id = query.value(0).toInt();       //获取name属性的值
+       QString name = query.value(fieldNo).toString();       //将结果输出
+       qDebug() &lt;&lt; &quot;rowNum is : &quot; &lt;&lt; rowNum
+                 &lt;&lt; &quot; id is : &quot; &lt;&lt; id
+                 &lt;&lt; &quot; name is : &quot; &lt;&lt; name
+                 &lt;&lt; &quot; columnNum is : &quot; &lt;&lt; columnNum;
+    }//定位到结果集中编号为2的记录，即第三条记录，因为第一条记录的编号为0
+    qDebug() &lt;&lt; &quot;exec seek(2) :&quot;;    if(query.seek(2))
+    {
+       qDebug() &lt;&lt; &quot;rowNum is : &quot; &lt;&lt; query.at()
+                 &lt;&lt; &quot; id is : &quot; &lt;&lt; query.value(0).toInt()
+                 &lt;&lt; &quot; name is : &quot; &lt;&lt; query.value(1).toString();
+    }    //定位到结果集中最后一条记录
+    qDebug() &lt;&lt; &quot;exec last() :&quot;;    if(query.last())
+    {
+       qDebug() &lt;&lt; &quot;rowNum is : &quot; &lt;&lt; query.at()
+                 &lt;&lt; &quot; id is : &quot; &lt;&lt; query.value(0).toInt()
+                 &lt;&lt; &quot; name is : &quot; &lt;&lt; query.value(1).toString();
+    }
+}
+</code></pre>
+<p>最后在<code>mainwindow.cpp</code>中添加<code>#include &lt;QSqlRecord&gt;</code>头文件包含，运行程序，点击查询按钮，输出结果如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-5.jpg" alt="">
+三、在SQL语句中使用变量
+1．我们先来看一个例子。首先在设计模式往界面上添加一个<code>Spin Box</code>部件，如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-6.jpg" alt="">
+2．将查询按钮槽里面的内容更改如下：</p>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery query;    int id = ui-&gt;spinBox-&gt;value();
+    query.exec(QString(&quot;select name from student where id =%1&quot;)
+               .arg(id));
+    query.next();
+    QString name = query.value(0).toString();
+    qDebug() &lt;&lt; name;
+}
+</code></pre>
+<p>这里使用了<code>QString</code>类的<code>arg()</code>函数实现了在SQL语句中使用变量，我们运行程序，更改<code>Spin Box</code>的值，然后点击查询按钮，效果如下图所示。
+<img src="http://shouce.jb51.net/qt-beginning/img/23-7.jpg" alt="">
+3．其实在<code>QSqlQuery</code>类中提供了数据绑定同样可以实现在SQL语句中使用变量，虽然它也是通过占位符来实现的，不过使用它形式上更明了一些。下面先来看一个例子，将查询按钮槽更改如下：</p>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery query;
+    query.prepare(&quot;insert into student (id, name) &quot;
+                  &quot;values (:id, :name)&quot;);
+    query.bindValue(0, 5);
+    query.bindValue(1, &quot;sixth&quot;);
+    query.exec();
+    query.exec(&quot;select \* from student&quot;);
+    query.last();    int id = query.value(0).toInt();
+    QString name = query.value(1).toString();
+    qDebug() &lt;&lt; id &lt;&lt; name;
+}
+</code></pre>
+<p>这里在<code>student</code>表的最后又添加了一条记录。然后我们先使用了<code>prepare()</code>函数，在其中利用了<code>“:id”</code>和<code>“:name”</code>来代替具体的数据，而后又利用<code>bindValue()</code>函数给<code>id</code>和<code>name</code>两个属性赋值，这称为绑定操作。其中编号0和1分别代表<code>“:id”</code>和<code>“:name”</code>，就是说按照<code>prepare()</code>函数中出现的属性从左到右编号，最左边是0 。
+特别注意，在最后一定要执行<code>exec()</code>函数，所做的操作才能被真正执行。运行程序，点击查询按钮，可以看到前面添加的记录的信息。这里的<code>“:id”</code>和<code>“:name”</code>，叫做占位符，这是ODBC数据库的表示方法，还有一种Oracle的表示方法就是全部用“？”号。例如：</p>
+<pre><code>query.prepare(&quot;insert into student(id, name) &quot;
+                  &quot;values (?, ?)&quot;);
+query.bindValue(0, 5);
+query.bindValue(1, &quot;sixth&quot;);
+query.exec();
+</code></pre>
+<p>也可以利用<code>addBindValue()</code>函数，这样就可以省去编号，它是按顺序给属性赋值的，如下：</p>
+<pre><code>query.prepare(&quot;insert into student(id, name) &quot;
+                  &quot;values (?, ?)&quot;);
+query.addBindValue(5);
+query.addBindValue(&quot;sixth&quot;);
+query.exec();
+</code></pre>
+<p>当用ODBC的表示方法时，我们也可以将编号用实际的占位符代替，如下：</p>
+<pre><code>query.prepare(&quot;insert into student(id, name) &quot;
+                      &quot;values (:id, :name)&quot;);
+query.bindValue(&quot;:id&quot;, 5);
+query.bindValue(&quot;:name&quot;, &quot;sixth&quot;);
+query.exec();
+</code></pre>
+<p>以上各种形式的表示方式效果是一样的。
+4．下面我们演示一下通过绑定操作在SQL语句中使用变量。更改槽函数如下：</p>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery query;
+    query.prepare(&quot;select name from student where id = ?&quot;);    int id = ui-&gt;spinBox-&gt;value();
+    query.addBindValue(id);
+    query.exec();
+    query.next();
+    qDebug() &lt;&lt; query.value(0).toString();
+}
+</code></pre>
+<p>运行程序，可以实现通过<code>Spin Box</code>的值来进行查询。
+四、批处理操作
+当要进行多条记录的操作时，我们就可以利用绑定进行批处理。将槽更改如下：</p>
+<pre><code>void MainWindow::on\_pushButton\_clicked()
+{
+    QSqlQuery q;
+    q.prepare(&quot;insert into student values (?, ?)&quot;);
+    QVariantList ints;
+    ints &lt;&lt; 10 &lt;&lt; 11 &lt;&lt; 12 &lt;&lt; 13;
+    q.addBindValue(ints);
+    QVariantList names;    // 最后一个是空字符串，应与前面的格式相同
+        names &lt;&lt; &quot;xiaoming&quot; &lt;&lt; &quot;xiaoliang&quot;
+                      &lt;&lt; &quot;xiaogang&quot; &lt;&lt; QVariant(QVariant::String);
+    q.addBindValue(names);    if (!q.execBatch()) //进行批处理，如果出错就输出错误
+       qDebug() &lt;&lt; q.lastError();    //下面输出整张表
+    QSqlQuery query;
+    query.exec(&quot;select \* from student&quot;);    while(query.next())
+    {       int id = query.value(0).toInt();
+       QString name = query.value(1).toString();
+       qDebug() &lt;&lt; id &lt;&lt; name;
+    }
+}
+</code></pre>
+<p>然后需要在<code>mainwindow.cpp</code>上添加头文件包含：<code>#include &lt;QSqlError&gt;</code>。我们在程序中利用列表存储了同一属性的多个值，然后进行了值绑定。最后执行<code>execBatch()</code>函数进行批处理。注意程序中利用<code>QVariant(QVariant::String)</code>来输入空值<code>NULL</code>，因为前面都是<code>QString</code>类型的，所以这里要使用<code>QVariant::String</code>使格式一致化。 运行程序，效果如下图所示：
+<img src="http://shouce.jb51.net/qt-beginning/img/23-8.jpg" alt="">
+五、事务操作
+事务可以保证一个复杂的操作的原子性，就是对于一个数据库操作序列，这些操作要么全部做完，要么一条也不做，它是一个不可分割的工作单位。在Qt中，如果底层的数据库引擎支持事务，那么<code>QSqlDriver::hasFeature(QSqlDriver::Transactions)</code>会返回<code>true</code>。可以使用<code>QSqlDatabase::transaction()</code>来启动一个事务，然后编写一些希望在事务中执行的SQL语句，最后调用<code>QSqlDatabase::commit()</code>或者<code>QSqlDatabase::rollback()</code>。当使用事务时必须在创建查询以前就开始事务，例如：</p>
+<pre><code>QSqlDatabase::database().transaction();
+QSqlQuery query;
+query.exec(&quot;SELECT id FROMemployee WHERE name = 'Torild Halvorsen'&quot;);if (query.next()) {    int employeeId = query.value(0).toInt();
+    query.exec(&quot;INSERT INTO project(id, name, ownerid) &quot;
+               &quot;VALUES (201, 'ManhattanProject', &quot;
+               + QString::number(employeeId) + ')');
+}
+QSqlDatabase::database().commit();
+</code></pre>
+<h2 id="%E7%BB%93%E8%AF%AD">结语 <a class="heading-anchor-permalink" href="#%E7%BB%93%E8%AF%AD" aria-hidden="true">#</a></h2>
+<h1 id="%E5%AF%B9%E6%89%A7%E8%A1%8Csql%E8%AF%AD%E5%8F%A5%E6%88%91%E4%BB%AC%E5%B0%B1%E4%BB%8B%E7%BB%8D%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%8C%E5%85%B6%E5%AE%9Eqt%E4%B8%AD%E6%8F%90%E4%BE%9B%E4%BA%86%E6%9B%B4%E4%B8%BA%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8D%E9%9C%80%E8%A6%81sql%E8%AF%AD%E5%8F%A5%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%E6%88%91%E4%BB%AC%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%8A%82%E8%AE%B2%E8%BF%B0%E8%BF%99%E4%BA%9B%E5%86%85%E5%AE%B9%E3%80%82%E6%B6%89%E5%8F%8A%E5%88%B0%E7%9A%84%E6%BA%90%E7%A0%81%3Ahttps%3A%2F%2Fwww.devbean.net%2F2013%2F06%2Fqt-study-road-2-database%2Fqt-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-2%EF%BC%8855%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C">对执行SQL语句我们就介绍这么多，其实Qt中提供了更为简单的不需要SQL语句就可以操作数据库的方法，我们在下一节讲述这些内容。
+涉及到的源码:
+<a href="https://www.devbean.net/2013/06/qt-study-road-2-database/">https://www.devbean.net/2013/06/qt-study-road-2-database/</a>
+Qt 学习之路 2（55）：数据库操作 <a class="heading-anchor-permalink" href="#%E5%AF%B9%E6%89%A7%E8%A1%8Csql%E8%AF%AD%E5%8F%A5%E6%88%91%E4%BB%AC%E5%B0%B1%E4%BB%8B%E7%BB%8D%E8%BF%99%E4%B9%88%E5%A4%9A%EF%BC%8C%E5%85%B6%E5%AE%9Eqt%E4%B8%AD%E6%8F%90%E4%BE%9B%E4%BA%86%E6%9B%B4%E4%B8%BA%E7%AE%80%E5%8D%95%E7%9A%84%E4%B8%8D%E9%9C%80%E8%A6%81sql%E8%AF%AD%E5%8F%A5%E5%B0%B1%E5%8F%AF%E4%BB%A5%E6%93%8D%E4%BD%9C%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%8C%E6%88%91%E4%BB%AC%E5%9C%A8%E4%B8%8B%E4%B8%80%E8%8A%82%E8%AE%B2%E8%BF%B0%E8%BF%99%E4%BA%9B%E5%86%85%E5%AE%B9%E3%80%82%E6%B6%89%E5%8F%8A%E5%88%B0%E7%9A%84%E6%BA%90%E7%A0%81%3Ahttps%3A%2F%2Fwww.devbean.net%2F2013%2F06%2Fqt-study-road-2-database%2Fqt-%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-2%EF%BC%8855%EF%BC%89%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E6%93%8D%E4%BD%9C" aria-hidden="true">#</a></h1>
+<p><a href="https://www.devbean.net/author/devbean/" title="由豆子发布">豆子</a> 2013年6月14日 <a href="https://www.devbean.net/category/qt-study-road-2/" title="View all posts in Qt 学习之路 2">Qt 学习之路 2</a> <a href="https://www.devbean.net/2013/06/qt-study-road-2-database/#comments">79条评论</a>
+Qt 提供了 QtSql 模块来提供平台-独立的基于 SQL 的数据库操作。这里我们所说的“平台-独立”，既包括操作系统平台，又包括各个数据库平台。另外，我们强调了“基于 SQL”，因为 NoSQL 数据库至今没有一个通用查询方法，所以不可能提供一种通用的 NoSQL 数据库的操作。Qt 的数据库操作还可以很方便的与 model/view 架构进行整合。通常来说，我们对数据库的操作更多地在于对数据库表的操作，而这正是 model/view 架构的长项。
+Qt 使用<code>QSqlDatabase</code>表示一个数据库连接。更底层上，Qt 使用驱动（drivers）来与不同的数据库 API 进行交互。Qt 桌面版本提供了如下几种驱动：
+ 驱动
+数据库
+QDB2
+IBM DB2 (7.1 或更新版本)
+QIBASE
+Borland InterBase
+QMYSQL
+MySQL
+QOCI
+Oracle Call Interface Driver
+QODBC
+Open Database Connectivity (ODBC) – Microsoft SQL Server 及其它兼容 ODBC 的数据库
+QPSQL
+PostgreSQL (7.3 或更新版本)
+QSQLITE2
+SQLite 2
+QSQLITE
+SQLite 3
+QSYMSQL
+针对 Symbian 平台的SQLite 3
+QTDS
+Sybase Adaptive Server (自 Qt 4.7 起废除)
+不过，由于受到协议的限制，Qt 开源版本并没有提供上面所有驱动的二进制版本，而仅仅以源代码的形式提供。通常，Qt 只默认搭载 QSqlite 驱动（这个驱动实际还包括 Sqlite 数据库，也就是说，如果需要使用 Sqlite 的话，只需要该驱动即可）。我们可以选择把这些驱动作为 Qt 的一部分进行编译，也可以当作插件编译。
+如果习惯于使用 SQL 语句，我们可以选择<code>QSqlQuery</code>类；如果只需要使用高层次的数据库接口（不关心 SQL 语法），我们可以选择<code>QSqlTableModel</code>和<code>QSqlRelationalTableModel</code>。本章我们介绍<code>QSqlQuery</code>类，在后面的章节则介绍<code>QSqlTableModel</code>和<code>QSqlRelationalTableModel</code>。
+在使用时，我们可以通过
+C/C++
+1 lines
+QSqlDatabase::drivers();
+找到系统中所有可用的数据库驱动的名字列表。我们只能使用出现在列表中的驱动。由于默认情况下，QtSql 是作为 Qt 的一个模块提供的。为了使用有关数据库的类，我们必须早 .pro 文件中添加这么一句：
+QT += sql
+这表示，我们的程序需要使用 Qt 的 core、gui 以及 sql 三个模块。注意，如果需要同时使用 Qt4 和 Qt5 编译程序，通常我们的 .pro 文件是这样的：
+Plain Text
+2 lines
+QT += core gui sql
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+这两句也很明确：Qt 需要加载 core、gui 和 sql 三个模块，如果主板本大于 4，则再添加 widgets 模块。
+下面来看一个简单的函数：
+C/C++</p>
+<pre><code>bool connect(const QString &amp;dbName)
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase(&quot;QSQLITE&quot;);
+//    db.setHostName(&quot;host&quot;);
+//    db.setDatabaseName(&quot;dbname&quot;);
+//    db.setUserName(&quot;username&quot;);
+//    db.setPassword(&quot;password&quot;);
+    db.setDatabaseName(dbName);
+    if (!db.open()) {
+        QMessageBox::critical(0, QObject::tr(&quot;Database Error&quot;),
+                              db.lastError().text());
+        return false;
+    }
+    return true;
+}
+</code></pre>
+<p>我们使用<code>connect()</code>函数创建一个数据库连接。我们使用<code>QSqlDatabase::addDatabase()</code>静态函数完成这一请求，也就是创建了一个<code>QSqlDatabase</code>实例。注意，数据库连接使用自己的名字进行区分，而不是数据库的名字。例如，我们可以使用下面的语句：
+C/C++
+QSqlDatabase db=QSqlDatabase::addDatabase(“QSQLITE”, QString(“con%1”).arg(dbName));
+此时，我们是使用<code>addDatabase()</code>函数的第二个参数来给这个数据库连接一个名字。在这个例子中，用于区分这个数据库连接的名字是<code>QString(&quot;conn%1&quot;).arg(dbName)</code>，而不是 “QSQLITE”。这个参数是可选的，如果不指定，系统会给出一个默认的名字<code>QSqlDatabase::defaultConnection</code>，此时，Qt 会创建一个默认的连接。如果你给出的名字与已存在的名字相同，新的连接会替换掉已有的连接。通过这种设计，我们可以为一个数据库建立多个连接。
+我们这里使用的是 sqlite 数据库，只需要指定数据库名字即可。如果是数据库服务器，比如 MySQL，我们还需要指定主机名、端口号、用户名和密码，这些语句使用注释进行了简单的说明。
+接下来我们调用了<code>QSqlDatabase::open()</code>函数，打开这个数据库连接。通过检查<code>open()</code>函数的返回值，我们可以判断数据库是不是正确打开。
+QtSql 模块中的类大多具有<code>lastError()</code>函数，用于检查最新出现的错误。如果你发现数据库操作有任何问题，应该使用这个函数进行错误的检查。这一点我们也在上面的代码中进行了体现。当然，这只是最简单的实现，一般来说，更好的设计是，不要在数据库操作中混杂界面代码（并且将这个<code>connect()</code>函数放在一个专门的数据库操作类中）。
+接下来我们可以在<code>main()</code>函数中使用这个<code>connect()</code>函数：
+C/C++</p>
+<pre><code>int main(int argc, char \*argv\[])
+{
+    QApplication a(argc, argv);
+    if (connect(&quot;demo.db&quot;)) {
+        QSqlQuery query;
+        if (!query.exec(&quot;CREATE TABLE student (&quot;
+                        &quot;id INTEGER PRIMARY KEY AUTOINCREMENT,&quot;
+                        &quot;name VARCHAR,&quot;
+                        &quot;age INT)&quot;)) {
+            QMessageBox::critical(0, QObject::tr(&quot;Database Error&quot;),
+                                  query.lastError().text());
+            return 1;
+        }
+    } else {
+        return 1;
+    }
+    return a.exec();
+}
+</code></pre>
+<p><code>main()</code>函数中，我们调用这个<code>connect()</code>函数打开数据库。如果打开成功，我们通过一个<code>QSqlQuery</code>实例执行了 SQL 语句。同样，我们使用其<code>lastError()</code>函数检查了执行结果是否正确。
+注意这里的<code>QSqlQuery</code>实例的创建。我们并没有指定是为哪一个数据库连接创建查询对象，此时，系统会使用默认的连接，也就是使用没有第二个参数的<code>addDatabase()</code>函数创建的那个连接（其实就是名字为<code>QSqlDatabase::defaultConnection</code>的默认连接）。如果没有这么一个连接，系统就会报错。也就是说，如果没有默认连接，我们在创建<code>QSqlQuery</code>对象时必须指明是哪一个<code>QSqlDatabase</code>对象，也就是<code>addDatabase()</code>的返回值。
+我们还可以通过使用<code>QSqlQuery::isActive()</code>函数检查语句执行正确与否。如果<code>QSqlQuery</code>对象是活动的，该函数返回 true。所谓“活动”，就是指该对象成功执行了<code>exec()</code>函数，但是还没有完成。如果需要设置为不活动的，可以使用<code>finish()</code>或者<code>clear()</code>函数，或者直接释放掉这个<code>QSqlQuery</code>对象。这里需要注意的是，如果存在一个活动的 SELECT 语句，某些数据库系统不能成功完成<code>connect()</code>或者<code>rollback()</code>函数的调用。此时，我们必须首先将活动的 SELECT 语句设置成不活动的。
+创建过数据库表student 之后，我们开始插入数据，然后将其独取出来：
+C/C++</p>
+<pre><code>if (connect(&quot;demo.db&quot;)) {
+    QSqlQuery query;
+    query.prepare(&quot;INSERT INTO student (name, age) VALUES (?, ?)&quot;);
+    QVariantList names;
+    names &lt;&lt; &quot;Tom&quot; &lt;&lt; &quot;Jack&quot; &lt;&lt; &quot;Jane&quot; &lt;&lt; &quot;Jerry&quot;;
+    query.addBindValue(names);
+    QVariantList ages;
+    ages &lt;&lt; 20 &lt;&lt; 23 &lt;&lt; 22 &lt;&lt; 25;
+    query.addBindValue(ages);
+    if (!query.execBatch()) {
+        QMessageBox::critical(0, QObject::tr(&quot;Database Error&quot;),
+                              query.lastError().text());
+    }
+    query.finish();
+    query.exec(&quot;SELECT name, age FROM student&quot;);
+    while (query.next()) {
+        QString name = query.value(0).toString();
+        int age = query.value(1).toInt();
+        qDebug() &lt;&lt; name &lt;&lt; &quot;: &quot; &lt;&lt; age;
+    }
+} else {
+    return 1;
+}
+</code></pre>
+<h1 id="%E4%BE%9D%E6%97%A7%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%88%91%E4%BB%AC%E5%88%9B%E5%BB%BA%E7%9A%84-demo.db-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%82%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E6%8F%92%E5%85%A5%E5%A4%9A%E6%9D%A1%E6%95%B0%E6%8D%AE%EF%BC%8C%E6%AD%A4%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8qsqlquery%3A%3Aexec()%E5%87%BD%E6%95%B0%E4%B8%80%E6%9D%A1%E4%B8%80%E6%9D%A1%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%86%E6%98%AF%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E9%80%89%E6%8B%A9%E4%BA%86%E5%8F%A6%E5%A4%96%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E6%89%B9%E9%87%8F%E6%89%A7%E8%A1%8C%E3%80%82%E9%A6%96%E5%85%88%EF%BC%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8qsqlquery%3A%3Aprepare()%E5%87%BD%E6%95%B0%E5%AF%B9%E8%BF%99%E6%9D%A1-sql-%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%8C%E9%97%AE%E5%8F%B7-%3F-%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E9%A2%84%E7%A4%BA%E7%9D%80%E4%BB%A5%E5%90%8E%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE%E6%9B%BF%E6%8D%A2%E8%BF%99%E4%BA%9B%E4%BD%8D%E7%BD%AE%E3%80%82%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E%E4%B8%80%E4%B8%8B%EF%BC%8C%E9%A2%84%E5%A4%84%E7%90%86%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E4%BE%9B%E7%9A%84%E4%B8%80%E7%A7%8D%E7%89%B9%E6%80%A7%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%B0%86-sql-%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91%EF%BC%8C%E6%80%A7%E8%83%BD%E5%92%8C%E5%AE%89%E5%85%A8%E6%80%A7%E9%83%BD%E8%A6%81%E4%BC%98%E4%BA%8E%E6%99%AE%E9%80%9A%E7%9A%84-sql-%E5%A4%84%E7%90%86%E3%80%82%E5%9C%A8%E4%B8%8A%E9%9D%A2%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%97%E8%A1%A8-names-%E6%9B%BF%E6%8D%A2%E6%8E%89%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E5%8F%B7%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%95%B4%E5%9E%8B%E5%88%97%E8%A1%A8-ages-%E6%9B%BF%E6%8D%A2%E6%8E%89%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E5%8F%B7%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8C%E5%88%A9%E7%94%A8qsqlquery%3A%3Aaddbindvalue()%E6%88%91%E4%BB%AC%E5%B0%86%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E5%88%B0%E8%BF%99%E4%B8%AA%E9%A2%84%E5%A4%84%E7%90%86%E7%9A%84-sql-%E8%AF%AD%E5%8F%A5%E4%B8%8A%E3%80%82%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%8Cnames-%E5%92%8C-ages-%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%88%97%E8%A1%A8%E9%87%8C%E9%9D%A2%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94%E3%80%82%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E8%B0%83%E7%94%A8qsqlquery%3A%3Aexecbatch()%E6%89%B9%E9%87%8F%E6%89%A7%E8%A1%8C-sql%EF%BC%8C%E4%B9%8B%E5%90%8E%E7%BB%93%E6%9D%9F%E8%AF%A5%E5%AF%B9%E8%B1%A1%E3%80%82%E8%BF%99%E6%A0%B7%EF%BC%8C%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C%E4%BE%BF%E5%AE%8C%E6%88%90%E4%BA%86%E3%80%82%E5%8F%A6%E5%A4%96%E8%AF%B4%E6%98%8E%E4%B8%80%E7%82%B9%EF%BC%8C%E6%88%91%E4%BB%AC%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%E4%BA%86-odbc-%E9%A3%8E%E6%A0%BC%E7%9A%84-%3F-%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E5%90%8C%E6%A0%B7%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-oracle-%E9%A3%8E%E6%A0%BC%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%9Ac%2Fc%2B%2Bquery.prepare(%E2%80%9Cinsert-into-student-(name%2C-age)-values-(%3Aname%2C-%3Aage)%E2%80%9D)%3B%E6%AD%A4%E6%97%B6%EF%BC%8C%E6%88%91%E4%BB%AC%E5%B0%B1%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8c%2Fc%2B%2Bquery.bindvalue(%22%3Aname%22%2C-names)%3Bquery.bindvalue(%22%3Aage%22%2C-ages)%3B%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A%E3%80%82oracle-%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%BB%91%E5%AE%9A%E6%9C%80%E5%A4%A7%E7%9A%84%E5%A5%BD%E5%A4%84%E6%98%AF%EF%BC%8C%E7%BB%91%E5%AE%9A%E7%9A%84%E5%90%8D%E5%AD%97%E5%92%8C%E5%80%BC%E5%BE%88%E6%B8%85%E6%99%B0%EF%BC%8C%E4%B8%8E%E9%A1%BA%E5%BA%8F%E6%97%A0%E5%85%B3%E3%80%82%E4%BD%86%E6%98%AF%E8%BF%99%E9%87%8C%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%8Cbindvalue()%E5%87%BD%E6%95%B0%E5%8F%AA%E8%83%BD%E7%BB%91%E5%AE%9A%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%E3%80%82%E6%AF%94%E5%A6%82c%2Fc%2B%2Bquery.prepare(%E2%80%9Cinsert-into-test-(name1%2C-name2)-values-(%3Aname%2C-%3Aname)%E2%80%9D)%3B%2F%2F-%E2%80%A6query.bindvalue(%22%3Aname%22%2C-name)%3B%E5%8F%AA%E8%83%BD%E7%BB%91%E5%AE%9A%E7%AC%AC%E4%B8%80%E4%B8%AA-%3Aname-%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E4%B8%8D%E8%83%BD%E7%BB%91%E5%AE%9A%E5%88%B0%E7%AC%AC%E4%BA%8C%E4%B8%AA%E3%80%82%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E4%BE%9D%E6%97%A7%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA-select-%E8%AF%AD%E5%8F%A5%E3%80%82%E5%A6%82%E6%9E%9C%E5%AD%98%E5%9C%A8%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%EF%BC%8Cqsqlquery%3A%3Anext()%E4%BC%9A%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E7%9B%B4%E5%88%B0%E5%88%B0%E8%BE%BE%E7%BB%93%E6%9E%9C%E6%9C%80%E6%9C%AB%EF%BC%8C%E8%BF%94%E5%9B%9E-false%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%81%8D%E5%8E%86%E7%BB%93%E6%9D%9F%E3%80%82%E6%88%91%E4%BB%AC%E5%88%A9%E7%94%A8%E8%BF%99%E4%B8%80%E7%82%B9%EF%BC%8C%E4%BD%BF%E7%94%A8-while-%E5%BE%AA%E7%8E%AF%E5%8D%B3%E5%8F%AF%E9%81%8D%E5%8E%86%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E3%80%82%E4%BD%BF%E7%94%A8qsqlquery%3A%3Avalue()%E5%87%BD%E6%95%B0%E5%8D%B3%E5%8F%AF%E6%8C%89%E7%85%A7-select-%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%AD%97%E6%AE%B5%E9%A1%BA%E5%BA%8F%E8%8E%B7%E5%8F%96%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E3%80%82%E5%AF%B9%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8qsqldatabase%3A%3Atransaction()%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1%EF%BC%8Cqsqldatabase%3A%3Acommit()%E6%88%96%E8%80%85qsqldatabase%3A%3Arollback()%E7%BB%93%E6%9D%9F%E4%BA%8B%E5%8A%A1%E3%80%82%E4%BD%BF%E7%94%A8qsqldatabase%3A%3Adatabase()%E5%87%BD%E6%95%B0%E5%88%99%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E5%90%8D%E5%AD%97%E8%8E%B7%E5%8F%96%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E3%80%82mfc%E4%B8%AD%E7%9A%84sqlite%E6%93%8D%E4%BD%9C">依旧连接到我们创建的 demo.db 数据库。我们需要插入多条数据，此时可以使用<code>QSqlQuery::exec()</code>函数一条一条插入数据，但是这里我们选择了另外一种方法：批量执行。首先，我们使用<code>QSqlQuery::prepare()</code>函数对这条 SQL 语句进行预处理，问号 ? 相当于占位符，预示着以后我们可以使用实际数据替换这些位置。简单说明一下，预处理是数据库提供的一种特性，它会将 SQL 语句进行编译，性能和安全性都要优于普通的 SQL 处理。在上面的代码中，我们使用一个字符串列表 names 替换掉第一个问号的位置，一个整型列表 ages 替换掉第二个问号的位置，利用<code>QSqlQuery::addBindValue()</code>我们将实际数据绑定到这个预处理的 SQL 语句上。需要注意的是，names 和 ages 这两个列表里面的数据需要一一对应。然后我们调用<code>QSqlQuery::execBatch()</code>批量执行 SQL，之后结束该对象。这样，插入操作便完成了。
+另外说明一点，我们这里使用了 ODBC 风格的 ? 占位符，同样，我们也可以使用 Oracle 风格的占位符：
+C/C++
+query.prepare(“INSERT INTO student (name, age) VALUES (:name, :age)”);
+此时，我们就需要使用
+C/C++
+query.bindValue(&quot;:name&quot;, names);
+query.bindValue(&quot;:age&quot;, ages);
+进行绑定。Oracle 风格的绑定最大的好处是，绑定的名字和值很清晰，与顺序无关。但是这里需要注意，<code>bindValue()</code>函数只能绑定一个位置。比如
+C/C++
+query.prepare(“INSERT INTO test (name1, name2) VALUES (:name, :name)”);
+// …
+query.bindValue(&quot;:name&quot;, name);
+只能绑定第一个 :name 占位符，不能绑定到第二个。
+接下来我们依旧使用同一个查询对象执行一个 SELECT 语句。如果存在查询结果，<code>QSqlQuery::next()</code>会返回 true，直到到达结果最末，返回 false，说明遍历结束。我们利用这一点，使用 while 循环即可遍历查询结果。使用<code>QSqlQuery::value()</code>函数即可按照 SELECT 语句的字段顺序获取到对应的数据库存储的数据。
+对于数据库事务的操作，我们可以使用<code>QSqlDatabase::transaction()</code>开启事务，<code>QSqlDatabase::commit()</code>或者<code>QSqlDatabase::rollback()</code>结束事务。使用<code>QSqlDatabase::database()</code>函数则可以根据名字获取所需要的数据库连接。
+MFC中的sqlite操作 <a class="heading-anchor-permalink" href="#%E4%BE%9D%E6%97%A7%E8%BF%9E%E6%8E%A5%E5%88%B0%E6%88%91%E4%BB%AC%E5%88%9B%E5%BB%BA%E7%9A%84-demo.db-%E6%95%B0%E6%8D%AE%E5%BA%93%E3%80%82%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E6%8F%92%E5%85%A5%E5%A4%9A%E6%9D%A1%E6%95%B0%E6%8D%AE%EF%BC%8C%E6%AD%A4%E6%97%B6%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8qsqlquery%3A%3Aexec()%E5%87%BD%E6%95%B0%E4%B8%80%E6%9D%A1%E4%B8%80%E6%9D%A1%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%BD%86%E6%98%AF%E8%BF%99%E9%87%8C%E6%88%91%E4%BB%AC%E9%80%89%E6%8B%A9%E4%BA%86%E5%8F%A6%E5%A4%96%E4%B8%80%E7%A7%8D%E6%96%B9%E6%B3%95%EF%BC%9A%E6%89%B9%E9%87%8F%E6%89%A7%E8%A1%8C%E3%80%82%E9%A6%96%E5%85%88%EF%BC%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8qsqlquery%3A%3Aprepare()%E5%87%BD%E6%95%B0%E5%AF%B9%E8%BF%99%E6%9D%A1-sql-%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%8C%E9%97%AE%E5%8F%B7-%3F-%E7%9B%B8%E5%BD%93%E4%BA%8E%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E9%A2%84%E7%A4%BA%E7%9D%80%E4%BB%A5%E5%90%8E%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE%E6%9B%BF%E6%8D%A2%E8%BF%99%E4%BA%9B%E4%BD%8D%E7%BD%AE%E3%80%82%E7%AE%80%E5%8D%95%E8%AF%B4%E6%98%8E%E4%B8%80%E4%B8%8B%EF%BC%8C%E9%A2%84%E5%A4%84%E7%90%86%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E6%8F%90%E4%BE%9B%E7%9A%84%E4%B8%80%E7%A7%8D%E7%89%B9%E6%80%A7%EF%BC%8C%E5%AE%83%E4%BC%9A%E5%B0%86-sql-%E8%AF%AD%E5%8F%A5%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%AF%91%EF%BC%8C%E6%80%A7%E8%83%BD%E5%92%8C%E5%AE%89%E5%85%A8%E6%80%A7%E9%83%BD%E8%A6%81%E4%BC%98%E4%BA%8E%E6%99%AE%E9%80%9A%E7%9A%84-sql-%E5%A4%84%E7%90%86%E3%80%82%E5%9C%A8%E4%B8%8A%E9%9D%A2%E7%9A%84%E4%BB%A3%E7%A0%81%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E4%BD%BF%E7%94%A8%E4%B8%80%E4%B8%AA%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%97%E8%A1%A8-names-%E6%9B%BF%E6%8D%A2%E6%8E%89%E7%AC%AC%E4%B8%80%E4%B8%AA%E9%97%AE%E5%8F%B7%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8C%E4%B8%80%E4%B8%AA%E6%95%B4%E5%9E%8B%E5%88%97%E8%A1%A8-ages-%E6%9B%BF%E6%8D%A2%E6%8E%89%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%97%AE%E5%8F%B7%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%8C%E5%88%A9%E7%94%A8qsqlquery%3A%3Aaddbindvalue()%E6%88%91%E4%BB%AC%E5%B0%86%E5%AE%9E%E9%99%85%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A%E5%88%B0%E8%BF%99%E4%B8%AA%E9%A2%84%E5%A4%84%E7%90%86%E7%9A%84-sql-%E8%AF%AD%E5%8F%A5%E4%B8%8A%E3%80%82%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E7%9A%84%E6%98%AF%EF%BC%8Cnames-%E5%92%8C-ages-%E8%BF%99%E4%B8%A4%E4%B8%AA%E5%88%97%E8%A1%A8%E9%87%8C%E9%9D%A2%E7%9A%84%E6%95%B0%E6%8D%AE%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%80%E5%AF%B9%E5%BA%94%E3%80%82%E7%84%B6%E5%90%8E%E6%88%91%E4%BB%AC%E8%B0%83%E7%94%A8qsqlquery%3A%3Aexecbatch()%E6%89%B9%E9%87%8F%E6%89%A7%E8%A1%8C-sql%EF%BC%8C%E4%B9%8B%E5%90%8E%E7%BB%93%E6%9D%9F%E8%AF%A5%E5%AF%B9%E8%B1%A1%E3%80%82%E8%BF%99%E6%A0%B7%EF%BC%8C%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C%E4%BE%BF%E5%AE%8C%E6%88%90%E4%BA%86%E3%80%82%E5%8F%A6%E5%A4%96%E8%AF%B4%E6%98%8E%E4%B8%80%E7%82%B9%EF%BC%8C%E6%88%91%E4%BB%AC%E8%BF%99%E9%87%8C%E4%BD%BF%E7%94%A8%E4%BA%86-odbc-%E9%A3%8E%E6%A0%BC%E7%9A%84-%3F-%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E5%90%8C%E6%A0%B7%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8-oracle-%E9%A3%8E%E6%A0%BC%E7%9A%84%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%9Ac%2Fc%2B%2Bquery.prepare(%E2%80%9Cinsert-into-student-(name%2C-age)-values-(%3Aname%2C-%3Aage)%E2%80%9D)%3B%E6%AD%A4%E6%97%B6%EF%BC%8C%E6%88%91%E4%BB%AC%E5%B0%B1%E9%9C%80%E8%A6%81%E4%BD%BF%E7%94%A8c%2Fc%2B%2Bquery.bindvalue(%22%3Aname%22%2C-names)%3Bquery.bindvalue(%22%3Aage%22%2C-ages)%3B%E8%BF%9B%E8%A1%8C%E7%BB%91%E5%AE%9A%E3%80%82oracle-%E9%A3%8E%E6%A0%BC%E7%9A%84%E7%BB%91%E5%AE%9A%E6%9C%80%E5%A4%A7%E7%9A%84%E5%A5%BD%E5%A4%84%E6%98%AF%EF%BC%8C%E7%BB%91%E5%AE%9A%E7%9A%84%E5%90%8D%E5%AD%97%E5%92%8C%E5%80%BC%E5%BE%88%E6%B8%85%E6%99%B0%EF%BC%8C%E4%B8%8E%E9%A1%BA%E5%BA%8F%E6%97%A0%E5%85%B3%E3%80%82%E4%BD%86%E6%98%AF%E8%BF%99%E9%87%8C%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%EF%BC%8Cbindvalue()%E5%87%BD%E6%95%B0%E5%8F%AA%E8%83%BD%E7%BB%91%E5%AE%9A%E4%B8%80%E4%B8%AA%E4%BD%8D%E7%BD%AE%E3%80%82%E6%AF%94%E5%A6%82c%2Fc%2B%2Bquery.prepare(%E2%80%9Cinsert-into-test-(name1%2C-name2)-values-(%3Aname%2C-%3Aname)%E2%80%9D)%3B%2F%2F-%E2%80%A6query.bindvalue(%22%3Aname%22%2C-name)%3B%E5%8F%AA%E8%83%BD%E7%BB%91%E5%AE%9A%E7%AC%AC%E4%B8%80%E4%B8%AA-%3Aname-%E5%8D%A0%E4%BD%8D%E7%AC%A6%EF%BC%8C%E4%B8%8D%E8%83%BD%E7%BB%91%E5%AE%9A%E5%88%B0%E7%AC%AC%E4%BA%8C%E4%B8%AA%E3%80%82%E6%8E%A5%E4%B8%8B%E6%9D%A5%E6%88%91%E4%BB%AC%E4%BE%9D%E6%97%A7%E4%BD%BF%E7%94%A8%E5%90%8C%E4%B8%80%E4%B8%AA%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%E6%89%A7%E8%A1%8C%E4%B8%80%E4%B8%AA-select-%E8%AF%AD%E5%8F%A5%E3%80%82%E5%A6%82%E6%9E%9C%E5%AD%98%E5%9C%A8%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%EF%BC%8Cqsqlquery%3A%3Anext()%E4%BC%9A%E8%BF%94%E5%9B%9E-true%EF%BC%8C%E7%9B%B4%E5%88%B0%E5%88%B0%E8%BE%BE%E7%BB%93%E6%9E%9C%E6%9C%80%E6%9C%AB%EF%BC%8C%E8%BF%94%E5%9B%9E-false%EF%BC%8C%E8%AF%B4%E6%98%8E%E9%81%8D%E5%8E%86%E7%BB%93%E6%9D%9F%E3%80%82%E6%88%91%E4%BB%AC%E5%88%A9%E7%94%A8%E8%BF%99%E4%B8%80%E7%82%B9%EF%BC%8C%E4%BD%BF%E7%94%A8-while-%E5%BE%AA%E7%8E%AF%E5%8D%B3%E5%8F%AF%E9%81%8D%E5%8E%86%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E3%80%82%E4%BD%BF%E7%94%A8qsqlquery%3A%3Avalue()%E5%87%BD%E6%95%B0%E5%8D%B3%E5%8F%AF%E6%8C%89%E7%85%A7-select-%E8%AF%AD%E5%8F%A5%E7%9A%84%E5%AD%97%E6%AE%B5%E9%A1%BA%E5%BA%8F%E8%8E%B7%E5%8F%96%E5%88%B0%E5%AF%B9%E5%BA%94%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%98%E5%82%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E3%80%82%E5%AF%B9%E4%BA%8E%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%93%8D%E4%BD%9C%EF%BC%8C%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8qsqldatabase%3A%3Atransaction()%E5%BC%80%E5%90%AF%E4%BA%8B%E5%8A%A1%EF%BC%8Cqsqldatabase%3A%3Acommit()%E6%88%96%E8%80%85qsqldatabase%3A%3Arollback()%E7%BB%93%E6%9D%9F%E4%BA%8B%E5%8A%A1%E3%80%82%E4%BD%BF%E7%94%A8qsqldatabase%3A%3Adatabase()%E5%87%BD%E6%95%B0%E5%88%99%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E5%90%8D%E5%AD%97%E8%8E%B7%E5%8F%96%E6%89%80%E9%9C%80%E8%A6%81%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93%E8%BF%9E%E6%8E%A5%E3%80%82mfc%E4%B8%AD%E7%9A%84sqlite%E6%93%8D%E4%BD%9C" aria-hidden="true">#</a></h1>
+<p><a href="https://github.com/Hygens/UsersRegistrationSPA">GitHub - Hygens/UsersRegistrationSPA: .NET Core Web + Web API + SQLite3 + AngularJS(1.7.5) + Webpack + Automations</a><br>
+<a href="https://www.cnblogs.com/fudong071234/p/6424856.html">VC++、MFC Sqlite3数据库的使用 - 付栋 - 博客园</a><br>
+<a href="https://blog.csdn.net/akof1314/article/details/5937103">VC连接SQLite3的方法(MFC封装类) - 无幻 - CSDN博客</a><br>
+<a href="https://social.msdn.microsoft.com/Forums/vstudio/en-US/42f9b356-24b1-4f38-8f78-228559c545d2/how-to-use-sqlite-library-in-mfc-aplication?forum=vcgeneral">How to use sqlite library in mfc aplication?</a><br>
+<a href="https://www.codeproject.com/Articles/10060/SQLite3-MFC-Wrapper">SQLite3 MFC Wrapper - CodeProject</a><br>
+<a href="https://github.com/Jia-Hong-Peng/SQLite-with-MFC-in-Chinese">SQLite-with-MFC-in-Chinese/MFCwithSQLiteSample at master · Jia-Hong-Peng/SQLite-with-MFC-in-Chinese</a><br>
+<a href="https://github.com/SRombauts/SQLiteCpp">SRombauts/SQLiteCpp: SQLiteC++ (SQLiteCpp) is a smart and easy to use C++ SQLite3 wrapper.</a><br>
+<a href="https://gist.github.com/2424514">A small example program using SQLite with C++</a><br>
+<a href="https://gist.github.com/enile8/2424514">A small example program using SQLite with C++</a><br>
+<a href="https://github.com/jhpeng/sqlite">Jia-Hong-Peng/sqlite: sqlite</a><br>
+<a href="https://github.com/Jia-Hong-Peng/sqlite">Jia-Hong-Peng/sqlite: sqlite</a><br>
+<a href="https://github.com/Jia-Hong-Peng/sqlite/tree/master/sqlite">sqlite/sqlite at master · Jia-Hong-Peng/sqlite</a><br>
+<a href="https://github.com/Jia-Hong-Peng/SQLite-with-MFC-in-Chinese/tree/master/MFCwithSQLiteSample">SQLite-with-MFC-in-Chinese/MFCwithSQLiteSample at master · Jia-Hong-Peng/SQLite-with-MFC-in-Chinese</a>
+链接:<a href="https://bbs.huaweicloud.com/blogs/197c180011c911e9bd5a7ca23e93a891">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

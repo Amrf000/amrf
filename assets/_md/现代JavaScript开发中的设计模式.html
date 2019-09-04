@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="active" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="%E5%8E%9F%E6%96%87%3A%E7%8E%B0%E4%BB%A3javascript%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">原文:<img src="https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca" alt="现代JavaScript开发中的设计模式">
+现代JavaScript开发中的设计模式 <a class="heading-anchor-permalink" href="#%E5%8E%9F%E6%96%87%3A%E7%8E%B0%E4%BB%A3javascript%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" aria-hidden="true">#</a></h1>
+<h2 id="%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E4%B8%AD%E6%9C%89%E6%95%88%E6%B2%9F%E9%80%9A%E7%9A%84%E6%80%9D%E8%80%83">关于软件项目设计中有效沟通的思考 <a class="heading-anchor-permalink" href="#%E5%85%B3%E4%BA%8E%E8%BD%AF%E4%BB%B6%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1%E4%B8%AD%E6%9C%89%E6%95%88%E6%B2%9F%E9%80%9A%E7%9A%84%E6%80%9D%E8%80%83" aria-hidden="true">#</a></h2>
+<p><a href="/@bojzi?source=post_page-----ec84d8be06ca----------------------"><img src="https://miro.medium.com/fit/c/48/48/1*XmFGCbZ8kwc--WoBo9iS9Q.jpeg" alt="克里斯蒂安·波斯莱克"></a></p>
+<p><a href="/@bojzi?source=post_page-----ec84d8be06ca----------------------">克里斯蒂安·波斯莱克</a></p>
+<p>跟随</p>
+<p><a href="/design-patterns-in-modern-javascript-development-ec84d8be06ca?source=post_page-----ec84d8be06ca----------------------">4月10日</a> · 9 分钟阅读</p>
+<p><img src="https://miro.medium.com/max/30/1*nfNi7oUIZBakAdyXXcmirw.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/3648/1*nfNi7oUIZBakAdyXXcmirw.jpeg" alt=""></p>
+<h1 id="%E6%A8%A1%E5%BC%8F%EF%BC%9F%E8%AE%BE%E8%AE%A1%EF%BC%9F%E6%88%91%E4%BB%AC%E8%BF%98%E5%9C%A8%E8%B0%88%E8%AE%BA%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%90%97%EF%BC%9F">模式？设计？我们还在谈论软件开发吗？ <a class="heading-anchor-permalink" href="#%E6%A8%A1%E5%BC%8F%EF%BC%9F%E8%AE%BE%E8%AE%A1%EF%BC%9F%E6%88%91%E4%BB%AC%E8%BF%98%E5%9C%A8%E8%B0%88%E8%AE%BA%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%90%97%EF%BC%9F" aria-hidden="true">#</a></h1>
+<p><strong>当然。</strong></p>
+<p>与面向对象编程一样，我们开发人员正试图模拟我们周围的世界。因此，尝试使用我们周围的世界作为描述我们工艺的工具是有意义的。</p>
+<p>在这种情况下，我们从建筑（具有建筑物和桥梁的那个）和开创性的建筑书籍“ <strong>A Pattern Language：Towns，Buildings，Construction</strong> by _Christopher Alexander，Sara Ishikawa，Murray Silverstein”<em>中获取一个页面</em>，_其中的模式描述如下：</p>
+<blockquote>
+<p>每个模式描述了一个在我们的环境中反复出现的问题，然后描述了该问题解决方案的核心，以这种方式使您可以使用此解决方案一百万次，而无需以相同的方式执行两次。</p>
+</blockquote>
+<p>在软件开发中，体系结构是以健康，健壮和可维护的方式构建应用程序的过程，模式提供了为常见问题的解决方案命名的方法。这些解决方案可以从抽象/概念到非常精确和技术，并允许开发人员有效地相互通信。</p>
+<p><img src="https://miro.medium.com/max/30/1*pdCoxUhmMHI5tBnGVdnNJQ.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/4000/1*pdCoxUhmMHI5tBnGVdnNJQ.jpeg" alt=""></p>
+<p>高效。</p>
+<p>如果团队中的两个或更多开发人员了解模式，那么谈论问题的解决方案就变得非常有效。如果只有一个开发人员了解模式，那么向团队的其他成员解释这些模式通常很容易。</p>
+<p><strong>本文的目的是通过向您介绍软件设计模式的概念，并介绍一些有趣的模式，因为它们在现代JavaScript项目中被大量使用，从而激发您对软件开发中某种形式的知识表示的兴趣。</strong></p>
+<h1 id="%E5%8D%95%E8%BA%AB%E6%A8%A1%E5%BC%8F">单身模式 <a class="heading-anchor-permalink" href="#%E5%8D%95%E8%BA%AB%E6%A8%A1%E5%BC%8F" aria-hidden="true">#</a></h1>
+<h2 id="%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88">那是什么 <a class="heading-anchor-permalink" href="#%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88" aria-hidden="true">#</a></h2>
+<p>单例模式不是最广泛使用的模式之一，但我们从这里开始，因为它相对容易掌握。</p>
+<p>单例模式源于单例的数学概念，即：</p>
+<blockquote>
+<p>在数学中，<strong>单身</strong>，也称为<strong>单位集</strong>，是一个只有一个元素的集合。例如，set {null}是一个单例。</p>
+</blockquote>
+<p>在软件中，它只是意味着我们将类的实例化限制为单个对象。第一次实现单例模式的类的对象应该被实例化，它实际上将被实例化。任何后续尝试都将返回第一个实例。</p>
+<p><img src="https://miro.medium.com/max/30/1*JsnR25Uewd4wZLzZ-a9frg.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2826/1*JsnR25Uewd4wZLzZ-a9frg.png" alt=""></p>
+<p>有蝙蝠侠时谁需要两个超级英雄？</p>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2">为什么呢 <a class="heading-anchor-permalink" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2" aria-hidden="true">#</a></h2>
+<p>除了允许我们只有一个超级英雄（显然是蝙蝠侠），为什么我们会使用单身模式？</p>
+<p>虽然单身模式并非没有问题（在单身人士被<a href="http://misko.hevery.com/2008/08/17/singletons-are-pathological-liars/">称为病态骗子</a>之前它被称为邪恶），但它仍有其用途。最值得注意的是实例化配置对象。除非应用程序的某项功能提供多种配置，否则您可能只需要一个适用于您的应用程序的配置实例。</p>
+<h2 id="%E5%9C%A8%E5%93%AA%E9%87%8C">在哪里 <a class="heading-anchor-permalink" href="#%E5%9C%A8%E5%93%AA%E9%87%8C" aria-hidden="true">#</a></h2>
+<p>Angular的服务是在一个大型流行框架中使用的单例模式的一个主要例子。<a href="https://angular.io/guide/singleton-services">Angular的文档中</a>有一个<a href="https://angular.io/guide/singleton-services">专门的页面，</a>说明如何确保服务始终作为单例提供。</p>
+<p>作为单例的服务很有意义，因为服务被用作存储状态，配置和允许组件之间通信的地方，并且您希望确保没有多个实例搞乱这些概念。</p>
+<p>作为一个例子，假设您有一个简单的应用程序，用于计算按钮被点击的次数。</p>
+<p><img src="https://miro.medium.com/max/30/1*PZpt4afyPY10CnuRADJx5w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2283/1*PZpt4afyPY10CnuRADJx5w.png" alt=""></p>
+<p>您应该跟踪一个对象中按下按钮的次数，它提供：</p>
+<ul>
+<li>计数的功能</li>
+<li>并提供当前的点击次数。</li>
+</ul>
+<p>如果该对象不是单例（并且每个按钮都会获得自己的实例），则点击计数将不正确。此外，您将向显示当前计数的组件提供哪些计数实例？</p>
+<h1 id="%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F">观察者模式 <a class="heading-anchor-permalink" href="#%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F" aria-hidden="true">#</a></h1>
+<h2 id="%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88-2">那是什么 <a class="heading-anchor-permalink" href="#%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88-2" aria-hidden="true">#</a></h2>
+<p>观察者模式定义如下：</p>
+<blockquote>
+<p>该 <strong>观察者模式</strong> 是一种软件设计模式，其中一个对象称为 <strong>学科</strong>，维护一个名为的家属列表 <strong>观察家</strong>，并通常通过调用他们的方法之一自动通知他们任何状态变化。</p>
+</blockquote>
+<p>如果我们尝试将它与现实世界中的一个例子 - 报纸订阅进行比较，那么理解观察者模式真的很容易。</p>
+<p>购买报纸的通常情况是，你走到报摊，询问你最喜欢的报纸的新版本是否已经发布。如果不是这样，那么你必须走回家并稍后再试，这是一种无效率的悲惨事件。在JavaScript术语中，这将与循环相同，直到您获得所需的结果。<br>
+当你终于把手放在报纸上时，你可以做你一直想做的事情 - 坐下来喝杯咖啡然后享受你的报纸（或者用JavaScript术语来执行你想做的回调功能全程）。</p>
+<p><img src="https://miro.medium.com/max/30/1*arrsn5kxG1GRbVpn7tlZkw.jpeg?q=20" alt=""></p>
+<p>最后。</p>
+<p>聪明的事情（每天得到你心爱的报纸）就是订阅报纸。<br>
+这样一来，出版公司会告诉你什么时候出版新报并将它交给你。不再跑到报摊了。没有更多的失望。极乐。<br>
+在JavaScript术语中，在您再次运行函数之前，不会循环并询问结果。相反，您可以让主题知道您对事件（消息）感兴趣，并提供一个回调函数，该函数应在新数据准备好时调用。那么，你是观察者。</p>
+<p><img src="https://miro.medium.com/max/30/1*Umz-GYQk5skILT07e0Kr4A.png?q=20" alt=""></p>
+<p>再也不会错过你的晨报。</p>
+<p>好消息是 - 您不必是唯一的订户。你会因为错过报纸而感到失望，其他人也会如此。这就是多个观察者可以订阅该主题的原因。</p>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2-2">为什么呢 <a class="heading-anchor-permalink" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2-2" aria-hidden="true">#</a></h2>
+<p>观察者模式有许多用例，但一般情况下，当你想要在没有紧密耦合的对象之间创建一对多依赖关系时，应该使用它，并且有可能让开放式数量的对象知道何时国家已经改变了。</p>
+<p>JavaScript是一个可观察模式的好地方，因为一切都是事件驱动的，而不是总是询问事件是否发生，你应该让事件通知你（就像古老的格言_“不要打电话给我们，我们会打电话给你”_）。有可能你已经做了一些看起来像观察者模式的东西 - <code>addEventListener</code>。向元素添加事件侦听器具有观察者模式的所有标记：</p>
+<ul>
+<li>你可以订阅这个对象，</li>
+<li>你可以取消订阅该对象，</li>
+<li>并且该对象可以向其所有订户广播事件。</li>
+</ul>
+<p>通过了解观察者模式获得的巨大回报是，您可以更快地实现自己的主题或掌握现有的解决方案。</p>
+<h2 id="%E5%9C%A8%E5%93%AA%E9%87%8C-2">在哪里 <a class="heading-anchor-permalink" href="#%E5%9C%A8%E5%93%AA%E9%87%8C-2" aria-hidden="true">#</a></h2>
+<p>实现一个基本的observable不应该太难，但是许多项目都使用了一个很棒的库，而<a href="https://github.com/ReactiveX/rxjs">RactJS</a>就是它的<a href="http://reactivex.io/">ReactiveX</a>，它的JavaScript对应物。<a href="https://github.com/ReactiveX/rxjs"></a></p>
+<p>RxJS不仅允许您订阅主题，还允许您以您能想象的任何方式转换数据，组合多个订阅，使异步工作更易于管理等等。如果您想将数据处理和转换级别提升到更高的水平，RxJS将是一个很好的学习库。</p>
+<p>除了观察者模式之外，ReactiveX还以实现迭代器模式而自豪，该模式使受试者有可能在订阅结束时让其订阅者知道，从而有效地结束了主题方的订阅。我不会在本文中解释迭代器模式，但是对于您来说，了解它并了解它如何适应可观察模式将是一个很好的练习。</p>
+<h1 id="%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F">门面模式 <a class="heading-anchor-permalink" href="#%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F" aria-hidden="true">#</a></h1>
+<h2 id="%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88-3">那是什么 <a class="heading-anchor-permalink" href="#%E9%82%A3%E6%98%AF%E4%BB%80%E4%B9%88-3" aria-hidden="true">#</a></h2>
+<p>立面图案是一种从建筑中取名的图案。在建筑中：</p>
+<blockquote>
+<p>阿<strong>立面</strong>是建筑物，通常前的通常一个外侧。这是来自法国_外墙_的外国借词，意思是“正面”或“面子”。</p>
+</blockquote>
+<p>由于建筑外立面是建筑物的外部，隐藏其内部工作，软件开发中的外观模式试图隐藏前面背后的潜在复杂性，有效地允许您使用更容易掌握的API，同时提供可能性根据需要更改底层代码。</p>
+<h2 id="%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2-3">为什么呢 <a class="heading-anchor-permalink" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%91%A2-3" aria-hidden="true">#</a></h2>
+<p>您可以在无数种情况下使用外观模式，但最值得注意的是使代码更容易理解（隐藏复杂性）并使依赖关系尽可能松散耦合。</p>
+<p><img src="https://miro.medium.com/max/29/1*Unh3rSLKfaMzs3gweZF7UQ.png?q=20" alt=""></p>
+<p>FUS RO DAH！</p>
+<p>很容易理解为什么外观对象（或具有多个对象的图层）会是一件好事。如果可以避免，你不想与龙打交道。Facade对象将为您提供一个很好的API并处理所有龙的恶作剧本身。</p>
+<p>我们在这里可以做的另一件好事是将龙从背景中更换而不会触及应用程序的其余部分。让我们说你想用小猫改变那条龙。它仍然有爪子，但更容易饲养。更改它是在不改变任何依赖对象的情况下重写外观中的代码。</p>
+<h2 id="%E5%9C%A8%E5%93%AA%E9%87%8C-3">在哪里 <a class="heading-anchor-permalink" href="#%E5%9C%A8%E5%93%AA%E9%87%8C-3" aria-hidden="true">#</a></h2>
+<p>您将看到外观的地方通常是Angular使用其服务作为简化背景逻辑的手段。但它不必只是Angular，正如您将在下一个示例中看到的那样。</p>
+<p>假设您要将状态管理添加到应用程序中。您可以选择Redux，NgRx，Akita，MobX，Apollo或左右弹出的任何新孩子。好吧，为什么不选择所有这些并带他们旋转呢？</p>
+<p>州管理图书馆将为您提供哪些基本功能？</p>
+<p>大概：</p>
+<ul>
+<li>让州政府知道您想要改变状态的一种方式</li>
+<li>以及获得当前（切片）状态的方法。</li>
+</ul>
+<p>这听起来不太糟糕。</p>
+<p>现在，在你的腰带的外观模式的力量，你可以写装饰门面其中要提供一个很好的API供您与工作状态的每个部分-有点像<code>facade.startSpinner()</code>，<code>facade.stopSpinner()</code>和<code>facade.getSpinnerState()</code>。这些方法非常容易理解和推理。</p>
+<p>之后，您可以处理外观并编写将转换代码的代码，以便它可以与Apollo一起使用（使用GraphQL管理状态 - 现在非常热门）。您可能会注意到它根本不适合您的编码风格，或者单元测试的编写方式确实不是您的一杯茶。没问题，写一个支持MobX的新外观。</p>
+<p><img src="https://miro.medium.com/max/30/1*O3pSZ9xOfBkk7lO0CtGCPA.png?q=20" alt=""></p>
+<p>也可能是龙…</p>
+<h1 id="%E4%BB%8E%E8%BF%99%E5%BE%80%E5%93%AA%E5%84%BF%E8%B5%B0">从这往哪儿走 <a class="heading-anchor-permalink" href="#%E4%BB%8E%E8%BF%99%E5%BE%80%E5%93%AA%E5%84%BF%E8%B5%B0" aria-hidden="true">#</a></h1>
+<p>你可能已经注意到我所讨论的设计模式没有代码或实现。那是因为这些设计模式中的每一个都至少可以成为本书中的一章。</p>
+<p>既然我们正在讨论书籍，那么深入了解一两个处理设计模式并不会有什么坏处。</p>
+<p>第一个也是最大的建议必须是<a href="http://wiki.c2.com/?DesignPatternsBook"><strong>设计模式：</strong></a> <em>Erich Gamma</em>，<em>Richard Helm</em>，<em>Ralph Johnson_和_John Vlisside</em> <a href="http://wiki.c2.com/?DesignPatternsBook"><strong>的可重复使用的面向对象软件</strong></a>  的<a href="http://wiki.c2.com/?DesignPatternsBook"><strong>元素，</strong></a>也被称为_Gang of Four_。这本书是一个金矿和软件设计模式的_事实上的_圣经。</p>
+<p>如果你正在寻找的东西，这是一个有点容易消化，有<a href="https://www.goodreads.com/book/show/58128.Head_First_Design_Patterns"><strong>Head First设计模式</strong></a>由_伯特·贝茨_，<em>凯西塞拉利昂</em>，<em>埃里克·弗里曼_和_伊丽莎白·罗布森</em>。这是一本非常好的书，试图通过视觉角度传达设计模式的信息。</p>
+<p><strong>最后但并非最不重要的是，没有什么能比谷歌搜索，阅读和尝试不同的方法。即使你最终从不使用模式或技术，你也会学到一些东西，并以你从未想到的方式成长。</strong></p>
+<p><em>插图中使用的语音气泡由</em><a href="https://www.freepik.com/free-photos-vectors/frame"><em>starline</em></a><em>创建</em><a href="https://www.freepik.com/free-photos-vectors/frame"><em>- www.freepik.com</em></a><em>。</em></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

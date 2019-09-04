@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="active" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <p><strong>分享一个浏览器历史记录整理的小技巧</strong>—&gt;
+以前一直从onetab中分析整理,但无奈的是环境里C盘一旦满了之后，onetab保存标签出错后会导致所有onetab旧数据丢失；
+这次采用的是chrome better history插件,按日期查看 F12选择相应的链接节点复制，然后粘贴到<a href="http://domchristie.github.io/turndown/">http://domchristie.github.io/turndown/</a>中，
+将需要的历史记录链接粘进去转换成markdown格式的然后一并复制整理,感觉还挺好用的;
+////=====================
+<a href="https://blog.csdn.net/itzyjr/article/details/8451610">地址栏&quot;.jsp&quot;变为&quot;.action&quot;的含义</a><br>
+<a href="https://blog.csdn.net/smileyan9/article/details/80408711">【Servlet】如何隐藏.jsp后缀或是更改后缀名</a>
+<a href="https://blog.csdn.net/chenqun123/article/details/48657267">web项目更改文件后缀，隐藏编程语言</a>
+<a href="https://www.cnblogs.com/huapox/archive/2013/05/01/3516108.html">jsp 修改 后缀名</a>
+<a href="https://blog.csdn.net/X_Jian/article/details/4015217">html与jsp</a>
+<a href="https://blog.csdn.net/xlxxcc/article/details/51148927">Spring MVC 多个视图解析器配置</a>
+<a href="https://blog.csdn.net/wwzuizz/article/details/78268007">springmvc的InternalResourceViewResolver自我理解</a>
+<a href="https://stackoverflow.com/questions/25055610/creating-multiple-internalresourceviewresolver">Creating Multiple InternalResourceViewResolver</a>
+<a href="https://stackoverflow.com/questions/19998904/cant-return-to-appropriate-jsp-from-spring-controller-with-pathvariable">Cant return to appropriate JSP from Spring Controller with @PathVariable</a>
+<a href="https://stackoverflow.com/questions/24818802/best-practice-of-redirecting-in-spring-controller">Best Practice of redirecting in Spring Controller</a>
+<a href="https://stackoverflow.com/questions/4584410/redirect-in-spring-mvc">Redirect in Spring MVC</a>
+<a href="https://stackoverflow.com/questions/44362899/how-to-redirect-from-spring-controller">How to redirect from spring controller?</a>
+<a href="https://stackoverflow.com/questions/1005073/initialization-of-an-arraylist-in-one-line">Initialization of an ArrayList in one line</a>
+<a href="https://stackoverflow.com/questions/28893796/returning-a-simple-map-structure-from-spring-mvc-controller-to-ajax">Returning a simple map structure from spring mvc controller to ajax</a>
+<a href="https://blog.csdn.net/u013257679/article/details/52295106">@Autowired用法详解 - IVON</a>
+<a href="https://stackoverflow.com/questions/13283381/row-size-too-large-error-in-mysql-create-table-query">Row size too large error in mysql create table query</a>
+<a href="https://stackoverflow.com/questions/2392413/convert-datetime-value-into-string">mysql - Convert datetime value into string</a>
+<a href="https://blog.csdn.net/fancheng614/article/details/79123123">SpringBoot+mybatis+jsp整合</a>
+<a href="https://blog.csdn.net/ws_kfxd/article/details/84500672">简单整合SpringBoot+MyBatis+JSP</a>
+<a href="https://stackoverflow.com/questions/75489/formatting-a-long-timestamp-into-a-date-with-jstl">Formatting a long timestamp into a Date with JSTL</a>
+<a href="https://stackoverflow.com/questions/5893183/jstl-iterate-over-list-of-objects">JSTL iterate over list of objects</a>
+<a href="https://www.oschina.net/code/snippet_12_8666">JSP 中使用 JSTL 按不同条件输出内容</a>
+<a href="https://stackoverflow.com/questions/4587397/how-to-use-if-else-option-in-jstl">jsp - How to use if-else option in JSTL</a>
+<a href="https://stackoverflow.com/questions/47418489/spring-mvc-populate-requestparam-mapstring-string">Spring MVC populate @RequestParam Map</a>
+<a href="https://stackoverflow.com/questions/32769203/spring-mvc-map-json-or-encoded-parameters-to-requestparam/32769625">Spring MVC map json or encoded parameters to @RequestParam</a>
+<a href="https://blog.csdn.net/zpzkitt/article/details/79217811">Spring处理x-www-form-urlencoded方式</a>
+<a href="https://blog.csdn.net/majinggogogo/article/details/78383772">HTTP请求返回415错误码定位解决</a>
+<a href="https://blog.csdn.net/lk_blog/article/details/48110453">RESTful调用报错status code=415 Unsupported Media Type</a>
+<a href="https://github.com/spring-projects/spring-boot/issues/3313">@RequestMapping Content-Type error when a @RequestBody is used but Content-Type header is not given 3313 · spring-projects/spring-boot</a>
+<a href="https://github.com/authorjapps/zerocode/issues/141">Support Content type “application/x-www-form-urlencoded” with sending KeyValue params 141 · authorjapps/zerocode</a>
+<a href="https://stackoverflow.com/questions/52414552/how-to-access-the-string-json-payload-and-mapping-it-to-an-object-in-spring-rest">How to access the String json payload and mapping it</a>
+<a href="https://stackoverflow.com/questions/26220791/is-it-possible-to-use-valid-with-hashmap-created-from-json-payload">Is it possible to use @Valid with @HashMap created from JSON payload?</a>
+<a href="https://stackoverflow.com/questions/22398892/how-to-capture-multiple-parameters-using-requestparam-using-spring-mvc">how to capture multiple parameters using @RequestParam using spring mvc?</a>
+<a href="https://stackoverflow.com/questions/21534224/how-do-i-create-a-new-multivaluemap-from-apache-commons-collections">How do I create a new MultiValueMap from Apache Commons Collections?</a>
+<a href="https://stackoverflow.com/questions/54720558/can-i-convert-a-mapstring-listinteger-into-a-multivaluemapstring-integer">Can I convert a Map&lt;String, List</a>
+<a href="https://stackoverflow.com/questions/33796218/content-type-application-x-www-form-urlencodedcharset-utf-8-not-supported-for">spring - Content type 'application/x-www-form-urlencoded;charset</a>
+<a href="https://github.com/52North/timeseries-protector/issues/3">Content type ‘application/x-www-form-urlencoded’ not supported 3 · 52North/timeseries-protector</a>
+<a href="https://stackoverflow.com/questions/7312436/spring-mvc-how-to-get-all-request-params-in-a-map-in-spring-controller">Spring MVC - How to get all request params in a map in Spring controller?</a>
+<a href="https://stackoverflow.com/questions/10993403/how-to-replace-hashmap-values-while-iterating-over-them-in-java">How to replace HashMap Values while iterating over them in Java</a>
+<a href="https://blog.csdn.net/sinat_33625560/article/details/78783980">通过request.getParameterMap()动态获取请求参数。</a>
+<a href="https://blog.csdn.net/hithedy/article/details/50635542">ServletRequest获取不到getParameter和filter获取不到request请求中的Parameter</a>
+<a href="https://blog.csdn.net/zh521zh/article/details/79353127">防止xss攻击 — getParameter getParameterValues getParameterMap的使用</a>
+<a href="https://stackoverflow.com/questions/37217989/what-size-of-an-int-do-i-need-to-store-unix-timestamp-in-mysql-database">php - What size of an INT do I need to store Unix timestamp in MySQL database?</a>
+<a href="https://stackoverflow.com/questions/12333461/insert-unix-timestamp-in-mysql">insert unix timestamp in mysql</a>
+<a href="https://stackoverflow.com/questions/17987380/combine-get-and-post-request-methods-in-spring">Combine GET and POST request methods in Spring</a>
+<a href="https://stackoverflow.com/questions/18526445/how-to-redirect-to-post-in-spring-mvc">How to redirect to POST in Spring MVC</a>
+<a href="https://stackoverflow.com/questions/9070375/redirect-from-spring-controller-with-post-parameter">Redirect from spring controller with post parameter</a>
+<a href="https://stackoverflow.com/questions/19266427/what-are-ways-for-pass-parameters-from-controller-after-redirect-in-spring-mvc">What are ways for pass parameters from controller after redirect in spring mvc?</a>
+<a href="https://blog.csdn.net/Guofengpu/article/details/51559311">andriod eclipse 如何设置ndk-build也即NDK自动编译C/C++、JNI程序</a>
+<a href="https://blog.csdn.net/gzj_1101/article/details/44310817">MySql密码过期解决方法</a>
+<a href="https://blog.csdn.net/chszs/article/details/50651264">MySQL的用户密码过期功能详解</a>
+<a href="https://blog.csdn.net/u014734645/article/details/80467366">mysql reset password</a>
+<a href="https://blog.csdn.net/m0_37663482/article/details/80282697">MYSQL密码过期</a>
+<a href="https://blog.csdn.net/vkingnew/article/details/81012699">MySQL 密码管理之密码过期和账号锁定</a>
+<a href="https://blog.csdn.net/t244387066/article/details/52993763">mysql5.7.9 密码过期</a>
+<a href="https://blog.csdn.net/a359877454/article/details/52679041">vs2015一键卸载所有组件工具，彻底卸载干净。</a>
+<a href="https://righere.github.io/2017/02/15/uninstall-VS/">卸载visual studio 2013、2015等，微软打脸出品 | Righere的博客</a>
+<a href="https://github.com/Microsoft/VisualStudioUninstaller">Microsoft/VisualStudioUninstaller: Visual Studio Uninstallation sometimes can be unreliable</a>
+<a href="https://github.com/IonicaBizau/img-to-svg">IonicaBizau/img-to-svg: Convert the image pixels in SVG squares.</a>
+<a href="https://github.com/xyproto/png2svg">xyproto/png2svg: Convert small PNG images to SVG Tiny 1.2</a>
+<a href="https://github.com/ianmackinnon/png2svg">ianmackinnon/png2svg: Convert PNG images to SVG.</a>
+<a href="https://github.com/filamentgroup/svg-to-png">filamentgroup/svg-to-png: Turn a folder full of SVGs into PNGs!</a>
+<a href="https://github.com/HitoriSensei/png-to-jpg-to-svg">HitoriSensei/png-to-jpg-to-svg: Converts a PNG file to a set of JPG+SVG files making a some kind of &quot;JPG with alpha channe</a>
+<a href="https://github.com/neocotic/convert-svg/tree/master/packages/convert-svg-to-png">convert-svg/packages/convert-svg-to-png</a>
+<a href="https://stackoverflow.com/questions/21554075/spring-enable-global-method-security-in-controller-layer-by-java-config">Spring: Enable global method security in Controller layer by java config</a>
+<a href="https://stackoverflow.com/questions/13766685/custom-authorization-in-spring-mvc">Custom authorization in Spring MVC</a>
+<a href="https://blog.csdn.net/cloume/article/details/84983006">Spring Security - 获取当前登录用户的详细信息</a>
+<a href="https://blog.csdn.net/u013815546/article/details/76898524">Re：从零开始的Spring Security Oauth2（一）</a>
+<a href="https://stackoverflow.com/questions/39909419/what-are-the-main-differences-between-jwt-and-oauth-authentication">What are the main differences between JWT and OAuth authentication?</a>
+<a href="https://blog.csdn.net/running_snail_/article/details/7167771">spring security 在jsp中的标签库</a>
+<a href="https://github.com/GEJLY/diary/tree/0d868fd4fb1a844cef720db45b7b944441538adc/privatediary/src/main/java/com/diary">diary/privatediary/src/main/java/com/diary</a>
+<a href="https://github.com/1332508387/diary-boot/tree/bd1bc6c1b9ff702bfe2b730e508059db8ad7204f/src/main/java/com/lh/diary/service/impl">diary-boot/src/main/java/com/lh/diary/service/imp</a>
+<a href="https://github.com/dwl588/Vcooline/tree/c78d58c93f4fe72ca33e7317a146ca60cfbca475/src">Vcooline/src</a>
+<a href="https://blog.csdn.net/qq_37811638/article/details/80063335">js/jquery怎么取后台request.setAttribute的对象或者属性值?</a>
+<a href="https://stackoverflow.com/questions/24528211/chrome-refuses-to-execute-an-ajax-script-due-to-wrong-mime-type">javascript - Chrome refuses to execute an AJAX script due to wrong MIME type</a>
+<a href="https://blog.csdn.net/u012156496/article/details/53421003">spring security logout(spring security登出示例)</a>
+<a href="https://stackoverflow.com/questions/22191386/securitycontextholder-getcontext-getauthentication-returning-null">SecurityContextHolder.getContext().getAuthentication() returning null</a>
+<a href="https://stackoverflow.com/questions/24948651/spring-security-difference-between-and-url-pattern-in-spring-security">Spring-Security: Difference Between /** and /* url pattern in Spring-Security</a>
+<a href="https://segmentfault.com/a/1190000006858102">3.4、路径模式与后缀匹配 - Spring 5 MVC</a>
+<a href="https://blog.csdn.net/nuaazhaofeng/article/details/47025359">Spring MVC interceptor拦截指定后缀请求</a>
+<a href="https://stackoverflow.com/questions/4783063/configuring-spring-security-3-x-to-have-multiple-entry-points">Configuring Spring Security 3.x to have multiple entry points</a>
+<a href="https://stackoverflow.com/questions/45260380/spring-security-ldap-authentication-userdn-and-password-from-login-form">Spring Security Ldap authentication userDn and password from login form</a>
+<a href="https://stackoverflow.com/questions/16084180/what-is-userdn-and-base-in-ldap-terminology">what is userDn and base in LDAP terminology</a>
+<a href="https://docs.oracle.com/cd/E19693-01/819-0997/gdzgn/index.html">LDAP URLs in the userdn Keyword (Sun Java System Directory Server Enterprise Edition 6.0 Reference)</a>
+<a href="https://stackoverflow.com/questions/37075577/ldap-authentication-spring-security-ldapauthenticationprovider">LDAP Authentication - Spring Security - LdapAuthenticationProvider</a>
+<a href="https://stackoverflow.com/questions/31411665/ldap-error-code-49-80090308-ldaperr-dsid-0c0903a9-comment-acceptsecurityc">authentication - LDAP: error code 49 - 80090308: LdapErr: DSID-0C0903A9</a>
+<a href="https://stackoverflow.com/questions/32393856/spring-ldap-with-dynamic-base-dn">Spring LDAP with dynamic base DN</a>
+<a href="https://stackoverflow.com/questions/47077160/ldap-authentication-in-spring-boot-app">LDAP authentication in spring boot app</a>
+<a href="https://github.com/eddumelendez/ldap-spring-boot/tree/master/ldap-spring-boot-samples">ldap-spring-boot/ldap-spring-boot-samples</a>
+<a href="https://github.com/spring-projects/spring-security/blob/master/samples/xml/ldap/src/main/webapp/WEB-INF/applicationContext-security.xml">spring-security/applicationContext-security.xml</a>
+<a href="https://github.com/spring-projects/spring-ldap/issues/137">LDAP-97: Escaping of weird characters in DistinguishedNames is inconsistent 137 · spring-projects/spring-ldap</a>
+<a href="https://stackoverflow.com/questions/6501115/lexical-error-encountered-0-after">python - Lexical error: Encountered: “” (0), after : “”</a>
+<a href="https://github.com/stanfordnlp/CoreNLP/issues/48">TokenMgrError: Lexical error at line 1, column 104. Encountered: “E” (69), after : “\\” 48 · stanfordnlp/CoreNLP</a>
+<a href="https://stackoverflow.com/questions/36305360/configure-spring-security-for-ldap-connection">Configure Spring security for Ldap connection</a>
+<a href="https://stackoverflow.com/questions/40846843/spring-boot-ldap-authentication">Spring Boot LDAP Authentication</a>
+<a href="https://stackoverflow.com/questions/36748592/uncategorized-exception-for-using-correct-credentials-in-ldap-authentication">Uncategorized exception for using correct credentials in LDAP authentication</a>
+<a href="https://stackoverflow.com/questions/33952246/how-to-avoid-plain-text-ldap-password-in-spring-security">How to avoid plain text LDAP password in spring security?</a>
+<a href="https://stackoverflow.com/questions/20149939/encrypting-a-password-within-a-spring-configuration-file">Encrypting a password within a Spring configuration file</a>
+<a href="https://blog.csdn.net/she_lock/article/details/84371215">jasypt中的加密与解密</a>
+<a href="https://blog.csdn.net/rongxiang111/article/details/85255370">使用Jasypt对SpringBoot配置文件加密</a>
+<a href="https://blog.csdn.net/gdfsbingfeng/article/details/16886805">jasypt结合spring加密</a>
+<a href="https://stackoverflow.com/questions/36732689/springboot-how-to-authenticate-with-ldap-without-using-ldif">SpringBoot, how to Authenticate with LDAP without using ldif?</a>
+<a href="https://stackoverflow.com/questions/42416818/ldap-spring-how-to-authenticate-users-belonging-to-different-bases">templates - LDAP SPRING : How to authenticate users belonging to different bases</a>
+<a href="https://blog.csdn.net/u014421556/article/details/78832427">jasypt 集成spring、spring boot 加密</a>
+<a href="https://blog.csdn.net/dyyaries/article/details/7399414">Spring 中使用jasypt对配置文件(.properties)中密码加密</a>
+<a href="https://stackoverflow.com/questions/45816441/password-change-in-spring-security-xml">password change in spring-security.xml</a>
+<a href="https://stackoverflow.com/questions/10306673/securing-a-password-in-a-properties-file/10307724#10307724">Securing a password in a properties file</a>
+<a href="https://stackoverflow.com/questions/30932467/how-to-migrate-spring-mvc-application-in-jasypt-1-9-x-with-spring-security-4-0">How to migrate spring-mvc application in jasypt 1.9.x with spring security 4.0 + spring 4.1 and hibernate 4.x</a>
+<a href="https://stackoverflow.com/questions/17444258/how-to-use-new-passwordencoder-from-spring-security">How to use new PasswordEncoder from Spring Security</a>
+<a href="https://github.com/tfredrich/jasypt/issues/1">jasypt-spring3 XML namespace is broken with Spring 4 1 · tfredrich/jasypt</a>
+<a href="https://stackoverflow.com/questions/26095821/full-integration-of-encrypted-properties-in-spring-4-boot">Full integration of encrypted properties in Spring 4/Boot</a>
+<a href="https://blog.csdn.net/saizzzzzz/article/details/52143896">spring-security + ldap的认证配置</a>
+<a href="https://blog.csdn.net/li90hou/article/details/77851845">在 Spring MVC + Spring 项目中使用 Spring Security 4.2.3</a>
+<a href="https://stackoverflow.com/questions/47417778/java-spring-get-attributes-from-active-directory-userdetails">Spring get attributes from Active Directory UserDetails</a>
+<a href="https://stackoverflow.com/questions/19525380/difference-between-role-and-grantedauthority-in-spring-security">Difference between Role and GrantedAuthority in Spring Security</a>
+<a href="https://github.com/paulhitz/yet-another-rest-client">paulhitz/yet-another-rest-client: YARC (Yet Another REST Client) is an easy-to-use REST Client for Google Chrome.</a>
+<a href="https://github.com/jeremys/Simple-Rest-Client-Chrome-Extension">jeremys/Simple-Rest-Client-Chrome-Extension</a>
+<a href="https://github.com/nathan-osman/Rest-Easy">nathan-osman/REST-Easy: A simple REST client for Firefox</a>
+<a href="https://stackoverflow.com/questions/11238508/how-to-get-value-of-a-div-using-javascript">How to get value of a div using javascript</a>
+<a href="https://stackoverflow.com/questions/16531729/decode-url-uri-in-jstl">Decode URL/URI in JSTL</a>
+<a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/util/UriUtils.html">UriUtils (Spring Framework 5.1.6.RELEASE API)</a>
+<a href="https://stackoverflow.com/questions/40670654/how-to-set-context-root-in-spring-mvc-project">apache - How to Set Context root in Spring Mvc Project</a>
+<a href="https://stackoverflow.com/questions/20498831/refused-to-display-in-a-frame-because-it-set-x-frame-options-to-sameorigin">angularjs - Refused to display in a frame because it set ‘X-Frame-Options’ to ‘SAMEORIGIN’</a>
+<a href="https://stackoverflow.com/questions/5195198/spring-security-with-ldap-and-custom-userdetailscontextmapper">Spring Security with LDAP and custom UserDetailsContextMapper</a>
+<a href="https://stackoverflow.com/questions/41118109/spring-security-4-0-2-multiple-authentication-manager-error-creating-bean-with">Spring Security 4.0.2- Multiple Authentication-manager -Error creating bean with name ‘org.springframework.security.filterChainProxy’</a>
+<a href="https://github.com/bsnyder/spring-security-demo/blob/master/src/main/webapp/WEB-INF/spring/security-context.xml">spring-security-demo/security-context.xml</a>
+<a href="https://stackoverflow.com/questions/36712158/spring-security-ldap-authentication">Spring Security + Ldap authentication</a>
+<a href="https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider">Spring security custom ldap authentication provider</a>
+<a href="https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/authentication/AbstractLdapAuthenticationProvider.html#userDetailsContextMapper">AbstractLdapAuthenticationProvider (Spring Security 4.2.11.RELEASE API)</a>
+<a href="https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider/16609171">Spring security custom ldap authentication provider</a>
+<a href="https://docs.spring.io/spring-security/site/docs/3.0.x/reference/ldap.html">18.LDAP Authentication</a>
+<a href="https://docs.spring.io/spring-security/site/docs/4.2.11.RELEASE/apidocs/org/springframework/security/ldap/authentication/LdapAuthenticationProvider.html">LdapAuthenticationProvider (Spring Security 4.2.11.RELEASE API)</a>
+<a href="https://stackoverflow.com/questions/45533063/spring-security-custom-ldapauthenticationprovider-custom-ldapauthoritiespopula">Spring Security custom ldapAuthenticationProvider + custom ldapAuthoritiesPopulator</a>
+<a href="https://stackoverflow.com/questions/37007445/custom-authorities-with-ldap-authentication">Custom authorities with LDAP authentication</a>
+<a href="https://blog.csdn.net/t894690230/article/details/52928369">利用Spring进行LDAP验证登录遇到的问题及其解决方式</a>
+<a href="https://blog.csdn.net/qq_16465949/article/details/41393605">解读Spring LDAP帮助中的代码案例（二）</a>
+<a href="https://stackoverflow.com/questions/1968068/java-how-to-convert-type-collection-into-arraylist">How to convert type collection into ArrayList?</a>
+<a href="https://stackoverflow.com/questions/6161985/get-userdetails-object-from-security-context-in-spring-mvc-controller">Get UserDetails object from Security Context in Spring MVC controller</a>
+<a href="https://stackoverflow.com/questions/3840191/spring-ldap-lookup-dn-without-throwing-exception-if-it-isnt-there">Spring Ldap: Lookup dn without throwing exception if it isn’t there</a>
+<a href="https://stackoverflow.com/questions/31171460/how-do-i-get-a-reference-to-an-authenticationmanager-using-a-spring-java-securit">authentication - How do i get a reference to an AuthenticationManager using a Spring java security configuration?</a>
+<a href="https://stackoverflow.com/questions/34350789/spring-security-4-restcontroller-with-ldap-provider">spring security 4 RestController with ldap provider</a>
+<a href="https://stackoverflow.com/questions/2671295/spring-security-custom-ldap-authentication-provider/10559278">Spring security custom ldap authentication provider</a>
+<a href="https://stackoverflow.com/questions/5417509/get-instance-of-authenticationmanager-manually">spring - Get instance of AuthenticationManager Manually</a>
+<a href="https://blog.csdn.net/a911711054/article/details/82530612">Spring Security（二）登录与安全控制</a>
+<a href="https://stackoverflow.com/questions/26004062/ldap-query-configuration-using-spring-boot">Ldap Query - Configuration using Spring Boot</a>
+<a href="https://github.com/aibingdd/antry-ldap/blob/master/src/main/java/com/an/antry/ldap/PersonRepoImpl.java">antry-ldap/PersonRepoImpl.java</a>
+<a href="https://github.com/postmanlabs/postman-chrome-extension-legacy">postmanlabs/postman-chrome-extension-legacy: Postman REST Client Chrome Extension (Legacy Version)</a>
+<a href="https://stackoverflow.com/questions/4858108/url-to-uri-encoding-changes-a-3d-to-253d">URL to URI encoding changes a “%3D” to “%253D”</a>
+<a href="https://stackoverflow.com/questions/469874/how-do-i-correctly-decode-unicode-parameters-passed-to-a-servlet">How do I correctly decode unicode parameters passed to a servlet</a>
+<a href="https://stackoverflow.com/questions/2632175/decoding-uri-query-string-in-java">Decoding URI query string in Java</a>
+<a href="https://stackoverflow.com/questions/15843581/how-to-correctly-iterate-through-getelementsbyclassname">javascript - How to correctly iterate through getElementsByClassName</a>
+<a href="https://stackoverflow.com/questions/55613413/how-to-make-encodeuri-decodeuri-using-java-spring">how to make encodeURI/decodeURI using java spring?</a>
+<a href="https://stackoverflow.com/questions/10829402/how-to-start-nginx-via-different-portother-than-80">ubuntu - How to start nginx via different port(other than 80)</a>
+<a href="https://stackoverflow.com/questions/10061191/add-nginx-exe-as-windows-system-service-like-apache">Add nginx.exe as Windows system service (like Apache)?</a>
+<a href="https://www.cnblogs.com/zhenjing/archive/2013/01/18/tomcat_spring.html">Tomcat 配置和spring-framework MVC配置简介</a>
+<a href="https://stackoverflow.com/questions/50028938/refused-to-display-a-frame-because-it-set-x-frame-options-to-sameorigin">cordova - Refused to display a frame because it set ‘X-Frame-Options’ to ‘sameorigin’</a>
+<a href="https://stackoverflow.com/questions/44128195/how-to-upload-file-in-spring">How to upload file in spring?</a>
+<a href="https://stackoverflow.com/questions/42113927/how-to-add-x-frame-options-to-some-pages-in-spring-security-headers-spring-vers">How to add X-FRAME-OPTIONS to some pages in Spring Security headers (Spring version 4.2.0)?</a>
+<a href="https://stackoverflow.com/questions/42257402/disable-x-frameoptions-response-header-for-a-url-spring-security-java-config">Disable X-FrameOptions response header for a URL Spring Security JAVA config</a>
+<a href="https://blog.csdn.net/whiteForever/article/details/73201586">springBoot springSecurty x-frame-options deny</a>
+<a href="https://blog.csdn.net/qq_26115733/article/details/79647776">Spring Security iFrame ‘X-Frame-Options’ to ‘deny’</a>
+<a href="https://blog.csdn.net/xqhys/article/details/87166986">Spring Security配置 解决X-Frame-Options deny 造成的页面空白 iframe调用问题</a>
+<a href="https://blog.csdn.net/wd2014610/article/details/79727061">权威分析@RequestParam和@RequestPart 的区别（官方文档）</a>
+<a href="https://blog.csdn.net/wojiaopanpan/article/details/69944970">wireshark过滤规则及使用方法</a>
+<a href="https://blog.csdn.net/u012373815/article/details/72724084">spring的multipartResolver和java后端获取的MultipartHttpServletRequest方法对比 （附：遇到的坑）</a>
+<a href="https://blog.csdn.net/a469517790/article/details/80395384">spring boot 上传文件出错，Required request part ‘file’ is not present</a>
+<a href="https://blog.csdn.net/befroe_You/article/details/81325479">springboot MultipartFile文件上传遇到的问题</a>
+<a href="https://blog.csdn.net/qq_20079921/article/details/78159419">springmvc文件上传报错</a>
+<a href="https://blog.csdn.net/qq_36410795/article/details/72582882">Spring MVC通过MultipartResolver实现单文件，多文件上传的详细讲解。</a>
+<a href="https://stackoverflow.com/questions/26118099/how-to-config-commonsmultipartresolver-in-spring4-without-xml-to-upload-file">How to config “CommonsMultipartResolver” in spring4 without xml to upload file</a>
+<a href="https://github.com/twilson63/ngUpload/issues/46">Response JSON is surrounded with HTML…? 46 · twilson63/ngUpload</a>
+<a href="https://blog.csdn.net/wuyanshen2012/article/details/75676157">解决ajax上传文件返回值中出现</a>
+<a href="https://blog.csdn.net/hon_3y/article/details/77840735">上传文件 返回值带</a>
+<a href="https://stackoverflow.com/questions/44261725/spring-mvc-image-response-content-type-set-text-html">Spring MVC Image response content type set text/html</a>
+<a href="https://github.com/aspnet/AspNetCore/issues/4846">Returning HTML using Produces(“text/html”) causes 406 response 4846 · aspnet/AspNetCore</a>
+<a href="https://blog.csdn.net/u011649691/article/details/79441971">@requestmapping参数produces,consumes</a>
+<a href="https://blog.csdn.net/qq_31896193/article/details/85256769">@Consumes @Produces的作用</a>
+<a href="https://blog.csdn.net/su_chunlong/article/details/72286720">Springmvc 4.x使用@ResponseBody出现406问题</a>
+<a href="https://blog.csdn.net/u013160932/article/details/50601476">SpringMVC使用了@ResponseBody报406错误的问题(2)</a>
+<a href="https://blog.csdn.net/qq_27093465/article/details/70172057">SpringMVC ajax 请求报错：406 Not Acceptable 的解决办法 使用@ResponseBody注解</a>
+<a href="https://stackoverflow.com/questions/3616359/who-sets-response-content-type-in-spring-mvc-responsebody">Who sets response content-type in Spring MVC (@ResponseBody)</a>
+<a href="https://stackoverflow.com/questions/15573959/how-to-select-particular-range-of-values-in-mysql-table">sql - How to select particular range of values in MySQL table?</a>
+<a href="https://stackoverflow.com/questions/5090591/mysql-select-where-id-in-correct-order">MySQL - SELECT … WHERE id IN (…) - correct order</a>
+<a href="https://blog.csdn.net/zl544434558/article/details/37724297">mybatis向mysql插入含有逗号的值报错</a>
+<a href="https://blog.csdn.net/weixin_38437243/article/details/75077745">两层c:forEach循环嵌套</a>
+<a href="https://stackoverflow.com/questions/4142631/is-it-possible-to-iterate-two-items-simultaneously-using-foreach-in-jstl">is it possible to iterate two items simultaneously using foreach in jstl?</a>
+[arrays - Java: How to convert String[] to List or Set](<a href="https://stackoverflow.com/questions/11986593/java-how-to-convert-string-to-list-or-set">https://stackoverflow.com/questions/11986593/java-how-to-convert-string-to-list-or-set</a>)
+<a href="https://stackoverflow.com/questions/5690228/spring-mvc-how-to-return-image-in-responsebody">Spring MVC: How to return image in @ResponseBody?</a>
+<a href="https://stackoverflow.com/questions/35479290/multipart-file-to-file-inputstream">Multipart File to File InputStream</a>
+<a href="https://stackoverflow.com/questions/23068676/how-to-get-current-timestamp-in-string-format-in-java-yyyy-mm-dd-hh-mm-ss">date - How to get current timestamp in string format in Java? “yyyy.MM.dd.HH.mm.ss”</a>
+<a href="https://blog.csdn.net/Ge_zi327/article/details/79194178">Java—以当前系统时间生成随机数</a>
+<a href="https://stackoverflow.com/questions/11100677/how-to-convert-fileinputstream-to-inputstream">How to convert FileInputStream to InputStream?</a>
+<a href="https://blog.csdn.net/qq_36722039/article/details/80795407">springmvc中利用ResponseEntity进行文件下载</a>
+<a href="https://blog.csdn.net/zhengxiangwen/article/details/68061784">SpringMVC 实现文件下载</a>
+<a href="https://blog.csdn.net/h996666/article/details/87279230">springboot下载文件</a>
+<a href="https://blog.csdn.net/sdut406/article/details/85647982">MultipartFile与File的一些事</a>
+<a href="https://blog.csdn.net/testcs_dn/article/details/39209761">Java如何获取文件的内容类型？例如：image/gif</a>
+<a href="https://segmentfault.com/q/1010000004352699">Mybatis 在 insert 之后想获取自增的主键 id，但是总是返回1</a>
+<a href="https://blog.csdn.net/zonghao123/article/details/78374169">Mybatis下insert语句后获取自增id</a>
+<a href="https://blog.csdn.net/lv_hang515888/article/details/75736292">mybatis insert插入返回自增长id</a>
+<a href="https://stackoverflow.com/questions/39954300/when-to-use-vs">mybatis - When to use $ vs #?</a>
+<a href="https://stackoverflow.com/questions/38948298/there-is-no-getter-for-property-named-tablename-in-class-java-lang-string">mybatis - There is no getter for property named ‘tablename’ in ‘class java.lang.String’</a>
+<a href="https://stackoverflow.com/questions/11760074/mybatis-string-as-parameter">MyBatis String as Parameter</a>
+<a href="https://blog.csdn.net/zcl_love_wx/article/details/78601481">mybatis中传入String类型参数的问题</a>
+<a href="https://blog.csdn.net/leliyanga/article/details/50997247">mybatis 传入String 类型的参数</a>
+<a href="https://blog.csdn.net/AinUser/article/details/81947211">${_parameter}mybatis中该参数的理解</a>
+<a href="https://blog.csdn.net/jia_zhengshen/article/details/78048700">mybatis报Could not find result map java.lang.Integer之类的错误</a>
+<a href="https://stackoverflow.com/questions/13936618/mybatis-select-statement-returns-null-values">jdbc - MyBatis select statement returns null values</a>
+<a href="https://www.cnblogs.com/xxyfhjl/p/4157988.html">mybatis不可忽略的细节</a>
+<a href="https://blog.csdn.net/qq_33543634/article/details/82831267">SpringMvc实现导出Excel视图</a>
+<a href="https://blog.csdn.net/z69183787/article/details/82556630">SpringMVC-4.2+ExcelView视图进行Excel文件下载</a>
+<a href="https://stackoverflow.com/questions/37132981/exporting-data-to-excel-file-using-spring-mvc">Exporting data to excel file using spring mvc</a>
+<a href="https://stackoverflow.com/questions/27017495/spring-mvc-excel-file-download-corrupts-file">Spring MVC, Excel file download, corrupts file</a>
+<a href="https://github.com/highcharts/export-csv/issues/117">Exporting to Excel gives an error when opening the file 117 · highcharts/export-csv</a>
+<a href="https://stackoverflow.com/questions/48090619/apache-poi-not-able-to-give-background-colour-to-a-cell">APACHE POI - Not able to give background colour to a cell</a>
+<a href="https://stackoverflow.com/questions/46484886/how-to-change-cellcolor-in-apache-poi">How to change Cellcolor in Apache POI</a>
+<a href="https://stackoverflow.com/questions/12286662/how-to-apply-bold-text-style-for-an-entire-row-using-apache-poi">How to apply bold text style for an entire row using Apache POI?</a>
+<a href="https://stackoverflow.com/questions/36975940/cellstyle-share-the-same-heap-address-apache-poi">CellStyle share the same heap address apache poi</a>
+<a href="https://stackoverflow.com/questions/28032550/how-to-convert-ordinary-java-color-to-indexedcolors">How to convert ordinary java Color to IndexedColors</a>
+<a href="https://stackoverflow.com/questions/48282807/how-to-create-hyperlink-using-apache-poi-and-java">excel - How to create hyperlink using Apache POI and Java?</a>
+<a href="https://stackoverflow.com/questions/16610881/html-formatted-cell-value-from-excel-using-apache-poi">HTML Formatted Cell value from Excel using Apache POI</a>
+<a href="https://blog.csdn.net/QQ578473688/article/details/78220943">org POI核心类</a>
+<a href="https://blog.csdn.net/u014727260/article/details/55805666">Apache POI使用详解</a>
+<a href="https://stackoverflow.com/questions/36243352/how-to-set-redirection-after-successful-login">spring security - How to set redirection after successful login?</a>
+<a href="https://stackoverflow.com/questions/50732207/spring-boot-redirect-to-requested-url-after-login">Spring Boot Redirect to requested URL after login</a>
+<a href="https://stackoverflow.com/questions/53026801/spring-security-referer-always-login-page-after-authentication">Spring Security: Referer always login page after authentication</a>
+<a href="https://blog.csdn.net/jkjkjkll/article/details/79975975">springboot security 自定义 AuthenticationEntryPoint 和 AccessDeineHandler</a>
+<a href="https://blog.csdn.net/lee353086/article/details/52610205">SpringSecurity学习四-自定义Login请求和返回的数据格式</a>
+<a href="https://github.com/czytelny/czytelny.com/blob/c705781e8cddb925bffc1fec6d440d39540c41dc/content/post/Spring-and-Angular-handling-session-timeout.md">czytelny.com/Spring-and-Angular-handling-session-timeout.md</a>
+<a href="https://github.com/tmanev/quis-listing/blob/cc898b6fb40b58733c1afde3f6ddbecc8d575bd7/src/main/java/com/manev/quislisting/security/ContinueEntryPoint.java">quis-listing/ContinueEntryPoint.jav</a>
+<a href="https://github.com/wultra/powerauth-webflow/blob/4022076dc5183d83c348b3faed7a9852f23662e0/powerauth-webflow/src/main/java/io/getlime/security/powerauth/app/webflow/controller/HomeController.java">powerauth-webflow/HomeController.java</a>
+<a href="https://stackoverflow.com/questions/8405831/how-to-extend-loginurlauthenticationentrypoint-or-how-to-implement-authenticatio">spring security - how to extend LoginUrlAuthenticationEntryPoint or how to implement AuthenticationEntryPoint</a>
+<a href="https://stackoverflow.com/questions/42358856/how-to-return-401-for-rest-api-call-in-spring-security">How to return 401 for REST API call in Spring Security?</a>
+<a href="https://stackoverflow.com/questions/9660764/symfony-2-how-do-i-check-if-a-user-is-not-logged-in-inside-a-template">authentication - Symfony 2: How do I check if a user is not logged in inside a template?</a>
+<a href="https://stackoverflow.com/questions/12097765/javamail-with-spring-missing-imports">JavaMail with Spring - Missing Imports</a>
+<a href="https://stackoverflow.com/questions/1367303/which-artifact-for-org-springframework-mail">Which artifact for org.springframework.mail?</a>
+<a href="https://stackoverflow.com/questions/8917400/how-to-configure-spring-javamailsender-for-ses-using-smtp">How to configure Spring JavaMailSender for SES using SMTP?</a>
+<a href="https://blog.csdn.net/u014204541/article/details/79309040">使用spring框架的JavaMailSender发送邮件工具类</a>
+<a href="https://stackoverflow.com/questions/12371770/spring-mvc-checking-if-user-is-already-logged-in-via-spring-security">Spring MVC - Checking if User is already logged in via Spring Security?</a>
+<a href="https://stackoverflow.com/questions/2020088/sending-email-in-android-using-javamail-api-without-using-the-default-built-in-a">Sending Email in Android using JavaMail API without using the default/built-in app</a>
+<a href="https://stackoverflow.com/questions/20544245/class-file-for-javax-mail-internet-mimemessage-not-found">spring - class file for javax.mail.internet.MimeMessage not found</a>
+<a href="https://stackoverflow.com/questions/6532273/unrecognized-ssl-message-plaintext-connection-exception">Unrecognized SSL message, plaintext connection? Exception</a>
+<a href="https://stackoverflow.com/questions/36590597/unable-to-send-mail-javax-net-ssl-sslexception-unrecognized-ssl-message-plai">Unable to Send Mail - javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection?</a>
+<a href="https://stackoverflow.com/questions/20588186/jenkins-on-windows-could-not-connect-to-smtp-host-unrecognized-ssl-message">Jenkins on Windows - Could not connect to SMTP host, “Unrecognized SSL message”</a>
+<a href="https://stackoverflow.com/questions/15983260/javax-net-ssl-sslexception-unrecognized-ssl-message-plaintext-connection">javax.net.ssl.SSLException: Unrecognized SSL message, plaintext connection</a>
+<a href="https://github.com/joscha/play-authenticate/issues/282">Outgoing email not working 282 · joscha/play-authenticate</a>
+<a href="https://stackoverflow.com/questions/16115453/javamail-could-not-convert-socket-to-tls-gmail">Javamail Could not convert socket to TLS GMail</a>
+<a href="https://blog.csdn.net/fengsigaoju/article/details/52864982">javamail中文乱码解决</a>
+<a href="https://stackoverflow.com/questions/14282569/spring-security-retaining-url-parameters-on-redirect-to-login">Spring Security - Retaining URL parameters on redirect to login</a>
+<a href="https://stackoverflow.com/questions/24953410/springsecurity-grails-how-to-change-loginformurl-in-loginurlauthenticationentryp">spring security - SpringSecurity/Grails how to change loginFormUrl in LoginUrlAuthenticationEntryPoint dynamically at runtime?</a>
+<a href="https://blog.csdn.net/honghailiang888/article/details/53671108">【Spring实战】----security4.1.3认证的过程以及原请求信息的缓存及恢复（RequestCache）</a>
+<a href="https://blog.csdn.net/berty_love/article/details/9280353">spring security插件–获取 登录前被拦截的URL</a>
+<a href="https://stackoverflow.com/questions/3745275/how-come-request-getpathinfo-in-service-method-returns-null">jsp - How come request.getPathInfo() in service method returns null?</a>
+<a href="https://stackoverflow.com/questions/8715474/servlet-and-path-parameters-like-xyz-value-test-how-to-map-in-web-xml">get - Servlet and path parameters like /xyz/{value}/test, how to map in web.xml?</a>
+<a href="https://stackoverflow.com/questions/30873815/php-url-path-as-parameters">PHP - url path as parameters</a>
+<a href="https://stackoverflow.com/questions/8033537/getting-hash-parameters-from-request-url">Getting hash parameters from request url</a>
+<a href="https://github.com/ring-clojure/ring/issues/207">How to get an URL fragment (data after #)? 207 · ring-clojure/ring</a>
+<a href="https://stackoverflow.com/questions/27987762/how-to-set-url-anchor-hash-in-servlets">How to set URL anchor (hash) in servlets?</a>
+<a href="https://github.com/spring-projects/spring-ldap/blob/master/core/src/main/java/org/springframework/ldap/core/LdapTemplate.java">spring-ldap/LdapTemplate.java</a>
+<a href="https://stackoverflow.com/questions/34314108/spring-ldap-jpa-limit-number-of-result">Spring LDAP JPA - Limit number of result</a>
+<a href="https://stackoverflow.com/questions/22672858/spring-ldap-odmanager-query-returning-size-limit-exceeded">SPRING LDAP - ODManager query returning size limit exceeded</a>
+<a href="https://blog.csdn.net/awj321000/article/details/78852876">spring-ldap基本使用总结</a>
+<a href="https://github.com/spring-projects/spring-ldap/blob/master/core/src/test/java/org/springframework/ldap/query/LdapQueryBuilderTest.java">spring-ldap/LdapQueryBuilderTest.java</a>
+<a href="https://stackoverflow.com/questions/32776541/ldap-template-search-by-multiple-attributes">spring - LDAP template search by multiple attributes</a>
+<a href="https://stackoverflow.com/questions/37946940/spring-ldaptemplate-search-on-multiple-bases-with-separate-filters">Spring LdapTemplate search on multiple bases with separate filters</a>
+<a href="https://stackoverflow.com/questions/27481225/how-to-use-like-operator-within-ldap-query">How to use like operator within LDAP query?</a>
+<a href="https://stackoverflow.com/questions/5592345/how-to-select-a-radio-button-by-default">How to select a radio button by default?</a>
+<a href="https://stackoverflow.com/questions/14482451/ternary-operator-in-jstl-el">jsp - Ternary operator in JSTL/EL</a>
+<a href="https://stackoverflow.com/questions/10189963/jstl-if-tag-for-equal-strings">JSTL if tag for equal strings</a>
+<a href="https://stackoverflow.com/questions/8355787/how-do-i-check-two-conditions-in-one-cif">jstl - How do I check two conditions in one</a>
+<a href="https://stackoverflow.com/questions/12144466/how-do-i-compare-if-a-string-is-not-equal-to">How do I compare if a string is not equal to?</a>
+<a href="https://stackoverflow.com/questions/10987453/how-to-use-chromes-network-debugger-with-redirects">http - How to use Chrome’s network debugger with redirects</a>
+<a href="https://stackoverflow.com/questions/5484253/jspservice-is-exceeding-the-65535-bytes-limit">_jspService is exceeding the 65535 bytes limit</a>
+<a href="https://stackoverflow.com/questions/51687563/how-to-insert-html-code-dynamically-using-jstl">jsp - How to insert html code dynamically using JSTL?</a>
+<a href="https://stackoverflow.com/questions/16376227/how-to-include-html-in-jsp">How to include HTML in JSP?</a>
+<a href="https://stackoverflow.com/questions/16169419/which-one-is-better-among-cimport-and-jspinclude-in-terms-of-performance">jstl - Which one is better among</a>
+<a href="https://blog.csdn.net/hehaoyang666/article/details/41281113">mysql自增ID起始值修改方法</a>
+<a href="https://stackoverflow.com/questions/52406467/convert-object-to-map-in-java">Convert object to map in java</a>
+<a href="https://github.com/gilmarsquinelato/i18n-manager">gilmarsquinelato/i18n-manager: The app that will help to manage your app translations.</a>
+<a href="https://angular-translate.github.io/">angular translate - i18n for your Angular apps, made easy.</a>
+<a href="https://blog.csdn.net/qq_26929957/article/details/79349333">sql优化之like模糊查询【亲测】</a>
+<a href="https://blog.csdn.net/u011118321/article/details/68946027">Mybatis中的trim标签 介绍</a>
+<a href="https://blog.csdn.net/sinat_36059653/article/details/73822168">myBatis中查询条件的拼接</a>
+<a href="https://blog.csdn.net/J080624/article/details/78794196">MyBatis - 分页中的小坑(limit 0.0 ,10)</a>
+<a href="https://blog.csdn.net/xl_1803/article/details/83472576">mybatis if标签判断参数map中是否存在某个key</a>
+<a href="https://blog.csdn.net/s20082043/article/details/46830439">Mybatis类型转换介绍</a>
+<a href="https://www.cnblogs.com/wucj/p/5148824.html">MyBatis之四：调用存储过程含分页、输入输出参数</a>
+<a href="https://blog.csdn.net/u012780336/article/details/52921043">mybatis的if判断有坑</a>
+<a href="https://blog.csdn.net/qq_27289001/article/details/77175077">使用limit查询的同时取得总的记录数：SQL_CALC_FOUND_ROWS和FOUND_ROWS()</a>
+<a href="https://blog.csdn.net/Revivedsun/article/details/70544053">MyBatis，MySql存储过程分页查询</a>
+<a href="https://blog.csdn.net/wenxingchen/article/details/78960721">mybatis一个select标签执行多个sql语句</a>
+<a href="https://stackoverflow.com/questions/26107022/how-to-wrap-multiple-select-queries-into-one-query-in-mybatis">mysql - How to wrap multiple select queries into one query in Mybatis?</a>
+<a href="https://www.cnblogs.com/chanedi/articles/4336013.html">MySQL高效分页解决方案集</a>
+<a href="https://stackoverflow.com/questions/5955471/wrong-result-with-found-rows-in-mysql">php - Wrong result with FOUND_ROWS() in mySQL</a>
+<a href="https://blog.csdn.net/IBLiplus/article/details/82789078">mybatis一个select标签执行多个sql语句</a>
+<a href="https://github.com/mybatis/mybatis-3/issues/274">How to wrap multiple select queries into one query 274 · mybatis/mybatis-3</a>
+<a href="https://www.cnblogs.com/digdeep/p/4818660.html">MySQL 中的 FOUND_ROWS() 与 ROW_COUNT() 函数 - digdeep</a>
+<a href="https://blog.csdn.net/u011450110/article/details/77962336">table表格 td设置固定宽度</a>
+<a href="https://blog.csdn.net/qq1332479771/article/details/77369321">html中设置table的各个td的宽度</a>
+<a href="https://stackoverflow.com/questions/12419619/whats-the-difference-between-ng-model-and-ng-bind">angularjs - What’s the difference between ng-model and ng-bind</a>
+<a href="https://stackoverflow.com/questions/2811626/evaluate-empty-or-null-jstl-c-tags">jsp - Evaluate empty or null JSTL c tags</a>
+<a href="https://blog.csdn.net/Jerry_1126/article/details/41143579">Python常用内置函数介绍【filter,map,reduce,apply,zip】</a>
+<a href="https://blog.csdn.net/Yeoman92/article/details/56289287">理解Python中列表，元组，字典，集合的区别</a>
+<a href="https://blog.csdn.net/sinat_37816910/article/details/79808026">Python3的多行输入</a>
+<a href="https://blog.csdn.net/longshenlmj/article/details/9838377">python一行写不下，变多行</a>
+<a href="https://stackoverflow.com/questions/36774694/qstringlist-to-qstring-conversion-issues">QstringList to Qstring conversion issues</a>
+<a href="https://stackoverflow.com/questions/19258299/qregexp-not-extracting-text-as-expected">regex - QRegExp not extracting text as expected</a>
+<a href="https://blog.csdn.net/u011407281/article/details/41546653">在JAVA中，对List集合的加减操作</a>
+<a href="https://blog.csdn.net/lan_liang/article/details/52554476">使用AD(Active Directory)验证内网用户名密码</a>
+<a href="https://stackoverflow.com/questions/46345978/how-to-authenticate-users-in-c-sharp-ldap">asp.net - How to authenticate users in C# LDAP</a>
+<a href="https://blog.csdn.net/swort_177/article/details/4594588">DirectoryEntry的使用 局域网内的计算机</a>
+<a href="https://blog.csdn.net/jcy472578/article/details/38085661">解决System.Runtime.Interopservices.COMException问题</a>
+<a href="https://blog.csdn.net/Ts1030746080/article/details/8741399">DirectoryEntry配置IIS7出现ADSI Error：未知错误(0x80005000)</a>
+<a href="https://www.cnblogs.com/catcherx/p/3330909.html">检测到在集成的托管管道模式下不适用的ASP.NET设置的解决方法（非简单设置为【经典】模式）。</a>
+<a href="https://blog.csdn.net/editoryang/article/details/80352775">System.DirectoryServices.DirectoryEntry 域用户验证</a>
+<a href="https://blog.csdn.net/fox009521/article/details/77759301">操作Active Directory (AD)的操作类</a>
+<a href="https://stackoverflow.com/questions/22158063/how-can-i-make-angularjs-ngchange-handler-be-called-only-when-user-finishes-typi">How can I make angularjs ngChange handler be called only when user finishes typing</a>
+<a href="https://stackoverflow.com/questions/18757980/why-cant-i-access-this-ng-model-variable-in-my-controller">angularjs - Why can’t I access this ng-model variable in my controller?</a>
+<a href="https://blog.csdn.net/weixin_34194551/article/details/85671693">[AngularJS] Angular 1.3: ng-model-options updateOn, debounce</a>
+<a href="https://blog.csdn.net/mingqingyuefeng/article/details/79454641">debounce消抖函数</a>
+<a href="https://stackoverflow.com/questions/13943471/what-is-the-correct-syntax-of-ng-include">javascript - What is the correct syntax of ng-include?</a>
+<a href="https://stackoverflow.com/questions/30337582/spring-boot-configure-and-use-two-datasources">Spring Boot Configure and Use Two DataSources</a>
+<a href="https://stackoverflow.com/questions/1712227/how-do-i-get-the-number-of-elements-in-a-list-in-python">How do I get the number of elements in a list in Python?</a>
+<a href="https://stackoverflow.com/questions/11841961/how-to-replace-with-using-qstring-replace">qt - How to replace ‘/’ with ‘\\’ using QString replace()?</a>
+<a href="https://stackoverflow.com/questions/22101086/split-and-count-a-python-string">arcpy - Split and Count a Python String</a>
+<a href="https://stackoverflow.com/questions/25481916/listen-for-a-specific-includecontentloaded">angularjs - Listen for a specific $includeContentLoaded</a>
+<a href="https://stackoverflow.com/questions/21056037/call-a-function-when-ng-show-is-triggered">angularjs - Call a function when ng-show is triggered?</a>
+<a href="https://github.com/QtExcel/QXlsx/issues/32">Sometime file will be lost something(share formula?)after modified by qxlsx 32 · QtExcel/QXlsx</a>
+<a href="https://blog.csdn.net/xiexingshishu/article/details/44624573">Qt中向单元格中写入日期数据</a>
+<a href="https://blog.csdn.net/alada007/article/details/7839289">QT时间设置</a>
+<a href="https://www.cnblogs.com/liushui-sky/p/8880127.html">QDateTime 本地时间和UTC时间转换问题</a>
+<a href="https://blog.csdn.net/tianyuzhixina/article/details/74373297">Qt新建文件，文件名加入时间</a>
+<a href="https://www.cnblogs.com/chechen/p/5138604.html">VC++ 获取文件属性创建时间、修改时间和访问时间</a>
+<a href="https://stackoverflow.com/questions/24437658/angular-ng-if-how-to-callback-after-ng-if-template-has-been-rendered">javascript - angular - ng-if - how to callback after ng-if template has been rendered</a>
+<a href="https://stackoverflow.com/questions/28448149/how-to-call-multi-function-in-single-ng-init-directice-using-angularjs">javascript - how to call multi function in single ng-init directice using angularjs</a>
+<a href="https://www.cnblogs.com/a8457013/p/8033263.html">mybatis if-else(写法)</a>
+<a href="https://blog.csdn.net/u013291394/article/details/50394324">每天学点Python之bytes</a>
+<a href="https://stackoverflow.com/questions/37400974/unicode-error-unicodeescape-codec-cant-decode-bytes-in-position-2-3-trunca">python - (unicode error) ‘unicodeescape’</a>
+<a href="https://blog.csdn.net/ily666666/article/details/79840118">利用python删除指定目录下，指定后缀名文件</a>
+<a href="https://gist.github.com/ladder1984/a063d3f1ca0d9be57a81">修改自标准库的copytree,可覆盖文件</a>
+<a href="https://blog.csdn.net/qq_25360769/article/details/80023656">python中shutil.copy()与shutil.copytree()的具体用法</a>
+<a href="http://www.51testing.com/html/72/502872-3720932.html">shutil模块（shell工具）–python复制、移动、改名和删除文件</a>
+<a href="https://blog.csdn.net/sunjinjuan/article/details/79028828">python中shutil模块学习笔记</a>
+<a href="https://stackoverflow.com/questions/39957637/mybatis-mapping-result-to-liststring-in-mybatisrepository-and-annotations?rq=1">MyBatis mapping result to List</a>
+<a href="https://blog.csdn.net/sinat_34130812/article/details/80492748">Qt时区检测及语言加载</a>
+<a href="https://blog.csdn.net/dazhi_1314/article/details/6255546">QDateTime时区的获取方法</a>
+<a href="https://blog.csdn.net/qq_24127015/article/details/83828325">QT QDateTime</a>
+<a href="https://stackoverflow.com/questions/23992178/how-can-i-show-messagebox-in-another-thread-qt">How can i show MessageBox in another thread Qt</a>
+<a href="https://stackoverflow.com/questions/5702688/does-the-and-operator-in-mybatis-test-expressions-short-circuit-during-evaluatio">Does the AND operator in MyBatis test expressions short-circuit during evaluation?</a>
+<a href="https://codeday.me/bug/20180320/145376.html">令人难以置信的奇怪文件创建时间问题</a>
+<a href="https://blog.csdn.net/hufengvip/article/details/5766703">Qt中 文件对话框QFileDialog 的使用</a>
+<a href="https://blog.csdn.net/u012348774/article/details/49964105">关于Qt的QFileDialog的使用问题</a>
+<a href="https://stackoverflow.com/questions/25270513/qfiledialoggetopenfilename-crashes-when-debugging-apparently-caused-by-projec">QFileDialog::getOpenFileName crashes when debugging, apparently caused by project name?</a>
+<a href="https://blog.csdn.net/chchlh/article/details/18410987">Qt新对话框创建与销毁</a>
+<a href="https://blog.csdn.net/qq_33233768/article/details/79217466">QDialog的accept函数和reject函数</a>
+<a href="https://github.com/QtExcel/QXlsx">QtExcel/QXlsx: Excel file(*.xlsx) reader/writer library using Qt5. Descendant of QtXlsx.</a>
+<a href="https://stackoverflow.com/questions/21976264/qt-isodate-formatted-date-time-including-timezone">Qt ISODate formatted date/time including timezone</a>
+<a href="https://stackoverflow.com/questions/18750569/qdatetime-isodate-with-timezone">QDateTime Isodate with timezone ?</a>
+链接:<a href="https://bbs.huaweicloud.com/blogs/b9308b8a723411e9bd5a7ca23e93a891">近期问题查询记录</a></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

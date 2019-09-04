@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="active" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="intro-to-bash-scripting"><img src="https://itnext.io/intro-to-bash-scripting-95c5fbc2dcef" alt="Intro to Bash Scripting">
+Intro to Bash Scripting <a class="heading-anchor-permalink" href="#intro-to-bash-scripting" aria-hidden="true">#</a></h1>
+<h2 id="building-tools-for-basic-command-line-tasks-in-bash">Building tools for basic command-line tasks in Bash <a class="heading-anchor-permalink" href="#building-tools-for-basic-command-line-tasks-in-bash" aria-hidden="true">#</a></h2>
+<p>[</p>
+<p><img src="https://miro.medium.com/fit/c/96/96/2*V96zPRvD_QA14QAS5GkzZw.png" alt="Kenneth Reilly"></p>
+<p>](/@kennethreilly?source=post_page-----95c5fbc2dcef----------------------)</p>
+<p><a href="/@kennethreilly?source=post_page-----95c5fbc2dcef----------------------">Kenneth Reilly</a></p>
+<p>Follow</p>
+<p><a href="/intro-to-bash-scripting-95c5fbc2dcef?source=post_page-----95c5fbc2dcef----------------------">Sep 3</a> · 8 min read</p>
+<p><img src="https://miro.medium.com/max/60/1*nlte8CxUQ8S3MpN9aA1KmA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/3844/1*nlte8CxUQ8S3MpN9aA1KmA.png" alt=""></p>
+<p><a href="https://www.gnu.org/software/bash/">GNU Bash</a></p>
+<h2 id="introduction">Introduction <a class="heading-anchor-permalink" href="#introduction" aria-hidden="true">#</a></h2>
+<p>Developing software typically involves spending a lot of time at the command line. Various tasks require the ability to input very detailed instructions to the computer, in ways that are difficult to impossible to accomplish without a text-based interface and a keyboard (and coffee).</p>
+<p>In this article we’ll look at the basics of creating useful tools in <a href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">Bash</a>, the most common shell found within server-side architecture and DevOps.</p>
+<p>While shell scripting is indeed <em>scripting,</em> an effort is made to apply as many concepts of production-grade software engineering to the example project as possible, to establish best practices that result in a high degree of success (and makes it easier to figure out what happened if something breaks).</p>
+<p>A copy of the source code for this article is available <a href="https://github.com/kenreilly/bash-tools-example">here on GitHub</a>.</p>
+<hr>
+<h2 id="overview">Overview <a class="heading-anchor-permalink" href="#overview" aria-hidden="true">#</a></h2>
+<p>Bash is a <a href="https://en.wikipedia.org/wiki/Command_language">command language</a> with a syntax derived from natural human language and a feature set that includes command execution, conditional logic, calculations, arrays/dictionaries, iteration/looping, functions, string manipulation, expansion, and more — making it extremely useful for batch processing, job control, maintenance, and other sysadmin tasks.</p>
+<p>For a general overview of Bash features and how they work, check out this excellent <a href="https://devhints.io/bash">cheatsheet</a>. Getting started with Bash is easy and requires nothing more than access to a terminal. To create and run a basic script:</p>
+<p><strong>$</strong> echo ‘echo “hello $1”’ &gt; <a href="http://hello.sh">hello.sh</a><br>
+<strong>$</strong> chmod +x <a href="http://hello.sh">hello.sh</a><br>
+<strong>$</strong> ./hello.sh programmerhello programmer</p>
+<p>The first line <a href="https://www.gnu.org/software/bash/manual/html_node/Redirections.html">redirects</a> the literal string <code>‘echo “hello $1&quot;'</code> to the file <em><a href="http://hello.sh">hello.sh</a></em>, and the second line <a href="https://en.wikipedia.org/wiki/Chmod">enables execute permissions</a> for the script. The third line runs the script with <code>programmer</code> as an argument, which is output back to the terminal via the <code>$1</code> variable. This illustrates the very basics of what <code>.sh</code> files are, and how they can take input and produce output from it. Next, we’ll look at the concept of formatting <code>.sh</code> files into structured blocks of code.</p>
+<hr>
+<h2 id="entry-point">Entry Point <a class="heading-anchor-permalink" href="#entry-point" aria-hidden="true">#</a></h2>
+<p>A bash script is interpreted line-by-line from the top-down, and other bash files can be imported using the <code>source _my-script-name.sh_</code>  command, which is useful for organizing various concepts into reusable library code.</p>
+<p>Here is the main file in our example project, <strong><a href="http://bash-example.sh">bash-example.sh</a></strong>:</p>
+<p>The first line contains<code>#!/bin/bash</code> — an interpreter directive scheme called a <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>, which tells the environment to process the rest of this file using the<code>bash</code> interpreter. The line <code>source ./lib/main.sh</code> imports the main function into the current session, which is then called with <code>main $@</code> which passes all arguments within the current scope (the <code>@</code> parameter) to the main function. This file is kept clean as a definition / entry file.</p>
+<hr>
+<h2 id="main-function">Main Function <a class="heading-anchor-permalink" href="#main-function" aria-hidden="true">#</a></h2>
+<p>Next up is the main function for this utility, in <strong>lib/main.sh</strong>:</p>
+<p>After the <a href="https://en.wikipedia.org/wiki/Shebang_(Unix)">shebang</a>, the rest of the library scripts are sourced, each of which we will inspect further in a moment. The <em>main()</em> function invoked at the entry point (in the previous file) begins with initializing directories for various data processing tasks handled by this example utility. Next, the command_table variable is created with the Bash command <code>declare -A -x command_table</code> which creates an associative array (<code>-A</code>) and allows the variable to be initialized with a value (<code>-x</code>). This creates a simple function table to avoid having to use much larger <code>if/elif</code> or <code>switch</code> blocks. The keys from the <code>command_table</code> are then parsed into the simple indexed array <code>commands</code> which is used to display help information when called with incorrect arguments.</p>
+<p>The first argument taken in from the command line is stored as <code>command</code> and then <code>shift</code> is called, which then pushes that item off the argument stack. The command is looked up in the command table, and if a matching key exists, the corresponding function is invoked with the remaining argument stack, by calling <code>$fn_name $@</code> which takes the value of <code>fn_name</code> and executes it as a shell command with parameters being passed in.</p>
+<p>There are three features supported by this small Bash program:</p>
+<ul>
+<li><code>scan-files **_num_** :</code> scans the current directory for <strong><em>num</em></strong> largest files, and outputs the result to a log under <code>./data/logs</code></li>
+<li><code>process-logs :</code> processes log files, writes a summary to <code>./data/reports</code>, creates a <code>tar.gz</code> file in <code>./data/archives</code>, and deletes the log files</li>
+<li><code>get-photo :</code> gets NASA’s Astronomy Picture of the Day and places the photo <code>.jpg</code> along with corresponding <code>.json</code> under <code>./data/images</code></li>
+</ul>
+<p>We’ll go over each of these functions in a moment, but first let’s check out the underlying configuration and utility functions that are used throughout the rest of this example project.</p>
+<hr>
+<h2 id="configuration">Configuration <a class="heading-anchor-permalink" href="#configuration" aria-hidden="true">#</a></h2>
+<p>No project would be complete without some initial setup and config. The next file we’ll check out is <strong>lib/config.sh</strong>:</p>
+<p>First, error handling is set-up by creating a handler function <em>on_error(),</em> setting error tracing, and then setting an error trap to call <em>on_error</em> when an <code>ERR</code> condition occurs (which provides useful feedback when debugging).</p>
+<p>Next, alias expansion is enabled to allow easy expansion and re-use of aliases. This functionality isn’t used much within this project but it’s here just in case.</p>
+<p>Another trap is set, this time for the <code>TERM</code> signal, to make it easy to exit from the script from any point at any time. Finally, the current working directory is discovered and stored in <code>_ROOT</code> for use in filesystem operations, to ensure that the correct directory is used throughout the rest of the codebase.</p>
+<hr>
+<h2 id="utility-functions">Utility Functions <a class="heading-anchor-permalink" href="#utility-functions" aria-hidden="true">#</a></h2>
+<p>The next file up for inspection is <strong>lib/utility.sh</strong>:</p>
+<p>Within this file are a few simple utility functions to make life easier when working on this project. The <em>exit_with_help</em> function displays a message passed in as an argument, and then exits the script. The <em>get_timestamp</em> function prints out the result of a <code>date</code> command with format string, and <em>init_dir</em> checks for a directory, and if it doesn’t it exist, creates it.</p>
+<p>The <em>str_split</em> function takes a string as an input, and “returns” an array by setting a global associative array str_split_result, which is accessed by the calling script after invoking str_split. The array is generated by setting the internal Bash read delimiter <code>IFS</code> to the value provided, and then reading the string data with <code>read</code> (which breaks the string into an array by <code>IFS</code>) and storing the result in <code>str_split_result</code> to be used later.</p>
+<hr>
+<h2 id="file-scanning">File Scanning <a class="heading-anchor-permalink" href="#file-scanning" aria-hidden="true">#</a></h2>
+<p>With the basic config and helper functions out of the way, let’s check out the first feature (file scanning) in <strong>lib/file-io.sh</strong>:</p>
+<p>The <em>write_file</em> function redirects the output of a printf statement to a path built from the root url and the provided string path. The write_log function just calls <em>write_log</em> with a <code>‘logs/’</code> prefix to store the file under <code>data/logs</code>.</p>
+<p>The actual scan feature is implemented in <em>scan_large_files</em> which first checks to verify that a parameter has been passed in (for number of largest files to log), and if one wasn’t provided, prints a help message and exits.</p>
+<p>Next, a <code>find</code> command is ran to search for all files within the current directory and below, piped through <code>awk</code>,<code>sort</code>, and <code>head</code> to filter, sort, and extract the top x files from the list. The result of this is stored in <code>data</code>, and a <code>timestamp</code> is generated. The contents of <code>data</code> are then saved to a file.</p>
+<p>This completes the file scanner and log generator. There is one more function in this file, <code>create_archive</code> (which is called from the next file we’ll check out) that effectively just runs a <code>tar</code> to archive and compress the log files, saving the resulting archive to <code>./data/archives</code>.</p>
+<p>The <em>create_report</em> function writes the contents of <code>log_data</code> to a formatted <code>.yaml</code> file for readibility.</p>
+<hr>
+<h2 id="data-processing">Data Processing <a class="heading-anchor-permalink" href="#data-processing" aria-hidden="true">#</a></h2>
+<p>Next up is the second feature in this example, processing the log files generated by the file scanner, implemented in <strong>lib/log-processor.sh</strong>:</p>
+<p>This file is where most of the complex work in this program is done. The first function within the file is <em>process_logs,</em> which starts by initializing a global associative array <code>log_data</code> that will hold the data used to create a report. Another find command is used and the result is stored in <code>logs</code>. Counters for total number of files and lines are also initialized. Next, a check is performed and if no log files are available, the script exits.</p>
+<p>Each log file is processed as <code>record</code>, and the date is extracted by calling <code>str_split</code> with an underscore delimiter (<code>_</code>) and retrieving the second item from the array. If the date is blank for some reason, the entry is ignored and the script continues processing the next item in the list. Each log file is read into <code>line</code> which is then passed into the <code>process_entry</code> function for further processing, which we will examine in a moment.</p>
+<p>The <em>process_entry</em> function sets a few local variables, prints some <a href="https://misc.flogisoft.com/bash/tip_colors_and_formatting">colorized</a> status information, and then looks to see if the file already exists in <code>log_data</code>. If so, the dates of the two entries are compared, and if the current item is newer than the one in the array, the older one is replaced. Otherwise, the item is simply added to the array.</p>
+<p>Once each record has been processed, some status info is displayed and the script runs <code>create_report</code> and <code>create_archive</code> to generate a report and archive the log files to their respective locations.</p>
+<hr>
+<h2 id="image-downloader">Image Downloader <a class="heading-anchor-permalink" href="#image-downloader" aria-hidden="true">#</a></h2>
+<p>Last but not least, we have the image downloader in <strong>lib/net-client.sh</strong>:</p>
+<p>Here we have a function, <code>get_nasa_photo</code>, for retrieving information from NASA about their current <a href="https://apod.nasa.gov/apod/astropix.html">Astronomy Picture of the Day</a>. This function begins by defining the NASA URL for this servic, executing a <a href="https://en.wikipedia.org/wiki/CURL">cURL</a> operation on it, and storing the result in <code>json</code>. The <code>filename</code> variable is also initialized to an empty string. Next, the json is trimmed of it’s leading and trailing braces using the string expansion range selector <code>${json:1:-1}</code> which takes the value of <code>json</code> and returns the beginning <code>+1</code> through the end <code>-1</code>. This is passed into <em>str_split</em> to split the remaining string by the <code>','</code> character, which will not allow for correct parsing of the entire JSON data but will get us one step closer to the only value we need from it, the <code>url</code>. This is an example of a pure hack and is done for for the sake of implementing a solution in pure Bash, but for production scenarios a command-line JSON processing tool <a href="https://stedolan.github.io/jq/">such as jt</a> is recommended instead.</p>
+<p>Each section of the split JSON data is processed as <code>field</code> and when one that starts with <code>'&quot;url&quot;:'</code> is found, it’s further processed to retrieve the actual URL from the string. Once the URL is obtained, the filename is retrieved from it and <em>download_image</em> is called, which executes another <code>curl</code> operation to download the file contents and redirect them to the target <code>.jpg</code> file.</p>
+<p>Once the download is complete, the original unmodified JSON data is also written, with the same filename but with a <code>.json</code> extension instead of <code>.jpg</code>.</p>
+<hr>
+<h2 id="conclusion">Conclusion <a class="heading-anchor-permalink" href="#conclusion" aria-hidden="true">#</a></h2>
+<p>Bash is a powerful command-line environment that provides developers and system administrators with a wide variety of tools to quickly automate many common tasks, especially when it comes to deployment and maintenance.</p>
+<p>This project illustrates just a few things that can be accomplished in Bash. For a more detailed look, check out this <a href="https://www.tldp.org/LDP/abs/html/">advanced scripting guide</a> or refer back to the <a href="https://devhints.io/bash">cheatsheet</a> mentioned earlier.</p>
+<p>Thanks for reading and good luck with your next DevOps project!</p>
+<hr>
+<p><img src="https://miro.medium.com/freeze/max/60/1*Ycl-WVGY_UfDMcT2kc7bnw.gif?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2732/1*Ycl-WVGY_UfDMcT2kc7bnw.gif" alt=""></p>
+<p>Screen capture of <strong><a href="http://bash-example.sh">bash-example.sh</a></strong> in action</p>
+<hr>
+<p><em>Kenneth Reilly (</em><a href="https://twitter.com/8_bit_hacker"><em>8_bit_hacker</em></a><em>) is the CTO of</em> <a href="https://innovationgroup.tech/"><em>The Innovation Group</em></a><em>, an R&amp;D firm that specializes in solving challenging technical problems and assisting others with putting the tools of tomorrow into production today.</em></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

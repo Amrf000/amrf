@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="active" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="dcgans---%E4%BD%BF%E7%94%A8tensorflow%E5%92%8Ckeras%E7%94%9F%E6%88%90%E7%8B%97%E5%9B%BE%E5%83%8F"><img src="https://towardsdatascience.com/dcgans-generating-dog-images-with-tensorflow-and-keras-fb51a1071432" alt="DCGANs - 使用Tensorflow和Keras生成狗图像">
+DCGANs - 使用Tensorflow和Keras生成狗图像 <a class="heading-anchor-permalink" href="#dcgans---%E4%BD%BF%E7%94%A8tensorflow%E5%92%8Ckeras%E7%94%9F%E6%88%90%E7%8B%97%E5%9B%BE%E5%83%8F" aria-hidden="true">#</a></h1>
+<p><a href="/@dragonflareful?source=post_page-----fb51a1071432----------------------"><img src="https://miro.medium.com/fit/c/48/48/2*2HhmAkgYHmPjd2Ki6XqA5g.jpeg" alt="Konstantin Georgiev"></a></p>
+<p><a href="/@dragonflareful?source=post_page-----fb51a1071432----------------------">Konstantin Georgiev</a></p>
+<p>跟随</p>
+<p><a href="/dcgans-generating-dog-images-with-tensorflow-and-keras-fb51a1071432?source=post_page-----fb51a1071432----------------------">8月30日</a> · 23 分钟阅读</p>
+<h1 id="%E5%9F%BA%E4%BA%8Ekaggle%E7%9A%84generative-dogs%E6%AF%94%E8%B5%9B%EF%BC%882019%E5%B9%B4%EF%BC%89">基于Kaggle的Generative Dogs比赛（2019年） <a class="heading-anchor-permalink" href="#%E5%9F%BA%E4%BA%8Ekaggle%E7%9A%84generative-dogs%E6%AF%94%E8%B5%9B%EF%BC%882019%E5%B9%B4%EF%BC%89" aria-hidden="true">#</a></h1>
+<p>时代的DCGAN模型可视化（约9小时的训练）</p>
+<p>这篇文章是关于<strong>DCGAN</strong>有效性背后的基本思想的教程，以及一些改善其性能的方法/黑客。这些方法都是基于我在<strong>Kaggle的</strong><a href="https://www.kaggle.com/c/generative-dog-images"><strong>Generative Dogs Competition中的</strong></a>经验**。该教程也可以在我的原始**<a href="https://www.kaggle.com/jadeblue/dcgans-and-techniques-to-optimize-them"><strong>内核</strong></a><strong>上以笔记本格式****或在</strong><a href="https://github.com/JadeBlue96/DCGAN-Dog-Generator"><strong>GitHub上使用</strong></a><strong>。</strong></p>
+<p>要在本地或使用<strong>Colab</strong>运行此示例，您需要一个<strong>Kaggle帐户</strong>，以便检索其API密钥并使用提供的数据集。<a href="https://medium.com/@yvettewu.dw/tutorial-kaggle-api-google-colaboratory-1a054a382de0"><strong>这里有</strong></a>完整的教程。</p>
+<h1 id="%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%EF%BC%88gan%EF%BC%89">生成对抗网络（GAN） <a class="heading-anchor-permalink" href="#%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%EF%BC%88gan%EF%BC%89" aria-hidden="true">#</a></h1>
+<p>与大多数流行的神经网络架构不同，<strong>GAN</strong>被训练为同时解决两个问题 - <strong>辨别</strong>（有效地分离真实图像）和**“逼真”伪造数据生成**（有效地生成被认为是真实的样本）。我们可以看到这些任务是完全相反的，但如果我们将它们分成不同的模型会发生什么？</p>
+<p>那么，这些模型的通用名称是<strong>Generator（G）<strong>和</strong>Discriminator（D）</strong>，被认为是<strong>GAN</strong>理论背后的<strong>基石</strong>。</p>
+<p>所述<strong>发电机</strong>网络需要输入一个简单随机噪声N维向量，并且根据学习目标分布转换它。它的输出也是N维的。另一方面，<strong>鉴别器</strong>模拟概率分布函数（如分类器）并输出输入图像是真实的还是假的**[0,1]**的概率。考虑到这一点，我们可以定义生成任务的两个主要目标：</p>
+<p><strong>1.训练G以最大化D的最终分类错误。</strong>（这样生成的图像被认为是真实的）。</p>
+<p><strong>2.训练D以最小化最终的分类错误。</strong>（这样可以将真实数据与假数据正确区分开来）。</p>
+<p>为了实现这一点，在<strong>反向传播</strong>期间，<strong>G</strong>的权重将使用<strong>渐变上升</strong>来更新以最大化误差，而<strong>D</strong>将使用<strong>渐变下降</strong>来最小化它。</p>
+<p><img src="https://miro.medium.com/max/30/0*efj9Bgi86fdiyfDq.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1132/0*efj9Bgi86fdiyfDq.png" alt=""></p>
+<p>GAN输入和输出 - （请注意，两个网络在训练期间不直接使用图像的真实分布，而是使用彼此的输出来估计其性能）</p>
+<p>那么我们如何定义估算两个网络累积性能的<strong>损失函数</strong>呢？好吧，我们可以使用<strong>绝对误差</strong>来估计<strong>D</strong>的误差，然后我们可以为<strong>G</strong>重复使用相同的函数但是最大化：</p>
+<p><img src="https://miro.medium.com/max/30/1*Ip0v_LDojrOQTX3ikMojNg.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/532/1*Ip0v_LDojrOQTX3ikMojNg.png" alt=""></p>
+<p>平均绝对误差 - 图像的真实和假分布之间的距离</p>
+<p>在这种情况下，<strong><em>p_t</em><strong>表示图像的真实分布，而</strong><em>p_g</em><strong>是从</strong>G</strong>创建的分布。</p>
+<p>我们可以观察到这个理论是基于<strong>强化学习的</strong>一些关键概念。它可以被认为是一个双人迷你极小游戏，两个玩家相互竞争，从而逐步改善他们各自的任务。</p>
+<p>我们看到了<strong>GAN</strong>理论背后的基本思想。现在让我们更进一步，通过应用<strong>卷积神经网络的</strong>思想和方法，了解<strong>DCGAN的</strong>工作原理。</p>
+<h1 id="%E6%B7%B1%E5%BA%A6%E5%8D%B7%E7%A7%AF%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%EF%BC%88dcgan%EF%BC%89">深度卷积生成对抗网络（DCGAN） <a class="heading-anchor-permalink" href="#%E6%B7%B1%E5%BA%A6%E5%8D%B7%E7%A7%AF%E7%94%9F%E6%88%90%E5%AF%B9%E6%8A%97%E7%BD%91%E7%BB%9C%EF%BC%88dcgan%EF%BC%89" aria-hidden="true">#</a></h1>
+<p><strong>DCGAN</strong>利用<strong>CNN的</strong>一些基本原理，并因此成为实践中使用最广泛的架构之一，因为它们快速收敛，并且由于它们可以非常容易地适应更复杂的变体（使用标签作为条件） ，应用残差​​块等）。以下是<strong>DCGAN</strong>解决的一些更重要的问题：</p>
+<ul>
+<li><strong>创建D使得它基本上解决了受监督的图像分类任务。</strong>（对于这种情况下狗或没有狗）</li>
+<li><strong>由GAN学习的过滤器可用于在生成的图像中绘制特定对象。</strong></li>
+<li><strong>G包含矢量化属性，可以学习非常复杂的对象语义表示。</strong></li>
+</ul>
+<p>以下是创建稳定<strong>DCGAN</strong>时要考虑的一些核心准则，而不是标准<strong>CNN</strong>（摘自官方<a href="https://arxiv.org/pdf/1511.06434.pdf">文件</a>）：</p>
+<ul>
+<li><strong>用Strided convolutions替换Pooling函数。</strong>（这允许<strong>D</strong>学习它自己的空间下采样和<strong>G</strong>各自的上采样，而不会给模型增加任何偏差）</li>
+<li><strong>使用BatchNorm</strong>（它通过将每个单元的输入标准化为零均值和单位方差来稳定学习，这也有助于创建更强大的深度模型而不会使梯度发散）</li>
+<li><strong>避免使用完全连接的隐藏层（不输出）。</strong>（例如，这是全球平均合并，似乎会损害收敛速度）</li>
+<li><strong>对于G - 使用ReLU激活和Tanh输出。</strong>（当您将图像作为输出时，tanh通常是更优先的激活，因为它具有[-1,1]的范围）</li>
+<li><strong>对于D - 使用LeakyReLU激活（以及输出概率的sigmoid函数）。</strong>（这是根据经验进行测试，似乎可以很好地建模到更高的分辨率）</li>
+</ul>
+<p>以下是<strong>DCGAN发生器</strong>的最标准结构：</p>
+<p><img src="https://miro.medium.com/max/30/1*QsYQLn7wfIIeZ49XU7SLuw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/875/1*QsYQLn7wfIIeZ49XU7SLuw.png" alt=""></p>
+<p>DCGAN发生器结构</p>
+<p>我们可以观察到，它的初始输入只是一个**（1,100）<strong>噪声向量，它通过</strong>4个卷积<strong>层进行上采样，步长为</strong>2**，产生大小为（64,64,3）的RGB图像。为实现此目的，将输入向量投影到1024维输出上以匹配第一个<strong>Conv</strong>层的输入，稍后我们将看到更多。</p>
+<p>标准鉴别器会是什么样子？好吧，关于你的期望，让我们来看看：</p>
+<p><img src="https://miro.medium.com/max/30/1*bjMzwBibh-KAb_06QV32bA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/325/1*bjMzwBibh-KAb_06QV32bA.png" alt=""></p>
+<p>DCGAN鉴别器结构</p>
+<p>这次我们有一个输入图像**（64,64,3）<strong>，与</strong>G<strong>的输出相同。我们将其传递给</strong>4个标准的下采样Conv层**，再次以<strong>2</strong>的步幅。在最终输出图层中，图像被平展为矢量，该矢量通常被馈送到S形函数，然后输出<strong>D</strong>对该图像的预测**（单个值表示范围[0,1]中的概率 - 狗= 1或没有狗= 0）**。</p>
+<p>那么，现在你看到了<strong>GAN</strong>和<strong>DCGAN</strong>背后的基本思想，所以现在我们可以继续使用<strong>Tensorflow和Keras</strong> :) 生成一些狗。</p>
+<h1 id="%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%E5%92%8Ceda%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%89">图像预处理和EDA（探索性数据分析） <a class="heading-anchor-permalink" href="#%E5%9B%BE%E5%83%8F%E9%A2%84%E5%A4%84%E7%90%86%E5%92%8Ceda%EF%BC%88%E6%8E%A2%E7%B4%A2%E6%80%A7%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%89" aria-hidden="true">#</a></h1>
+<p>在我们继续创建<strong>GAN</strong>模型之前，让我们先快速浏览一下我们将要使用的<strong>Stanford Dogs</strong>数据集。因为我们还有每个图像的注释，我们可以使用它们将每个狗图像映射到其各自的品种。为此，我们可以先创建一个字典，将文件名中的品种代码映射到实际的品种名称。</p>
+<p>接下来，我将使用<strong>OpenCV</strong>来快速读取图像并将其转换为<strong>RGB</strong>。</p>
+<p>如果我们查看数据集，我们可以看到每个注释文件夹都包含一个<strong>xml</strong>文件列表。这些文件与特定图像相关联，并包含非常有用的信息，主要是图像中每只狗周围的边界框。还有一些图像中包含多条狗，这使我们可以准确地裁剪它们并制作一个<strong>仅</strong>包含<strong>单只狗</strong>图像的数据集。</p>
+<p>在这里，我们可以利用<strong>xml</strong>库创建一个树，并找到该注释的相关元素。对于每个对象，我们可以提取边界框坐标，裁剪图像并通过根据结果<strong>图像宽度****缩小</strong>或<strong>扩展</strong>它来标准化裁剪。最后，我们将把图像保存在一个numpy数组中。</p>
+<p>使用ET查找图像中每只狗的注释</p>
+<p>for o in objects：<br>
+bndbox = o.find（‘bndbox’）<br>
+xmin = int（bndbox.find（‘xmin’）。text）<br>
+ymin = int（bndbox.find（‘ymin’）。text）<br>
+xmax = int（bndbox .find（‘xmax’）。text）<br>
+ymax = int（bndbox.find（‘ymax’）。text）…添加一些边距并调整宽度…＃裁剪图像<br>
+img_cropped = img [ymin：ymin + w， xmin：xmin + w，：]＃[h，w，c] …插值步骤…<br>
+＃调整图像大小<br>
+img_cropped = cv2.resize（img_cropped，（image_width，image_height），interpolation = interpolation）<br>
+＃保存图像和标签<br>
+dog_images_np [curIdx，：，：，]] = np.asarray（img_cropped）<br>
+dog_breed_name = dog_breed_dict [dog_ann.split（’ _’）[0]]<br>
+breeds.append（dog_breed_name）<br>
+curIdx + = 1</p>
+<p>返回dog_images_np，品种</p>
+<p><em>这些功能需要大约2-3分钟才能加载。</em></p>
+<p>通过试验，我们可以发现只有单只狗的结果图像是<strong>22125</strong>，因此我们可以指定我们的numpy数组的确切大小。有<strong>120</strong>种不同的犬种。</p>
+<p>现在我们有了特征和标签，我们可以将它们绘制成方形网格，以查看作物的外观并确保它们被正确标记。</p>
+<p>def plot_features（features，labels，image_width = image_width，image_height = image_height，image_channels = image_channels，<br>
+examples = 25，disp_labels = True）：</p>
+<p>如果不是math.sqrt（例子）.is_integer（）：<br>
+print（‘请选择有效数字示例。’）<br>
+返回<br>
+imgs = []<br>
+classes = []<br>
+for i in range（examples）：<br>
+rnd_idx = np.random.randint（0，len（labels））<br>
+imgs.append（features [rnd_idx，：，：，]] ）<br>
+classes.append（labels [rnd_idx]） fig，axes = plt.subplots（round（math.sqrt（examples）），round（math.sqrt（examples）），figsize =（15,15），<br>
+subplot_kw = {’ xticks’：[]，‘yticks’：[]}，<br>
+gridspec_kw = dict（hspace = 0.3，wspace = 0.01））</p>
+<p>for i，ax in enumerate（axes.flat）：<br>
+if disp_labels == True：<br>
+ax.title.set_text（classes [i]）<br>
+ax.imshow（imgs [i]）</p>
+<p>请注意，我们需要对像素值进行标准化，以确保正确绘制狗。</p>
+<p>plot_features（dog_images_np / 255.，品种，示例= 25，disp_labels = True）</p>
+<p><img src="https://miro.medium.com/max/30/1*9LwQfdpKPB_OvuQq92YMlg.png?q=20" alt=""></p>
+<p>可视化图像功能</p>
+<h1 id="%E6%A8%A1%E5%9E%8B%E8%B6%85%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8">模型超参数列表 <a class="heading-anchor-permalink" href="#%E6%A8%A1%E5%9E%8B%E8%B6%85%E5%8F%82%E6%95%B0%E5%88%97%E8%A1%A8" aria-hidden="true">#</a></h1>
+<p>在这里，我们有一个完整的超参数列表，您可以调整和使用它们来尝试改进模型。我主要从研究论文中收集这些价值观，并通过调整它们进行了一些实验，这就是我最终的结果。以下是您可以尝试的事项列表：</p>
+<ul>
+<li><strong>样本大小</strong> - 功能的数量</li>
+<li><strong>批量大小</strong> - 64或32可以提高性能，但计算量很大，你只能运行模型少量的时期</li>
+<li><strong>Weight Init Std和Mean</strong> - 这些值来自研究论文，似乎可以稳定模型训练</li>
+<li><strong>Leaky ReLU斜率</strong> - <strong>D</strong>激活的门槛也似乎很强劲</li>
+<li><strong>缩小因子和比例因子</strong> - 设置使得<strong>G</strong>的噪声向量可以重新<strong>变形为（4,4,512</strong>），其他组合也可以起作用</li>
+<li><strong>辍学</strong> - 辍学层的数量，它们的位置和速率可以提高性能。</li>
+<li><strong>学习率和学习率衰减</strong> - 对模型融合非常重要，难以精确调整，<strong>G</strong>和<strong>D</strong>可以有不同的学习率。</li>
+<li><strong>噪声矢量形状</strong> - 通常128或100似乎就足够了</li>
+</ul>
+<h1 id="%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E9%9B%86">创建图像数据集 <a class="heading-anchor-permalink" href="#%E5%88%9B%E5%BB%BA%E5%9B%BE%E5%83%8F%E6%95%B0%E6%8D%AE%E9%9B%86" aria-hidden="true">#</a></h1>
+<p>现在让我们使用我们的numpy特性数组来构造<strong>Tensorflow</strong>数据集对象。首先，我们可以将数据类型转换为<strong>float32</strong>，这总是有助于保留一些内存。</p>
+<p>dog_features_tf = tf.cast（dog_images_np，‘float32’）</p>
+<p>我们还可以将<strong>数据增强</strong>应用于我们的数据集。这包括随机<strong>水平翻转</strong>，缩放和裁剪随机区域中的图像。在这些中，我发现只有第一种方法对于为数据集添加更多方差有些用处，因为其他方法会引入大量噪声。</p>
+<p>因此，在这种情况下，我们的数据集中的图像将有<strong>50％的</strong>可能性从左向右翻转。</p>
+<p>def flip（x：tf.Tensor） - &gt;（tf.Tensor）：<br>
+x = tf.image.random_flip_left_right（x）<br>
+return x</p>
+<p>现在我们可以使用<strong>Tensorflow</strong>通过对其进行混洗，应用一些扩充，最后将其分成指定<strong>批量大小的</strong>批次来创建数据集。</p>
+<p>dog_features_data = tf.data.Dataset.from_tensor_slices（dog_features_tf）.shuffle（sample_size）.map（flip）.batch（batch_size，drop_remainder = True）</p>
+<h1 id="%E8%A7%84%E8%8C%83%E5%8C%96%E6%8A%80%E6%9C%AF">规范化技术 <a class="heading-anchor-permalink" href="#%E8%A7%84%E8%8C%83%E5%8C%96%E6%8A%80%E6%9C%AF" aria-hidden="true">#</a></h1>
+<p>在我们实际<strong>生成Generator</strong>之前，让我们看一些可以逐步加速<strong>DCGAN</strong>收敛的<strong>规范化</strong>。</p>
+<h1 id="%E9%87%8D%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96">重量初始化 <a class="heading-anchor-permalink" href="#%E9%87%8D%E9%87%8F%E5%88%9D%E5%A7%8B%E5%8C%96" aria-hidden="true">#</a></h1>
+<p>这些方法之一是权<strong>重初始化</strong>。事实证明，这对培养稳定的<strong>GAN</strong>非常重要。首先，模型权重需要以<strong>零为中心</strong>，并略微增加<strong>std</strong>（0.02）。这在训练期间稳定了<strong>D</strong>和<strong>G</strong>，并防止模型梯度消失或爆炸。这是每种情况下的关键步骤，我们必须在模型中使用随机变量（随机噪声向量）。</p>
+<p>以下是权<strong>重初始化</strong>如何严重影响神经网络学习过程的示例。</p>
+<p><img src="https://miro.medium.com/max/30/1*PaTir4OPRGRMpWCCwv6eXQ.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1370/1*PaTir4OPRGRMpWCCwv6eXQ.png" alt=""></p>
+<p>权重初始化对模型训练的影响</p>
+<p>我们还可以使用<strong>Keras</strong>应用<strong>截断正态分布</strong>，这将丢弃<strong>与平均值<strong><strong>相差</strong></strong>超过2个标准偏差的值</strong>。这可能会在培训期间消除一些异常点。</p>
+<p>weight_initializer = tf.keras.initializers.TruncatedNormal（stddev = weight_init_std，mean = weight_init_mean，seed = 42）</p>
+<h1 id="%E5%85%89%E8%B0%B1%E5%BD%92%E4%B8%80%E5%8C%96">光谱归一化 <a class="heading-anchor-permalink" href="#%E5%85%89%E8%B0%B1%E5%BD%92%E4%B8%80%E5%8C%96" aria-hidden="true">#</a></h1>
+<p><strong>Spectral Normalization</strong>是一种新型的权重初始化，专为<strong>GAN</strong>设计，似乎可以进一步稳定模型训练（您可以从<a href="https://arxiv.org/pdf/1802.05957.pdf">本文中</a>阅读更多内容）。有关<strong>光谱归一化</strong>及其工作原理的更详细说明，也值得查看这篇<a href="https://christiancosgrove.com/blog/2018/01/04/spectral-normalization-explained.html">文章</a>，它有非常直观的例子。</p>
+<p><strong>光谱</strong>我们网络中单个权重的<strong>标准化</strong>可以定义如下：</p>
+<p><img src="https://miro.medium.com/max/30/1*szrUCXyXqK5uIk1xUxKvfQ.png?q=20" alt=""></p>
+<p>对单个权重应用光谱归一化</p>
+<p>这里_u_和_v_是相同大小的简单随机向量。对于每个学习步骤，它们被用于对特定权重执行所谓的<strong>功率迭代</strong>操作，并且证明它比简单地惩罚梯度更具计算效率。</p>
+<p>此后，在反向传播的步骤，我们使用_无线传感器网络（W）<em>更新权重，而不是_w ^</em>。</p>
+<p>对于这个项目，我会重用一些定制<strong>Keras</strong>由执行层<strong>IShengFang</strong>（<a href="https://github.com/IShengFang/SpectralNormalizationKeras">官方代码</a>），应用<strong>谱归</strong>之上<strong>转化率</strong>和<strong>致密</strong>层。</p>
+<p>这也是<strong>光谱归一化</strong>效果的一个很好的例子：</p>
+<p><img src="https://miro.medium.com/max/30/1*rd7XVN8zTgZB3gGgqFkC6w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/640/1*rd7XVN8zTgZB3gGgqFkC6w.png" alt=""></p>
+<p>SN的DCGAN培训</p>
+<p><img src="https://miro.medium.com/max/30/1*h80WCznlsGXifDDxrbUAow.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/640/1*h80WCznlsGXifDDxrbUAow.png" alt=""></p>
+<p>使用标准层进行DCGAN培训</p>
+<p>我们还在<strong>Keras中</strong>定义了一些模板层，以便我们以后可以更轻松地创建<strong>G</strong>和<strong>D.</strong> 图层的标准模式是：</p>
+<p><strong>TP_Conv_Block = [（Conv（SN）2DTranspose（upsample）） - &gt;（BatchNorm） - &gt;（ReLU）]</strong></p>
+<p><strong>Conv_Block = [（Conv（SN）2D（下采样）） - &gt;（BatchNorm） - &gt;（LeakyReLU）]</strong></p>
+<p>对于这个例子，我将使用<strong>D中的G和Spectral Normalized Conv2D层中的</strong>标准<strong>Conv2DTranspose块。</strong></p>
+<p>def transposed_conv（model，out_channels，ksize，stride_size，ptype =‘same’）：<br>
+model.add（Conv2DTranspose（out_channels，（ksize，ksize），<br>
+strides =（stride_size，stride_size），padding = ptype，<br>
+kernel_initializer = weight_initializer，use_bias = False））<br>
+model.add（BatchNormalization（））<br>
+model.add（ReLU（））<br>
+返回模型</p>
+<p>def convSN（model，out_channels，ksize，stride_size）：<br>
+model.add（ConvSN2D（out_channels，（ksize，ksize），strides =（ stride_size，stride_size），padding =‘same’，<br>
+kernel_initializer = weight_initializer，use_bias = False））<br>
+model.add（BatchNormalization（））<br>
+model.add（LeakyReLU（alpha = leaky_relu_slope））<br>
+＃model.add（Dropout（dropout_rate））<br>
+返回模型</p>
+<h1 id="%E5%8F%91%E7%94%B5%E6%9C%BA">发电机 <a class="heading-anchor-permalink" href="#%E5%8F%91%E7%94%B5%E6%9C%BA" aria-hidden="true">#</a></h1>
+<p>我们终于可以定义我们的发电机 模型结构主要基于官方的DCGAN <a href="https://arxiv.org/pdf/1511.06434.pdf">论文，</a>并进行了一些调整，我认为这些调整对性能有益。这是整体结构：</p>
+<p><strong>[输入（128,1） - &gt;密集（2048，） - &gt;重塑（4,4,128） - &gt; TP_Conv_Block（深度= 512，K = 5x5，S = 1x1） - &gt;丢失（0.5） - &gt; TP_Conv_Block（深度= 256，K = 5x5，S = 2x2） - &gt;丢失（0.5） - &gt; TP_Conv_Block（深度= 128，K = 5x5，S = 2x2） - &gt; TP_Conv_Block（深度= 64，K = 5x5，S = 2x2） - &gt; TP_Conv_Block（深度= 32，K = 5x5，S = 2x2） - &gt;密集（深度= 3，Tanh）]</strong></p>
+<p>def DogGenerator（）：<br>
+model = Sequential（）<br>
+model.add（Dense（image_width // scale_factor * image_height // scale_factor * 128，<br>
+input_shape =（noise_dim，），kernel_initializer = weight_initializer））<br>
+＃model.add（BatchNormalization（epsilon = BN_EPSILON） ，momentum = BN_MOMENTUM））<br>
+＃model.add（LeakyReLU（alpha = leaky_relu_slope））<br>
+model.add（Reshape（（image_height // scale_factor，image_width // scale_factor，128）））</p>
+<p>model = transposed_conv（model，512，ksize = 5 ，stride_size = 1）<br>
+model.add（Dropout（dropout_rate））<br>
+model = transposed_conv（model，256，ksize = 5，stride_size = 2）<br>
+model.add（Dropout（dropout_rate））<br>
+model = transposed_conv（model，128，ksize = 5 ，stride_size = 2）<br>
+model = transposed_conv（model，64，ksize = 5，stride_size = 2）<br>
+model = transposed_conv（model，32，ksize = 5，stride_size = 2）</p>
+<p>model.add（Dense（3，activation =‘tanh’，kernel_initializer = weight_initializer） ）</p>
+<p>返回模型</p>
+<h1 id="%E9%89%B4%E5%88%AB%E8%80%85">鉴别者 <a class="heading-anchor-permalink" href="#%E9%89%B4%E5%88%AB%E8%80%85" aria-hidden="true">#</a></h1>
+<p>该<strong>鉴别</strong>相对容易实现，因为它基本上是一个小<strong>CNN</strong>两级分类。我们可以选择是否应用<strong>光谱归一化</strong>，并查看性能效果。对于这个例子，我将尝试仅在<strong>D中</strong>应用<strong>SN</strong>。这是<strong>D</strong>的结构：</p>
+<p><strong>[输入（128,128,3） - &gt; Conv（SN）2D（深度= 64，K = 5x5，S = 1x1，相同） - &gt; LeakyReLU - &gt; Conv_Block（深度= 64，K = 5x5，S = 2x2） - &gt; Conv_Block（深度= 128，K = 5x5，S = 2x2） - &gt; Conv_Block（深度= 256，K = 5x5，S = 2x2） - &gt;展平 - &gt;密集（16384，Sigmoid）]</strong></p>
+<p>另请注意，所有<strong>Conv</strong>和<strong>Dense</strong>图层都使用上面定义的<strong>Truncated Normal</strong>分布进行初始化。另一件事是<strong>偏置</strong>项从<strong>Conv</strong>层中移除，这也使模型稍微稳定一些。</p>
+<p>def DogDiscriminator（spectral_normalization = True）：<br>
+model = Sequential（）<br>
+if spectral_normalization：<br>
+model.add（ConvSN2D（64，（5,5），strides =（1,1），padding =‘same’，use_bias = False，<br>
+input_shape = [image_height，image_width，image_channels]，<br>
+kernel_initializer = weight_initializer））<br>
+＃model.add（BatchNormalization（epsilon = BN_EPSILON，momentum = BN_MOMENTUM））<br>
+model.add（LeakyReLU（alpha = leaky_relu_slope））<br>
+＃model.add（Dropout（dropout_rate））</p>
+<p>model = convSN（model，64，ksize = 5，stride_size = 2）<br>
+#model = convSN（model，128，ksize = 3，stride_size = 1）<br>
+model = convSN（model，128，ksize = 5，stride_size = 2）<br>
+#model = convSN（model，256，ksize = 3，stride_size = 1）<br>
+model = convSN（model，256，ksize = 5，stride_size = 2）<br>
+#model = convSN（model，512，ksize = 3，stride_size = 1）<br>
+＃model.add（Dropout（dropout_rate））</p>
+<p>model.add（Flatten（））<br>
+model.add（DenseSN（1，activation =‘sigmoid’））<br>
+else：<br>
+…<br>
+return model dog_discriminator = DogDiscriminator（spectral_normalization = True）</p>
+<h1 id="%E6%A0%87%E7%AD%BE%E5%B9%B3%E6%BB%91">标签平滑 <a class="heading-anchor-permalink" href="#%E6%A0%87%E7%AD%BE%E5%B9%B3%E6%BB%91" aria-hidden="true">#</a></h1>
+<p>可以在训练期间应用的一种正则化方法称为<strong>标签平滑</strong>。这样做是因为它基本上可以防止<strong>D</strong>在其预测中过于自信或不自信。如果<strong>D</strong>变得过于确定特定图像中存在狗，则<strong>G</strong>可以利用该事实并且不断地开始仅生成该类型的图像，并且反过来，停止改进。我们可以通过将类标签设置为负类的**[0,0.3** **]<strong>范围和正类的</strong>[0.7,1]**来解决这个问题。</p>
+<p>这将防止整体概率非常接近两个阈值。</p>
+<p>＃标签平滑 - 来自GAN黑客的技术，而不是将1/0指定为类标签，我们为正类<br>
+＃和[</p>
+<p>0.0,0.3 ] 分配范围[ 0.7,1.0 ] 的随机整数，用于负类def smooth_positive_labels（y） ：<br>
+return y  -  0.3 +（np.random.random（y.shape）* 0.5）</p>
+<p>def smooth_negative_labels（y）：<br>
+return y + np.random.random（y.shape）* 0.3</p>
+<h1 id="%E5%90%91%E6%A0%87%E7%AD%BE%E5%BC%95%E5%85%A5%E5%99%AA%E9%9F%B3">向标签引入噪音 <a class="heading-anchor-permalink" href="#%E5%90%91%E6%A0%87%E7%AD%BE%E5%BC%95%E5%85%A5%E5%99%AA%E9%9F%B3" aria-hidden="true">#</a></h1>
+<p>此技术也称为<strong>实例噪声</strong>。通过向标签添加少量误差（假设为5％），这往往会使真实和预测的分布更加分散，从而开始相互重叠。这反过来使得在学习过程中更容易拟合生成的图像的自定义分布。</p>
+<p>以下是使用这些技术如何使用这两种发行版的一个很好的示例：</p>
+<p><img src="https://miro.medium.com/max/30/1*EA95dVM9vFHBTxWjrwYJCQ.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1711/1*EA95dVM9vFHBTxWjrwYJCQ.png" alt=""></p>
+<p>Insance Noise和Label平滑对图像的真实和虚假分布的影响</p>
+<p>以下是我们如何实现<strong>实例噪声</strong>：</p>
+<p>＃随机翻转一些标签<br>
+def noisy_labels（y，p_flip）：<br>
+＃确定要翻转的标签数量<br>
+n_select = int（p_flip * int（y.shape [0]））<br>
+＃选择要翻转的标签<br>
+flip_ix = np.random.choice（ [i for i in range（int（y.shape [0]））]，size = n_select）</p>
+<p>op_list = []<br>
+＃反转标签<br>
+#y_np [flip_ix] = 1  -  y_np [flip_ix]<br>
+for i in range（ int（y.shape [0]））：<br>
+如果我在flip_ix中：<br>
+op_list.append（tf.subtract（1，y [i]））<br>
+else：<br>
+op_list.append（y [i]）</p>
+<p>outputs = tf.stack（op_list ）<br>
+返回输出</p>
+<h1 id="%E4%BC%98%E5%8C%96%E5%99%A8">优化器 <a class="heading-anchor-permalink" href="#%E4%BC%98%E5%8C%96%E5%99%A8" aria-hidden="true">#</a></h1>
+<p>这项任务的最佳验证优化算法是<strong>Adam</strong>，两种模型的标准学习率为<strong>0.0002</strong>，beta为<strong>0.5</strong>。</p>
+<p>generator_optimizer = tf.train.AdamOptimizer（learning_rate = lr_initial_g，beta1 = 0.5）<br>
+discriminator_optimizer = tf.train.AdamOptimizer（learning_rate = lr_initial_d，beta1 = 0.5）</p>
+<h1 id="%E5%AE%9A%E4%B9%89%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">定义损失函数 <a class="heading-anchor-permalink" href="#%E5%AE%9A%E4%B9%89%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0" aria-hidden="true">#</a></h1>
+<p>最近优化<strong>GAN的</strong>另一个新趋势是应用<strong>相对论</strong>损失函数而不是标准函数。这些函数测量实际数据比生成数据更“真实”的概率。一种比较流行的相对论函数选择包括<strong>RaLSGAN（相对论平均最小二乘法），RaSGAN（相对论平均标准）和RaHinge（相对论铰链损失）</strong>。</p>
+<p>但在此之前，让我们定义标准的<strong>GAN</strong>损失：</p>
+<p><img src="https://miro.medium.com/max/30/1*o8VrOm7QexoDjOOoi_sHpg.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/598/1*o8VrOm7QexoDjOOoi_sHpg.png" alt=""></p>
+<p>我们可以观察到，这基本上是用于分类任务的标准<strong>二进制Crossentropy损失</strong>或实际和生成分布之间的<strong>Logistic损失</strong>。在<strong>Tensorflow中</strong>，这可以定义如下：</p>
+<p>相比之下，这是**RSGAN（相对论标准）**损失的样子：</p>
+<p><img src="https://miro.medium.com/max/30/1*vrDKykPN7Fwny5ffWvV6Ew.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/562/1*vrDKykPN7Fwny5ffWvV6Ew.png" alt=""></p>
+<p>在这种情况下，任务是不同的，以测量<strong>真实（r）<strong>和</strong>假（f）<strong>数据分布之间的相似性。当D（x）= 0.5（即_C_（<em>xr</em>）= <em>C</em>（<em>xf</em>））时，RSGAN达到最佳点。存在许多相对论的损失函数变体，它们都包含用于测量这种相似性的不同方法。在这个项目中，我尝试了</strong>3</strong>种似乎具有最佳记录的<strong>MIFID</strong>分数的变体**（RaLSGAN，RaSGAN和RaHinge）**。随意尝试不同的损失，看看你是否可以提高性能;）。</p>
+<p>以下是最常用的列表：</p>
+<p><img src="https://miro.medium.com/max/17/1*R6cGS9l48aQcT9SEDvLFlA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/875/1*R6cGS9l48aQcT9SEDvLFlA.png" alt=""></p>
+<p>标准和相对论的GAN损失</p>
+<p>在针对这一特定问题的许多试验中，我没有发现通过切换到<strong>相对论性</strong>损失来提高性能，所以我决定坚持使用标准的<strong>GAN</strong>损失函数，因为它更容易估计，尽管在某些情况下这些损失可以真正加快模型的收敛速度。</p>
+<p>以下是使用标准<strong>平滑和实例噪声</strong>时<strong>鉴别器</strong>损失函数的样子。它基本上是两个子损失的总和**（假 - 根据G的图像，真实 - 就实际训练图像而言）**。</p>
+<p>def discriminator_loss（real_output，fake_output，loss_func，apply_label_smoothing = True，label_noise = True）：<br>
+if label_noise和apply_label_smoothing：<br>
+real_output_noise = noisy_labels（tf.ones_like（real_output），0.05）<br>
+fake_output_noise = noisy_labels（tf.zeros_like（fake_output），0.05）<br>
+real_output_smooth = smooth_positive_labels（real_output_noise）<br>
+fake_output_smooth = smooth_negative_labels（fake_output_noise）<br>
+if loss_func ==‘gan’：<br>
+real_loss = cross_entropy（tf.ones_like（real_output_smooth），real_output）<br>
+fake_loss = cross_entropy（tf.zeros_like（fake_output_smooth），fake_output） else：<br>
+…其他损失函数变体 loss = fake_loss + real_loss<br>
+回损</p>
+<p>并且<strong>发电机</strong>损耗功能**（应用标签平滑）<strong>只是标准的</strong>物流损失**：</p>
+<p>def generator_loss（real_output，fake_output，loss_func，apply_label_smoothing = True）：<br>
+if apply_label_smoothing：<br>
+fake_output_smooth = smooth_negative_labels（tf.ones_like（fake_output））<br>
+if loss_func ==‘gan’：<br>
+return cross_entropy（tf.ones_like（fake_output_smooth），fake_output）<br>
+else：<br>
+…其他损失函数变量 返回损失</p>
+<h1 id="%E4%B8%BB%E8%A6%81%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF">主要训练循环 <a class="heading-anchor-permalink" href="#%E4%B8%BB%E8%A6%81%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF" aria-hidden="true">#</a></h1>
+<p>我们还要确定训练时期的数量和要提供给<strong>发生器</strong>的图像数量，以便可视化中间结果。</p>
+<p>EPOCHS = 280<br>
+num_examples_to_generate = 64<br>
+seed = tf.random.normal（[num_examples_to_generate，noise_dim]）</p>
+<p><strong>DCGAN的</strong>一个培训步骤包括三个标准步骤：</p>
+<ol>
+<li><strong>前方道具</strong> - <strong>G</strong>创造了一批假图像; 此，沿着一批真实图像被馈送到<strong>d</strong>。</li>
+<li><strong>计算G和D的损失函数</strong>。</li>
+<li><strong>Backprop</strong> - 计算<strong>G</strong>和<strong>D的</strong>梯度来优化权重。</li>
+</ol>
+<p>def train_step（images，loss_type =‘gan’）：<br>
+noise = tf.random.normal（[batch_size，noise_dim]），</p>
+<p>其中tf.GradientTape（）为gen_tape，tf.GradientTape（）为disc_tape：<br>
+generated_images = dog_generator（noise，training = True）</p>
+<p>real_output = dog_discriminator（images，training = True）<br>
+fake_output = dog_discriminator（generated_images，training = True）</p>
+<p>gen_loss = generator_loss（real_output，fake_output，loss_type，apply_label_smoothing = True）<br>
+disc_loss = discriminator_loss（real_output，fake_output，loss_type，<br>
+apply_label_smoothing = True ，label_noise = True）</p>
+<p>gradients_of_generator = gen_tape.gradient（gen_loss，dog_generator.trainable_variables）<br>
+gradients_of_discriminator = disc_tape.gradient（disc_loss，dog_discriminator.trainable_variables）</p>
+<p>generator_optimizer.apply_gradients（zip（gradients_of_generator，dog_generator.trainable_variables））<br>
+discriminator_optimizer.apply_gradients（zip（gradients_of_discriminator，dog_discriminator.trainable_variables））</p>
+<p>return gen_loss，disc_loss</p>
+<p>让我们定义一些函数来按时代和整体来模拟模型损失。</p>
+<p>def plot_losses（G_losses，D_losses，all_gl，all_dl，epoch）：<br>
+plt.figure（figsize =（10,5））<br>
+plt.title（“Generator and Discriminator Loss  -  EPOCH {}”。format（epoch））<br>
+plt.plot（ G_losses，label =“G”）<br>
+plt.plot（D_losses，label =“D”）<br>
+plt.xlabel（“Iterations”）<br>
+plt.ylabel（“Loss”）<br>
+plt.legend（）<br>
+ymax = plt.ylim（）[1 ]<br>
+plt.show（）</p>
+<p>plt.figure（figsize =（10,5））<br>
+plt.plot（np.arange（len（all_gl）），all_gl，label =‘G’）<br>
+plt.plot（np.arange（len（ all_dl）），all_dl，label =‘D’）<br>
+plt.legend（）<br>
+＃plt.ylim（（0，np.min（[1.1 * np.max（all_gl），2 * ymax]）））<br>
+plt.title（ ‘所有时间损失’）<br>
+plt.show（）</p>
+<p>我们还可以使用以下函数绘制生成图像的网格。</p>
+<p>def generate_and_save_images（model，epoch，test_input，rows，cols）：<br>
+＃notice`training` 设置为False。<br>
+＃这是所有图层都以推理模式运行（batchnorm）。<br>
+predictions = model（test_input，training = False）<br>
+fig = plt.figure（figsize =（14,14））<br>
+for i in range（predictions.shape [0]）：<br>
+plt.subplot（rows，cols，i + 1）<br>
+plt .imshow（（predictions [i，：，：，] * 127.5 + 127.5）/ 255.）<br>
+plt.axis（‘off’）</p>
+<p>plt.subplots_adjust（wspace = 0，hspace = 0）<br>
+plt.savefig（‘image_at_epoch_ { ：04d} .png’.format（epoch））<br>
+plt.show（）</p>
+<p>要生成单个测试图像，我们也可以重用相同的方法。</p>
+<p>def generate_test_image（model，noise_dim = noise_dim）：<br>
+test_input = tf.random.normal（[1，noise_dim]）<br>
+＃通知`training`设置为False。<br>
+＃这是所有图层都以推理模式运行（batchnorm）。<br>
+predictions = model（test_input，training = False）<br>
+fig = plt.figure（figsize =（5,5））<br>
+plt.imshow（（predictions [0，：，：，] * 127.5 + 127.5）/ 255.）<br>
+plt。 axis（‘off’）<br>
+plt.show（）</p>
+<h1 id="%E8%AF%84%E4%BC%B0gan">评估GAN <a class="heading-anchor-permalink" href="#%E8%AF%84%E4%BC%B0gan" aria-hidden="true">#</a></h1>
+<p>我们还没有提到通常如何评估<strong>GAN</strong>。大多数使用基准来评估<strong>GAN</strong>执行情况的研究论文通常基于所谓的<strong>初始分数</strong>。这测量输入图像的两个主要特征：</p>
+<ul>
+<li><strong>品种（例如产生不同类型的狗品种）</strong></li>
+<li><strong>区别（或图像的质量）</strong></li>
+</ul>
+<p>如果两件事情都属实，那么得分会很高。如果其中一个或两个都是假的，则分数将很低。得分越高越好。这意味着您的GAN可以生成许多不同的图像。可能的最低分为零。在数学上，尽可能高的分数是无限的，尽管在实践中可能会出现非无限的上限。</p>
+<p>在<strong>成立之初分数</strong>是从谷歌的衍生<a href="/a-simple-guide-to-the-versions-of-the-inception-network-7fc52b863202">盗网络</a>，这对图像进行分类的国家的最先进的深层结构中的一种。通过从我们的GAN通过分类器传递图像，我们可以测量生成的图像的属性。为了产生分数，我们需要计算图像的真实和假分布之间的相似性/距离。这是使用<strong>KL（Kullback-Leibler）分歧公式完成的</strong>：</p>
+<p><img src="https://miro.medium.com/max/30/1*S6Cp770aAUtMJBK66zLgFw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/415/1*S6Cp770aAUtMJBK66zLgFw.png" alt=""></p>
+<p>这里，<strong>P和Q</strong>是两个测量分布。在这种情况下，<strong>更高的KL发散</strong>意味着更好的结果 - 图像质量相似，并且存在各种各样的标签。在相反的情况下，<strong>低KL分歧</strong>可能是由于低质量或低品种的标签：</p>
+<p><img src="https://miro.medium.com/max/30/1*NbPx_RCrZv0G7nRIA_cseg.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1736/1*NbPx_RCrZv0G7nRIA_cseg.png" alt=""></p>
+<p>用KL分歧测量性能</p>
+<h1 id="fid%EF%BC%88frechet%E5%88%9D%E5%A7%8B%E8%B7%9D%E7%A6%BB%EF%BC%89">FID（Frechet初始距离） <a class="heading-anchor-permalink" href="#fid%EF%BC%88frechet%E5%88%9D%E5%A7%8B%E8%B7%9D%E7%A6%BB%EF%BC%89" aria-hidden="true">#</a></h1>
+<p><strong>IS的</strong>一个缺点是，如果每个类只生成一个图像，它就会歪曲性能。为了解决这个问题，我们可以使用<strong>FID（Frechet初始距离）</strong>。该度量将两个先前类型的图像定义为具有平均_μ_和协方差Σ（Sigma）的多变量<strong>高斯分布</strong>。让我们看看如何计算这个距离：</p>
+<p><img src="https://miro.medium.com/max/30/1*c159Dp06UeZUzAj_5JKonw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/597/1*c159Dp06UeZUzAj_5JKonw.png" alt=""></p>
+<p>这里，_x_和_g_表示图像的真实和虚假分布，而_Tr_是结果的对角元素的总和。</p>
+<blockquote>
+<p><strong><em>较低的FID值意味着更好的图像质量和多样性。</em></strong></p>
+</blockquote>
+<p><img src="https://miro.medium.com/max/30/1*YYEKvgxy1WKo6Tn4EE624g.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1478/1*YYEKvgxy1WKo6Tn4EE624g.png" alt=""></p>
+<p>多样性因子如何影响不同数据集的评分的示例</p>
+<p>这里还有一些有用的注释，说明为什么<strong>FID</strong>是一个很好的衡量标准：</p>
+<ul>
+<li><strong>FID比IS更加稳健。</strong></li>
+<li><strong>如果模型仅为每个类生成一个图像，则距离将很高。因此，FID是图像多样性的更好测量。</strong></li>
+<li><strong>通过计算训练数据集和测试数据集之间的FID，我们应该期望FID为零，因为两者都是真实图像。（虽然通常会有少量错误）</strong></li>
+<li><strong>FID和IS基于特征提取（特征的存在或不存在）。</strong></li>
+</ul>
+<h1 id="mifid%EF%BC%88%E8%AE%B0%E5%BF%86%E9%80%9A%E7%9F%A5frechet%E5%90%AF%E5%8A%A8%E8%B7%9D%E7%A6%BB%EF%BC%89">MIFID（记忆通知Frechet启动距离） <a class="heading-anchor-permalink" href="#mifid%EF%BC%88%E8%AE%B0%E5%BF%86%E9%80%9A%E7%9F%A5frechet%E5%90%AF%E5%8A%A8%E8%B7%9D%E7%A6%BB%EF%BC%89" aria-hidden="true">#</a></h1>
+<p>以下是Kaggle对Generative Dogs竞赛的官方评估工作流程：</p>
+<p><img src="https://miro.medium.com/max/23/1*EPkyoJAjlDC2QHAKGyHcyg.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/681/1*EPkyoJAjlDC2QHAKGyHcyg.png" alt=""></p>
+<p>评估分为两个阶段 - 不同数据集上的公共和私有。MIFID指标使用标准FID和记忆分数计算得出。</p>
+<p>我们可以看到，除了<strong>FID</strong>指标外，计算中还增加了一个<strong>记忆分数</strong>。这基本上是<strong>余弦距离</strong>公式，用于测量真实（来自私人数据集的图像）和伪图像之间的相似性。我的猜测是，这样做是为了确保提供给评估内核的图像实际上是由<strong>GAN</strong>生成的，而不仅仅是从真实数据集中复制或修改。</p>
+<p>值得庆幸的是，<strong>MIFID</strong>评估员已经由Kaggle团队<a href="https://www.kaggle.com/wendykan/demo-mifid-metric-for-dog-image-generation-comp">（这里）实施</a>，我们不必担心。</p>
+<h1 id="%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E4%BF%9D%E5%AD%98%E5%8A%9F%E8%83%BD">图像压缩和保存功能 <a class="heading-anchor-permalink" href="#%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9%E5%92%8C%E4%BF%9D%E5%AD%98%E5%8A%9F%E8%83%BD" aria-hidden="true">#</a></h1>
+<p>我只是<strong>要再</strong>添加两个用于压缩最终的<strong>10K</strong>图像以进行提交并生成临时图像以计算训练期间某些时期之间的<strong>MIFID</strong>。</p>
+<p>def zip_images（filename =‘images.zip’）：<br>
+＃SAVE TO ZIP FILE NAMED IMAGES.ZIP<br>
+z = zipfile.PyZipFile（filename，mode =‘w’）<br>
+for k in range（image_sample_size）：<br>
+generated_image = dog_generator（tf.random .normal（[1，noise_dim]），training = False）<br>
+f = str（k）+’。<br>
+png’img = np.array（generated_image）<br>
+img =（img [0，：，：，：] + 1.） / 2.<br>
+img = Image.fromarray（（255 * img）.astype（‘uint8’）。reshape（（image_height，image_width，image_channels）））<br>
+img.save（f，‘PNG’）<br>
+z.write（f）<br>
+os .remove（f）<br>
+#if k％1000 == 0：print（k）<br>
+z.close（）<br>
+print（‘保存最终图像以供提交。’）</p>
+<p>def save_images（directory = OUT_DIR）：<br>
+for k in range（image_sample_size）：<br>
+generated_image = dog_generator（tf.random.normal（[1，noise_dim]），training = False）<br>
+f = str（k）+’。png’f<br>
+= os.path.join（directory， f）<br>
+img = np.array（generated_image）<br>
+img =（img [0，：，：，：] + 1.）/ 2.<br>
+img = Image.fromarray（（255 * img）.astype（‘uint8’）。reshape （（image_height，image_width，image_channels）））<br>
+img.save（f，‘PNG’）<br>
+#if k％1000 == 0：print（k）<br>
+print（‘保存的临时图像用于评估。’）</p>
+<p>现在终于实施了包含整个过程的最终训练功能。这里还有一些我尚未提及的技术。让我们看看它们是什么。</p>
+<h1 id="%E5%AD%A6%E4%B9%A0%E7%8E%87%E4%B8%8B%E9%99%8D">学习率下降 <a class="heading-anchor-permalink" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87%E4%B8%8B%E9%99%8D" aria-hidden="true">#</a></h1>
+<p>这个是实验性的并不总是有助于提高性能，但我认为这不会对任何方式造成伤害。这里的想法是为每个训练步骤/步骤降低非常小的<strong>学习率</strong>，以便稳定训练过程并加速收敛（并摆脱局部最小值）。对于这个项目，我使用的是<a href="https://www.tensorflow.org/api_docs/python/tf/train/cosine_decay"><strong>余弦学习率衰减</strong></a>  的<strong>Tensorflow</strong>，以减少每一次的学习速度<code>decay_step</code>迭代。</p>
+<h1 id="%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F%E5%B4%A9%E6%BA%83">处理模式崩溃 <a class="heading-anchor-permalink" href="#%E5%A4%84%E7%90%86%E6%A8%A1%E5%BC%8F%E5%B4%A9%E6%BA%83" aria-hidden="true">#</a></h1>
+<p>除了<strong>非收敛</strong>和<strong>消失和爆炸梯度之外</strong>，<strong>GAN</strong>有时会遇到另一个称为<strong>模式崩溃的</strong>主要问题。当<strong>G</strong>开始生产有限种类的样品时会发生这种情况。以下是在<strong>MNIST</strong>数据集上训练的<strong>GAN</strong>的<strong>模式折叠的</strong>一个很好的例子，其中<strong>G</strong>连续生成单个类标签的图像：</p>
+<p><img src="https://miro.medium.com/max/30/1*t5Vr12P6BnrwiQbEbvpUfQ.png?q=20" alt=""></p>
+<p>G学会通过仅从单个类生成样本来欺骗D，这导致模型失去多样性</p>
+<p>我们已经看到一些方法可以消除<strong>模式折叠，<strong>如</strong>标签平滑</strong>，<strong>实例噪声</strong>，权<strong>重初始化</strong>等。我们可以在训练期间应用的另一种方法称为<strong>体验重放</strong>。</p>
+<p><strong>体验重放会</strong>在内存中保留一些最近生成的图像。对于每次<code>replay_step</code>迭代，我们在先前的图像上训练<strong>D</strong>以“提醒”前几代网络，从而减少在训练期间<strong>过度拟合</strong>到特定数据批次实例的机会。在这个例子中，我使用的是一种稍微不同的<strong>体验重放</strong>形式，我将为每个训练步骤生成一个新的额外图像以存储在列表中，而不是从之前的迭代中提供实际生成的图像，因为存储数据在<strong>急切执行</strong>期间并非易事。</p>
+<p>‘’’<br>
+generated_image = dog_generator（tf.random.normal（[1，noise_dim]），training = False）<br>
+exp_replay.append（generated_image）<br>
+if len（exp_replay）== replay_step：<br>
+print（‘Executing experience replay …’）<br>
+replay_images = np.array（exp_replay中p为[p [0]]）<br>
+dog_discriminator（replay_images，training = True）<br>
+exp_replay = []<br>
+‘’’</p>
+<p><em>编辑：由于Kaggle在运行约7-8小时后遇到内存问题，我决定不使用经验重播。如果您找到解决方法，请告诉我：D。</em></p>
+<h1 id="%E5%9F%B9%E8%AE%AD%E5%8A%9F%E8%83%BD"><strong>培训功能</strong> <a class="heading-anchor-permalink" href="#%E5%9F%B9%E8%AE%AD%E5%8A%9F%E8%83%BD" aria-hidden="true">#</a></h1>
+<p>总而言之，培训过程非常简单。还有其他步骤可以显示中间结果，如图像，<strong>丢失</strong>和计算<strong>MIFID</strong>。在学习过程结束时，我们打印出最终评估和最终图像的更大网格。</p>
+<p>display_results = 40<br>
+calculate_mifid = 100<br>
+replay_step = 50<br>
+decay_step = 50</p>
+<p>def train（dataset，<br>
+epochs ）：all_gl = np.array（[]）; all_dl = np.array（[]）<br>
+用于tqdm（范围（</p>
+<p>epochs ））中的纪元：G_loss = []; D_loss = []</p>
+<p>start = time.time（）<br>
+new_lr_d = lr_initial_d<br>
+new_lr_g = lr_initial_g<br>
+global_step = 0</p>
+<p>表示数据集中的<br>
+image_batch ：g_loss，d_loss = train_step（image_batch）<br>
+global_step = global_step + 1<br>
+G_loss.append（g_loss）; D_loss.append（d_loss）<br>
+all_gl = np.append（all_gl，np.array（[G_loss]））<br>
+all_dl = np.append（all_dl，np.array（[D_loss]））</p>
+<p>if（epoch + 1）％display_results == 0或epoch == 0：<br>
+plot_losses（G_loss，D_loss，all_gl，all_dl，epoch + 1）<br>
+generate_and_save_images（dog_generator，epoch + 1，seed，rows = 8，cols = 8）</p>
+<p>if （epoch + 1）％calculate_mifid == 0：<br>
+OUT_DIR.mkdir（exist_ok = True）<br>
+save_images（OUT_DIR）<br>
+evaluateator = MiFIDEvaluator（MODEL_PATH，TRAIN_DIR）<br>
+fid_value，distance，mi_fid_score = evaluator.evaluate（OUT_DIR）<br>
+print（f’FID：{ fid_value：.5f}’）<br>
+print（f’distance：{distance：.5f}’）<br>
+print（f’MiFID：{mi_fid_score：.5f}’）<br>
+shutil.rmtree（OUT_DIR）<br>
+print（‘删除的临时图像目录。’）</p>
+<p>＃余弦学习率衰减<br>
+if（epoch + 1）％decay_step == 0：<br>
+new_lr_d = tf.train.cosine_decay（new_lr_d，min（global_step，lr_decay_steps），lr_decay_steps）<br>
+new_lr_g = tf。 train.cosine_decay（new_lr_g，min（global_step，lr_decay_steps），lr_decay_steps）<br>
+generator_optimizer = tf.train.AdamOptimizer（learning_rate = new_lr_d，beta1 = 0.5）<br>
+discriminator_optimizer = tf.train.AdamOptimizer（learning_rate = new_lr_g，beta1 = 0.5）</p>
+<p>print（’ Epoch：{}为{} sec’.format计算（epoch + 1，time.time（） -  start））<br>
+print（‘Gen_loss mean：’，np.mean（G_loss），‘std：’，np.std（ G_loss））<br>
+print（‘disc_loss mean：’，np.mean（D_loss），‘std：’，np.std（D_loss））</p>
+<p>＃在最后一个纪元后生成并重复进程<br>
+generate_and_save_images（dog_generator，epochs，seed，rows = 8，cols = 8）<br>
+checkpoint.save（file_prefix = checkpoint_prefix）</p>
+<p>OUT_DIR.mkdir（exist_ok = True）<br>
+save_images（OUT_DIR）<br>
+evaluationator = MiFIDEvaluator（MODEL_PATH，TRAIN_DIR）<br>
+fid_value，distance，mi_fid_score = evaluator.evaluate（OUT_DIR）<br>
+print（f’FID：{ fid_value：.5f}’）<br>
+print（f’distance：{distance：.5f}’）<br>
+print（f’MiFID：{mi_fid_score：.5f}’）<br>
+shutil.rmtree（OUT_DIR）<br>
+print（‘Removed temporary image directory’。 ）</p>
+<p>print（‘Final epoch。’）</p>
+<p>以下是训练期间生成的一些狗图像：</p>
+<p><img src="https://miro.medium.com/max/30/1*ByRDA7N5DSEBEAyNGtGlGQ.png?q=20" alt=""></p>
+<p>Epoch 120 - MIFID~90.5</p>
+<p><img src="https://miro.medium.com/max/30/1*u0XOmQ8_5nSBItT7f7HI7A.png?q=20" alt=""></p>
+<p>Epoch 200 - MIFID~64.8</p>
+<p><img src="https://miro.medium.com/max/30/1*SkG-eUZOBIiW0U6kWDdY3A.png?q=20" alt=""></p>
+<p>Epoch 280（最终） - MIFID~60.99</p>
+<p>正如我们所观察到的，MIFID在280个时期（约8小时）内稳步提升。我在比赛中使用这个模型获得的最高分是<strong>55.87</strong>。学习过程确实有点随机，所以我认为**[50,65]**区域的分数应该是现实的。如果你有时间，可以随意训练这个模型，因为它有可能继续改进:)。</p>
+<p>最后，我将向您展示如何制作一个有趣的<strong>GIF，<strong>以便看到</strong>DCGAN</strong>学习过程的一个很好的小模拟（来自Tensorflow的<a href="https://www.tensorflow.org/beta/tutorials/generative/dcgan">DCGAN教程的</a>代码）。</p>
+<p>anim_file =‘dcgan.gif’，</p>
+<p>其中imageio.get_writer（anim_file，mode =‘I’）作为writer：<br>
+filenames = glob.glob（‘image * .png’）<br>
+filenames = sorted（filenames）<br>
+last = -1<br>
+for i，filename in enumerate（filenames）：<br>
+frame = 1 *（i ** 2）<br>
+if round（frame）&gt; round（last）：<br>
+last = frame<br>
+else：<br>
+continue<br>
+image = imageio.imread（filename）<br>
+writer.append_data（image）<br>
+image = imageio .imread（filename）<br>
+writer.append_data（image）如果IPython.version_info&gt;（6,2,0，’’）</p>
+<p>导入IPython<br>
+：<br>
+IPython.display.Image（filename = anim_file）</p>
+<h1 id="%E7%BB%93%E8%AE%BA">结论 <a class="heading-anchor-permalink" href="#%E7%BB%93%E8%AE%BA" aria-hidden="true">#</a></h1>
+<p>总而言之，<strong>DCGAN</strong>似乎对超参数选择极其敏感，并且在训练期间可能会出现很多问题，包括<strong>模式崩溃</strong>。它们的计算密集程度非常高，为运行时间<strong>约为9小时</strong>构建高分模型非常困难。幸运的是，有一整套可能的方法和技术，这些方法和技术都有详细记录，可以很容易地应用到您的模型中，以稳定培训过程。</p>
+<p>就我个人而言，玩这些技术并在此过程中打破一些内核真的很有趣：D。请随意在评论中留下任何建议（用于改进模型或修复我搞砸了的东西）。</p>
+<p>非常感谢<strong>Chris Deotte，Nanashi，Chad Malla和Nirjhar Roy</strong>在比赛期间的Kaggle内核和示例。我会在下面留下链接给他们。</p>
+<p>总的来说，这是我参加过的第一次<strong>Kaggle</strong>比赛，这是一个非常有趣的方法，可以学习<strong>GAN</strong>并玩弄它们。这似乎是Kaggle的第一次涉及生成建模的竞赛，让我们希望将来会出现更多令人兴奋的挑战;）。</p>
+<h1 id="%E5%8F%82%E8%80%83">参考 <a class="heading-anchor-permalink" href="#%E5%8F%82%E8%80%83" aria-hidden="true">#</a></h1>
+<h1 id="%E6%9C%89%E7%94%A8%E7%9A%84%E5%86%85%E6%A0%B8%E5%92%8C%E7%AC%94%E8%AE%B0%E6%9C%AC">有用的内核和笔记本 <a class="heading-anchor-permalink" href="#%E6%9C%89%E7%94%A8%E7%9A%84%E5%86%85%E6%A0%B8%E5%92%8C%E7%AC%94%E8%AE%B0%E6%9C%AC" aria-hidden="true">#</a></h1>
+<p>[1]。我之前关于<a href="https://www.kaggle.com/jadeblue/dog-generator-starter-eda-preprocessing">EDA和图像预处理的</a>内核<a href="https://www.kaggle.com/jadeblue/dog-generator-starter-eda-preprocessing"></a></p>
+<p>[2]。<a href="https://www.kaggle.com/paulorzp/show-annotations-and-breeds">Xml解析和裁剪到指定的边界框</a></p>
+<p>[3]。<a href="https://www.kaggle.com/amanooo/wgan-gp-keras">具有插值的图像裁剪方法</a></p>
+<p>[4]。<a href="https://www.kaggle.com/cmalla94/dcgan-generating-dog-images-with-tensorflow">Chad Malla的另一个伟大的基于Keras的DCGAN方法</a></p>
+<p>[5]。<a href="https://www.kaggle.com/c/generative-dog-images/discussion/98595">DCGAN无法提升您的模型性能</a></p>
+<p>[6]。<a href="https://www.tensorflow.org/beta/tutorials/generative/dcgan">Tensorflow DCGAN教程</a></p>
+<p>[7]。<a href="https://www.kaggle.com/jesucristo/introducing-dcgan-dogs-images">DCGAN狗图像由Nanashi</a></p>
+<p>[8]。<a href="https://www.kaggle.com/phoenix9032/gan-dogs-starter-24-jul-custom-layers">GAN犬首发24-Jul - Nirjhar Roy的Custom Layers</a></p>
+<p>[9]。<a href="https://www.kaggle.com/cdeotte/supervised-generative-dog-net">由Chris Deotte监督的Generative Dog Net</a></p>
+<p>[10]。<a href="https://www.kaggle.com/jadeblue/dogdcgan-v6-ksize">我最好的参赛作品</a></p>
+<h1 id="%E7%A0%94%E7%A9%B6%E8%AE%BA%E6%96%87%EF%BC%8C%E5%B8%96%E5%AD%90%E5%92%8C%E8%AE%A8%E8%AE%BA">研究论文，帖子和讨论 <a class="heading-anchor-permalink" href="#%E7%A0%94%E7%A9%B6%E8%AE%BA%E6%96%87%EF%BC%8C%E5%B8%96%E5%AD%90%E5%92%8C%E8%AE%A8%E8%AE%BA" aria-hidden="true">#</a></h1>
+<p>[1]。Ian Goodfellow，J。Pouget-Abadie，M。Mirza，B。Xu <strong>，</strong> S。Ozair，Y。Bengio <strong>，</strong><a href="https://arxiv.org/pdf/1406.2661.pdf">Generative Adversarial Networks</a>（2014）</p>
+<p>[2]。J. Rocca，<a href="/understanding-generative-adversarial-networks-gans-cd6e4651a29">了解生成性对抗网络（GAN）</a></p>
+<p>[3]。J. Brownlee，<a href="https://machinelearningmastery.com/what-are-generative-adversarial-networks-gans/">生成对抗网络（GAN）的温和介绍</a></p>
+<p>[4]。A. Radford，L。Metz，S。Chintala，<a href="https://arxiv.org/abs/1511.06434">使用深度卷积生成对抗网络的无监督表示学习</a>（2015）</p>
+<p>[5]。J. Hui，<a href="https://medium.com/@jonathan_hui/gan-dcgan-deep-convolutional-generative-adversarial-networks-df855c438f">GAN - DCGAN（深度卷积生成对抗网络）</a></p>
+<p>[6]。S.Yadav，<a href="/weight-initialization-techniques-in-neural-networks-26c649eb3b78">神经网络中的权重初始化技术</a></p>
+<p>[7]。T. Miyato，T。Kataoka，M。Koyama，Y。Yoshida，<a href="https://arxiv.org/pdf/1802.05957.pdf">Generative Adversarial Networks的频谱归一化</a>（2018）</p>
+<p>[8]。IShengFang，<a href="https://github.com/IShengFang/SpectralNormalizationKeras">光谱归一化在</a> Keras <a href="https://github.com/IShengFang/SpectralNormalizationKeras">实施</a></p>
+<p>[9]。C. Cosgrove，<a href="https://christiancosgrove.com/blog/2018/01/04/spectral-normalization-explained.html">光谱归一化解释</a></p>
+<p>[10]。J. Hui，<a href="/gan-ways-to-improve-gan-performance-acf37f9f59b">GAN - 改善GAN表现的方法</a></p>
+<p>[11]。J. Brownlee，<a href="https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/">如何在Keras实施GAN黑客训练稳定模型</a></p>
+<p>[12]。Y. Jiao，<a href="https://lanpartis.github.io/deep%20learning/2018/03/12/tricks-of-gans.html">GANS的伎俩</a></p>
+<p>[13]。CKSønderby，<a href="https://www.inference.vc/instance-noise-a-trick-for-stabilising-gan-training/">Instance Noise：稳定GAN训练的技巧</a></p>
+<p>[14]。J. Hui，<a href="https://medium.com/@jonathan_hui/gan-rsgan-ragan-a-new-generation-of-cost-function-84c5374d3c6e">GAN - RSGAN＆RaGAN（新一代成本函数。）</a></p>
+<p>[15]。D. Mack，<a href="https://medium.com/octavian-ai/a-simple-explanation-of-the-inception-score-372dff6a8c7a">对初始分数的简单解释</a></p>
+<p>[16]。J. Hui，<a href="https://medium.com/@jonathan_hui/gan-how-to-measure-gan-performance-64b988c47732">GAN - 如何衡量GAN绩效？</a></p>
+<p>[17]。<a href="https://www.kaggle.com/c/generative-dog-images/discussion/98595#latest-582912">你需要的只是GAN Hacks</a></p>
+<p>[18]。<a href="https://www.kaggle.com/c/generative-dog-images/discussion/102155#latest-599429">如何训练你敏感的GAN - 似乎有用的东西。</a></p>
+<p>[19]。<a href="https://www.kaggle.com/c/generative-dog-images/discussion/97809#latest-591866">解释度量标准FID</a></p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

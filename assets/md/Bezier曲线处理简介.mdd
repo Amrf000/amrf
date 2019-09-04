@@ -1,0 +1,155 @@
+![Bezier曲线处理简介](https://medium.com/swlh/introduction-to-processing-with-bezier-curves-185dca85e00)
+Bezier曲线处理简介
+============
+
+通过绘制将生命置于动画中的曲线，在视觉艺术素描本软件上进行直观的动手实践！
+-------------------------------------
+
+[![Mohit Mayank](https://miro.medium.com/fit/c/48/48/1*1hAWLJLrwbe8xFhwrZOCxg.jpeg)](/@MohitMayank?source=post_page-----185dca85e00----------------------)
+
+[Mohit Mayank](/@MohitMayank?source=post_page-----185dca85e00----------------------)
+
+跟随
+
+[8月4日](/swlh/introduction-to-processing-with-bezier-curves-185dca85e00?source=post_page-----185dca85e00----------------------) · 6 分钟阅读
+
+![](https://miro.medium.com/freeze/max/30/1*_AX_NJ942kUZR61LErkbsg.gif?q=20)
+
+![](https://miro.medium.com/max/701/1*_AX_NJ942kUZR61LErkbsg.gif)
+
+二次贝塞尔曲线的所有荣耀！
+
+介绍
+--
+
+在这篇文章中，我们将学习处理的基础知识 - 它是一种交互式视觉软件和全球学生和艺术家使用的语言。它的开源，具有OpenGL集成并支持多种语言（Java，JS，Python等）和操作系统（Mac，Windows，Linux，Android等）。另一方面，Bezier曲线基本上是与计算机图形中的曲线有关的任何构建块，甚至在动画中也是如此。我选择了这个例子，因为这篇文章将向我们介绍折线领域的一个重要的数学主题，并且我们还将学习一些处理的基础知识。让我们开始吧！
+
+Bezier曲线 - 为什么以及如何？
+-------------------
+
+在2D平面中，假设您要绘制一条线。它非常简单，只需要两点，然后用最短的路径连接它们 - 这就是直线。现在如果你想画一条曲线怎么办？然后你需要回答一些问题 - 曲线的角度是什么？有多少这样的曲线或曲折？它变得非常复杂很快。输入贝塞尔曲线。直觉是锚点的放置 - 在其间绘制曲线的固定点，以及控制点 - 用于给原始线条弯曲的点。现在，这些点的计数定义了曲线的顺序。最着名的是线性（2锚），二次（1控制和2锚）和三次曲线（2控制和2锚）。
+
+![](https://miro.medium.com/max/30/1*ca-ss-c_VN-rKbgKq5kkUQ.png?q=20)
+
+![](https://miro.medium.com/max/831/1*ca-ss-c_VN-rKbgKq5kkUQ.png)
+
+一些基本类型的贝塞尔曲线。
+
+现在根据控制点的位置，我们可以改变曲线的形状。如果控制点接近锚点，则曲线对于该点与另一个锚点的角度更大。也就是说，我们需要找到这些公式，给定这些点的位置，它们将给出曲线的坐标。为了简单起见，让我们坚持使用二次曲线。因此，我们所知道的只有三点，比如P0（AP），P1（CP）和P2（AP）。不进行详细的数学计算，二次曲线的公式由下式给出，
+
+![](https://miro.medium.com/max/30/1*ntZVVhJxB1jQbp96gAFDTA.png?q=20)
+
+![](https://miro.medium.com/max/542/1*ntZVVhJxB1jQbp96gAFDTA.png)
+
+二次贝塞尔曲线。来源：[这里。](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+
+这里，
+
+*   **B（t）**给出步骤' **t** ' 处曲线的坐标
+*   **P0**，**P1**和**P2**是锚点和控制点。
+*   **'t'**定义了步骤。它在0和1之间。在**t = 0时**，**B（t）**给出**P0**，在**t = 1时，B（t）**给出**P2**。
+
+有了这个，我们准备潜入Processing的世界并开始绘制这个东西！
+
+处理
+--
+
+处理支持多种语言编码，我将试用python版本。您可以从[这里](https://processing.org/)下载并安装它，如有任何问题，请告诉我。在我们开始之前，让我们先了解一些基本的处理过程，
+
+*   有一个设置区域，首先被调用并用于配置环境。在处理中，这属于`setup`功能。
+*   有一个平局区。这是根据帧速率迭代调用的。这是我们进行主要策划的地方。在处理中，这属于`draw`功能。
+
+让我们首先定义设置函数，它如下;
+
+![](https://miro.medium.com/max/30/1*YXzq-R1d99gUVKwbZ8XXtw.png?q=20)
+
+![](https://miro.medium.com/max/426/1*YXzq-R1d99gUVKwbZ8XXtw.png)
+
+设置环境
+
+该功能包含;
+
+*   `size`它定义了窗口或画布的大小。所有绘图都将在此窗口内完成。
+*   `background`它定义了背景颜色。我们选择了白色。
+
+我们还创建了另一个函数，称为`setup_bezier`AP和CP以及它们之间的绘制线。
+
+![](https://miro.medium.com/max/30/1*oTgPjz2ut0WwaYEvUDJTLg.png?q=20)
+
+![](https://miro.medium.com/max/629/1*oTgPjz2ut0WwaYEvUDJTLg.png)
+
+一些预先策划！
+
+现在这是非常多的，让我们理解代码，
+
+*   `setup_bezier`执行两个任务，（1）绘制**P0，P1**和**P2**点。为此，它调用另一个函数`drawPoint`，（2）它在对（**P0，P1**）和（**P1，P2**）之间绘制线
+*   `stroke`用于设置我们绘制的下一个对象的轮廓颜色。如果对此的输入是单个参数，则它会考虑灰度，如果有3个参数，则使用RGB格式。
+*   `strokeWeight` 定义笔划的像素大小。
+*   `point` 将两个值作为输入，并在x和y坐标上绘制一个点。
+*   `fill`用于填充具有某种颜色的对象。遵循相同的输入逻辑`stroke`。
+*   `text` 需要3个输入 - 要显示的字符串以及其位置的x，y坐标。
+*   `line` 需要4个输入，两个点的xy坐标，在这两个点之间绘制一条直线。
+*   假设我们有一个全局字典`p`，它存储三个点的值。它会像这样存储它，
+
+![](https://miro.medium.com/max/30/1*fANKFbDpHSa8Y1dWNc11jA.png?q=20)
+
+![](https://miro.medium.com/max/626/1*fANKFbDpHSa8Y1dWNc11jA.png)
+
+P0，P1和P2存储在变量中。
+
+现在在绘图部分之前，还可以将Bezier公式转换为工作的python代码。
+
+![](https://miro.medium.com/max/30/1*NKZSs9h1sr55nvuTm0StJg.png?q=20)
+
+![](https://miro.medium.com/max/723/1*NKZSs9h1sr55nvuTm0StJg.png)
+
+重复z和y坐标计算的公式
+
+现在我们准备开始使用主绘图功能了。我们的逻辑是迭代**t**并找出曲线的点，即**B（t）。**现在，如果我们以100步进行迭代，即**t**以0.01为步长从0变为1，我们将得到大约100个**B（t）**值。保持简单，我们需要做的就是在最后一个**B（t）**点和下一个**B（t）**点之间绘制一条直线。让我们开始吧，
+
+![](https://miro.medium.com/max/30/1*Oy0mTb6thFSJTwiLV0RfTg.png?q=20)
+
+![](https://miro.medium.com/max/607/1*Oy0mTb6thFSJTwiLV0RfTg.png)
+
+主要绘图功能！
+
+让我们理解这里的代码，
+
+*   我们定义`prev_x`并`prev_y`存储**B（t）**的先前值**，**其在开始时为**P0。**
+*   我们定义`t` 并将其设置为0.我们将使用它来迭代每一步。
+*   在绘制函数开始时，我们定义`global`我们想要使用并更新提到的全局变量。
+*   `find_next_bt`将`t`计算该步骤的**B（t）**作为输入。
+*   `line`在前一个和更新的**B（t）**之间绘制一条直线**。**
+*   最后，我们增加了值 `t`
+*   我们使用`time.sleep`它来慢慢地可视化绘图。
+*   最后，我们添加了一个停止条件，`noLoop`当我们到达**P2**时打破**。**
+
+完整的代码是，
+
+在这里，请记住主要实体是三点。通过更改它们的值并重新绘制，我们得到不同的曲线实例。让我们尝试一些变化来感受它。
+
+![](https://miro.medium.com/freeze/max/30/1*BxGx_I1ZcuTfAJrOQnasdw.gif?q=20)
+
+![](https://miro.medium.com/max/1148/1*BxGx_I1ZcuTfAJrOQnasdw.gif)
+
+不同的变化 - 改变锚点和控制点。
+
+结论
+--
+
+选择该示例是为了提供处理的基本介绍。将此视为下一级hello world程序的处理。因为我们想要涵盖多个基本操作，我们可能已经采取了很少的方法，但也就是说，这样做是为了保持介绍有点先进而不触及真正复杂的部分。一个例子，处理提供了一个内置函数来绘制贝塞尔曲线，它只需要点并在其中执行计算。但是那里的乐趣:)
+
+参考
+--
+
+\[1\] [处理](https://processing.org/)
+
+\[2\]贝塞尔曲线 - [维基百科](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)
+
+\[3\] [Bézier曲线的入门书](https://pomax.github.io/bezierinfo/#introduction)
+
+* * *
+
+_欲了解更多帖子这样的访问我的个人网站_[_在这里_](http://mohitmayank.com)_。_
+
+干杯。

@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="active" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="building-a-react-components-library"><img src="https://medium.com/better-programming/lets-build-react-components-library-part-3-b2e7aec478a2" alt="Building a React Components Library">
+Building a React Components Library <a class="heading-anchor-permalink" href="#building-a-react-components-library" aria-hidden="true">#</a></h1>
+<h2 id="part-3-%E2%80%94-bundling-and-publishing-the-library-to-the-npm">Part 3 — Bundling and publishing the library to the NPM <a class="heading-anchor-permalink" href="#part-3-%E2%80%94-bundling-and-publishing-the-library-to-the-npm" aria-hidden="true">#</a></h2>
+<p><a href="/@tomasz.fiechowski?source=post_page-----b2e7aec478a2----------------------"><img src="https://miro.medium.com/fit/c/96/96/1*xjQv8kiqyZ8cFYz5cDSy3Q.jpeg" alt="Tomasz Fiechowski"></a></p>
+<p><a href="/@tomasz.fiechowski?source=post_page-----b2e7aec478a2----------------------">Tomasz Fiechowski</a></p>
+<p>Follow</p>
+<p><a href="/better-programming/lets-build-react-components-library-part-3-b2e7aec478a2?source=post_page-----b2e7aec478a2----------------------">Sep 2</a> · 8 min read</p>
+<p><img src="https://miro.medium.com/max/60/1*bmaWfveszbEa8yJBxuiBjg.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/2400/1*bmaWfveszbEa8yJBxuiBjg.jpeg" alt=""></p>
+<p><img src="https://miro.medium.com/max/4800/1*bmaWfveszbEa8yJBxuiBjg.jpeg" alt=""></p>
+<p>NPM and Rollup</p>
+<p>In the previous parts, we <a href="/better-programming/building-a-react-components-library-f5a390d5973d">built the library with components</a> and <a href="/better-programming/building-a-react-components-library-6a05c2bca538">tested</a> them. Now, we are ready to publish the library and make it publicly available.</p>
+<hr>
+<h1 id="entrypoint-to-the-library">Entrypoint to the Library <a class="heading-anchor-permalink" href="#entrypoint-to-the-library" aria-hidden="true">#</a></h1>
+<p>To make our library work, the first thing we need to do is to configure how it should be used and accessed by other projects.</p>
+<p>In order to do that, we need to specify the <code>main</code> field in the <code>package.json</code> file. <a href="https://docs.npmjs.com/files/package.json#main">It’s the primary entrypoint to the program</a>. This points to the bundled file that we will generate, not to the sources.</p>
+<p>Let’s set it to <code>lib/index.js</code>. This file will be the output file for the bundler.</p>
+<p>package.json</p>
+<p>We need to add one more file, which will actually define what is exported from the library and what users can import. We are building a components library, so let’s export the <code>Button</code> component we previously created. Create a <code>src/index.js</code> file, and type the following code:</p>
+<p>src/index.js</p>
+<p>Those two, <code>src/index.js</code> and <code>lib/index.js</code>, are respectively the input and output files for the bundler.</p>
+<hr>
+<h1 id="bundling-the-library">Bundling the Library <a class="heading-anchor-permalink" href="#bundling-the-library" aria-hidden="true">#</a></h1>
+<p>We’ll be using the <a href="https://rollupjs.org/guide/en/">Rollup</a> module bundler. Obviously, the first step is to install it, along with a few important plugins:</p>
+<p>npm i -D rollup rollup-plugin-commonjs rollup-plugin-babel</p>
+<p>The first plugin will enable CommonJS modules to be included in the bundle, and the second is for seamless integration with the existing Babel config.</p>
+<p>Let’s create the Rollup configuration file, <code>rollup.config.js</code>:</p>
+<p>rollup.config.js</p>
+<p>You can see two fields: <code>input</code> and <code>output</code>. This is the place where we tell Rollup to bundle <code>src/index.js</code> to <code>lib/index.js</code>. The output module will be in CommonJS format. We will cover other types later. Let’s add build script — <code>&quot;build&quot;: &quot;rollup -c&quot;</code> — to <code>package.json</code>and run it. We should see something like:</p>
+<p>./src/index.js → lib/index.js…<br>
+(!) Unresolved dependencies<br>
+…<br>
+react (imported by src/components/Button.js)<br>
+<a href="http://twitter.com/emotion/styled">@emotion/styled</a> (imported by src/components/Button.js)<br>
+<a href="http://twitter.com/emotion/core">@emotion/core</a> (imported by src/config/styles.js)<br>
+created lib/index.js in 1.3s</p>
+<p>Rollup warns us about unresolved dependencies_._ What does this mean? Rollup will only resolve <em>relative</em> module IDs by default. This means that an import statement like <code>import X from 'Y';</code> won’t result in <code>X</code> being included in your bundle. Instead, it will be an external dependency that is required at runtime.</p>
+<p>It would work if the user had <code>Y</code> already installed in the project, but that is not a convenient way to build libraries meant to be shared.</p>
+<hr>
+<h2 id="resolving-modules">Resolving Modules <a class="heading-anchor-permalink" href="#resolving-modules" aria-hidden="true">#</a></h2>
+<p>There is a plugin for resolving third-party modules and including them in the bundle. Let’s install <code>npm i -D rollup-plugin-node-resolve</code>, and add it to the Rollup config file.</p>
+<p>rollup.config.js</p>
+<p>Run the build again and …</p>
+<p>$ npm run build./src/index.js → lib/index.js…<br>
+[!] Error: ‘createContext’ is not exported by node_modules/react/index.js</p>
+<p>Now we have a problem with external libraries.</p>
+<hr>
+<h2 id="handling-peer-dependencies">Handling Peer Dependencies <a class="heading-anchor-permalink" href="#handling-peer-dependencies" aria-hidden="true">#</a></h2>
+<p>In the first part of the tutorial, we added React and Emotion as the peer dependencies of the project. Those dependencies should be provided by the consumer of the library and not bundled directly into the code.</p>
+<p>There is an<code>external</code> option in the Rollup config for specifying the libraries that should be treated as peer dependencies. Obviously, this is already specified in the <code>package.json</code> in the <code>peerDependecies</code> field, so we will use another Rollup plugin to automatically process and add that list to the config.</p>
+<p>Let’s install it — <code>npm i -D rollup-plugin-peer-deps-external</code> — and add it to Rollup config:</p>
+<p>Let’s rebuild the bundle and inspect <code>lib/index.js</code>. We can see our <code>Button</code> component bundled and peer dependencies properly imported.</p>
+<p>At this point, the library would be already usable. Having it published, for example, under <code>react-sample-components-library</code>, you or other people could use the <code>Button</code> in their projects in the following way:</p>
+<p><code>import { Button } from 'react-sample-components-library';</code></p>
+<hr>
+<h1 id="how-can-i-check-it-locally%3F">How Can I Check It Locally? <a class="heading-anchor-permalink" href="#how-can-i-check-it-locally%3F" aria-hidden="true">#</a></h1>
+<p>Well, it would be cumbersome to publish the library every time we make a small change to see if everything works in the related projects.</p>
+<p>Fortunately, we have a command called <code>link</code> (<code>[yarn link](https://yarnpkg.com/lang/en/docs/cli/link/)</code> or <code>[npm link](https://docs.npmjs.com/cli/link)</code>).</p>
+<p>Let’s assume that our library is named <code>react-sample-components-library</code> (the <code>name</code> in <code>package.json</code>), and we have stored it locally under <code>~/library</code>.<br>
+We also have some separate project that uses the library. The project is located in the <code>~/project</code> directory. Now we can do the following (I encourage you to use <code>yarn</code> here, as it gives copy paste-able hints).</p>
+<p>$ cd ~/library<br>
+$ yarn linksuccess Registered “react-sample-components-library”.<br>
+info You can now run `yarn link “react-sample-components-library”` in the projects …</p>
+<p>$ cd ~/project<br>
+$ yarn link “react-sample-components-library”</p>
+<p>Now, your project will be using the library from the local directory. It uses the generated bundles, so remember to rebuild them after making changes to the library itself.</p>
+<hr>
+<h1 id="minification">Minification <a class="heading-anchor-permalink" href="#minification" aria-hidden="true">#</a></h1>
+<p>Without minification, the bundle should weigh around <code>1.8kB</code>. That’s small, but remember that we only have one component in the library. As soon as the library grows, every byte starts to count.</p>
+<p>To minify our bundle, we will use the Uglify plugin. Let’s install it — <code>npm i -D rollup-plugin-uglify</code> — and add it to the config. We will split our configuration into two now: one for normal bundle and one for minified. We will also add a small helper function <code>minifyExtension</code> to append <code>.min</code> to the minified files output paths:</p>
+<p>rollup.config.js</p>
+<p>Let’s run the build and check the contents of the <code>lib</code> directory:</p>
+<p>1.4K  index.min.js<br>
+1.8K  index.js</p>
+<p>Nice, we saved <code>0.4k</code> with minification! ⚖</p>
+<hr>
+<h1 id="other-module-types%3A-umd%2C-es">Other Module Types: UMD, ES <a class="heading-anchor-permalink" href="#other-module-types%3A-umd%2C-es" aria-hidden="true">#</a></h1>
+<p>Besides CommonJS module format, there are also <a href="https://github.com/umdjs/umd">UMD</a> and <a href="https://nodejs.org/api/esm.html">ES</a> formats. The first acronym stands for <em>Universal Module Definition.</em> It’s capable of working everywhere, be it in the client, on the server, or elsewhere. ES are really ECMAScript modules and are <a href="https://tc39.github.io/ecma262/#sec-modules">the official standard format</a> to package JavaScript code.</p>
+<p>Similar to the <code>main</code> field in <code>package.json</code> that specified the output file path for CommonJS module type, we also have:</p>
+<ul>
+<li><code>browser</code>: for the UMD build and browser usage</li>
+<li><code>module</code>: for the ES bundle format (usable for ES-module aware tools)</li>
+</ul>
+<p>It’s best to make the library as accessible as possible, so we will generate bundles in all those module types.</p>
+<p>Let’s modify our <code>package.json</code> by adding <code>browser</code> and <code>module</code> fields:</p>
+<p>{<br>
+…<br>
+“main”: “lib/index.js”,<br>
+“browser”: “lib/index.umd.js”,<br>
+“module”: “lib/index.es.js”,<br>
+…<br>
+}</p>
+<p>And to update the config, let’s start with the UMD part:</p>
+<p>rollup.config.js</p>
+<p>Besides changing <code>output.format</code> and <code>output.file</code> to read the<code>browser</code> field, there are also several other changes:</p>
+<ul>
+<li>To tell Rollup how to access given dependencies, there’s a new <code>[output.globals](https://rollupjs.org/guide/en/)</code> field</li>
+<li>To minify UMD/ES code, we need <code>terser</code> instead of <code>uglify</code>. Install <code>rollup-plugin-terser</code></li>
+</ul>
+<p>Now, for the ES part:</p>
+<p>rollup.config.js</p>
+<p>Let’s run the build and see the output now:</p>
+<p>1.5K  index.es.js<br>
+827B  index.es.min.js<br>
+1.8K  index.js<br>
+1.4K  index.min.js<br>
+2.3K  index.umd.js<br>
+1.2K  index.umd.min.js</p>
+<p>We have the bundle in several formats now, ready to be used by a variety of different tools.</p>
+<hr>
+<h1 id="last-preparations-before-publishing">Last Preparations Before Publishing <a class="heading-anchor-permalink" href="#last-preparations-before-publishing" aria-hidden="true">#</a></h1>
+<p>Before publishing the bundle, let’s add some helper scripts to <code>package.json</code>:</p>
+<p>“prepublishOnly”: “rm -rf lib &amp;&amp; npm run build”,<br>
+“postbuild”: “npm pack &amp;&amp; tar -xvzf *.tgz &amp;&amp; rm -rf package *.tgz”</p>
+<p>With <code>prepublishOnly</code>, each time we want to publish the bundle, the <code>lib</code> directory will be cleaned up and source files rebuilt. That’s a very good sanity check that will prevent us from accidentally publishing old files.</p>
+<p>The command in <code>postbuild</code> will show us the contents of the package that would be published to the NPM.</p>
+<p><strong>Note:</strong> The <code>name</code> property in the <code>package.json</code> is the name of your package and <em>must be unique</em>. Check NPM to see if the name you want to get is free.</p>
+<hr>
+<h1 id="publishing-the-package-to-the-npm">Publishing the Package to the NPM <a class="heading-anchor-permalink" href="#publishing-the-package-to-the-npm" aria-hidden="true">#</a></h1>
+<p>In order to publish the package to the NPM, you should have an account at <a href="http://www.npmjs.com">www.npmjs.com</a>. Create it if you don’t have it yet.</p>
+<p>Let’s jump to the terminal and log in to NPM by running <code>npm login</code>.<br>
+If everything went successfully, you should see something like this:</p>
+<p>$ npm login<br>
+Username: tfiechowski<br>
+Password: ***<br>
+Email: (this IS public) <a href="mailto:tomasz.fiechowski@gmail.com">tomasz.fiechowski@gmail.com</a><br>
+Logged in as tfiechowski on <a href="https://registry.npmjs.org/">https://registry.npmjs.org/</a>.</p>
+<p>Finally, run <code>npm publish</code>.</p>
+<p>Given everything went fine, you can enter <code>npmjs.com/package/&lt;package-name&gt;</code>, and open a beer.</p>
+<p><strong>Note:</strong> You can check out the<code>part3-first-publish</code> tag to see the repository at this stage of the article (just <code>git checkout part3-first-publish</code>).</p>
+<p>Let’s have a step back and see the output of the <code>npm publish</code> command.<br>
+Wait, what’s that?</p>
+<hr>
+<h1 id="optimising-the-package">Optimising the Package <a class="heading-anchor-permalink" href="#optimising-the-package" aria-hidden="true">#</a></h1>
+<p>When you take a look at the file list in the output of the <code>npm publish</code>, there is literally a file from your repository:</p>
+<p>=== Tarball Contents ===<br>
+1.4kB package.json<br>
+121B  .babelrc<br>
+68B   jest.config.js<br>
+408B  <a href="http://README.md">README.md</a><br>
+2.3kB rollup.config.js<br>
+204B  styleguide.config.js<br>
+1.6kB lib/index.es.js<br>
+827B  lib/index.es.min.js<br>
+1.8kB lib/index.js<br>
+1.4kB lib/index.min.js<br>
+2.3kB lib/index.umd.js<br>
+1.2kB lib/index.umd.min.js<br>
+309B  src/components/Button.js<br>
+103B  src/components/Button.md<br>
+887B  src/components/Button.test.js<br>
+328B  src/config/styles.js<br>
+55B   src/index.js<br>
+66B   src/setupTests.js</p>
+<p>That’s not elegant. We don’t need a majority of those files. Let’s improve that.</p>
+<p>We can specify the <code>files</code> field in the <code>package.json</code>. <a href="https://docs.npmjs.com/files/package.json#files">It basically whitelists files that will be included in the package.</a> By default it accepts all the files from the repository (respects <code>.gitignore</code> ) that we have already seen.</p>
+<p><strong>Note:</strong> There is a possibility to add <code>.npmignore</code> to your blacklisted files, but <a href="/@jdxcode/for-the-love-of-god-dont-use-npmignore-f93c08909d8d">for the love of God, don’t use it</a>.</p>
+<p>Let’s modify <code>files</code> to only include our bundled files:</p>
+<p>{<br>
+…<br>
+“files”: [<br>
+“/lib”<br>
+],<br>
+…<br>
+}</p>
+<p><strong>Note:</strong> Without the <code>/</code> prefix before <code>lib</code>, all nested <code>lib</code> directories, for example <code>abc/def/lib</code>, would be included as well.</p>
+<p>Now, let’s use our <code>postbuild</code> helper to check the package contents without actually publishing it:</p>
+<p>$ npm run build=== Tarball Contents ===<br>
+1.4kB package.json<br>
+408B  <a href="http://README.md">README.md</a><br>
+1.6kB lib/index.es.js<br>
+827B  lib/index.es.min.js<br>
+1.8kB lib/index.js<br>
+1.4kB lib/index.min.js<br>
+2.3kB lib/index.umd.js<br>
+1.2kB lib/index.umd.min.js</p>
+<p>Sweet, we’re getting only required files, nothing extra.</p>
+<p><strong>Note:</strong> If your bundle size is becoming suspiciously large or you just want to analyse its contents, there are two great plugins that can help you with that:<br>
+<code>[rollup-plugin-analyzer](https://github.com/doesdev/rollup-plugin-analyzer)</code> and <code>[rollup-plugin-](https://github.com/btd/rollup-plugin-visualizer)visualizer</code> .</p>
+<h2 id="versioning-the-library">Versioning the library <a class="heading-anchor-permalink" href="#versioning-the-library" aria-hidden="true">#</a></h2>
+<p>Use <a href="https://docs.npmjs.com/about-semantic-versioning">semantic versioning</a> for specifying the updates to your package.</p>
+<p>We optimised the package, so it would be good to publish the new version. Bump up <code>version</code> in <code>package.json</code> to <code>1.0.1</code>, and run <code>npm publish</code> again.</p>
+<p>That’s it. You and others can now import your library to your respective projects!</p>
+<h2 id="generating-source-maps">Generating source maps <a class="heading-anchor-permalink" href="#generating-source-maps" aria-hidden="true">#</a></h2>
+<p>Finally, we can add the source map to the bundle to enable users to inspect the sources if necessary and debug the library easily.</p>
+<p>To generate source maps, just set <code>output.sourcemap</code> to <code>true</code> in your Rollup config, for example:</p>
+<p>output: {<br>
+file: packageJSON.main,<br>
+format: “cjs”,<br>
+sourcemap: true<br>
+}</p>
+<hr>
+<h1 id="summary">Summary <a class="heading-anchor-permalink" href="#summary" aria-hidden="true">#</a></h1>
+<p>We set up Rollup to bundle our code and added minification to the process. Later we added more types of generated modules: UMD and ES. Then we published the initial version of the library and also optimised the contents of the package in order to keep the bundle as light as possible.</p>
+<p>Full code is available in the <a href="https://github.com/tfiechowski/react-sample-components-library">GitHub repository</a>. You can checkout the <code>part3</code> tag (<code>git checkout part3</code>) to see the full example from this part.</p>
+<h2 id="next-parts">Next parts <a class="heading-anchor-permalink" href="#next-parts" aria-hidden="true">#</a></h2>
+<p>In the next and final part, we take care of deploying the documentation to GitHub pages automatically. Stay tuned.</p>
+<h2 id="important-note-about-_%40emotion%2Fstyled_">Important note about <code>_@emotion/styled_</code> <a class="heading-anchor-permalink" href="#important-note-about-_%40emotion%2Fstyled_" aria-hidden="true">#</a></h2>
+<p>If you want to use cool features of Emotion, like components as selectors, you need to install a Babel plugin that will take care of preprocessing those. It’s named <code>babel-plugin-emotion</code>.</p>
+<p>Please also check the size of the bundle when playing with Emotion. I had some big issues with the bundle being enormously heavy. Finally, I noticed some very big blocks of blob text in the bundle. and it turned out the source maps were included in the bundles. Keep an eye on that.</p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>
