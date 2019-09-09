@@ -1,0 +1,92 @@
+![Why you should be data-informed and not data-driven](https://medium.com/hackernoon/why-you-should-be-data-informed-and-not-data-driven-76079d187989)
+#### Top highlight
+
+Why you should be data-informed and not data-driven
+===================================================
+
+[![Uzma Barlaskar](https://miro.medium.com/fit/c/48/48/0*63SH5ylI5xkCzHdR.jpg)](/@productmanagement?source=post_page-----76079d187989----------------------)
+
+[Uzma Barlaskar](/@productmanagement?source=post_page-----76079d187989----------------------)
+
+Follow
+
+[Oct 1, 2018](/hackernoon/why-you-should-be-data-informed-and-not-data-driven-76079d187989?source=post_page-----76079d187989----------------------) · 7 min read
+
+![](https://miro.medium.com/max/30/1*-U2UHPQDqHn9dL_QfBa5Tw.jpeg?q=20)
+
+![](https://miro.medium.com/max/1280/1*-U2UHPQDqHn9dL_QfBa5Tw.jpeg)
+
+The decision making framework you build for your team/organization is going to be critical to its success or failure. In the era of the internet, data has become a key part of the decision making frameworks in companies. And, rightfully, so. Data is based in reality — what’s actually happening. And, your decisions should be grounded in reality and facts as much as possible. However, **how** you use data in your decisions also matters. And, that can have long term downstream impact on the quality of the product you build.
+
+Data driven vs Data informed
+============================
+
+Sometimes people think the difference between being ‘_data driven_’ and ‘_data informed_’ is like _potayto potahto._ Some organizations call themselves data driven, others call themselves data informed. It means the same thing.
+
+While the difference between these terms may seem subtle, depending on what decision making culture you set up in your organization, it can have long term effects on your product and the trajectory of your organization.
+
+To understand what is the difference between being _data driven_ and _data informed, l_et’s look at an example. Say, you are a news publisher and you are deciding how to frame the headlines of your news reports. You try a few different variants, and find that the one with clickbaity titles gets the most clicks.
+
+**_Data driven_ decision making**: Clicks are up. Visitations (the topline metric for this publisher) are up. Revenue (since they run CPM ads) is up. Great! All our key metrics are up. Let’s ship headings with clickbaity titles.
+
+**_Data informed_ decision making**: All our key metrics are up. That’s good. What are the counter metrics ? Bounce rate is up. That doesn’t seem like a good experience if users are bouncing. What about long term counter metrics? Do we think clickbaity titles are good for our users ? Would it hurt sentiment towards our publishing brand ? Btw, why are click-baity headlines working? Content that piques users’ curiosity does well. Instead of writing click-baity headlines, can we integrate this insight it into our content strategy. Write about topics that people are curious about, but may not know enough.
+
+In **_data driven_** decision making, data is at the center of the decision making. It’s the primary (and sometimes, the only) input. You rely on data alone to decide the best path forward. In **_data informed_** decision making, data is a key input among many other variables. You use the data to build a deeper understanding of what value you are providing to your users.
+
+So, one might ask, what’s wrong with being a _data driven_ culture. Data is an incontrovertible source of truth. The belief that data is incontrovertible is actually a myth. There are several blind spots in data, which if not addressed, can lead to sub optimal decisions.Here’s a look at the risks of being a _data driven_ culture.
+
+The blind spots of a data driven culture
+========================================
+
+**When you apply insights from data literally**
+
+Say you are a game developer, you run an analysis and you find users who get notified are more active. Decision: Yay, let’s send more notifications! The volume of the notifications increases in the app. I get notified about the new gaming bundle  I can buy, my friend who scored a new level, and it goes on. The noise to signal ratio increases. Users start ignoring notifications, even the high value ones you sent earlier, eventually turning off push, and ultimately your gaming app ends up being one of the several badged but never opened apps on the user’s device.
+
+In a **_data informed_** culture, you try to understand the behavior that’s behind the data. Users find value in the content that they are being notified about, not in the notification itself. Understanding which notifications users like and why users find these certain notifications valuable, you will be able to figure out a) how to increase the value your app is providing b) if there are similar high-value events that users would appreciate notifications for.
+
+**When the data you measure isn’t accurately capturing the behavior**
+
+*   Leading vs lagging indicators
+
+Measuring the right metrics is critical to building both a _data driven_ and a _data informed_ culture. However, when you consider data sacrosanct, you are more likely to fall for the fallacy of measuring a lagging indicator. For ex. say you are a gaming developer, your primary instrumented metric of measuring the health of your app is daily and monthly actives, and retention. You are building a new feature. There was some feedback that this change is making the game more complex. You decide that the results of an A/B test should help you decide. So you run an A/B test, notice no impact on the above metrics. All good, you ship the change.
+
+However, after some time, you notice that the game levels people are reaching has declined, but DAU/MAU are still stable. The change you shipped did increase the complexity of game play, so users are finding it harder to navigate the game. Over the next few months, users start churning off, and that’s when you see impact on DAU/MAU. In this case, the game levels reached were a leading indicator (that you didn’t measure), DAU/MAU were lagging indicators. By the time you see impact on DAU/MAU, it is too late to stop the churn.
+
+*   Impact of participation vs volume
+
+Sometimes, you may notice a positive impact on your metrics, and assume it’s a positive change for all users. In fact, a small group of power users may be biasing your results and the large majority of your users are impacted negatively.
+
+*   Impact of context
+
+Again, taking the example of the game developer, say you are building a store front for the gaming app. The store front is placed very prominently in your app, so that all your users know it exists. You measure the conversion funnel for the store front. One of your employees who was at an e-commerce company before says, woah, that’s way less than what we saw there. That funnel is broken!
+
+Here’s where context matters. Your store front is placed very prominently in a gaming app. You are providing a functionality in addition to gaming, not the primary value. So your top of funnel is massive and also not high intent. But the e-commerce app gets (high intent) users who are looking to buy something. So if you compare the conversion funnel on these two apps, that’s like apples and oranges. In this case, you either need to measure your top of funnel on the store front in a way that filters out low intent traffic, or benchmark with another app that provides a similar functionality.
+
+**When you have paralysis because of a lack of data**
+
+Sometimes a data driven culture leads to the attitude of — If we can’t measure it, we won’t build it. Without data (or imperfect data), it can be tough to figure out if a problem is real or not. Many times, the decision ends up being not to solve it since you can’t measure the opportunity. First principles based thinking is your friend at this time. Understanding the fundamental blocks of a problem, can help you decide what’s the best path forward, even if you have no data. Here’s a [good article](https://mayooshin.com/first-principles-thinking/) on how to practice first principles based thinking (If you’re interested in learning more about first principles based thinking, let me know through the comments and I might write another article).
+
+**When trends are changing**
+
+Early trends rarely show up in the data. People start noticing early trends sooner than it shows up in the data . Don’t be shy to trust your product instincts. If you look at a problem from first principles, the eventual impact would be much more obvious, even before it shows up in the data. This is a massive blind spot for most large organizations, and is the space, where startups thrive in. Disruption of large organizations happens when they ignore or don’t notice early trends, and instead rely on existing data.
+
+**When you outsource product thinking to data**
+
+Sometimes when you have data readily available, it’s easy to start doing micro-optimizations without thinking of the end to end product experience. While on the surface of it, this may seem like a sound approach (you are being _data driven_ after all) the net effect of all the micro-optimizations may actually be negative. And, sometimes, it may take some time to see the impact of it (see the above point on measuring lagging indicators). User empathy, design and product sense should always be your guide, along with data, when solving problems for your users. Ask if this solution is providing value to users? Does this fit their mental model ? Does the entire system that this change is part of make sense?
+
+But, how do you prevent subjectivity in a data informed culture
+===============================================================
+
+Building great products requires that you understand the user well. Your goal in using data should be in sole pursuit of this. Subjectivity is not bad. Product building is, inherently, subjective. . That’s why Twitter differs from Facebook, WhatsApp differs from Telegram. Each of these products is serving similar use-cases and one can argue, also notices many similar behaviors, but chooses to interpret them differently.
+
+But, how do you scale subjectivity in an organization. While data is so much easier to scale, scaling a _data informed_ culture is hard but not impossible. Scaling a _data informed_ culture can be achieved by using strong processes and principles in the product building framework.
+
+How to create a data-informed culture
+=====================================
+
+*   Understand what user behavior is driving the metric, don’t use the metric as is. Any experiment analysis should have a set of hypotheses outlining what user behavior might be causing the metric to move. If possible, validate these with additional user research.
+*   Ask if you are measuring the right things ? Is this a leading indicator or a lagging indicator ? What are the effects on sub populations ? What are the blind spots in your measurement? How will you cover for them?
+*   Think about the context of the data. What was the user experience for this experiment? What else is going on in the system that this change is a a part of , that might affect this ?
+*   Force yourself to consider all the opinions of why the results of the analysis might be wrong. Play devil’s advocate.
+*   When you have imperfect data, use first principles.
+*   Always, always, keep the user in mind. This is the holy grail that wil determine the success of a _data informed_ culture.

@@ -1,0 +1,144 @@
+![RxJS：使用forkJoin进行错误处理](https://medium.com/better-programming/rxjs-error-handling-with-forkjoin-3d4027df70fc)
+RxJS：使用forkJoin进行错误处理
+组合静态方法的错误处理，如forkJoin，concat和zip
+RxJS：使用forkJoin进行错误处理
+=====================
+
+组合静态方法的错误处理，如forkJoin，concat和zip
+--------------------------------
+
+[![JoãoVictorGhignatti](https://miro.medium.com/fit/c/48/48/2*Opurq9ZadGgF6XWf7P_etQ.png)](/@joaoghignatti?source=post_page-----3d4027df70fc----------------------)
+
+[JoãoVictorGhignatti](/@joaoghignatti?source=post_page-----3d4027df70fc----------------------)
+
+跟随
+
+[9月2日](/better-programming/rxjs-error-handling-with-forkjoin-3d4027df70fc?source=post_page-----3d4027df70fc----------------------) · 5 分钟阅读
+
+![](https://miro.medium.com/max/30/1*emZVDTbl5L_ZnXh95z51LQ.png?q=20)
+
+![](https://miro.medium.com/max/1996/1*emZVDTbl5L_ZnXh95z51LQ.png)
+
+如果您是Angular开发人员，那么您已经熟悉了[RxJS](https://rxjs-dev.firebaseapp.com/)，或者至少，您知道在进行服务调用之后`HttpClient`，您应该订阅。
+
+但是，您可以通过更深入的反应性扩展知识实现更多目标。
+
+如果使用得当，有一些运算符可以使事情变得更容易，这与仅知道如何订阅不同。这正是RxJS [对运营商所说的](https://rxjs-dev.firebaseapp.com/guide/operators)：
+
+> “RxJS主要用于其运营商，即使可观察性是其基础。”
+
+有时，在使用observable时，您最终必须将它们组合在一起。RxJS为您提供组合操作符和静态方法，帮助您处理这些情况，但生活不是一缕玫瑰花。
+
+当我们组合多个observable时，尝试处理错误成为一个真正的问题，RxJS方法大多不会像你想要的那样运行。
+
+让我们来看一个例子以及我写这篇文章的主要原因。
+
+const todo1 $ = this.myService.getTodo（1）;   
+const error $ = this.myService.getTodo（201）;   
+const todo2 $ = this.myService.getTodo（2）; forkJoin（\[todo1 $，error $，todo2 $\]）.   
+ subscribe（  
+ next => console.log（next），  
+ error => console.log（error）  
+ ）;
+
+在上面的示例代码中，我使用一个服务来存储`GET`到电话[JSONPlaceholder](https://jsonplaceholder.typicode.com/)的开放API，他们每个人应该返回一个可观察的`todo`由它`id`。
+
+然后，我结合使用这些observables `forkJoin`，它们并行执行这些调用。
+
+有些人可能会说，如果你需要结合请求，你做错了或你的后端是错误的。
+
+好吧，您在前端处理的数据实际上来自数据库中的两个不同集合，或者您可能需要从表单中执行对每个修改对象的请求，删除所有操作等等。 。
+
+`forkJoin`将订阅传递的observable，从而提出`HTTP GET`请求。
+
+根据JSONPlaceholder的网站上的信息，他们有200个待办事项，所以我故意有一个`error$`变量，需要`todo`with `201`as `id`。
+
+这将返回错误，但在订阅时如何收到信息？
+
+![](https://miro.medium.com/max/30/1*crILPmRgZkFpCraNOdTVfg.png?q=20)
+
+![](https://miro.medium.com/max/926/1*crILPmRgZkFpCraNOdTVfg.png)
+
+通过forkJoin的onError登录到控制台
+
+检查控制台，我们只看到一条错误消息，`onError`由subscribe 的回调捕获并记录。
+
+![](https://miro.medium.com/max/30/1*dDt_9alBoUqGskx7ztcWPw.png?q=20)
+
+![](https://miro.medium.com/max/342/1*dDt_9alBoUqGskx7ztcWPw.png)
+
+Chrome DevTools网络标签
+
+但是等等......如果我们检查DevTools中的网络选项卡，我们会看到所有三个`GET`都被调用了。`todo1$`并`todo2$`返回成功，所以他们在哪里？
+
+`forkJoin`根据[RxJS文档](https://rxjs-dev.firebaseapp.com/api/index/function/forkJoin)证明这是[可行](https://rxjs-dev.firebaseapp.com/api/index/function/forkJoin)的方式：
+
+> “如果在某些时候任何输入可观察到的错误，forkJoin也将出错，所有其他可观察的内容将立即取消订阅。”
+
+所以，你只是失去了从检索到的信息`todo1$`和`todo2$`。
+
+再一次，如果你是Angular开发人员，这次使用[NgRx](https://ngrx.io/)，也许你已经不得不担心_不让你的_[观察者](https://ngrx.io/)_死掉。_
+
+这是因为，当在内部进行管道传输时`Effect`，如果您没有正确处理错误，`Effect`那么如果您再次发出它处理的操作，您可能会死亡而不会被执行。
+
+因此，这里的关键是单独处理错误，例如每个observable。
+
+使用`catchError`运算符管理此observable 将处理错误并将其映射到另一个值。您可以找到最适合您需求的方式，但这里有一些例子：
+
+const error $ = this.myService.getTodo（201）  
+ .pipe（  
+ catchError（err => of（err.status）），  
+ ）; ... const error $ = this.myService.getTodo（201）  
+ .pipe（  
+ catchError（err => of（{isError：true，error：err}）），  
+ ）; ... const error $ = this.myService.getTodo（201）  
+ .pipe（  
+ catchError（err => of（undefined）），  
+ ）;
+
+这样，一旦`error$`抛出错误，它将在内部处理，并且新值将返回到外部observable。您可以将错误映射到任何其他值，如图所示，状态代码，未定义，全新对象等。
+
+现在，如果我们检查控制台，它将显示一个包含两个`todo`对象和a `string`的状态代码的数组`error$`。
+
+所有这些都由处理`forkJoin.subscribe(next => {})`，因为`forkJoin`不知道有错误。
+
+![](https://miro.medium.com/max/30/1*WWI3B2o1Y2Gq936IfzxQ-A.png?q=20)
+
+![](https://miro.medium.com/max/1382/1*WWI3B2o1Y2Gq936IfzxQ-A.png)
+
+通过forkJoin的onNext登录到控制台
+
+可以使用相同的方法`concat`。根据其[文档](https://rxjs-dev.firebaseapp.com/api/index/function/concat)：
+
+> “创建一个输出Observable，它顺序发出给定Observable的所有值，然后继续下一个。
+> 
+> 如果链错误中有任何Observable，而不是将控制传递给下一个Observable，concat也会立即出错。在发出错误的那个之后订阅的Observable将永远不会。“
+
+concat（\[todo1 $，error $，todo2 $\]）.   
+ subscribe（  
+ next => console.log（next），  
+ error => console.log（error）  
+ ）;
+
+如果我们不应用我们可观察到的死亡预防，`concat`将发送价值`todo1$`然后错误，而不是订阅`todo2$`。
+
+如果我们在内部处理`error$`错误，那就是我们的重新调整的值：
+
+![](https://miro.medium.com/max/30/1*nxv6Z1jHwitQOxxWN75tOg.png?q=20)
+
+![](https://miro.medium.com/max/1474/1*nxv6Z1jHwitQOxxWN75tOg.png)
+
+通过concat的onNext登录到控制台
+
+* * *
+
+**_结论_**
+========
+
+那么，关键在于，如上所述，_不要让你的观察死亡_。
+
+外部observable不需要知道内部observable引发错误，您可以返回重要数据以找出哪些失败。
+
+这适用于其他情况，不仅适用于服务呼叫，还适用于其他组合方法甚至是运营商。在进行管道处理时，您最终可以获得更高阶的可观察性而不处理其错误可能会导致真正的头痛。
+
+我希望这有帮助。

@@ -1,0 +1,537 @@
+![在Apache OpenWhisk中使用GPU](https://medium.com/openwhisk/using-gpus-with-apache-openwhisk-c6773efcccfb)
+在Apache OpenWhisk中使用GPU
+=======================
+
+此博客是与[Avi Weit](/@weit_36383)合作编写的。
+-----------------------------------
+
+[![大卫布莱特甘](https://miro.medium.com/fit/c/48/48/0*X_8mvFKAJJlkzjGQ.jpg)](/@david.breitgand?source=post_page-----c6773efcccfb----------------------)
+
+[大卫布莱特甘](/@david.breitgand?source=post_page-----c6773efcccfb----------------------)
+
+跟随
+
+[8月15日](/openwhisk/using-gpus-with-apache-openwhisk-c6773efcccfb?source=post_page-----c6773efcccfb----------------------) · 11 分钟阅读
+
+![](https://miro.medium.com/max/30/1*9anLI1RPMIdpQIpN-IoDYQ.jpeg?q=20)
+
+![](https://miro.medium.com/max/450/1*9anLI1RPMIdpQIpN-IoDYQ.jpeg)
+
+在过去的几年中，GPU在各种应用中变得非常流行，媒体密集型和AI应用程序处于领先地位。您可能熟悉[无服务器计算概念](https://openwhisk.apache.org/)，甚至可能在您的项目中使用它。但是，很少有无服务器框架支持开箱即用的GPU。特别是，Apache OpenWhisk官方发行版目前缺乏此功能。在这篇博客中，我们展示了如何通过GPU支持增强Apache OpenWhisk，只需对现有代码库进行微小的更改。如果您尝试喜欢它，请给我们留言，我们可以继续向Apache OpenWhisk社区提交拉取请求。
+
+但首先要做的事情。让我们从...... [Kubernetes](https://kubernetes.io/)开始[吧](https://kubernetes.io/)。你为什么要问Kubernetes？好吧，首先，Apache OpenWhisk和Kubernetes是朋友。可以使用其原生Docker Container Factory或Kubernetes Container Factory配置OpenWhisk。为了省略所有血腥细节，在前一个选项中，无服务器函数（在OpenWhisk用语中称为_动作_）将作为Docker容器执行，由OpenWhisk自己的协调器编排，使用Docker API; 在后一种情况下，操作将作为由Kubernetes编排的pod中的Docker容器执行。
+
+由Kubernetes精心策划，带来一些好处。首先，Kubernetes可以在安排需要GPU支持的操作时轻松实施复杂的放置策略。换句话说，通过向Kubernetes调度程序提供关于我们希望给定操作最终在集群中的位置的一些提示，我们将在寻找GPU，分配GPU，腾出它们等方面节省大量工作。
+
+![](https://miro.medium.com/max/30/1*UWSSs6TIioQVhc78ZaVo6Q.jpeg?q=20)
+
+![](https://miro.medium.com/max/1300/1*UWSSs6TIioQVhc78ZaVo6Q.jpeg)
+
+所以，Kubernetes的两个大拇指！但这种魔法究竟会如何发生？
+
+自K8s 1.6以来，Kubernetes包含对管理分布在节点上的NVIDIA GPU的实验性支持。消耗GPU的推荐方法是使用[设备插件](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/device-plugins/)（从K8s 1.8开始）。
+
+在我们的设计中，我们将使用Kubernetes提供的非常方便的机制：[资源限制](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus/)。
+
+实质上，当一个新的OpenWhisk动作被卸载到Kubernetes时，一个名为Invoker的组件在资源限制部分指定了GPU请求。
+
+Apache OpenWhisk中的每个动作都是某种_形式_。[种类词典（即运行时）是一种JSON结构](https://github.com/5g-media/incubator-openwhisk-deploy-kube/blob/master/helm/openwhisk/runtimes.json)，是Apache OpenWhisk配置的一部分。为了启用新类型的操作 - 那些将消耗GPU的操作 - 我们按如下方式丰富了运行时字典。
+
+“deepspeech”：\[   
+ {   
+ “kind”：“python：3ds @gpu”，  
+ “default”：true，  
+ “image”：{   
+ “prefix”：“docker5gmedia”，  
+ “name”：“python3dscudaaction”，  
+ “tag”：“最新的“   
+ }，  
+ ”弃用“：false，  
+ ”附加“：{   
+ ”attachmentName“：”codefile“，  
+ ”attachmentType“：”text / plain“   
+ }   
+ }   
+\]，
+
+在这种情况下，我们定义了一种新的动作类型：`python:3ds@gpu` [它在GPU上提供DeepSpeech模型](https://github.com/5g-media/incubator-openwhisk-runtime-python/tree/deepspeech-gpu/core/python3DSAction/sample)。我们将在稍后解释这个动作实际上做了什么。但在去那里之前，让我们来看看另一个消耗GPU的自定义动作。让我们假设我们想要定义一个“通用”CUDA动作。
+
+“cuda”：\[   
+{   
+ “kind”：“cuda：8 @ gpu”，  
+ “default”：true，  
+ “image”：{   
+ “prefix”：“docker5gmedia”，  
+ “name”：“cuda8action”，  
+ “tag”：“最新的“   
+ }，  
+ ”弃用“：false，  
+ ”附加“：{   
+ ”attachmentName“：”codefile“，  
+ ”attachmentType“：”text / plain“   
+ } }
+
+当然，仅仅在字典中定义一个新条目是不够的。我们需要教Invoker了解这些新定义。对于GPU消费操作，我们将采用一种形式的字符串约定：
+
+<运行时名称> @gpu
+
+表示请求GPU的操作运行时名称。例如，
+
+CUDA：8 @ GPU 
+
+要么
+
+蟒蛇：3DS @ GPU
+
+Invoker准备的动作的yaml pod定义将是这样的：
+
+apiVersion：v1   
+种类：Pod   
+元数据：  
+ 名称：cuda8action   
+规范：  
+ 容器：  
+ - 名称：cuda8action   
+ 图片：“ docker5gmedia / cuda8action：latest ”   
+ 资源：  
+ 限制：  
+ nvidia.com/gpu：1
+
+为实现这一目标，我们使用了解新动作类型的逻辑丰富了[KubernetesClient](https://github.com/5g-media/incubator-openwhisk/blob/gpu-d353d26-v4.0/core/invoker/src/main/scala/org/apache/openwhisk/core/containerpool/kubernetes/KubernetesClient.scala)，并将它们转换为pod定义。_这是代码库中唯一被更改的地方。_简单。
+
+![](https://miro.medium.com/max/30/1*IRPXefdw7O3NAkL70xPDig.jpeg?q=20)
+
+![](https://miro.medium.com/max/1920/1*IRPXefdw7O3NAkL70xPDig.jpeg)
+
+暂时不要离开。说够了，让我们亲自动手吧。在本博客的提醒中，我们将引导您完成使用我们新创建的GPU操作的两个示例。
+
+* * *
+
+![](https://miro.medium.com/max/30/1*WoZsV4ekkTIRqobWznMUHw.jpeg?q=20)
+
+![](https://miro.medium.com/max/3264/1*WoZsV4ekkTIRqobWznMUHw.jpeg)
+
+哦，在您尝试我们的GPU OpenWisk操作之前，您必须设置开发环境。如果您已经在某些节点上安装了Nvidia Docker的K8s群集，您可能希望跳过本节并直接转到下一部分。对于我们其他人，让我们先做一些初步工作。
+
+先决条件
+----
+
+我们需要一台带有16 GB RAM，至少100 GB磁盘和GPU卡的全新Ubuntu 16.04 Linux机器。为了避免虚拟机（VM）无法正常暴露给GPU的问题（对于我们拥有的GPU硬件配置），我们使用物理机（带有Quadro K100M GPU卡的Lenovo W530）。我希望你的笔记本电脑上有一个更强大的GPU :)甚至可能不止一个。然而，即使这张适度的卡也足以证明这一概念。
+
+我们将从一个干净的平板Linux安装开始一步一步地指导您。但是，如果您已经安装了具有Ubuntu 16.04，Nvidia驱动程序，[Docker-CE 18.06.0](https://docs.docker.com/install/linux/docker-ce/ubuntu/)和启用了GPU支持的Minikube的计算机，您可能希望跳过下面的步骤1-4并直接转到步骤5。
+
+第1步：安装Nvidia CUDA驱动程序
+---------------------
+
+首先，确保获取最新的更新
+
+sudo apt-get update   
+sudo apt-get upgrade
+
+接下来，按照[Cuda-toolkit 9.2安装程序的](https://developer.nvidia.com/cuda-92-download-archive?target_os=Linux&target_arch=x86_64&target_distro=Ubuntu&target_version=1604&target_type=debnetwork)说明操作：
+
+sudo dpkg -i cuda-repo-ubuntu1604\_9.2.148-1\_amd64.deb   
+sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86\_64/7fa2af80.pub   
+sudo apt-get update   
+sudo apt-get install cuda
+
+重新启动并验证您的安装：
+
+NVIDIA-SMI
+
+我们的笔记本电脑上看起来像这样：
+
+![](https://miro.medium.com/max/30/1*QMowh2dfJdQvkYxHnDcXfQ.png?q=20)
+
+![](https://miro.medium.com/max/714/1*QMowh2dfJdQvkYxHnDcXfQ.png)
+
+第2步：安装Docker
+------------
+
+我们需要一个经过验证可与Nvidia，Kubernetes和Minikube一起使用的Docker版本（[Docker-CE 18.06.0](https://docs.docker.com/install/linux/docker-ce/ubuntu/)）（我们将使用Minikube进行测试）。
+
+sudo apt-get update sudo apt-get install \\   
+ apt-transport-https \\   
+ ca-certificates \\   
+ curl \\   
+ gnupg-agent \\   
+ software-properties-common
+
+添加密钥并确保其指纹
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add  -   
+sudo apt-key fingerprint 0EBFCD88
+
+注册docker存储库
+
+sudo add-apt-repository \\   
+ “deb \[arch = amd64\] https://download.docker.com/linux/ubuntu \\   
+ $（lsb\_release -cs）\\   
+ stable”   
+sudo apt-get update
+
+安装docker 18.06.0
+
+sudo apt-get install docker-ce = 18.06.0~ce~3-0~ubuntu containerd.io
+
+验证泊坞窗
+
+sudo docker run hello-world
+
+第3步：安装Nvidia-docker运行时
+----------------------
+
+下一步是安装[Nvidia docker runtime](https://github.com/NVIDIA/nvidia-docker)。它应与您在上一步中安装的docker版本匹配。
+
+添加包存储库：
+
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | \\   
+sudo apt-key add  -   
+distribution = $（。/ etc / os-release; echo $ ID $ VERSION\_ID）  
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker .list | \\   
+sudo tee /etc/apt/sources.list.d/nvidia-docker.list   
+sudo apt-get update
+
+[安装匹配的版本](https://github.com/NVIDIA/nvidia-docker/wiki/Frequently-Asked-Questions#how-do-i-install-20-if-im-not-using-the-latest-docker-version)：
+
+sudo apt-get install -y nvidia-docker2 = 2.0.3 + docker18.06.0-1 nvidia-container-runtime = 2.0.0 + docker18.06.0-1
+
+重启Docker守护进程：
+
+sudo pkill -SIGHUP dockerd
+
+使用最新的官方CUDA图像测试nvidia-smi：
+
+sudo docker run --runtime = nvidia --rm nvidia / cuda：9.0-base nvidia-smi
+
+现在，您需要启用Nvidia运行时作为_默认_运行时。编辑docker守护程序配置文件，通常可以在其中找到
+
+/etc/docker/daemon.json
+
+看起来像这样：
+
+{   
+ “default-runtime”：“nvidia”，  
+ “runtimes”：{   
+ “nvidia”：{   
+ “path”：“/ usr / bin / nvidia-container-runtime”，  
+ “runtimeArgs”：\[\]   
+ }   
+ }   
+}
+
+重启Docker
+
+sudo服务码头停止  
+sudo服务码头开始
+
+第4步：安装Minikube
+--------------
+
+有很多关于如何在Ubuntu上安装Minikube的教程。我们回顾了完整性和方便参考的基本步骤。
+
+首先[安装kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-on-linux)：
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64 / kubectl   
+chmod + x ./kubectl   
+sudo mv ./kubectl / usr / local / bin / kubectl
+
+验证安装：
+
+sudo kubectl版本
+
+现在[安装Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/#install-minikube-via-direct-download)：
+
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \\   
+ && chmod + x minikube   
+sudo install minikube / usr / local / bin
+
+如果您尚未将它们配置为在您自己的用户下运行，则可能需要在sudo下运行kubectl / minikube / helm命令
+
+安装依赖项：
+
+sudo apt-get install socat
+
+启动Minikube：
+
+sudo minikube start --vm-driver = none --memory = 8192
+
+该命令可能需要几分钟才能完成......
+
+Minikube启动后：
+
+sudo ip link set docker0 promisc on
+
+（每次重启Minikube时都应运行此命令）
+
+现在，让我们验证Minikube的安装：
+
+sudo minikube status   
+get pod --all-namespaces
+
+检查状态并等待所有pod成为`Running`或`Completed`
+
+现在，[在Kubernetes上启用GPU支持](https://github.com/NVIDIA/k8s-device-plugin#enabling-gpu-support-in-kubernetes)
+
+sudo kubectl create -f https://raw.githubusercontent.com/NVIDIA/k8s-device-plugin/1.0.0-beta/nvidia-device-plugin.yml
+
+让我们确保pod确实可以消耗GPU。创建示例窗格定义：
+
+cat << EOF> pod-gpu.yaml   
+apiVersion：v1   
+种类：Pod   
+元数据：  
+ 名称：cuda-vector-add   
+spec：  
+ restartPolicy：OnFailure   
+ containers：  
+ -  name：cuda-vector-add   
+ image：“k8s.gcr.io/cuda -vector-add：v0.1“   
+ resources：  
+ limits：  
+ nvidia.com/gpu：1＃请求1个GPU   
+EOF
+
+并使用此yaml创建一个pod：
+
+sudo kubectl create -f pod-gpu.yaml
+
+等待它进入`Completed`状态并验证其日志
+
+sudo kubectl logs cuda-vector-add
+
+![](https://miro.medium.com/max/30/1*I-cNDKK3VkvqHOhfHZ1VxA.png?q=20)
+
+![](https://miro.medium.com/max/713/1*I-cNDKK3VkvqHOhfHZ1VxA.png)
+
+步骤5：使用Helm在Minikube上安装带有GPU支持的OpenWhisk Fork
+============================================
+
+在下创建yaml定义 `~/mycluster.yaml`
+
+whisk：  
+ ingress：  
+ type：NodePort   
+ apiHostName：<MINIKUBE IP>   
+ apiHostPort：31001   
+ limits：  
+ actions：  
+ memory：  
+ max：“2048m”   
+nginx：  
+ httpsNodePort：31001
+
+将ingress.apiHostName替换为`minikube ip`命令的输出。
+
+下载[helm](https://github.com/helm/helm/releases/tag/v2.14.1)并将其解压缩到主目录。
+
+Init helm导致tiller pod被创建：
+
+sudo~ / linux-amd64 / helm init
+
+当分蘖舱移动到该`Running`状态时，为掌舵授予必要的权限：
+
+sudo kubectl create clusterrolebinding tiller-cluster-admin --clusterrole = cluster-admin --serviceaccount = kube-system：default
+
+标记我们的节点（我们只有一个）
+
+kubectl标签节点--all openwhisk-role = invoker
+
+克隆OpenWhisk存储库并运行helm以安装OpenWhisk
+
+cd~   
+git clone https://github.com/5g-media/incubator-openwhisk-deploy-kube.git   
+cd incubator-openwhisk-deploy-kube   
+git checkout gpu   
+~ / linux-amd64 / helm install ./helm/openwhisk  - -namespace = openwhisk --name = owdev -f~ / mycluster.yaml
+
+咖啡时间：安装可能需要几分钟......
+
+等待创建并运行invoker-health pod：
+
+sudo kubectl get pods -n openwhisk | grep invokerhealthtestaction
+
+我们差不多完成了。现在我们需要为OpenWhisk GPU操作提取GPU运行时映像：
+
+sudo docker pull docker5gmedia / python3dscudaaction   
+sudo docker pull docker5gmedia / cuda8action
+
+这些图像很大，因此可能需要几分钟。
+
+OpenWhisk安装的最后一步是安装和配置OpenWhisk CLI。
+
+安装：
+
+curl -L [https://github.com/apache/incubator-openwhisk-cli/releases/download/latest/OpenWhisk\_CLI-latest-linux-amd64.tgz](https://github.com/apache/incubator-openwhisk-cli/releases/download/latest/OpenWhisk_CLI-latest-linux-amd64.tgz) -o /tmp/wsk.tgz   
+tar xvfz /tmp/wsk.tgz -C / tmp /   
+mv / tmp / wsk / usr / local / bin
+
+要配置：
+
+WSK属性设置--apihost <whisk.ingress.apiHostName>：<whisk.ingress.apiHostPort>   
+WSK属性设置--auth 23bc46b1-71f6-4ed5-8c54-816aa4f8c502：123zO3xZCLrMN6v2BKK1dXYFpXlPkccOFqm12CdAsMgRU4VrNZ9lyGVCGuMDGIwP 猫<< EOF>〜/ .wskprops   
+APIHOST = $ OPENWHISK\_APIHOST   
+AUTH = $ OPENWHISK\_AUTH   
+EOF
+
+如果遇到问题，请进行故障排除，看看这个[更完整的描述](https://github.com/5g-media/incubator-openwhisk-deploy-kube/tree/gpu#configure-the-wsk-cli)。
+
+* * *
+
+![](https://miro.medium.com/max/30/1*IsInelKeX_ydX-cQM2GH8w.jpeg?q=20)
+
+![](https://miro.medium.com/max/5532/1*IsInelKeX_ydX-cQM2GH8w.jpeg)
+
+我们已经准备好了一切。现在让真正的乐趣开始吧！我们将首先跟随[Nvidia的介绍性博客](https://devblogs.nvidia.com/even-easier-introduction-cuda/)的脚步。为了节省我们为CUDA设置开发环境的麻烦，我们将扩展由Nvidia准备的[Docker开发容器映像](https://gitlab.com/nvidia/cuda/blob/ubuntu16.04/10.1/devel/Dockerfile)。新容器已经打包了所有依赖项（包括预先安装和预配置的OpenWhisk CLI）。我们将在[交互模式下](https://docs.docker.com/engine/reference/commandline/exec/)启动此容器，如下所示：
+
+sudo docker run -it -e OPENWHISK\_APIHOST =\`sudo minikube ip\`：31001 --rm docker5gmedia / 5gmedia-playbox-minikube-ow-gpu：1.0 / bin / bash
+
+在我们针对Minikube的开发容器映像中，我们预先安装并预配置了Apache OpenWhisk CLI。去检查：
+
+更多〜/ .wskprops
+
+你应该看到这样的东西：
+
+![](https://miro.medium.com/max/30/1*DK-xB3Do3DF1EhE9SqtqBA.png?q=20)
+
+![](https://miro.medium.com/max/1050/1*DK-xB3Do3DF1EhE9SqtqBA.png)
+
+开发容器中.wskprops的示例内容（您将看到一个不同的IP，它将是您的Docker主机的IP）
+
+现在，让我们创建CUDA操作的代码。我们将使用与Nvidia开发博客相同的代码来说明如何使用GPU。
+
+cat << EOF> /add.cu   
+#include <iostream>   
+#include <math.h>   
+//内核函数添加两个数组的元素  
+\_\_global\_\_   
+void add（int n，float \* x，float \* y）  
+{   
+ for（ int i = 0; i <n; i ++）  
+ y \[i\] = x \[i\] + y \[i\];   
+}   
+  
+int main（void）  
+{   
+ int N = 1 << 20;   
+ float \* x，\* y;   
+  
+ //分配统一内存。可从CPU或GPU   
+ cudaMallocManaged（＆x，N \* sizeof（float））访问;   
+ cudaMallocManaged（＆y，N \* sizeof（float））;   
+  
+ //在主机上初始化x和y数组  
+ （int i = 0; i <N; i ++）{   
+ x \[i\] = 1.0f;   
+ y \[i\] = 2.0f;   
+ }   
+  
+ //在GPU上的1M元素上运行内核  
+ 添加<<< 1,1 >>>（N，x，y）;   
+  
+ //在主机  
+ cudaDeviceSynchronize（）上访问之前等待GPU完成;   
+  
+ //检查错误（所有值应为3.0f）  
+ float maxError = 0.0f;   
+ for（int i = 0; i <N; i ++）  
+ maxError = fmax（maxError，fabs（y \[i\] -3.0f））;   
+ std :: cout <<“{\\”message \\“：\\”最大错误：“<< maxError <<”\\“}”;   
+  
+ //   
+ 可用内存cudaFree（x）;   
+ cudaFree（Y）;   
+    
+ 返回0;   
+}   
+EOF
+
+编译示例：
+
+nvcc add.cu -o add\_cuda
+
+并运行它：
+
+./add\_cuda
+
+![](https://miro.medium.com/max/30/1*tcIXsbXCv_qr8NXzL24ABA.png?q=20)
+
+![](https://miro.medium.com/max/564/1*tcIXsbXCv_qr8NXzL24ABA.png)
+
+如果您看到上述内容，则示例按预期工作。
+
+创建OpenWhisk操作：
+
+wsk -i action创建cuda\_Test myAction.zip --kind cuda：8 @ gpu
+
+并调用它：
+
+wsk -i action invoke -b cuda\_Test
+
+由于在调用中使用了“-b”标志，因此调用是阻塞的，并且应该返回以下结果（请参阅下面的片段）：
+
+“response”：{   
+ “result”：{   
+ “message”：“Max error：0”   
+ }，  
+ “status”：“success”，  
+ “success”：true   
+ }，
+
+整个输出看起来像这样：
+
+![](https://miro.medium.com/max/30/1*rcNz6_W-aN7xTyQ3Mwb1dA.png?q=20)
+
+![](https://miro.medium.com/max/1920/1*rcNz6_W-aN7xTyQ3Mwb1dA.png)
+
+为了观察运行的动作，我们可以使用 `sudo watch nvidia-smi`
+
+好。有用。但也许运行一个基本的CUDA示例不是你想要做的？让我们考虑另一个用例：语音识别。在这种情况下，我们将使用[DeepSpeech](https://github.com/mozilla/DeepSpeech)。
+
+我们在上一个场景中使用的开发容器已经安装了[这个git存储库](https://github.com/5g-media/incubator-openwhisk-runtime-python/tree/gpu/core/python3DSAction/sample#create-the-action-1)。
+
+cd / incubator-openwhisk-runtime-python / core / python3DSAction / sample
+
+我们现在需要按如下方式创建DeepSpeech操作
+
+wsk -i action创建myAction-gpu ds\_action.py -m 2048 --kind python：3ds @gpu
+
+我们来检查它是否已创建
+
+wsk -i动作列表
+
+![](https://miro.medium.com/max/30/1*hHByYx-pyiuqB5gEok_ZTw.png?q=20)
+
+![](https://miro.medium.com/max/693/1*hHByYx-pyiuqB5gEok_ZTw.png)
+
+我们将使用[此示例声音文件](https://github.com/5g-media/incubator-openwhisk-runtime-python/blob/gpu/core/python3DSAction/sample/audio/2830-3980-0043.wav)作为输入（如果您愿意，首先使用您喜欢的播放器播放它）。
+
+现在让我们看看我们的DeepSpeech行动是否会识别这个样本的内容。
+
+wsk -i action invoke -r myAction-gpu -p url https://raw.githubusercontent.com/5g-media/incubator-openwhisk-runtime-python/gpu/core/python3DSAction/sample/audio/2830-3980-0043 .WAV
+
+![](https://miro.medium.com/max/30/1*HnWIpR4ApGEG-oLu4NuTJg.png?q=20)
+
+![](https://miro.medium.com/max/871/1*HnWIpR4ApGEG-oLu4NuTJg.png)
+
+* * *
+
+![](https://miro.medium.com/max/30/1*MiHkcy5FTH8lW1hU5YvsUA.png?q=20)
+
+![](https://miro.medium.com/max/350/1*MiHkcy5FTH8lW1hU5YvsUA.png)
+
+是时候总结一下我们在这篇博客中所倾向的内容了。
+
+*   Apache OpenWhisk具有灵活的可插拔架构，可以轻松添加新类型的操作。在我们的例子中 - GPU消费行为;
+*   结合K8s GPU调度支持，OpenWhisk操作可以轻松利用GPU - 在各种用例环境中反复出现的要求;
+*   让我们知道您的想法。
+
+* * *
+
+_这项工作是_[_5G-MEDIA项目的一部分_](http://www.5gmedia.eu/)
+
+![](https://miro.medium.com/max/30/1*qttEzyP--ql5E67if66q6g.png?q=20)
+
+![](https://miro.medium.com/max/1049/1*qttEzyP--ql5E67if66q6g.png)
+
+_该项目已获得欧盟“地平线2020”研究和创新计划资助，资助协议编号为761699_

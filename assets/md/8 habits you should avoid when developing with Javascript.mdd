@@ -1,0 +1,280 @@
+![8 habits you should avoid when developing with Javascript](https://medium.com/javascript-in-plain-english/8-habits-you-should-avoid-when-developing-with-javascript-a39a5ca2fae6)
+#### Top highlight
+
+8 habits you should avoid when developing with Javascript
+=========================================================
+
+Better leave these bad habits today than tomorrow
+-------------------------------------------------
+
+[![Gerardo Fernández](https://miro.medium.com/fit/c/48/48/2*4cheavv3B8i7E074JtR6Lg.jpeg)](/@ger86?source=post_page-----a39a5ca2fae6----------------------)
+
+[Gerardo Fernández](/@ger86?source=post_page-----a39a5ca2fae6----------------------)
+
+Follow
+
+[Sep 6](/javascript-in-plain-english/8-habits-you-should-avoid-when-developing-with-javascript-a39a5ca2fae6?source=post_page-----a39a5ca2fae6----------------------) · 10 min read
+
+![](https://miro.medium.com/max/30/1*2sBdp7Jf6oNxebWbGTHmoA.jpeg?q=20)
+
+![](https://miro.medium.com/max/1360/1*2sBdp7Jf6oNxebWbGTHmoA.jpeg)
+
+As you all know **Javascript** has become fashionable (I think we all agree on this point). This has meant an increase in the demand for job offers and the proliferation of “_bootcamps_” that promise to train developers in just 6 months.
+
+From zero to hero in 6 months
+
+However, as we begin to deepen this language, it is common to fall into a series of habits or tendencies from which it is difficult to get rid of it (especially if it has been learned on the fast track bypassing some of the most basic and important points) . That is why I found it interesting to write this article where I will talk about some customs that are best avoided if we want to become good developers of this language.
+
+Let’s see them!
+
+* * *
+
+1\. Using JQuery
+================
+
+![](https://miro.medium.com/max/30/1*-3XAZ8MCJfpTYNQOZd0Y4Q.png?q=20)
+
+![](https://miro.medium.com/max/2200/1*-3XAZ8MCJfpTYNQOZd0Y4Q.png)
+
+A minute of silence by jQuery 😢
+
+For the newest **jQuery** was a library that at the beginning of the web development boom played a very important role in the **Javascript** ecosystem. At a time when browsers implemented the specifications in their own way (greetings Internet Explorer!) jQuery helped standardize many things thanks to the abstractions it provided, facilitated the way the DOM was manipulated thanks to its “_helpers_” and providing a simple way to make AJAX calls. In summary, I do not think anyone puts their hands to their heads if I say that without jQuery the web would not exist as we know it.
+
+However, today it is all advantages that it gave us are no longer such as many of its features already belong to the standard such as fetch to make AJAX calls or the new functions to manipulate the DOM, of which I already spoke at the time in this article:
+
+[
+
+Vanilla JS. AddEventListener, querySelector y closest
+
+
+---------------------------------------------------------
+
+### 
+
+Hoy toca un artículo corto pero que me ha parecido interesante hacer, especialmente ahora que JQuery ha dejado de ser…
+
+#### 
+
+medium.com
+
+
+
+](/@ger86/vanilla-js-addeventlistener-queryselector-y-closest-ef95b3a0a2c1?source=post_page-----a39a5ca2fae6----------------------)
+
+In addition, the appearance of **React** and other libraries have solved in a better way problems such as controlling the state of the application so even there jQuery has lost the game. Not surprisingly, it was very common to be tempted to use the elements of the DOM as stores of the state which caused having to write code quite convoluted to calculate the next or previous state.
+
+Therefore, as the saying goes, to Caesar what is Caesar’s but today jQuery is 100% expendable.
+
+If you want to read more about this topic, here is an article from the **GitHub** team where they comment on their decision to remove jQuery from their base code:
+
+[
+
+Removing jQuery from GitHub.com frontend - The GitHub Blog
+
+
+--------------------------------------------------------------
+
+### 
+
+We have recently completed a milestone where we were able to drop jQuery as a dependency of the frontend code for…
+
+#### 
+
+github.blog
+
+
+
+](https://github.blog/2018-09-06-removing-jquery-from-github-frontend/?source=post_page-----a39a5ca2fae6----------------------)
+
+* * *
+
+2\. Don’t keep learning
+=======================
+
+![](https://miro.medium.com/max/30/1*NM5UuZ0QYHUqJNYPB56VVw.jpeg?q=20)
+
+![](https://miro.medium.com/max/1280/1*NM5UuZ0QYHUqJNYPB56VVw.jpeg)
+
+Don’t keep learning Javascript
+
+It is very common that once we are comfortable with a language we stop learning to put into practice everything we already know well at work. In addition, this is reinforced by **how difficult it is sometimes to continue training within a company**: things are needed “for now” and there never seems to be time to continue learning.
+
+However, if you really like programming (and this advice is valid for any language you use) **my advice is that you book at least a couple of hours a week to learn something new**, read a couple of articles on programming or even review the Source code of a library: you would be surprised at the things you learn by looking at code written by other developers.
+
+Of course there are also alternatives to “solo” learning. For example, in large cities there are many MeetUps with very interesting talks where people are delighted to share knowledge and sites such as [**CodeWars**](https://www.codewars.com) propose a daily challenge in some of the most common programming languages to solve it (you can also see the most ingenious solutions to the proposed question).
+
+In any case, get out of your comfort zone and keep learning!
+
+* * *
+
+3\. Neglect your physical and mental health
+===========================================
+
+![](https://miro.medium.com/max/30/1*WGwzlAHMaiBK67mD6UcQ-g.jpeg?q=20)
+
+![](https://miro.medium.com/max/4000/1*WGwzlAHMaiBK67mD6UcQ-g.jpeg)
+
+Do not neglect your physical or mental health
+
+I have played chess for a long time at the amateur level and one of the things that impacted me the most when I delved into the lives of the great masters is the need **they had to be in full physical form**, something that a priori may not be so obvious.
+
+That is why I think we should remember more often the phrase “_mens sana in corpore sano_” since if we want to yield 100% of our abilities it is very important to be in an optimal physical state. This need is accentuated even more in a profession such as that of a developer: we spend so many hours sitting in front of the computer that in the long run it seems inevitable that problems such as increased back or back pain caused by bad postures.
+
+My advice, **reserve half an hour a day to do some sport**, even if it is of low intensity such as walking at a fast pace or climbing stairs. In the long run you will appreciate it.
+
+![](https://miro.medium.com/max/30/1*IWH4lv65ERUBKApWdUdpNQ.jpeg?q=20)
+
+![](https://miro.medium.com/max/1390/1*IWH4lv65ERUBKApWdUdpNQ.jpeg)
+
+So far the physical component. But what about the mental one? Recently, the debate about what a **10x developer** was and the one that defined him was his few social skills. However, neglecting this aspect of everyday life by earning another hour or two of work is a big mistake in which it is very easy to fall.
+
+In the peaks of work it is easy to be long periods working without looking up and without talking to anyone but the human mind also needs to clear, interact with other people and “disconnect.” Isolating yourself for long periods may end up leading to anxiety or depression problems, **so take a break. Surely the day has spread more than you think** and takes the opportunity to go to drink some beer, to the movies or play a team sport.
+
+* * *
+
+4\. Do not write tests
+======================
+
+![](https://miro.medium.com/max/30/1*HVDNG2tfJ2woO0kKnK24bQ.png?q=20)
+
+![](https://miro.medium.com/max/2389/1*HVDNG2tfJ2woO0kKnK24bQ.png)
+
+Write tests when developing applications
+
+Not writing tests is one of the main mistakes especially when we are learning or have to develop our first project. In fact, it is even common to dispense with them in large applications in order to reduce times … until errors begin to arise with each change made to the code.
+
+In other words, **although at first it may seem that writing tests is a waste of time and money**, eventually integrating them into your development methodology involves a lower cost than dispensing with them in the initial stages of the project. Not surprisingly, the tests are the cornerstone of the _Test Driven Development._
+
+Among other things, the tests allow the code to be much more maintainable, provide a certain assurance that everything works as expected and allow to verify that the changes introduced do not affect other parts of the code. That is, no matter how much the code seems to run without problems there are borderline (extreme) cases that without an adequate battery of tests we will be unable to locate them.
+
+In the case of Javascript there are a few libraries that allow you to write tests in a simple way so if you want to investigate more I recommend you consult the following article:
+
+[
+
+An Overview of JavaScript Testing in 2018
+
+
+---------------------------------------------
+
+### 
+
+This guide is intended to catch you up with the most important reasoning, terms, tools, and approaches to JavaScript…
+
+#### 
+
+medium.com
+
+
+
+](/welldone-software/an-overview-of-javascript-testing-in-2018-f68950900bc3?source=post_page-----a39a5ca2fae6----------------------)
+
+* * *
+
+5\. Learn Javascript using frameworks
+=====================================
+
+![](https://miro.medium.com/max/30/1*vBUR6litCBLbXmtfNw3tXw.jpeg?q=20)
+
+![](https://miro.medium.com/max/1200/1*vBUR6litCBLbXmtfNw3tXw.jpeg)
+
+Learn Javascript using frameworks. A bad idea
+
+Once you have taken the first steps with Javascript and web development it is very tempting to start working with a library or framework of those that both sound on social networks such as React, Vue or Angular. However, **learning** **Javascript and a library or framework at the same time does not seem like a good idea.**
+
+My recommendation is that you spend at least some time in learning the basics of languages, familiarize yourself with their patterns and then make the leap to a library/framework because otherwise it is likely that you are giving up knowing certain elements that libraries already solve in a way “ _automagic_ ”. This is even more worrying in the case of Angular (the main issue of _bootcamps_) because it has its own implementation of many elements (the Angular way) and intensively employs high-level libraries such as RxJS that abstract many concepts that, in my opinion, it is important to know.
+
+Books like “[**You don’t know Javascript**](https://github.com/getify/You-Dont-Know-JS)” are read quite enjoyable and have many examples and explanations for you to acquire and understand the main elements of Javascript.
+
+Of course, once you start feeling really comfortable with Javascript, start learning a library or framework (my advice is that you choose React because it will allow you to continue improving in Javascript while choosing a library that enjoys great popularity and is which currently marks the way to the rest), because currently many job offers ask for knowledge of React, Angular or Vue so we could say that managing one of them is essential if you want to progress in the workplace.
+
+* * *
+
+6\. Do not learn good practices
+===============================
+
+![](https://miro.medium.com/max/30/1*Xgr1qnNU6qffbQBjL6PThg.png?q=20)
+
+![](https://miro.medium.com/max/996/1*Xgr1qnNU6qffbQBjL6PThg.png)
+
+SOLID principles
+
+> If you really want to progress as a developer (in whatever language) it is imperative that you invest time in acquiring solid knowledge about clean code, design patterns and SOLID principles.
+
+**This is the main advice I can give you** and the sooner you start learning this series of concepts the more options you will have, over time, to become a senior developer.
+
+Why so much interest in learning principles about clean code? My main argument to defend this position is that these concepts and good practices are applicable in any language because they are common to any problem that involves developing code, hence its value. In addition, they provide an extra dose of abstract thinking so necessary when developing good code and, if you have internalized them well, they usually result in a much cleaner and above all, maintainable code.
+
+Therefore, in the same way that in the previous point I recommended you to deepen in Javascript before starting to work with a library, now I want to encourage you to familiarize yourself with these concepts and try to apply them in each application that you develop: the benefits to both short and long term they are huge and will allow you to differentiate yourself from other developers who adopt the “_fast track_”.
+
+* * *
+
+7\. Do not start working directly on large projects
+===================================================
+
+![](https://miro.medium.com/max/30/1*XJmiPK1hYBy8GVkb1YEt7g.jpeg?q=20)
+
+![](https://miro.medium.com/max/2048/1*XJmiPK1hYBy8GVkb1YEt7g.jpeg)
+
+Photo by [Tim Gouw](https://unsplash.com/@punttim?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+
+Another common mistake is to finish a training or “_bootcamp_” and start working for a large company taking complex projects and often involving developments already made.
+
+> If you want to get frustrated soon I think there is no better way
+
+Why? First of all, if you’re not a senior developer yet, **you probably don’t have time to finish it in time**. Developing a large application involves a large number of elements and not just code development: writing tests, setting up a scalable architecture, applying design patterns that simplify the solutions … That is, many things to consider so that a _junior_ developer takes responsibility for all of them.
+
+On the contrary, choosing small projects will allow you to continue learning and putting into practice all the concepts necessary to develop solid and maintainable applications and, on the other, it is a “_quick_” way to add elements to your portfolio in order to carry out job interviews with much more security.
+
+Another tip that I would like to give you is that if you have a choice, opt for projects that are in an early stage of development or have not directly started. In this way you will not be forced to acquire or work with the bad practices of other developers (and unfortunately I think that the probability of finding yourself with poorly developed and dirty code are higher than those of working on a well-planned project).
+
+Therefore and again as the saying goes, “dress me slowly I am in a hurry”. 😄
+
+* * *
+
+8\. Do not learn algorithms or data structures
+==============================================
+
+![](https://miro.medium.com/max/30/1*VgDDT3xRZX8xx3B1UKs-Ug.jpeg?q=20)
+
+![](https://miro.medium.com/max/4000/1*VgDDT3xRZX8xx3B1UKs-Ug.jpeg)
+
+Photo by [Markus Spiske](https://unsplash.com/@markusspiske?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+
+Surely at this point you will be thinking that there are many elements to learn. It is true. If you want to progress as a developer **it is not enough to know how to do things but it is necessary to know the best way to do them.**
+
+Therefore, as you increase your skills as a developer, my advice is to reserve some time to familiarize yourself with the main data structures and algorithms that exist (the ordination ones are usually a good starting point). It does not have to be at the beginning (since neither the idea that I want to move you is to be training for two years because the work world unfortunately does not wait) but I do think you should consider it as something to do in the medium term because both **algorithms** and **data structures** represent one of the key pillars of software development.
+
+* * *
+
+Conclusion
+==========
+
+And here my list of **bad habits that you have to part with as soon as possible when you learn Javascript** or any other programming language.
+
+I hope you have found it interesting and that if you are starting your career as a developer you will be able to improve and reinforce everything you are learning.
+
+* * *
+
+Do you want to read more articles like this?
+============================================
+
+If you liked this article I encourage you to subscribe to the newsletter that I send every Sunday with similar publications to this and more recommended content: 👇👇👇
+
+[
+
+Latte and Code
+
+
+------------------
+
+### 
+
+Estás a punto de suscribirte a la newsletter de Latte and Code que recibirás cada domingo. En ella podrás encontrar: …
+
+#### 
+
+eepurl.us20.list-manage.com
+
+
+
+](https://eepurl.us20.list-manage.com/subscribe?u=c14cad2102bcf33bf216cc69e&id=2790da9378&source=post_page-----a39a5ca2fae6----------------------)

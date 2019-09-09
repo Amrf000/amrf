@@ -1,0 +1,139 @@
+![Building a Chrome Extension, Tips and Tricks](https://medium.com/@berraknil/building-a-chrome-extension-tips-and-tricks-ba95aa664ebe)
+构建Chrome扩展，提示和技巧
+================
+
+[
+
+![Berrak Nil](https://miro.medium.com/fit/c/96/96/1*2leK_SV-3yCjgbuNlNXG5g@2x.jpeg)
+
+](/@berraknil?source=post_page-----ba95aa664ebe----------------------)
+
+[Berrak Nil](/@berraknil?source=post_page-----ba95aa664ebe----------------------)
+
+跟随
+
+[1月8日](/@berraknil/building-a-chrome-extension-tips-and-tricks-ba95aa664ebe?source=post_page-----ba95aa664ebe----------------------) · 5 分钟阅读
+
+我上周发布了我的第一个Chrome扩展程序，[浏览器均衡器](https://chrome.google.com/webstore/detail/browser-eq/odamhgdipmfelnoclggflemkjkigdnhe)。它是一个[参数音频均衡器](https://www.presonus.com/learn/technical-articles/What-Is-a-Parametric-Eq)，使用户能够调整他们正在观看的视频流的音频内容。
+
+浏览器EQ的简短演示
+
+在我构建它的过程中，我有机会学习如何构建使用Chrome tabCapture API和Web Audio API（以及其他许多内容）的扩展，这篇文章旨在记录该体验的一部分。
+
+**免责声明：**这不是关于如何构建您的第一个Chrome扩展程序的指南，因为已有许多教程（其中一些包含在本文末尾的资源部分中），但更多的洞察力可能会避免和您可以使用的技巧使您的开发体验更加愉快。
+
+在哪里保留您的申请状态
+===========
+
+Chrome扩展程序通常包含三个主要部分：后台脚本，弹出脚本和内容脚本。请注意，您可以创建和使用其他脚本（甚至库）以及这些脚本，您只需确保在[扩展清单](https://developer.chrome.com/extensions/manifest)上包含这些脚本。
+
+您希望在何处保持您的应用程序状态会有所不同，这主要取决于您希望应用程序首先执行的操作。我需要我在扩展启动时向UI发送一些预定义的参数值，并且还需要跟踪用户将从弹出窗口发送回应用程序的值。
+
+由于我不需要与页面上的任何DOM内容进行交互，因此在我的情况下，在后台脚本中创建和存储这些值而不是内容脚本是最佳选择。
+
+请记住，弹出脚本几乎不是保持应用程序状态的理想位置，因为每次切换打开时它实际上都会重置（并重建自身）。因此，如果要跟踪值，则应将其存储在专用后台脚本中，或者存储在可用的存储选项之一中，例如[chrome.storage](https://developer.chrome.com/apps/storage)或[sessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)。
+
+* * *
+
+如何检查活动选项卡
+=========
+
+Browser EQ依赖于使用[tabCapture API](https://developer.chrome.com/extensions/tabCapture)捕获当前选项卡的音频流。我需要一种方法来检查我是否已经捕获了一个选项卡，因此我可以将值从后台脚本传回UI，并确保不再尝试捕获该流。
+
+使用tabCapture API的一个好处是，它能够[返回已请求捕获或](https://developer.chrome.com/extensions/tabCapture#method-getCapturedTabs)通过其getCapturedTabs方法[捕获的选项卡列表](https://developer.chrome.com/extensions/tabCapture#method-getCapturedTabs)。
+
+因此，在使用[选项卡API](https://developer.chrome.com/extensions/tabs)获取当前选项卡的ID之后，您需要做的就是查明您所在的当前选项卡是否已请求捕获以及是否仍在主动捕获。
+
+* * *
+
+消息传递
+====
+
+组成扩展的脚本之间的通信可以通过[消息传递实现](https://developer.chrome.com/extensions/messaging)。您可以遵循两种主要模式来保持脚本同步，[实现一次性请求](https://developer.chrome.com/extensions/messaging#simple)或[实现连接](https://developer.chrome.com/extensions/messaging#connect)。
+
+对于这个应用程序，我选择使用长期连接，因为用户将实时操作和发送/接收多个参数值 - 因为扩展正在运行 - 我发现在切换时通过弹出窗口创建端口...
+
+...然后将该端口传递给后台脚本以接收值，这是将脚本连接在一起的最可靠方法。
+
+* * *
+
+切换弹出，两种方式
+=========
+
+首先，您甚至需要一个用户界面屏幕吗？一些扩展 - 如整[页屏幕捕获 -](https://chrome.google.com/webstore/detail/full-page-screen-capture/fdpohaocaechififmbbbbbknoalclacl?hl=en)仅依靠切换事件来激活扩展，其中一些（如浏览器EQ）实际上需要一个多面的全功能界面屏幕。如果是后者，您有两个选项可以在扩展激活时切换UI屏幕。
+
+第一个是，只包括要显示为清单上默认弹出窗口的html文件的路径。
+
+这样，无论何时单击图标，都会触发并显示popup.html
+
+第二种方法是从清单中删除默认弹出选项，而是在使用[Windows API](https://developer.chrome.com/extensions/windows#method-create)单击扩展图标时创建新窗口。
+
+我使用了浏览器EQ的默认弹出选项，但是如果你想要一个单独的专用窗口没有“附加”到浏览器栏作为弹出窗口，现在你知道有办法做到这一点。
+
+* * *
+
+一种（相对）无痛的方式来设计UI
+================
+
+最后但并非最不重要的一点是，如果您为扩展程序创建了一个有点复杂的UI，您可能也想要设置它的样式。在这种情况下，您很快就会意识到，每次要查看代码编辑器中所做的样式更改时，必须单击扩展图标才会变得非常旧，非常快！
+
+如果打开弹出窗口时打开popup.html DevTools，并在打开样式时将其保持打开状态，则可以解决这个问题。现在，如果您专注于DevTools检查器时F5，它将刷新弹出屏幕并显示最新更改，而无需单击扩展图标。
+
+另一种更友好的用户方式是，在浏览器中转到_chrome-extension：//YOUR\_EXTENSION\_ID\_HERE/popup.html_地址，直接打开弹出式html文件。通过这种方式，您可以直接刷新页面，甚至无需打开devtools（尽管您也可以打开它），请注意每当您使用chrome：// extensions上的重新加载功能重新加载扩展时，此页面将消失，所以如果你做了一个完整的重新加载（你不必为CSS更改生效），你将不得不再次打开这个页面。
+
+![](https://miro.medium.com/max/60/1*sIamrYpNsmQ3xL9MNcEceQ.png?q=20)
+
+![](https://miro.medium.com/max/2560/1*sIamrYpNsmQ3xL9MNcEceQ.png)
+
+![](https://miro.medium.com/max/5120/1*sIamrYpNsmQ3xL9MNcEceQ.png)
+
+您可以直接在浏览器中打开弹出屏幕
+
+**提示：您可以转到chrome：// extensions来查找您的扩展程序ID**
+
+* * *
+
+好吧，在制作Chrome扩展程序时，我所学到的大多数（绝对不是全部）。请随意安装并亲自试用该应用程序并让我知道您的想法，如果您想了解有关如何构建Chrome扩展程序的更多信息或查看一些示例，以下是我利用的**众多**资源中的一些建立这个。
+
+资源
+==
+
+**_教程：_**
+
+[Chrome的官方入门教程](https://developer.chrome.com/extensions/getstarted)
+
+[Google Developers - Google Chrome扩展程序：如何构建扩展程序](https://www.youtube.com/watch?v=e3McMaHvlBY)
+
+[编码训练 - Chrome扩展（视频教程系列）](https://www.youtube.com/watch?list=PLRqwX-V7Uu6bL9VOMT65ahNEri9uqLWfS&v=hkOTAmmuv_4)
+
+**_示例扩展：_**
+
+[Chrome的官方示例扩展程序](https://developer.chrome.com/extensions/samples)
+
+[编码训练 - 示例扩展](https://shiffman.net/a2z/chrome-ext/)
+
+[铬音频采集](https://github.com/arblast/Chrome-Audio-Capturer)
+
+**_有用的链接：_**
+
+[Chrome tabCapture API](https://developer.chrome.com/extensions/tabCapture)
+
+[MDN Web Docs MediaStreamAudioSourceNode](https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamAudioSourceNode)
+
+[如何保存扩展弹出窗口内容（SO）](https://stackoverflow.com/questions/41284528/completely-lost-on-how-to-save-extension-popup-window-content/41289802#41289802)
+
+[如何在Chrome扩展（SO）中的Popup.js和Background.js之间进行通信](https://stackoverflow.com/questions/13546778/how-to-communicate-between-popup-js-and-background-js-in-chrome-extension/13549245#13549245)
+
+**_开发播放列表：_**
+
+[Louis Cole - F up up（Live Sesh）](https://www.youtube.com/watch?v=IxEIQQkhyeI)
+
+[Vulfpeck - 迪恩镇（来自这里）](https://www.youtube.com/watch?v=zVyEPAMpwDc)
+
+[DJ Maseo（De La Soul）Boiler Room London DJ Set](https://www.youtube.com/watch?v=v1Uji6CHTao)
+
+[KAYTRANADA锅炉房蒙特利尔DJ套装](https://www.youtube.com/watch?v=-5EQIiabJvk)
+
+[乙烯基上的日本朋克和灵魂](https://www.youtube.com/watch?v=HxzXg8p4oU0)
+
+[Sama'DJ Set | 巴勒斯坦锅炉房](https://www.youtube.com/watch?v=x9VYKrtziSg)

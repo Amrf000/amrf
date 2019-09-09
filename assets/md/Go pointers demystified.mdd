@@ -1,0 +1,128 @@
+![Go pointers demystified](https://medium.com/swlh/go-pointers-demystified-1f0710ec07eb)
+Go pointers demystified
+=======================
+
+[
+
+![Sriharsha Tikkireddy](https://miro.medium.com/fit/c/96/96/2*RYH-BYEz6yJ6_3OCbWtYmQ.jpeg)
+
+](/@tsriharsha?source=post_page-----1f0710ec07eb----------------------)
+
+[Sriharsha Tikkireddy](/@tsriharsha?source=post_page-----1f0710ec07eb----------------------)
+
+Follow
+
+[Jun 23](/swlh/go-pointers-demystified-1f0710ec07eb?source=post_page-----1f0710ec07eb----------------------) · 3 min read
+
+![](https://miro.medium.com/max/60/1*0-R4VuyZzLM5GJwWsi61Cg.png?q=20)
+
+![](https://miro.medium.com/max/1600/1*0-R4VuyZzLM5GJwWsi61Cg.png)
+
+![](https://miro.medium.com/max/3200/1*0-R4VuyZzLM5GJwWsi61Cg.png)
+
+Pointers and Memory Addresses
+=============================
+
+While first learning Go dealing with pointers and memory addresses may be frustrating but don’t let that stop you from learning Golang. The language is fun to learn and don’t let pointers stop you on your journey.
+
+There are two symbols you need to know:
+
+*   **&** of a variable returns the memory address of the variable
+*   **\*** of a variable (which holds an memory address) will return the value of said variable.
+
+Here is a simple example to follow along.
+
+The best way to interpret this is that every instance of **\*** resolves the **&** and returns the value. So why do we care about pointers.
+
+Pointers are important when dealing with the mutability of a object in go. Lets dissect the following go code. It is very simple but let us look at it part by part.
+
+**type** person **struct** {  
+   fullName  string  
+   FirstName string  
+   LastName  string  
+   Address   string  
+}  
+  
+**func** (p person) GenerateFullNameValue() {  
+   p.fullName = p.FirstName + " " + p.LastName  
+}  
+  
+**func** (p \*person) GenerateFullNamePointer() {  
+   p.fullName = p.FirstName + " " + p.LastName  
+}  
+  
+**func** (p person) String() string {  
+   **return** "Full Name: "+p.fullName  
+}  
+  
+**func** main(){  
+   per1 := person{FirstName:"Jane", LastName:"Doe", Address:"philly"}  
+   per1.GenerateFullNameValue()  
+   fmt.Println(per1.String())  
+   per1.GenerateFullNamePointer()  
+   fmt.Println(per1.String())  
+}
+
+The first section simply creates a struct called person and makes it private to the file:
+
+**type** person **struct** {  
+   fullName  string  
+   FirstName string  
+   LastName  string  
+   Address   string  
+}
+
+Then we have three functions. Let us take a look at the first two functions:
+
+1.  GenerateFullNameValue
+2.  GenerateFullNamePointer
+
+func (p person) GenerateFullNameValue() {  
+   p.fullName = p.FirstName + " " + p.LastName  
+}  
+  
+func (p \*person) GenerateFullNamePointer() {  
+   p.fullName = p.FirstName + " " + p.LastName  
+}  
+  
+func (p person) String() string {  
+   return "Full Name: "+p.fullName  
+}
+
+They both have the same operation. Let us break down what the definition of a Go function is:
+
+func <reciever> <Function name>(<function args>) <return types> {  
+  _// Function definition here_  
+}
+
+The receiver describes what the type that this function can be applied to and the value of the receiver is passed to the function.
+
+When we call the last section of the code:
+
+func main(){  
+   per1 := person{FirstName:"Jane", LastName:"Doe", Address:"philly"}  
+   per1.GenerateFullNameValue()  
+   fmt.Println(per1.String())  
+   per1.GenerateFullNamePointer()  
+   fmt.Println(per1.String())}
+
+The output will be:
+
+Full Name:   
+Full Name: Jane Doe
+
+Hmm… So we can see that GenerateFullNameValue is not mutating the instance of the struct per1. That is because the function is given a copy of the receiver and only the copy is impacted in the scope of the function **GenerateFullNameValue**. If you do not believe me; try it yourself by printing the value of **fullName** in the scope of the function **GenerateFullNameValue**.
+
+The function **GenerateFullNamePointer** on the other hand mutates the object. The function always gets a copy of the receiver but in this case it is a copy of the **memory address** of the person. This allows the function to mutate by using the memory address. If you print out **p** using the _println_ function you will see that it prints the memory address of the receiver. Go has this concept of method sets and you can read more about it [here](https://github.com/golang/go/wiki/MethodSets). But what this does is that when a method receiver has a requirement of a pointer to memory address Go implicitly submits the memory address rather than the value of the variable. Example shown below.
+
+(&per1).GenerateFullNamePointer()
+
+There is a lot more to pointers and other Gopher things [here](https://golang.org/doc/faq#methods_on_values_or_pointers) that you can read about. But below is a quick little snippet that I found interesting.
+
+> _By the way, in Java method receivers are always pointers, although their pointer nature is somewhat disguised (and there is a proposal to add value receivers to the language). It is the value receivers in Go that are unusual. — Golang FAQs_
+
+These slight nuances can cause issues and bugs in your programs so it is good to know. Hope this helps you understand pointers a bit better and **keep calm** like the GoPher at the top.
+
+* * *
+
+_Originally published at_ [_https://www.linkedin.com_](https://www.linkedin.com/pulse/go-pointers-demystified-sriharsha-tikkireddy)_._

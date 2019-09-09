@@ -1,0 +1,203 @@
+![Advance AI Building chatbot using Rasa-NLU](https://medium.com/mlrecipies/advance-ai-building-chatbot-using-rasa-nlu-99c0c8abc5d)
+Advance AI: Building chatbot using Rasa-NLU
+===========================================
+
+[![Manish Thapliyal](https://miro.medium.com/fit/c/96/96/1*6h3F56mULF9k02YjEwH1UA.jpeg)](/@manish54.thapliyal?source=post_page-----99c0c8abc5d----------------------)
+
+[Manish Thapliyal](/@manish54.thapliyal?source=post_page-----99c0c8abc5d----------------------)
+
+Follow
+
+[Sep 7](/mlrecipies/advance-ai-building-chatbot-using-rasa-nlu-99c0c8abc5d?source=post_page-----99c0c8abc5d----------------------) · 8 min read
+
+![](https://miro.medium.com/max/60/1*C3XWiLM4SuoBC7dZn3gPKw.png?q=20)
+
+![](https://miro.medium.com/max/712/1*C3XWiLM4SuoBC7dZn3gPKw.png)
+
+![](https://miro.medium.com/max/1424/1*C3XWiLM4SuoBC7dZn3gPKw.png)
+
+What Is Rasa NLU?
+-----------------
+
+Rasa NLU is an open-source NLP library for intent classification and entity extraction in chatbots. It helps you build and write custom NLP for your chatbots.
+
+There are two parts of Rasa:
+
+*   **Rasa NLU:** With Rasa NLU we’ll be learning to prepare our training data for our chatbot, writing configuration files, choosing a pipeline and training the model. Lastly, we will be predicting the intent of a text using our model. We’ll also be learning how to parse entities using Rasa NLU.
+*   **Rasa Core:** In the second part we’ll be learning to train the **Rasa Core** dialog management model to prepare responses back to the user. This section becomes very important when you have a variety of intents in your chatbot and their follow-up questions or responses. Instead of writing lots of conditions in our decision tree and spending hours debugging it in case of a big enterprise-level application, it’s better to teach the model to create responses. It’ll be interesting to see how well our trained model performs in doing that. We can’t just spit out anything to the user in the form of text; it should make sense.
+
+WHY USE RASA NLU?
+-----------------
+
+*   Rasa NLU is an actively maintained project and has a good community to support it.
+*   If we don’t want to share our user’s sensitive data with a third party, we must use open-source tools like Rasa NLU to build chatbots from scratch. This way all the data remains and gets processed on our own servers.
+*   Depending on third-party services for training your data and finding the intents of user utterances will require you to call APIs that may not always be reliable. What happens to your chatbot application if their server is down?
+*   Using Rasa NLU for building chatbots will give you full command over your chatbots. You can train, tune, and optimize it the way you want with the data you want. With Rasa NLU we can experiment with which ML algorithm works best for our dataset rather than depending on a fixed algorithm.
+
+Installing Rasa
+---------------
+
+To install Rasa, run the following pip command that we tried in previous chapters for installing spaCy. Note that we’ll be using Rasa version 0.13.2.
+
+> pip install rasa-nlu==0.13.2
+
+Rasa NLU has multiple components for classifying intents and recognizing entities. Different components of Rasa have their own sets of dependencies.
+
+When we train our model, Rasa NLU checks that all the required dependencies are installed. If you want to install the full requirements needed to entirely use the Rasa library, you can execute the following steps:
+
+> git clone [https://github.com/RasaHQ/rasa\_nlu.git](https://github.com/RasaHQ/rasa_nlu.git) #Clone the repo
+> 
+> cd rasa\_nlu #Get into the rasa directory
+> 
+> pip install -r alt\_requirements/requirements\_full.txt #Install full requirements
+
+Deciding a Pipeline in Rasa
+---------------------------
+
+A pipeline is nothing but a set of algorithms to be used to train your model. Rasa NLU has two widely used pipelines called **_spacy\_sklearn_** and **_tensorflow\_embedding_**.
+
+spacy\_sklearn
+--------------
+
+*   _spacy\_sklearn_ pipeline makes use of pre-trained word vectors from either GloVe algorithm or an algorithm developed by the Facebook AI team called fastText.
+*   _spacy\_sklearn_ works amazingly well in situations where, suppose you have an utterance like, “What is the weather in Boston?” When we train our model on the same utterance example and then ask it to predict the intent for, “What is the weather in London?” our model is now intelligent enough to know that both the words “Boston” and “London” are similar, and they belong to the same intent.
+*   This pipeline is very useful with small sets of data.
+
+tensorflow\_embedding
+---------------------
+
+*   _tensorflow\_embedding_ pipeline doesn’t make use of any pre-trained word vectors like spacy\_sklearn, but it adjusts itself as per our own provided dataset.
+*   The good thing about _tensorflow\_embedding_ pipeline is that our word vectors will be as per our domain.
+*   To explain how _tensorflow\_embedding_ works with an example, in the English language, the word “play” may be closely related to “a sport” or “an activity of enjoyment or recreation, ” and it may seem it very different from the words “an act.” In a theater domain, “play” and “an act” are closely related, where “play” means “a form of literature written by a playwright,” and it is very necessary to tell our model to learn specific to our domain and not get confused due to some pre-trained model.
+
+Training and Building a Chatbot
+===============================
+
+We are going to take a use-case of a chatbot and build it from scratch.We are going to build a horoscope bot that understands user queries and tells them their horoscope for the day.
+
+**BUILDING A HOROSCOPE BOT**
+
+In this example of building a chatbot completely on our own using the open-source library Rasa NLU, we are going to build a Horoscope Bot. Let’s decide the scope of this chatbot and see what it does and can do.
+
+*   The Horoscope Bot should be able to understand greetings and reply with a greeting.
+*   The bot should be able to understand if the user is asking for a horoscope.
+*   The bot should be able to ask the horoscope sign of the user if the user doesn’t provide it.
+*   If the user doesn’t know his/her horoscope sign, the bot should ask the user’s date of birth (DOB) and find it for them.
+*   The bot should subscribe/unsubscribe the user to get the daily horoscope.
+*   The bot should learn from existing responses to formulate a new response.
+*   The bot should be able to handle spelling mistakes by the user.
+
+It is pretty simple what our bot is supposed to do here.
+
+Possible intents
+
+*   Greeting Intent: User starting with a greeting
+*   Get Horoscope Intent: User asking for horoscope
+*   User’s Horoscope Intent: User telling the horoscope sign
+*   User’s DOB Intent: User telling his/her DOB
+*   Subscription Intent: User asking for subscription
+
+**CONVERSATION SCRIPT BETWEEN BOT AND THE USER**
+
+Let’s create a possible conversation script between our chatbot and the user. Writing a conversation script is like preparing a software requirement document before building the software. It may change later but gives you an overall view of what’s going to happen in the final chatbot application.
+
+The following is what our conversation between the user and the bot looks like:
+
+*   **User:** Hello
+*   **Horoscope Bot:** Hello! Hope you are doing well.
+*   **User:** I want to know my horoscope.
+*   **Horoscope Bot:** Sure, may I know your horoscope sign?
+*   **User:** Capricorm
+*   **Horoscope Bot:** Sorry, did you mean Capricorn?
+*   **User:** Yes.
+*   **Horoscope Bot:** Alright, Here is your horoscope for today. Chances are that you’ll feel upbeat and positive today. Share this energy with others who feel less than content. Your attitude can have a profound effect on friends, partners, spouse, and children. Neighbors and extended family can pick up on your spirit without you even realizing it. If someone is hurt or angry, be encouraging. Everything will eventually work out.
+*   **Horoscope Bot:** Would you like to subscribe for the daily updates? If yes, just say subscribe.
+*   **User:** Yes, please subscribe.
+*   **Horoscope Bot:** Great, you are subscribed now. Have a good day.
+
+This conversation is just to have a fair idea of how our chatbot conversation is going to look. We may or may not want to change the flow of the conversation based on our needs.
+
+**PREPARING DATA FOR CHATBOT**
+
+Rasa NLU has multiple ways of defining the intents and their entities on our custom data. It supports data in markdown, in JSON as a single file, or as a directory containing multiple files.
+
+Creating Data for Model in JSON Format
+--------------------------------------
+
+The JSON format of the data that Rasa NLU expects, has a top-level object called **_rasa\_nlu\_data_**, with the keys **_common\_examples_**, **_entity\_synonyms_**, and **_regex\_features_**.
+
+The most important one with which we are going to be working is **_common\_examples_**. The following is the skeleton form of how our JSON data is going to look:
+
+**{****“rasa\_nlu\_data”: {****“common\_examples”: \[\],****“regex\_features” : \[\],****“entity\_synonyms”: \[\]****}****}**
+
+The **_common\_examples_** key in our JSON data is the central place that’ll be used to train our model. We will be adding all our training examples in the **_common\_examples_** array.
+
+**_regex\_features_** is a tool to help the intent classifier recognize entities or intents and improve the accuracy of intent classification.
+
+Let’s start writing our JSON file. Let’s call it **data.json.**
+
+1.  Create a folder called **horoscope\_bot**.
+2.  Change the current working directory to horoscope\_bot.
+3.  Start Jupyter Notebook #jupyter notebook.
+4.  Create a new folder called **data**.
+5.  Click on the data folder and go to “Text File” under New menu in Jupyter Notebook.
+6.  Click on the name of the file created and change the name to **data.json** and write your intents for your chatbots.
+
+This following is what my **data.json** under **data** folder looks like:
+
+{“rasa\_nlu\_data”: {“common\_examples”: \[{“text”: “Hello”,“intent”: “greeting”,“entities”: \[\]},{“text”: “I want to know my Horoscope”,“intent”: “get\_horoscope”,“entities”: \[\]},{“text”: “Can you please tell me my horoscope?”,“intent”: “get\_horoscope”,“entities”: \[\]},{“text”: “Please subscribe me”,“intent”: “subscription”}\],“regex\_features”: \[\],“entity\_synonyms”: \[\]}}
+
+**TRAINING THE CHATBOT MODEL**
+------------------------------
+
+In this section, we are going to train a model on the data we prepared. we would use Jupyter Notebook for our file creation and management, we will be creating a new .ipynb and start writing our Python code to train our model by choosing one of the pipelines.
+
+Creating a Configuration File
+-----------------------------
+
+Let’s create a JSON file again in the same way we created one earlier using Jupyter and name it **config.json**. Let’s keep it outside our data folder (i.e., in the horoscope\_bot that is our project directory).
+
+Add the following configuration to it:
+
+{“pipeline”:”tensorflow\_embedding”,“path”:”./models/nlu”,“data”:”./data/data.json”}
+
+As you can see, there are some important configuration parameters done in our config.json file. Let’s try to understand them.
+
+*   **pipeline**: Pipeline is going to specify what featurizers or feature extractors are going to be used to crunch text messages and extract necessary information. In our case, we are using _tensorflow\_embedding_.
+*   **path**: path is essentially the directory where we keep our model after the training. We are going to keep our model in the /models/nlu folder.
+*   **data**: data is the path we need to specify; it’s basically where our training data sits.
+
+As we are done with our config.json file, let’s move on to some Python code to train our ML model.
+
+Let’s open up a new .ipynb file and start writing our code.
+
+Let’s name the ipynb as rasa-nlu.ipynb. Make sure you have already successfully installed rasa-nlu==0.13.2 for the Python version you are using.
+
+The following is what our code looks like to use our **data.json** and **config.json** in Python and train a model using **_tensorflow\_embedding_** pipeline.
+
+**from rasa\_nlu.training\_data import** load\_data**from rasa\_nlu.model import** Trainer**from rasa\_nlu import** config**from rasa\_nlu.model import** Interpreter**def train\_horoscopebot**(data\_json, config\_file, model\_dir): training\_data = load\_data(data\_json) trainer = Trainer(config.load(config\_file)) trainer.train(training\_data) model\_directory = trainer.persist(model\_dir, fixed\_model\_name =      ‘horoscopebot’)**def predict\_intent**(text): interpreter = Interpreter.load(‘./models/nlu/default/horoscopebot’) **print**(interpreter.parse(text))
+
+Training the Model
+------------------
+
+We run the below snippet to call our train\_horoscopebot method with the respective parameters
+
+train\_horoscopebot(‘./data/data.json’, ‘config.json’, ‘./models/nlu’)
+
+After running this code in our rasa-nlu.ipynb, we will get an output like this:
+
+Epochs: 100%|██████████| 300/300 \[00:01<00:00, 175.69it/s, loss=0.075, acc=1.000\]
+
+The code for training the chatbot model will create the model's folder, which you can see using Jupyter or using your file explorer or finder app. It will create a bunch of indexes, meta, and pickle files at the model directory destination we provided.
+
+PREDICTING FROM THE MODEL
+-------------------------
+
+Let’s call the predict\_intent method by passing a text to see how our trained model performs.
+
+predict\_intent(“I am looking for my horoscope for today. I am wondering if you can tell me that.”)
+
+The method itself prints the output. For the above text, my output looks like the following:
+
+INFO:tensorflow:Restoring parameters from ./models/nlu/default/horoscopebot/intent\_classifier\_tensorflow\_embedding.ckpt  
+{“intent”: {“name”: “get\_horoscope”,“confidence”: **0.9636583924293518**},“entities”: \[\],“intent\_ranking”: \[{“name”: “get\_horoscope”,“confidence”: 0.9636583924293518},{“name”: “dob\_intent”,“confidence”: 0.03462183475494385},{“name”: “greeting”,“confidence”: 0},{“name”: “subscription”,“confidence”: 0}\],“text”: “I am looking for my horoscope for today. I am wondering if you can tell me that.”}

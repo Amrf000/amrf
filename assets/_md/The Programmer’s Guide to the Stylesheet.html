@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Bad Habits of Absolutely Ineffective Technology Managers.html">5 Bad Habits of Absolutely Ineffective Technology Managers</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="5个简单的CSS技巧使普通页面看起来很棒.html">5个简单的CSS技巧使普通页面看起来很棒</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="8 habits you should avoid when developing with Javascript.html">8 habits you should avoid when developing with Javascript</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Advance AI Building chatbot using Rasa-NLU.html">Advance AI Building chatbot using Rasa NLU</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Build Your Pokédex Part 1 — Introduction to NgRX.html">Build Your Pokédex Part 1 — Introduction to NgRX</a></li>
+<li><a class="" href="Building a Chrome Extension, Tips and Tricks.html">Building a Chrome Extension, Tips and Tricks</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="GPU编程–CUDA环境配置与简单例程.html">GPU编程–CUDA环境配置与简单例程</a></li>
+<li><a class="" href="Github 项目推荐  无监督神经机器翻译 —— UNdreaMT.html">Github 项目推荐  无监督神经机器翻译 —— UNdreaMT</a></li>
+<li><a class="" href="Go pointers demystified.html">Go pointers demystified</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Language Modelling and Text Generation using LSTMs — Deep Learning for NLP.html">Language Modelling and Text Generation using LSTMs — Deep Learning for NLP</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="RxJS：使用forkJoin进行错误处理.html">RxJS：使用forkJoin进行错误处理</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080.html">Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="active" href="The Programmer’s Guide to the Stylesheet.html">The Programmer’s Guide to the Stylesheet</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="Why you should be data-informed and not data-driven.html">Why you should be data informed and not data driven</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="go 链表.html">go 链表</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="什么是深度学习.html">什么是深度学习</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="停止询问React Hooks是否替换Redux.html">停止询问React Hooks是否替换Redux</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Apache OpenWhisk中使用GPU.html">在Apache OpenWhisk中使用GPU</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何使用后台脚本获取Chrome扩展程序中的数据.html">如何使用后台脚本获取Chrome扩展程序中的数据</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="新型机器翻译.html">新型机器翻译</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="构建机器学习系统的六个重要步骤.html">构建机器学习系统的六个重要步骤</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="" href="良好用户界面的基础知识.html">良好用户界面的基础知识</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="链表常见问题总结.html">链表常见问题总结</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="雅可比正则化.html">雅可比正则化</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="the-programmer%E2%80%99s-guide-to-the-stylesheet"><img src="https://blog.prototypr.io/the-programmers-guide-to-the-stylesheet-13f2dce47429" alt="The Programmer’s Guide to the Stylesheet">
+The Programmer’s Guide to the Stylesheet <a class="heading-anchor-permalink" href="#the-programmer%E2%80%99s-guide-to-the-stylesheet" aria-hidden="true">#</a></h1>
+<p><a href="/@moib?source=post_page-----13f2dce47429----------------------"><img src="https://miro.medium.com/fit/c/48/48/1*pvHm3KBhwYfHpB63x6F9Ig@2x.jpeg" alt="Mohammed Ibrahim"></a></p>
+<p><a href="/@moib?source=post_page-----13f2dce47429----------------------">Mohammed Ibrahim</a></p>
+<p>Follow</p>
+<p><a href="/the-programmers-guide-to-the-stylesheet-13f2dce47429?source=post_page-----13f2dce47429----------------------">Aug 30</a> · 14 min read</p>
+<p><img src="https://miro.medium.com/max/30/1*mdjhvXDdsf9WWcjmZPZLDQ.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1794/1*mdjhvXDdsf9WWcjmZPZLDQ.jpeg" alt=""></p>
+<p>This is neither an introduction to nor a crash course on CSS. Rather, I’m presenting a sanity doctrine for UX engineers, covering certain areas that I believe cause a lot of trouble. If you know enough about writing stylesheets to survive, but you wish it was less painful, then this article is for you.</p>
+<p>The secret to good stylesheets is that nobody ever really gets good at them, at least not in any conventional sense. I’ve written thousands of stylesheets and read many more, and I can’t say I’ve ever seen one that I would describe as elegant.</p>
+<p>Design is emotional, and so, to an extent, design code will be arbitrary. The goal here is not to force patterns where none exist, but instead to understand the few critical patterns upon which you will form your design architecture.</p>
+<hr>
+<h1 id="position">Position <a class="heading-anchor-permalink" href="#position" aria-hidden="true">#</a></h1>
+<p>When you begin CSS work on a project, your first challenge will be to position your elements. There are four main position types, listed below.</p>
+<p>Except for the default type, which is <code>static</code>, all other types are <strong>positioned</strong>. A positioned element can be moved with the offset properties <code>top</code>, <code>right</code>, <code>bottom</code>, and <code>left</code>.</p>
+<p>Also, children of a positioned element will be offset relative to the positioned element’s boundary, rather than the screen.</p>
+<ul>
+<li><strong>static</strong> (default): Not positioned; element is rendered in the order that it appears in the HTML.</li>
+<li><strong>relative:</strong> Similar to static, but element is positioned.</li>
+<li><strong>absolute:</strong> Element is removed from HTML order and rendered relative to the nearest positioned parent (or the screen, if none exist).</li>
+<li><strong>fixed:</strong> Element is rendered relative to the screen only, and does not scroll with the screen.</li>
+</ul>
+<h2 id="absolute">Absolute <a class="heading-anchor-permalink" href="#absolute" aria-hidden="true">#</a></h2>
+<p>Once you apply absolute position to an element, that element is no longer rendered in HTML order. Here’s a simple example:</p>
+<p>.absolute {<br>
+position: absolute;<br>
+}<body></p>
+  <div>1</div>  
+  <div>2</div>  
+  <div class="absolute">3</div>  
+  <div>4</div>  
+  <div>5</div>  
+</body>
+<p><img src="https://miro.medium.com/max/30/1*hba__eF274MJVRcRgHOPOw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1284/1*hba__eF274MJVRcRgHOPOw.png" alt=""></p>
+<p>Because element #3 has absolute position, it no longer affects the position of the elements appearing later in the HTML. Element #4 is rendered as if it follows #2 in the code.</p>
+<p>Note that block elements with absolute or fixed position no longer have a default width of 100%. Instead, the width is fit to inner content, and you will need to set the element’s width to 100% in CSS to readjust.</p>
+<p>Finally, notice how, since no offsets have been applied to <code>.absolute</code>, its initial <code>top</code> and <code>left</code> positions still respect the element’s HTML position.</p>
+<p>Now we apply some offsets:</p>
+<p>.absolute {<br>
+position: absolute;<br>
+<strong>right: 1em;<br>
+top: 1em;</strong><br>
+}</p>
+<p><img src="https://miro.medium.com/max/30/1*Xo-3hZZ1GeUWUaD609Khrw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1278/1*Xo-3hZZ1GeUWUaD609Khrw.png" alt=""></p>
+<p>You can see above how we are able to reposition it anywhere in the body by using offset values. Now notice what happens when we have opposing offsets:</p>
+<p>.absolute {<br>
+position: absolute;<br>
+right: 1em;<br>
+top: 1em;<br>
+<strong>left: 75%;<br>
+bottom: -1em;</strong><br>
+}</p>
+<p><img src="https://miro.medium.com/max/30/1*OGHkqOV4GNgUoHfCGmUhug.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1200/1*OGHkqOV4GNgUoHfCGmUhug.png" alt=""></p>
+<p>By using opposing offsets, you can stretch an element with absolute or fixed position to cover an exact area you want.</p>
+<h2 id="fixed">Fixed <a class="heading-anchor-permalink" href="#fixed" aria-hidden="true">#</a></h2>
+<p>Fixed-position elements are similar to absolute-position elements, except they don’t scroll along with the screen, but rather stay in place. Also, they don’t respect any positioned parent elements, and thus are always positioned relative to the screen.</p>
+<p><img src="https://miro.medium.com/freeze/max/30/1*G7QxFy5Lx5zAEHMhXRpwwg.gif?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1080/1*G7QxFy5Lx5zAEHMhXRpwwg.gif" alt=""></p>
+<p>Fixed position is typically used for elements like headers, alerts, or action panels — items which must be accessible at all times for certain UI.</p>
+<h2 id="relative">Relative <a class="heading-anchor-permalink" href="#relative" aria-hidden="true">#</a></h2>
+<p>You will want to use relative position when you have positioned child elements, and you want them to respect their parent boundary, while also rendering the parent boundary in HTML order.</p>
+<p>Let’s demonstrate this:</p>
+<p>.box {<br>
+border: 1px solid;<br>
+display: inline-block;<br>
+padding: 50px;<br>
+<strong>position: relative;</strong><br>
+}.close-button {<br>
+background-color: #bbb;<br>
+border-radius: 50%;<br>
+color: white;<br>
+height: 1.4em;<br>
+line-height: 1.3em;<br>
+position: absolute;<br>
+<strong>right: 10px;<br>
+top: 10px;</strong><br>
+width: 1.4em;<br>
+}</p>
+<p><img src="https://miro.medium.com/max/30/1*wPwkdqS8O-j9KP_GRNab_w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1028/1*wPwkdqS8O-j9KP_GRNab_w.png" alt=""></p>
+<p>Above, we have a box with padding, and a close button with absolute position. Notice how the offsets for <code>right</code> and <code>top</code> are set to 10px, relative to the parent boundary.</p>
+<p>This works because the parent has relative position, and if it did not, then the button would be offset to the top-right corner of the screen, far from the box.</p>
+<h2 id="z-index">z-index <a class="heading-anchor-permalink" href="#z-index" aria-hidden="true">#</a></h2>
+<p>For elements with absolute, fixed, or relative position, the <code>z-index</code> value helps identify how they lay on top of each other:</p>
+<div style="z-index: 1">1</div>  
+<div style="z-index: 3">3</div>  
+<div style="z-index: 4">4</div>  
+<div style="z-index: 5">5</div>  
+<div style="z-index: 2">2</div>
+<p><img src="https://miro.medium.com/max/30/1*iqN5a0NGktCjXPIybEbhUA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1024/1*iqN5a0NGktCjXPIybEbhUA.png" alt=""></p>
+<p>I have a principle that I like to use in my work: <code>z-index</code> values 1–5 are free to use across my UI, while multiples of 10 are reserved for <a href="https://sass-lang.com/guide">preprocessor variables</a>, which I reference in my style code:</p>
+<p>$z-index-alert: 30;<br>
+$z-index-screen: 20;<br>
+$z-index-header: 10;<br>
+$z-index-footer: 10;</p>
+<p>In the code above, I have a <code>z-index</code> arrangement which allows me to lay a screen over my header and footer, and then an alert over that screen. This is ideal for prompting a user to stop and respond.</p>
+<p>Also, by centralizing my <code>z-index</code> variables in a single place, I can modify the order with ease, instead of using “Search all: z-index” in my IDE.</p>
+<hr>
+<h1 id="gridding">Gridding <a class="heading-anchor-permalink" href="#gridding" aria-hidden="true">#</a></h1>
+<p>I’m not going to waste time debating different gridding philosophies. I’ll tell you that I avoided <a href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">flexbox</a> for a long time because, well, new things are scary.</p>
+<p>Instead, I kept leaning on inline blocks and floats and tables to do things for which the flexbox was designed. I was late to the flex game, but much better late than never.</p>
+<p>Flexbox creates a container for items whereby the height and width of each item will adjust automatically, depending on the size of other items inside the flexbox:</p>
+<p>.flex {<br>
+display: flex;<br>
+}<div class="flex"></p>
+  <div>first item</div>  
+  <div>second</div>  
+  <div>this is the<br/>third item</div>  
+  <div>fourth and final item</div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*AIyKWfB1ElRO9BNLG-Ikew.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1308/1*AIyKWfB1ElRO9BNLG-Ikew.png" alt=""></p>
+<p>This is where inline blocks fall short in a big way: Flexbox is able to adjust the height of all elements in a row to match the height of the tallest element. This is especially useful to you if vertical symmetry is part of your design strategy.</p>
+<p>Now watch how we use the <code>justify-content</code> property to position cells laterally in the box:</p>
+<p>.flex {<br>
+display: flex;<br>
+<strong>justify-content: flex-end;</strong><br>
+}</p>
+<p><img src="https://miro.medium.com/max/30/1*7jik3kY3Hf-slQKxjdz45w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1226/1*7jik3kY3Hf-slQKxjdz45w.png" alt=""></p>
+<p>And then we use the <code>align-items</code> property to position cells vertically:</p>
+<p>.flex {<br>
+display: flex;<br>
+justify-content: flex-end;<br>
+<strong>align-items: flex-end;</strong><br>
+}</p>
+<p><img src="https://miro.medium.com/max/30/1*1-_U_dGrO6bfq_MRfhgXqw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1224/1*1-_U_dGrO6bfq_MRfhgXqw.png" alt=""></p>
+<p>You can also decide which elements will increase in width to account for empty row space, using the <code>flex-grow</code> property:</p>
+<div class="flex">  
+  <div>first item</div>  
+ **<div style="flex-grow: 1">second</div>**  
+  <div>this is the<br/>third item</div>  
+  <div>fourth and final item</div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*Qib4gmIT7G-3WqOFd8pyPA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1312/1*Qib4gmIT7G-3WqOFd8pyPA.png" alt=""></p>
+<p>Above, you can see that the width of the second element has increased by the width of the previously empty space, pushing the row to 100% width. If any element in a flexbox has the <code>flex-grow</code> property, the flexbox will have a default width of 100%.</p>
+<p>Now we see what happens when we give the same <code>flex-grow</code> value to another element in the flexbox:</p>
+<div class="flex">  
+  <div>first item</div>  
+  <div style="flex-grow: 1">second</div>  
+  <div>this is the<br/>third item</div>  
+ **<div style="flex-grow: 1">fourth and final item</div>**  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*FQszQ9ZxVPchV_FEYNC75Q.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1314/1*FQszQ9ZxVPchV_FEYNC75Q.png" alt=""></p>
+<p>Notice how the second and fourth elements split the empty space, while the first and third still have the same widths.</p>
+<p>When you have uneven columns of text in a row, sometimes using asymmetrical spacing can be easier to read than using equally spaced columns. Try different arrangements, and put on your user hat.</p>
+<p>In our final example, we add a higher <code>flex-grow</code> value to the fourth element, to demonstrate how a lower priority column gives up some space to a higher one:</p>
+<div style="display: flex">  
+  <div>first item</div>  
+  <div style="flex-grow: 1">second</div>  
+  <div>this is the<br/>third item</div>  
+ **<div style="flex-grow: 2">fourth and final item</div>**  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*ST1P1f9rmekksT2BHmUd_g.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1312/1*ST1P1f9rmekksT2BHmUd_g.png" alt=""></p>
+<hr>
+<h1 id="margin-vs-padding">Margin vs padding <a class="heading-anchor-permalink" href="#margin-vs-padding" aria-hidden="true">#</a></h1>
+<p>It’s not always clear whether you should be using margin or padding, so as a general rule, use margin for paragraph spacing and padding for block spacing.</p>
+<p>If your element has a border, consider whether you want the space to exist inside the border (padding) or outside (margin). You may often find yourself using both, if you want a padded element with space around it.</p>
+<p>Look at this simple example:</p>
+<p>.margin &gt; div {<br>
+margin: 20px;<br>
+}.padding &gt; div {<br>
+padding: 20px;<br>
+}<div style="display: flex"></p>
+  <div class="margin">  
+    <div>you are a good programmer</div>  
+    <div>even on your bad days</div>  
+    <div>the fact that you keep coding</div>  
+    <div>is all the proof you need</div>  
+  </div>  
+  <div class="padding">  
+    <div>you are good at design</div>  
+    <div>because you are human</div>  
+    <div>you just need to listen</div>  
+    <div>to what other humans want</div>  
+  </div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*rwoht6vuLw2hbsgO5bKh7A.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/486/1*rwoht6vuLw2hbsgO5bKh7A.jpeg" alt=""></p>
+<p>Using the inspector, I’ve highlighted some lines from each column. You can see how margins overlap from line to line, while padding creates space for each line.</p>
+<hr>
+<h1 id="font-size">Font size <a class="heading-anchor-permalink" href="#font-size" aria-hidden="true">#</a></h1>
+<h2 id="em-and-rem">em and rem <a class="heading-anchor-permalink" href="#em-and-rem" aria-hidden="true">#</a></h2>
+<p><img src="https://miro.medium.com/max/30/1*ATjl6mL03Xlb8JuSt2XONA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1280/1*ATjl6mL03Xlb8JuSt2XONA.png" alt=""></p>
+<p>The <a href="https://en.wikipedia.org/wiki/Em_(typography)">em measurement</a> was named after the capital letter M, used for its width to measure the boundaries for every other letter in a set. Today, <code>em</code> is used in CSS as a multiple of the inherited font size.</p>
+<p>Once you set a font size for a parent element, all of its child elements will inherit that font size, unless otherwise specified. Properties like height and width, or even border and shadow sizes, can be set using inherited font sizes.</p>
+<p>If you use this concept wisely, most of your sizing values will be set by inheritance. This way, if you need to tweak your font sizes, you only need to change a few values, and the rest will adjust accordingly.</p>
+<p>html {<br>
+font-size: 16px;<br>
+}.banner {<br>
+font-size: 24px;<br>
+}.banner h1 {<br>
+font-size: 2em;<br>
+}.banner h2 {<br>
+font-size: 1.5em;<br>
+}.banner small {<br>
+font-size: 0.75em;<br>
+}.banner .alert {<br>
+font-size: 1.25rem;<br>
+}</p>
+<p>In the example above, we have a root font size of 16px and a <code>.banner</code> element with a font size of 24px. We use inheritance to size all <code>h1</code>, <code>h2</code>, and <code>small</code> tags which are child elements of <code>.banner</code>.</p>
+<p>In our example, <code>.banner h1</code> has a calculated font size of (24px * 2em) or 48px, <code>.banner h2</code> has a calculated font size of (24px * 1.5em) or 36px, and <code>.banner small</code> is (24px * 0.75em) or 18px.</p>
+<p>Note that <code>.banner .alert</code> is using <code>rem</code> for sizing, therefore it inherits font size directly from the root, which is on the <code>html</code> element. In this case, the calculated font size is (16px * 1.25rem) or 20px.</p>
+<h2 id="nesting">Nesting <a class="heading-anchor-permalink" href="#nesting" aria-hidden="true">#</a></h2>
+<p>The code below is a sort of riddle:</p>
+<p>.content {<br>
+font-size: 10px;<br>
+}.content &gt; div {<br>
+font-size: 2em;<br>
+}.content &gt; div &gt; div {<br>
+font-size: 0.5em;<br>
+}<div class="content"></p>
+  <div>  
+    **<div>What is my font size?</div>**  
+  </div>  
+</div>
+<p>The answer is <strong>10px</strong>. Once you set the font size on <code>.content &gt; div</code> to be 2em, which has a calculated font size of 20px, that becomes the inherited font size. Therefore, <code>.content &gt; div &gt; div</code> will have a calculated font size of ((10px * 2em) * 0.5em) = (20px * 0.5em) = 10px.</p>
+<h2 id="using-font-size-for-other-size-properties">Using font size for other size properties <a class="heading-anchor-permalink" href="#using-font-size-for-other-size-properties" aria-hidden="true">#</a></h2>
+<p>.outer1 {<br>
+height: 200px;<br>
+width: 200px;<br>
+}.outer2 {<br>
+font-size: 200px;<br>
+height: 1em;<br>
+width: 1em;<br>
+}<div class="outer1"></div></p>
+<div class="outer2"></div>
+<p><img src="https://miro.medium.com/max/30/1*zJjne4Of_Cco2zP6_p9wkw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/453/1*zJjne4Of_Cco2zP6_p9wkw.png" alt=""></p>
+<p>In the example above, we have two ways of creating two visually identical elements. For <code>.outer1</code>, we use pixel values for height and width, whereas for <code>.outer2</code>, we set a pixel-value font size, and then use <code>em</code> to set the height and width based on that font size.</p>
+<p>So how do these approaches differ? Well, consider that we wanted to add a child element with a relative height to each <code>.outer{n}</code> element:</p>
+<p>.inner {<br>
+height: 0.5em;<br>
+}<div class="outer1"></p>
+  <div class="inner"></div>  
+</div>  
+<div class="outer2">  
+  <div class="inner"></div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*w8sunryv2Jjhakz1YDDuAw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/456/1*w8sunryv2Jjhakz1YDDuAw.png" alt=""></p>
+<p>For the first <code>.inner</code> element, since it has no parent with a font size, it inherits the <code>body</code> font size, which in this case is 16px. Therefore, the calculated height is (16px * 0.5em) or 8px.</p>
+<p>For <code>.outer2</code>, however, the <code>.inner</code> element inherits a font size of 200px, so the calculated height is 100px.</p>
+<p>Keep in mind that, with the second approach, your text will no longer inherit the root font size, so you will need to set font sizes for your text tags. I personally only use the second approach for fancy animations with lots of empty tags and very little text.</p>
+<hr>
+<h1 id="pseudo-classes">Pseudo-classes <a class="heading-anchor-permalink" href="#pseudo-classes" aria-hidden="true">#</a></h1>
+<p>Many of us are familiar with the CSS state selectors like <code>:hover</code> and <code>:focus</code>, but what if you wanted to style specific elements in a set? In the example below, we give bottom borders to each row in a set, except for the fourth one:</p>
+<p>.row {<br>
+border-bottom: 1px solid #aaa;<br>
+}.row:nth-child(4) {<br>
+border-bottom: 0;<br>
+}<div></p>
+  <div class="row">you are a good programmer</div>  
+  <div class="row">even on your bad days</div>  
+  <div class="row">the fact that you keep coding</div>  
+  <div class="row">is all the proof you need</div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*ClPa5keWungyK7DZbth14w.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/665/1*ClPa5keWungyK7DZbth14w.png" alt=""></p>
+<p>While this use of the <a href="https://www.w3schools.com/cssref/sel_nth-child.asp">nth-child selector</a> works for now, it will break if the number of rows changes. For this reason, we use a dynamic selector:</p>
+<p>.row {<br>
+border-bottom: 1px solid #aaa;<br>
+}.row:<strong>last-child</strong> {<br>
+border-bottom: 0;<br>
+}</p>
+<p>Now, we don’t have to worry about the index of the last item. There is also an available selector for <code>first-child</code>, as well as <code>first-of-type</code>, <code>last-of-type</code>, and <code>nth-of-type</code>.</p>
+<p>The <a href="https://www.w3schools.com/cssref/sel_nth-of-type.asp">nth-of-type selectors</a> match the nth item in a set which also matches a type, whereas the nth-child selectors only consider the index. Take a look at this example:</p>
+<p>.row {<br>
+color: white;<br>
+}.row:nth-of-type(2n) {<br>
+background-color: #111;<br>
+}.row:nth-of-type(2n+1) {<br>
+background-color: #333;<br>
+}<div></p>
+  <div>Part 1</div>  
+  <div class="row">you are a good programmer</div>  
+  <div class="row">even on your bad days</div>  
+  <div class="row">the fact that you keep coding</div>  
+  <div class="row">is all the proof you need</div>  
+  <div>Part 2</div>  
+  <div class="row">you are good at design</div>  
+  <div class="row">because you are human</div>  
+  <div class="row">you just need to listen</div>  
+  <div class="row">to what other humans want</div>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*Pw6chZ8Cfqf3uVN4Wz9q8Q.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/666/1*Pw6chZ8Cfqf3uVN4Wz9q8Q.png" alt=""></p>
+<p>Notice how the styles are not applied to elements which don’t have the <code>.row</code> class, because they don’t match the type. You can use these principles to create elegant table structures with minimal code.</p>
+<hr>
+<h1 id="media-queries">Media queries <a class="heading-anchor-permalink" href="#media-queries" aria-hidden="true">#</a></h1>
+<p>Media queries allow you to separate styles based on screen conditions. In the example below, we have media queries for mobile, tablet, and desktop, respectively:</p>
+<p>@media (max-width: 480px) {<br>
+.content {…}<br>
+}@media (min-width: 481px) and (max-width: 720px) {<br>
+.content {…}<br>
+}@media (min-width: 720px) {<br>
+.content {…}<br>
+}</p>
+<p>You can also specify a media query based on screen orientation:</p>
+<p>@media screen and (orientation: landscape) {<br>
+.content {…}<br>
+}</p>
+<p>Notice the <code>screen</code> <a href="https://stackoverflow.com/questions/8549529/what-is-the-difference-between-screen-and-only-screen-in-media-queries/14168210#14168210">keyword</a> in the media query above. This means the styles in the query only apply to screens, and not to print. Here’s how you would create a media query for print:</p>
+<p>@media print {<br>
+.content {…}<br>
+}</p>
+<p>Sometimes, you’ll need to resize certain elements based on pixel density. Below is an example of a media query for Retina screens:</p>
+<p>.image {<br>
+height: 300px;<br>
+width: 300px;<br>
+}@media screen and (min-resolution: 192dpi) {<br>
+.image {<br>
+height: 150px;<br>
+width: 150px;<br>
+}<br>
+}</p>
+<hr>
+<h1 id="transitions-and-animations">Transitions and animations <a class="heading-anchor-permalink" href="#transitions-and-animations" aria-hidden="true">#</a></h1>
+<p>I’ve written <a href="/this-aint-disney-a-practical-guide-to-css-transitions-and-animations-a8b87e7c5531">a detailed article on key principles</a> for CSS transitions and animations, you should find some valuable answers if you have questions.</p>
+<hr>
+<h1 id="sanity-tips">Sanity tips <a class="heading-anchor-permalink" href="#sanity-tips" aria-hidden="true">#</a></h1>
+<h2 id="temporary-borders-everywhere">Temporary borders everywhere <a class="heading-anchor-permalink" href="#temporary-borders-everywhere" aria-hidden="true">#</a></h2>
+<p>You’ve probably noticed how many of the elements in my examples have borders. This is not just a teaching tool, I do this when positioning elements in my work.</p>
+<p>Since HTML elements are borderless by default, positioning work could become tricky when you have many elements and you want your UI to be pixel perfect.</p>
+<p><img src="https://miro.medium.com/max/22/1*4clzAhWuuZSejd3paPnXhw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/800/1*4clzAhWuuZSejd3paPnXhw.png" alt=""></p>
+<p>Darshan Singh on <a href="https://dribbble.com/shots/5496405-Your-Cart-View">Dribbble</a></p>
+<p>Consider creating a CSS class for temporary borders. In the example above, I’m using a dashed line for certain outer borders, and a solid line for inner ones. Find an arrangement which works for you, and this work becomes more pleasant.</p>
+<h2 id="generic-css-classes">Generic CSS classes <a class="heading-anchor-permalink" href="#generic-css-classes" aria-hidden="true">#</a></h2>
+<p>In the example below, I’ve created some generic classes to use anywhere in my UI:</p>
+<p>.font-family-body {font-family: Avenir, sans-serif;}<br>
+.font-weight-body-bold {font-weight: 600;}<br>
+.font-weight-body-normal {font-weight: 400;}<br>
+.font-weight-body-light {font-weight: 300;}.font-family-heading {font-family: Oswald, serif;}<br>
+.font-weight-heading-bold {font-weight: 700;}<br>
+.font-weight-heading-normal {font-weight: 400;}.color-active {color: blue;}<br>
+.color-danger {color: red;}<br>
+.color-warning {color: orange;}<br>
+.color-success {color: green;}.color-text-normal {color: #333;}<br>
+.color-text-dark {color: #111;}<br>
+.color-text-light {color: #555;}</p>
+<p>Compared to duplicating the properties across elements the project, this strategy adds much more scalability, since I can easily modify my global styles from one place.</p>
+<h2 id="keep-visual-and-functional-components-separate">Keep visual and functional components separate <a class="heading-anchor-permalink" href="#keep-visual-and-functional-components-separate" aria-hidden="true">#</a></h2>
+<p>In the following example, we have a card-style element containing text:</p>
+<p>.feedback {<br>
+background-color: white;<br>
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);<br>
+padding: 20px 40px;<br>
+}.feedback h1 {<br>
+color: #333;<br>
+}.feedback p {<br>
+color: #888;<br>
+}<div class="feedback"></p>
+  <h1>We got your feedback</h1>  
+  <p>And we are working hard to respond to you as soon as possible. Please check your email for a message from our team.</p>  
+</div>
+<p><img src="https://miro.medium.com/max/30/1*bH-lLkF1oD6NQJdJJlwS5Q.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/716/1*bH-lLkF1oD6NQJdJJlwS5Q.png" alt=""></p>
+<p>There’s nothing inherently wrong with this approach, but there is a more scalable one. Consider this change:</p>
+<p><strong>.card {<br>
+background-color: white;<br>
+box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);<br>
+padding: 20px 40px;<br>
+}</strong>.feedback h1 {<br>
+color: #333;<br>
+}.feedback p {<br>
+color: #888;<br>
+}<div class="feedback **card**"></p>
+  <h1>We got your feedback</h1>  
+  <p>And we are working hard to respond to you as soon as possible. Please check your email for a message from our team.</p>  
+</div>
+<p>By breaking the styles for the feedback card into two classes, <code>.feedback</code> and <code>.card</code>, we can reuse our card styles elsewhere in the UI for consistency.</p>
+<hr>
+<h1 id="conclusion">Conclusion <a class="heading-anchor-permalink" href="#conclusion" aria-hidden="true">#</a></h1>
+<p>The amount of information missing from this “guide” makes me uneasy. CSS is an endless void, and it will continue to feel that way as long as designers keep making bolder decisions.</p>
+<p>Your aim should be to understand aspects of CSS as your need arises, rather than to try and grasp every concept on a philosophical level. Each design task you complete will add more weapons to your arsenal, and as time passes, you will need less documentation to make more progress.</p>
+<p>At the end of the day, what matters is most is that your design looks on screen the way it looked in your mind. CSS is here to help you accomplish that; stylesheets work for you, not the other way around.</p>
+<h2 id="side-note">Side note <a class="heading-anchor-permalink" href="#side-note" aria-hidden="true">#</a></h2>
+<p>There are styles in my examples which don’t show up in the code, I’ve done this to make the concepts easier to visualize without adding clutter. Feel free to DM me if you have any questions about that.</p>
+<h2 id="codepens">Codepens <a class="heading-anchor-permalink" href="#codepens" aria-hidden="true">#</a></h2>
+<ul>
+<li><a href="https://codepen.io/mohammedibrahim/pen/mdbwEKo">Absolute and fixed positions</a></li>
+<li><a href="https://codepen.io/mohammedibrahim/pen/yLBXWbQ">Relative position</a></li>
+<li><a href="https://codepen.io/mohammedibrahim/pen/pozwEJP">Flexbox</a></li>
+<li><a href="https://codepen.io/mohammedibrahim/pen/JjPJJYN">z-index</a></li>
+<li><a href="https://codepen.io/mohammedibrahim/pen/zYOzENg">Margin vs padding</a></li>
+<li><a href="https://codepen.io/mohammedibrahim/pen/MWgoRwm">Separating style from function</a></li>
+</ul>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

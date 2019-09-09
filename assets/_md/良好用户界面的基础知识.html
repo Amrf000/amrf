@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /*! ADAPTED
+    Typeplate : Starter Kit
+    URL ........... http://typeplate.com
+    Version ....... 3.0.2
+    Github ........ https://github.com/typeplate/starter-kit
+    Authors ....... Dennis Gaebel (@gryghostvisuals) & Zachary Kain (@zakkain)
+    License ....... Creative Commmons Attribution 3.0
+    License URL ... https://github.com/typeplate/starter-kit/blob/master/license.txt
+    */
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        text-rendering: optimizeLegibility;
+        line-height: 1;
+        margin-top: 0;
+        color: #222;
+      }
+
+      blockquote + figcaption cite {
+        display: block;
+        font-size: inherit;
+        text-align: right;
+      }
+
+      body {
+        word-wrap: break-word;
+      }
+
+      pre code {
+        word-wrap: normal;
+      }
+
+      body {
+        -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+        hyphens: auto;
+        color: #444;
+      }
+
+      h1 {
+        font-size: 2em;
+        /* 2*16 = 32 */
+      }
+
+      h2 {
+        font-size: 1.5em;
+        /* 1.5*16 = 24 */
+      }
+
+      h3 {
+        font-size: 1.17em;
+        /* 1.17*16 = 18.72 */
+      }
+
+      h4 {
+        font-size: 1em;
+        /* 1*16 = 16 */
+      }
+
+      h5 {
+        font-size: 0.83em;
+        /* 0.83*16 = 13.28 */
+      }
+
+      h6 {
+        font-size: 0.75em;
+        /* 0.75*16 = 12 */
+      }
+
+      h1 {
+        margin: 2.42424rem 0 1.454544rem;
+      }
+
+      h2 {
+        margin: 2.0202rem 0 1.21212rem;
+      }
+
+      h3 {
+        margin: 1.61616rem 0 1rem;
+      }
+
+      h4 {
+        margin: 1.21212rem 0 1;
+      }
+
+      h5 {
+        margin: 0.80808rem 0;
+      }
+
+      h6 {
+        margin: 0.70707rem 0;
+      }
+
+      p {
+        margin: auto auto 1.5rem;
+      }
+
+      small {
+        font-size: 65%;
+      }
+
+      input,
+      abbr,
+      acronym,
+      blockquote,
+      code,
+      kbd,
+      q,
+      samp,
+      var {
+        -webkit-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+      }
+
+      pre {
+        white-space: pre;
+      }
+
+      pre code {
+        white-space: -moz-pre-wrap;
+        white-space: pre-wrap;
+      }
+
+      code {
+        white-space: pre;
+        font-family: SF Mono, Consolas, Dejavu Sans Mono, Menlo, monospace;
+      }
+
+      abbr {
+        -webkit-font-variant: small-caps;
+        -moz-font-variant: small-caps;
+        -ms-font-variant: small-caps;
+        font-variant: small-caps;
+        font-weight: 600;
+        text-transform: lowercase;
+        color: gray;
+      }
+
+      abbr[title]:hover {
+        cursor: help;
+      }
+
+      /* FROM http://purecss.io/layouts/side-menu/  adapted to remove pure classes*/
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+          "Segoe UI Symbol";
+        color: #444;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: auto;
+      }
+
+      code,
+      pre {
+        background-color: #f5f5f5;
+        color: #444;
+        border-radius: 2px;
+        text-shadow: 0px 1px 0px white;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
+      }
+
+      pre code {
+        border: none;
+        box-shadow: none;
+      }
+
+      pre {
+        padding: 0.5em;
+      }
+
+      code {
+        display: inline-block;
+        padding: 0 0.5em;
+        line-height: 1.4;
+        font-size: 0.9em;
+      }
+
+      table {
+        border-spacing: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      table th,
+      table td {
+        padding: 0.3em 0.7em;
+      }
+
+      table th {
+        background-color: #f4f4f4;
+        border-bottom: 2px solid #444;
+      }
+
+      table td {
+        border: 1px solid #f5f5f5;
+      }
+
+      /* Add transition to containers so they can push in and out. */
+
+      #layout,
+      #menu,
+      .menu-link {
+        -webkit-transition: all 0.2s ease-out;
+        -moz-transition: all 0.2s ease-out;
+        -ms-transition: all 0.2s ease-out;
+        -o-transition: all 0.2s ease-out;
+        transition: all 0.2s ease-out;
+      }
+
+      /* This is the parent `<div>` that contains the menu and the content area. */
+
+      #layout {
+        position: relative;
+        padding-left: 0;
+      }
+
+      #layout.active #menu {
+        left: 250px;
+        width: 250px;
+      }
+
+      #layout.active .menu-link {
+        left: 250px;
+      }
+
+      /* The content `<div>` is where all your content goes. */
+
+      .content {
+        margin: 50px auto;
+        padding: 0 2em;
+        max-width: 80ex;
+        line-height: 1.6em;
+      }
+
+      /*
+      The `#menu` `<div>` is the parent `<div>` that contains the menu that
+      appears on the left side of the page.
+      */
+
+      #menu {
+        margin-left: -250px;
+        /* "#menu" width */
+        width: 250px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        /* so the menu or its navicon stays above all content */
+        background: #f4f4f4;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.9em;
+      }
+
+      a,
+      a * {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      a:visited {
+        text-decoration: none;
+        color: #2483cc;
+      }
+
+      /* All anchors inside the menu should be styled like this. */
+
+      #menu a {
+        display: block;
+        padding: 0.5em 0.5em;
+      }
+
+      #menu a:first-letter {
+        text-transform: capitalize;
+      }
+
+      #menu ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 1em 0.5em;
+      }
+
+      #menu ul ul {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        border-left: 4px solid rgba(255, 255, 255, 0.5);
+      }
+
+      /* Change color of the anchor links on hover/focus. */
+
+      #menu li a:hover,
+      #menu li a:focus {
+        background: rgba(255, 255, 255, 0.4);
+      }
+
+      /* This styles the selected menu item `<li>`. */
+
+      #menu li a.active {
+        background: rgba(0, 0, 0, 0.05);
+      }
+
+      /* This styles a link within a selected menu item `<li>`. */
+
+      #menu li a.active {
+        color: #222;
+      }
+
+      /* This styles the menu heading. */
+
+      #menu li.heading {
+        font-size: 0.9em;
+        text-transform: uppercase;
+        color: #000;
+      }
+
+      #menu li.heading > * {
+        padding: 0.5em;
+        display: block;
+      }
+
+      #menu li.heading a {
+        color: #0c68af;
+      }
+
+      /* -- Dynamic Button For Responsive Menu -------------------------------------*/
+
+      /*
+      `.menu-link` represents the responsive menu toggle that shows/hides on
+      small screens.
+      */
+
+      .menu-link {
+        position: fixed;
+        display: block;
+        /* show this only on small screens */
+        top: 0;
+        left: 0;
+        /* "#menu width" */
+        font-size: 10px;
+        /* change this value to increase/decrease button size */
+        z-index: 10;
+        width: 2em;
+        height: auto;
+        padding: 1.6em 1.2em;
+        border-radius: 0 2px 2px 0;
+      }
+
+      .menu-link:hover {
+        background: #f4f4f4;
+      }
+
+      .menu-link span {
+        position: relative;
+        display: block;
+      }
+
+      .menu-link span,
+      .menu-link span:before,
+      .menu-link span:after {
+        background-color: #555;
+        width: 100%;
+        height: 0.2em;
+        border-radius: 1em;
+      }
+
+      .menu-link span:before,
+      .menu-link span:after {
+        position: absolute;
+        margin-top: -0.6em;
+        content: " ";
+      }
+
+      .menu-link span:after {
+        margin-top: 0.6em;
+      }
+
+      /* Hides the menu at `48em`, but modify this based on your app's needs. */
+
+      @media (min-width: 48em) {
+        .header,
+        .content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+
+        #layout {
+          padding-left: 250px;
+          /* left col width "#menu" */
+          left: 0;
+        }
+        #menu {
+          left: 250px;
+        }
+
+        .menu-link {
+          position: fixed;
+          left: 250px;
+          display: none;
+        }
+
+        #layout.active .menu-link {
+          left: 250px;
+        }
+      }
+
+      @media (max-width: 48em) {
+        /* Only apply this when the window is small. Otherwise, the following case results in extra padding on the left:
+         * Make the window small.
+         * Tap the menu to trigger the active state.
+         * Make the window large again.
+         */
+        #layout.active {
+          position: relative;
+          left: 250px;
+        }
+      }
+
+      /* Heading anchors and permalinks */
+      h1[id],
+      h2[id],
+      h3[id],
+      h4[id],
+      h5[id],
+      h6[id] {
+        position: relative;
+      }
+      .heading-anchor-permalink {
+        /* Position the permalink to the left of the title */
+        position: absolute;
+        right: 100%;
+        /* Add some spacing as padding to not lose the hover */
+        padding-right: 0.6rem;
+        /* Make it only visible on heading hover, see below */
+        opacity: 0;
+      }
+      h1[id]:hover .heading-anchor-permalink,
+      h2[id]:hover .heading-anchor-permalink,
+      h3[id]:hover .heading-anchor-permalink,
+      h4[id]:hover .heading-anchor-permalink,
+      h5[id]:hover .heading-anchor-permalink,
+      h6[id]:hover .heading-anchor-permalink {
+        opacity: 0.5;
+      }
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div id="layout">
+      <!-- Menu toggle -->
+      <a href="#menu" id="menuLink" class="menu-link">
+        <!-- Hamburger icon -->
+        <span></span>
+      </a>
+      <nav id="menu">
+        <ul>
+<li><a class="" href="2019年React Developers的22个神奇工具.html">2019年React Developers的22个神奇工具</a></li>
+<li><a class="" href="4数据处理的设计原则.html">4数据处理的设计原则</a></li>
+<li><a class="" href="5 Bad Habits of Absolutely Ineffective Technology Managers.html">5 Bad Habits of Absolutely Ineffective Technology Managers</a></li>
+<li><a class="" href="5 Easy Steps to Understanding JSON Web Tokens (JWT).html">5 Easy Steps to Understanding JSON Web Tokens (JWT)</a></li>
+<li><a class="" href="5个简单的CSS技巧使普通页面看起来很棒.html">5个简单的CSS技巧使普通页面看起来很棒</a></li>
+<li><a class="" href="6仍未解决的数学问题.html">6仍未解决的数学问题</a></li>
+<li><a class="" href="8 habits you should avoid when developing with Javascript.html">8 habits you should avoid when developing with Javascript</a></li>
+<li><a class="" href="A_基础介绍.html">A 基础介绍</a></li>
+<li><a class="" href="Advance AI Building chatbot using Rasa-NLU.html">Advance AI Building chatbot using Rasa NLU</a></li>
+<li><a class="" href="Angular Material安装.html">Angular Material安装</a></li>
+<li><a class="" href="Angular chat.html">Angular chat</a></li>
+<li><a class="" href="Angular 测试和使用记录.html">Angular 测试和使用记录</a></li>
+<li><a class="" href="Angular 笔记.html">Angular 笔记</a></li>
+<li><a class="" href="AngularJS Material Design Tabs, Forms & Toasts.html">AngularJS Material Design Tabs, Forms & Toasts</a></li>
+<li><a class="" href="Angularjs 特性快速浏览记录.html">Angularjs 特性快速浏览记录</a></li>
+<li><a class="" href="Apache CXF Support for RESTful Web Services.html">Apache CXF Support for RESTful Web Services</a></li>
+<li><a class="" href="Awesome-Chinese-NLP.html">Awesome Chinese NLP</a></li>
+<li><a class="" href="Bezier曲线处理简介.html">Bezier曲线处理简介</a></li>
+<li><a class="" href="Build Your Pokédex Part 1 — Introduction to NgRX.html">Build Your Pokédex Part 1 — Introduction to NgRX</a></li>
+<li><a class="" href="Building a Chrome Extension, Tips and Tricks.html">Building a Chrome Extension, Tips and Tricks</a></li>
+<li><a class="" href="Building a React Components Library.html">Building a React Components Library</a></li>
+<li><a class="" href="CButtonST使用记录(mfc).html">CButtonST使用记录(mfc)</a></li>
+<li><a class="" href="CDHtmlDialog是一个好的选择吗.html">CDHtmlDialog是一个好的选择吗</a></li>
+<li><a class="" href="Caffe搭建手记_基于Ubuntu14.04LTS.html">Caffe搭建手记 基于Ubuntu14.04LTS</a></li>
+<li><a class="" href="DCGANs - 使用Tensorflow和Keras生成狗图像.html">DCGANs   使用Tensorflow和Keras生成狗图像</a></li>
+<li><a class="" href="DeviceIoControl && DCB.html">DeviceIoControl && DCB</a></li>
+<li><a class="" href="EA模型导入mysql表结构步骤.html">EA模型导入mysql表结构步骤</a></li>
+<li><a class="" href="GPU编程–CUDA环境配置与简单例程.html">GPU编程–CUDA环境配置与简单例程</a></li>
+<li><a class="" href="Github 项目推荐  无监督神经机器翻译 —— UNdreaMT.html">Github 项目推荐  无监督神经机器翻译 —— UNdreaMT</a></li>
+<li><a class="" href="Go pointers demystified.html">Go pointers demystified</a></li>
+<li><a class="" href="Golang中的JSON简介.html">Golang中的JSON简介</a></li>
+<li><a class="" href="Go中的并发简介：Gopher Farm.html">Go中的并发简介：Gopher Farm</a></li>
+<li><a class="" href="Go踩坑记录.html">Go踩坑记录</a></li>
+<li><a class="" href="HPA与NavigationMesh相关资料.html">HPA与NavigationMesh相关资料</a></li>
+<li><a class="" href="Intro to Bash Scripting.html">Intro to Bash Scripting</a></li>
+<li><a class="" href="JWT的名词解释和使用.html">JWT的名词解释和使用</a></li>
+<li><a class="" href="Kotlin Coroutines图案和反图案.html">Kotlin Coroutines图案和反图案</a></li>
+<li><a class="" href="Language Modelling and Text Generation using LSTMs — Deep Learning for NLP.html">Language Modelling and Text Generation using LSTMs — Deep Learning for NLP</a></li>
+<li><a class="" href="Lucene 同义词.html">Lucene 同义词</a></li>
+<li><a class="" href="Netty 教程 - hello world.html">Netty 教程   hello world</a></li>
+<li><a class="" href="OOP模式匹配：访客模式.html">OOP模式匹配：访客模式</a></li>
+<li><a class="" href="Onetab数据丢失之后!!!.html">Onetab数据丢失之后!!!</a></li>
+<li><a class="" href="Python后端：Flask与Django.html">Python后端：Flask与Django</a></li>
+<li><a class="" href="Python语法速览（一）.html">Python语法速览（一）</a></li>
+<li><a class="" href="Python语法速览（二）.html">Python语法速览（二）</a></li>
+<li><a class="" href="QGraphicsView测试.html">QGraphicsView测试</a></li>
+<li><a class="" href="Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常.html">Qt5.10 qtcreator4.5.0 vs调试器安装和qtcreatorcdbext.dll异常</a></li>
+<li><a class="" href="RAD Studio XE2安装.html">RAD Studio XE2安装</a></li>
+<li><a class="" href="RESTful API设计 - 循序渐进指南.html">RESTful API设计   循序渐进指南</a></li>
+<li><a class="" href="RabbitMQ场景观察.html">RabbitMQ场景观察</a></li>
+<li><a class="" href="RapidXml使用小结.html">RapidXml使用小结</a></li>
+<li><a class="" href="Reactjs 实例测试记录.html">Reactjs 实例测试记录</a></li>
+<li><a class="" href="Rust中的WebAssembly模块.html">Rust中的WebAssembly模块</a></li>
+<li><a class="" href="RxJS：使用forkJoin进行错误处理.html">RxJS：使用forkJoin进行错误处理</a></li>
+<li><a class="" href="Simple Chat - React & Java.html">Simple Chat   React & Java</a></li>
+<li><a class="" href="SlimXml的一个使用注意点.html">SlimXml的一个使用注意点</a></li>
+<li><a class="" href="Spring AOP的相关概念和使用场景.html">Spring AOP的相关概念和使用场景</a></li>
+<li><a class="" href="Spring Boot + WebSockets + Angular 5.html">Spring Boot + WebSockets + Angular 5</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_Spring WebFlux（三）.html">Spring Boot 参考文档阅读摘录 Spring WebFlux（三）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录_spring mvc（二）.html">Spring Boot 参考文档阅读摘录 spring mvc（二）</a></li>
+<li><a class="" href="Spring Boot 参考文档阅读摘录（一）.html">Spring Boot 参考文档阅读摘录（一）</a></li>
+<li><a class="" href="Spring Webflux&Angular集成测试.html">Spring Webflux&Angular集成测试</a></li>
+<li><a class="" href="Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080.html">Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080</a></li>
+<li><a class="" href="Swing简单图形常识备忘.html">Swing简单图形常识备忘</a></li>
+<li><a class="" href="The Programmer’s Guide to the Stylesheet.html">The Programmer’s Guide to the Stylesheet</a></li>
+<li><a class="" href="VISAInstrument运行时环境包.html">VISAInstrument运行时环境包</a></li>
+<li><a class="" href="Vuejs演示用例测试记录.html">Vuejs演示用例测试记录</a></li>
+<li><a class="" href="Vue数据流如何工作 - 一个实际的例子.html">Vue数据流如何工作   一个实际的例子</a></li>
+<li><a class="" href="Web Assembly(wasm).html">Web Assembly(wasm)</a></li>
+<li><a class="" href="Why you should be data-informed and not data-driven.html">Why you should be data informed and not data driven</a></li>
+<li><a class="" href="[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper).html">[ 转载]Qt数据库操作(附MFC sqlite c++ wrapper)</a></li>
+<li><a class="" href="[转]react native环境.html">[转]react native环境</a></li>
+<li><a class="" href="[转]使用虚幻4 制作动作角色扮演游戏---(第1步 在一个美丽的场景中).html">[转]使用虚幻4 制作动作角色扮演游戏   (第1步 在一个美丽的场景中)</a></li>
+<li><a class="" href="[转载]ko：Go中的快速Kubernetes微服务开发.html">[转载]ko：Go中的快速Kubernetes微服务开发</a></li>
+<li><a class="" href="[转载]向OutLook中添加HTML源码.html">[转载]向OutLook中添加HTML源码</a></li>
+<li><a class="" href="[转载]将Bulma CSS Framework添加到Angular 6应用程序中.html">[转载]将Bulma CSS Framework添加到Angular 6应用程序中</a></li>
+<li><a class="" href="[转载]构建Web实时协作文本编辑器.html">[转载]构建Web实时协作文本编辑器</a></li>
+<li><a class="" href="aiml 2  查询记录.html">aiml 2  查询记录</a></li>
+<li><a class="" href="angular RxJS.html">angular RxJS</a></li>
+<li><a class="" href="angular markdown editor项目测试.html">angular markdown editor项目测试</a></li>
+<li><a class="" href="angular-material2-vertical-tabs.html">angular material2 vertical tabs</a></li>
+<li><a class="" href="angular.io教程转载.html">angular.io教程转载</a></li>
+<li><a class="" href="angular基础（一）.html">angular基础（一）</a></li>
+<li><a class="" href="boost 参考文档目录翻译.html">boost 参考文档目录翻译</a></li>
+<li><a class="" href="c++静态检查记录.html">c++静态检查记录</a></li>
+<li><a class="" href="docker环境测试.html">docker环境测试</a></li>
+<li><a class="" href="doc文档内容分析检错.html">doc文档内容分析检错</a></li>
+<li><a class="" href="freetype-gl接口分析.html">freetype gl接口分析</a></li>
+<li><a class="" href="freetype中文字符渲染.html">freetype中文字符渲染</a></li>
+<li><a class="" href="gitbook使用记录.html">gitbook使用记录</a></li>
+<li><a class="" href="github pages中包含md文件时的异常.html">github pages中包含md文件时的异常</a></li>
+<li><a class="" href="go 链表.html">go 链表</a></li>
+<li><a class="" href="jQuery提示：不要使用DOM来存储数据.html">jQuery提示：不要使用DOM来存储数据</a></li>
+<li><a class="" href="java pdf转txt用于文档全文检索.html">java pdf转txt用于文档全文检索</a></li>
+<li><a class="" href="java 杂记（三）.html">java 杂记（三）</a></li>
+<li><a class="" href="java杂记（一）.html">java杂记（一）</a></li>
+<li><a class="" href="java杂记（二）.html">java杂记（二）</a></li>
+<li><a class="" href="java杂记（五）.html">java杂记（五）</a></li>
+<li><a class="" href="java杂记（四）.html">java杂记（四）</a></li>
+<li><a class="" href="lua 5.3和C++互相调用测试.html">lua 5.3和C++互相调用测试</a></li>
+<li><a class="" href="lucence特殊字符转义.html">lucence特殊字符转义</a></li>
+<li><a class="" href="lucene 5.5.1使用.html">lucene 5.5.1使用</a></li>
+<li><a class="" href="lucene MultiFieldQueryParser 模糊反思.html">lucene MultiFieldQueryParser 模糊反思</a></li>
+<li><a class="" href="markdown-here离线安装.html">markdown here离线安装</a></li>
+<li><a class="" href="matlab 2017帮助页目录.html">matlab 2017帮助页目录</a></li>
+<li><a class="" href="mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系.html">mfc .rc文件中的尺寸和实际显示的像素尺寸之间的关系</a></li>
+<li><a class="" href="mysql日志、索引、事务、内外连接查询、连接池.html">mysql日志、索引、事务、内外连接查询、连接池</a></li>
+<li><a class="" href="navicat11无法显示mysql json字段.html">navicat11无法显示mysql json字段</a></li>
+<li><a class="" href="ng-bootstrap的测试和使用.html">ng bootstrap的测试和使用</a></li>
+<li><a class="" href="php调用FFMpeg实现视频切片查询记录.html">php调用FFMpeg实现视频切片查询记录</a></li>
+<li><a class="" href="poi合并单元格假合并问题.html">poi合并单元格假合并问题</a></li>
+<li><a class="" href="qml  + qwebengineview  + qwebchannel 实践记录.html">qml  + qwebengineview  + qwebchannel 实践记录</a></li>
+<li><a class="" href="qml webviewengine使用中的一些查询记录.html">qml webviewengine使用中的一些查询记录</a></li>
+<li><a class="" href="qml项目打包后程序无法单独启动问题.html">qml项目打包后程序无法单独启动问题</a></li>
+<li><a class="" href="qt  createWindowContainer embed realvnc.html">qt  createWindowContainer embed realvnc</a></li>
+<li><a class="" href="qt5 静态链接库文件.html">qt5 静态链接库文件</a></li>
+<li><a class="" href="smtp协议邮件转发.html">smtp协议邮件转发</a></li>
+<li><a class="" href="spring boot restful api documentation with swagger 2.html">spring boot restful api documentation with swagger 2</a></li>
+<li><a class="" href="spring secrity ldap.html">spring secrity ldap</a></li>
+<li><a class="" href="spring 本地开发环境webapp_WEB-INF_classes下配置文件不更新问题  .html">spring 本地开发环境webapp WEB INF classes下配置文件不更新问题  </a></li>
+<li><a class="" href="springboot cxf starter教程项目实际测试.html">springboot cxf starter教程项目实际测试</a></li>
+<li><a class="" href="springboot cxf starter教程项目测试（二）.html">springboot cxf starter教程项目测试（二）</a></li>
+<li><a class="" href="spring上下文看起来加载了两次的问题.html">spring上下文看起来加载了两次的问题</a></li>
+<li><a class="" href="spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法.html">spring定时任务执行两次、Tomcat启动时项目重复加载的解决办法</a></li>
+<li><a class="" href="tensorflow.js 用例观察.html">tensorflow.js 用例观察</a></li>
+<li><a class="" href="unreal相关.html">unreal相关</a></li>
+<li><a class="" href="vs远程调试步骤.html">vs远程调试步骤</a></li>
+<li><a class="" href="【扩展开发问题记录】Refused to load the script because it violates....html">【扩展开发问题记录】Refused to load the script because it violates...</a></li>
+<li><a class="" href="一个成功的人工记忆已被创造.html">一个成功的人工记忆已被创造</a></li>
+<li><a class="" href="一袋单词代码 - 使用python的NLP技术的最简单解释.html">一袋单词代码   使用python的NLP技术的最简单解释</a></li>
+<li><a class="" href="不要跳过伪代码.html">不要跳过伪代码</a></li>
+<li><a class="" href="什么是GraphQL：历史，组件和生态系统.html">什么是GraphQL：历史，组件和生态系统</a></li>
+<li><a class="" href="什么是TensorFrames？TensorFlow + Apache Spark.html">什么是TensorFrames？TensorFlow + Apache Spark</a></li>
+<li><a class="" href="什么是深度学习.html">什么是深度学习</a></li>
+<li><a class="" href="从Async Task到Kotlin Coroutines的旅程.html">从Async Task到Kotlin Coroutines的旅程</a></li>
+<li><a class="" href="任何MMO游戏后端如何运作.html">任何MMO游戏后端如何运作</a></li>
+<li><a class="" href="使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API.html">使用GO，GORM，JWT，Postgres，Mysql和测试的Crud Restful API</a></li>
+<li><a class="" href="使用RESTful API实现GraphQL的强大功能 - 满足Hypnos.html">使用RESTful API实现GraphQL的强大功能   满足Hypnos</a></li>
+<li><a class="" href="使用eclipse远程调试java图形工具程序.html">使用eclipse远程调试java图形工具程序</a></li>
+<li><a class="" href="使用websocket实时显示后台日志.html">使用websocket实时显示后台日志</a></li>
+<li><a class="" href="使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）.html">使用变压器模型进行文本分类的动手指南（XLNet，BERT，XLM，RoBERTa）</a></li>
+<li><a class="" href="使用多任务级联CNN进行深度学习的人脸检测.html">使用多任务级联CNN进行深度学习的人脸检测</a></li>
+<li><a class="" href="停止询问React Hooks是否替换Redux.html">停止询问React Hooks是否替换Redux</a></li>
+<li><a class="" href="分布式名词收集.html">分布式名词收集</a></li>
+<li><a class="" href="分布式名词收集（二）.html">分布式名词收集（二）</a></li>
+<li><a class="" href="前后端交互设计.html">前后端交互设计</a></li>
+<li><a class="" href="前端JS开发没有透明的源代码.html">前端JS开发没有透明的源代码</a></li>
+<li><a class="" href="前端杂记.html">前端杂记</a></li>
+<li><a class="" href="单片与微服务，以及介于两者之间.html">单片与微服务，以及介于两者之间</a></li>
+<li><a class="" href="和弦：在Golang中构建DHT（分布式哈希表）.html">和弦：在Golang中构建DHT（分布式哈希表）</a></li>
+<li><a class="" href="图形化工具改造日志.html">图形化工具改造日志</a></li>
+<li><a class="" href="图片反向检索【转载】.html">图片反向检索【转载】</a></li>
+<li><a class="" href="在 c++ 嵌入 Python.html">在 c++ 嵌入 Python</a></li>
+<li><a class="" href="在Apache OpenWhisk中使用GPU.html">在Apache OpenWhisk中使用GPU</a></li>
+<li><a class="" href="在Go中管理Goroutines群.html">在Go中管理Goroutines群</a></li>
+<li><a class="" href="在线演示文档观察.html">在线演示文档观察</a></li>
+<li><a class="" href="基于angularjs和mxgraph的里程碑计划控件.html">基于angularjs和mxgraph的里程碑计划控件</a></li>
+<li><a class="" href="基于httpclient和jsoup实现的爬虫.html">基于httpclient和jsoup实现的爬虫</a></li>
+<li><a class="" href="基于selenium的爬虫(chromedriver)-java环境下.html">基于selenium的爬虫(chromedriver) java环境下</a></li>
+<li><a class="" href="多变量与AB测试：有什么区别.html">多变量与AB测试：有什么区别</a></li>
+<li><a class="" href="如何使用后台脚本获取Chrome扩展程序中的数据.html">如何使用后台脚本获取Chrome扩展程序中的数据</a></li>
+<li><a class="" href="如何在AI中作为开发人员入门.html">如何在AI中作为开发人员入门</a></li>
+<li><a class="" href="如何开始使用IPFS和节点.html">如何开始使用IPFS和节点</a></li>
+<li><a class="" href="如何编写模拟器（CHIP-8解释器）.html">如何编写模拟器（CHIP 8解释器）</a></li>
+<li><a class="" href="带管道和GridSearch的NLP.html">带管道和GridSearch的NLP</a></li>
+<li><a class="" href="强化学习：马尔可夫决策过程（第2部分）.html">强化学习：马尔可夫决策过程（第2部分）</a></li>
+<li><a class="" href="忘记RxJava：Kotlin Coroutines就是您所需要的.html">忘记RxJava：Kotlin Coroutines就是您所需要的</a></li>
+<li><a class="" href="您应该在2019年了解的9个Web组件UI库.html">您应该在2019年了解的9个Web组件UI库</a></li>
+<li><a class="" href="我在我的Android应用程序中交换了RxJava for coroutines.html">我在我的Android应用程序中交换了RxJava for coroutines</a></li>
+<li><a class="" href="打赌你无法解决这个谷歌面试问题.html">打赌你无法解决这个谷歌面试问题</a></li>
+<li><a class="" href="操作JSON字段.html">操作JSON字段</a></li>
+<li><a class="" href="数据库杂记.html">数据库杂记</a></li>
+<li><a class="" href="数据科学变得简单：使用Orange的交互式数据可视化.html">数据科学变得简单：使用Orange的交互式数据可视化</a></li>
+<li><a class="" href="数据科学家的自动版本控制.html">数据科学家的自动版本控制</a></li>
+<li><a class="" href="新型机器翻译.html">新型机器翻译</a></li>
+<li><a class="" href="无监督学习 - 凝聚聚类变得简单.html">无监督学习   凝聚聚类变得简单</a></li>
+<li><a class="" href="最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录.html">最近帮忙把saml登录从java移植到asp.net环境下的一些查询记录</a></li>
+<li><a class="" href="机器学习算法查询记录.html">机器学习算法查询记录</a></li>
+<li><a class="" href="构建React应用程序时不需要做的10件事.html">构建React应用程序时不需要做的10件事</a></li>
+<li><a class="" href="构建机器学习系统的六个重要步骤.html">构建机器学习系统的六个重要步骤</a></li>
+<li><a class="" href="正向模式自动微分和双数.html">正向模式自动微分和双数</a></li>
+<li><a class="" href="渲染DOM的最快方法.html">渲染DOM的最快方法</a></li>
+<li><a class="" href="现代JavaScript开发中的设计模式.html">现代JavaScript开发中的设计模式</a></li>
+<li><a class="" href="理解Dijkstra算法和Bellman-Ford算法的边缘松弛.html">理解Dijkstra算法和Bellman Ford算法的边缘松弛</a></li>
+<li><a class="" href="用于预测的堆叠神经网络.html">用于预测的堆叠神经网络</a></li>
+<li><a class="" href="由一个问题_Need to integrate mxGraph with react js_引发的开发测试实践.html">由一个问题 Need to integrate mxGraph with react js 引发的开发测试实践</a></li>
+<li><a class="" href="矢量记录.html">矢量记录</a></li>
+<li><a class="" href="程序创建的xlxs文件创建时间和修改时间不正确的问题.html">程序创建的xlxs文件创建时间和修改时间不正确的问题</a></li>
+<li><a class="" href="自动编码器高级指南.html">自动编码器高级指南</a></li>
+<li><a class="active" href="良好用户界面的基础知识.html">良好用户界面的基础知识</a></li>
+<li><a class="" href="记录qt异常（The inferior stopped because it triggered an exception） .html">记录qt异常（The inferior stopped because it triggered an exception） </a></li>
+<li><a class="" href="设计数据可视化.html">设计数据可视化</a></li>
+<li><a class="" href="贝叶斯神经网络（LSTM）：实施.html">贝叶斯神经网络（LSTM）：实施</a></li>
+<li><a class="" href="近期问题查询记录.html">近期问题查询记录</a></li>
+<li><a class="" href="遗传算法与回溯：N-Queen问题.html">遗传算法与回溯：N Queen问题</a></li>
+<li><a class="" href="量子编程简介.html">量子编程简介</a></li>
+<li><a class="" href="链表常见问题总结.html">链表常见问题总结</a></li>
+<li><a class="" href="错误收集贴.html">错误收集贴</a></li>
+<li><a class="" href="长轮询与WebSockets对比服务器发送的事件.html">长轮询与WebSockets对比服务器发送的事件</a></li>
+<li><a class="" href="问题记录.html">问题记录</a></li>
+<li><a class="" href="雅可比正则化.html">雅可比正则化</a></li>
+<li><a class="" href="静态资源打包添加hash版本.html">静态资源打包添加hash版本</a></li>
+<li><a class="" href="频谱图卷积逐步解释和实施.html">频谱图卷积逐步解释和实施</a></li>
+</ul>
+      </nav>
+      <article id="main" class="content">
+        <h1 id="%E8%89%AF%E5%A5%BD%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><img src="https://medium.com/datadriveninvestor/the-basics-of-good-user-interfaces-649a701891e4" alt="良好用户界面的基础知识">
+良好用户界面的基础知识 <a class="heading-anchor-permalink" href="#%E8%89%AF%E5%A5%BD%E7%94%A8%E6%88%B7%E7%95%8C%E9%9D%A2%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86" aria-hidden="true">#</a></h1>
+<p><a href="/@karaverse?source=post_page-----649a701891e4----------------------"><img src="https://miro.medium.com/fit/c/48/48/1*K3wNgT9lO4KZn-sUdyQRJg.jpeg" alt="特里卡拉沃利亚斯"></a></p>
+<p><a href="/@karaverse?source=post_page-----649a701891e4----------------------">特里卡拉沃利亚斯</a></p>
+<p>跟随</p>
+<p><a href="/datadriveninvestor/the-basics-of-good-user-interfaces-649a701891e4?source=post_page-----649a701891e4----------------------">8月16日</a> · 9 分钟阅读</p>
+<p><img src="https://miro.medium.com/max/30/1*QHVWQvJh46YskKyWBWuEDQ.jpeg?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/740/1*QHVWQvJh46YskKyWBWuEDQ.jpeg" alt=""></p>
+<p>Nest的简单而有效的用户界面。即使没有使用过，你也知道它是如何工作的。</p>
+<p>用户界面很难。作为开发人员，使用我们在数据库中拥有的所有信息很难概念化易于使用的界面。作为设计师，在忽略关键规格的同时，很容易构建视觉上吸引人的东西。产品人员是一个很好的调解员，他可以在良好的设计，用户体验/界面和开发人员限制之间找到一些中间地带 - 不幸的是并非每个公司都拥有一个奢侈品。</p>
+<p>有时，我们需要戴上不同的帽子并处理我们不一定习惯的事情。幸运的是，构建良好的用户界面是一项几乎任何人都可以学习的技能。以下是一些如何入门的提示。</p>
+<p>[</p>
+<p>该技术有望在2019年改变世界 数据驱动的投资者</p>
+<hr>
+<h3 id=""> <a class="heading-anchor-permalink" href="#" aria-hidden="true">#</a></h3>
+<p>很难想象一种技术会像去年的区块链那样获得尽可能多的宣传，但是…</p>
+<h4 id="-2"> <a class="heading-anchor-permalink" href="#-2" aria-hidden="true">#</a></h4>
+<p><a href="http://www.datadriveninvestor.com">www.datadriveninvestor.com</a></p>
+<p>](<a href="https://www.datadriveninvestor.com/2019/01/17/the-technologies-poised-to-change-the-world-in-2019/?source=post_page-----649a701891e4----------------------">https://www.datadriveninvestor.com/2019/01/17/the-technologies-poised-to-change-the-world-in-2019/?source=post_page-----649a701891e4----------------------</a>)</p>
+<h1 id="%E4%BD%A0%E4%B8%8D%E6%98%AF%E7%94%A8%E6%88%B7"><strong>你不是用户</strong> <a class="heading-anchor-permalink" href="#%E4%BD%A0%E4%B8%8D%E6%98%AF%E7%94%A8%E6%88%B7" aria-hidden="true">#</a></h1>
+<p>这是我一直想提到的一点，因为它是最重要的一点。我们经常陷入自己的世界，以至于我们有时会忘记谁在使用我们的产品。虽然存储在我们数据库中的记录遵循某些命名约定，但它们对我们的用户没有任何意义。您希望以用户易于理解的方式在您的网站或应用中显示数据。</p>
+<p><img src="https://miro.medium.com/max/30/1*VwEenXKkMnD4V-Jwi9n1ig.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/636/1*VwEenXKkMnD4V-Jwi9n1ig.png" alt=""></p>
+<p>哪一个更容易阅读？添加一个日历图标，可以帮助您选择日期，并且您很高兴</p>
+<p>关于某个新功能，您可能已经进行了数周或者几个月的会议。在你的脑海中，这个功能很有意义。局外人不会拥有相同的内幕知识，而且这些功能对他们来说是陌生的。</p>
+<p>首先创建一个概念证明并将其展示给某人而不给他们一个背景故事。颜色，外观，甚至功能的名称可能会让局外人感到困惑。通过查看它们被卡住的位置，您将知道需要更改的内容。因为这个反馈很早就给你了，所以在那个时候进行调整要容易得多，而不是等到你几乎到达终点线。</p>
+<p>仅仅因为该功能对您有意义，并不意味着每个人都会理解它是如何工作的。乐于接受反馈并愿意接受反馈。</p>
+<h1 id="%E7%AE%80%E5%8D%95%E5%B0%B1%E6%98%AF%E6%9B%B4%E5%A5%BD"><strong>简单就是更好</strong> <a class="heading-anchor-permalink" href="#%E7%AE%80%E5%8D%95%E5%B0%B1%E6%98%AF%E6%9B%B4%E5%A5%BD" aria-hidden="true">#</a></h1>
+<p>通常被称为“ <em>少即是多”</em>。我们倾向于在假冒伪劣的情况下在页面上放置尽可能多的数据，以便我们为用户增加价值。一个特定的表单可以有30个字段，以便您最大程度地控制您的设置。太棒了，用户会很开心！不是真的，你的用户现在可能已经不堪重负，困惑，已经变得不耐烦，或者已经转移到别的东西上。</p>
+<p>考虑哪些字段是绝对必要的，并删除其余字段。现在使用新的字段子集，再次执行此操作，删除至少一个或两个以上的选项。仅仅因为字段对您很重要，并不一定意味着它对用户有价值。没有这些数据，您的应用仍可以运行吗？如果它不重要，您可以随时在实际需要时收集它。</p>
+<p><img src="https://miro.medium.com/max/30/1*NycbozePaBkHAy7AaQR88A.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/601/1*NycbozePaBkHAy7AaQR88A.png" alt=""></p>
+<p>保持形式简单！</p>
+<h1 id="%E4%B8%8D%E8%A6%81zig-zag"><strong>不要Zig-Zag</strong> <a class="heading-anchor-permalink" href="#%E4%B8%8D%E8%A6%81zig-zag" aria-hidden="true">#</a></h1>
+<p>我们从上到下阅读网页，其他一切都是绒毛，我们对分心的看法越来越盲。页面两侧或顶部的项目很容易被遗漏。我们已经学会忽略这些广告。不要试图通过以非线性方式放置内容来克服这一障碍。你的混乱会引起混乱，你的用户也会离开。相反，请接受这一事实，并将您的内容与页面上不可见的垂直线对齐 - 如果您愿意，则将网格对齐。</p>
+<p><img src="https://miro.medium.com/max/30/1*EC0mwT92PWerhhrr7MOAVA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1211/1*EC0mwT92PWerhhrr7MOAVA.png" alt=""></p>
+<p>虽然这个设计很干净，但内容无处不在，让你的眼睛随处可见。这很难理解。</p>
+<p>处理表单时，请将标签保留在输入的左侧或直接位于输入的上方。将所有输入与网格对齐。如果您要在表单末尾放置一个提交按钮（即没有自动保存并且没有浮动保存按钮），那么就像您猜到的那样将它对齐到网格。</p>
+<h1 id="%E6%B6%88%E9%99%A4%E6%89%80%E6%9C%89%E6%91%A9%E6%93%A6"><strong>消除所有摩擦</strong> <a class="heading-anchor-permalink" href="#%E6%B6%88%E9%99%A4%E6%89%80%E6%9C%89%E6%91%A9%E6%93%A6" aria-hidden="true">#</a></h1>
+<p>您希望用户的会话尽可能简单，以便他们可以专注于您的产品。不要添加任何摩擦力。在他们还在阅读时不要添加任何弹出窗口。如果可以一步简化，请不要使用多步导航。做一些魔术。尽可能自动完成事情但是以智能方式（例如允许语法错误和拼写错误）。不要让他们在输入时格式化他们的电话号码，为他们做。</p>
+<p>不要告诉他们用户点击提交后正在使用，立即执行。同样，在被证明是无辜之前，不要认定有罪。例如，当他们甚至没有进入重新输入密码字段时，不要告诉他们他们的密码不匹配。实际上，摆脱重新输入的密码字段，如果他们搞砸了，他们总是可以在以后重置密码。如果您不相信，请添加一个取消屏蔽密码的眼球图标，以便他们可以看到他们正在键入的内容。</p>
+<p>说到密码，长度就是一切。一个16个字符的密码比一个8字符的密码要难得多，这个密码有数字，字母，特殊字符，表情符号，星座或任何其他奇怪的组合要求。要求您的用户输入他们容易记住的句子或几个单词。因为他们更容易记住它们，所以他们不会最终在他们的桌面上用粘滞便笺写下他们的密码。</p>
+<p><img src="https://miro.medium.com/max/30/1*sS5hm54XXitJopBBTlhCSQ.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/588/1*sS5hm54XXitJopBBTlhCSQ.png" alt=""></p>
+<p>带有奇怪要求的短密码很糟糕。底部更容易记忆，更安全。</p>
+<h1 id="%E4%BF%9D%E6%8C%81%E8%8F%9C%E5%8D%95%E7%AE%80%E5%8D%95"><strong>保持菜单简单</strong> <a class="heading-anchor-permalink" href="#%E4%BF%9D%E6%8C%81%E8%8F%9C%E5%8D%95%E7%AE%80%E5%8D%95" aria-hidden="true">#</a></h1>
+<p>这与我的第一点相呼应，但让我们专注于导航一分钟，因为这是您的用户将发现更多内容的方式。有没有去过那些在菜单上提供100多件商品的餐馆，你不知道该订购什么？相比之下只有7件商品的餐厅。前者是压倒性的，后者使你更容易决定你想吃什么。</p>
+<p>更简单的菜单还显示厨师知道他们正在做什么 - 而不是成为所有行业的杰克，无人掌握，他们将所有精力集中在创造更少，更好的饭菜上。完全相同的逻辑适用于Web和应用程序中的菜单。通过提供有限数量的选择，您可以让用户更轻松地决定点击什么，同时还表明您是专家而不是出现在各处。</p>
+<p>这就是困境，如果你有50个部分因为你的网站永远存在，或者你需要它们用于商业或SEO原因怎么办？评估所有类别，看看哪些类别实际获得点击和流量，哪些可以合并或消除。真的不应该有这么多的选择。如果你绝对必须保留它们，那么创建5-7个主要类别并将其余类别放在子类别中。您的菜单可以只显示顶级类别，当您点击时，其余的可以显示。</p>
+<p>尽量避免在弹出窗口中显示子类别 - 悬停菜单中的菜单中的菜单会产生令人沮丧的用户体验。</p>
+<p>通过新的更简单的菜单，您突然使用户在遵守业务要求的同时更容易导航。</p>
+<p><img src="https://miro.medium.com/max/30/1*oyr0t5cvUg2kmX5Q-JGFjw.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1193/1*oyr0t5cvUg2kmX5Q-JGFjw.png" alt=""></p>
+<p>我徘徊在一个类别，并获得了一百万个选项和一些广告。每个类别都有很多选项。这是非常糟糕的设计。</p>
+<h1 id="%E8%A1%A8%E5%8D%95%E5%8D%A0%E4%BD%8D%E7%AC%A6%E4%B8%8D%E5%A5%BD%EF%BC%8C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83%E4%BB%AC"><strong>表单占位符不好，不要使用它们</strong> <a class="heading-anchor-permalink" href="#%E8%A1%A8%E5%8D%95%E5%8D%A0%E4%BD%8D%E7%AC%A6%E4%B8%8D%E5%A5%BD%EF%BC%8C%E4%B8%8D%E8%A6%81%E4%BD%BF%E7%94%A8%E5%AE%83%E4%BB%AC" aria-hidden="true">#</a></h1>
+<p>在处理表单时，有些人会省略标签，而是将这些信息直接放在占位符中。这是一个糟糕的设计。当您开始填写表单时，标签会消失，如果您更改标签然后再次查看表单，您将不知道哪个字段是哪个。如果只在字段中键入内容时才显示标签，则会增加注意力。</p>
+<p>我经常看到的另一件事是人们使用占位符来显示字段可以接受的数据类型的示例。这也不是一个好主意。对于用户来说，有时看起来该字段已经填写并且他们将跳过它。不要试图在这里过于聪明，在其正上方有标签的输入，或在其左侧是最用户友好的方法。</p>
+<p><img src="https://miro.medium.com/max/30/1*RAMMBiYAIeUG5HyhNb64EQ.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/527/1*RAMMBiYAIeUG5HyhNb64EQ.png" alt=""></p>
+<p>如果使用占位符作为标签，则会丢失上下文</p>
+<h1 id="%E6%8A%9B%E5%BC%83%E6%B1%89%E5%A0%A1%E5%92%8C%E4%BD%A0%E7%9A%84%E5%81%87%E8%AE%BE"><strong>抛弃汉堡和你的假设</strong> <a class="heading-anchor-permalink" href="#%E6%8A%9B%E5%BC%83%E6%B1%89%E5%A0%A1%E5%92%8C%E4%BD%A0%E7%9A%84%E5%81%87%E8%AE%BE" aria-hidden="true">#</a></h1>
+<p>我们都知道汉堡图标，我们到处都看到它。每个人都知道它是什么，它是做什么的。不完全的。即使在今年进行的测试中，我发现大多数用户，特别是桌面用户，几乎不使用汉堡包图标。他们很可能没有注意到它，或者根本不想点击它。但是，在我的测试中，通过在其旁边或下面添加“菜单”一词，它总是会产生更多点击次数。我的建议是不要添加这个词，但可能会重新考虑你的界面。也许汉堡图标不是桌面上最好的方法，你有空间显示你的一些菜单项？</p>
+<p><img src="https://miro.medium.com/max/30/1*SLsfWHH4GeyIlx_2xAEMNA.png?q=20" alt=""></p>
+<p><img src="https://miro.medium.com/max/1175/1*SLsfWHH4GeyIlx_2xAEMNA.png" alt=""></p>
+<p>有些元素暴露在外，很容易找到。对于真正想要寻找它们的用户，其余的隐藏在汉堡包图标中。这是一个很好的设计。</p>
+<p>假设我们的用户会自动理解某个功能，因为它在其他网站上使用是有问题的。在几年前（大约2013年）完成的测试中，我发现我的链接会获得更多的点击，如果它们是蓝色和下划线而不是任何其他颜色，仅在悬停时带下划线。太疯狂吧？我决定删除下划线，因为差异不足以证明它们增加了网站的外观和感觉的丑陋。</p>
+<p>这里的教训是永远不要假设您的用户。如果可能的话，测试一下。有大量工具可以帮助您进行A / B测试。但要注意，A / B测试的时间和金钱都很昂贵，而且你需要相当多的流量才能得出正确的结论。如果您的样本量足够高，那么请相信您的数据。这些数据比你的直觉更准确。</p>
+<h1 id="%E4%BB%8E%E5%88%AB%E4%BA%BA%E9%82%A3%E9%87%8C%E5%90%B8%E5%8F%96%E7%81%B5%E6%84%9F">从别人那里吸取灵感 <a class="heading-anchor-permalink" href="#%E4%BB%8E%E5%88%AB%E4%BA%BA%E9%82%A3%E9%87%8C%E5%90%B8%E5%8F%96%E7%81%B5%E6%84%9F" aria-hidden="true">#</a></h1>
+<p>如果您正在构建新的东西并且您不完全确定采取哪种方法，请查看其他人正在做的事情。很多时候，他们已经完成了研究。但是要小心，因为其他人正在做这件事并不能使其正确，而不是保证在您的平台上取得成功。不同的受众表现出不同的方式。</p>
+<p>在他们的网站上测试该功能。这也为您提供了不需要构建原型的额外好处。尽管如此，请不要将它复制出来。您需要根据自己的网站，品牌和受众群体调整功能。当您完成该功能时，该功能可能会受到来自少数不同网站或应用的影响的组合，并添加了您自己的特殊触感。不要抄袭剽窃，但要吸取一些灵感。请注意，某些功能确实拥有专利权。</p>
+<h1 id="%E7%BB%93%E8%AE%BA">结论 <a class="heading-anchor-permalink" href="#%E7%BB%93%E8%AE%BA" aria-hidden="true">#</a></h1>
+<p>创建良好的用户界面还有很多其他内容，但是如果你一直在关注，我将这篇文章仅限于一些我觉得最有价值的想法。请在下面的评论中告诉我您的想法，并在twitter（@tkaravou）上关注我，我将发布更多提示。</p>
+
+      </article>
+    </div>
+    <script>
+      // Load contents.json if you need it
+    </script>
+    <script>
+      // FROM http://purecss.io/js/ui.js
+      (function(window, document) {
+        var layout = document.getElementById("layout"),
+          menu = document.getElementById("menu"),
+          menuLink = document.getElementById("menuLink");
+
+        function toggleClass(element, className) {
+          var classes = element.className.split(/\s+/),
+            length = classes.length,
+            i = 0;
+
+          for (; i < length; i++) {
+            if (classes[i] === className) {
+              classes.splice(i, 1);
+              break;
+            }
+          }
+          // The className is not found
+          if (length === classes.length) {
+            classes.push(className);
+          }
+
+          element.className = classes.join(" ");
+        }
+
+        menuLink.onclick = function(e) {
+          var active = "active";
+
+          e.preventDefault();
+          toggleClass(layout, active);
+          toggleClass(menu, active);
+          toggleClass(menuLink, active);
+        };
+      })(this, this.document);
+    </script>
+  </body>
+</html>

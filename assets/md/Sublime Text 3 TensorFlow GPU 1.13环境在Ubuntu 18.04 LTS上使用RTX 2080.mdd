@@ -1,0 +1,239 @@
+![Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080](https://medium.com/better-programming/sublime-text-3-tensorflow-gpu-1-13-environment-with-rtx-2080-on-ubuntu-18-04-lts-a907f4b3cced)
+Sublime Text 3 TensorFlow GPU 1.13环境在Ubuntu 18.04 LTS上使用RTX 2080
+================================================================
+
+_CUDA 10.0，cuDNN v7.6.0，TensorFlow v1.13，Ubuntu 18.04 LTS_
+----------------------------------------------------------
+
+[![瑞安格林哈尔](https://miro.medium.com/fit/c/96/96/2*c8hlMGxLNFf2GMDh5_WAOw.png)](/@ryan.greenhalgh133?source=post_page-----a907f4b3cced----------------------)
+
+[瑞安格林哈尔](/@ryan.greenhalgh133?source=post_page-----a907f4b3cced----------------------)
+
+跟随
+
+[8月9日](/better-programming/sublime-text-3-tensorflow-gpu-1-13-environment-with-rtx-2080-on-ubuntu-18-04-lts-a907f4b3cced?source=post_page-----a907f4b3cced----------------------) · 6 分钟阅读
+
+![](https://miro.medium.com/max/60/0*msZA0h1-S7WBg-Bo?q=20)
+
+![](https://miro.medium.com/max/1000/0*msZA0h1-S7WBg-Bo)
+
+![](https://miro.medium.com/max/2000/0*msZA0h1-S7WBg-Bo)
+
+照片由[Lucabravo](https://unsplash.com/@lucabravo)在[Unsplash](https://unsplash.com/photos/XJXWbfSo2f0)上[拍摄](https://unsplash.com/photos/XJXWbfSo2f0)
+
+您刚刚购买了新的[NVIDIA RTX 2080](https://www.nvidia.com/en-gb/geforce/graphics-cards/rtx-2080/)并希望使用[TensorFlow](https://www.tensorflow.org/) GPU 抽出一些ML算法吗？
+
+本周早些时候，我处于这种情况。不幸的是，我坐了两天在网上搜索才能正确设置驱动程序。
+
+本指南的目的是在Sublime Text 3中设置一个工作环境，这样您就可以在[Ubuntu](https://ubuntu.com/) 18.04 LTS 上使用带有RTX 2080的TensorFlow GPU运行ML算法。
+
+1.  安装[CUDA](https://developer.nvidia.com/cuda-zone) 10.0和依赖项
+2.  安装[cuDNN](https://developer.nvidia.com/cudnn) 7.6.0
+3.  安装[Anaconda3](https://www.anaconda.com/distribution/)
+4.  安装TensorFlow GPU
+5.  创建[Sublime Text 3](https://www.sublimetext.com/3) TensorFlow GPU环境
+
+我建议全新安装Ubuntu 18.04 LTS。使用[Refus](https://rufus.ie/)创建可启动USB并重新安装Ubuntu。如果你想双启动Ubuntu，请遵循本[指南](/@jangid.hitesh2112/how-to-install-ubuntu-alongside-window-dual-boot-6be6be286f81)。
+
+一旦设置了Ubuntu 18.04 LTS，您可能会注意到显示器的分辨率搞砸了。这是因为Linux尚未识别RTX 2080驱动程序并且正在使用默认的[nouveau](https://nouveau.freedesktop.org/)驱动程序。
+
+* * *
+
+**第1步**：安装CUDA 10.0和依赖项
+=======================
+
+我们首先需要安装[GCC](https://gcc.gnu.org/)和[make](https://packages.ubuntu.com/bionic/make)，它们是用于编译CUDA 10.0的软件包。
+
+打开终端（`CTRL + ALT+ T`）并输入：
+
+$ sudo apt install gcc $ sudo apt install make $ sudo apt-get install freeglut3 freeglut3-dev libxi-dev libxmu-dev
+
+现在，更新所有包以确保所有内容都是最新的：
+
+$ sudo apt-get update $ sudo apt-get upgrade -y $ sudo apt-get dist-upgrade -y
+
+然后，`reboot`系统。
+
+在安装CUDA 10.0和[NVIDIA](https://www.nvidia.com/en-us/)驱动程序之前，我们需要禁用nouveau驱动程序。
+
+要将nouveau驱动程序列入黑名单，我们需要退出GUI `CTRL+ALT+F2`。输入您的用户名和密码，并`.conf`在终端中创建以下文件：
+
+$ nano /etc/modprobe.d/blacklist-nouveau.conf blacklist nouveau options nouveau modeset = 0
+
+写入更改`CTRL+O`并退出`CTRL+X`，然后将其应用于根文件系统。
+
+$ sudo update-initramfs -u $ sudo reboot
+
+注意：如果您的显示分辨率之前没有搞砸，现在将在禁用nouveau驱动程序之后。不用担心，这将在安装CUDA 10.0后得到修复。
+
+现在我们已经安装了所有设置来安装CUDA 10.0。下载CUDA 10.0的deb（网络）版本。
+
+![](https://miro.medium.com/max/60/1*tZDMbEFp6C5JNwsW2I-EJQ.png?q=20)
+
+![](https://miro.medium.com/max/601/1*tZDMbEFp6C5JNwsW2I-EJQ.png)
+
+![](https://miro.medium.com/max/1202/1*tZDMbEFp6C5JNwsW2I-EJQ.png)
+
+打开终端，导航到downloads文件夹，然后安装CUDA 10.0。
+
+$ cd下载/ $ sudo dpkg -i cuda-repo-ubuntu1804\_10.0.130-1\_amd64.deb $ sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804 / x86\_64 / 7fa2af80.pub\` $ sudo apt-get update $ sudo apt-get install cuda-10-0
+
+注意：确保您可以运行`sudo apt-get install cuda-10–0`，而不是`sudo apt-get install cuda`，或者可以安装更高版本的CUDA。
+
+将CUDA 10.0添加到您的路径中。
+
+$ export PATH = / usr / local / cuda-10.0 / bin $ {PATH：+：$ {PATH}} $ export LD\_LIBRARY\_PATH = / usr / local / cuda-10.0 / lib64 $ {LD\_LIBRARY\_PATH：+：$ {LD\_LIBRARY\_PATH}} $ source~ / .bashrc
+
+现在，应该安装CUDA 10.0。要检查NVIDIA和CUDA 10.0的安装，请运行：
+
+$ nvidia-smi
+
+![](https://miro.medium.com/max/60/1*JJI-qdkZaBXaLyott--fBQ.png?q=20)
+
+![](https://miro.medium.com/max/517/1*JJI-qdkZaBXaLyott--fBQ.png)
+
+![](https://miro.medium.com/max/1034/1*JJI-qdkZaBXaLyott--fBQ.png)
+
+$ nvcc -V
+
+![](https://miro.medium.com/max/60/1*ABRqtgmbgZ6l9r0Bkmt-6w.png?q=20)
+
+![](https://miro.medium.com/max/520/1*ABRqtgmbgZ6l9r0Bkmt-6w.png)
+
+![](https://miro.medium.com/max/1040/1*ABRqtgmbgZ6l9r0Bkmt-6w.png)
+
+为了测试目录是否正常运行，让我们试试一些样本。我们将创建一个测试目录，复制一些样本并运行它们。
+
+在终端：
+
+$ mkdir test $ cd test / $ cp -a /usr/local/cuda-10.0/samples samples-10.0 $ cd /samples-10.0/ $ make -j 4 $ cd bin / x86\_64 / linux / release $ ./nbody
+
+![](https://miro.medium.com/max/60/1*APsEGHDblnbFCtMBkCYmTA.png?q=20)
+
+![](https://miro.medium.com/max/601/1*APsEGHDblnbFCtMBkCYmTA.png)
+
+![](https://miro.medium.com/max/1202/1*APsEGHDblnbFCtMBkCYmTA.png)
+
+如果我们查看NVIDIA GUI（`nvidia-settings`），我们可以看到GPU利用率为52％且仿真正在运行，确认NVIDIA驱动程序和CUDA 10.0都已成功安装。
+
+![](https://miro.medium.com/max/60/1*PdFt3daZdOKDhpcso63YeQ.png?q=20)
+
+![](https://miro.medium.com/max/543/1*PdFt3daZdOKDhpcso63YeQ.png)
+
+![](https://miro.medium.com/max/1086/1*PdFt3daZdOKDhpcso63YeQ.png)
+
+* * *
+
+**第2步：**安装cuDNN 7.6.0
+=====================
+
+下载cDNA 10.0的cuDNN v7.6.0（2019年5月20日）。您需要创建一个帐户并完成调查才能获得下载。
+
+![](https://miro.medium.com/max/60/1*a9m9TJ3sdz0HkTqB3Bg4nw.png?q=20)
+
+![](https://miro.medium.com/max/601/1*a9m9TJ3sdz0HkTqB3Bg4nw.png)
+
+![](https://miro.medium.com/max/1202/1*a9m9TJ3sdz0HkTqB3Bg4nw.png)
+
+下载完成后，导航到downloads文件夹，解压缩，将解压缩的内容复制到CUDA目录中，并授予所有用户读写权限：
+
+$ cd下载/ $ tar -xzvf cudnn-10.0-linux-x64-v7.6.0.64.tgz $ sudo cp cuda / include / cudnn.h /usr/local/cuda-10.0/include $ sudo cp cuda / lib64 / libcudnn \* /usr/local/cuda-10.0/lib64 $ sudo chmod a + r /usr/local/cuda-10.0/include/cudnn.h /usr/local/cuda-10.0/lib64/libcudnn\*
+
+现在，必须将cuDNN添加到`./bashrc`文件的末尾：
+
+$ export LD\_LIBRARY\_PATH =“$ LD\_LIBRARY\_PATH：/ usr / local / cuda / lib64：/ usr / local / cuda / extras / CUPTI / lib64” $ export CUDA\_HOME = / usr / local / cuda $ export PATH = / usr / local / cuda -10.0 / bin $ {PATH：+：$ {PATH}} $ export LD\_LIBRARY\_PATH = / usr / local / cuda-10.0 / lib64 \\ $ {LD\_LIBRARY\_PATH：+：$ {LD\_LIBRARY\_PATH}} $ source~ / .bashrc $ sudo ldconfig
+
+当您运行该`sudo ldconfig`命令时，您可能会收到错误消息`libcudnn.so.7 is not a symbolic link`。
+
+我发现这个错误的解决方案是删除一些文件并创建一个符号链接（根据此[链接](https://askubuntu.com/questions/1025928/why-do-i-get-sbin-ldconfig-real-usr-local-cuda-lib64-libcudnn-so-7-is-not-a)）。
+
+$ cd / usr / local / cuda / lib64 $ sudo rm libcudnn.so.7 $ sudo ln libcudnn.so.7.6.0 libcudnn.so.7 $ sudo ln libcudnn.so.7 libcudnn.so $ sudo ldconfig
+
+* * *
+
+**第3步：**安装Anaconda3
+===================
+
+[Anaconda3](https://www.anaconda.com/distribution/)是用于科学计算的[Python](https://www.python.org/)和[R](https://www.r-project.org/about.html)编程语言的开源发行版。这是获取Python所有关键包的一种非常简单的方法。
+
+要安装Anaconda3，`curl`最新版本。
+
+注意：检查您是否拥有最新版本的Anaconda3，并使用最新版本替换2019.07。如果您之前没有使用`curl`过，可以安装它`sudo apt install curl`。
+
+$ cd / tmp $ curl -O https://repo.anaconda.com/archive/Anaconda3-2019.07-Linux-x86\_64.sh $ bash Anaconda3-2019.07-Linux-x86\_64.sh
+
+将出现许可协议。通过点击键入`yes`并使用默认路径（\[username\]应该是您的用户名）。`/home/[USERNAME]/anaconda3``enter`
+
+安装完成后，系统会询问您是否要将Anaconda3添加到路径中。输入`yes`，因为我们将使用该`conda`命令来安装TensorFlow。
+
+最后，使用以下命令激活安装：
+
+$ source~ / .bashrc
+
+* * *
+
+**第4步：**安装TensorFlow GPU
+========================
+
+使用Anaconda3安装，我们现在可以使用该`conda`命令创建新环境并安装TensorFlow GPU。
+
+创建一个新环境并使用以下命令激活它：
+
+$ conda create --name tf\_gpu $ conda activate tf\_gpu
+
+![](https://miro.medium.com/max/60/1*8Fr4pZwj3WG6hcz8CF9OWw.png?q=20)
+
+![](https://miro.medium.com/max/519/1*8Fr4pZwj3WG6hcz8CF9OWw.png)
+
+![](https://miro.medium.com/max/1038/1*8Fr4pZwj3WG6hcz8CF9OWw.png)
+
+请注意（基础）已更改为（tf\_gpu）
+
+现在我们可以安装TensorFlow GPU：
+
+$ conda install -c anaconda tensorflow-gpu
+
+* * *
+
+**第5步：**创建Sublime Text 3 TensorFlow GPU环境
+=========================================
+
+Sublime Text 3是一个轻量级IDE，可用于编译许多不同的编程语言。
+
+要安装Sublime，请在终端中输入以下内容：
+
+$ wget -qO  -  https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add  - $ sudo apt-get install apt-transport-https $ echo“deb https://download.sublimetext.com/ apt / stable /”| sudo tee /etc/apt/sources.list.d/sublime-text.list $ sudo apt-get update $ sudo apt-get install sublime-text
+
+我们现在需要做的就是添加`tf_gpu`我们之前创建的环境的路径。
+
+打开Sublime GUI，转到`Tools > Build System > New Build System…`，然后输入以下代码以确保`tf_gpu`构建环境。
+
+注意：确保将用户名更改为用户名。
+
+{ “cmd”：\[“/ home / username / anaconda3 / envs / tf\_gpu / bin / python3”，“$ file”\]，“selector”：“source.python”，“file\_regex”：“^ \\\\ s \*文件\\“（... \*？）\\”，行（\[0-9\] \*）“ }
+
+要测试TensorFlow GPU的安装是否有效，请在Sublime中创建一个新脚本并运行。
+
+import tensorflow as tf gpu = tf.Session（config = tf.ConfigProto（log\_device\_placement = True））print（gpu）
+
+![](https://miro.medium.com/max/60/1*Hs3Meqf1O01ibZSGkEfrlA.png?q=20)
+
+![](https://miro.medium.com/max/602/1*Hs3Meqf1O01ibZSGkEfrlA.png)
+
+![](https://miro.medium.com/max/1204/1*Hs3Meqf1O01ibZSGkEfrlA.png)
+
+GPU已被TensorFlow认可
+
+在这个阶段，一切正常，TensorFlow识别GPU。
+
+然后，我想我会尝试一个我几个月前写过的双向递归神经网络，用于文本摘要。
+
+我点击`CTRL+B`Sublime来构建脚本然后突然失败，返回错误消息`Could not create cudnn handle: CUDNN_STATUS_INTERNAL_ERROR`。
+
+我发现了一个[GitHub](https://github.com/tensorflow/tensorflow/issues/24496)帖子通过在Python脚本的开头添加以下内容来解决此问题：
+
+import tensorflow as tf session\_config = tf.ConfigProto（gpu\_options = tf.GPUOptions（allow\_growth = True））sess = tf.Session（config = session\_config）
+
+全部完成！TensorFlow GPU应该与RTX 2080一起使用！
+
+谢谢阅读！
