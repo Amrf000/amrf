@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>创建一个screen session并激活虚拟环境</p>
+<pre class="language-bash"><code>#!/bin/bash
+screen -dmS spawner
+screen -S spawner -X stuff 'source 。。。/bin/activate;
+'
+sleep 3  # Need time for venv screen to initialize.
+screen -S spawner -X stuff 'cd 。。。;
+'
+screen -S spawner -X stuff 'python  。。。/manage.py runserver 0.0.0.0:xxx</code></pre>
+<p>相应的离开虚拟环境并终止该session</p>
+<pre class="language-bash"><code>#!/bin/bash
+
+screen -S spawner -X stuff 'deactivate
+'
+sleep 2
+screen -S spawner -X quit
+</code></pre>
+<p>参考:</p>
+<p><a rel="nofollow" href="https://gist.github.com/nolsto/1bf39c021908400ba821">https://gist.github.com/nolsto/1bf39c021908400ba821</a></p>
+<p><a>https://stackoverflow.com/questions/990754/how-to-leave-exit-deactivate-a-python-virtualenv</a></p>
+<p><a>https://stackoverflow.com/questions/6064548/send-commands-to-a-gnu-screen</a></p>
+<p><a>https://unix.stackexchange.com/questions/13953/sending-text-input-to-a-detached-screen</a>&nbsp;</p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/253673#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Python_Blog" title="Python" href="https://developer.huaweicloud.com/tags/200496/blog_1">Python</a>
+        
+    </div>
+</div></div>

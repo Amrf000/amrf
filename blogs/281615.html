@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><span style="color: #333333;">原文:https://www.tarlogic.com/en/blog/sasshimi-evading-allowtcpforwarding/</span></p>
+<p><span style="color: #333333;">OpenSSH AllowTcpForwarding 配置参数有时用作 SSH 服务器加强的度量，以使隧道创建复杂化。这种限制可能会使任务复杂化，在那些需要使用跃点计算机来执行审计(或在任何五个阶段)的情况下。</span></p>
+<p><span style="color: #333333;"><span>因此，我们创建了一个名为 SaSSHimi 的小工具，以便轻松避开 AllowTcpForwarding。可以从我们的 GitHub(https://github.com/TarlogicSecurity/SaSSHimi) 下载。</span></span></p>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x01&nbsp;</span>– <span class="cyxy-trs-source"><span>问题是</span></span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">通常在加强 SSH 连接时会发现一些限制，例如使用 AllowTcpForwarding 配置参数，以避免在连接中使用 SSH 隧道。但是，正如 OpenSSH 文档中很好地解释的那样，这个参数的使用并不能提高安全性，除非用户也被拒绝 shell 访问，因为他们总是可以安装自己的转发器。</p>
+<p class="cyxy-trs-source cyxy-trs-target">在底层，通过使用这个参数，可以在不影响“ session”通道的情况下避免“ forwarded-tcpip”和“ direct-tcpip”通道的创建(这些是 SSH 为了执行 TTYs 管理和命令执行而使用的通道)。</p>
+<p class="cyxy-trs-source cyxy-trs-target">例如，如果您希望从我们的机器(a)对基础结构中的机器(b)执行连接，并通过基本的 SSH，那么可以在您已经登录的机器(s)中安装一个二进制文件，该文件针对目标机器(b)打开一个套接字。用 STDIN 编写的机器(a)中的所有内容都通过套接字发送到目标机器(b) ，该套接字接收的所有内容都发送到 STDOUT。</p>
+<div class="wp-caption aligncenter"> 
+ <p><img alt="SaSSHimi-AllowTcpForwarding-1.png" class="mce_image " id="image_images_162549564512486" src="https://bbs-img.huaweicloud.com/blogs/img/SaSSHimi-AllowTcpForwarding-1.png"></p> 
+ <p class="wp-caption-text cyxy-trs-source cyxy-trs-target" style="text-align: center;">禁用架构 AllowTcpForwarding 绕过</p> 
+</div>
+<p class="cyxy-trs-source cyxy-trs-target">因此，作为一个示例，可以仿真本地 SSH 隧道(SSH-l)的行为。模拟本地通道的另一种较为简单的方法可能是使用 netcat 和双向管道。</p>
+<p class="cyxy-trs-source cyxy-trs-target">动态隧道的仿真方法与局部隧道的仿真方法非常相似。唯一不同的是，远程终端服务应该是代理袜子。</p>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x02&nbsp;</span>– <span class="cyxy-trs-source"><span>实施自订货运代理</span></span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">要解决的主要困难是通过 SSH 会话通道创建动态通道的可能性。因此，该工具应该远程打开 Socks 代理，并能够通过 SSH 通道 STDIN 和 STDOUT 流将本地套接字数据流与 Socks 代理连接起来。请看下面的最终功能图。</p>
+<div class="wp-caption aligncenter"> 
+ <p class="wp-caption-text cyxy-trs-source cyxy-trs-source-ted" style="text-align: center;"><br></p> 
+ <p class="wp-caption-text cyxy-trs-source cyxy-trs-target" style="text-align: center;">禁用 allowtcpforded 的动态隧道方案</p> 
+</div>
+<p class="cyxy-trs-source cyxy-trs-target">使用与 netcat 和一些轻量级 Socks5服务器静态编译相结合的 socat 实现类似的东西可能相对容易。但是，出现了以下问题: 在本地运行的 socat 需要为每个传入连接打开一个 SSH 连接，并为每个连接另外执行一个远程 netcat。</p>
+<p class="cyxy-trs-source cyxy-trs-target">因此，这个项目的主要目标是实现一个简单的、自包含的解决方案，它提供了在一个 SSH 会话中实现这种隧道复用一组连接的可能性。</p>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x03&nbsp;</span>–&nbsp;<span class="cyxy-trs-source">Golang is the new python<span>&nbsp;Golang 是一条新的巨蟒</span></span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">为了完成这项任务，我们选择了使用 Golang 编程语言。对于 python 这类工具，它提供了一系列优点:</p>
+<ol> 
+ <li class="cyxy-trs-source"><span>它很快(尽管 python 也可以快速添加协同例程)</span></li> 
+ <li class="cyxy-trs-source"><span>它生成一个静态编译的可接受大小的单个二进制文件</span></li> 
+ <li class="cyxy-trs-source"><span>它允许交叉编译</span><a class="cyxy-trs-source" style="color: #00bfb3; text-decoration: none; background-color: transparent;">complications<span>&nbsp;并发症</span></a></li> 
+</ol>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x04&nbsp;</span>–&nbsp;<span class="cyxy-trs-source">SaSSHimi</span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">SaSSHimi 是一个工具，它用一个二进制文件覆盖这个功能，使用 STDIN 和 STDOUT 创建一个原始的“定制转发器”。一方面，二进制文件本身与服务器同时工作，打开针对远程主机的 SSH 连接，并在本地模式下启动监听端口。另一方面，它作为一个代理工作，在远程机器中创建一个 Socks5代理，并通过 STDIN 注入条目。</p>
+<p class="cyxy-trs-source cyxy-trs-target">因此，当工具以服务器模式执行时，除了以代理模式执行自身以执行转发器功能外，它还负责在远程计算机中复制自身。每当代理死亡，在远程系统中创建的每个文件都会被删除。</p>
+<p class="cyxy-trs-source cyxy-trs-target">可以在我们的 GitHub(https://github.com/TarlogicSecurity/SaSSHimi) 存储库中找到 SaSSHimi，同时还有一些文档，包括一个用户指南。</p>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x05&nbsp;</span>–&nbsp;<span class="cyxy-trs-source">Future steps<span>&nbsp;未来的步骤</span></span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">这个工具的创建是为了满足一个非常具体的需求，但是希望随着时间的推移，它将逐步增加以下功能:</p>
+<ul> 
+ <li class="cyxy-trs-source"><span>本地及远程的隧道</span></li> 
+ <li class="cyxy-trs-source"><span>编码附加层以使 PAM 类型的审计工具复杂化(特权访问管理)</span></li> 
+ <li class="cyxy-trs-source"><span>在这个编码的附加层中实现一个 TTY</span></li> 
+ <li class="cyxy-trs-source"><span>研究实现 X11转发的可行性</span></li> 
+</ul>
+<h3 style="color: #00bfb3; text-align: left;"><span>0x06&nbsp;</span>– <span class="cyxy-trs-source"><span>结论</span></span></h3>
+<p class="cyxy-trs-source cyxy-trs-target">SSH 会话硬化在一定程度上会使五角大楼和 RedTeam 练习中的横向移动复杂化。SaSSHimi 的目标是成为一个可以考虑的工具，以便于在这些环境中工作。</p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="82794a9061604d2eb400c1bf5a1d04d8" href="/blogs/attachment?id=82794a9061604d2eb400c1bf5a1d04d8" title="ssh-aticle.zip">ssh-aticle.zip</a>
+                <span class="attSize">921.82KB</span>
+                <span class="downloadNum">，下载次数：<i>0</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/281615#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.ssh_Blog" title="ssh" href="https://developer.huaweicloud.com/tags/200493/blog_1">ssh</a>
+        
+    </div>
+</div></div>

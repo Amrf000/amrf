@@ -1,0 +1,75 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class="list-paddingleft-2"><li><p>Swing设置窗口图标</p></li></ul><pre class="prettyprint linenums">ImageIcon&nbsp;imageIcon&nbsp;=&nbsp;new&nbsp;ImageIcon(DocMessMainFrame.class.getResource("/icon.png"));
+frame.setIconImage(imageIcon.getImage());</pre><ul class="list-paddingleft-2"><li><p>Swing固定窗口大小</p></li></ul><pre class="prettyprint linenums">frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+frame.setPreferredSize(new&nbsp;Dimension(800,&nbsp;550));
+frame.setResizable(false);</pre><ul class="list-paddingleft-2"><li><p>Swing设置窗口关闭退出程序</p></li></ul><pre class="prettyprint linenums">frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</pre><ul class="list-paddingleft-2"><li><p>Swing窗口居中</p></li></ul><pre class="prettyprint linenums">frame.pack();
+frame.setLocationRelativeTo(null);
+frame.setVisible(true);</pre><ul class="list-paddingleft-2"><li><p>Swing窗口线程创建和显示UI</p></li></ul><pre class="prettyprint linenums">javax.swing.SwingUtilities.invokeLater(new&nbsp;Runnable()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;@Override
+	public&nbsp;void&nbsp;run()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createAndShowGUI();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+});</pre><ul class="list-paddingleft-2"><li><p>Swing null布局</p></li></ul><pre class="prettyprint linenums">panel.setLayout(null)
+xxx.setBounds(10,20,80,25);</pre><ul class="list-paddingleft-2"><li><p>Swing GridBagLayout布局</p></li></ul><pre class="prettyprint linenums">JPanel&nbsp;panel&nbsp;=&nbsp;new&nbsp;JPanel();
+GridBagLayout&nbsp;gridbag&nbsp;=&nbsp;new&nbsp;GridBagLayout();
+GridBagConstraints&nbsp;c&nbsp;=&nbsp;new&nbsp;GridBagConstraints();&nbsp;&nbsp;&nbsp;
+panel.setLayout(gridbag);</pre><ul class="list-paddingleft-2"><li><p>Swing文本框添加滚动</p></li></ul><pre class="prettyprint linenums"><br></pre><p>JTextArea tarea = new JTextArea(20, 30);<br>tarea.setEditable(false);<br>JScrollPane scroll = new JScrollPane(tarea); <br>scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);</p><ul class="list-paddingleft-2"><li><p>Swing文本框只读不灰显</p></li></ul><pre class="prettyprint linenums">JTextField&nbsp;outDir&nbsp;=&nbsp;new&nbsp;JTextField(OutDir);
+outDir.setEditable(false);
+inDir.setBackground(UIManager.getColor("TextField.background"));</pre><ul class="list-paddingleft-2"><li><p>Swing进度条结合SwingWorker</p></li></ul><pre class="prettyprint linenums">JProgressBar&nbsp;jpb&nbsp;=&nbsp;new&nbsp;JProgressBar();
+buttonStart.addActionListener(new&nbsp;ActionListener()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;actionPerformed(ActionEvent&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;	if(!OutDir.isEmpty()&nbsp;&amp;&amp;&nbsp;!OutDir.isEmpty()&nbsp;&amp;&amp;&nbsp;new&nbsp;File(OutDir).exists()&nbsp;&amp;&amp;&nbsp;new&nbsp;File(InDir).exists())&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		buttonStart.setEnabled(false);
+&nbsp;&nbsp;&nbsp;&nbsp;		tarea.setText("");
+&nbsp;&nbsp;&nbsp;&nbsp;		File&nbsp;inFiles&nbsp;=&nbsp;new&nbsp;File(InDir);
+&nbsp;&nbsp;&nbsp;&nbsp;		int&nbsp;max&nbsp;=&nbsp;1000;
+&nbsp;&nbsp;&nbsp;&nbsp;		if(inFiles.exists()&nbsp;&amp;&amp;&nbsp;inFiles.isDirectory())&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;			max&nbsp;=&nbsp;inFiles.list().length;
+&nbsp;&nbsp;&nbsp;&nbsp;		}else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;			max&nbsp;=&nbsp;1000;
+&nbsp;&nbsp;&nbsp;&nbsp;		}
+&nbsp;&nbsp;&nbsp;&nbsp;		jpb.setMaximum(max);
+&nbsp;&nbsp;&nbsp;&nbsp;		new&nbsp;PWorker(InDir,OutDir,buttonStart,jpb,tarea,isAddCom.isSelected()).execute();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+});</pre><ul class="list-paddingleft-2"><li><p>Swing文件夹选择</p></li></ul><pre class="prettyprint linenums">buttonIn.addActionListener(new&nbsp;ActionListener()&nbsp;{
+&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;actionPerformed(ActionEvent&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JFileChooser&nbsp;fileChooser&nbsp;=&nbsp;new&nbsp;JFileChooser();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;option&nbsp;=&nbsp;fileChooser.showOpenDialog(frame);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(option&nbsp;==&nbsp;JFileChooser.APPROVE_OPTION){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;File&nbsp;file&nbsp;=&nbsp;fileChooser.getSelectedFile();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;se&nbsp;=&nbsp;file.getAbsolutePath();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inDir.setText(se);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InDir&nbsp;=&nbsp;se;
+			try&nbsp;{
+				if(ini!=null)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			ini.put("set",&nbsp;"indir",&nbsp;se);
+				ini.store();
+				}
+		}&nbsp;catch&nbsp;(IOException&nbsp;e1)&nbsp;{
+			e1.printStackTrace();
+		}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;}
+});</pre><ul class="list-paddingleft-2"><li><p>GridBagLayout布局固定Cell大小</p></li></ul><pre class="prettyprint linenums">jpb.setPreferredSize(new&nbsp;Dimension(700,&nbsp;40));</pre><ul class="list-paddingleft-2"><li><p>GridBagLayout布局设置边距</p></li></ul><pre class="prettyprint linenums">c.insets&nbsp;=&nbsp;new&nbsp;Insets(3,3,3,3);</pre><ul class="list-paddingleft-2"><li><p>GridBagLayout布局设置宽度为当前到行尾</p></li></ul><pre class="prettyprint linenums">c.gridwidth&nbsp;=&nbsp;GridBagConstraints.REMAINDER;
+panel.add(buttonOut);
+gridbag.setConstraints(buttonOut,&nbsp;c);</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>swing设计工具</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/1998704/the-best-tool-for-build-swing-ui-visually">https://stackoverflow.com/questions/1998704/the-best-tool-for-build-swing-ui-visually</a><br></p></li></ul>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/105126#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,53 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>方式一：</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1596094929533000148.png" title="1596094929533000148.png" alt="image.png"></p>
+<p>方式二：</p>
+<pre class="brush:cpp;toolbar:false">void&nbsp;GainAdminPrivileges(CString&nbsp;strApp,&nbsp;UINT&nbsp;idd)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;CString&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;strCmd;
+&nbsp;&nbsp;&nbsp;&nbsp;strCmd.Format&nbsp;(_T("/adminoption&nbsp;%d"),&nbsp;idd);
+
+&nbsp;&nbsp;&nbsp;&nbsp;SHELLEXECUTEINFO&nbsp;execinfo;
+&nbsp;&nbsp;&nbsp;&nbsp;memset(&amp;execinfo,&nbsp;0,&nbsp;sizeof(execinfo));
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.lpFile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;strApp;
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.cbSize&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;sizeof(execinfo);
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.lpVerb&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;_T("runas");
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.fMask&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SEE_MASK_NO_CONSOLE;
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.nShow&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;SW_SHOWDEFAULT;
+&nbsp;&nbsp;&nbsp;&nbsp;execinfo.lpParameters&nbsp;&nbsp;&nbsp;=&nbsp;strCmd;
+
+&nbsp;&nbsp;&nbsp;&nbsp;ShellExecuteEx(&amp;execinfo);
+}</pre>
+<p>方式三:</p>
+<pre class="brush:ps;toolbar:false">NET&nbsp;SESSION&nbsp;&gt;nul&nbsp;2&gt;&amp;1
+IF&nbsp;%ERRORLEVEL%&nbsp;EQU&nbsp;0&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;ECHO&nbsp;Administrator&nbsp;PRIVILEGES&nbsp;Detected!&nbsp;
+)&nbsp;ELSE&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;ECHO&nbsp;NOT&nbsp;AN&nbsp;ADMIN!
+&nbsp;&nbsp;&nbsp;&nbsp;powershell&nbsp;start&nbsp;-verb&nbsp;runas&nbsp;'%0'&nbsp;am_admin&nbsp;&amp;&nbsp;exit&nbsp;/b
+)</pre>
+<p>参考:</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/youyudexiaowangzi/article/details/43484893">https://blog.csdn.net/youyudexiaowangzi/article/details/43484893</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/Time2017/article/details/91954251">https://blog.csdn.net/Time2017/article/details/91954251</a></p>
+<p><a>https://caojingyou.github.io/2017/10/01/VC%E7%A8%8B%E5%BA%8F%E8%8E%B7%E5%8F%96%E7%AE%A1%E7%90%86%E5%91%98%E6%9D%83%E9%99%90/</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/whatday/article/details/39403199">https://blog.csdn.net/whatday/article/details/39403199</a></p>
+<p><a>https://stackoverflow.com/questions/133379/elevating-process-privilege-programmatically</a></p>
+<p><a>https://stackoverflow.com/questions/4051883/batch-script-how-to-check-for-admin-rights</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/191692#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.其他_Blog" title="其他" href="https://developer.huaweicloud.com/tags/200213/blog_1">其他</a>
+        
+    </div>
+</div></div>

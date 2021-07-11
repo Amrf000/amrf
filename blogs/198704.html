@@ -1,0 +1,61 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><br></p>
+<h3>目标是希望自定义scheme实现跳转远程文档</h3>
+<p>例如：sourcefilemap:{"/":"XXX:/"}&nbsp;</p>
+<h3>方案一：采用vscode.TextDocumentContentProvider</h3>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>验证效果：</p></li> 
+</ul>
+<p>方案可行，可以正常跳转，但是文件编辑过程体验不佳；</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>实现参考:(采用ssh2读取远程文件)</p></li> 
+</ul>
+<p>https://code.visualstudio.com/api/extension-guides/virtual-documents</p>
+<p>Editable TextDocumentContentProvider for extensions&nbsp;</p>
+<p>https://github.com/microsoft/vscode/issues/10547</p>
+<p><br></p>
+<h3>方案二：采用vscode.FileSystemProvider</h3>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>验证效果：</p></li> 
+</ul>
+<p>由于调试插件cpp-tools或者gdb的source路径会被转义\被转义为%5C,不能正常识别scheme;但是可以通过修改vscode workbench修补这个问题;例如用c/c++写个控制台程序,插件active时调用一下即可</p>
+<p>具体的就是修改workbench.desktop.main.js中的getUriFromSource的实现,将%5C替换回/,即</p>
+<p>function getUriFromSource(raw, path, sessionId) {</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; try{</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <span style="white-space:pre"> </span>if(path.startsWith('XXX')){</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <span style="white-space:pre"> </span>path = path.replace(/%5C/g,'/');</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <span style="white-space:pre"> </span>raw.path = path;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <span style="white-space:pre"> </span>}</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }catch(err){</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; <span style="white-space:pre"> </span>console.log(err);</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; }</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; ...</p>
+<p>同时移除product.json中的,vs/workbench/workbench.desktop.main.js checksum校验节点;</p>
+<p>当然在插件中修改应用这样的操作有些太直接太imba,也可以修改后自行编译vscode版本；</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>实现参考:(采用ssh2读写远程文件)</p></li> 
+</ul>
+<p>Why TextDocumentContentProvider dont call provideTextDocumentContent on update when query params changes?</p>
+<p>https://stackoverflow.com/questions/47888617/why-textdocumentcontentprovider-dont-call-providetextdocumentcontent-on-update-w</p>
+<p>How to work with FileSystemProvider file systems in Visual Studio Code</p>
+<p>https://stackoverflow.com/questions/50198150/how-to-work-with-filesystemprovider-file-systems-in-visual-studio-code</p>
+<p>https://github.com/carreath/VSCode-Extension-Showcase/blob/f6b3a1b57bf71d42e4d65e8487bfe11ba660aa8c/fsprovider-sample/src/fileSystemProvider.ts</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/198704#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

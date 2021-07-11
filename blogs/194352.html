@@ -1,0 +1,34 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>如何给一个已经遗失了分支代码的老工具代码，需要做的修改只是在老工具的dll增加一行代码;正常情况下，统一使用后续的受维护支持的新版本工具就行了 但是如果非要对老的进行修改呢.</p>
+<p>通过添加一个中转dll，这样对原的dll的调用都会经过中转dll，中转过程中将我们需要修改的函数入口转到另一个patch.dll，在patch中实现新的函数逻辑，由于原dll是导出的类，实际上还有调用嵌套和换名等问题，并且VS高低版本的CString的实现是有差异的，所以说导出函数参数不建议用这些可能有差异类库.</p>
+<p><br></p>
+<p>中转表参考:</p>
+<p><a>https://bbs.pediy.com/thread-154269.htm</a> </p>
+<p><br></p>
+<p>收集到的一些相关文章：</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/liujiayu2/article/details/51713280" target="_self">IDA+OD双剑合璧=逆向无敌</a> </p>
+<p><a rel="nofollow" href="https://blog.csdn.net/iteye_6236/article/details/82030516" target="_self">OllyICE使用与关键代码定位(断点)</a> </p>
+<p><a rel="nofollow" href="https://blog.csdn.net/xfgryujk/article/details/50170985" target="_self">游戏修改器制作教程五：OllyDBG和其他调试工具</a> </p>
+<p><a target="_self">没有源代码也能加功能也能玩美化</a> </p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/194352#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.C++_Blog" title="C++" href="https://developer.huaweicloud.com/tags/200434/blog_1">C++</a>
+        
+    </div>
+</div></div>

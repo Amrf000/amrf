@@ -1,0 +1,179 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>实际使用的vnc服务端是realvnc 5，后来实际使用的方案是vncviewer嵌入;<img src="https://bbs-img.huaweicloud.com/blogs/img/1554254514455830.png" title="1554254514455830.png" alt="pic.PNG" class="localImage"></p><p>参考文档:</p><p><a rel="nofollow" href="https://archive.realvnc.com/products/vnc/documentation/4.2/unix/man/vncviewer.html">https://archive.realvnc.com/products/vnc/documentation/4.2/unix/man/vncviewer.html</a> </p><p><a rel="nofollow" href="https://serverfault.com/questions/224434/realvnc-command-line-switches">https://serverfault.com/questions/224434/realvnc-command-line-switches</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/12679464/run-an-external-application-inside-a-qwidget">https://stackoverflow.com/questions/12679464/run-an-external-application-inside-a-qwidget</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/18472840/qt-how-to-embed-an-application-into-qt-widget">https://stackoverflow.com/questions/18472840/qt-how-to-embed-an-application-into-qt-widget</a> </p><p><a rel="nofollow" href="https://github.com/BackupGGCode/portable-executable-library">https://github.com/BackupGGCode/portable-executable-library</a>&nbsp;（import_adder.exe注意至少需要一个导出函数）</p><p><br></p><p>android 下的vncserver</p><p><a rel="nofollow" href="https://blog.csdn.net/richu123/article/details/51438009">https://blog.csdn.net/richu123/article/details/51438009</a></p><p>时间旧了，有的代码具体是解决什么问题的我也记不清了;</p><p>依稀记得主体上分为两部分，一部分是嵌入的工具程序；</p><p>另一部分是用于注入realvnc客户端的dll(为了捕捉客户端很早的窗口句柄创建采用的静态注入);</p><p>//=======这步逻辑应该是当时出现嵌入后的vnc客户端无法输入按键文字的问题的解决方案==========</p><pre class="brush:java;toolbar:false">class&nbsp;NativeFilter&nbsp;:&nbsp;public&nbsp;QAbstractNativeEventFilter&nbsp;{
+public:
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;nativeEventFilter(const&nbsp;QByteArray&nbsp;&amp;eventType,&nbsp;void&nbsp;*message,&nbsp;long&nbsp;*result)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(pMain!=NULL)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WidgetContainer*&nbsp;pcover&nbsp;=&nbsp;pMain-&gt;getVncCover();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(pcover!=NULL){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;HWND&nbsp;hwnd&nbsp;=&nbsp;(HWND)pcover-&gt;getVncHwnd();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(hwnd!=0&nbsp;&amp;&amp;&nbsp;IsWindow(hwnd)&nbsp;&amp;&amp;&nbsp;pcover-&gt;rect().contains(pcover-&gt;mapFromGlobal(QCursor::pos())))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MSG&nbsp;*param&nbsp;=&nbsp;static_cast&lt;MSG&nbsp;*&gt;(message);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch&nbsp;(param-&gt;message){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SETFOCUS:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_KILLFOCUS:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_KEYDOWN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SYSKEYDOWN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_CHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_UNICHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_KEYUP:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SYSKEYUP:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_HOTKEY:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_DEADCHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SYSDEADCHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_APPCOMMAND:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_INPUTLANGCHANGEREQUEST:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_INPUTLANGCHANGE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_STARTCOMPOSITION:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_ENDCOMPOSITION:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_COMPOSITION:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//case&nbsp;WM_IME_KEYLAST:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_SETCONTEXT:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_NOTIFY:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_CONTROL:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_COMPOSITIONFULL:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_SELECT:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_CHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_REQUEST:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_KEYDOWN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_IME_KEYUP:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SYSCHAR:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//case&nbsp;WM_SYSCOMMAND:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//case&nbsp;WM_COMMAND:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_ACTIVATE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_SETHOTKEY:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_GETHOTKEY:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//qDebug(&nbsp;QString("%0&nbsp;hwnd=%1").arg("vnc1&nbsp;native&nbsp;WM_SYSKEYUP").arg((int)param-&gt;hwnd).toLocal8Bit().data());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SendMessage(hwnd,param-&gt;message,param-&gt;wParam,param-&gt;lParam);//PostMessage
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+};
+NativeFilter&nbsp;*closeFilter&nbsp;=&nbsp;new&nbsp;NativeFilter;
+app.installNativeEventFilter(closeFilter);</pre><p>//=================这部分代码是解决从来没有运行过vnc客户端的机器上面的异常=======================</p><pre class="brush:java;toolbar:false">const&nbsp;std::wstring&nbsp;testSubKey&nbsp;=&nbsp;L"SOFTWARE\\RealVNC\\vncviewer";
+winreg::RegKey&nbsp;key(HKEY_CURRENT_USER,&nbsp;testSubKey);
+key.SetStringValue(L"Scaling",&nbsp;L"AspectFit");
+key.SetStringValue(L"EulaAccepted",&nbsp;L"xxxxxxxxxxxx");
+key.Close();
+winreg::RegKey&nbsp;key1(HKEY_CURRENT_USER,L"SOFTWARE\\RealVNC\\vncviewer\\KnownHosts");
+WORD&nbsp;val&nbsp;=&nbsp;0x0101;
+key1.SetBinaryValue(L"xxxxxxxxxxxx::5900/extra",(void*)&amp;val,2);
+key1.SetBinaryValue(L"xxxxxxxxx::5900/extra",(void*)&amp;val,2);
+key1.Close();</pre><p>//============为了保存连接设置可以通过-config传入.vnc的连接配置文件名======================</p><p>.vnc文件一般结构</p><pre class="brush:css;toolbar:false">[Connection]
+Host=xx.xx.xx.xx
+Password=加密的,加密方式（https://github.com/paulmarsy/VncPassword/tree/master/src/vncpassword）
+[Options]
+ShareFiles=1
+EnableChat=1
+Encryption=Server
+UserName=
+Scaling=AspectFit
+ServerCutText=1
+ClientCutText=1
+SendKeyEvents=1
+SendPointerEvents=1
+UseLocalCursor=1</pre><p>//=========嵌入服务端和vnc客户端之间的交互我当时采用的是QSharedMemory</p><p>用于获取一些关注的客户端句柄的创建和显示</p><p>//==================隐藏嵌入的客户端的任务栏图标========================</p><pre class="brush:java;toolbar:false">void&nbsp;ShowInTaskbar(HWND&nbsp;hWnd,&nbsp;BOOL&nbsp;bshow)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;HRESULT&nbsp;hr;
+&nbsp;&nbsp;&nbsp;&nbsp;ITaskbarList&nbsp;*pTaskbarList;
+&nbsp;&nbsp;&nbsp;&nbsp;hr&nbsp;=&nbsp;CoCreateInstance(CLSID_TaskbarList,NULL,CLSCTX_INPROC_SERVER,&nbsp;IID_ITaskbarList,(void**)&amp;pTaskbarList);
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;hr&nbsp;==&nbsp;S_OK&nbsp;){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hr&nbsp;=&nbsp;pTaskbarList-&gt;HrInit();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;hr&nbsp;==&nbsp;S_OK&nbsp;){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(bshow){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pTaskbarList-&gt;AddTab(hWnd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pTaskbarList-&gt;DeleteTab(hWnd);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pTaskbarList-&gt;Release();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p>//=======嵌入服务端在收到客户端窗口句柄创建之后获取到hwnd==============</p><pre class="brush:java;toolbar:false">if(m_vncDlg==NULL){
+&nbsp;&nbsp;&nbsp;&nbsp;m_vncDlg&nbsp;=&nbsp;QWindow::fromWinId((WId)&nbsp;hwnd);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;m_vncwidget&nbsp;=&nbsp;QWidget::createWindowContainer(m_vncDlg,this);
+&nbsp;&nbsp;&nbsp;&nbsp;ShowInTaskbar((HWND)this-&gt;m_vncwidget-&gt;winId(),false);
+&nbsp;&nbsp;&nbsp;&nbsp;if(m_layout==NULL)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m_layout=new&nbsp;QGridLayout(this);
+&nbsp;&nbsp;&nbsp;&nbsp;m_layout-&gt;addWidget(this-&gt;m_vncwidget,0,0);
+}</pre><p>//========嵌入服务端在收到客户端窗口显示之后重设窗口大小=======</p><p>&nbsp;this-&gt;m_vncwidget-&gt;setGeometry(this-&gt;geometry());</p><p>//========嵌入服务端在收到客户端窗口最大化之后保存风格=============</p><pre class="brush:java;toolbar:false">if&nbsp;(maxMode==&nbsp;false){
+&nbsp;&nbsp;&nbsp;&nbsp;m_enOrigWindowFlags&nbsp;=&nbsp;this-&gt;windowFlags();
+&nbsp;&nbsp;&nbsp;&nbsp;m_pParent=(QWidget*)this-&gt;parent();
+&nbsp;&nbsp;&nbsp;&nbsp;m_ind=((QSplitter*)m_pParent)-&gt;indexOf(this);
+&nbsp;&nbsp;&nbsp;&nbsp;((QSplitter*)m_pParent)-&gt;replaceWidget(m_ind,m_tmp);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;setParent(NULL);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;setWindowFlags(&nbsp;Qt::FramelessWindowHint|Qt::WindowStaysOnTopHint);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;showMaximized();
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;showFullScreen();
+&nbsp;&nbsp;&nbsp;&nbsp;maxMode&nbsp;=&nbsp;true;
+}</pre><p>//========嵌入服务端在收到客户端窗口恢复后还原风格=====</p><pre class="brush:java;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(maxMode){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;overrideWindowFlags(m_enOrigWindowFlags);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;((QSplitter*)m_pParent)-&gt;replaceWidget(m_ind,this);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;show();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;maxMode&nbsp;=&nbsp;&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ShowInTaskbar((HWND)this-&gt;m_vncDlg-&gt;winId(),false);
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p>//=========VNC客户端部分，鼠标右键时添加active和setfocus消息以处理嵌入后获取不到焦点消息的问题======================</p><pre class="brush:java;toolbar:false">LRESULT&nbsp;CALLBACK&nbsp;hookMouseProc(&nbsp;int&nbsp;&nbsp;nCode,&nbsp;WPARAM&nbsp;wParam,LPARAM&nbsp;lParam)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;LPMOUSEHOOKSTRUCT&nbsp;inf&nbsp;=(LPMOUSEHOOKSTRUCT)lParam;
+&nbsp;switch(nCode)
+&nbsp;{
+&nbsp;case&nbsp;HC_ACTION:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//printf("action&nbsp;x=%d,y=%d\n",inf-&gt;pt.x,inf-&gt;pt.y);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(wParam)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;WM_LBUTTONDOWN:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostMessage(inf-&gt;hwnd,WM_ACTIVATE,WA_ACTIVE,0);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostMessage(inf-&gt;hwnd,WM_SETFOCUS,0,0);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</pre><p>//=========在SetWindowPos函数上挂钩泳衣检测最大化和恢复======================</p><pre class="brush:java;toolbar:false">BOOL&nbsp;WINAPI&nbsp;newSetWindowPos(&nbsp;&nbsp;HWND&nbsp;hWnd,&nbsp;&nbsp;HWND&nbsp;hWndInsertAfter,&nbsp;&nbsp;int&nbsp;&nbsp;X,&nbsp;&nbsp;int&nbsp;&nbsp;Y,&nbsp;&nbsp;int&nbsp;&nbsp;cx,&nbsp;&nbsp;int&nbsp;&nbsp;cy,&nbsp;&nbsp;UINT&nbsp;uFlags)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;if(aCDesktopWin&nbsp;&amp;&amp;&nbsp;hWnd==wndMap[QString("vwr::CDesktopWin")])
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(hWndInsertAfter==HWND_TOP&nbsp;&amp;&amp;&nbsp;uFlags==SWP_FRAMECHANGED){//全屏
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pClient-&gt;downShareMemory();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else&nbsp;if(hWndInsertAfter==HWND_NOTOPMOST&nbsp;&amp;&amp;&nbsp;uFlags==SWP_FRAMECHANGED){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pClient-&gt;downShareMemory();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;oldSetWindowPos(hWnd,hWndInsertAfter,X,Y,cx,cy,uFlags);
+}</pre><p>//==============atom=IsBadStringPtr======================</p><pre class="brush:java;toolbar:false">if(GetAtomNameA((ATOM)lpszClass,bu,127)&gt;0){
+LPCWSTR&nbsp;lpszName&nbsp;=&nbsp;IsBadStringPtr(lpCreate-&gt;lpcs-&gt;lpszName,128)?L"null":lpCreate-&gt;lpcs-&gt;lpszName;
+GetClassName(hWnd,szText,127);
+int&nbsp;id=GetWindowLong(hWnd,GWLP_ID);
+GetWindowText(hWnd,szText1,GetWindowTextLength(hWnd)+1);</pre><p>--这部分又记不清了，挂钩相关的也忘的差不多了可以打拳去了</p><p>//=========python嵌入c++相关的我在另一篇博客中说明=========================</p><p><br></p><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="29f7fae9872911e9b759fa163e330718" href="/blogs/attachment?id=29f7fae9872911e9b759fa163e330718" title="androidvncserver.zip">androidvncserver.zip</a>
+                <span class="attSize">128.86KB</span>
+                <span class="downloadNum">，下载次数：<i>0</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/106187#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

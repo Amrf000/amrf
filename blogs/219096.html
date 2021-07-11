@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><strong>链接: </strong>https://thebhwgroup.com/blog/react-native-jni<br><strong>对应的演示代码: </strong>https://github.com/rdixonbhw/ReactNative-JNI-Blog</p>
+<p><strong>我按照这个react jni入门教程做相关操作,由于版本升级,需要做一些修改,下面就是一些记录;</strong></p>
+<ul> 
+ <li><strong>可以通过在local.properties中添加来指定使用的cmake ，形如</strong><br>cmake.dir=C:/android-sdk_r24.4.1-windows/cmake/3.10.2.4988404&nbsp;</li> 
+ <li><strong>cmake的配置参考</strong><br>https://developer.android.com/studio/projects/configure-cmake<br>具体到上面这个文章中的例子则修改<br>android/app/src/mian/CMakeLists.txt为：</li> 
+</ul>
+<pre>cmake_minimum_required(VERSION 3.10.2)
+
+# Set compiler flags
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -frtti -fexceptions -std=c++14 -Wno-deprecated-declarations -Wno-reorder -Wno-invalid-offsetof -fPIC")
+
+# Add source files to be compliled here
+# Path is relative to this CMakeLists.txt file
+set(SOURCE_FILES
+&nbsp; &nbsp; &nbsp; &nbsp; ./jni/hello_world.c
+&nbsp; &nbsp; &nbsp; &nbsp; )
+
+add_library( # Specifies the name of the library.
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;hello_world_jni
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;# Sets the library as a shared library.
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;SHARED
+
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;# Provides a relative path to your source file(s).
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;${SOURCE_FILES} )</pre>
+<ul> 
+ <li><strong>Gradle的配置参考</strong>&nbsp; &nbsp;</li> 
+</ul>
+<p><br>https://developer.android.com/studio/projects/gradle-external-native-builds<br>具体到上面这个文章中的例子则修改<br>android/app/build.gradle<br></p>
+<pre>在defaultConfig 节点之中添加
+ndk {
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; abiFilters "armeabi-v7a", "x86"
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; moduleName "hello_world_jni"
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ldLibs "log"
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; cFlags "-std=c99"
+&nbsp; &nbsp; &nbsp; &nbsp; }
+buildTypes节点的同级之下添加
+sourceSets { main { jni.srcDirs = ['src/main/jni/'] } }
+externalNativeBuild {
+&nbsp; &nbsp; cmake {
+&nbsp; &nbsp; &nbsp; &nbsp; path "src/main/CMakeLists.txt"
+&nbsp; &nbsp; }
+}</pre>
+<ul> 
+ <li><strong>gradle.properties最后的android.useDeprecatedNdk=true去掉&nbsp;&nbsp;</strong></li> 
+ <li><strong>还需要注意的是hello_world.c中的函数名中的包名部分要和你自己例子工程中HelloWorlModule.java的包名对应上;&nbsp;&nbsp;</strong></li> 
+ <li><strong>另外一个修改MyReactPackage的createJSModules之上的@Override在新版本里不再需要；&nbsp;&nbsp;</strong></li> 
+ <li><strong>在MainApplication的getPackages()函数中添加packages.add(new MyReactPackage());&nbsp;&nbsp;</strong></li> 
+</ul>
+<p><strong>参考：</strong><br>[APP闪退分析及Crash日志获取（PC端Log打印）](https://blog.csdn.net/u013110200/article/details/92767776)<br>[Android 发出警告 android.useDeprecatedNdk 不在被支持](https://www.jianshu.com/p/34b5702d3927)<br>[Just remove the @Override Annotation of createJSModules() and it will work for both!](https://stackoverflow.com/questions/45584887/react-native-0-47-removed-createjsmodules-method-retrocompatibility)</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/219096#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,36 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>场景是这样的,google快照在企业内网白名单,但是要浏览的页面的域不在白名单内,并且需要访问的页面主要是静态文本内容并且拥有搜索快照;</p><p>这个时候如果是单页面，我们也没什么，但是如果快照内还有相关的兄弟链接我们希望点击访问,这个时候正常还是不能直接访问,需要人为添加<a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:">https://webcache.googleusercontent.com/search?q=cache:</a>前缀继续访问(参考:<a rel="nofollow" href="https://stackoverflow.com/questions/4560400/how-can-i-get-the-google-cache-age-of-any-url-or-web-page">https://stackoverflow.com/questions/4560400/how-can-i-get-the-google-cache-age-of-any-url-or-web-page</a>)</p><p>而我们可以注意到这种场景下同一页面中的兄弟节点一般都是同一个网站域下面的,也就是具有相似特征的;这个时候我们就可以利用chrome.webRequest.onBeforeRequest对所有请求进行捕捉并进行重定向;</p><p>举个例子假设我需要用快照方式访问<a rel="nofollow" href="https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-01-genesis.html">https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-01-genesis.html</a>这个链接</p><p>相关插件代码如下:</p><pre class="brush:js;toolbar:false">chrome.webRequest.onBeforeRequest.addListener(
+&nbsp;&nbsp;&nbsp;&nbsp;function(details)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;rUrl&nbsp;=&nbsp;"";
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(details.url.indexOf('chai2010')!=-1){
+		&nbsp;&nbsp;&nbsp;&nbsp;rUrl&nbsp;=&nbsp;"https://webcache.googleusercontent.com/search?q=cache:"+details.url.replace('http://','');
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;redirectUrl:&nbsp;rUrl
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;urls:&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*://chai2010.cn/*",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"*://chai2010.gitbooks.io/*"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;types:&nbsp;["main_frame",&nbsp;"sub_frame",&nbsp;"stylesheet",&nbsp;"script",&nbsp;"image",&nbsp;"object",&nbsp;"xmlhttprequest",&nbsp;"other"]
+&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;["blocking"]
+);</pre><p>重新加载插件后我们再次点击上面那个链接就会自动跳到快照地址,点击Nav中的其他链接也会自动跳到快照地址;<br></p><p>当有其他不在白名单但有快照的域时也可以按照上面的规则继续添加;</p><p>感觉挺方便的,共享给各位;</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/135347#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

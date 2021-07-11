@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>gRPC是一个现代的，开源的，高性能的远程过程调用（RPC）框架，可以在任何地方运行。gRPC使客户端和服务器应用程序可以透明地进行通信，并简化了连接系统的构建。</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>gRPC默认的序列反序列协议是proto3;</p></li><li><p>gRPC是一个RPC框架;</p></li><li><p>gRPC基于HTTP/2传输;</p></li><li><p>gRPC可以设置为同步或者异步通讯;</p></li></ul><p>备注:</p><pre class="brush:cpp;toolbar:false">/*---
+HTTP&nbsp;-&nbsp;一个Web客户端协议(例如浏览器)以便从服务器请求资源(例如Web服务器).
+HTTPS&nbsp;-&nbsp;一种HTTP加密方式.&nbsp;一种加密HTTP的方式.它基本上使用SSL&nbsp;/&nbsp;TLS将HTTP消息包装为加密格式.当通过未加密的HTTP为网站提供服务时，Web越来越趋向于HTTPS，并且Web浏览器开始发出越来越多的警告.除非您有很好的理由不这样做，否则请在您现在创建的任何网站上使用HTTPS.
+进一步研究HTTP，我们可以看到:
+HTTP/1.1&nbsp;-&nbsp;这是HTTP的流行格式，直到最近.这是一个基于文本的协议，并且效率低下-尤其是在请求大量资源（例如典型的网页）时.HTTP/1.1消息可以不加密（网站地址以http://开头），也可以使用HTTPS加密（网站地址以https://开头）.客户端使用URL的开头来确定要使用的协议，如果未提供，通常默认为http://.
+HTTP/2&nbsp;-&nbsp;2015年发布的HTTP的新版本，通过从基于文本的协议转移到明确定义每个字节的二进制协议，解决了一些性能问题.对于客户端和服务器而言，这更容易解析，为错误留出了更少的空间，还允许多路复用.HTTP/2与HTTP/1.1一样，可通过未加密（http://）和加密（https://）通道使用，但是Web浏览器仅通过HTTPS支持它，在此情况下，是决定使用HTTP/1.1还是HTTP/2在连接开始时作为HTTPS协商的一部分.
+在撰写本文时，约有三分之一的网站使用HTTP/2.但是，并非所有客户端都支持HTTP/2，因此您应尽可能支持HTTPS上的HTTP/1.1和HTTPS上的HTTP/2（我相信节点在使用http模块时会自动为您执行此操作）.我认为HTTP/1.1不会在不久的将来淘汰.您还应该考虑通过未加密的HTTP支持HTTP/1.1，然后重定向到HTTPS版本（然后将视情况使用HTTP/1.1或HTTP/2）.像Apache或Nginx这样前置Web服务器很容易做到这一点.
+HTTP/3&nbsp;-&nbsp;HTTP的下一版本，目前正在开发中.预计将在2019年完成，但可能要到2020年才能在Web服务器和节点等语言中看到.它将建立在称为QUIC的基于UDP的传输之上（而不是HTTP&nbsp;/&nbsp;1.1和HTTP&nbsp;/&nbsp;2所基于的基于TCP的协议）.它将在协议中包括HTTPS的一部分，因此HTTP&nbsp;/&nbsp;3仅可通过HTTPS使用.
+简而言之，您应该在HTTPS上使用HTTP/1.1，并且如果易于实现的话，也应该考虑HTTP/2（并非总是可能，因为它尚不普遍，但是到那里为止），将来您可能会使用HTTP/3。
+如果您要进行Web开发，我建议您对所有这些技术有一个深刻的了解（也许还没有HTTP/3）。它会很好地支持您。
+---*/</pre><p>参考:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/53488601/what-is-difference-between-https-and-http-2">What is difference between httpS and http/2?</a></p><p><a rel="nofollow" href="https://medium.com/teachmind/grpc-server-side-implementation-in-java-10336cf7093d">GRPC Server Side Implementation in Java</a></p><p><a rel="nofollow" href="https://blog.51cto.com/andrewli/2058908">使用Grpc+maven定义接口、发布服务、调用服务</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/48330261/protobuf-vs-grpc">protobuf vs gRPC</a></p><p><a rel="nofollow" href="http://hengyunabc.github.io/thinking-about-grpc-protobuf/">思考gRPC ：为什么是protobuf</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/35934276/using-grpc-in-maven">Using grpc in maven</a></p><p><a rel="nofollow" href="https://github.com/grpc/grpc-java">grpc-java</a></p><p><a rel="nofollow" href="https://github.com/saturnism/grpc-by-example-java/blob/master/rxjava-example/rxjava-server/src/main/proto/Streaming.proto">grpc-by-example-java</a></p><p><a rel="nofollow" href="https://github.com/grpc/grpc">grpc</a></p><p><a rel="nofollow" href="https://colobu.com/2019/10/03/protobuf-ultimate-tutorial-in-go/">protobuf-ultimate-tutorial-in-go</a></p><p><a rel="nofollow" href="https://github.com/protostuff/protostuff">protostuff</a></p><p><a rel="nofollow" href="https://blog.csdn.net/eric520zenobia/article/details/53766571">简单的使用protobuf和protostuff</a></p><p><span style="color:rgb(0,176,80);">/*----------------------------分割线--------------------------------*/</span></p><p><a rel="nofollow" href="http://tldp.org/HOWTO/XML-RPC-HOWTO/xmlrpc-howto-java.html">xmlrpc-howto-java</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/31047623/java-xml-rpc-client-and-server">java-xml-rpc-client-and-server</a></p><p><a rel="nofollow" href="https://github.com/moodlehq/sample-ws-clients/blob/master/JAVA-XMLRPC/XmlRpcMoodleClient.java">XmlRpcMoodleClient</a></p><p><a rel="nofollow" href="https://www.tutorialspoint.com/xml-rpc/xml_rpc_examples.htm">xml_rpc_examples</a></p><p><a rel="nofollow" href="https://www.programcreek.com/java-api-examples/%3Fapi%3Dorg.apache.xmlrpc.client.XmlRpcClient">xmlrpc.client.XmlRpcClient</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/40471/differences-between-hashmap-and-hashtable">differences-between-hashmap-and-hashtable</a></p><p><span style="color:rgb(0,176,80);">/*----------------------------分割线--------------------------------*/</span></p><p>很多人吐槽grpc的性能</p><p><a rel="nofollow" href="https://zeroc.com/products/ice">https://zeroc.com/products/ice</a> </p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/134867#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

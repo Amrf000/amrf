@@ -1,0 +1,91 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>参考:</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/dongdong9223/article/details/52998375">https://blog.csdn.net/dongdong9223/article/details/52998375</a></p>
+<p>查看当前正在运行的容器（可以添加-l,-a选项）</p>
+<pre class="language-actionscript"><code>docker container ls</code></pre>
+<p>删除Exited状态的所有容器</p>
+<pre class="language-actionscript"><code>docker rm `docker ps -a | grep Exited | awk '{print $1}'`</code></pre>
+<p>从docker中拷贝文件到宿主机</p>
+<pre class="language-actionscript"><code>docker cp dockerid:源文件路径 宿主机目标路径</code></pre>
+<p>docker 容器中mount宿主机里的目录</p>
+<pre class="language-actionscript"><code>docker run --mount src=宿主目录,target=容器中的目录,type=bind --privileged -dt --cap-add SYS_ADMIN --security-opt seccomp:unconfined -td image:version</code></pre>
+<p>进入运行中的docker容器</p>
+<pre class="language-actionscript"><code>docker exec -it 容器id /bin/bash</code></pre>
+<p>离开bash</p>
+<pre class="language-actionscript"><code>Ctrl+D</code></pre>
+<p>拉镜像</p>
+<pre class="language-actionscript"><code>docker pull ip:port/tag:version</code></pre>
+<p>从当前目录下的Dockerfile构建镜像</p>
+<pre class="language-actionscript"><code>docker build -t tag:version .</code></pre>
+<p>删除构建后的临时镜像（<a rel="nofollow" href="https://blog.csdn.net/whatday/article/details/104048064">https://blog.csdn.net/whatday/article/details/104048064</a> docker 不使用缓存重建镜像）</p>
+<pre class="language-actionscript"><code>docker rmi -f  `docker images | grep '&lt;none&gt;' | awk '{print $3}'`</code></pre>
+<p>列出本地存在的所有镜像</p>
+<pre class="language-actionscript"><code>docker images</code></pre>
+<p>运行镜像</p>
+<pre class="language-actionscript"><code>docker run tag:version
+-&gt;
+docker run -d tag:version
+-&gt;
+docker run --privileged -dt --cap-add SYS_ADMIN --security-opt seccomp:unconfined tag:version</code></pre>
+<p>容器的依稀启动报错：</p>
+<ul> 
+ <li>Failed to determine whether /sys is a mount point:（https://bugzilla.redhat.com/show_bug.cgi?id=1443922，<a rel="nofollow" href="https://github.com/solita/docker-systemd/issues/1">https://github.com/solita/docker-systemd/issues/1</a>）&nbsp; &nbsp;&nbsp;</li> 
+</ul>
+<pre class="language-javascript"><code>--cap-add SYS_ADMIN --security-opt seccomp=unconfined</code></pre>
+<ul> 
+ <li class="title-article" style="color: #222226;">Failed to mount tmpfs at /run（<a rel="nofollow" href="https://blog.csdn.net/wangctes/article/details/92740919">https://blog.csdn.net/wangctes/article/details/92740919</a>）</li> 
+</ul>
+<pre class="language-actionscript"><code>--privileged</code></pre>
+<p>停止某一容器</p>
+<pre class="language-actionscript"><code>docker stop 容器id</code></pre>
+<p>查看容器的日志（<a rel="nofollow" href="https://blog.csdn.net/whatday/article/details/104136405">https://blog.csdn.net/whatday/article/details/104136405</a> docker logs 查看docker容器日志）</p>
+<pre class="language-actionscript"><code>docker logs --since 30m 容器id</code></pre>
+<p>问题："<a target="_blank" href="http://3ms.huawei.com/km/blogs/details/6008927" title="docker:Error response from daemon: Get https://registry-1.docker.io/v2/" class="search-hwa-click visited" style="color: #333333 !important; text-decoration: none;"><span class="title_em___NtELB"><em style="color: red;">docker</em>:Error response from daemon: Get https://<em style="color: red;">registry-1.docker.io</em>/v2/"处理</span></a></p>
+<pre class="language-actionscript"><code>修改/etc/docker/daemon.json中的insecure-registries,并且执行systemctl restart docker
+
+（https://stackoverflow.com/questions/49674004/docker-repository-server-gave-http-response-to-https-client）</code></pre>
+<p>Docker增加端口（<a rel="nofollow" href="https://blog.csdn.net/weixin_43866211/article/details/103509513">https://blog.csdn.net/weixin_43866211/article/details/103509513/</a><a rel="nofollow" href="https://blog.csdn.net/liu865033503/article/details/100120113">https://blog.csdn.net/liu865033503/article/details/100120113</a>/ https://juejin.cn/post/6844903849451323399 ）--&nbsp; （iptables -t nat -vnL）</p>
+<pre class="language-actionscript"><code>-p port:port  多端口需要多个-p</code></pre>
+<p class="title-article" style="color: #222226;">docker: 为运行的container增加多个端口（<a rel="nofollow" href="https://blog.csdn.net/sgs595595/article/details/70230384">https://blog.csdn.net/sgs595595/article/details/70230384</a>）</p>
+<pre class="language-actionscript"><code>docker ps -a
+docker stop test01
+docker commit test01 test02
+docker run -p 8080:8080 -p 80:80 -td test02</code></pre>
+<p>容器开机自启设定（<a>https://stackoverflow.com/questions/30449313/how-do-i-make-a-docker-container-start-automatically-on-system-boot</a>）</p>
+<pre class="language-actionscript"><code>docker update --restart=always 0576df221c0b</code></pre>
+<p>Dockerfile编写中的一些关键字</p>
+<ul> 
+ <li>EXPOSE -- <a rel="nofollow" href="https://blog.csdn.net/u012972836/article/details/83380220">https://blog.csdn.net/u012972836/article/details/83380220</a></li> 
+ <li>FROM --<strong style="color: #4d4d4d; text-align: start;">指定基于哪个基础镜像,必须为第一个命令 （参考：</strong>Dockerfile文件详解 <a rel="nofollow" href="https://blog.csdn.net/u011781521/article/details/80464065">https://blog.csdn.net/u011781521/article/details/80464065</a><strong style="color: #4d4d4d; text-align: start;">）</strong></li> 
+ <li>COPY --<strong style="color: #4d4d4d; text-align: start;">功能类似ADD，但是是不会自动解压文件，也不能访问网络资源URL</strong></li> 
+ <li>WORKDIR --<strong style="color: #4d4d4d; text-align: start;">工作目录,类似于cd命令</strong></li> 
+ <li>RUN -- &nbsp;<strong style="color: #4d4d4d; text-align: start;">构建镜像时执行的命令</strong></li> 
+ <li>ENV --<strong style="color: #4d4d4d; text-align: start;">设置环境变量,它主要是为后续的RUN指令提供一个环境变量</strong></li> 
+</ul>
+<p>关于Dorkerfile编写的一些其他链接</p>
+<ul> 
+ <li class="title-article" style="color: #222226;">Dockerfile 修改sources.list源&nbsp; <a rel="nofollow" href="https://blog.csdn.net/BigData_Mining/article/details/87869361">https://blog.csdn.net/BigData_Mining/article/details/87869361</a></li> 
+ <li class="title-article" style="color: #222226;">使用Dockerfile创建docker镜像及Dockerfile命令详解 <a rel="nofollow" href="https://blog.csdn.net/u012834750/article/details/79979557">https://blog.csdn.net/u012834750/article/details/79979557</a></li> 
+ <li class="title-article" style="color: #222226;">使用Docker创建镜像的三种方法 <a rel="nofollow" href="https://blog.csdn.net/Apeopl/article/details/105449362">https://blog.csdn.net/Apeopl/article/details/105449362</a></li> 
+ <li class="title-article" style="color: #222226;">使用Dockerfile创建镜像，创建容器并运行 <a rel="nofollow" href="https://blog.csdn.net/dongdong9223/article/details/83059265">https://blog.csdn.net/dongdong9223/article/details/83059265</a><br></li> 
+</ul>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/240227#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Docker_Blog" title="Docker" href="https://developer.huaweicloud.com/tags/200489/blog_1">Docker</a>
+        
+    </div>
+</div></div>

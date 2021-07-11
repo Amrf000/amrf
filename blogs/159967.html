@@ -1,0 +1,257 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原PHP实现地址:<br></p><p><a rel="nofollow" href="https://github.com/philipashlock/mediawiki-to-markdown/blob/master/convert.php">https://github.com/philipashlock/mediawiki-to-markdown/blob/master/convert.php</a></p><p>翻译到Golang的实现如下:</p><pre class="brush:cpp;toolbar:false">package&nbsp;main
+import&nbsp;(
+	"bytes"
+	"fmt"
+	"github.com/docopt/docopt-go"
+	"github.com/antchfx/xmlquery"
+	"golang.org/x/text/encoding/simplifiedchinese"
+	"golang.org/x/text/transform"
+	"io"
+	"io/ioutil"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"regexp"
+	"strconv"
+	"strings"
+	"html"
+)
+
+var&nbsp;g_re&nbsp;=&nbsp;regexp.MustCompile("/\\[\\[(.+?)\\]\\]/")
+func&nbsp;main()&nbsp;{
+	usage&nbsp;:=&nbsp;`Wiki2Md.
+Usage:
+&nbsp;&nbsp;wiki2md&nbsp;--filename=&lt;name&gt;&nbsp;[--output=&lt;export&gt;]&nbsp;[--indexes=&lt;true|false&gt;]&nbsp;[--format=&lt;markdown_phpextra|markdown_github&gt;]&nbsp;[--frontmatter=&lt;true|false&gt;]
+Options:
+&nbsp;&nbsp;--filename==&lt;filename&gt;&nbsp;&nbsp;the&nbsp;name&nbsp;of&nbsp;the&nbsp;xml&nbsp;file&nbsp;you&nbsp;exported&nbsp;from&nbsp;MediaWiki.
+&nbsp;&nbsp;--output==&lt;output&gt;&nbsp;&nbsp;&nbsp;&nbsp;specify&nbsp;an&nbsp;output&nbsp;folder&nbsp;since&nbsp;each&nbsp;wiki&nbsp;page&nbsp;in&nbsp;the&nbsp;XML&nbsp;file&nbsp;will&nbsp;generate&nbsp;it"s&nbsp;own&nbsp;separate&nbsp;markdown&nbsp;file.
+&nbsp;&nbsp;--indexes==&lt;indexes&gt;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;indexes&nbsp;as&nbsp;true&nbsp;if&nbsp;you&nbsp;want&nbsp;pages&nbsp;with&nbsp;the&nbsp;same&nbsp;name&nbsp;as&nbsp;a&nbsp;directory&nbsp;to&nbsp;be&nbsp;renamed&nbsp;as&nbsp;index.md&nbsp;and&nbsp;placed&nbsp;into&nbsp;their&nbsp;directory.
+&nbsp;&nbsp;--frontmatter==&lt;frontmatter&gt;&nbsp;specify&nbsp;whether&nbsp;you&nbsp;want&nbsp;frontmatter&nbsp;included.&nbsp;This&nbsp;is&nbsp;automatically&nbsp;set&nbsp;to&nbsp;true&nbsp;when&nbsp;the&nbsp;output&nbsp;format&nbsp;is&nbsp;markdown_github.
+&nbsp;&nbsp;--format==&lt;format&gt;&nbsp;&nbsp;&nbsp;&nbsp;specify&nbsp;different&nbsp;output&nbsp;formats&nbsp;with&nbsp;format.&nbsp;The&nbsp;default&nbsp;is&nbsp;markdown_github.[default:&nbsp;markdown_github]`
+	arguments,&nbsp;err&nbsp;:=&nbsp;docopt.Parse(usage,&nbsp;nil,&nbsp;true,&nbsp;"blah&nbsp;1.0",&nbsp;false)
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		fmt.Println(err)
+		return
+	}
+	fmt.Println(arguments["--filename"])
+	if&nbsp;(arguments["--filename"]==nil&nbsp;||&nbsp;arguments["--filename"].(string)&nbsp;==&nbsp;"")&nbsp;{
+		fmt.Println("No&nbsp;input&nbsp;file&nbsp;specified.&nbsp;Use&nbsp;--filename=mediawiki.xml");
+		return
+	}
+	output_path&nbsp;:=&nbsp;"";
+	if&nbsp;(arguments["--output"]!=nil&nbsp;&amp;&amp;&nbsp;arguments["--output"].(string)&nbsp;!=&nbsp;"")&nbsp;{
+		output_path&nbsp;=&nbsp;arguments["--output"].(string);
+		if&nbsp;_,&nbsp;err&nbsp;:=&nbsp;os.Stat(output_path);&nbsp;os.IsNotExist(err)&nbsp;{
+			fmt.Println("Creating&nbsp;output&nbsp;directory&nbsp;%s",&nbsp;output_path);
+			err&nbsp;=&nbsp;os.MkdirAll(output_path,&nbsp;0777)
+			if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+				fmt.Println(err)
+				return
+			}
+		}
+	}
+	format&nbsp;:=&nbsp;"markdown_github";
+	if&nbsp;(arguments["--format"]&nbsp;!=nil&nbsp;&amp;&amp;&nbsp;arguments["--format"].(string)&nbsp;!=&nbsp;"")&nbsp;{
+		format&nbsp;=&nbsp;arguments["--format"].(string);
+	}
+	add_meta&nbsp;:=&nbsp;false;
+	if&nbsp;((arguments["--frontmatter"]&nbsp;!=&nbsp;nil&nbsp;&amp;&amp;&nbsp;arguments["--frontmatter"].(string)&nbsp;!=&nbsp;"")&nbsp;||&nbsp;((arguments["--frontmatter"]==nil&nbsp;||&nbsp;arguments["--frontmatter"].(string)&nbsp;==&nbsp;"")&nbsp;&amp;&amp;&nbsp;format&nbsp;==&nbsp;"markdown_github"))&nbsp;{
+		add_meta&nbsp;=&nbsp;true;
+	}
+	//&nbsp;Load&nbsp;XML&nbsp;file
+	buf,&nbsp;err&nbsp;:=&nbsp;ioutil.ReadFile(arguments["--filename"].(string));&nbsp;//&nbsp;just&nbsp;pass&nbsp;the&nbsp;file&nbsp;name
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		fmt.Print(err)
+	}
+	file&nbsp;:=&nbsp;string(buf);
+	xml&nbsp;:=&nbsp;strings.ReplaceAll(&nbsp;file,"xmlns&nbsp;=&nbsp;","ns&nbsp;=&nbsp;");&nbsp;//string&nbsp;is&nbsp;a&nbsp;string&nbsp;that&nbsp;contains&nbsp;xml...
+	doc,err&nbsp;:=&nbsp;xmlquery.Parse(strings.NewReader(xml))
+	result&nbsp;:=&nbsp;xmlquery.Find(doc,&nbsp;"//page")
+	count&nbsp;:=&nbsp;0;
+	directory_list&nbsp;:=&nbsp;map[string]bool{}
+	//&nbsp;Iterate&nbsp;through&nbsp;XML
+	for&nbsp;_,node&nbsp;:=&nbsp;range&nbsp;result&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;title&nbsp;:=&nbsp;xmlquery.FindOne(node,"//title");
+	&nbsp;&nbsp;&nbsp;&nbsp;titleStr&nbsp;:=&nbsp;title.InnerText();//title[0];
+	&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;:=&nbsp;strings.Replace(titleStr,"&nbsp;",&nbsp;"_",&nbsp;-1);
+		url&nbsp;=&nbsp;strings.Replace(url,"\"",&nbsp;"",&nbsp;-1);
+		directory&nbsp;:=&nbsp;"";
+		filename&nbsp;:=&nbsp;url;
+		slash&nbsp;:=&nbsp;strings.Index(url,&nbsp;"/");
+	&nbsp;&nbsp;&nbsp;&nbsp;if(slash&nbsp;!=&nbsp;-1){
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;titleStr&nbsp;=&nbsp;strings.Replace(titleStr,"/",&nbsp;"&nbsp;",&nbsp;-1);
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;=&nbsp;url[0:slash];
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;=&nbsp;url[slash+1:];
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;directory_list[directory]&nbsp;=&nbsp;true;
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+
+	&nbsp;&nbsp;&nbsp;&nbsp;text&nbsp;:=&nbsp;xmlquery.FindOne(node,"//revision//text");
+	&nbsp;&nbsp;&nbsp;&nbsp;textStr&nbsp;:=&nbsp;text.InnerText();//text[0];
+	&nbsp;&nbsp;&nbsp;&nbsp;textStr&nbsp;=&nbsp;html.UnescapeString(textStr);&nbsp;//&nbsp;decode&nbsp;inline&nbsp;html
+		g_re&nbsp;=&nbsp;regexp.MustCompile("/\\[\\[(.+?)\\]\\]/")
+	&nbsp;&nbsp;&nbsp;&nbsp;textStr&nbsp;=&nbsp;g_re.ReplaceAllStringFunc(textStr,new_link);&nbsp;//&nbsp;adds&nbsp;leading&nbsp;slash&nbsp;to&nbsp;links,&nbsp;"absolute-path&nbsp;reference"
+	&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;prepare&nbsp;to&nbsp;append&nbsp;page&nbsp;title&nbsp;frontmatter&nbsp;to&nbsp;text
+		frontmatter&nbsp;:=&nbsp;"";
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(add_meta)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frontmatter&nbsp;=&nbsp;"---\n";
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frontmatter&nbsp;+=&nbsp;"title:&nbsp;"+titleStr+"\n";
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frontmatter&nbsp;+=&nbsp;"permalink:&nbsp;/"+url+"/\n";
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;frontmatter&nbsp;+=&nbsp;"---\n\n";
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+	&nbsp;&nbsp;&nbsp;&nbsp;//==================
+	&nbsp;&nbsp;&nbsp;&nbsp;//pandoc&nbsp;01_overview.mediawiki&nbsp;-f&nbsp;mediawiki&nbsp;-t&nbsp;markdown&nbsp;-o&nbsp;Project-Handbook_01_Overview.md
+		var&nbsp;stdout&nbsp;bytes.Buffer
+		var&nbsp;stderr&nbsp;bytes.Buffer
+	&nbsp;&nbsp;&nbsp;&nbsp;Param&nbsp;:=&nbsp;"-f&nbsp;mediawiki&nbsp;-t&nbsp;"+format;
+		params&nbsp;:=&nbsp;[]string{"/C",&nbsp;"pandoc"}&nbsp;//
+		params&nbsp;=&nbsp;append(params,&nbsp;strings.Split(Param,&nbsp;"&nbsp;")...)
+		cmd&nbsp;:=&nbsp;exec.Command("cmd",&nbsp;params...)
+		stdin,&nbsp;err&nbsp;:=&nbsp;cmd.StdinPipe()
+		if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+			fmt.Println(err)&nbsp;//replace&nbsp;with&nbsp;logger,&nbsp;or&nbsp;anything&nbsp;you&nbsp;want
+		}
+		//cmd.Stdout&nbsp;=&nbsp;os.Stdout
+		//cmd.Stderr&nbsp;=&nbsp;os.Stderr
+		cmd.Stdout&nbsp;=&nbsp;&amp;stdout
+		cmd.Stderr&nbsp;=&nbsp;&amp;stderr
+		fmt.Println("START")&nbsp;//for&nbsp;debug
+		if&nbsp;err&nbsp;=&nbsp;cmd.Start();&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{&nbsp;//Use&nbsp;start,&nbsp;not&nbsp;run
+			fmt.Println("An&nbsp;error&nbsp;occured:&nbsp;",&nbsp;err)&nbsp;//replace&nbsp;with&nbsp;logger,&nbsp;or&nbsp;anything&nbsp;you&nbsp;want
+		}
+		io.WriteString(stdin,&nbsp;textStr)
+		stdin.Close()
+		cmd.Wait()
+		fmt.Println("END")&nbsp;//for&nbsp;debug
+		bt,err&nbsp;:=&nbsp;GbkToUtf8([]byte(stderr.String()))
+		bs&nbsp;:=&nbsp;&nbsp;stdout.String()+string(bt);//
+		if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+			fmt.Println("execbat:err"+err.Error()+"\n"+&nbsp;bs)
+		}&nbsp;else&nbsp;{
+			fmt.Println(&nbsp;bs)
+		}
+		//====================
+		textStr&nbsp;=&nbsp;bs;
+	&nbsp;&nbsp;&nbsp;&nbsp;textStr&nbsp;=&nbsp;strings.Replace(textStr,&nbsp;"\\_",&nbsp;"_",-1);
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(add_meta)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;textStr&nbsp;=&nbsp;frontmatter&nbsp;+&nbsp;textStr;
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;len(output_path)&gt;0&nbsp;&amp;&amp;&nbsp;output_path[len(output_path)-1:]&nbsp;!=&nbsp;"/"&nbsp;{
+			output_path&nbsp;=&nbsp;output_path&nbsp;+&nbsp;"/";
+		}
+	&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;=&nbsp;output_path&nbsp;+&nbsp;directory;
+	&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;directory&nbsp;if&nbsp;necessary
+	&nbsp;&nbsp;&nbsp;&nbsp;if(directory!="")&nbsp;{
+		&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;_,&nbsp;err&nbsp;:=&nbsp;os.Stat(directory);&nbsp;os.IsNotExist(err)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;os.Mkdir(directory,0777);
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+		&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;len(directory)&gt;0&nbsp;&amp;&amp;&nbsp;directory[len(directory)-1:]!="/"&nbsp;{
+				directory&nbsp;=&nbsp;directory&nbsp;+&nbsp;"/";
+			}
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+	&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;create&nbsp;file
+	&nbsp;&nbsp;&nbsp;&nbsp;pt&nbsp;:=&nbsp;normalizePath(directory&nbsp;+&nbsp;filename&nbsp;+&nbsp;".md")
+		err&nbsp;=&nbsp;ioutil.WriteFile(pt,&nbsp;[]byte(textStr),&nbsp;0755)
+		if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+			fmt.Println(err)
+			return
+		}
+
+	&nbsp;&nbsp;&nbsp;&nbsp;count++;
+	}
+	//&nbsp;Rename&nbsp;and&nbsp;move&nbsp;files&nbsp;with&nbsp;the&nbsp;same&nbsp;name&nbsp;as&nbsp;directories
+	if&nbsp;(len(directory_list)!=0&nbsp;&amp;&amp;&nbsp;arguments["--indexes"]!=nil&nbsp;&amp;&amp;&nbsp;arguments["--indexes"].(string)!="")&nbsp;{
+		directory_list_keys&nbsp;:=&nbsp;make([]string,&nbsp;len(directory_list))
+		i&nbsp;:=&nbsp;0
+		for&nbsp;k&nbsp;:=&nbsp;range&nbsp;directory_list&nbsp;{
+			directory_list_keys[i]&nbsp;=&nbsp;k
+			i++
+		}
+
+		for&nbsp;_,directory_name&nbsp;:=&nbsp;range&nbsp;directory_list_keys&nbsp;{
+			if&nbsp;_,&nbsp;err&nbsp;:=&nbsp;os.Stat(output_path+directory_name+".md");&nbsp;os.IsNotExist(err)&nbsp;{
+				os.Rename(output_path+directory_name+".md",&nbsp;output_path+directory_name+"/index.md");
+			}
+		}
+	}
+	if&nbsp;(count&nbsp;&gt;&nbsp;0)&nbsp;{
+		fmt.Println(strconv.Itoa(count)&nbsp;+&nbsp;"&nbsp;files&nbsp;converted");
+	}
+}
+
+func&nbsp;GbkToUtf8(s&nbsp;[]byte)&nbsp;([]byte,&nbsp;error)&nbsp;{
+	reader&nbsp;:=&nbsp;transform.NewReader(bytes.NewReader(s),&nbsp;simplifiedchinese.GBK.NewDecoder())
+	d,&nbsp;e&nbsp;:=&nbsp;ioutil.ReadAll(reader)
+	if&nbsp;e&nbsp;!=&nbsp;nil&nbsp;{
+		return&nbsp;nil,&nbsp;e
+	}
+	return&nbsp;d,&nbsp;nil
+}
+
+func&nbsp;new_link(m&nbsp;string)&nbsp;string&nbsp;{
+	matches&nbsp;:=&nbsp;g_re.FindStringSubmatch(m)
+&nbsp;&nbsp;&nbsp;&nbsp;if(strings.Index(matches[1],&nbsp;"|")&nbsp;!=&nbsp;-1)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new_link&nbsp;:=&nbsp;strings.ReplaceAll(matches[1],"&nbsp;",&nbsp;"_");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"[[/"+new_link+"|{"+matches[1]+"}]]";
+&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;:=&nbsp;strings.TrimSpace((matches[1])[0:(strings.Index(matches[1],&nbsp;"|"))]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link&nbsp;=&nbsp;"/"&nbsp;+&nbsp;strings.ReplaceAll(link,"&nbsp;",&nbsp;"_");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;link_text&nbsp;:=&nbsp;strings.TrimSpace((matches[1])[(strings.Index(matches[1],&nbsp;"|")+1):]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"[["+link+"|"+link_text+"]]";
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}
+func&nbsp;Explode(delimiter,&nbsp;text&nbsp;string)&nbsp;[]string&nbsp;{
+	if&nbsp;len(delimiter)&nbsp;&gt;&nbsp;len(text)&nbsp;{
+		return&nbsp;strings.Split(delimiter,&nbsp;text)
+	}&nbsp;else&nbsp;{
+		return&nbsp;strings.Split(text,&nbsp;delimiter)
+	}
+}
+func&nbsp;Implode(glue&nbsp;string,&nbsp;pieces&nbsp;[]string)&nbsp;string&nbsp;{
+	return&nbsp;strings.Join(pieces,&nbsp;glue)
+}
+type&nbsp;stack&nbsp;[]string
+func&nbsp;(s&nbsp;stack)&nbsp;Push(v&nbsp;string)&nbsp;stack&nbsp;{
+	return&nbsp;append(s,&nbsp;v)
+}
+func&nbsp;(s&nbsp;stack)&nbsp;Pop()&nbsp;(stack,&nbsp;string)&nbsp;{
+	//&nbsp;FIXME:&nbsp;What&nbsp;do&nbsp;we&nbsp;do&nbsp;if&nbsp;the&nbsp;stack&nbsp;is&nbsp;empty,&nbsp;though?
+	l&nbsp;:=&nbsp;len(s)
+	if&nbsp;l==0&nbsp;{
+		return&nbsp;s,""
+	}
+	return&nbsp;&nbsp;s[:l-1],&nbsp;s[l-1]
+}
+
+func&nbsp;GetCurrentDirectory()&nbsp;string&nbsp;{
+	dir,&nbsp;err&nbsp;:=&nbsp;filepath.Abs(filepath.Dir(os.Args[0]))&nbsp;//返回绝对路径&nbsp;&nbsp;filepath.Dir(os.Args[0])去除最后一个元素的路径
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		fmt.Println(err.Error())
+	}
+	return&nbsp;strings.Replace(dir,&nbsp;"\\",&nbsp;"/",&nbsp;-1)&nbsp;//将\替换成/
+}
+//&nbsp;Borrowed&nbsp;from&nbsp;http://php.net/manual/en/func.realpath.php
+func&nbsp;normalizePath(path&nbsp;string)&nbsp;string&nbsp;{
+	if&nbsp;!strings.HasPrefix(path,&nbsp;".")&nbsp;{
+		return&nbsp;path
+	}
+	return&nbsp;filepath.Join(GetCurrentDirectory(),&nbsp;path)
+}</pre><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/159967#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,21 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>prunsrv与log4j冲突:</p><p>windows环境下,tomcat配置成windows服务,使用了prunsrv,prunsrv的日志功能会重定向标准输入输出,而log4j也存在标准输入输出重定向操作,实际看来prunsrv最终获取到了句柄，</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/31538113/how-to-disabled-logging-stdout-for-apache-commons-daemon-procrun/32464633">https://stackoverflow.com/questions/31538113/how-to-disabled-logging-stdout-for-apache-commons-daemon-procrun/32464633</a></p><p>这个可以禁掉输出文件但是句柄还是发生了重定向;---------要完全保持log4j的功能,有待分析;</p><p><br></p><p>log4j输出时间行号:<br></p><pre class="brush:xml;toolbar:false">&lt;layout&nbsp;class="org.apache.log4j.PatternLayout"&gt;
+&lt;!--param&nbsp;name="ConversionPattern"&nbsp;value="%-5p:&nbsp;%c&nbsp;-&nbsp;%m%n"&nbsp;/--&gt;
+&lt;param&nbsp;name="ConversionPattern"&nbsp;value="[%p(%F:%L)@%d{yyy&nbsp;MMM&nbsp;dd&nbsp;HH:mm:ss}]:&nbsp;-&nbsp;%m%n"&nbsp;/&gt;
+&lt;/layout&gt;</pre><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/127263#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,81 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>js位操作针对的是32位有符号整数</h3><p>1&lt;&lt;31的结果是-2147483648</p><p>可以通过(1&lt;&lt;31)&gt;&gt;&gt;0转回无符号;</p><p>同理,其他位操作的时候也有出现溢出为负数的情况,也需要进行类似的处理;</p><p>参考:</p><p><a rel="nofollow" href="https://www.jianshu.com/p/2cb75bfa34b0">https://www.jianshu.com/p/2cb75bfa34b0</a></p><p><a rel="nofollow" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators">https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators</a></p><h3>分享一个通过字符串函数间接位操作的函数:</h3><pre class="brush:js;toolbar:false">Vue.prototype.calcBits&nbsp;=&nbsp;function&nbsp;(newVal,&nbsp;oldVal32,&nbsp;begin,&nbsp;end)&nbsp;{
+&nbsp;&nbsp;if&nbsp;(typeof&nbsp;begin&nbsp;===&nbsp;'string')&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;=&nbsp;parseInt(begin)
+&nbsp;&nbsp;}
+&nbsp;&nbsp;if&nbsp;(typeof&nbsp;end&nbsp;===&nbsp;'string')&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;=&nbsp;parseInt(end)
+&nbsp;&nbsp;}
+&nbsp;&nbsp;if&nbsp;(end&nbsp;&gt;=&nbsp;32&nbsp;||&nbsp;begin&nbsp;&lt;&nbsp;0&nbsp;||&nbsp;begin&nbsp;&gt;&nbsp;end)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(`setBits(${newVal},${oldVal32},${begin},${end})`)
+&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;let&nbsp;oldVal32s&nbsp;=&nbsp;oldVal32.toString(2).padStart(32,&nbsp;'0').split("");
+&nbsp;&nbsp;let&nbsp;bitlen&nbsp;=&nbsp;end&nbsp;-&nbsp;begin&nbsp;+&nbsp;1;
+&nbsp;&nbsp;let&nbsp;newVals&nbsp;=&nbsp;newVal.toString(2).padStart(bitlen,&nbsp;'0').substr(-bitlen).split("");
+&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;bitlen;&nbsp;++i)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;oldVal32s[31&nbsp;-&nbsp;(i&nbsp;+&nbsp;begin)]&nbsp;=&nbsp;newVals[(bitlen&nbsp;-&nbsp;1&nbsp;-&nbsp;i)];
+&nbsp;&nbsp;}
+&nbsp;&nbsp;return&nbsp;parseInt(oldVal32s.join(""),&nbsp;2)
+}
+
+Vue.prototype.queryBits&nbsp;=&nbsp;function&nbsp;(val32,&nbsp;begin,&nbsp;end)&nbsp;{
+&nbsp;&nbsp;if&nbsp;(typeof&nbsp;begin&nbsp;===&nbsp;'string')&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;begin&nbsp;=&nbsp;parseInt(begin)
+&nbsp;&nbsp;}
+&nbsp;&nbsp;if&nbsp;(typeof&nbsp;end&nbsp;===&nbsp;'string')&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;end&nbsp;=&nbsp;parseInt(end)
+&nbsp;&nbsp;}
+&nbsp;&nbsp;if&nbsp;(end&nbsp;&gt;=&nbsp;32&nbsp;||&nbsp;begin&nbsp;&lt;&nbsp;0&nbsp;||&nbsp;begin&nbsp;&gt;&nbsp;end)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.error(`setBits(${val32},${begin},${end})`)
+&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;let&nbsp;bitlen&nbsp;=&nbsp;end&nbsp;-&nbsp;begin&nbsp;+&nbsp;1;
+&nbsp;&nbsp;let&nbsp;val&nbsp;=&nbsp;val32.toString(2).padStart(32,&nbsp;'0').substr(-end&nbsp;-&nbsp;1,&nbsp;bitlen);
+&nbsp;&nbsp;return&nbsp;parseInt(val,&nbsp;2)
+}
+Vue.prototype.gWriteBit&nbsp;=&nbsp;function&nbsp;(regVec,&nbsp;self,&nbsp;rid,&nbsp;index,&nbsp;value)&nbsp;{
+&nbsp;&nbsp;if&nbsp;(isNaN(index)&nbsp;||&nbsp;index&nbsp;&lt;&nbsp;0&nbsp;||&nbsp;index&nbsp;&gt;&nbsp;32)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;}
+&nbsp;&nbsp;let&nbsp;mask&nbsp;=&nbsp;(1&nbsp;&lt;&lt;&nbsp;index)&nbsp;&gt;&gt;&gt;&nbsp;0;
+&nbsp;&nbsp;return&nbsp;new&nbsp;Promise(function&nbsp;(resolve)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;setTimeout(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;function&nbsp;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;reg&nbsp;=&nbsp;regVec[rid];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;val&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(isNaN(value))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;=&nbsp;regVec[rid].RegValue&nbsp;^&nbsp;mask;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(value)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;=&nbsp;regVec[rid].RegValue&nbsp;|&nbsp;mask;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;val&nbsp;=&nbsp;regVec[rid].RegValue&nbsp;&amp;&nbsp;~mask;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.$forceUpdate();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;resolve;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}.bind(self),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;300
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;}.bind(self));
+}</pre><p><br></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/152428#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.其他_Blog" title="其他" href="https://developer.huaweicloud.com/tags/200213/blog_1">其他</a>
+        
+    </div>
+</div></div>

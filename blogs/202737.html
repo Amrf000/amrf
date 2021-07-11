@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><a>多线程之死锁就是这么简单</a><br></p>
+<p>避免死锁可以概括成三种方法：</p>
+<p>固定加锁的顺序(针对锁顺序死锁) 开放调用(针对对象之间协作造成的死锁) 使用定时锁--&gt;tryLock()</p>
+<p>如果等待获取锁时间超时，则抛出异常而不是一直等待！</p>
+<p><a>Java多线程：死锁</a></p>
+<p>总结：避免死锁的方式</p>
+<p>1、让程序每次至多只能获得一个锁。当然，在多线程环境下，这种情况通常并不现实。</p>
+<p>2、设计时考虑清楚锁的顺序，尽量减少嵌在的加锁交互数量。</p>
+<p>3、既然死锁的产生是两个线程无限等待对方持有的锁，那么只要等待时间有个上限不就好了。当然synchronized不具备这个功能，但是我们可以使用Lock类中的tryLock方法去尝试获取锁，这个方法可以指定一个超时时限，在等待超过该时限之后便会返回一个失败信息。</p>
+<p style="white-space: normal;"><a target="_self">Programmatic deadlock detection</a>&nbsp;<br><a>Java中的死锁检测</a>&nbsp;<br><a>Programmatic deadlock detection in java</a></p>
+<p style="white-space: normal;"><a>Java面试必问-死锁终极篇</a>&nbsp;<br><a rel="nofollow" href="https://blog.csdn.net/li396864285/article/details/51487637">java两种经典死锁例子，Lock发生死锁案列</a>&nbsp;<br><a rel="nofollow" href="https://blog.csdn.net/aitumingmumu/article/details/69218245">Java死锁范例与死锁分析</a></p>
+<p style="white-space: normal;"><a>死锁</a></p>
+<p style="white-space: normal;"><a rel="nofollow" href="https://github.com/frohoff/jdk8u-jdk/blob/master/src/share/demo/management/FullThreadDump/ThreadMonitor.java">ThreadMonitor</a></p>
+<p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_text.svg">
+                <a att-id="9a20f37018414f5ca6ac820cac932e4c" href="/blogs/attachment?id=9a20f37018414f5ca6ac820cac932e4c" title="外链限制.md.txt">外链限制.md.txt</a>
+                <span class="attSize">967B</span>
+                <span class="downloadNum">，下载次数：<i>0</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/202737#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+    </div>
+</div></div>

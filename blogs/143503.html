@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>工程地址:</p><p><a rel="nofollow" href="https://github.com/AdguardTeam/AdGuardHome">https://github.com/AdguardTeam/AdGuardHome</a></p><p>构建中的一些注意点:</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>webpack编译客户端代码时报LF/CRLF错误</p></li></ul><p>可以在client/src目录使用for /R %G in (*.js *.css) do dos2unix "%G"批量将CRLF替换为LF</p><p>更好的办法是在git clone之前先使用git config core.autocrlf查询，如果是true则使用git config --global core.autocrlf false设置,</p><p>这样下载下来的文件行结束符格式应该就是LF了;</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>客户端build-prod编译报NODE_ENV不是内部命令, 这个和windows bat环境语法有关</p></li></ul><p>可以改成SET NODE_ENV=production &amp;&amp; .\node_modules\.bin\webpack --config webpack.prod.js</p><p>或者直接在控制台进入client目录,手动输入上面两条指令,独立编译客户端</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>如果有build\static文件夹创建失败的错误，提示可以手动创建出这两个文件夹后，重新构建<br></p></li><li><p>GOPROXY设置</p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579504019563263.png" title="1579504019563263.png" alt="image.png" width="319" height="300" class="localImage"></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>代理设置</p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579504155862265.png" title="1579504155862265.png" alt="image.png" class="localImage"></p><p>同理可设置https_proxy,<a rel="nofollow" href="http://proxy.com">http://userName:password@proxy.com:proxyPort,注意password特殊字符需要转义，例如@=&gt;%40</a> </p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>makefile中PATH=$(GOPATH)/bin:$(PATH),可能会由于路径中包含括号导致错误</p></li></ul><p>处理办法去除后,临时将$(GOPATH)/bin添加到环境path变量中</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>&nbsp;执行make构建,如果有客户端编译的报错则可以不在make中编译客户端</p></li><li><p>服务端和客户端分别编译成功后,目录下会生成AdGuardHome.exe服务端程序,build\static目录下会生成客户端文件</p></li><li><p>双击AdGuardHome.exe则服务运行，可通过访问localhost:3000访问设置;</p></li></ul><p><span style="color:rgb(0,176,80);">/*-------------------------------------------------------------------------------------------*/</span></p><p>题外话:</p><p>这个项目只是我希望将crates.io的dns解析为本机的一个尝试,发现在host中设置后,在命令行里解析确实生效了,但是浏览器始终不生效,于是就想是不是直接运行一个dns服务器就好了,结果还不行=&gt;使用chrome.storage.local.set('DNShosts'..也不行，额....实际上犯了一个愚蠢的错误，忘了代理了设置了;</p><p>浏览器中可以方便的使用Proxy SwitchyOmega切换直连和代理,<span style="color:rgb(32,33,36);font-family:Roboto, 'Segoe UI', Arial, 'Microsoft Yahei', sans-serif;font-size:13px;background-color:rgb(255,255,255);">IPvFoo插件可以看到当前tab的域名解析,</span>Siderite's DNS Resolver可以看到当前的浏览器dns缓存;</p><p>此外,AdGuardHome的前端采用react后端采用go,框架结构和整体设计是值得学习的;</p><p><span style="color:rgb(32,33,36);font-family:Roboto, 'Segoe UI', Arial, 'Microsoft Yahei', sans-serif;font-size:13px;background-color:rgb(255,255,255);"></span><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/143503#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Windows_Blog" title="Windows" href="https://developer.huaweicloud.com/tags/200366/blog_1">Windows</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.DNS_Blog" title="DNS" href="https://developer.huaweicloud.com/tags/200616/blog_1">DNS</a>
+        
+    </div>
+</div></div>

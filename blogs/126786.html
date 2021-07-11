@@ -1,0 +1,139 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>由于既没有实际串口也没有虚拟串口，上面的代码都没有进行实际测试,改进空间应该还比较巨大;</p><p><br></p><p>首先需要一个单例:</p><pre class="brush:c#;toolbar:false">private&nbsp;static&nbsp;MSerialPort&nbsp;_instance&nbsp;=&nbsp;null;
+private&nbsp;static&nbsp;Object&nbsp;_mutex&nbsp;=&nbsp;new&nbsp;Object();
+public&nbsp;static&nbsp;MSerialPort&nbsp;GetInstance(int&nbsp;ComPortNum)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(_instance&nbsp;==&nbsp;null)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lock&nbsp;(_mutex)&nbsp;//&nbsp;now&nbsp;I&nbsp;can&nbsp;claim&nbsp;some&nbsp;form&nbsp;of&nbsp;thread&nbsp;safety...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(_instance&nbsp;==&nbsp;null)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_instance&nbsp;=&nbsp;new&nbsp;MSerialPort(ComPortNum);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;_instance;
+}
+private&nbsp;MSerialPort(int&nbsp;ComPortNum):base(){
+&nbsp;&nbsp;&nbsp;&nbsp;...
+}</pre><p>异步写:</p><pre class="brush:c#;toolbar:false">public&nbsp;async&nbsp;Task&lt;bool&gt;&nbsp;WriteStr(string&nbsp;value)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!base.IsOpen)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!doConnect(_ComPortNum))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;byte[]&nbsp;buffer&nbsp;=&nbsp;new&nbsp;byte[128];
+&nbsp;&nbsp;&nbsp;&nbsp;Encoding.UTF8.GetBytes(value,&nbsp;0,&nbsp;value.Length,&nbsp;buffer,&nbsp;0);
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;flag&nbsp;=&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;try
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base.BaseStream.WriteTimeout&nbsp;=&nbsp;2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;base.BaseStream.WriteAsync(buffer,&nbsp;0,&nbsp;128);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;=&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;catch&nbsp;(Exception&nbsp;ex)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("MSerialPort&nbsp;exception:&nbsp;"&nbsp;+&nbsp;ex);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;flag;
+}</pre><p>异步读一次：</p><pre class="brush:c#;toolbar:false">public&nbsp;async&nbsp;Task&lt;Tuple&lt;bool,string&gt;&gt;&nbsp;readStr()//ref&nbsp;string&nbsp;value
+{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!base.IsOpen)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;doConnect(_ComPortNum);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;byte[]&nbsp;buffer&nbsp;=&nbsp;new&nbsp;byte[128];
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;flag&nbsp;=&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;try
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base.BaseStream.ReadTimeout&nbsp;=&nbsp;2;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;base.BaseStream.ReadAsync(buffer,&nbsp;0,&nbsp;128);//这种一旦读到任何内容就结束
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;=&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;catch&nbsp;(Exception&nbsp;ex)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("MSerialPort&nbsp;exception:&nbsp;"&nbsp;+&nbsp;ex);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;Tuple&lt;bool,&nbsp;string&gt;(flag,&nbsp;System.Text.Encoding.UTF8.GetString(buffer,&nbsp;0,&nbsp;buffer.Length));
+}</pre><p>异步读到特征值:<br></p><pre class="brush:c#;toolbar:false">public&nbsp;async&nbsp;Task&lt;Tuple&lt;bool,&nbsp;MatchCollection&gt;&gt;&nbsp;readUntil(Regex&nbsp;reg)//ref&nbsp;string&nbsp;value,
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Console.WriteLine("readUntil");
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!base.IsOpen)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;doConnect(_ComPortNum);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;DateTime&nbsp;beforDT&nbsp;=&nbsp;System.DateTime.Now;
+&nbsp;&nbsp;&nbsp;&nbsp;byte[]&nbsp;buffer&nbsp;=&nbsp;new&nbsp;byte[128];
+&nbsp;&nbsp;&nbsp;&nbsp;base.BaseStream.ReadTimeout&nbsp;=&nbsp;2;
+&nbsp;&nbsp;&nbsp;&nbsp;double&nbsp;spend&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;flag&nbsp;=&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;StringBuilder&nbsp;sb&nbsp;=&nbsp;new&nbsp;StringBuilder();
+&nbsp;&nbsp;&nbsp;&nbsp;MatchCollection&nbsp;matchx&nbsp;=&nbsp;null;
+&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;Task.Run(()&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Array.Clear(buffer,&nbsp;0,&nbsp;buffer.Length);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;base.BaseStream.Read(buffer,&nbsp;0,&nbsp;128);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}catch(Exception&nbsp;ex)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//Console.WriteLine("MSerialPort&nbsp;exception:&nbsp;"&nbsp;+&nbsp;ex);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.Append(System.Text.Encoding.UTF8.GetString(buffer,&nbsp;0,&nbsp;buffer.Length));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;string&nbsp;value&nbsp;=&nbsp;sb.ToString();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(value&nbsp;!=&nbsp;"")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;matchx&nbsp;=&nbsp;reg.Matches(value);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(matchx.Count&nbsp;&gt;&nbsp;0)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flag&nbsp;=&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DateTime&nbsp;afterDT&nbsp;=&nbsp;System.DateTime.Now;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TimeSpan&nbsp;ts&nbsp;=&nbsp;afterDT.Subtract(beforDT);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spend&nbsp;=&nbsp;ts.TotalMilliseconds;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;while&nbsp;(spend&nbsp;&lt;=&nbsp;5000.0);
+&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;Tuple&lt;bool,&nbsp;MatchCollection&gt;(flag,&nbsp;matchx);
+}</pre><p>测试调用:</p><pre class="brush:c#;toolbar:false">单例:
+static&nbsp;async&nbsp;void&nbsp;MyAsyncMethod()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;MSerialPort&nbsp;s&nbsp;=&nbsp;GetInstance(1);
+&nbsp;&nbsp;&nbsp;&nbsp;Task&lt;bool&gt;&nbsp;calculateResult&nbsp;=&nbsp;s.WriteStr("123");
+&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;calculateResult;
+&nbsp;&nbsp;&nbsp;&nbsp;Regex&nbsp;rx&nbsp;=&nbsp;new&nbsp;Regex(@"(\d+)",&nbsp;RegexOptions.Compiled&nbsp;|&nbsp;RegexOptions.IgnoreCase);
+&nbsp;&nbsp;&nbsp;&nbsp;Task&lt;Tuple&lt;bool,&nbsp;MatchCollection&gt;&gt;&nbsp;calculateResult1&nbsp;=&nbsp;s.readUntil(rx);
+&nbsp;&nbsp;&nbsp;&nbsp;await&nbsp;calculateResult1;
+}</pre><p><br></p><p>看到这种建议：</p><p><span style="font-family:'Microsoft YaHei';font-size:medium;">Strongly recommend&nbsp;</span><a rel="nofollow" href="https://github.com/ebraminio/PInvokeSerialPort" style="font-family:'Microsoft YaHei';font-size:medium;white-space:normal;">PInvokeSerialPort</a><span style="font-family:'Microsoft YaHei';font-size:medium;">, it fires one event for every byte, and more stable than .net built in one&nbsp;<span style="font-family:'Microsoft YaHei';font-size:medium;">===&gt;(一个c++串口的wrapper)</span></span></p><p><span style="font-family:'Microsoft YaHei';font-size:medium;"><a rel="nofollow" href="https://stackoverflow.com/questions/42568662/serial-port-on-c-read-until-a-byte-sequence">https://stackoverflow.com/questions/42568662/serial-port-on-c-read-until-a-byte-sequence</a></span></p><p>其他参考:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/18716928/how-to-write-a-async-method-with-out-parameter">https://stackoverflow.com/questions/18716928/how-to-write-a-async-method-with-out-parameter</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/40686776/what-exactly-is-a-reference-in-c-sharp">https://stackoverflow.com/questions/40686776/what-exactly-is-a-reference-in-c-sharp</a></p><p><a rel="nofollow" href="https://www.tutorialspoint.com/csharp/csharp_reference_parameters.htm+&amp;cd=16&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://www.tutorialspoint.com/csharp/csharp_reference_parameters.htm+&amp;cd=16&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/11654562/how-to-convert-byte-array-to-string">https://stackoverflow.com/questions/11654562/how-to-convert-byte-array-to-string</a></p><p><a rel="nofollow" href="https://msdn.microsoft.com/en-us/magazine/cc301786.aspx">https://msdn.microsoft.com/en-us/magazine/cc301786.aspx</a></p><p><a rel="nofollow" href="https://www.codeproject.com/Questions/1060886/Continuosly-serial-port-read">https://www.codeproject.com/Questions/1060886/Continuosly-serial-port-read</a></p><p><a rel="nofollow" href="https://blog.csdn.net/xzjxylophone/article/details/6832160">https://blog.csdn.net/xzjxylophone/article/details/6832160</a></p><p><a rel="nofollow" href="https://blog.csdn.net/u013658041/article/details/78203931">https://blog.csdn.net/u013658041/article/details/78203931</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/51658706/await-async-on-anonymous-function">https://stackoverflow.com/questions/51658706/await-async-on-anonymous-function</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/20395826/explicitly-use-a-functask-for-asynchronous-lambda-function-when-action-overloa">https://stackoverflow.com/questions/20395826/explicitly-use-a-functask-for-asynchronous-lambda-function-when-action-overloa</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/1897555/what-is-the-equivalent-of-memset-in-c">https://stackoverflow.com/questions/1897555/what-is-the-equivalent-of-memset-in-c</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/1407715/how-to-quickly-zero-out-an-array/43188508">https://stackoverflow.com/questions/1407715/how-to-quickly-zero-out-an-array/43188508</a></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex?view=netframework-4.8">https://docs.microsoft.com/en-us/dotnet/api/system.text.regularexpressions.regex?view=netframework-4.8</a></p><p><a rel="nofollow" href="https://www.geeksforgeeks.org/destructors-in-c-sharp/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://www.geeksforgeeks.org/destructors-in-c-sharp/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/5732282/using-the-destructor-dispose-of-the-base-class">https://stackoverflow.com/questions/5732282/using-the-destructor-dispose-of-the-base-class</a></p><p><a rel="nofollow" href="https://csharpindepth.com/articles/singleton+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://csharpindepth.com/articles/singleton+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/4203634/singleton-with-parameters">https://stackoverflow.com/questions/4203634/singleton-with-parameters</a></p><p><a rel="nofollow" href="https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/08/how-to-call-an-async-method-from-a-console-app-main-method/">https://blogs.msdn.microsoft.com/benjaminperkins/2017/03/08/how-to-call-an-async-method-from-a-console-app-main-method/</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/24894774/how-to-use-await-within-main">https://stackoverflow.com/questions/24894774/how-to-use-await-within-main</a></p><p><a rel="nofollow" href="https://recaffeinate.co/post/how-to-await-console-application/+&amp;cd=4&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://recaffeinate.co/post/how-to-await-console-application/+&amp;cd=4&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://github.com/ebraminio/PInvokeSerialPort">https://github.com/ebraminio/PInvokeSerialPort</a></p><p><span style="color:rgb(0,176,80);">/*-------------------------C#有名管道-------------------------------------*/</span></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/dotnet/api/system.io.pipes.namedpipeclientstream?view=netframework-4.8">https://docs.microsoft.com/en-us/dotnet/api/system.io.pipes.namedpipeclientstream?view=netframework-4.8</a></p><p><a rel="nofollow" href="https://bytes.com/topic/c-sharp/answers/277259-readtoend-blocking+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://bytes.com/topic/c-sharp/answers/277259-readtoend-blocking+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://github.com/sovprene/named-pipe-examples/tree/master/Inter-Process%20Communication%20(IPC)/CSNamedPipeClient">https://github.com/sovprene/named-pipe-examples/tree/master/Inter-Process%20Communication%20(IPC)/CSNamedPipeClient</a></p><p><a rel="nofollow" href="https://www.codeproject.com/Articles/864679/Creating-a-Server-Using-Named-Pipes">https://www.codeproject.com/Articles/864679/Creating-a-Server-Using-Named-Pipes</a></p><p><a rel="nofollow" href="https://gist.github.com/Suplanus/f652a15a55bff64b6ccb33836041f8bb">https://gist.github.com/Suplanus/f652a15a55bff64b6ccb33836041f8bb</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/48059410/using-namedpipeserverstream-and-namedpipeclientstream-asynchronously">https://stackoverflow.com/questions/48059410/using-namedpipeserverstream-and-namedpipeclientstream-asynchronously</a></p><p><a rel="nofollow" href="https://gist.github.com/AArnott/0d5f4645ad7e9a765cee">https://gist.github.com/AArnott/0d5f4645ad7e9a765cee</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/23304311/async-namedpipeclientstream-implementation-feedback">https://stackoverflow.com/questions/23304311/async-namedpipeclientstream-implementation-feedback</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/49838628/named-pipe-input-output-in-c-sharp">https://stackoverflow.com/questions/49838628/named-pipe-input-output-in-c-sharp</a></p><p><br></p><p>1.ReadToEnd阻塞的原因(<a rel="nofollow" href="https://bytes.com/topic/c-sharp/answers/277259-readtoend-blocking+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://bytes.com/topic/c-sharp/answers/277259-readtoend-blocking+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg</a>)</p><p>--<span style="font-family:'Microsoft YaHei';font-size:16.8px;">No - there's no real sense of "all data" until the stream has been</span><br><span style="font-family:'Microsoft YaHei';font-size:16.8px;">closed, because the server could always have sent some more since you</span></p><p><span style="font-family:'Microsoft YaHei';font-size:16.8px;"><br></span></p><p>2.WaitForPipeDrain();//等待管道另一端读取所有</p><p><span style="color:rgb(0,176,80);">/*-------------------------C#单元测试-------------------------------------*/</span></p><p><span style="color:rgb(0,176,80);"><a rel="nofollow" href="https://blog.csdn.net/lang791534167/article/details/50778246">https://blog.csdn.net/lang791534167/article/details/50778246</a></span></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/visualstudio/test/walkthrough-creating-and-running-unit-tests-for-managed-code?view=vs-2019">https://docs.microsoft.com/en-us/visualstudio/test/walkthrough-creating-and-running-unit-tests-for-managed-code?view=vs-2019</a></p><p><span style="color:rgb(0,176,80);">/*-------------------------C#异步-------------------------------------*/</span></p><p><a rel="nofollow" href="https://blog.csdn.net/madongchunqiu/article/details/69855744">https://blog.csdn.net/madongchunqiu/article/details/69855744</a></p><p><a rel="nofollow" href="https://blog.csdn.net/jl1134069094/article/details/50511418">https://blog.csdn.net/jl1134069094/article/details/50511418</a></p><p><a rel="nofollow" href="https://blog.csdn.net/a_little_a_day/article/details/78519265">https://blog.csdn.net/a_little_a_day/article/details/78519265</a></p><p><a rel="nofollow" href="https://codeday.me/bug/20190223/699688.html">https://codeday.me/bug/20190223/699688.html</a></p><p><a rel="nofollow" href="https://medium.com/software-development-2/coroutines-and-fibers-why-and-when-5798f08464fd+&amp;cd=3&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://medium.com/software-development-2/coroutines-and-fibers-why-and-when-5798f08464fd+&amp;cd=3&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/lxrj2008/article/details/78677810">https://blog.csdn.net/lxrj2008/article/details/78677810</a></p><p><a rel="nofollow" href="https://blog.csdn.net/wlk1229/article/details/81276970">https://blog.csdn.net/wlk1229/article/details/81276970</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/5096926/what-is-the-get-set-syntax-in-c">https://stackoverflow.com/questions/5096926/what-is-the-get-set-syntax-in-c</a></p><p><span style="color:rgb(0,176,80);">/*-------------------------C#异步-------------------------------------*/</span></p><p><span style="color:rgb(0,176,80);"><a rel="nofollow" href="https://msdn.microsoft.com/en-us/magazine/cc164086.aspx">https://msdn.microsoft.com/en-us/magazine/cc164086.aspx</a></span></p><p><span style="color:rgb(0,176,80);"><a rel="nofollow" href="https://stackoverflow.com/questions/1949051/is-there-a-fiber-api-in-net">https://stackoverflow.com/questions/1949051/is-there-a-fiber-api-in-net</a></span></p><p><span style="color:rgb(0,176,80);"><a rel="nofollow" href="https://paoloseverini.wordpress.com/tag/fibers/+&amp;cd=5&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://paoloseverini.wordpress.com/tag/fibers/+&amp;cd=5&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </span></p><p><a rel="nofollow" href="https://medium.com/%40deep_blue_day/long-story-short-async-await-best-practices-in-net-1f39d7d84050+&amp;cd=7&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://medium.com/%40deep_blue_day/long-story-short-async-await-best-practices-in-net-1f39d7d84050+&amp;cd=7&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/mawming/article/details/52385405">https://blog.csdn.net/mawming/article/details/52385405</a></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/windows/win32/procthread/fibers">https://docs.microsoft.com/en-us/windows/win32/procthread/fibers</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/31221210/fibers-vs-async-await">https://stackoverflow.com/questions/31221210/fibers-vs-async-await</a></p><p><a rel="nofollow" href="https://www.zhihu.com/question/23955356">https://www.zhihu.com/question/23955356</a></p><p><a rel="nofollow" href="https://github.com/markpapadakis/coros-fibers">https://github.com/markpapadakis/coros-fibers</a></p><p><a rel="nofollow" href="https://medium.com/software-development-2/coroutines-and-fibers-why-and-when-5798f08464fd+&amp;cd=11&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://medium.com/software-development-2/coroutines-and-fibers-why-and-when-5798f08464fd+&amp;cd=11&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p><p><br></p><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2f862d4e0f4211eab759fa163e330718" href="/blogs/attachment?id=2f862d4e0f4211eab759fa163e330718" title="Reflector9.zip">Reflector9.zip</a>
+                <span class="attSize">10.14M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/126786#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click..NET_Blog" title=".NET" href="https://developer.huaweicloud.com/tags/200423/blog_1">.NET</a>
+        
+    </div>
+</div></div>

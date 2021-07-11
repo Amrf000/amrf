@@ -1,0 +1,69 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>gitbook-convert</p><p>可以将docx,pdf转换成gitbook markdown文件目录</p><p>可以使用npm install gitbook-convert -g安装</p><p><br></p><p>gitbook<br></p><p>是一个文档工具,可以将文档发布为静态网站、pdf、ebook等</p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);">可以使用npm install gitbook-cli -g安装</span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">常用的指令是:</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">gitbook install&nbsp;</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">可以安装book.json 里的gitbook插件;</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">gitbook build&nbsp;</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">可以由markdown生成静态网页;</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">gitbook serve&nbsp;</span></span></p><p><span style="color:#4d4d4d;font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;"><span style="background-color:rgb(255,255,255);">可以运行一个静态网页的服务器</span></span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"><br></span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);">book.json参考格式</span></p><p><br></p><pre class="brush:xml;toolbar:false">{
+&nbsp;&nbsp;"gitbook":&nbsp;"*",
+&nbsp;&nbsp;"basePath":&nbsp;".",
+&nbsp;&nbsp;"language":&nbsp;"",
+&nbsp;&nbsp;"theme":&nbsp;"default",
+&nbsp;&nbsp;"title":&nbsp;"xxxx",
+&nbsp;&nbsp;"description":&nbsp;"xxxx",
+&nbsp;&nbsp;"plugins":&nbsp;[
+&nbsp;&nbsp;&nbsp;"highlight",
+&nbsp;&nbsp;&nbsp;"expandable-chapters",
+&nbsp;&nbsp;&nbsp;&nbsp;"copy",
+&nbsp;&nbsp;"search",
+&nbsp;&nbsp;&nbsp;"lunr",
+&nbsp;&nbsp;&nbsp;"sharing",
+&nbsp;&nbsp;&nbsp;"fontsettings",
+&nbsp;&nbsp;&nbsp;"add-js-css"
+&nbsp;&nbsp;],
+&nbsp;&nbsp;"pluginsConfig":&nbsp;{
+"search":&nbsp;{},
+"lunr":&nbsp;{
+"maxIndexSize":&nbsp;1000000,
+"ignoreSpecialCharacters":&nbsp;false
+},
+"fontsettings":&nbsp;{
+"theme":&nbsp;"white",
+"family":&nbsp;"sans",
+"size":&nbsp;2
+},
+"highlight":&nbsp;{},
+"copy":&nbsp;{},
+"expandableChapters":&nbsp;{
+"cssFile":&nbsp;["expandable-chapters-theme.css"]
+},
+"sharing":&nbsp;{
+"facebook":&nbsp;true,
+"twitter":&nbsp;true,
+"google":&nbsp;false,
+"weibo":&nbsp;false,
+"instapaper":&nbsp;false,
+"vk":&nbsp;false,
+"all":&nbsp;["facebook",&nbsp;"google",&nbsp;"twitter",&nbsp;"weibo",&nbsp;"instapaper"]
+},
+"expandable-chapters":&nbsp;{},
+&nbsp;&nbsp;&nbsp;&nbsp;"add-js-css":&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;"js":&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;],
+&nbsp;&nbsp;&nbsp;&nbsp;"css":&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"./styles/style.css"
+&nbsp;&nbsp;&nbsp;&nbsp;]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"><br></span>两个问题:</p><p>（一）我的环境需要设置git代理</p><p>1.设置git代理</p><p>git config --global https.proxy https://域账号:密码@xxxxx.com:8080</p><p>git config --global http.proxy http://域账号:密码@xxxx.com:8080</p><p>如果密码中有特殊字符，可以使用chrome的consle，在其中输入:encodeURIComponent(密码)，查看转义后的内容，进行设置</p><p>2、不支持git协议，使用https协议代替git协议: git config --global url."https://".insteadOf git://</p><p>3、不验证ssl协议：git config --global http.sslVerify false</p><p>（二）npm代理设置</p><p>no-proxy=.xxx.com---不需要代理的域</p><p>registry=https://repo.xxxx.com/repository/npm/</p><p>_auth="repository pass"----如果仓带auth验证</p><p>always-auth=true</p><p>proxy=http:///域账号:密码@xxxxx.com:port/</p><p>https-proxy=http:///域账号:密码@xxxxx.com:port/</p><p>prefix=npm本地仓路径--如果要放到非C盘下默认路径的时候指定</p><p><br></p><p>由于我的npm设置了prefix,所以后来在全局安装了gitbook后,直接运行gitbook命令还是找不到，需要将prefix路径加到环境变量或者直接到该路径执行指令</p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"><br></span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"><br></span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);">参考:</span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"><a rel="nofollow" href="https://blog.csdn.net/axi295309066/article/details/61420694">https://blog.csdn.net/axi295309066/article/details/61420694</a></span></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/110709#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

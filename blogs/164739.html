@@ -1,0 +1,262 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h2>测试脚手架基于：</h2>
+<h2>&nbsp;&nbsp;&nbsp;&nbsp;https://cloud.tencent.com/developer/article/1395426</h2>
+<h3># React redux 测试</h3>
+<p>Counter.js<br></p>
+<pre class="brush:js;toolbar:false">import&nbsp;React,&nbsp;{&nbsp;Component&nbsp;}&nbsp;from&nbsp;'react';
+import&nbsp;{&nbsp;createStore&nbsp;}&nbsp;from&nbsp;'redux';
+import&nbsp;{&nbsp;connect&nbsp;}&nbsp;from&nbsp;'react-redux';
+import&nbsp;PropTypes&nbsp;from&nbsp;'prop-types';
+
+//&nbsp;============action================
+const&nbsp;ADD_ONE&nbsp;=&nbsp;'ADD_ONE';
+const&nbsp;MINUS_ONE&nbsp;=&nbsp;'MINUS_ONE';
+//&nbsp;=============reducer=================
+const&nbsp;initialState&nbsp;=&nbsp;{
+&nbsp;&nbsp;number:&nbsp;0
+};
+function&nbsp;reducer(state&nbsp;=&nbsp;initialState,&nbsp;action)&nbsp;{
+&nbsp;&nbsp;switch&nbsp;(action.type)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;ADD_ONE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number:&nbsp;state.number&nbsp;+&nbsp;1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;MINUS_ONE:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;number:&nbsp;state.number&nbsp;-&nbsp;1
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;default:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;state;
+&nbsp;&nbsp;}
+}
+//&nbsp;==============store======================
+const&nbsp;Store&nbsp;=&nbsp;createStore(reducer);
+//&nbsp;====================================
+const&nbsp;mapStateToProps&nbsp;=&nbsp;(state)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;return&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;number:&nbsp;state.number
+&nbsp;&nbsp;};
+}
+//&nbsp;====================================
+
+const&nbsp;containerStyle&nbsp;=&nbsp;{
+&nbsp;&nbsp;...
+}
+const&nbsp;buttonStyle&nbsp;=&nbsp;{
+&nbsp;&nbsp;...
+}
+
+const&nbsp;propTypes&nbsp;=&nbsp;{
+&nbsp;&nbsp;dispatch:&nbsp;PropTypes.func.isRequired,
+&nbsp;&nbsp;number:PropTypes.number.isRequired
+};
+
+class&nbsp;Counter0&nbsp;extends&nbsp;Component&nbsp;{
+&nbsp;&nbsp;addOne&nbsp;=&nbsp;()&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;dispatch&nbsp;}&nbsp;=&nbsp;this.props;
+&nbsp;&nbsp;&nbsp;&nbsp;dispatch({&nbsp;type:&nbsp;'ADD_ONE'&nbsp;});
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;minusOne&nbsp;=&nbsp;()&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;dispatch&nbsp;}&nbsp;=&nbsp;this.props;
+&nbsp;&nbsp;&nbsp;&nbsp;dispatch({&nbsp;type:&nbsp;'MINUS_ONE'&nbsp;});
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;render()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;number&nbsp;}&nbsp;=&nbsp;this.props;
+
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;{number}&lt;/h1&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;style={containerStyle}&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;onClick={this.minusOne}&nbsp;type="button"&nbsp;style={buttonStyle}&gt;-&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;onClick={this.addOne}&nbsp;type="button"&nbsp;style={buttonStyle}&gt;+&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;}
+}
+
+Counter0.propTypes&nbsp;=&nbsp;propTypes;
+
+const&nbsp;Counter&nbsp;=&nbsp;connect(mapStateToProps)(Counter0)
+export&nbsp;{&nbsp;Store,&nbsp;Counter};</pre>
+<p>App.jsx</p>
+<pre class="brush:js;toolbar:false">import&nbsp;{&nbsp;Provider&nbsp;}&nbsp;from&nbsp;'react-redux';
+import&nbsp;{Counter,Store}&nbsp;from&nbsp;'../component/Counter';
+&nbsp;&lt;Provider&nbsp;store={Store}&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Counter&nbsp;/&gt;
+&nbsp;&lt;/Provider&gt;</pre>
+<h3># Router 4测试以及Prop传参</h3>
+<p>App.jsx</p>
+<pre class="brush:js;toolbar:false">&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;Link&nbsp;to="/"&gt;App&lt;/Link&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;Link&nbsp;to="/about"&gt;About&lt;/Link&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;Link&nbsp;to="/dashboard"&gt;dashboard&lt;/Link&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;Link&nbsp;to="/example"&gt;Example&lt;/Link&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;&lt;Link&nbsp;to={`/example1/${name}/${id}?a=1&amp;b=2#c=3`}&gt;Example1&lt;/Link&gt;&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route&nbsp;exact&nbsp;path="/"&nbsp;component={ShowcaseWelcome}&nbsp;/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route&nbsp;path="/about"&nbsp;component={About}&nbsp;/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exact
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;path='/dashboard'
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;render={(props)&nbsp;=&gt;&nbsp;&lt;About&nbsp;{...props}&nbsp;greeting='Welcome&nbsp;to&nbsp;React'&nbsp;/&gt;}
+&nbsp;&nbsp;&nbsp;&nbsp;/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route&nbsp;path="/example"&nbsp;component={Example}&nbsp;/&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;Route&nbsp;path="/example1/:name/:id"&nbsp;component={Example1}&nbsp;/&gt;
+&lt;/ul&gt;</pre>
+<p>Example1.js（路由参数测试,如果需要进一步解析可以考虑qs或者自行编写参数解析函数）</p>
+<pre class="brush:js;toolbar:false">const&nbsp;{&nbsp;match,&nbsp;location&nbsp;}&nbsp;=&nbsp;this.props;
+&lt;p&gt;{match.params.id}&nbsp;-&nbsp;{location.search}&nbsp;-{location.hash}&nbsp;&lt;/p&gt;
+&lt;Link&nbsp;to="/dashboard"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;type="button"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GoTo
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;
+&lt;/Link&gt;</pre>
+<p>About.js（组件属性传参测试）<br></p>
+<pre class="brush:js;toolbar:false">const&nbsp;{&nbsp;greeting&nbsp;}&nbsp;=&nbsp;this.props;
+{greeting}</pre>
+<h3># typevalid测试<br></h3>
+<pre class="brush:js;toolbar:false">static&nbsp;defaultProps&nbsp;=&nbsp;{
+	greeting:&nbsp;""
+}
+const&nbsp;{&nbsp;value&nbsp;}&nbsp;=&nbsp;this.state
+{value}
+About.propTypes&nbsp;=&nbsp;{
+&nbsp;&nbsp;greeting:&nbsp;PropTypes.string//&nbsp;.isRequired
+}</pre>
+<h3># react-hook测试<br></h3>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p>原结构</p></li>
+</ul>
+<pre class="brush:js;toolbar:false">class&nbsp;Example1&nbsp;extends&nbsp;React.Component&nbsp;{
+&nbsp;&nbsp;constructor(props)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;super(props);
+&nbsp;&nbsp;&nbsp;&nbsp;this.state&nbsp;=&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count:&nbsp;0
+&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;componentDidMount()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;count&nbsp;}&nbsp;=&nbsp;this.state;
+&nbsp;&nbsp;&nbsp;&nbsp;document.title&nbsp;=&nbsp;`You&nbsp;clicked&nbsp;${count}&nbsp;times`;
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;componentDidUpdate()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;count&nbsp;}&nbsp;=&nbsp;this.state;
+&nbsp;&nbsp;&nbsp;&nbsp;document.title&nbsp;=&nbsp;`You&nbsp;clicked&nbsp;${count}&nbsp;times`;
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;render()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;count&nbsp;}&nbsp;=&nbsp;this.state;
+&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;{&nbsp;match,&nbsp;location&nbsp;}&nbsp;=&nbsp;this.props;
+
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;type="button"&nbsp;onClick={()&nbsp;=&gt;&nbsp;this.setState({&nbsp;count:&nbsp;count&nbsp;+&nbsp;1&nbsp;})}&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click&nbsp;me
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;}
+}</pre>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p>后结构</p></li>
+</ul>
+<pre class="brush:js;toolbar:false">function&nbsp;Example()&nbsp;{
+&nbsp;&nbsp;const&nbsp;[count,&nbsp;setCount]&nbsp;=&nbsp;useState(0);
+
+&nbsp;&nbsp;useEffect(()&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;document.title&nbsp;=&nbsp;`You&nbsp;clicked&nbsp;${count}&nbsp;times`;
+&nbsp;&nbsp;});
+
+&nbsp;&nbsp;return&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;You&nbsp;clicked&nbsp;{count}&nbsp;times&lt;/p&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;button&nbsp;type="button"&nbsp;onClick={()&nbsp;=&gt;&nbsp;setCount(count&nbsp;+&nbsp;1)}&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click&nbsp;me
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/button&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&nbsp;&nbsp;);
+}</pre>
+<p>参考:</p>
+<p>[react-router学习笔记](https://blog.csdn.net/crystal6918/article/details/76549229)</p>
+<p>[React Router 4 简易入门](https://blog.csdn.net/mjr99999/article/details/79373792)</p>
+<p>[React-Router 4.0基础详解](https://blog.csdn.net/Mr_Dave/article/details/79028983)</p>
+<p>[React Router 详解](https://blog.csdn.net/chenshun123/article/details/78999254)</p>
+<p>[How to pass props to the route component in React router](https://learnwithparam.com/blog/how-to-pass-props-in-react-router/)</p>
+<p>[How to pass props to components in React](https://www.robinwieruch.de/react-pass-props-to-component/)</p>
+<p>[https://medium.com/alturasoluciones/how-to-pass-props-to-routes-components-29f5443eee94](How to pass props to React routes components)</p>
+<p>[https://tylermcginnis.com/react-router-pass-props-to-components/](Pass props to a component rendered by React Router)</p>
+<p>[https://stackoverflow.com/questions/42768620/onenter-not-called-in-react-router](onEnter not called in React-Router)</p>
+<p>[https://medium.com/@felippenardi/how-to-do-componentdidmount-with-react-hooks-553ba39d1571](如何componentDidMount使用React Hooks？)</p>
+<p>[https://stackoverflow.com/questions/38684925/react-eslint-error-missing-in-props-validation](React eslint error missing in props validation)</p>
+<p>[https://blog.csdn.net/zn740395858/article/details/92798527](react常见错误解决)</p>
+<p>[https://stackoverflow.com/questions/39082142/props-is-missing-from-props-validation](Props is missing from props validation)</p>
+<p>[https://stackoverflow.com/questions/48681892/what-is-the-best-way-of-defining-optional-proptypes-in-react](What is the best way of defining optional propTypes in react?)</p>
+<p>[https://github.com/yannickcr/eslint-plugin-react/issues/1957](Error: 'is missing in props validation' after update of ESLint to v5.4.0)</p>
+<p>[https://github.com/yannickcr/eslint-plugin-react/issues/2121](must be placed on a new line react/jsx-one-expression-per-line )</p>
+<p>[https://medium.com/javascript-scene/do-react-hooks-replace-redux-210bab340672](Do React Hooks Replace Redux?)</p>
+<p>[https://cloud.tencent.com/developer/article/1521587](学习 React Hooks 可能会遇到的五个灵魂问题)</p>
+<p>[https://juejin.im/post/5d478b2d518825673a6ae1b9](为什么会出现React Hooks?)</p>
+<p>[https://juejin.im/post/5d0ae589518825122925c2de](Talking about hooks)</p>
+<p>[https://medium.com/@dan_abramov/making-sense-of-react-hooks-fdbde8803889](Making Sense of React Hooks)</p>
+<p>[https://blog.bitsrc.io/why-we-switched-to-react-hooks-48798c42c7f](Why We Switched to React Hooks)</p>
+<p>[https://zhuanlan.zhihu.com/p/50597236](一篇看懂 React Hooks)</p>
+<p>[https://medium.com/better-programming/here-are-6-awesome-react-hooks-2ff0c0b35218](Here Are 6 Awesome React Hooks)</p>
+<p>[https://medium.com/@chathuranga94/introduction-to-react-hooks-4694fe2d0fc0](Introduction to React Hooks)</p>
+<p>[https://glennstovall.com/how-to-use-useeffect-and-other-hooks-in-class-components/](How to Use useEffect (and other hooks) in Class Components)</p>
+<p>[https://stackoverflow.com/questions/56772703/useeffect-alternate-for-class-component](useEffect alternate for Class Component)</p>
+<p>[https://dev.to/pallymore/use-hooks-in-class-components-too-2nog](Use Hooks In Class Components Too)</p>
+<p>[https://reactjs.org/docs/hooks-effect.html](Using the Effect Hook)</p>
+<p>[https://stackoverflow.com/questions/29852998/getting-query-parameters-from-react-router-hash-fragment](Getting query parameters from react-router hash fragment)</p>
+<p>[https://stackoverflow.com/questions/43216569/how-to-get-query-parameters-in-react-router-v4](How to get query parameters in react-router v4)</p>
+<p>[https://medium.com/better-programming/how-to-pass-multiple-route-parameters-in-a-react-url-path-4b919de0abbe](How To Pass Multiple Route Parameters in a React URL Path)</p>
+<p>[https://stackoverflow.com/questions/46484026/eslint-react-router-v4-how-to-validate-match-params-props](ESLint React-Router v4 - How to validate Match params props?)</p>
+<p>[https://stackoverflow.com/questions/47519612/eslint-match-is-missing-in-props-validation-react-prop-types](Eslint - 'match' is missing in props validation react/prop-types)</p>
+<p>[https://github.com/ReactTraining/react-router/issues/6007](browserHistory doesn't exist in react-router)</p>
+<p>[https://github.com/ReactTraining/react-router/blob/master/packages/react-router/docs/guides/migrating.md](Migrating from v2/v3 to v4)</p>
+<p>[https://stackoverflow.com/questions/44471437/how-to-get-params-in-component-in-react-router-dom-v4](How to get params in component in react router dom v4?)</p>
+<p>[https://stackoverflow.com/questions/39523040/concatenating-variables-and-strings-in-react](Concatenating variables and strings in React)</p>
+<p>[https://stackoverflow.com/questions/46858840/unexpected-string-concatenation](Unexpected string concatenation)</p>
+<p>[https://github.com/ReactTraining/react-router/issues/4571](Relative Routes + Links)</p>
+<p>[https://stackoverflow.com/questions/35086162/react-render-link-containing-a-variable](React render link containing a variable)</p>
+<p>[https://stackoverflow.com/questions/35043528/how-to-get-parameters-from-hash-url-with-react-router](How to get parameters from hash URL with react-router?)</p>
+<p>[https://stackoverflow.com/questions/29852998/getting-query-parameters-from-react-router-hash-fragment/37981165](Getting query parameters from react-router hash fragment)</p>
+<p>[https://github.com/BretCameron/Example-Redux-Counter/blob/master/src/Counter.js](Example-Redux-Counter)</p>
+<p>[https://stackoverflow.com/questions/49771834/react-redirect-by-button-click-in-react-with-react-router-dom](React. Redirect by button click in React with react-router-dom)</p>
+<p>[https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button](Wrapping a react-router Link in an html button)</p>
+<p>[https://medium.com/javascript-in-plain-english/the-only-introduction-to-redux-and-react-redux-youll-ever-need-8ce5da9e53c6](The only introduction to Redux and React-Redux you’ll ever need)</p>
+<p>[https://itnext.io/how-to-use-redux-with-react-143de57d0bab](How to use Redux with React)</p>
+<p>[https://medium.com/@bretcameron/a-beginners-guide-to-redux-with-react-50309ae09a14](A beginner’s guide to Redux with React)</p>
+<p>[https://stackoverflow.com/questions/46039976/exporting-multiple-modules-in-react-js](exporting multiple modules in react.js)</p>
+<p>[https://github.com/airbnb/react-sketchapp/issues/185](Exporting multiple components from 1 file)</p>
+<p>[https://blog.csdn.net/ZYC88888/article/details/82501791](React export和export default的区别)</p>
+<p>[https://medium.com/@etherealm/named-export-vs-default-export-in-es6-affb483a0910](Named Export vs Default Export in ES6)</p>
+<p>[https://stackoverflow.com/questions/53352851/must-use-destructuring-props-assignment-react-destructuring-assignment](Must use destructuring props assignment react/destructuring-assignment)</p>
+<p>[https://stackoverflow.com/questions/46913851/why-and-when-to-use-default-export-over-named-exports-in-es6-modules](Why and when to use default export over named exports in es6 Modules?)</p>
+<p>[https://duanruilong.github.io/blog/2018/06/11/React%E5%BC%80%E5%8F%91%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-Redux/](React开发常用设计模式-Redux)</p>
+<p>[https://stackoverflow.com/questions/39544713/why-my-redux-state-not-updating](why my redux state not updating)</p>
+<p>[https://stackoverflow.com/questions/50532674/redux-mapstatetoprops-not-working](Redux- mapStateToProps not working)</p>
+<p>[https://blog.csdn.net/u010977147/article/details/53412381](react-redux 之 connect 方法详解)</p>
+<p>[https://medium.com/@rashminashrestha/mobx-vs-redux-with-react-58090605b02d](MobX vs Redux with React)</p>
+<p>[https://flaviocopes.com/react-state-vs-props/](Props vs State in React)</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/164739#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,70 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>想找到一篇前几天在博客这边点赞的文章，愣是没找到入口，发现api/blog/get-vl可以获得某一篇博客自己是否点赞, 但是用restles测试发现总是返回<span style="color:rgb(0,0,136);font-family:Consolas, 'Andale Mono', monospace;font-size:14px;background-color:rgb(255,255,255);">false</span>信息，与实际不符;怀疑是不是由于_csrf保护导致的就查了查csrf保护相关的机制;</p><p>在目标页面console里直接执行ajax请求就可以获得正确的结果,</p><p>感觉不是csrf导致的;</p><p><strong>找到自己的所有点赞主要步骤分两步</strong>：</p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>登录博客之后,在console里执行下面的代码获取到所有的blogid，其中2788是博客总页数，可以在首页看到</p></li></ol><pre class="brush:js;toolbar:false">var&nbsp;apiRoot&nbsp;=&nbsp;'https://bbs.huaweicloud.com/api/blog/info';
+var&nbsp;sumContent&nbsp;=&nbsp;'';
+var&nbsp;getarray&nbsp;=&nbsp;[];
+var&nbsp;blogObject&nbsp;=&nbsp;{&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blogObject.page&nbsp;=&nbsp;1;//默认从第一页开始
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blogObject.category&nbsp;=&nbsp;"all";//文章类别
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blogObject.tag&nbsp;=&nbsp;"";//选择标签
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blogObject.defaultUrl&nbsp;=&nbsp;"//static.huaweicloud.com";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;blogObject.bbsimg&nbsp;=&nbsp;"https://bbs.huaweicloud.com";
+for(var&nbsp;i=1;i&lt;=1394;++i){
+	blogObject.page&nbsp;=&nbsp;i;
+	getarray.push($.ajax({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;"post",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;blogObject,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;"json",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;apiRoot,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;function&nbsp;(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sumContent&nbsp;+=&nbsp;data.content;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+	}));
+}
+var&nbsp;getarray1&nbsp;=&nbsp;[];
+$.when.apply($,&nbsp;getarray).done(function()&nbsp;{&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;for(var&nbsp;i=1395;i&lt;=2788;++i){
+&nbsp;&nbsp;&nbsp;&nbsp;blogObject.page&nbsp;=&nbsp;i;
+	getarray1.push($.ajax({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;"post",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;blogObject,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;"json",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;apiRoot,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;function&nbsp;(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sumContent&nbsp;+=&nbsp;data.content;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+	}));
+}
+});</pre><p>2.第二步，等第一步的请求完成之后，遍历所有blogid查询自己是否点赞<br></p><pre class="brush:java;toolbar:false">sumContent.match(RegExp('blogid="[^"]+"','g')).forEach(function(item,&nbsp;index){
+	eval(item);
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;s&nbsp;=&nbsp;{};
+&nbsp;&nbsp;&nbsp;&nbsp;s._csrf&nbsp;=&nbsp;getAinfo();
+&nbsp;&nbsp;&nbsp;&nbsp;s.blogId&nbsp;=&nbsp;blogid;
+&nbsp;&nbsp;&nbsp;&nbsp;$.ajax({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;"post",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;'https://bbs.huaweicloud.com/api/blog/get-vl',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;s,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;async:&nbsp;false,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;"json",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;function&nbsp;(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	if(data.is_vote){
+				console.log('#'+blogid);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;});
+});</pre><p>当然上述的过程可能显得过于长了，尤其是第二步为了保证csrf过程使用了同步请求，可以考虑从自己的历史纪录先过滤出来自博客的链接，再使用第二步判断；或者对第一得到的结果，过滤出其中点赞数大于0的，再进行第二步;此外，由于第二步遍历时间过长,过程中登录可能失效,导致后续请求失败;https://bbs.huaweicloud.com/blogs/加上获取的blogid就是目标地址;</p><p>&nbsp;查询记录:</p><p><a rel="nofollow" href="https://www.cnblogs.com/digdeep/p/4703298.html">https://www.cnblogs.com/digdeep/p/4703298.html</a></p><p><a rel="nofollow" href="https://segmentfault.com/a/1190000007932293">https://segmentfault.com/a/1190000007932293</a></p><p><a rel="nofollow" href="https://medium.com/%40Skylinearafat/a-very-useful-technique-to-bypass-the-csrf-protection-for-fun-and-profit-471af64da276">https://medium.com/%40Skylinearafat/a-very-useful-technique-to-bypass-the-csrf-protection-for-fun-and-profit-471af64da276</a> </p><p><a rel="nofollow" href="https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html">https://docs.spring.io/spring-security/site/docs/3.2.0.CI-SNAPSHOT/reference/html/csrf.html</a></p><p><a rel="nofollow" href="https://xz.aliyun.com/t/6176">https://xz.aliyun.com/t/6176</a> </p><p><a href="https://bbs.huaweicloud.com/blogs/137394">https://bbs.huaweicloud.com/blogs/137394</a></p><p><a href="https://bbs.huaweicloud.com/blogs/137380">https://bbs.huaweicloud.com/blogs/137380</a></p><p><a href="https://bbs.huaweicloud.com/blogs/127451">https://bbs.huaweicloud.com/blogs/127451</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/137967#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

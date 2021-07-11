@@ -1,0 +1,129 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>尽管EA也可以生成接口代码，但是当我们想自定义目录结构或者从一些配置信息里来生成接口时,</p><p>或者一些更自定义的要求时可以考虑下面这种方案;</p><p><br></p><p>&nbsp;原文地址:</p><p><a rel="nofollow" href="https://www.codeproject.com/Articles/571645/Really-simple-Cplusplus-code-generation-in-Python">https://www.codeproject.com/Articles/571645/Really-simple-Cplusplus-code-generation-in-Python</a></p><p>文中CodeGen.py地址:</p><p><a rel="nofollow" href="https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=571645">https://www.codeproject.com/script/Articles/ViewDownloads.aspx?aid=571645</a></p><p><br></p><p>原文摘录:</p><p>从Python可以读取的任何数据中快速生成重复的C ++，C＃或Java代码。</p><h2 style="font-size:29px;line-height:1.4;color:rgb(255,153,0);margin:20px 0px 11px;padding:0px 0px 10px;font-weight:200;">介绍</h2><p style="line-height:1.4;">您对学习曲线过敏，并想立即生成代码<strong style="padding:0px;border:0px;">！</strong>这是一个易于定制的100行Python模块，位于上方<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">f.writeline</code>。</p><h2 style="font-size:29px;line-height:1.4;color:rgb(255,153,0);margin:20px 0px 11px;padding:0px 0px 10px;font-weight:200;">使用代码</h2><p style="line-height:1.4;">让我们从一个非常简单的示例开始（请指出，请不要<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">main</code>返回<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">int</code>！这是一个<em style="padding:0px;border:0px;">示例。</em>）</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">from&nbsp;CodeGen&nbsp;import&nbsp;*
+&nbsp;
+cpp&nbsp;=&nbsp;CppFile("test.cpp")
+&nbsp;
+cpp("#include&nbsp;&lt;iostream&gt;")
+&nbsp;
+with&nbsp;cpp.block("void&nbsp;main()"):
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;range(5):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp('std::cout&nbsp;&lt;&lt;&nbsp;"'&nbsp;+&nbsp;str(i)&nbsp;+&nbsp;'"&nbsp;&lt;&lt;&nbsp;std::endl;')
+&nbsp;&nbsp;&nbsp;&nbsp;
+cpp.close()</pre><p style="line-height:1.4;">输出：</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">#include&nbsp;&lt;iostream&gt;
+void&nbsp;main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;"0"&nbsp;&lt;&lt;&nbsp;std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;"1"&nbsp;&lt;&lt;&nbsp;std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;"2"&nbsp;&lt;&lt;&nbsp;std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;"3"&nbsp;&lt;&lt;&nbsp;std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout&nbsp;&lt;&lt;&nbsp;"4"&nbsp;&lt;&lt;&nbsp;std::endl;
+}</pre><p style="line-height:1.4;">利用Python的<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">with</code>关键字，我们可以将语句封装在<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">{}</code>具有正确缩进的自动封闭的语句块中，以使输出保持可读性。</p><h2 style="font-size:29px;line-height:1.4;color:rgb(255,153,0);margin:20px 0px 11px;padding:0px 0px 10px;font-weight:200;">换人</h2><p style="line-height:1.4;">当生成更复杂的代码时，您将很快意识到Python脚本变得越来越难理解，而且各处都有难看的字符串连接。那就是<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">subs</code>方法的所在：</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">from&nbsp;CodeGen&nbsp;import&nbsp;*
+&nbsp;
+cpp&nbsp;=&nbsp;CppFile("test.cpp")
+&nbsp;
+cpp("#include&nbsp;&lt;iostream&gt;")
+&nbsp;
+with&nbsp;cpp.block("void&nbsp;main()"):
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;i&nbsp;in&nbsp;range(5):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(i=str(i),&nbsp;xi="x"+str(i+1)):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp('int&nbsp;$xi$&nbsp;=&nbsp;$i$;')
+&nbsp;&nbsp;&nbsp;&nbsp;
+cpp.close()</pre><p style="line-height:1.4;">产生：</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">#include&nbsp;&lt;iostream&gt;
+
+void&nbsp;main()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;x1&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;x2&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;x3&nbsp;=&nbsp;2;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;x4&nbsp;=&nbsp;3;
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;x5&nbsp;=&nbsp;4;
+}</pre><p style="line-height:1.4;">替换在<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">with</code>可嵌套的Python&nbsp;块内有效。</p><h2 style="font-size:29px;line-height:1.4;color:rgb(255,153,0);margin:20px 0px 11px;padding:0px 0px 10px;font-weight:200;">差不多了</h2><p style="line-height:1.4;">最后，这是一个更复杂的示例，生成以下代码：</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">收缩</span>&nbsp;<img referrerpolicy="no-referrer" src="https://www.codeproject.com/images/arrow-up-16.png" alt="arrow-up-16.png">&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">class&nbsp;ClassX
+{
+protected:
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;a;
+&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;b;
+&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;c;
+public:
+&nbsp;&nbsp;&nbsp;&nbsp;ClassX(A&nbsp;a,&nbsp;B&nbsp;b,&nbsp;C&nbsp;c)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;a&nbsp;=&nbsp;a;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;b&nbsp;=&nbsp;b;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;c&nbsp;=&nbsp;c;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;getA()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;this-&gt;a;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;B&nbsp;getB()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;this-&gt;b;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;C&nbsp;getC()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;this-&gt;c;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+};
+class&nbsp;ClassY
+{
+protected:
+&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;p;
+&nbsp;&nbsp;&nbsp;&nbsp;Q&nbsp;q;
+public:
+&nbsp;&nbsp;&nbsp;&nbsp;ClassY(P&nbsp;p,&nbsp;Q&nbsp;q)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;p&nbsp;=&nbsp;p;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;q&nbsp;=&nbsp;q;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;P&nbsp;getP()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;this-&gt;p;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;Q&nbsp;getQ()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;this-&gt;q;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+};</pre><p style="line-height:1.4;">看看<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">CodeGen.py</code>，看看该怎么<code style="padding:0px;border:0px;color:rgb(153,0,0);font-size:15px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;">label</code>功能对于如何将代码与特定语言功能扩展的提示来实现。</p><p><span style="padding:0px;border:0px;">隐藏</span>&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">收缩</span>&nbsp;<img referrerpolicy="no-referrer" src="https://www.codeproject.com/images/arrow-up-16.png" alt="arrow-up-16.png">&nbsp;&nbsp;&nbsp;<span style="padding:0px;border:0px;">复制代码</span></p><pre style="color:rgb(0,0,0);background-color:rgb(251,237,187);padding:6px;font-size:13px;line-height:normal;font-family:Consolas, 'Courier New', Courier, mono;white-space:pre-wrap;border:1px solid rgb(251,237,187);overflow:auto;margin-top:0px;">from&nbsp;CodeGen&nbsp;import&nbsp;*
+&nbsp;
+cpp&nbsp;=&nbsp;CppFile("test.cpp")
+&nbsp;
+CLASS_NAMES&nbsp;=&nbsp;["ClassX",&nbsp;"ClassY"]
+VAR_NAMES&nbsp;=&nbsp;{&nbsp;"ClassX":&nbsp;["A",&nbsp;"B",&nbsp;"C"],&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"ClassY":&nbsp;["P","Q"]&nbsp;}
+&nbsp;
+for&nbsp;className&nbsp;in&nbsp;CLASS_NAMES:
+&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(ClassName=className):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.block("class&nbsp;$ClassName$",&nbsp;";"):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp.label("protected")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;varName&nbsp;in&nbsp;VAR_NAMES[className]:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(A=varName,&nbsp;a=varName.lower()):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp("$A$&nbsp;$a$;")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp.label("public")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(**{"A&nbsp;a":&nbsp;",&nbsp;".join([x&nbsp;+&nbsp;"&nbsp;"&nbsp;+&nbsp;x.lower()&nbsp;for&nbsp;x&nbsp;in&nbsp;VAR_NAMES[className]])}):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.block("$ClassName$($A&nbsp;a$)"):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;varName&nbsp;in&nbsp;VAR_NAMES[className]:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(a=varName.lower()):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp("this-&gt;$a$&nbsp;=&nbsp;$a$;")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;varName&nbsp;in&nbsp;VAR_NAMES[className]:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.subs(A=varName,&nbsp;a=varName.lower(),&nbsp;getA="get"+varName):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;with&nbsp;cpp.block("$A$&nbsp;$getA$()"):
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cpp("return&nbsp;this-&gt;$a$;")
+&nbsp;&nbsp;&nbsp;&nbsp;
+cpp.close()</pre><p><br></p><p><span style="color:rgb(0,176,80);">/*---------------------------------------------------分割线---------------------------------*/</span></p><p><span style="color:rgb(0,0,238);"><a rel="nofollow" href="https://github.com/AxioDL/CodeGen">https://github.com/AxioDL/CodeGen</a> </span></p><p><a rel="nofollow" href="https://medium.com/%40jasonrigden/jinja2-templating-engine-tutorial-4bd31fb4aea3">https://medium.com/%40jasonrigden/jinja2-templating-engine-tutorial-4bd31fb4aea3</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/134529#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Python_Blog" title="Python" href="https://developer.huaweicloud.com/tags/200496/blog_1">Python</a>
+        
+    </div>
+</div></div>

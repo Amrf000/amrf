@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>CDHtmlDialog总结:</p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>适用于运行于windows环境下的工具；</p></li><li><p>比较适合于对旧的mfc工具进行轻量级的升级，</p><p>因为使用ie内核，所以最终程序比其他方案要小；此外还可以利用原有的大部分其他c、c++代码;</p></li><li><p>缺点运行环境比较特定，对用户本地ie有要求，如果用户ie版本不同会导致不同的显示效果和其他兼容性问题;</p></li></ol><h3>问题记录:<br></h3><p>&nbsp;1.在CDHtmlDialog中使用mxGraph时发现,ie内核设置的ie11时，鼠标事件居然没反应，但是在ie中打开是正常的，对比了一下发现</p><p>msPointerEnabled,pointerEnabled 这两个值不同，</p><p>后来通过修改mxclient中的</p><p>IS_POINTER: false,//window.PointerEvent != null &amp;&amp; !(navigator.appVersion.indexOf('Mac') &gt; 0),</p><p>CDHtmlDialog中window.PointerEvent不为空但是msPointerEnabled和pointerEnabled却有问题，查了一些资料说是ie11废弃了pointerEnabled标识什么的，</p><p>直接设为false后，事件可以正常 响应了,不求甚解了;</p><p>2.由于需要加装本地文件，mxclient中相关修改如下:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1551252124477380.png" title="1551252124477380.png" alt="image.png" width="571" height="369" class="localImage"></p><p>mxXmlRequest.prototype.getStatus = function()</p><p>{</p><p><span style="white-space:pre;">	</span>return 250;//this.request.status;</p><p>};</p><p>3.这段代码是对grapheditor添加stencils的测试修改:</p><p>this.addStencilPalette('ntest', 'ntest', dir + '/ntest.xml',</p><p><span style="white-space:pre;">		</span>';whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2');</p><p>4.navTrustedForActiveX是打开页面是允许activex控件:</p><p>&nbsp; &nbsp; //Navigate(L"jgraph.github.io/mxgraph/javascript/examples/grapheditor/www/index.html", navNoReadFromCache | navTrustedForActiveX);//www.baidu.com&nbsp; &nbsp;</p><p><span style="white-space:pre;">	</span>Navigate(L"file://D:/dev/CDHtmlDlg-master/CDHtmlDlg-master/DHtml/2.html", navNoReadFromCache | navTrustedForActiveX);//&nbsp;</p><p>5.还遇到个问题访问外部链接报代理无响应问题，后来发现被软件阻断了，可以通过修改工程输出名通过,</p><p>&nbsp; &nbsp;后来基本都从本地加载这个问题就更不存在了;</p><p>6. 单独加载stencils的测试代码</p><pre class="brush:html;toolbar:false">&lt;html&gt;
+&lt;head&gt;
+&lt;meta&nbsp;http-equiv="Content-Type"&nbsp;content="text/html;&nbsp;charset=utf-8"&gt;
+&lt;meta&nbsp;http-equiv="X-UA-Compatible"&nbsp;content="IE=Edge"&gt;&nbsp;
+&lt;title&gt;Hello,&nbsp;World!&nbsp;example&nbsp;for&nbsp;mxGraph&lt;/title&gt;
+&lt;base&nbsp;href="file:
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div&nbsp;id="graphContainer"
+style="position:relative;overflow:hidden;width:1910px;height:934px;background:url('./images/grid.gif');cursor:default;"&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;!--&nbsp;Sets&nbsp;the&nbsp;basepath&nbsp;for&nbsp;the&nbsp;library&nbsp;if&nbsp;not&nbsp;in&nbsp;same&nbsp;directory&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&gt;
+&nbsp;&nbsp;mxBasePath&nbsp;=&nbsp;'src';
+&lt;/script&gt;
+&lt;!--&nbsp;Loads&nbsp;and&nbsp;initializes&nbsp;the&nbsp;library&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&gt;
+var&nbsp;urlParams&nbsp;=&nbsp;(function(url)
+{
+var&nbsp;result&nbsp;=&nbsp;new&nbsp;Object();
+var&nbsp;idx&nbsp;=&nbsp;url.lastIndexOf('?');
+if&nbsp;(idx&nbsp;&gt;&nbsp;0)
+{
+var&nbsp;params&nbsp;=&nbsp;url.substring(idx&nbsp;+&nbsp;1).split('&amp;');
+for&nbsp;(var&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;params.length;&nbsp;i++)
+{
+idx&nbsp;=&nbsp;params[i].indexOf('=');
+if&nbsp;(idx&nbsp;&gt;&nbsp;0)
+{
+result[params[i].substring(0,&nbsp;idx)]&nbsp;=&nbsp;params[i].substring(idx&nbsp;+&nbsp;1);
+}
+}
+}
+return&nbsp;result;
+})(window.location.href);
+mxLoadResources&nbsp;=&nbsp;false;
+&lt;/script&gt;
+&lt;script&nbsp;type="text/javascript"&nbsp;src="./jquery-1.9.1.min.js"&gt;&lt;/script&gt;
+&lt;script&nbsp;type="text/javascript"&nbsp;src="./mxClient.js"&gt;&lt;/script&gt;
+&lt;script&nbsp;src="https://cdn.staticfile.org/react/16.4.0/umd/react.development.js"&gt;&lt;/script&gt;
+&lt;script&nbsp;src="https://cdn.staticfile.org/react-dom/16.4.0/umd/react-dom.development.js"&gt;&lt;/script&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;生产环境中不建议使用&nbsp;--&gt;
+&lt;script&nbsp;src="https://cdn.staticfile.org/babel-standalone/6.26.0/babel.min.js"&gt;&lt;/script&gt;
+&lt;!--&nbsp;Example&nbsp;code&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&gt;
+$(document).ready(function()&nbsp;{
+function&nbsp;main(container)
+{
+if&nbsp;(!mxClient.isBrowserSupported())
+{
+mxUtils.error('Browser&nbsp;is&nbsp;not&nbsp;supported!',&nbsp;200,&nbsp;false);
+}
+else
+{
+mxEvent.disableContextMenu(container);
+var&nbsp;req&nbsp;=&nbsp;mxUtils.load('stencils.xml');
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;root&nbsp;=&nbsp;req.getDocumentElement();
+var&nbsp;shape&nbsp;=&nbsp;root.firstChild;
+while&nbsp;(shape&nbsp;!=&nbsp;null){
+if&nbsp;(shape.nodeType&nbsp;==&nbsp;mxConstants.NODETYPE_ELEMENT){
+mxStencilRegistry.addStencil(shape.getAttribute('name'),&nbsp;new&nbsp;mxStencil(shape));
+}
+shape&nbsp;=&nbsp;shape.nextSibling;
+}
+var&nbsp;graph1&nbsp;=&nbsp;new&nbsp;mxGraph(container);
+new&nbsp;mxRubberband(graph1);
+var&nbsp;parent&nbsp;=&nbsp;graph1.getDefaultParent();
+graph1.getModel().beginUpdate();
+try
+{
+var&nbsp;v1&nbsp;=&nbsp;graph1.insertVertex(parent,&nbsp;null,&nbsp;'Hello,',&nbsp;20,&nbsp;20,&nbsp;80,&nbsp;30);
+var&nbsp;v2&nbsp;=&nbsp;graph1.insertVertex(parent,&nbsp;null,&nbsp;'World!',&nbsp;200,&nbsp;150,&nbsp;80,&nbsp;30);
+var&nbsp;v4&nbsp;=&nbsp;graph1.insertVertex(parent,&nbsp;null,&nbsp;'A1',&nbsp;20,&nbsp;20,&nbsp;40,&nbsp;80,&nbsp;'and;flipH=1');
+var&nbsp;v4&nbsp;=&nbsp;graph1.insertVertex(parent,&nbsp;null,&nbsp;'A1',&nbsp;40,&nbsp;80,&nbsp;40,&nbsp;80,&nbsp;'shape=mxGraph.ntest.ArrowDown');
+graph1.insertVertex(v2,&nbsp;null,&nbsp;'c!',&nbsp;70,&nbsp;0,&nbsp;10,&nbsp;10);
+var&nbsp;e1&nbsp;=&nbsp;graph1.insertEdge(parent,&nbsp;null,&nbsp;'',&nbsp;v1,&nbsp;v2);
+}
+finally
+{
+graph1.getModel().endUpdate();
+}
+/*graph1.addMouseListener(
+{
+&nbsp;&nbsp;mouseDown:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseDown');
+&nbsp;&nbsp;},
+&nbsp;&nbsp;mouseMove:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseMove');
+&nbsp;&nbsp;},
+&nbsp;&nbsp;mouseUp:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseUp');
+&nbsp;&nbsp;}
+});*/
+graph1.addListener(mxEvent.CLICK,&nbsp;function&nbsp;(sender,&nbsp;evt)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;cell&nbsp;=&nbsp;evt.getProperty("cell");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cell!=null){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;sty&nbsp;=&nbsp;graph1.getCellStyle(cell);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(sty.shape=='rectangle')
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug(cell.id);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph1.model.setValue(cell,&nbsp;"abc");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;graph1.setCellStyles(mxConstants.STYLE_FILLCOLOR,&nbsp;"#ffffff",&nbsp;[cell]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*var&nbsp;cell&nbsp;=&nbsp;graph1.getSelectionCell();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(cell&nbsp;!=&nbsp;null)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(cell.id);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}*/
+});
+var&nbsp;enc&nbsp;=&nbsp;new&nbsp;mxCodec();
+var&nbsp;str=enc.encode(graph1.getModel());
+enc.encode(graph1.getModel().getCell(1));
+}
+};
+main(document.getElementById('graphContainer'));
+mxLog.show();
+});
+&lt;/script&gt;
+&lt;/html&gt;</pre><p><span style="color:rgb(0,176,80);">/*-------------------------------------对比cef3方案-----------------------------------------------------------------------*/</span></p><p><a rel="nofollow" href="https://github.com/lmsp/SimpleCEFDLL">https://github.com/lmsp/SimpleCEFDLL</a></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2a041ce3525f11eab759fa163e330718" href="/blogs/attachment?id=2a041ce3525f11eab759fa163e330718" title="cef3-jsdoc.zip">cef3-jsdoc.zip</a>
+                <span class="attSize">379.98KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/109659#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/131877/blog_1">Java</a>
+        
+    </div>
+</div></div>

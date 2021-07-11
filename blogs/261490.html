@@ -1,0 +1,37 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>参考：<a>https://stackoverflow.com/questions/6293498/check-whether-user-has-a-chrome-extension-installed</a></p>
+<p>例如对于secure-shell-app扩展，它的扩展manifest.json指定的这些文件可以从浏览器侧访问，那么可以通过下面的函数对是否安装或者启用了插件进行检测</p>
+<p><img class="mce_image" height="398" id="images_161915543563771" src="https://bbs-img.huaweicloud.com/blogs/img/1619155437646087544.png" width="734"></p>
+<pre class="language-actionscript"><code>function detectExtension(extensionId, callback) {
+      window
+        .fetch('chrome-extension://' + extensionId + '/html/nassh_google_relay.html')
+        .then((res) =&gt; {
+          const result = true
+          callback(result)
+        })
+        .catch((err) =&gt; {
+          console.log(err)
+          const result = false
+          callback(result)
+        })
+}
+detectExtension('pnhechapfaindjhompbnflcldabbghjo', function (resp) {})</code></pre>
+<p></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/261490#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

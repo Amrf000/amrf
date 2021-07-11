@@ -1,0 +1,95 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>问题地址:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/48883403/need-to-integrate-mxgraph-with-react-js">https://stackoverflow.com/questions/48883403/need-to-integrate-mxgraph-with-react-js</a></p><h2>mxGraph javascript测试步骤</h2><p>1.下载工程:</p><p><a rel="nofollow" href="https://github.com/jgraph/mxgraph">https://github.com/jgraph/mxgraph</a></p><p>2.eclipse新建一个空的java项目</p><p>3.将java和javascript/examples/grapheditor/java/src/com/mxgraph/examples/web/目录下的jars和src拷贝到项目目录，将javascript目录拷贝到项目目录</p><p>4.将jars里面的jar文件加入到构建路径</p><p>5.由于我时想测试javascript版本的，所以java文件里和绘制有关的文件可以删除</p><p>6.执行com.mxgraph.examples.web.GraphEditor启动服务器</p><p>7.访问</p><p><a rel="nofollow" href="http://localhost/javascript/index.html">http://localhost:{port}/javascript/index.html</a></p><p><a rel="nofollow" href="http://localhost:9333/javascript/examples/grapheditor/www/index.html">http://localhost:9333/javascript/examples/grapheditor/www/index.html</a></p><h2>mxGraph事件测试</h2><pre class="brush:java;toolbar:false">&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Hello,&nbsp;World!&nbsp;example&nbsp;for&nbsp;mxGraph&lt;/title&gt;
+&lt;!--&nbsp;Sets&nbsp;the&nbsp;basepath&nbsp;for&nbsp;the&nbsp;library&nbsp;if&nbsp;not&nbsp;in&nbsp;same&nbsp;directory&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&gt;
+&nbsp;&nbsp;mxBasePath&nbsp;=&nbsp;'src';
+&lt;/script&gt;
+&lt;!--&nbsp;Loads&nbsp;and&nbsp;initializes&nbsp;the&nbsp;library&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&nbsp;src="./mxClient.js"&gt;&lt;/script&gt;
+&lt;!--&nbsp;Example&nbsp;code&nbsp;--&gt;
+&lt;script&nbsp;type="text/javascript"&gt;
+function&nbsp;main(container)
+{
+if&nbsp;(!mxClient.isBrowserSupported())
+{
+mxUtils.error('Browser&nbsp;is&nbsp;not&nbsp;supported!',&nbsp;200,&nbsp;false);
+}
+else
+{
+mxEvent.disableContextMenu(container);
+var&nbsp;graph&nbsp;=&nbsp;new&nbsp;mxGraph(container);
+new&nbsp;mxRubberband(graph);
+var&nbsp;parent&nbsp;=&nbsp;graph.getDefaultParent();
+graph.getModel().beginUpdate();
+try
+{
+var&nbsp;v1&nbsp;=&nbsp;graph.insertVertex(parent,&nbsp;null,&nbsp;'Hello,',&nbsp;20,&nbsp;20,&nbsp;80,&nbsp;30);
+var&nbsp;v2&nbsp;=&nbsp;graph.insertVertex(parent,&nbsp;null,&nbsp;'World!',&nbsp;200,&nbsp;150,&nbsp;80,&nbsp;30);
+var&nbsp;e1&nbsp;=&nbsp;graph.insertEdge(parent,&nbsp;null,&nbsp;'',&nbsp;v1,&nbsp;v2);
+}
+finally
+{
+//&nbsp;Updates&nbsp;the&nbsp;display
+graph.getModel().endUpdate();
+}
+graph.addMouseListener(
+{
+&nbsp;&nbsp;mouseDown:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseDown');
+&nbsp;&nbsp;},
+&nbsp;&nbsp;mouseMove:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseMove');
+&nbsp;&nbsp;},
+&nbsp;&nbsp;mouseUp:&nbsp;function(sender,&nbsp;evt)
+&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;mxLog.debug('mouseUp');
+&nbsp;&nbsp;}
+});
+graph.addListener(mxEvent.CLICK,&nbsp;function&nbsp;(sender,&nbsp;evt)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;cell&nbsp;=&nbsp;evt.getProperty("cell");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cell!=null){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(cell.id);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//var&nbsp;id&nbsp;=&nbsp;cell.id;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*var&nbsp;cell&nbsp;=&nbsp;graph.getSelectionCell();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(cell&nbsp;!=&nbsp;null)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(cell.id);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}*/
+});
+var&nbsp;enc&nbsp;=&nbsp;new&nbsp;mxCodec();
+var&nbsp;str=enc.encode(graph.getModel());
+enc.encode(graph.getModel().getCell(1));
+}
+};
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&nbsp;onload="main(document.getElementById('graphContainer'))"&gt;
+&lt;div&nbsp;id="graphContainer"
+style="position:relative;overflow:hidden;width:321px;height:241px;background:url('examples/editors/images/grid.gif');cursor:default;"&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre><h2>DrawIo和mxGraph的关系是，drawio是基于mxGraph并做了一些拓展的站点和服务商，并有开源版本</h2><p>项目地址:<a rel="nofollow" href="https://github.com/jgraph/drawio">https://github.com/jgraph/drawio</a> </p><p>可以安装桌面版也可以运行docker版，我使用的是源码打到tomcat中运行的，运行一切正常 很不错；</p><h2><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;">从mxfiles中提取XML</span><br></h2><p><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;"></span></p><p style="margin-bottom:20px;color:rgb(68,68,68);font-family:Lato;white-space:normal;background-color:rgb(255,255,255);margin-top:0px;">保存图表的默认格式在不久前已经从使用标准deflate压缩的原始XML更改为XML。造成这种情况的主要原因是，当Google的服务器挣扎时，压缩文件的写入机会要大得多。也就是说，原始XML可能有助于了解如何构建图表。</p><p style="margin-top:0px;margin-bottom:20px;color:rgb(68,68,68);font-family:Lato;white-space:normal;background-color:rgb(255,255,255);">当您查看压缩的draw.io XML文件时，您将看到如下内容（灰色突出显示的文本是您的实际图表数据）：</p><p><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1545315021422776.png" title="1545315021422776.png" alt="image.png" class="localImage"></span><br></p><p><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;">标签之间的部分使用标准的deflate流程进行压缩。您可以将其复制并粘贴到<a rel="nofollow" href="https://jgraph.github.io/drawio-tools/tools/convert.html">https://jgraph.github.io/drawio-tools/tools/convert.html</a></span><span style="color:rgb(51,51,51);font-family:Lato;font-size:18px;">，按</span><span style="background-color:rgb(255,255,255);font-family:Lato;font-size:18px;font-weight:700;color:rgb(68,68,68);">解码</span><span style="color:rgb(51,51,51);font-family:Lato;font-size:18px;">，然后您将获得原始XML：</span></p><p><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1545315057269859.png" title="1545315057269859.png" alt="image.png" class="localImage"></span></p><p><br></p><h2 style="color:rgb(51,51,51);margin-right:0px;margin-bottom:.67em;margin-left:0px;font-family:Lato;line-height:1.4em;padding-bottom:0px;font-size:28px;white-space:normal;background-color:rgb(255,255,255);margin-top:0px;">在draw.io编辑器中编辑XML代码</h2><p style="margin-top:0px;margin-bottom:20px;color:rgb(68,68,68);font-family:Lato;white-space:normal;background-color:rgb(255,255,255);">如果您不想使用额外的inflate / deflate工具，您还可以查看图表的XML代码并直接编辑它，或将其复制到文本编辑器中。</p><p style="margin-top:0px;margin-bottom:20px;color:rgb(68,68,68);font-family:Lato;white-space:normal;background-color:rgb(255,255,255);">单击<span style="font-weight:700;">Extras&gt; Edit Diagram</span>查看和编辑图表的XML代码。</p><p><span style="background-color:rgb(255,255,255);color:rgb(51,51,51);font-family:Lato;font-size:18px;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1545315103977484.png" title="1545315103977484.png" alt="image.png" class="localImage"></span><br></p><h2>关于vsd vsdx文件</h2><p>drawio-8.6.3提供的java版本集成在站点之内，支持vsdx（是一个beta功能，但是个人比较推荐）</p><p>drawio-9.4.1提供的是.net调用visio的版本,支持vsd和vsdx</p><p>后面的版本全是服务的方式</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/106500#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.开发测试系统上云_Blog" title="开发测试系统上云" href="https://developer.huaweicloud.com/tags/200344/blog_1">开发测试系统上云</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.React_Blog" title="React" href="https://developer.huaweicloud.com/tags/200403/blog_1">React</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>query参数修改</p></li></ul><pre class="brush:js;toolbar:false">import&nbsp;merge&nbsp;from&nbsp;"webpack-merge";
+...
+this.$router.push({
+&nbsp;&nbsp;&nbsp;&nbsp;query:&nbsp;merge(this.$route.query,&nbsp;{&nbsp;xxx:&nbsp;yyy})
+});</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>修改当前路由并带上query参数</p></li></ul><pre class="brush:js;toolbar:false">this.$router.push({
+&nbsp;&nbsp;&nbsp;&nbsp;path:&nbsp;"/zzz",
+&nbsp;&nbsp;&nbsp;&nbsp;query:&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xxx:&nbsp;yyy,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;www:&nbsp;zzz
+&nbsp;&nbsp;&nbsp;&nbsp;}
+});</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>获取query参数</p></li></ul><pre class="brush:js;toolbar:false">this.$route.query.xxx</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>监控某个路由参数的变化</p></li></ul><pre class="brush:js;toolbar:false">watch:&nbsp;{
+"$route.query.xxx":&nbsp;function(xxx)&nbsp;{
+}</pre><p>}<br></p><p>参考:<br></p><p><a rel="nofollow" href="https://blog.csdn.net/qq_36090127/article/details/102950095">https://blog.csdn.net/qq_36090127/article/details/102950095</a></p><p><a rel="nofollow" href="https://blog.csdn.net/sllailcp/article/details/80312848">https://blog.csdn.net/sllailcp/article/details/80312848</a></p><p><a rel="nofollow" href="https://github.com/vuejs/vue-router/issues/463">https://github.com/vuejs/vue-router/issues/463</a></p><p><a rel="nofollow" href="https://forum.vuejs.org/t/vue-router-programmatically-append-to-querystring/3655">https://forum.vuejs.org/t/vue-router-programmatically-append-to-querystring/3655</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/40382388/how-to-set-url-query-params-in-vue-with-vue-router">https://stackoverflow.com/questions/40382388/how-to-set-url-query-params-in-vue-with-vue-router</a></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/152429#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

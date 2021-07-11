@@ -1,0 +1,645 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h1 class="fd fe ff fg b fh fi fj fk fl fm fn fo fp fq fr fs ft fu fv fw fx fy fz ga gb ce cyxy-trs-source cyxy-trs-source-ted"><span>&nbsp;</span>Pytest测试框架介绍(https://medium.com/testcult/intro-to-test-framework-pytest-5b1ce4d011ae)</h1>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在本文中，我们将学习 pytest(https://docs.pytest.org/en/latest/)，一个基于 python 的测试框架。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在继续前进之前，建议阅读本系列的第1部分，该部分解释了自动化的基础知识-</p> 
+  <div class="it iu iv iw ix iy"> 
+   <div class="ch n bs"> 
+    <div class="iz n ja p jb jc"> 
+     <h2 class="fg b jd je dr jf gn go jg gq gr fe ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">API 自动化入门: 第1部分-概述</h2> 
+     <div class="jh s"> 
+      <h3 class="az b cb bb dr ji gn go jg gq gr bc cyxy-trs-source cyxy-trs-target" style="color: #757575;">所以你想开始自动化 api，但是，每次你在 google 上搜索最好的 api 自动化工具，你会看到这么多..</h3> 
+     </div> 
+    </div> 
+    <div class="jk s"> 
+     <div class="jl s jm jn jo jk jp jq iy"> 
+      <br> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is"><em class="ff">Step 1: Installation-</em></strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">第一步: 安装 -</p> 
+  </blockquote> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们需要安装 python，版本2或3支持两个版本。随着 Python 的安装而来的是 pip ——一个用于安装和管理 Python 编写的软件包的包管理系统。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">要安装 pytest，我们将使用 pip 命令-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>pip install pytest</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">就这样，pytest 已经安装，我们可以继续使用 pytest 编写测试。</p> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is"><em class="ff">Step 2: Pytest syntax for writing tests-</em></strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">步骤2: 编写测试的 Pytest 语法-</p> 
+  </blockquote> 
+  <ul class=""> 
+   <li class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq kh ki kj ce cyxy-trs-source cyxy-trs-source cyxy-trs-source" style="color: #292929;">“<span>&nbsp;文件名应以“</span><strong class="hv is cyxy-trs-source">test<span>&nbsp;测试</span></strong>”, as in<span>&nbsp;</span><span>”，比如</span><code class="kk kl km kn kd b">test_example.py</code><span>&nbsp;</span>or<span>&nbsp;</span><span>或</span><code class="kk kl km kn kd b">example_test.py</code>.</li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source cyxy-trs-source cyxy-trs-source cyxy-trs-source cyxy-trs-source" style="color: #292929;">the<span>&nbsp;</span><span>如果测试定义为类上的方法，则</span><strong class="hv is cyxy-trs-source">class name<span>&nbsp;类名</span></strong><span> </span>&nbsp;“<span>&nbsp;应该从“</span><strong class="hv is cyxy-trs-source">Test<span>&nbsp;测试</span></strong>”, as in<span>&nbsp;”，比如</span><code class="kk kl km kn kd b">TestExample</code>.<span>。类不应该有一个</span><code class="kk kl km kn kd b">__init__</code><span>&nbsp;</span>method.<span>&nbsp;方法</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce" style="color: #292929;"><mark><span>测试</span></mark><mark><strong class="hv is cyxy-trs-source"><span>方法名或函数名</span></strong></mark><mark> <span>应该从“</span></mark><mark><strong class="hv is cyxy-trs-source">test_<span>&nbsp;测试</span></strong></mark><mark>”, <span>比如</span></mark><mark><code class="kk kl km kn kd b">test_example</code></mark><mark>. <span>&nbsp;</span><span>名称与此模式不匹配的方法不会作为测试执行</span></mark></li> 
+  </ul> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在，我们已经清楚了命名约定，让我们创建项目目录-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>- demo_tests/
+    - test_example.py</code></pre> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is">Step 3: Write basic tests in pytest</strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">步骤3: 在 pytest 中编写基本测试</p> 
+  </blockquote> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在 test _ example.py 文件中，让我们编写一个非常简单的函数 sum，它接受两个参数 num1和 num2并返回它们的和。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>def sum(num1, num2):
+    """It returns sum of two numbers"""
+    return num1 + num2</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在我们将编写测试来测试 sum 函数-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>import pytest#make sure to start function name with test
+def test_sum():
+    assert sum(1, 2) == 3</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">要运行这个测试，遍历 demo _ tests 目录并运行命令:</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>#It will find all tests inside file test_example.py and run them
+pytest test_example.py
+</code></pre> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="100" id="images_162515135837254" src="https://miro.medium.com/max/2000/1*stilFb3-0v1fCY6-MJbc4A.png" width="1000"> 
+    </div> 
+   </div> <span>测试运行结果</span> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在这里，每个点代表一个测试用例。由于我们现在只有一个测试用例，我们可以看到1点，它通过在0.01秒。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">要获得关于测试运行的更多信息，请使用上面的命令 -v (verbose)选项。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>pytest test_example.py -v</code></pre> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <br> 
+   </div> <span>开启详细模式的测试运行结果</span> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在 test _ example.py 文件中添加一个测试，它将测试函数 sum 给出的输出类型即整数。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>def test_sum_output_type():
+    assert type(sum(1, 2)) is int</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在，如果我们再次运行测试，我们将得到两个测试的输出，以及<code class="kk kl km kn kd b">test_sum<span>&nbsp;</span></code>和 <code class="kk kl km kn kd b">test_sum_output_type</code></p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lu"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="101" id="images_162515135837248" src="https://miro.medium.com/max/2000/1*wuoh_qpIWW8AdFwKfOxfLQ.png" width="1000"> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">到目前为止，我们已经看到了所有通过的测试，让我们将<code class="kk kl km kn kd b">test_sum</code> assertion 更改为 fail-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>def test_sum():
+    assert sum(1, 2) == 4</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">这将给出结果和失败的原因，我们预期和(1,2)是3等于4。</p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="236" id="images_162515135837255" src="https://miro.medium.com/max/2000/1*sgHXNoejhREpJfDp26GsHw.png" width="1000"> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">这包括 pytest 的基本知识。现在我们将深入研究一些高级的概念，这些概念使得 pytest 中的测试编写更加强大。</p> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is">Step 4: Parametrizing test methods</strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">第四步: 参数化测试方法</p> 
+  </blockquote> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">如果您查看我们的 <code class="kk kl km kn kd b">test_sum</code> 函数，它只使用一组输入(1,2)测试我们的 sum 函数，并且测试是使用这个值进行硬编码的。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">覆盖更多场景的更好方法是将测试数据作为参数传递给我们的测试函数，然后断言预期的结果。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">让我们修改 <code class="kk kl km kn kd b">test_sum</code> 函数来使用参数。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>import pytest@pytest.mark.parametrize('num1, num2, expected', [(3,5,8)])
+def test_sum(num1, num2, expected):
+        assert sum(num1, num2) == expected</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">内建的 pytest.mark.parametrize(https://docs.pytest.org/en/latest/reference.html#pytest-mark-parametrize-ref) decorator 允许对测试函数的参数进行参数化</p> 
+  <ul class=""> 
+   <li class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq kh ki kj ce cyxy-trs-source cyxy-trs-source cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">argnames<span>&nbsp;阿尔戈名</span></strong><span>&nbsp;</span>—<span>ー一个逗号分隔的字符串，表示一个或多个参数名称，或参数字符串的列表/元组</span><code class="kk kl km kn kd b">num1</code>,<span>&nbsp;</span><code class="kk kl km kn kd b">num2</code><span>&nbsp;</span>and<span>&nbsp;</span><span>及</span><code class="kk kl km kn kd b">expected</code><span>&nbsp;</span>as 1st input , 2nd input and expected sum respectively.<span>&nbsp;分别作为第一输入、第二输入和期望和</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source cyxy-trs-source cyxy-trs-source cyxy-trs-source cyxy-trs-source cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">argvalues<span>&nbsp;阿尔格值</span></strong><span>&nbsp;</span>— <span>argvalues 列表决定了使用不同参数值调用测试的频率。如果只指定了一个 argname 值，那么就是一个值列表。如果指定了 n 个 argnames，则 argvalues 必须是 n-tuple 的列表，其中每个 tuple 元素为其各自的 argname 指定一个值。在这里，我们传递了一个元组</span><code class="kk kl km kn kd b">(3,5,8)</code><span>&nbsp;</span>inside a list where<span>&nbsp;</span><span>在一个名单里</span><code class="kk kl km kn kd b">3</code><span>&nbsp;</span>is<span>&nbsp;</span><span>是</span><code class="kk kl km kn kd b">num1</code>,<code class="kk kl km kn kd b">5</code><span>&nbsp;</span>is<span>&nbsp;是</span><code class="kk kl km kn kd b">num2</code><span>&nbsp;</span>and<span>&nbsp;</span><span>及</span><code class="kk kl km kn kd b">8</code>is<span>&nbsp;</span><span>是</span><code class="kk kl km kn kd b">expected sum.</code></li> 
+  </ul> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">Here, the<span>&nbsp;</span><code class="kk kl km kn kd b">@parametrize</code><span>&nbsp;</span>decorator defines one<span>&nbsp;</span><code class="kk kl km kn kd b">(num1, num2, expected)</code><span>&nbsp;</span>tuple so that the<span>&nbsp;</span><code class="kk kl km kn kd b">test_sum</code><span>&nbsp;</span>function will run one time.</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在这里,@parametrize decorator 定义了一个(num1，num2，expected)元组，以便 test _ sum 函数运行一次。</p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="99" id="images_162515135837259" src="https://miro.medium.com/max/2000/1*v3cpMJO3aQPXqHO8mzHFDA.png" width="1000"> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们可以在上面示例中作为第二个参数传递的列表中添加几个元组(num1，num2，expected)。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>import pytest@pytest.mark.parametrize('num1, num2, expected',[(3,5,8),              (-2,-2,-4), (-1,5,4), (3,-5,-2), (0,5,5)])
+def test_sum(num1, num2, expected):
+        assert sum(num1, num2) == expected</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">此测试<code class="kk kl km kn kd b">test_sum</code>test 将对上述参数运行5次</p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="158" id="images_16251513583720" src="https://miro.medium.com/max/2000/1*P3i126JeddFcE8F4edw99Q.png" width="1000"> 
+    </div> 
+   </div> <span>&nbsp;请注意 test _ sum []中的参数值。每个值每次都会更改</span> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在上面的代码中，我们已经直接传递了第二个参数的值(这是实际的测试数据)。我们也可以调用函数来获取这些值。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>import pytestdef get_sum_test_data():
+        return [(3,5,8), (-2,-2,-4), (-1,5,4), (3,-5,-2), (0,5,5)]@pytest.mark.parametrize('num1, num2, expected',get_sum_test_data())
+def test_sum(num1, num2, expected):
+        assert sum(num1, num2) == expected</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">这也会得到与上面相同的结果。</p> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is">Step 5: Use of Fixtures</strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">第五步: 使用装置</p> 
+  </blockquote> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">根据官方 pytest 文档: 测试装置的目的(http://en.wikipedia.org/wiki/Test_fixture#Software)是提供一个固定的基线，在这个基线上测试可以可靠地重复执行。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">Fixture 可用于在测试之间共享测试数据，分别在测试执行之前和之后执行 setup 和 teardown 方法。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">为了理解 fixture，我们将重写上面的<code class="kk kl km kn kd b">test_sum</code> 函数，并利用 fixture 获得测试数据-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>import pytest@pytest.fixture
+def get_sum_test_data():
+        return [(3,5,8), (-2,-2,-4), (-1,5,4), (3,-5,-2), (0,5,5)]def test_sum(get_sum_test_data):
+        for data in get_sum_test_data:
+                num1 = data[0]
+                num2 = data[1]
+                expected = data[2]
+                assert sum(num1, num2) == expected</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">这将给出输出-</p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lt"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="95" id="images_162515135837272" src="https://miro.medium.com/max/2000/1*WCEfN9KU2EwP3DLrqu4TXg.png" width="1000"> 
+    </div> 
+   </div> <span>注意，现在没有显示不同的测试参数</span> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">如果查看上面的测试结果，您可能会怀疑测试是否运行了所有的值，因为从测试运行来看并不清楚。因此，让我们更改其中一个测试数据以包含错误并重新运行测试。</p> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="321" id="images_16251513583726" src="https://miro.medium.com/max/2000/1*TnqHQylkqPTDbWNRvC5QCg.png" width="1000"> 
+    </div> 
+   </div> <span>我们可以看到对每个数据运行的测试在最后一个数据中失败了</span> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;"><strong class="hv is">Scope of fixture</strong>—— Scope 控制 fixture 被调用的频率。默认是函数。以下是<code class="kk kl km kn kd b">scope</code>的选项:</p> 
+  <ul class=""> 
+   <li class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">function:<span>&nbsp;</span><span>功能:</span></strong>Run once per test<span>&nbsp;每次测试运行一次</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">class:<span>&nbsp;</span><span>类别:</span></strong>Run once per class of tests<span>&nbsp;每类测试运行一次</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">module:<span>&nbsp;</span><span>模块:</span></strong>Run once per module<span>&nbsp;每个模块运行一次</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><strong class="hv is cyxy-trs-source">session:<span>&nbsp;</span><span>会议:</span></strong>Run once per session<span>&nbsp;每个会话运行一次</span></li> 
+  </ul> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">从最低到最高的可能范围是:</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">function &lt; class &lt;module&lt;session.</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">Fixture 可以标记为 <code class="kk kl km kn kd b">autouse=True</code>，这将使您的套件中的每个测试默认使用它。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在，我们将使用 fixture 来编写 <code class="kk kl km kn kd b">setup_and_teardown</code> 函数。Setup 函数在测试开始前从数据库中读取一些数据，teardown 函数在测试结束后将测试运行数据写入数据库。为了简单起见，我们的 <code class="kk kl km kn kd b">setup_and_teardown</code> 函数只是打印一条消息。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">注意 setup 和 teardown 中的产量，任何在 yieldis 执行后写的代码都是在测试执行结束后写的。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>@pytest.fixture(scope='session')
+def get_sum_test_data():
+        return [(3,5,8), (-2,-2,-4), (-1,5,4), (3,-5,-2), (0,5,5)]@pytest.fixture(autouse=True)
+def setup_and_teardown():
+        print '\nFetching data from db'
+        yield
+        print '\nSaving test run data in db'def test_sum(get_sum_test_data):
+        for data in get_sum_test_data:
+                num1 = data[0]
+                num2 = data[1]
+                expected = data[2]
+                assert sum(num1, num2) == expected
+</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">还要注意，我们没有传递 setup _ 和 teardown 作为 test _ sum 函数的参数，因为 autusse = True 已经在 fixture 定义中设置了。因此，它将在每次测试运行之前和之后自动调用。我们现在需要使用-s 选项运行测试以打印到 stdout。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>pytest test_example.py -v -s</code></pre> 
+ </div> 
+</div>
+<div class="ky" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="n p"> 
+  <div class="kz la lb lc ld le af lf ag lg ai aj"> 
+   <div class="lk ll cg lm aj ln"> 
+    <div class="ek el lh"> 
+     <img referrerpolicy="no-referrer" alt="" class="mce_image" height="223" id="images_16251513583729" src="https://miro.medium.com/max/2000/1*Oq8REKl1dyhlViTHNw1ScQ.png" width="1000"> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+ <div class="ab ac ae af ag fc ai aj"> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is">Step 6: Test case Markings</strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">第六步: 测试用例标记</p> 
+  </blockquote> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">Pytest 允许标记测试，然后有选择地运行它们。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">通过使用 pytest.mark 助手，您可以轻松地在测试函数上设置元数据。有一些内置的标记，例如:</p> 
+  <ul class=""> 
+   <li class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><a class="ck ir cyxy-trs-source" style="color: inherit; text-decoration: underline;">skip<span>&nbsp;跳过</span></a><span>&nbsp;</span>— always skip a test function<span>&nbsp;总是跳过测试函数</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><a class="ck ir cyxy-trs-source" style="color: inherit; text-decoration: underline;">skipif<span>&nbsp;船长</span></a><span>&nbsp;</span>— skip a test function if a certain condition is met<span>&nbsp;ー如符合某些条件，则跳过测试功能</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><a class="ck ir cyxy-trs-source" style="color: inherit; text-decoration: underline;">xfail</a><span>&nbsp;</span>— produce an “expected failure” outcome if a certain condition is met<span>&nbsp;ー如符合某项条件，便会产生「预期失败」的结果</span></li> 
+   <li class="ht hu ff hv b hw ko hy hz ia kp ic id ie kq ig ih ii kr ik il im ks io ip iq kh ki kj ce cyxy-trs-source" style="color: #292929;"><a class="ck ir cyxy-trs-source" style="color: inherit; text-decoration: underline;">parametrize<span>&nbsp;护理</span></a><span>&nbsp;</span>to perform multiple calls to the same test function. (<span>&nbsp;对同一个测试函数执行多个调用</span><em class="ju cyxy-trs-source">We already discussed this above.<span>&nbsp;我们在上面已经讨论过了</span></em>)</li> 
+  </ul> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">在上面的例子中，我们可以将第一个测试函数标记为慢，并且只运行该函数。</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>@pytest.mark.slow
+def test_sum():
+    assert sum(1, 2) == 3def test_sum_output_type():
+    assert type(sum(1, 2)) is int</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在，要在文件 test _ example.py 中只运行标记为慢的测试，我们将使用-</p> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code>pytest test_example.py -m slow</code></pre> 
+  <blockquote class="jr js jt"> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><strong class="hv is">Step 7: Cheatsheet to run pytest with different options</strong></p> 
+   <p class="ht hu ju hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">第七步: 使用不同的选项运行 pytest</p> 
+  </blockquote> 
+  <pre class="jv jw jx jy jz ka gx dz  language-javascript"><code># keyword expressions 
+# Run all tests with some string ‘validate’ in the name
+pytest -k “validate”# Exclude tests with ‘db’ in name but include 'validate'
+pytest -k “validate and not db” #Run all test files inside a folder demo_tests
+pytest demo_tests/# Run a single method test_method of a test class TestClassDemo 
+pytest demo_tests/test_example.py::TestClassDemo::test_method# Run a single test class named TestClassDemo 
+pytest demo_tests/test_example.py::TestClassDemo# Run a single test function named test_sum
+pytest demo_tests/test_example.py::test_sum# Run tests in verbose mode: 
+pytest -v demo_tests/# Run tests including print statements: 
+pytest -s demo_tests/# Only run tests that failed during the last run 
+pytest — lf</code></pre> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">这将介绍 pytest 的基础知识，在阅读本文之后，您应该可以开始使用 pytest 在 python 中编写测试了。</p> 
+  <p class="ht hu ff hv b hw hx hy hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ex ce cyxy-trs-source cyxy-trs-target" style="color: #292929;">您可以在我的 github repo 中找到所有使用的👉代码(https://github.com/shashikumarraja/pytest_tutorial)。</p> 
+  <h1 class="posttitle cyxy-trs-source cyxy-trs-target" style="color: #2bbc8a; background-color: #1d1f21;">Pytest 特性，你在你的(测试)生活中需要(https://martinheinz.dev/blog/7)</h1> 
+  <p><span style="color: #c9cacc; text-align: justify; background-color: #1d1f21;">测试代码是开发的一个组成部分，质量测试可以为您节省很多麻烦。有很多关于用 Python 进行测试和用 Pytest 进行测试的指南，但是有一些特性我很少在任何地方看到，但是我经常需要。所以，这里列出了 Pytest 的一系列技巧和特性，这些是我离不开的(而且你也不能很快离开)。</span></p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">例外测试</h2> 
+  <pre class="language-javascript"><code>import pytest
+
+def test_my_function():
+    with pytest.raises(Exception, match='My Message') as e:
+        my_function()
+        assert e.type is ValueError</code></pre> 
+  <p class="cyxy-trs-source cyxy-trs-target">让我们从简单的开始。你有一个抛出异常的函数，你需要确保它在正确的条件下发生并包含正确的消息: import Pytest def test _ My _ function () : with Pytest.raises (Exception，match = ‘ My Message’) as e: My _ function () assert. type is ValueError 这里我们可以看到 Pytest 为我们提供的简单上下文管理器。它允许我们指定应该引发的异常类型以及异常的消息。如果在块中没有引发异常，则测试失败。当上下文管理器返回 ExceptionInfo 类时，您还可以检查异常的更多属性，该类具有类型、值或回溯等属性。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">过滤警告</h2> 
+  <p class="cyxy-trs-source cyxy-trs-source-ted">With exceptions out of the way, let's look at warnings. Sometimes you get bunch of warning messages in your logs from inside of libraries that you use. You can't fix them and they really just create unnecessary noise, so let's get rid of them:</p> 
+  <pre class="language-javascript"><code>import warnings
+from sqlalchemy.exc import SADeprecationWarning
+
+def test_my_function():
+    # SADeprecationWarning is issued by SQLAchemy when deprecated API is used
+    warnings.filterwarnings("ignore", category=SADeprecationWarning)
+    ...
+    assert ...
+
+def test_my_function():
+    with warnings.catch_warnings(record=True) as w:
+        warnings.simplefilter("ignore")  # ignore annoying warnings
+        ...
+        assert ...
+    # warnings restored</code></pre> 
+  <p class="cyxy-trs-source cyxy-trs-target">除了例外情况，让我们看看警告。有时候你会从你使用的库中得到一堆警告消息。您不能修复它们，它们实际上只是创建了不必要的噪音，所以让我们摆脱它们: 从 sqlalchemy 导入警告。Exc import SADeprecationWarning def test _ my _ function () : # SADeprecationWarning 由 sqllachemy 在使用已弃用的 API 警告时发出。Filterwarnings (“ ignore”，category = SADeprecationWarning) . 。。断言...使用警告来测试 _ my _ function () :。Catch _ warnings (record = True)为 w: warnings。Simplefilter (“ ignore”) # ignore annoying warnings..。。断言...# 警告恢复在这里我们展示了两种方法-在第一种方法中，我们直接忽略指定类别的所有警告，通过在过滤器列表前面插入一个过滤器。这将导致您的程序忽略此类别的所有警告，直到它终止，这可能不总是可取的。对于第二种方法，我们使用上下文管理器，在退出其作用域后恢复所有警告。我们还指定 record = True，以便在需要时检查已发出(忽略)警告的列表。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">测试标准输出和标准错误消息</h2> 
+  <p class="cyxy-trs-source cyxy-trs-target">接下来，让我们看看下面的场景: 您有一个命令行工具，它具有一些函数，可以将消息打印到标准输出，但是不返回任何内容。那么，我们如何测试呢？Def Test _ my _ function (capsys) : my _ function () # function that prints stuff Capture = capsys.readouterr () # Capture output assert f“ Received invalid message...”in captured.out # Test stdout assert f“ Fatal error...”in captured.err # Test stderr 为了解决这个问题，Pytest 提供了一个名为 capsys 的 fixture，它可以捕获系统输出。所有您需要使用它的，是添加它作为参数到您的测试函数。接下来，在调用正在测试的函数之后，以 tuple-(out，err)的形式捕获输出，然后可以在 assert 语句中使用它。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">修补对象</h2> 
+  <pre class="language-javascript"><code>from unittest import mock
+
+def test_my_function():
+    with mock.patch('module.some_function') as some_function:  # Used as context manager
+        my_function()  # function that calls `some_function`
+
+        some_function.assert_called_once()
+        some_function.assert_called_with(2, 'x')
+
+@mock.patch('module.func')  # Used as decorator
+def test_my_function(some_function):
+    module.func(10)  # Calls patched function
+    some_function.assert_called_with(10)  # True</code></pre> 
+  <pre class="language-javascript"><code>from unittest import mock
+
+def test_my_function():
+    with mock.patch.object(SomeClass, 'method_of_class', return_value=None) as mock_method:
+        instance = SomeClass()
+        instance.method_of_class('arg')
+
+        mock_method.assert_called_with('arg')  # True
+
+def test_my_function():
+    r = Mock()
+    r.content = b'{"success": true}'
+    with mock.patch('requests.get', return_value=r) as get:  # Avoid doing actual GET request
+        some_function()  # Function that calls requests.get
+        get.assert_called_once()</code></pre> 
+  <p class="cyxy-trs-source cyxy-trs-target">有时在测试时，您可能需要替换被测试函数中使用的对象，以提供更可预测的数据集，或者避免该函数访问可能不可用的资源。Patch 可以帮助你: from unittest import mock def test _ my _ function () : with mock.patch (‘ module.some _ function’) as some _ function: # Used as context manager my function () # function that calls‘ some _ function’some _ function。Assert _ called _ once () some _ function.Assert _ called _ with (2，‘ x’)@mock。Patch (‘ module.func’) # 用作 decorator def test _ my _ function (some _ function) : module.func (10) # 调用 patched function some _ function。Assert _ called with (10) # True 在第一个例子中，我们可以看到可以对函数进行补丁，然后检查它们被调用了多少次以及使用了哪些参数。这些补丁还可以以 decorator 和 context manager 的形式进行堆叠。现在，有了一些更强大的用途: 从 unittest import mock def test _ my _ function () : with mock.patc.object (SomeClass，‘ method _ of _ class’，return _ value = None) as mock _ method: instance = SomeClass () instance.method _ of _ class (‘ arg’) mock _ method。Assert _ called _ with (‘ arg’) # True def test _ my _ Function () : r = Mock () r.content = b’{“ success”: True }’with Mock.patch (‘ requests.GET’，return _ value = r) : # Avoid 执行实际的 GET request some _ Function () # Function that calls requests.GET。在第二个更实际的例子中，我们通过替换 requests.get，使它返回我们提供合适数据的对象，从而避免依赖于远程 API/资源。</p> 
+  <p class="cyxy-trs-source cyxy-trs-target">Mock 模块还可以为您做很多事情，其中一些非常疯狂——包括副作用、 mocking 属性、模仿不存在的属性等等。如果您在编写测试时遇到问题，那么您肯定应该签出这个模块的文档，因为您很可能会在那里找到解决方案。</p> 
+  <h2 class="cyxy-trs-source" style="color: #eeeeee; text-align: start;">Sharing Fixtures with<span>&nbsp;</span><span>共用固定装置</span><code class="inline">conftest.py</code></h2> 
+  <p class="cyxy-trs-source cyxy-trs-target">如果您编写了大量的测试，那么在某个时候您会意识到将所有 Pytest fixture 集中在一个地方是很好的，您可以从中导入它们，从而在测试文件之间共享它们。这可以通过 conftest.py 来解决。</p> 
+  <p class="cyxy-trs-source cyxy-trs-target">Py 是一个驻留在测试目录树底部的文件。在这个文件中，您可以存储所有的测试装置，然后由 Pytest 自动发现它们，因此您甚至不需要导入它们。</p> 
+  <p><span style="color: #c9cacc; text-align: justify; background-color: #1d1f21;"><span>如果您需要在多个测试之间共享数据，这也很有帮助——只需创建返回测试数据的 fixture 即可</span></span></p> 
+  <p class="cyxy-trs-source cyxy-trs-target">另一个有用的特性是能够指定 fixture 的范围——这在创建非常昂贵的 fixture 时非常重要，例如到数据库的连接(会话范围)和在其他范围的连接需要在每个测试用例(功能范围)之后重置。治具范围的可能值是: 函数、类、模块、包和会话。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">辅助设备</h2> 
+  <pre class="language-javascript"><code>import pytest, os
+
+@pytest.fixture(scope='function')
+def reset_sqlite_db(request):
+    path = request.param  # Path to database file
+    with open(path, 'w'): pass
+    yield None
+    os.remove(path)
+
+@pytest.mark.parametrize('reset_sqlite_db', ['/tmp/test_db.sql'], indirect=True)
+def test_send_message(reset_sqlite_db):
+    ...  # Perform tests that access prepared SQLite database</code></pre> 
+  <p class="cyxy-trs-source cyxy-trs-target">我们已经在上面的例子中讨论了 fixture，所以让我们再深入一点。如果您想通过参数化来创建一个更通用的 fixture，该怎么办？Import pytest，os@pytest.Fixture (scope = ‘ function’) def reset _ sqlite _ db (request) : Path = request.param # Path to database file with open (Path，‘ w’) : pass yield None os.remove (Path)@pytest。参数化(‘ reset _ SQLite _ db’，[’/tmp/test _ db.sql’] ，indirect = True) def test _ send _ message (reset _ SQLite _ db) : ... # Perform test that access prepared SQLite database Above 是一个 fixture 示例，它为每个测试准备 SQLite 测试数据库。这个 fixture 接收数据库的路径作为参数。这个路径使用 request 对象传递给 fixture，属性 param 是传递给 fixture 的所有参数的迭代，在这个例子中只有一个-路径。在这里，这个 fixture 首先创建数据库文件(为了清晰起见，还可以填充它省略) ，然后执行测试，测试完成后，fixture 删除数据库文件。</p> 
+  <p class="cyxy-trs-source cyxy-trs-target">至于测试本身，我们使用@pytest。使用3个参数进行参数化——第一个是 fixture 的名称，第二个是 fixture 的参数值列表，它将成为 request.param，最后是 keyword argument indirect = True，它将导致参数值出现在 request.param 中。</p> 
+  <p class="cyxy-trs-source cyxy-trs-target">我们需要做的最后一件事情是添加 fixture 作为参数来测试它自己，然后我们就完成了。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-source-ted" style="color: #eeeeee; text-align: start;">Skipping Tests</h2> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">跳过测试</h2> 
+  <pre class="language-javascript"><code>import pytest, os
+
+@pytest.mark.skipif(os.system("service postgresql status") &gt; 0,
+                    reason="PostgreSQL service is not running")
+def test_connect_to_database():
+    ... # Run function that tries to connect to PostgreSQL database</code></pre> 
+  <p class="cyxy-trs-source cyxy-trs-target">有些情况下，跳过一些测试是合理的，不管是因为环境(Linux vs Windows)、互联网连接、资源的可用性或其他原因。那么，我们该怎么做呢？Import pytest，os@pytest.0，reason = “ PostgreSQL service is not running”)) def test _ connect _ to _ database () : ... # Run 函数，尝试连接到 PostgreSQL 数据库。在 Pytest 还有很多很酷的功能可以跳过或预测失败，这里已经有很好的文档说明，所以我不会在这里详细说明，因为在这里复制和粘贴现有的内容似乎是多余的。</p> 
+  <h2 class="cyxy-trs-source cyxy-trs-target" style="color: #eeeeee; text-align: start;">总结</h2> 
+  <p class="cyxy-trs-source cyxy-trs-target">希望这些小技巧能让你的测试过程变得更加愉快和高效，从而激励你在之前写更多的测试。如果你有任何问题，请随时与我联系，如果你有自己的建议或技巧，请在这里分享。🙂</p> 
+  <h1 class="gs cu gt ba cj gu gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">Pytest 导论(https://medium.com/@chilinski.a/intro-to-pytest-280f56e97f19)</h1> 
+  <p class="ik il gt im b in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">编码最重要的一个方面是测试ーー确保你的代码在所有可能的情况下都能完成它应该完成的任务。当然，我经常使用 Python，Python 的主要测试框架称为 pytest(https://docs.pytest.org/en/stable/)。</p> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">就像任何 Python 包一样，您需要用 pip 安装它(最好是在项目的虚拟环境中https://medium.com/swlh/python-virtual-environments-221c39943bab)。所以运行命令:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>pip install pytest</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">确保安装时运行:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>pip freeze</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">一旦安装完毕，就可以开始测试了！请记住，在任何文件的顶部，您都需要导入 pytest:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>import pytest</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">我将展示一个非常简单的单元测试(测试一小段代码)。假设我们想要一个函数(例如，在一个名为 testing.py 的文件中) ，该函数以一个数字作为参数，当执行时，它会将该数字加上5。像这样:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>def add_five(num):
+   return num + 5</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">简单的东西。所以我们可以很容易地测试，以确保这个函数的工作，通过添加下面的代码:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>def test_method():
+   assert add_five(3) == 8</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">了解基本的数学知识，这个测试应该可以通过:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>pytest testing.py</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">你们会看到这样的反应:</p> 
+  <div class="jz ka ao kb w kc"> 
+   <div class="ga gb jx"> 
+    <div class="ki s ao kj" style="background-color: #f2f2f2;"> 
+     <div class="kk kl s"> 
+      <div class="et kd gj fs fp ke w kf kg kh"> 
+       <br> 
+      </div> 
+      <img referrerpolicy="no-referrer" alt="" class="mce_image" height="151" id="images_162515225566969" src="https://miro.medium.com/max/700/1*HyYSZ2aG3mxiY9OzVu4oXQ.png" style="background-color: #ffffff;" width="700"> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <p>pytest<span>&nbsp;通过pytest&nbsp;</span></p> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">瞧，测试通过了！现在，如果我们将测试函数更改为一个失败的函数，如下所示:</p> 
+  <pre class="jk jl jm jn jo jp dr jq  language-javascript"><code>def test_function():
+   assert add_five(3) == 3</code></pre> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">3 + 5不应该等于3. 所以让我们看看运行 pytest testing.py 时会发生什么:</p> 
+  <div class="jz ka ao kb w kc"> 
+   <div class="ga gb kv"> 
+    <div class="ki s ao kj" style="background-color: #f2f2f2;"> 
+     <div class="kw kl s"> 
+      <div class="et kd gj fs fp ke w kf kg kh"> 
+       <br> 
+      </div> 
+      <img referrerpolicy="no-referrer" alt="" class="mce_image" height="212" id="images_162515225566992" src="https://miro.medium.com/max/700/1*cqidPn8MJJpjSXc1COnrxg.png" style="background-color: #ffffff;" width="700"> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <p>failing pytest<span>&nbsp;化脓失败试验</span></p> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">就是这样，它失败了。它显示了断言错误是什么(8不等于3)。因此，这两个测试都确保了原始的 add _ five ()函数能够完成它应该完成的任务。</p> 
+  <p class="ik il gt im b in jf io ip iq jg ir is it jh iu iv iw ji ix iy iz jj ja jb jd cw ev cyxy-trs-source cyxy-trs-target" style="color: #292929; background-color: #ffffff;">还有很多需要测试的地方，我很可能在某个时候再写一篇关于它的博文。但这只是一个简短的介绍！</p> 
+  <h1 class="hc hd he bf hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz ia ib cyxy-trs-source cyxy-trs-target">4个鲜为人知但很棒的 Pytest 技巧(https://towardsdatascience.com/4-lessor-known-yet-awesome-tips-for-pytest-2117d8a62d9c)</h1> 
+  <div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+   <div class="au av aw ax ay hb ba v"> 
+    <div class="kb kc at kd v ke"> 
+     <div class="gk gl jy"> 
+      <img referrerpolicy="no-referrer" alt="" class="mce_image" height="1050" id="images_162515244328622" src="https://miro.medium.com/max/1400/0*Thjx7rZfjHz_aKPp" width="700"> 
+     </div> 
+    </div> Photo by<span>&nbsp;</span><span>图片由</span><a class="cw kl cyxy-trs-source" style="color: inherit; text-decoration: underline;">Gayatri Malhotra</a><span>&nbsp;</span>on<span>&nbsp;</span><span>打开</span><a class="cw kl cyxy-trs-source" style="color: inherit; text-decoration: underline;">Unsplash</a> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">Motivation</h1> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">动机</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">作为一个数据科学家，确保你的功能正常工作是很重要的。一个好的做法是编写一个小函数，然后用单元测试来测试您的函数。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">与其试图调试大块的代码，不如将代码拆分成小块，并确保小块能够工作。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">Pytest 是一个理想的框架，它使用 Python 编写小型测试变得容易。我在这里介绍了单元测试的好处以及如何开始 pytest。在上一篇文章中，我展示了如何:</p> 
+    <ul class=""> 
+     <li class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md mj mk ml ib cyxy-trs-source" style="color: #292929;">Test one function with multiple tests<span>&nbsp;用多个测试测试一个函数</span></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib cyxy-trs-source" style="color: #292929;">Combine multiple tests into one test function<span>&nbsp;将多个测试合并到一个测试函数中</span></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib cyxy-trs-source" style="color: #292929;">Test one function at a time<span>&nbsp;每次测试一个函数</span></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib cyxy-trs-source" style="color: #292929;">Test different functions using the same data<span>&nbsp;使用相同的数据测试不同的函数</span></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib cyxy-trs-source" style="color: #292929;">Structure your projects<span>&nbsp;组织你的项目</span></li> 
+    </ul> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">In<span>&nbsp;</span>this article, I will show you how to:</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">在本文中，我将向您展示如何:</p> 
+    <ul class=""> 
+     <li class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md mj mk ml ib" style="color: #292929;"><strong class="lm hf cyxy-trs-source">Filter warnings<span>&nbsp;过滤警告</span></strong></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib" style="color: #292929;"><strong class="lm hf cyxy-trs-source">Print the output of the function being tested<span>&nbsp;打印被测试函数的输出</span></strong></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib" style="color: #292929;"><strong class="lm hf cyxy-trs-source">Benchmark your code<span>&nbsp;基准测试你的代码</span></strong></li> 
+     <li class="lk ll he lm b id mm kr lo ig mn kv lq lr mo lt lu lv mp lx ly lz mq mb mc md mj mk ml ib" style="color: #292929;"><strong class="lm hf cyxy-trs-source">Repeat a single test for a specific number of times<span>&nbsp;在特定的次数内重复一个测试</span></strong></li> 
+    </ul> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们开始吧！</p> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">过滤警告</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">在运行 pytest 时经常会看到弃用警告。当我们只想调试代码时，这些警告可能是不必要的，并且显得很烦人。幸运的是，我们可以过滤 pytest 警告。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我将从我以前的 pytest 文章中借用这些例子。在这个例子中，我想测试 TextBlob 是否准确地预测了文本的情绪。如果您不了解 TextBlob，可以在这里了解更多关于该工具的信息。</p> 
+    <div class="mw s at"> 
+     <div class="zh my s"> <iframe src="https://towardsdatascience.com/media/dc353284f6c576ebb053a6b57acdd038" width="680" height="353"></iframe> 
+     </div> 
+    </div> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">当我们测试这个脚本时，使用</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>pytest test_example.py</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们会看到警告。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">为了过滤警告，在运行脚本的同一个目录中创建一个名为 pytest.ini 的文件</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>.
+├── pytest.ini
+└── test_example.py</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">然后将下面的内容插入到 pytest.ini 中</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>[pytest]addopts = -p no:warnings</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">就是这样! 现在重新运行我们的测试。我们将得到一个没有警告的干净输出！</p> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">打印输出</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">有时候，我们可能希望在编写 assert 语句之前看到中间输出。为什么不打印输出来知道中间输出呢？</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">这也将帮助我们开发一个函数，生成我们想要的输出。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">例如，我们可以打印 text.sentiment 来知道 text.sentiment 到底是做什么的</p> 
+    <div class="mw s at"> 
+     <div class="zg my s"> <iframe src="https://towardsdatascience.com/media/d929d7164a633757276f93d8dbf15e1e" width="680" height="378"></iframe> 
+     </div> 
+    </div> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><br></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">当运行 pytest _ example.py 时，我们将看不到任何输出。为了查看 print 函数的输出，我们需要在命令末尾包含-s</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>&gt;&gt;&gt; pytest test_example.py -s====================== test session starts ======================
+test_examply.py Sentiment(polarity=0.8, subjectivity=0.75)
+======================= 1 passed in 0.49s =======================</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><br></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">太棒了! 现在我们知道我们可以用 text.sentiment.polarity来获取情绪的极性。</p> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">多次重复一个测试</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">有时我们可能想要运行一个测试100次，以确保函数始终按预期工作。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">例如，我们发现了合并两个 Python 列表的方法</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>&gt;&gt;&gt; l1 = [1,2,3]
+&gt;&gt;&gt; l2 = [4,5,6]
+&gt;&gt;&gt; l1.extend(l2)
+&gt;&gt;&gt; l1
+[1,2,3,4,5,6]</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">从输出来看，列表 l2中的值似乎是插入在列表 l1中的值之后。但是每对列表的顺序都是这样的吗？</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">为了确保使用 functionextend 时保持插入顺序，我们可以创建两个随机列表，然后对其进行100次测试。如果所有测试都通过，我们确信函数将始终如我们所期望的那样工作</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">若要重复单个测试，请安装 pytest-repeat</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>pip install pytest-repeat</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;"><br></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在使用 pytest.mark.repeat (100)作为我们要重复的测试函数的 decorator</p> 
+    <div class="mw s at"> 
+     <div class="zi my s"> <iframe src="https://towardsdatascience.com/media/2304ecc419838f7d5de0584052a08170" width="680" height="655"></iframe> 
+     </div> 
+    </div> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>&gt;&gt;&gt; pytest test_repeat.py 
+====================== test session starts ========================test_repeat.py ...........                                  [100%]======================= 101 passed in 0.09s =======================</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">太棒了。现在我们可以确定，在使用 extend ()时，插入顺序将始终保留，因为101个测试已经通过。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">如果你想更加确定，那就把数量增加到1000，然后看看你能得到什么。你可以在这里找到关于 pytest-repeat 的更多信息。</p> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">基准测试你的代码</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们可能不仅要断言输出是我们所期望的，而且还要比较不同函数的速度。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">基准测试是一种测试，我们可以使用它来衡量我们的代码有多快。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">幸运的是，有一个名为 pytest-benchmark 的库，它允许我们在用 pytest 测试函数时对代码进行基准测试！</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">Install<span>&nbsp;</span><code class="nh ni nj nk nd b">pytest-benchmark</code><span>&nbsp;</span>with</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">安装 pytest-benchmark</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>pip install pytest-benchmark</code></pre> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我将从关于高效 Python 代码计时的文章中借用一些示例来说明如何使用 pytest-benchmark。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">在这里，我们测试使用 concat 方法创建一个列表需要多长时间</p> 
+    <div class="mw s at"> 
+     <div class="afu my s"> <iframe src="https://towardsdatascience.com/media/abd0507d9467318e2461f8c93f924524" width="680" height="259"></iframe> 
+     </div> 
+    </div> 
+    <div class="kb kc at kd v ke"> 
+     <div class="gk gl nq"> 
+      <div class="mw s at nh" style="background-color: #f2f2f2;"> 
+       <div class="nw my s"> 
+        <div class="dg nr fm fy fv ns v nt nu nv"> 
+         <br> 
+        </div> 
+        <img referrerpolicy="no-referrer" alt="" class="mce_image" height="291" id="images_162515244328687" src="https://miro.medium.com/max/700/1*2ja75UdRPhJaLn5Kz3KM4Q.png" style="background-color: #ffffff;" width="700"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">平均运行时间为792.1252微秒。我们可以看到其他测量，如最小时间和最大时间！</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们还可以为测试函数插入参数，并重复测试100次，以更准确地估计代码执行的速度。</p> 
+    <div class="kb kc at kd v ke"> 
+     <div class="gk gl nz"> 
+      <div class="mw s at nh" style="background-color: #f2f2f2;"> 
+       <div class="oa my s"> 
+        <img referrerpolicy="no-referrer" alt="" class="mce_image" height="153" id="images_162515244328616" src="https://miro.medium.com/max/700/1*0ysqfM67lg6cdIHrnGSfGg.png" style="background-color: #ffffff;" width="700"> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们得到了一个不同的平均值730微秒。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">现在，让我们使用 pytest-benchmark 比较多个方法来创建一个范围从0到999的列表。</p> 
+    <div class="mw s at"> 
+     <div class="afv my s"> 
+      <br> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="ka v" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+   <img referrerpolicy="no-referrer" alt="" class="mce_image" height="271" id="images_162515244328654" src="https://miro.medium.com/max/3130/1*eNMmh8kC3l7DY8NcPpWhlw.png" width="1565"> 
+  </div> 
+  <div class="n p" style="color: rgba(0, 0, 0, 0.8); background-color: #ffffff;"> 
+   <div class="au av aw ax ay hb ba v"> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">输出很好，很容易阅读！从输出中，我们知道 list range 方法执行时间最短，concat 方法执行时间最长！</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们知道 theconcat 方法比其他方法需要更多的时间来执行，但是需要多长时间呢？</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">我们可以使用——<code class="nh ni nj nk nd b">--benchmark-historgram</code>来可视化结果</p> 
+    <pre class="mr ms mt mu mv mz na nb  language-javascript"><code>pytest test_benchmark.py --benchmark-histogram</code></pre> 
+    <div class="kb kc at kd v ke"> 
+     <div class="gk gl og"> 
+      <img referrerpolicy="no-referrer" alt="" class="mce_image" height="523" id="images_162515244328672" src="https://miro.medium.com/max/1400/1*IjxjbiloXfuJSdE_bymF2w.png" width="700"> 
+     </div> 
+    </div> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">哇! 与其他方法相比，Theconcat 方法需要更长的运行时间。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">您可以在这里了解有关 pytest-benchmark 的更多信息。</p> 
+    <h1 class="km kn he bf ko kp kq kr ks kt ku kv kw kx ky kz la lb lc ld le lf lg lh li lj ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">总结</h1> 
+    <p class="lk ll he lm b id ln kr lo ig lp kv lq lr ls lt lu lv lw lx ly lz ma mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">祝贺你！您刚刚学习了4种使用 pytest 测试函数的技巧。我希望这些能够帮助您更有效地测试函数并编写健壮的代码。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">你的队友会感谢你编写的代码工作。</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;">本文的源代码可以在这里找到</p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><br></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://medium.com/testcult/intro-to-test-framework-pytest-5b1ce4d011ae</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://martinheinz.dev/blog/7</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://medium.com/@chilinski.a/intro-to-pytest-280f56e97f19</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://towardsdatascience.com/4-lessor-known-yet-awesome-tips-for-pytest-2117d8a62d9c</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://towardsdatascience.com/5-advanced-pytest-tricks-c5d733b2acc7</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://medium.datadriveninvestor.com/pytest-a-beginner-guide-9ba84a18d3dd</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://faun.pub/lets-learn-pytest-a2ab60600fab</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><a>https://betterprogramming.pub/understand-5-scopes-of-pytest-fixtures-1b607b5c19ed</a></p> 
+    <p class="lk ll he lm b id me kr lo ig mf kv lq lr mg lt lu lv mh lx ly lz mi mb mc md gx ib cyxy-trs-source cyxy-trs-target" style="color: #292929;"><br></p> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="94a6a5bace7b40fbbae56cb5eb2336c9" href="/blogs/attachment?id=94a6a5bace7b40fbbae56cb5eb2336c9" title="pytest_artices.zip">pytest_artices.zip</a>
+                <span class="attSize">6.53MB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/281474#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.API_Blog" title="API" href="https://developer.huaweicloud.com/tags/200212/blog_1">API</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Python_Blog" title="Python" href="https://developer.huaweicloud.com/tags/200496/blog_1">Python</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,100 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>由于我只是想查看一下加密的sqlite3数据文件，所以只需要附加进程找到sqlite3_key调用时的参数就行了,然后使用获得的密码使用navicat就可以打开了,&nbsp;</p>
+<p>当然这是一般情况下;</p>
+<p><br></p>
+<p>/********************************************************************************/</p>
+<p>数据库规范</p>
+<p>1、select语句要列出具体字段名，不要使用select * from xxx 方式。</p>
+<p>2、insert语句要列出具体字段名，不要使用insert into table values ( … )方式，</p>
+<p>或insert into table select * from xxx 方式。</p>
+<p>3、避免在列上进行运算，必要时使用函数索引。</p>
+<p>4、from 后面的表按照主表、次表、再次的顺序排列，不能确定主次关系时按照表名的首字母排列（首字母相同时按照第二字母排列，以此类推）；所有的表都要加上别名，别名尽量短小。</p>
+<p>5、where 后面先写连接条件，后写过滤条件（当过滤条件包含复合索引时，按照复合索引的顺序写）。</p>
+<p>6、使用in 、not in时要把最常用的条件放在前面。</p>
+<p>7、使用group by 时，先过滤数据，然后进行分组处理。</p>
+<p>8、order by 后面的字段顺序应该和相关索引的顺序保持一致。</p>
+<p>9、order by 后面的字段如果为 NULL值，则不能用到索引。</p>
+<p>10、SQL语句要么大写、要么小写，避免大小写造成的多次解析。</p>
+<p>11、善于使用Oracle 提供的函数进行业务处理，特别是报表的开发，不要自己写低效的业务函数。</p>
+<p>12、程序中应直接赋值，不要使用select xxx into 变量名 from dual 的方式，见下：</p>
+<p>&nbsp;如 ：应使用&nbsp; 变量名 ：= sysdate</p>
+<p>不要用&nbsp; select sysdate into 变量名 from dual;</p>
+<p>13、处理业务逻辑时，先锁A表再锁B表，所有的处理都要按照这个顺序，否则会产生死锁。</p>
+<p>14、使用for update 语句时应加限制条件，避免不必要的表锁或行锁。</p>
+<p>15、少用select 嵌套写法，如select ... from table1 ，（select ... from table2) ... ，</p>
+<p>&nbsp;尽可能把嵌套写法改为连接方式，如select ... from table1 ，table2 ...。</p>
+<p>16、列上避免进行 to_char()、to_date()、to_number()的隐含转换。</p>
+<p>17、使用 &gt;= 代替 &gt; ，如 select count(1) from table where id &gt;= 3;</p>
+<p>&nbsp;代替 select count(1) from table where id &gt; 2;</p>
+<p>18、运算符 not in 、is null 、!= 、&lt;&gt; 、not between ...and 、not like、（or 与 &gt; 或&lt; 组合，or 与 &gt;= 或&lt;= 组合，or 与 != 组合），都不能使用索引，使用时应考虑好。</p>
+<p>19、尽量少用视图，Oracle在处理视图时，先把视图转换为基本表；与其使用视图还不如使用函数来处理，可以减少解析编译。&nbsp;</p>
+<p>20、视图含有表达式时，表达式要加上别名。</p>
+<p>/********************************************************************************/</p>
+<p>一.数据的组织与划分</p>
+<p>(1) 按照读写频率进行组织</p>
+<p>读写频率较高的数据与读写频率较低的数据应该独立划分.</p>
+<p>(2) 按数据量进行组织</p>
+<p>大数据量与小数据量文件尽可能进行分离.</p>
+<p>(3) 按功能与层次划分</p>
+<p>根据实际业务场景的需要, 强相关性的数据应该放在一起.</p>
+<p>二.表与索引的创建与修改</p>
+<p>(1) 建表与索引要符合DB设计三范式,避免表数据冗余。</p>
+<p>第一范式: 不应该有意义相同的重复列</p>
+<p>第二范式: 必须要有主键(非主键列要完全依赖于主键)</p>
+<p>第三范式: 表引用其他表内容时,必须要通过外键引用.(非主键列要直接依赖于主键)</p>
+<p>(2) 留有一定的冗余字段</p>
+<p>(3) 禁止删除/修改以前的字段。</p>
+<p>(4) 对查询特别频繁的列应创建索引.</p>
+<p>(5) 尽量不要创建多列索引</p>
+<p>(6) 程序启动时,应该检查 表/索引/字段的完整性.</p>
+<p>(7) Sqlite的SQL建表语句varchar长度指定无意义,自适应长度,指定的长度只是为了兼容SQL标准</p>
+<p>(8) 不要使用时间戳作为主键</p>
+<p>三.表的增删该查</p>
+<p>(1) 查询SQL语句的where子句要根据查询复杂性从低到高依次排列.</p>
+<p>(2) 多表联合查询时,注意from子句里的表顺序.</p>
+<p>多表联合关联字段有索引的表放在后面.</p>
+<p>(3) 当数据量较大时，不要一次查询所有数据,按需加载</p>
+<p>(4) 分页查询的优化技巧</p>
+<p>(5) 大量数据入库时,尽量批量处理,减少对DB的占用</p>
+<p>(6) 提升写入性能的synchronous选项</p>
+<p>(7) 提升回滚日志写入速度的journalmode选项</p>
+<p>(8) Insert时可以通过insert or ignore into 或者 replace into避免违反唯一性索引报错.</p>
+<p>(9) Insert or ignore into如果根据唯一性索引判断已经有相同数据存在，会放弃操作。这样返回的lastrecord是表数据的最后一条，而不是相同的那条数据的rowid</p>
+<p>(10)避免使用SELECT * ,避免要写明所有列名</p>
+<p>(11) Offset必须要和limit结合使用，只有offset的SQL语句为非法语句</p>
+<p>四.DB开发接口的使用</p>
+<p>(1) SQLITE支持的线程模式</p>
+<p>SQLITE支持三种线程模式:单线程模式;多线程模式;串行模式</p>
+<p>单线程模式: SQLITE不提供任何互斥,多线程使用不安全. 线程安全访问需要应用层自己来实现.</p>
+<p>&nbsp;多线程模式: 每个线程必须要使用自己创建的DB连接,不能使用别的线程的DB连接.</p>
+<p>&nbsp;串行模式: SQLITE库本身提供线程安全访问机制, 进程内的所有线程使用同一DB连接.</p>
+<p><span style="white-space:pre"> </span>可以通过定义SQLITE_THREADSAFE宏来指定线程模式。如果没有指定，默认为串行模式。定义宏SQLITE_THREADSAFE=1指定使用串行模式;=0使用单线程模式；＝2使用多线程模式。</p>
+<p>&nbsp;目前我们使用的多线程模式.多线程模式的好处是各个线程的DB连接都是独立的,可以进行并发查询操作,而且可以直接同步等待查询结果,简化处理. 但是写操作仍然是独占式的.</p>
+<p>(2) DB连接的管理</p>
+<p>(3) DB读写模型的选择.</p>
+<p>目前我们采用的读写业务模型是多线程同步查询,单线程异步写.</p>
+<p>(4) DB单线程写接口的说明</p>
+<p>接口提供了两种写结果通知方式: 异步阻塞,异步非阻塞;</p>
+<p style="white-space: normal;">参考:</p>
+<p style="white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1589164492569057780.png" title="1589164492569057780.png" alt="image.png"></p>
+<pre class="brush:html;toolbar:false">https://medium.com/@programthink/c-%E7%9A%84%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E5%92%8C%E8%B7%A8%E5%B9%B3%E5%8F%B0%E5%BC%80%E5%8F%91-6-%E5%A4%9A%E7%BA%BF%E7%A8%8B-69d1261149da</pre>
+<p style="white-space: normal;"><a></a><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/160937#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

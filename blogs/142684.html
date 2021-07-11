@@ -1,0 +1,59 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">tealeg/xlsx是一个go语言下读写XLSX文件的库，代码仓地址:</span></p><p><a rel="nofollow" href="https://github.com/tealeg/xlsx">https://github.com/tealeg/xlsx</a></p><p>可以通过<span style="color:rgb(36,41,46);font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:11.9px;">go get github.com/tealeg/xlsx安装到本地</span></p><p><br></p><p><a rel="nofollow" href="https://github.com/darkcl/wasm-xlsx">https://github.com/darkcl/wasm-xlsx</a>是一个<span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">tealeg/xlsx编译到wasm的小的测试程序;</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">原始的makefile应该是针对linux环境下的,在batch环境下执行可能有问题,所以我们就一行一行执行;</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">set GOOS=js</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">set GOARCH=wasm</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">o build -o ./build/test.wasm ./main.go</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">cp ./page.html ./build/index.html</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">#cp $$(go env GOROOT)/misc/wasm/wasm_exec.js ./build/wasm_exec.js==&gt;这个手动复制就好了</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">项目依赖"syscall/js"所以要求go版本不能太低;</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);"><br></span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">编译成功后新建一个控制台，运行go run server.go启动服务器，浏览器访问<a rel="nofollow" href="http://localhost:8180/">http://localhost:8180/</a>可以看到测试运行结果;</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);"><br></span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);">&nbsp;总结,wasm很有意思,能为我们带来不一样的解决方案包括提升执行效率、减少重复开发的过程<span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(255,255,255);">,</span></span></p><p><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(0,176,80);">/*-----------------------------------------------------------------------------------------------------------*/</span></p><p><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(0,176,80);">/*-----------------------------------------------------------------------------------------------------------*/</span></p><p><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(0,176,80);">/*-----------------------------------------------------------------------------------------------------------*/</span></p><p><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(0,176,80);">/*-----------------------------------------------------------------------------------------------------------*/</span></p><p><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(0,176,80);">/*-----------------------------------------------------------------------------------------------------------*/</span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);"><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);">之所以看这个测试使同事希望使用</span><a rel="nofollow" href="https://github.com/DHTMLX/excel2json" style="text-decoration:underline;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);"><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);">https://github.com/DHTMLX/excel2json</span></a><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);">库,可是这个库的依赖公司内网连接不到，编译依赖cargo内部也不方便获取,emcc也是无法获取,所有考虑使用go编译输出wsam文件;</span></span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);"><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);"><br></span></span></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);"><span style="font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';background-color:rgb(255,255,255);color:rgb(89,89,89);"><a rel="nofollow" href="https://anhkgg.com/rust-note-1-config-environment/">https://anhkgg.com/rust-note-1-config-environment/</a></span></span></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="e30db467378a11eab759fa163e330718" href="/blogs/attachment?id=e30db467378a11eab759fa163e330718" title="rust-1.40.0-msi.7z.001.zip">rust-1.40.0-msi.7z.001.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="e3178ad0378a11eab759fa163e330718" href="/blogs/attachment?id=e3178ad0378a11eab759fa163e330718" title="rust-1.40.0-msi.7z.003.zip">rust-1.40.0-msi.7z.003.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="e31af517378a11eab759fa163e330718" href="/blogs/attachment?id=e31af517378a11eab759fa163e330718" title="rust-1.40.0-msi.7z.002.zip">rust-1.40.0-msi.7z.002.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="e31ea195378a11eab759fa163e330718" href="/blogs/attachment?id=e31ea195378a11eab759fa163e330718" title="rust-1.40.0-msi.7z.004.zip">rust-1.40.0-msi.7z.004.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="e326dec4378a11eab759fa163e330718" href="/blogs/attachment?id=e326dec4378a11eab759fa163e330718" title="rust-1.40.0-msi.7z.005.zip">rust-1.40.0-msi.7z.005.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/142684#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

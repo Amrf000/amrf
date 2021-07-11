@@ -1,0 +1,96 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>由于办公环境一直在云端虚拟机,然后又限制usb端口,所以Android相关的东西我一向不太想碰,毕竟云端启动个安卓模拟器都至少得一刻钟,实在是难以忍受。直到上个月听闻了一个环境工具,提供了一个云端通过网络连接Android真机或者模拟机的环境,用了用发现真不错，于是趁着最近这段时间项目也不忙，鼓捣鼓捣Android。<br>前面有篇文章我记录了一些ad的消息机制的一些文章,和win32消息机制有些像,看着还挺眼花缭乱的,如果不想了解太多的安卓架构，又要写个apk，那么react-native应该是个不错的选择。<br>参考这篇 https://react-mongolia.github.io/react-native/docs/getting-started文章<br>jdk和Android sdk相关的环境这里就不讲了;</p>
+<ul> 
+ <li><strong>如果以前没安装过react-native-cli则</strong><br> <pre><code>npm install -g react-native-cli</code></pre> <br></li> 
+ <li><strong>创建一个新的应用程序</strong><br> <pre><code>react-native init AwesomeProject</code></pre> <br></li> 
+ <li><strong>启动React Native应用程序</strong><br> <pre><code>cd AwesomeProject
+
+react-native run-android</code></pre> </li> 
+</ul>
+<ul> 
+ <li><strong>如果提示找不到ANDROID SDK则</strong></li> 
+</ul>
+<p>配置ANDROID_HOME或者在xxx\AwesomeProject\android\local.properties中添加,假设你的sdk路径为C:/android-sdk_r24.4.1-windows<br></p>
+<pre><code>sdk.dir=C:/android-sdk_r24.4.1-windows
+ndk.dir=C:/android-sdk_r24.4.1-windows/ndk-bundle</code></pre>
+<ul> 
+ <li><strong>如果需要设置gradle代理则修改gradle.properties</strong><br> <pre><code>systemProp.http.proxyPort=端口
+systemProp.http.proxyUser=账户名
+systemProp.http.proxyPassword=代理密码
+systemProp.https.proxyPassword=代理密码
+systemProp.https.proxyHost=代理网址
+systemProp.http.nonProxyHosts=127.0.0.*|localhost|*.其他不需要走代理的网站.com
+systemProp.http.proxyHost=代理网址
+systemProp.https.proxyPort=端口
+systemProp.https.nonProxyHosts=127.0.0.*|localhost|*.其他不需要走代理的网站.com
+systemProp.https.proxyUser=账户名
+com.android.build.gradle.overridePathCheck=true</code></pre> <br></li> 
+ <li><strong>如果不希望gradle缓存地址在c盘则环境变量中添加GRADLE_USER_HOME配置</strong></li> 
+ <li><strong>gradle文件的镜像地址</strong></li> 
+</ul>
+<pre><code>http://mirrors.huaweicloud.com/repository/toolkit/gradle/</code></pre>
+<ul> 
+ <li><strong>如果希望react-native启动的时候使用自定义的adb则,可以创建软链接</strong><br> <pre><code>mklink "安卓sdk中的adb路径\\platform-tools\\adb.exe" "你需要指定的adb路径\\adb.exe"</code></pre> <br></li> 
+ <li>react-native 环境下的jni开发</li> 
+</ul>
+<pre><code>https://thebhwgroup.com/blog/react-native-jni
+https://stackoverflow.com/questions/36574454/create-react-native-native-module-in-c-or-c-using-android-ndk
+https://blog.csdn.net/pbz106/article/details/81202262
+https://github.com/rdixonbhw/ReactNative-JNI-Blog
+<a>https://elemefe.github.io/element-react/#/zh-CN/quick-start</a>
+<a>https://fakefish.github.io/react-webpack-cookbook/Configuring-react-js.html</a></code></pre>
+<ul> 
+ <li><strong>react-native&nbsp;flex布局参考</strong><strong></strong></li> 
+</ul>
+<pre>https://www.cnblogs.com/ludashi/p/9696158.html
+https://github.com/lizelu/ReactNativeTestDemo/tree/master/flex_demo
+https://github.com/crazycodeboy/RNStudyNotes/blob/master/React%20Native%E5%B8%83%E5%B1%80/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97/React%20Native%E5%B8%83%E5%B1%80%E8%AF%A6%E7%BB%86%E6%8C%87%E5%8D%97.md
+https://www.cnblogs.com/powertoolsteam/p/react-native-tutorials2.html
+https://cloud.tencent.com/developer/article/1117284</pre>
+<p><img alt="545446-20181013210531107-785096657.gif" class="mce_image " id="image_images_mce_5" src="https://bbs-img.huaweicloud.com/blogs/img/1606961582740043697.gif"><img alt="545446-20181013221553703-888590138.gif" class="mce_image " id="image_images_mce_6" src="https://bbs-img.huaweicloud.com/blogs/img/1606961583699071577.gif"><img alt="545446-20181013234610554-1558658252.gif" class="mce_image " id="image_images_mce_7" src="https://bbs-img.huaweicloud.com/blogs/img/1606961584413088073.gif"></p>
+<p><img alt="545446-20181013234824935-2141936661.gif" class="mce_image " id="image_images_mce_8" src="https://bbs-img.huaweicloud.com/blogs/img/1606961584869078555.gif"><img alt="545446-20181013234849841-1732299017.gif" class="mce_image " id="image_images_mce_9" src="https://bbs-img.huaweicloud.com/blogs/img/1606961585333044955.gif"><img alt="545446-20181014182927196-895867994.gif" class="mce_image " id="image_images_mce_10" src="https://bbs-img.huaweicloud.com/blogs/img/1606961585903012685.gif"></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_text.svg">
+                <a att-id="3b77562ac3b046b99c950525a4d157f8" href="/blogs/attachment?id=3b77562ac3b046b99c950525a4d157f8" title="A mostly complete guide to webpack 5 (2020) (2020-12-02 下午10_30_06).html.txt">A mostly complete guide to webpack 5 (2020) (2020-12-02 下午10_30_06).html.txt</a>
+                <span class="attSize">1.53MB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_text.svg">
+                <a att-id="6bf51d5fb7b44596a952c88c643b21cb" href="/blogs/attachment?id=6bf51d5fb7b44596a952c88c643b21cb" title="React Native with JNI &amp; C (2020-12-02 下午8_09_36).html.txt">React Native with JNI &amp; C (2020-12-02 下午8_09_36).html.txt</a>
+                <span class="attSize">1.35MB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_text.svg">
+                <a att-id="6ed9a129023146b0b2ca9a721df00687" href="/blogs/attachment?id=6ed9a129023146b0b2ca9a721df00687" title="How to React with Webpack 5 - Setup Tutorial - RWieruch (2020-12-02 下午10_26_26).html.txt">How to React with Webpack 5 - Setup Tutorial - RWieruch (2020-12-02 下午10_26_26).html.txt</a>
+                <span class="attSize">186.21KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/217103#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

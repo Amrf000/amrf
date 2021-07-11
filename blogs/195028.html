@@ -1,0 +1,59 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>这个问题发生在不知道什么时候发现一个项目的webpack打包时间变得很久，在进入打包逻辑之前停顿了几分钟的样子；</p>
+<p>一直以为是项目依赖多了或者某个组件导致的,慢就等会，有空再分析原因；</p>
+<p>昨天就花了些时间分析了一下，打包过程时间分布;</p>
+<p>参考下面几个帖子:</p>
+<p><a>https://juejin.im/post/6844904056985485320</a> </p>
+<p><a>https://segmentfault.com/a/1190000018493260</a> </p>
+<p><a>https://segmentfault.com/a/1190000008377195</a> </p>
+<p>通过<span style="color: rgb(255, 80, 44); font-family: Menlo, Monaco, Consolas, &quot;Courier New&quot;, monospace; font-size: 13.05px; background-color: rgb(255, 245, 245);">speed-measure-webpack-plugin</span>插件我们可以看到打包过程中的各个过程的时间占用,但是发现似乎不包含我们上面的那个时间;</p>
+<p>进一步分析后发现是构建之前的require('./check-versions')()导致的,进一步的定位到</p>
+<p><span style="color: #93a1a1;font-style: italic;">require('child_process').execSync(cmd).toString().trim()</span></p>
+<p>当cmd为npm --version时就会出现长长的阻塞等待，实际上在命令行这个命令执行要不了多久;</p>
+<p>&nbsp;现象和这个仁兄描述的是一致的<a>https://segmentfault.com/q/1010000011707690/a-1020000011711975</a></p>
+<p>当cmd改成node --version则不会出现这个运行很久的现象,当传入选项为stdio:'inherit'时,也能够很快跑下去,但是这个时候输出到了父标准输出,</p>
+<p>无法使用toString获取结果;</p>
+<p>同样的传入参数改为文件句柄,运行也很快;</p>
+<p>var out = fs.openSync('./out.log', 'a');</p>
+<p>。。。stdio:['inherit',out,'inherit']</p>
+<p>var data = fs.readFileSync('./out.log')</p>
+<p>------------------------</p>
+<p>很明显的stdio:'pipe' 时就会发生运行很久的问题,换成另外的win10机器现象有所好转,但是还是挺久的;</p>
+<p>&nbsp;切换node版本问题依旧;</p>
+<p>翻了翻：</p>
+<p><a rel="nofollow" href="https://github.com/nodejs/node/blob/master/lib/internal/child_process.js">https://github.com/nodejs/node/blob/master/lib/internal/child_process.js</a></p>
+<p><a rel="nofollow" href="https://github.com/nodejs/node/blob/master/src/spawn_sync.cc">https://github.com/nodejs/node/blob/master/src/spawn_sync.cc</a></p>
+<p>感觉问题可能在win10的管道上,<span style="color: rgb(147, 161, 161); font-style: italic;">execSync还是尽量别用了;</span></p>
+<p><span style="color: rgb(147, 161, 161); font-style: italic;">---------------------------</span></p>
+<p>进一步分析:</p>
+<p>node --version的调用其实是node.exe --version</p>
+<p>npm --version在windows上调用的是npm.cmd脚本</p>
+<p>==&gt;我们将最终的命令打印出来"%NODE_EXE%" "%NPM_CLI_JS%" %* =&gt;echo "%NODE_EXE%" "%NPM_CLI_JS%" %*</p>
+<p>形如:</p>
+<p>'"C:\\Users\\xxxx\\node-v13.6.0-win-x64\\node.exe" "C:\\Users\\xxxx\\node-v13.6.0-win-x64\\node_modules\\npm\\bin\\npm-cli.js" --version'</p>
+<p>替换后运行也很快就结束了,意味着问题出在当我们调用的目标是一个bat脚本的时候;</p>
+<p><strong>参考:</strong></p>
+<p><span style="color:#93a1a1"><em>child_process fork ipc</em></span></p>
+<p><span style="color:#93a1a1"><em><a rel="nofollow" href="https://gist.github.com/ndelangen/3b2b981a4795e51ef4f8cf583764eb8a">https://gist.github.com/ndelangen/3b2b981a4795e51ef4f8cf583764eb8a</a></em></span></p>
+<p><span style="color:#93a1a1"><a>https://theantway.com/2016/12/capture-console-output-when-using-child_process-execsync-in-node-js/</a> </span></p>
+<p><a>https://html.developreference.com/article/16877584/Why+NodeJS+execSync()+is+too+slow+when+executing+custom+scripts</a> </p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/195028#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Windows_Blog" title="Windows" href="https://developer.huaweicloud.com/tags/200366/blog_1">Windows</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,123 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>原文地址:<a rel="nofollow" href="https://medium.com/oril/spring-boot-websockets-angular-5-f2f4b1c14cee">https://medium.com/oril/spring-boot-websockets-angular-5-f2f4b1c14cee</a><br></h3><section><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><h3>测试效果:</h3><p class="graf graf--p graf-after--figure"><img src="https://bbs-img.huaweicloud.com/blogs/img/1542768669121117.png" title="1542768669121117.png" alt="image.png" class="localImage"></p><h3>原文转载:</h3><p class="graf graf--p graf-after--figure">Hello guys! Here we will speak about how to set up Spring Boot project with Websocket messaging and Angular 5.</p><p class="graf graf--p graf-after--p">As an output of this topic you will get small chat built with Spring Boot and Angular 5.</p><p class="graf graf--p graf-after--p">So, lets’s start it!</p><p class="graf graf--p graf-after--p">First of all, we will set up Java project for this. The pom.xml file will contain just two dependencies we need at the moment:</p><pre class="brush:xml;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependencies&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;1.5.2.RELEASE&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-starter-websocket&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;1.5.2.RELEASE&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependencies&gt;</pre><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>pom.xml</p><p class="graf graf--p graf-after--figure">We just included&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">spring-boot-starter-web</em></strong>&nbsp;and&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">spring-boot-starter-websocket</em></strong>&nbsp;into the project and that’s pretty enough to be able to receive messages from outside.</p><p class="graf graf--p graf-after--p">Next step is to configure WebSockets. Let’s create class&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">WebSocketConfiguration</em></strong>&nbsp;where we will put all settings we need to start with sockets.</p><pre class="graf graf--pre graf-after--p">@Configuration
+@EnableWebSocketMessageBroker
+public&nbsp;class&nbsp;WebSocketConfiguration&nbsp;extends&nbsp;AbstractWebSocketMessageBrokerConfigurer{</pre><pre class="graf graf--pre graf-after--pre">&nbsp;&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;registerStompEndpoints(StompEndpointRegistry&nbsp;registry)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry.addEndpoint("/socket")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.setAllowedOrigins("*")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.withSockJS();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;configureMessageBroker(MessageBrokerRegistry&nbsp;registry)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry.setApplicationDestinationPrefixes("/app")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.enableSimpleBroker("/chat");
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p class="graf graf--p graf-after--pre">The class should be annotated with&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">@Configuration</em></strong>&nbsp;and&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">@EnableWebSocketMessageBroker</em></strong>&nbsp;annotations, and our config class should be extended from an&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">AbstractWebSocketMessageBrokerConfigurer&nbsp;</em></strong>class. After that just two methods should be overrided:</p><p class="graf graf--p graf-after--p">First method:</p><pre class="graf graf--pre graf-after--p">@Override
+public&nbsp;void&nbsp;registerStompEndpoints(StompEndpointRegistry&nbsp;registry)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry.addEndpoint("/socket")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.setAllowedOrigins("*")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.withSockJS();
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p class="graf graf--p graf-after--pre">Here we define the endpoint, that our clients will use to connect to the server. So, in our case the URL for connection will be&nbsp;<a rel="nofollow" href="http://localhost:8080/socket/" class="markup--anchor markup--p-anchor">http://localhost:8080/socket/.</a></p><p class="graf graf--p graf-after--p">Also we allow server to receive requests from any origin. And we told the we will use not “clean” websockets, but with SockJS.</p><p class="graf graf--p graf-after--p">Second method:</p><pre class="graf graf--pre graf-after--p">@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;configureMessageBroker(MessageBrokerRegistry&nbsp;registry)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry.setApplicationDestinationPrefixes("/app")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.enableSimpleBroker("/chat");
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p class="graf graf--p graf-after--pre">What we say here — is an app prefix. So, when our client will send message through socket, the URL to send will look approximately like this:&nbsp;<a rel="nofollow" href="http://localhost:8080/app" class="markup--anchor markup--p-anchor">http://localhost:8080/app</a>/…/…</p><p class="graf graf--p graf-after--p">And also we said that for now we will have just one subscription — /chat. So clients will subscribe to this subscription and will wait from messages from the server.</p><h4 class="graf graf--h4 graf-after--p">And that’s it for configuration!</h4><p class="graf graf--p graf-after--h4">The last thing we need to add before starting using websockets — is the controller.</p><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>WebSocketController.java</p><p class="graf graf--p graf-after--figure">The same as @RequestMapping for RestController we need to&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">use @MessageMapping</em></strong>&nbsp;for websockets.</p><p class="graf graf--p graf-after--p">So, here we set up @MessageMapping(“/send/message”), and once this URL will be triggered — we will simply send message to all clients subscribed to&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">/chat&nbsp;</em></strong>subscription.</p><p class="graf graf--p graf-after--p">And that’s it for Back-End! Now we need to create Front-End part of the application to start the socket communication.</p><p class="graf graf--p graf-after--p">For Front-End we will use just recently released Angular 5 framework.</p><p class="graf graf--p graf-after--p">Let’s use Angular CLI for application creation.</p><p class="graf graf--p graf-after--p">In command line run&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">ng new your-app-name-here.&nbsp;</em></strong>Output of this command will be fully create Angular application that we can just run with command&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">ng serve.</em></strong></p><p class="graf graf--p graf-after--p">Inside the project we have to install tree libraries with commands:</p><ol class="postList list-paddingleft-2"><li><p>npm install stompjs;</p></li><li><p>npm install sockjs-client</p></li><li><p>npm install jquery (just to quickly access the DOM elements)</p></li></ol><p class="graf graf--p graf-after--li">Here the code from&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">app.component.ts</em></strong></p><pre class="graf graf--pre graf-after--p">{&nbsp;Component&nbsp;}&nbsp;'@angular/core';
+Stomp&nbsp;'stompjs';
+SockJS&nbsp;'sockjs-client';
+$&nbsp;'jquery';
+
+@Component({
+&nbsp;&nbsp;selector:&nbsp;'app-root',
+&nbsp;&nbsp;templateUrl:&nbsp;'./app.component.html',
+&nbsp;&nbsp;styleUrls:&nbsp;['./app.component.css']
+})
+AppComponent&nbsp;{
+&nbsp;&nbsp;serverUrl&nbsp;=&nbsp;'http://localhost:8080/socket'
+&nbsp;&nbsp;title&nbsp;=&nbsp;'WebSockets&nbsp;chat';
+&nbsp;&nbsp;stompClient;
+
+&nbsp;&nbsp;(){
+&nbsp;&nbsp;&nbsp;&nbsp;.initializeWebSocketConnection();
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;initializeWebSocketConnection(){
+&nbsp;&nbsp;&nbsp;&nbsp;ws&nbsp;=&nbsp;SockJS(.serverUrl);
+&nbsp;&nbsp;&nbsp;&nbsp;.stompClient&nbsp;=&nbsp;Stomp.over(ws);
+&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;=&nbsp;;
+&nbsp;&nbsp;&nbsp;&nbsp;.stompClient.connect({},&nbsp;(frame)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that.stompClient.subscribe("/chat",&nbsp;(message)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(message.body)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".chat").append("&lt;div&nbsp;class='message'&gt;"+message.body+"&lt;/div&gt;")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(message.body);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;sendMessage(message){
+&nbsp;&nbsp;&nbsp;&nbsp;.stompClient.send("/app/send/message"&nbsp;,&nbsp;{},&nbsp;message);
+&nbsp;&nbsp;&nbsp;&nbsp;$('#input').val('');
+&nbsp;&nbsp;}
+
+}</pre><ul class="postList list-paddingleft-2"><li><p>So, in the<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">&nbsp;initializeWebSocketConnection()</em></strong>&nbsp;method we define&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">let ws = new SockJS(this.serverUrl)</em></strong>. And our serverUrl is&nbsp;<a rel="nofollow" href="http://localhost:8080/socket" class="markup--anchor markup--li-anchor">http://localhost:8080/socket</a>. So, this is the endpoint that we added in the&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">registerStompEndpoints()</em></strong>&nbsp;method in the server code.</p></li><li><p>After that we told our stompClient to subscribe to the&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">“/chat”</em></strong>&nbsp;channel, that is defined in the&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">WebSocketConfiguration</em></strong>&nbsp;class in Java application.</p></li></ul><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>The “/chat” channel defining;</p><p><a class="graf-image"></a></p><p>Send all received messages to all clients subscribed to “/chat” channel. WebSocketController class;</p><p class="graf graf--p graf-after--figure">So, what this subscription means — is that whenever some server send messages to the channel<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">&nbsp;“/chat”</em></strong>, all clients that are currently subscribed to it — will receive those messages.</p><ul class="postList list-paddingleft-2"><li><p>Next important element is&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">sendMessage(message)</em></strong>&nbsp;method in app.component.ts. Here we simply take the message submitted from the input in html file, and with the help of stompClient we send this message to the&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">“/app/send/message”</em></strong>&nbsp;route defined in the WebSocketController in Java as a value of&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">@MessageMapping</em></strong>&nbsp;in&nbsp;<strong class="markup--strong markup--li-strong"><em class="markup--em markup--li-em">onReceivedMessage</em></strong>&nbsp;method;</p></li></ul><p class="graf graf--p graf-after--li">So, whenever the client send message to “/app/send/message” → this message at the same time is sent to all clients subscribed to the&nbsp;<strong class="markup--strong markup--p-strong"><em class="markup--em markup--p-em">“/chat”&nbsp;</em></strong>channel.</p><p class="graf graf--p graf-after--p">This is how easy the work with Websockets in Java can be.</p><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>Type message in one&nbsp;client</p><p class="graf graf--p graf-after--figure">We have two browsers opened. Simulate two different clients. So, when in the left side browser user types message and press send button, this message should be send to both browsers, as each of them subscribed to the “/chat” channel.</p><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>After clicking send button in the left side browser → message appeared in both&nbsp;browsers</p><p class="graf graf--p graf-after--figure">And when right side browser send message in answer, the “Hi there, Client 1!” message appears in both browsers as well!</p><p><a class="progressiveMedia-thumbnail js-progressiveMedia-thumbnail"></a><a class="progressiveMedia-image js-progressiveMedia-image"></a></p><p>Messages from both clients appeared in two&nbsp;browsers</p><p class="graf graf--p graf-after--figure">This is how it works! So, you can easily expand functionality and scale the project based on your needs, as much as possible. And now you know how easy is adding WebSocket messaging to the Spring Boot application.</p><p class="graf graf--p graf-after--p">Thank you! The source code available on my GitHub account:</p><ul class="postList list-paddingleft-2"><li><p><a rel="nofollow" href="https://github.com/igorkosandyak/spring-boot-websockets" class="markup--anchor markup--li-anchor"><strong class="markup--strong markup--li-strong">Spring Boot</strong></a></p></li><li><p><a rel="nofollow" href="https://github.com/igorkosandyak/angular2-websokets" class="markup--anchor markup--li-anchor"><strong class="markup--strong markup--li-strong">Angular 5</strong></a></p></li></ul><p class="graf graf--p graf-after--li">As well you can find it on&nbsp;<a rel="nofollow" href="https://github.com/oril-software/spring-boot-websockets" class="markup--anchor markup--p-anchor"><strong class="markup--strong markup--p-strong">Oril Software GitHub</strong></a><strong class="markup--strong markup--p-strong">.</strong></p><h3><strong>测试修改:</strong></h3><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>client&nbsp;</p></li></ul><p>\client\node_modules\@angular-devkit\build-angular\src\angular-cli-files\models\webpack-configs\browser.js&nbsp;</p><p>==&gt; node:&nbsp;{net:"empty"}//# false</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>server</p></li></ul><p>pom.xml==&gt;<br></p><pre class="brush:xml;toolbar:false">&lt;?xml&nbsp;version="1.0"&nbsp;encoding="UTF-8"?&gt;
+&lt;project&nbsp;xmlns="http://maven.apache.org/POM/4.0.0"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xsi:schemaLocation="http://maven.apache.org/POM/4.0.0&nbsp;http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;groupId&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-websockets&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;properties&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;java.version&gt;1.8&lt;/java.version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/properties&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;parent&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;2.1.0.RELEASE&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/parent&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependencies&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;spring-boot-starter-websocket&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependency&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/dependencies&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&lt;/project&gt;</pre><h3>相关链接:</h3><p><a rel="nofollow" href="https://github.com/527515025/springBoot/tree/master/springWebSocket">https://github.com/527515025/springBoot/tree/master/springWebSocket</a> </p><p><a rel="nofollow" href="https://github.com/leelance/spring-boot-all/blob/master/spring-boot-websocket/pom.xml">https://github.com/leelance/spring-boot-all/blob/master/spring-boot-websocket/pom.xml</a> </p><p><a rel="nofollow" href="https://github.com/callicoder/spring-boot-websocket-chat-demo/blob/master/pom.xml">https://github.com/callicoder/spring-boot-websocket-chat-demo/blob/master/pom.xml</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/hello_worldee/article/details/78142064">https://blog.csdn.net/hello_worldee/article/details/78142064</a></p><p class="graf graf--p graf-after--p graf--trailing"><a rel="nofollow" href="https://github.com/oril-software/spring-boot-websockets">https://github.com/oril-software/spring-boot-websockets</a> </p><p class="graf graf--p graf-after--p graf--trailing"><a rel="nofollow" href="https://github.com/oril-software?tab=repositories">https://github.com/oril-software?tab=repositories</a> </p><p class="graf graf--p graf-after--p graf--trailing"><a rel="nofollow" href="https://github.com/igorkosandyak">https://github.com/igorkosandyak</a> </p><p class="graf graf--p graf-after--p graf--trailing"><a rel="nofollow" href="https://github.com/igorkosandyak/spring-boot-websockets/">https://github.com/igorkosandyak/spring-boot-websockets/</a> </p><p class="graf graf--p graf-after--p graf--trailing"><a rel="nofollow" href="https://github.com/igorkosandyak/angular2-websokets">https://github.com/igorkosandyak/angular2-websokets</a> </p><p class="graf graf--p graf-after--p graf--trailing"><br></p></section>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/101696#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Spring Boot_Blog" title="Spring Boot" href="https://developer.huaweicloud.com/tags/200524/blog_1">Spring Boot</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Angular_Blog" title="Angular" href="https://developer.huaweicloud.com/tags/201890/blog_1">Angular</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Spring_Blog" title="Spring" href="https://developer.huaweicloud.com/tags/200680/blog_1">Spring</a>
+        
+    </div>
+</div></div>

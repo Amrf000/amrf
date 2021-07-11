@@ -1,0 +1,96 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>客户端:</h3>
+<p><strong>参考:</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;基于Websocket的简易webshell实现<span style="font-size: 16px;">&nbsp;----&nbsp;</span><a style="font-size: 16px;">https://stackoverflow.com/questions/38277740/html-css-javascript-command-line-like-interface</a></p>
+<p><strong>有几点小改动:</strong></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>addLine添加br并且设置滚动位置 ;</p></li> 
+ <li><p>点击背景,设置焦点到textarea;</p></li> 
+ <li><p>ws.onmessage是调用addline;</p></li> 
+ <li><p>checkInput中发送当前值,注意发送的值需要添加\n;</p></li> 
+</ul>
+<p><strong>其他参考:</strong></p>
+<p style="white-space: normal;"><a>https://www.runoob.com/html/html5-websocket.html</a></p>
+<p style="white-space: normal;"><a>https://codepen.io/paoloppp/pen/WNbOaNG</a></p>
+<h3>服务端参考：</h3>
+<p><a>https://blog.csdn.net/tankpanv/article/details/105562735</a></p>
+<p>对其中的<span style="color: rgb(64, 120, 242); font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; white-space: pre; background-color: rgb(250, 250, 250);">RemoteShell</span>函数做一些改造:</p>
+<pre class="brush:cpp;toolbar:false">func&nbsp;RemoteShell(ws&nbsp;*websocket.Conn)&nbsp;{
+	bScanner&nbsp;:=&nbsp;bufio.NewScanner(ws)
+	cmd&nbsp;:=&nbsp;exec.Command("cmd"&nbsp;)
+	cmdReader,&nbsp;err&nbsp;:=&nbsp;cmd.StdoutPipe()
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatal(err)
+	}
+	cmd.Stderr&nbsp;=&nbsp;cmd.Stdout
+	cmdWriter,&nbsp;err&nbsp;:=&nbsp;cmd.StdinPipe()
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatal(err)
+	}
+	idleCount&nbsp;:=&nbsp;0
+	mu&nbsp;:=&nbsp;&amp;sync.Mutex{}
+	go&nbsp;func()&nbsp;{
+		for&nbsp;bScanner.Scan()&nbsp;{
+			mu.Lock()
+			idleCount&nbsp;=&nbsp;0
+			mu.Unlock()
+			cmdStr&nbsp;:=&nbsp;bScanner.Bytes()
+			str,&nbsp;_&nbsp;:=&nbsp;Utf8ToGbk(cmdStr)
+			//fmt.Println(string(cmdStr))
+			cmdWriter.Write(append([]byte(str),&nbsp;'\n'))//\r\n
+		}
+	}()
+	scanner&nbsp;:=&nbsp;bufio.NewScanner(cmdReader)
+	go&nbsp;func()&nbsp;{
+		for&nbsp;scanner.Scan()&nbsp;{
+			mu.Lock()
+			idleCount&nbsp;=&nbsp;0
+			mu.Unlock()
+			outStr&nbsp;:=&nbsp;scanner.Bytes()
+			str,&nbsp;_&nbsp;:=&nbsp;GbkToUtf8(outStr)&nbsp;//windous命令行默认编码是gbk,可以使用chcp查看和修改
+			//fmt.Println(string(str))
+			ws.Write(str)
+		}
+	}()
+	go&nbsp;func()&nbsp;{//长时间不操作,退出
+		for&nbsp;{
+			mu.Lock()
+			idle&nbsp;:=&nbsp;idleCount
+			mu.Unlock()
+			if&nbsp;idle&nbsp;&gt;&nbsp;120&nbsp;{
+				cmdWriter.Write([]byte("exit\n"))
+				break;
+			}
+			mu.Lock()
+			idleCount&nbsp;=&nbsp;idle&nbsp;+1
+			mu.Unlock()
+			time.Sleep(time.Duration(1)*time.Second)
+		}
+	}()
+	if&nbsp;err&nbsp;:=&nbsp;cmd.Start();&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatal(err)
+	}
+	if&nbsp;err&nbsp;:=&nbsp;cmd.Wait();&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatal(err)
+	}
+}</pre>
+<h3>测试效果:</h3>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1591235875066058934.png" title="1591235875066058934.png" alt="image.png"></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/173487#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

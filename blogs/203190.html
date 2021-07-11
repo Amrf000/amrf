@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>概述：</h3>
+<p>实现AndroidDebugBridge.IDeviceChangeListener接口的deviceConnected/deviceDisconnected/deviceChanged的类实例， getInstance获取实现单例</p>
+<h3>开始监听</h3>
+<pre class="prettyprint linenums">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(AndroidDebugBridge.getBridge()&nbsp;==&nbsp;null)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.init(false);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.addDeviceChangeListener(getInstance());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.createBridge();&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.addDeviceChangeListener(getInstance());&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+<h3>停止监听</h3>
+<pre class="prettyprint linenums">&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(AndroidDebugBridge.getBridge()&nbsp;!=&nbsp;null)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.terminate();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.removeDeviceChangeListener(getInstance());&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.disconnectBridge();&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(AndroidDebugBridge.getBridge()&nbsp;!=&nbsp;null)&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Bridge&nbsp;not&nbsp;killed!");&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;else&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AndroidDebugBridge.removeDeviceChangeListener(getInstance());&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+<h3>参考：</h3>
+<p><a rel="nofollow" href="https://blog.csdn.net/u010889616/article/details/77462852">ddmlib(adb)监听设备的上下</a> <br><a rel="nofollow" href="https://blog.csdn.net/eclipsexys/article/details/51316423">隐藏Boss——ddmlib使用入门</a> <br><a rel="nofollow" href="https://blog.csdn.net/u011195508/article/details/102641411">3.1 ddmlib实现Android设备的监听</a> <br><a rel="nofollow" href="https://blog.csdn.net/zhuzhenlong998/article/details/7393810">java 获得安卓设备（devices）</a> </p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/203190#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+    </div>
+</div></div>

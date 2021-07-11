@@ -1,0 +1,96 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h2 class="code-line" style="font-weight: normal; position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; white-space: normal;">配置过程</h2>
+<ul style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p>添加用户 adduser username adduser username sudo</p></li> 
+ <li><p>设置密码 sudo smbpasswd -a username</p></li> 
+ <li><p>修改smb配置(注意这里配置的username和userpassword与windows域用户里的相同) vi /etc/samba/smb.conf</p></li> 
+</ul>
+<pre style="padding: 16px; border-radius: 3px; overflow: auto; background-color: rgba(220, 220, 220, 0.4); white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px;">[work]&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;comment&nbsp;=&nbsp;samba&nbsp;home&nbsp;directory&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;path&nbsp;=&nbsp;/home/username&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;=&nbsp;false&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;browseable&nbsp;=&nbsp;true&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;read&nbsp;only&nbsp;=&nbsp;no&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;valid&nbsp;users&nbsp;=&nbsp;username&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;create&nbsp;mask&nbsp;=&nbsp;0777&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;directory&nbsp;mask&nbsp;=&nbsp;0777&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;force&nbsp;user&nbsp;=&nbsp;username&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;force&nbsp;group&nbsp;=&nbsp;username&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;available&nbsp;=&nbsp;yes&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;writeable&nbsp;=&nbsp;yes</pre>
+<ul style="color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p>重启samba服务 sudo service smbd restart</p></li> 
+</ul>
+<h2 class="code-line" style="font-weight: normal; position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; white-space: normal;">参考文档:</h2>
+<p class="code-line" style="position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;"><a title="https://pomelojiang.github.io/linux_deploy_samba.html" style="text-decoration-line: none;">Linux与Windows共享文件之Samba部署</a><br><a title="https://www.cnblogs.com/gzdaijie/p/5194033.html" style="text-decoration-line: none;">Linux与Windows共享文件夹之samba的安装与使用（Ubuntu为例）</a><br><a rel="nofollow" href="https://blog.csdn.net/Primeprime/article/details/45423229" title="https://blog.csdn.net/Primeprime/article/details/45423229" style="text-decoration-line: none;">windows下无权限写入samba分享目录</a><br><a rel="nofollow" href="https://blog.csdn.net/heroful/article/details/26477503" title="https://blog.csdn.net/heroful/article/details/26477503" style="text-decoration-line: none;">windows 无法写入samba 共享目录解决办法</a><br><a rel="nofollow" href="https://gist.github.com/gogromat/d00305d823b970e9330b" title="https://gist.github.com/gogromat/d00305d823b970e9330b" style="text-decoration-line: none;">Make samba faster on ubuntu 14.04</a><br><a title="https://stackoverflow.com/questions/1789594/how-do-i-write-the-cd-command-in-a-makefile" style="text-decoration-line: none;">How do I write the 'cd' command in a makefile?</a><br><a rel="nofollow" href="https://blog.csdn.net/sgzy001/article/details/44870847" title="https://blog.csdn.net/sgzy001/article/details/44870847" style="text-decoration-line: none;">ubuntu 共享出现nobody/nogroup问题</a><br><a rel="nofollow" href="https://blog.csdn.net/ethan0ly/article/details/83316381" title="https://blog.csdn.net/ethan0ly/article/details/83316381" style="text-decoration-line: none;">Linux于Windows使用Samba共享文件时文件属性nobody nogroup的解决办法</a><br><a rel="nofollow" href="https://blog.csdn.net/qq_20252351/article/details/89197441" title="https://blog.csdn.net/qq_20252351/article/details/89197441" style="text-decoration-line: none;">ubuntu下配置samba服务器，Windows不能访问</a><br><a rel="nofollow" href="https://blog.csdn.net/u012736557/article/details/78555337" title="https://blog.csdn.net/u012736557/article/details/78555337" style="text-decoration-line: none;">Windows无法访问Ubuntu Samba 解决方案</a><br><a rel="nofollow" href="https://blog.csdn.net/wbaction/article/details/72758673" title="https://blog.csdn.net/wbaction/article/details/72758673" style="text-decoration-line: none;">Ubuntu 16.04安装配置Samba服务</a><br><a rel="nofollow" href="https://blog.csdn.net/i_chips/article/details/19191957" title="https://blog.csdn.net/i_chips/article/details/19191957" style="text-decoration-line: none;">Ubuntu下配置支持Windows访问的samba共享</a><br><a rel="nofollow" href="https://blog.csdn.net/qq_41772936/article/details/79510678" title="https://blog.csdn.net/qq_41772936/article/details/79510678" style="text-decoration-line: none;">samba共享匿名访问，用户访问，账户映射，访问地址限制方法</a><br><a title="https://zhidao.baidu.com/question/111649237.html" style="text-decoration-line: none;">Samba用户、windows用户与linux用户的区别？</a><br><a title="https://developer.aliyun.com/article/114603" style="text-decoration-line: none;">安装配置Samba实现windows+linux文件共享</a><br><a title="https://zhidao.baidu.com/question/1703068469670800060.html" style="text-decoration-line: none;">samba服务器windows登录只有一次密码提示</a></p>
+<pre style="padding: 16px; border-radius: 3px; overflow: auto; background-color: rgba(220, 220, 220, 0.4); white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px;">能否贴2113出Samba配置来,第二，是通5261常windows普通客户端(2000
+/XP/2003)访问不4102了还是域1653服务器访问不了。版在你未贴来之前权，给你一些提示:1,Samba认证windows帐号时，是有多种认证方式的，你用的是那一种。2,在Windows中登录的这个用户名，在Linux中需要增加此帐号（这是关键），如果你的Samba不是使用域认证的话，你还必须用sampasswd
+-a
+name增加这个用户（建议用户和密码都和Windows的相同）。</pre>
+<p class="code-line" style="position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;"><a title="https://www.jianshu.com/p/ac4e994a47e2" style="text-decoration-line: none;">Linux修改目录权限</a></p>
+<pre style="padding: 16px; border-radius: 3px; overflow: auto; background-color: rgba(220, 220, 220, 0.4); white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px;">几种常用权限实例：
+-rw-------&nbsp;(600)&nbsp;只有所有者才有读和写的权限
+-rw-r--r--&nbsp;(644)&nbsp;只有所有者才有读和写的权限，组群和其他人只有读的权限
+-rwx------&nbsp;(700)&nbsp;只有所有者才有读，写，执行的权限
+-rwxr-xr-x&nbsp;(755)&nbsp;只有所有者才有读，写，执行的权限，组群和其他人只有读和执行的权限
+-rwx--x--x&nbsp;(711)&nbsp;只有所有者才有读，写，执行的权限，组群和其他人只有执行的权限
+-rw-rw-rw-&nbsp;(666)&nbsp;每个人都有读写的权限
+-rwxrwxrwx&nbsp;(777)&nbsp;每个人都有读写和执行的权限</pre>
+<p class="code-line" style="position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;"><a rel="nofollow" href="https://blog.csdn.net/gnail_oug/article/details/70162658" title="https://blog.csdn.net/gnail_oug/article/details/70162658" style="text-decoration-line: none;">linux命令详解之ls命令</a><br><a rel="nofollow" href="https://blog.csdn.net/LI_AINY/article/details/87971085?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" title="https://blog.csdn.net/LI_AINY/article/details/87971085?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" style="text-decoration-line: none;">Linux授予某个用户对某个文件夹的读写权限</a><br><a rel="nofollow" href="https://blog.csdn.net/yuzeyuan12/article/details/96426715?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" title="https://blog.csdn.net/yuzeyuan12/article/details/96426715?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-1.channel_param" style="text-decoration-line: none;">Linux中，Root用户给其他用户赋文件夹的权限，正确姿势！</a><br><a rel="nofollow" href="https://blog.csdn.net/imxiangzi/article/details/47262079" title="https://blog.csdn.net/imxiangzi/article/details/47262079" style="text-decoration-line: none;">管理Linux文件权限和所有权</a></p>
+<pre style="padding: 16px; border-radius: 3px; overflow: auto; background-color: rgba(220, 220, 220, 0.4); white-space: pre-wrap; color: rgb(51, 51, 51); font-size: 14px;">清单&nbsp;1.&nbsp;决定有效的用户&nbsp;id
+/home/ian$&nbsp;whoami
+tom
+/home/ian$&nbsp;exit
+exit
+$&nbsp;whoami
+ian
+清单&nbsp;2.&nbsp;决策组成员
+[ian@echidna&nbsp;~]$&nbsp;id
+uid=1000(ian)&nbsp;gid=1000(ian)&nbsp;groups=1000(ian),505(development),8093(editor)
+context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+[ian@echidna&nbsp;~]$&nbsp;id&nbsp;ian
+uid=1000(ian)&nbsp;gid=1000(ian)&nbsp;groups=1000(ian),8093(editor),505(development)
+[ian@echidna&nbsp;~]$&nbsp;groups
+ian&nbsp;development&nbsp;editor
+[ian@echidna&nbsp;~]$&nbsp;id&nbsp;tom
+uid=1012(tom)&nbsp;gid=1012(tom)&nbsp;groups=1012(tom),505(development)
+[ian@echidna&nbsp;~]$&nbsp;groups&nbsp;tom
+tom&nbsp;:&nbsp;tom&nbsp;development
+[ian@echidna&nbsp;~]$&nbsp;su&nbsp;tom
+Password:&nbsp;
+[tom@echidna&nbsp;ian]$&nbsp;groups
+tom&nbsp;development
+[tom@echidna&nbsp;ian]$&nbsp;groups&nbsp;ian
+ian&nbsp;:&nbsp;ian&nbsp;editor&nbsp;development</pre>
+<p class="code-line" style="position: relative; color: rgb(51, 51, 51); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe WPC&quot;, &quot;Segoe UI&quot;, system-ui, Ubuntu, &quot;Droid Sans&quot;, sans-serif; font-size: 14px; white-space: normal;"><a title="https://www.cnblogs.com/jiading/p/11717388.html" style="text-decoration-line: none;">Linux小知识：sudo su和su的区别</a></p>
+<p><br></p>
+<p>为了避免链接消失，附件为markdown原文；</p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="b4febe3e39ae46acb43db97c3fe083cf" href="/blogs/attachment?id=b4febe3e39ae46acb43db97c3fe083cf" title="Ubuntu配置samba共享目录_markdown原文.zip">Ubuntu配置samba共享目录_markdown原文.zip</a>
+                <span class="attSize">2.48KB</span>
+                <span class="downloadNum">，下载次数：<i>0</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/198155#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

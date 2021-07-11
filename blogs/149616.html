@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>excelize地址:</p><p><a rel="nofollow" href="https://github.com/360EntSecGroup-Skylar/excelize">https://github.com/360EntSecGroup-Skylar/excelize</a></p><p>获取单元格背景色:</p><pre class="brush:cpp;toolbar:false">func&nbsp;getCellBgColor(xlsx&nbsp;*excelize.File,&nbsp;sheet,&nbsp;axix&nbsp;string)&nbsp;string&nbsp;{
+&nbsp;&nbsp;&nbsp;styleID,err&nbsp;:=&nbsp;xlsx.GetCellStyle(sheet,&nbsp;axix)
+&nbsp;&nbsp;&nbsp;if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;println(err.Error())
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"000"
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;fillID&nbsp;:=&nbsp;xlsx.Styles.CellXfs.Xf[styleID].FillID
+&nbsp;&nbsp;&nbsp;fgColor&nbsp;:=&nbsp;xlsx.Styles.Fills.Fill[fillID].PatternFill.FgColor
+&nbsp;&nbsp;&nbsp;if&nbsp;fgColor.Theme&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srgbClr&nbsp;:=&nbsp;xlsx.Theme.ThemeElements.ClrScheme.Children[*fgColor.Theme].SrgbClr.Val
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;excelize.ThemeColor(*srgbClr,&nbsp;fgColor.Tint)
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;return&nbsp;fgColor.RGB
+}</pre><p>上面的函数获取系统色的时候会返回空串,而可以获取到fgColor.Indexed,所以可以添加补充为</p><pre class="brush:cpp;toolbar:false">var&nbsp;COLOR_INDEX&nbsp;=&nbsp;[]string{
+&nbsp;&nbsp;&nbsp;"FF000000",&nbsp;"FFFFFFFF",&nbsp;"FFFF0000",&nbsp;"FF00FF00",&nbsp;"FF0000FF",
+&nbsp;&nbsp;&nbsp;"FFFFFF00",&nbsp;"FFFF00FF",&nbsp;"FF00FFFF",&nbsp;"FF000000",&nbsp;"FFFFFFFF",
+&nbsp;&nbsp;&nbsp;"FFFF0000",&nbsp;"FF00FF00",&nbsp;"FF0000FF",&nbsp;"FFFFFF00",&nbsp;"FFFF00FF",
+&nbsp;&nbsp;&nbsp;"FF00FFFF",&nbsp;"FF800000",&nbsp;"FF008000",&nbsp;"FF000080",&nbsp;"FF808000",
+&nbsp;&nbsp;&nbsp;"FF800080",&nbsp;"FF008080",&nbsp;"FFC0C0C0",&nbsp;"FF808080",&nbsp;"FF9999FF",
+&nbsp;&nbsp;&nbsp;"FF993366",&nbsp;"FFFFFFCC",&nbsp;"FFCCFFFF",&nbsp;"FF660066",&nbsp;"FFFF8080",
+&nbsp;&nbsp;&nbsp;"FF0066CC",&nbsp;"FFCCCCFF",&nbsp;"FF000080",&nbsp;"FFFF00FF",&nbsp;"FFFFFF00",
+&nbsp;&nbsp;&nbsp;"FF00FFFF",&nbsp;"FF800080",&nbsp;"FF800000",&nbsp;"FF008080",&nbsp;"FF0000FF",
+&nbsp;&nbsp;&nbsp;"FF00CCFF",&nbsp;"FFCCFFFF",&nbsp;"FFCCFFCC",&nbsp;"FFFFFF99",&nbsp;"FF99CCFF",
+&nbsp;&nbsp;&nbsp;"FFFF99CC",&nbsp;"FFCC99FF",&nbsp;"FFFFCC99",&nbsp;"FF3366FF",&nbsp;"FF33CCCC",
+&nbsp;&nbsp;&nbsp;"FF99CC00",&nbsp;"FFFFCC00",&nbsp;"FFFF9900",&nbsp;"FFFF6600",&nbsp;"FF666699",
+&nbsp;&nbsp;&nbsp;"FF969696",&nbsp;"FF003366",&nbsp;"FF339966",&nbsp;"FF003300",&nbsp;"FF333300",
+&nbsp;&nbsp;&nbsp;"FF993300",&nbsp;"FF993366",&nbsp;"FF333399",&nbsp;"FF333333",&nbsp;"System&nbsp;Foreground",&nbsp;"System&nbsp;Background",
+}
+func&nbsp;getCellBgColor(xlsx&nbsp;*excelize.File,&nbsp;sheet,&nbsp;axix&nbsp;string)&nbsp;string&nbsp;{
+&nbsp;&nbsp;&nbsp;styleID,err&nbsp;:=&nbsp;xlsx.GetCellStyle(sheet,&nbsp;axix)
+&nbsp;&nbsp;&nbsp;if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;println(err.Error())
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;"000"
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;fillID&nbsp;:=&nbsp;xlsx.Styles.CellXfs.Xf[styleID].FillID
+&nbsp;&nbsp;&nbsp;fgColor&nbsp;:=&nbsp;xlsx.Styles.Fills.Fill[fillID].PatternFill.FgColor
+&nbsp;&nbsp;&nbsp;if&nbsp;fgColor.Theme&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srgbClr&nbsp;:=&nbsp;xlsx.Theme.ThemeElements.ClrScheme.Children[*fgColor.Theme].SrgbClr.Val
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;excelize.ThemeColor(*srgbClr,&nbsp;fgColor.Tint)
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;if(fgColor.RGB==""){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;&nbsp;COLOR_INDEX[fgColor.Indexed]
+&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;return&nbsp;fgColor.RGB
+}</pre><p>参考:</p><p><a rel="nofollow" href="https://openpyxl.readthedocs.io/en/stable/_modules/openpyxl/styles/colors.html">https://openpyxl.readthedocs.io/en/stable/_modules/openpyxl/styles/colors.html</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/149616#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

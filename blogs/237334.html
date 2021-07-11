@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文：</p>
+<p><a>https://segmentfault.com/a/1190000004222341</a></p>
+<p><span style="color: #000000;">结论：年、月、日、时、分、秒，英文、数字，必须精确地限定到 golang 指定的时间原点：</span><code>2006-01-02 15:04:05</code><code></code></p>
+<pre class="language-actionscript"><code>    now := time.Now().Local()
+    nowRight := now.Format("2006-01-02") </code></pre>
+<p><code></code></p>
+<p><code>vs</code></p>
+<pre class="language-actionscript"><code>    now := time.Now().Local()
+    nowWrong := now.Format("2012-01-02") </code></pre>
+<p><code></code></p>
+<p><code>我原以为layout只是类似于YYYY-MM-DD的一个格式设定，却没想到这个设定是特定的，否则你就会得到一个异常的的时间输出。</code></p>
+<p><code></code></p>
+<p><code><span style="color: #2dc26b;">/*************************************************************************************/</span></code></p>
+<p><span style="color: #2dc26b;">/************************************下面的内容和标题不相关***********************************************************/</span></p>
+<h1>golang orm和批量插入等</h1>
+<h3 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><span>3.golang: gorm不定条件查询和分页操作</span></h3>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><span style="color: #333333;"><a rel="nofollow" href="https://blog.csdn.net/linux_player_c/article/details/82351934">https://blog.csdn.net/linux_player_c/article/details/82351934</a></span></h1>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><code><span style="color: #333333; text-align: start;">gorm+gin不定条件查询</span></code></h1>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><a>https://forum.golangbridge.org/t/how-can-i-speed-up-mysql-inserts-in-go/5770</a></h1>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><a>https://stackoverflow.com/questions/21108084/how-to-insert-multiple-data-at-once</a></h1>
+<div class="votecell post-layout--left" style="color: #242729; text-align: left;"> 
+ <div class="js-voting-container grid jc-center fd-column ai-stretch gs4 fc-black-200" style="color: var(--black-200)  !important;">
+  <a class="js-post-issue grid--cell s-btn s-btn__unset c-pointer py6 mx-auto" style="color: unset; background: none; text-align: center; text-decoration: none;"></a>
+  <br>
+ </div> 
+</div>
+<div class="answercell post-layout--right" style="color: #242729; text-align: left;"> 
+ <div class="s-prose js-post-body"> 
+  <p>this is an efficient way to do transition which will do network call only after commit.</p> 
+ </div> 
+</div>
+<pre class="language-actionscript"><code>func insert(requestObj []models.User) (bool, error) {
+    tx := db.Begin()
+    defer func() {
+        if r := recover(); r != nil {
+            tx.Rollback()
+        }
+    }()
+
+    for _, obj := range requestObj {
+        if err := tx.Create(&amp;obj).Error; err != nil {
+            logging.AppLogger.Errorf("Failed to create user")
+            tx.Rollback()
+            return false, err
+        }
+    }
+    err := tx.Commit().Error
+    if err != nil {
+        return false, err
+    }
+    return true, nil
+}</code></pre>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><a>https://ruby-china.org/topics/38906</a></h1>
+<pre class="language-actionscript"><code>func (repo *repo) CreateBalancesForAsset(ctx context.Context, wallets []*Wallet, asset *SimpleAsset) (error) {
+  valueStrings := []string{}
+  valueArgs := []interface{}{}
+  for _, w := range wallets {
+    valueStrings = append(valueStrings, "(?, ?, ?, ?)")
+
+    valueArgs = append(valueArgs, w.Address)
+    valueArgs = append(valueArgs, asset.Symbol)
+    valueArgs = append(valueArgs, asset.Identify)
+    valueArgs = append(valueArgs, asset.Decimal)
+  }
+  smt := `INSERT INTO balances(address, symbol, identify, decimal)
+    VALUES %s ON CONFLICT (address, symbol) DO UPDATE SET address = excluded.address`
+  smt = fmt.Sprintf(smt, strings.Join(valueStrings, ","))
+  fmt.Println("smttt:", smt)
+  tx := repo.db.Begin()
+  err := tx.Exec(smt, valueArgs...).Error
+  if err != nil {
+    tx.Rollback()
+    return err
+  }
+  return tx.Commit().Error
+}</code></pre>
+<h1 class="article-title J-articleTitle" style="color: #000000; text-align: start;"><code></code></h1>
+<p><code></code></p>
+<p><code></code></p>
+<p><code></code><img referrerpolicy="no-referrer" class="mce_image" id="images_161098472731053" src="https://l.ruby-china.com/photo/2019/5fd12705-22c3-4832-a570-c2e6d63bf5cf.png!large">:</p>
+<p><a>https://medium.com/better-programming/how-to-bulk-create-and-update-the-right-way-in-golang-part-i-e15a8e5585d1</a></p>
+<p><span style="color: #2dc26b;">/*************************************************************************************/</span></p>
+<h1>golang 并行网络请求优化</h1>
+<h3 class="m-t-xs" style="color: #58666e;">golang下的并发、并行优化 - <a>https://www.ctolib.com/topics-136872.html</a></h3>
+<p style="color: #333333;">GO语言是非常适合高并发场景的，那么，业务系统具体会遇到哪些高并发的场景呢？该如何考虑性能开销呢？那么本文就笔者在业务系统常常遇到的问题来抛砖引玉~</p>
+<h3 style="color: #333333;">请求合并</h3>
+<p style="color: #333333;">这是什么场景呢？回源！回源DB，二进制流回源源站等等~高并发的场景下，大量用户访问同一个对象，那么做请求合并可以节省非常可观的资源，<span>&nbsp;</span><a style="color: #4183c4; background: 0px 0px; text-decoration: none;">singleflight~</a><span>&nbsp;</span>当然这是进程内的用法。</p>
+<h3 style="color: #333333;">批量协议</h3>
+<p style="color: #333333;">好像和请求合并有点像？不太一样。比较经典的case就是redis的pipeline。能批量就批量，减少太多的封包解包，减少cpu和带宽~</p>
+<h3 style="color: #333333;">merge请求</h3>
+<p style="color: #333333;">额~~merge什么？比如一个视频id更新计数，那么9-&gt;18-&gt;25......对了，计数从1涨到100，难道我要写100次db吗？很明显，可以内存里merge~~</p>
+<h3 style="color: #333333;">并行请求</h3>
+<p style="color: #333333;">这个用法在网关服务就非常常见啦~当你的服务需要聚合A、B、C这3个系统的数据，而A、B和C之间没有依赖，那么完全可以并行请求。golang里常用<span>&nbsp;</span><a style="color: #4183c4; background: 0px 0px; text-decoration: none;">errgroup</a><span>&nbsp;</span>去实现。</p>
+<h3 style="color: #333333;">减少锁以及系统调用</h3>
+<p style="color: #333333;">有些情况锁是很难避免的，但是可以通过一些锁粒度拆分优化去减少锁的开销。系统调用对cpu的开销都是挺明显的，具体可以压测查看top，us%的开销在90%以上，说明性能优化还是可以的。</p>
+<h3 style="color: #333333;">序列化协议，json和pb</h3>
+<p style="color: #333333;">这里既包括API的协议，也同时包括缓存对象的序列化协议。缓存的访问常常会几倍于api请求，经常有放大，所以更要重视。</p>
+<h3 style="color: #333333;">异步处理，使用channel，而不是无限制go func()</h3>
+<p style="color: #333333;">比如更新缓存的场景。这点挺容易理解，无限制的goroutine会带来大量的context切换，浪费cpu。当然channel的长度要做限制和监控。消费者goroutine数可以适当配置。</p>
+<p style="color: #333333;">查看原文：<span>&nbsp;</span><a style="color: #4183c4; background: 0px 0px; text-decoration: none;">golang下的并发、并行优化</a></p>
+<h1 class="article-title" style="color: #333333;">用Golang写爬虫(二) - 并发 <a>https://juejin.cn/post/6844903887158116360</a></h1>
+<h2 style="color: #333333;">8.6. 示例: 并发的Web爬虫 -&nbsp;<a>https://books.studygolang.com/gopl-zh/ch8/ch8-06.html</a></h2>
+<h1 class="Post-Title" style="color: #121212;">Golang 通道，同步等待组 并发爬虫 - <a>https://zhuanlan.zhihu.com/p/102605314</a></h1>
+<h1 class="h2 mb-3" style="color: #212529; text-align: left;"><a class="text-body" style="color: #212529 !important; text-decoration: none;">Golang搭建并行版爬虫信息采集框架</a> - <a>https://segmentfault.com/a/1190000016595502</a></h1>
+<h1 class="post-title" style="color: #303030;">使用 Go 的并发特性来并行化一个 Web 爬虫 - <a>https://zhuqiuzhi.github.io/2017/10/18/%E7%88%AC%E8%99%AB.html</a></h1>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/237334#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

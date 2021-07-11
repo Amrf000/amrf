@@ -1,0 +1,128 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><strong>说一下使用场景先:</strong></p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>selenium是常用的网页自动化测试框架,我这次的使用场景是这样的，项目爬虫范围拓展到了一个新的站点,虽然登录还是原来的单点登录,但是这个网站后续判断是否登录授权中有使用一些前端js动态添加的cookies,这段逻辑具体会产生sessionId等cookie,其中使用了<a rel="nofollow" href="https://github.com/broofa/node-uuid">https://github.com/broofa/node-uuid</a>等机制,通过观察发现这部分逻辑一时无法在不依赖与浏览器引擎的后端爬虫里面模拟再现;</p></li><li><p>导致的情况就是使用原有的单点登录后的cookie进行后续爬虫鉴权失败，如果直接复制浏览器中带有sessionId等信息的cookie后续操作正常，很明显的是复制的cookie过一段时间肯定就失效了;</p></li><li><p>&nbsp;然后我的解决方案就是通过selenium动态获取这个生成的cookie,因为原始项目已经比较肥胖，所以我采用的是spring +cxf&nbsp; +selenium,以服Rest务的方式将这个爬虫需要的cookie提供给原始的httpclient+jsoup爬虫使用;</p></li><li><p>最终效果是符合我的预期的，注意spring&nbsp;+selenium时需要移除pom中的一个guaua库;</p></li></ol><h3>基于apache cxf微服务例子</h3><pre class="brush:java;toolbar:false">服务接口
+@Path("/r")
+@Produces("application/json")
+public&nbsp;interface&nbsp;XXXService&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;@GET
+&nbsp;&nbsp;&nbsp;&nbsp;@Path("/{uid}/{password}/{headless}")
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;XXXModel&nbsp;get(@PathParam("uid")&nbsp;String&nbsp;uid,@PathParam("password")&nbsp;String&nbsp;password,@PathParam("headless")&nbsp;Integer&nbsp;headless);
+&nbsp;&nbsp;&nbsp;&nbsp;@POST
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;post(XXXModel&nbsp;xxxModel);
+}
+
+@Service("xxxService")
+public&nbsp;class&nbsp;XXXServiceImpl&nbsp;implements&nbsp;XXXService&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;XXXModel&nbsp;get(String&nbsp;uid,String&nbsp;password,Integer&nbsp;headless)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;prepare(headless);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;cookies="";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	cookies&nbsp;=&nbsp;getCookies(uid,new&nbsp;String(Base64.decode(password)));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}catch(Exception&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e.printStackTrace();	
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}finally&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	itsdown();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;new&nbsp;XXXModel(cookies);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;@Override
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;post(XXXModel&nbsp;xxxModel)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;String&nbsp;testUrl;
+&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;WebDriver&nbsp;driver;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;prepare(Integer&nbsp;headless)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.setProperty(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"webdriver.chrome.driver",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D:\\XXX\\chrome\\Chrome-bin\\chromedriver.exe");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;testUrl&nbsp;=&nbsp;"https://xxxx/login";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ChromeOptions&nbsp;options&nbsp;=&nbsp;null;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options&nbsp;=&nbsp;new&nbsp;ChromeOptions();
+&nbsp;&nbsp;&nbsp;&nbsp;	}catch(Exception&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		e.printStackTrace();
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options.setBinary("D:\\XXX\\chrome\\Chrome-bin\\chrome.exe");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;options.setHeadless(headless!=0);
+&nbsp;&nbsp;&nbsp;&nbsp;	try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver&nbsp;=&nbsp;new&nbsp;ChromeDriver(options);//options
+&nbsp;&nbsp;&nbsp;&nbsp;	}catch(Exception&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		e.printStackTrace();
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver.get(testUrl);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;String&nbsp;getCookies(String&nbsp;uid,String&nbsp;password)&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;	/*try&nbsp;{
+			Thread.sleep(3000);
+		}&nbsp;catch&nbsp;(InterruptedException&nbsp;e)&nbsp;{
+			e.printStackTrace();
+		}*/
+&nbsp;&nbsp;&nbsp;&nbsp;	(new&nbsp;WebDriverWait(driver,&nbsp;5)).until(
+&nbsp;&nbsp;&nbsp;&nbsp;			ExpectedConditions.visibilityOfElementLocated(By.id("password"))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;&nbsp;&nbsp;	//WebElement&nbsp;uidE=&nbsp;driver.findElement(By.id("uid"));
+&nbsp;&nbsp;&nbsp;&nbsp;	WebElement&nbsp;passwordE=&nbsp;driver.findElement(By.id("password"));
+&nbsp;&nbsp;&nbsp;&nbsp;	JavascriptExecutor&nbsp;jsExecutor&nbsp;=&nbsp;(JavascriptExecutor)&nbsp;driver;
+&nbsp;&nbsp;&nbsp;&nbsp;	try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	//jsExecutor.executeScript("document.getElementById('password').setAttribute('value',&nbsp;'"+password+"')");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	passwordE.sendKeys(password);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	jsExecutor.executeScript("document.getElementById('uid').setAttribute('value',&nbsp;'"+uid+"')");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	jsExecutor.executeScript("submitForm()");
+		}&nbsp;catch&nbsp;(Exception&nbsp;e)&nbsp;{
+			e.printStackTrace();
+		}
+&nbsp;&nbsp;&nbsp;&nbsp;	(new&nbsp;WebDriverWait(driver,&nbsp;5)).until(
+&nbsp;&nbsp;&nbsp;&nbsp;		ExpectedConditions.visibilityOfElementLocated(By.className("head_searchBtn"))
+&nbsp;&nbsp;&nbsp;&nbsp;		/*new&nbsp;ExpectedCondition&lt;Boolean&gt;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;			public&nbsp;Boolean&nbsp;apply(WebDriver&nbsp;d)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;((JavascriptExecutor)&nbsp;driver).executeScript("return&nbsp;document.readyState").equals("complete");
+&nbsp;&nbsp;&nbsp;&nbsp;			}
+&nbsp;&nbsp;&nbsp;&nbsp;		}*/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;&nbsp;&nbsp;	driver.navigate().to("http://xxx.com");
+&nbsp;&nbsp;&nbsp;&nbsp;	(new&nbsp;WebDriverWait(driver,&nbsp;5)).until(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		new&nbsp;ExpectedCondition&lt;Boolean&gt;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			public&nbsp;Boolean&nbsp;apply(WebDriver&nbsp;d)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;((String)&nbsp;jsExecutor.executeScript("return&nbsp;document.cookie")).contains("PLM_REMOTE_USER");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);&nbsp;&nbsp;&nbsp;&nbsp;	
+&nbsp;&nbsp;&nbsp;&nbsp;	String&nbsp;cookiesString&nbsp;=&nbsp;(String)&nbsp;jsExecutor.executeScript("return&nbsp;document.cookie");
+&nbsp;&nbsp;&nbsp;&nbsp;	return&nbsp;cookiesString;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;Set&lt;Cookie&gt;&nbsp;parseBrowserCookies(String&nbsp;cookiesString)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Set&lt;Cookie&gt;&nbsp;cookies&nbsp;=&nbsp;new&nbsp;HashSet&lt;&gt;();
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(StringUtils.isBlank(cookiesString))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cookies;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Arrays.asList(cookiesString.split(";&nbsp;")).forEach(cookie&nbsp;-&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String[]&nbsp;splitCookie&nbsp;=&nbsp;cookie.split("=",&nbsp;2);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cookies.add(new&nbsp;Cookie(splitCookie[0],&nbsp;splitCookie[1],&nbsp;"/"));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cookies;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;public&nbsp;void&nbsp;itsdown()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;driver.quit();
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p style="white-space:normal;">参考文档:</p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/35776826/how-to-specify-the-chrome-binary-location-via-the-selenium-server-standalone-com">https://stackoverflow.com/questions/35776826/how-to-specify-the-chrome-binary-location-via-the-selenium-server-standalone-com</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/45500606/set-chrome-browser-binary-through-chromedriver-in-python">https://stackoverflow.com/questions/45500606/set-chrome-browser-binary-through-chromedriver-in-python</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/47396547/how-to-set-the-geo-location-through-code">https://stackoverflow.com/questions/47396547/how-to-set-the-geo-location-through-code</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/22130109/cant-use-chrome-driver-for-selenium">https://stackoverflow.com/questions/22130109/cant-use-chrome-driver-for-selenium</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/20349844/how-chromedriverservice-is-useful-in-selenium-automation">https://stackoverflow.com/questions/20349844/how-chromedriverservice-is-useful-in-selenium-automation</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:9Q8V7fW2DrUJ:https://xiaojingjing.iteye.com/blog/2382701+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://webcache.googleusercontent.com/search?q=cache:9Q8V7fW2DrUJ:https://xiaojingjing.iteye.com/blog/2382701+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:rjkU_qxcMkQJ:https://zhuanlan.zhihu.com/p/30644530+&amp;cd=10&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://webcache.googleusercontent.com/search?q=cache:rjkU_qxcMkQJ:https://zhuanlan.zhihu.com/p/30644530+&amp;cd=10&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/49788257/what-is-default-location-of-chromedriver-and-for-installing-chrome-on-windows">https://stackoverflow.com/questions/49788257/what-is-default-location-of-chromedriver-and-for-installing-chrome-on-windows</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://stackoverflow.com/questions/16689426/how-to-set-google-chrome-in-webdriver">https://stackoverflow.com/questions/16689426/how-to-set-google-chrome-in-webdriver</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/112458#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

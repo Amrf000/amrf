@@ -1,0 +1,92 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文:</p>
+<p><a>https://www.cnblogs.com/tocy/p/subtitle-format-srt.html</a></p>
+<p style="color: #494949;">视频文件中最简单、最常见的外挂字幕格式是SRT（SubRip Text）。本人找了好久也没找到类似的标准文档，从wiki等资料来看，SRT格式是SubRip软件所生成从DVD或视频文件提取的字幕格式，SubRip软件使用OCR将基于图形的字幕转化为纯文本格式的字幕，这样就可以支持诸如渲染、检索、数据分析等诸多用途。后来出于某些原因普及起来，被主流多媒体播放器所支持，由此也催生了各种字幕组产生。<br>本文的内容将包括：</p>
+<ul style="color: #494949;"> 
+ <li>SRT字幕基本格式</li> 
+ <li>SRT特效设置</li> 
+ <li>ffmpeg中srt相关用例</li> 
+</ul>
+<p style="color: #494949;">其中字幕序号一般是顺序增加的，表示字幕是一系列连续的序列。但该数值在字幕显示中不起任何作用，只是起着标记和标识的作用，方便分配翻译行数用。字幕序号的值可以随意，1和100都一样，并不会影响字幕的显示。但字幕序号也是字幕段的一部分，所以不能没有或者删去，否则在播放时，将出现错误。</p>
+<p style="color: #494949;">字幕显示起始时间的格式如下：<br><code>hour:minute:second.millisecond --&gt; hour:minute:second.millisecond</code><span>&nbsp;</span>或<br><code>hour:minute:second,millisecond --&gt; hour:minute:second,millisecond</code><br>后面还可以附加用于指定字幕显示位置的信息，以像素为单位，格式如下：<span>&nbsp;</span><code>X1:number Y1:number X2:number Y2:number</code>。</p>
+<p style="color: #494949;">一个典型的SRT文件如下（截取自阿凡达中英字幕）：</p>
+<pre><code class="hljs css">3
+00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:39</span>,770 <span class="hljs-selector-tag" style="color: #0000ff;">--</span>&gt; 00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:41</span>,880
+在经历了一场人生巨变之后
+<span class="hljs-selector-tag" style="color: #0000ff;">When</span> <span class="hljs-selector-tag" style="color: #0000ff;">I</span> <span class="hljs-selector-tag" style="color: #0000ff;">was</span> <span class="hljs-selector-tag" style="color: #0000ff;">lying</span> <span class="hljs-selector-tag" style="color: #0000ff;">there</span> <span class="hljs-selector-tag" style="color: #0000ff;">in</span> <span class="hljs-selector-tag" style="color: #0000ff;">the</span> <span class="hljs-selector-tag" style="color: #0000ff;">VA</span> <span class="hljs-selector-tag" style="color: #0000ff;">hospital</span> ...
+
+4
+00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:42</span>,550 <span class="hljs-selector-tag" style="color: #0000ff;">--</span>&gt; 00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:44</span>,690
+我被送进了退伍军人管理局医院
+... <span class="hljs-selector-tag" style="color: #0000ff;">with</span> <span class="hljs-selector-tag" style="color: #0000ff;">a</span> <span class="hljs-selector-tag" style="color: #0000ff;">big</span> <span class="hljs-selector-tag" style="color: #0000ff;">hole</span> <span class="hljs-selector-tag" style="color: #0000ff;">blown</span> <span class="hljs-selector-tag" style="color: #0000ff;">through</span> <span class="hljs-selector-tag" style="color: #0000ff;">the</span> <span class="hljs-selector-tag" style="color: #0000ff;">middle</span> <span class="hljs-selector-tag" style="color: #0000ff;">of</span> <span class="hljs-selector-tag" style="color: #0000ff;">my</span> <span class="hljs-selector-tag" style="color: #0000ff;">life</span>,
+
+5
+00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:45</span>,590 <span class="hljs-selector-tag" style="color: #0000ff;">--</span>&gt; 00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:48</span>,120
+那段时间我经常会梦到自己在飞翔
+... <span class="hljs-selector-tag" style="color: #0000ff;">I</span> <span class="hljs-selector-tag" style="color: #0000ff;">started</span> <span class="hljs-selector-tag" style="color: #0000ff;">having</span> <span class="hljs-selector-tag" style="color: #0000ff;">these</span> <span class="hljs-selector-tag" style="color: #0000ff;">dreams</span> <span class="hljs-selector-tag" style="color: #0000ff;">of</span> <span class="hljs-selector-tag" style="color: #0000ff;">flying</span>.
+
+6
+00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:49</span>,740 <span class="hljs-selector-tag" style="color: #0000ff;">--</span>&gt; 00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:51</span>,520
+终获自由
+<span class="hljs-selector-tag" style="color: #0000ff;">I</span> <span class="hljs-selector-tag" style="color: #0000ff;">was</span> <span class="hljs-selector-tag" style="color: #0000ff;">free</span>.
+
+7
+00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:54</span>,620 <span class="hljs-selector-tag" style="color: #0000ff;">--</span>&gt; 00<span class="hljs-selector-pseudo" style="color: #2b91af;">:00</span><span class="hljs-selector-pseudo" style="color: #2b91af;">:55</span>,830
+而不幸的是
+<span class="hljs-selector-tag" style="color: #0000ff;">Sooner</span> <span class="hljs-selector-tag" style="color: #0000ff;">or</span> <span class="hljs-selector-tag" style="color: #0000ff;">later</span> <span class="hljs-selector-tag" style="color: #0000ff;">though</span>, ...
+</code></pre>
+<h2 style="color: #494949;">2 SRT格式化设置</h2>
+<p style="color: #494949;">多数SRT支持一些特定格式化，比如斜体、粗体、下划线以及字体颜色。使用时需要基于HTML的标签，具体用法如下：</p>
+<pre><code class="hljs xml"><span class="hljs-tag" style="color: #0000ff;">&lt;<span class="hljs-name" style="color: #0000ff;">font</span> <span class="hljs-attr" style="color: #ff0000;">color</span>=<span class="hljs-string" style="color: #a31515;">red</span>&gt;</span>颜色<span class="hljs-tag" style="color: #0000ff;">&lt;/<span class="hljs-name" style="color: #0000ff;">font</span>&gt;</span>
+<span class="hljs-tag" style="color: #0000ff;">&lt;<span class="hljs-name" style="color: #0000ff;">i</span>&gt;</span>字体斜体<span class="hljs-tag" style="color: #0000ff;">&lt;/<span class="hljs-name" style="color: #0000ff;">i</span>&gt;</span>
+<span class="hljs-tag" style="color: #0000ff;">&lt;<span class="hljs-name" style="color: #0000ff;">u</span>&gt;</span>字体下加划线<span class="hljs-tag" style="color: #0000ff;">&lt;/<span class="hljs-name" style="color: #0000ff;">u</span>&gt;</span>
+<span class="hljs-tag" style="color: #0000ff;">&lt;<span class="hljs-name" style="color: #0000ff;">br</span>&gt;</span>换行
+<span class="hljs-tag" style="color: #0000ff;">&lt;<span class="hljs-name" style="color: #0000ff;">b</span>&gt;</span>字体加粗<span class="hljs-tag" style="color: #0000ff;">&lt;/<span class="hljs-name" style="color: #0000ff;">b</span>&gt;</span>
+</code></pre>
+<p style="color: #494949;">这些HTML可嵌套。<br>当然某些播放器还对SRT做了扩展，可以支持ASS/SSA中部分格式化代码。</p>
+<h2 style="color: #494949;">3 ffmpeg中srt相关用例</h2>
+<p style="color: #494949;">使用ffmpeg可以很轻松的把ass/vtt/lyric转换为srt文件，命令如下：</p>
+<blockquote style="color: #555555; background: none #f4ede3;"> 
+ <p>ffmpeg -i a.ass b.srt<br>ffmpeg -i c.vtt d.srt<br>ffmpeg -i e.lyric f.srt</p> 
+</blockquote>
+<p style="color: #494949;">使用ffplay现在字幕需要使用<a target="_blank" style="color: #494949; text-decoration: underline;">subtitles</a><span>&nbsp;</span>filter，具体命令如下：</p>
+<blockquote style="color: #555555; background: none #f4ede3;"> 
+ <p>./ffplay test.mp4 -vf subtitles=test.srt</p> 
+</blockquote>
+<p style="color: #494949;">对于FFmpeg中的srt demuxer的实现逻辑，基本上是参考SRT基本格式实现的，其中并未支持各种格式，具体代码请查看<a target="_blank" style="color: #494949; text-decoration: underline;">srtdec.c</a>。</p>
+<h2 style="color: #494949;">4 小结</h2>
+<p style="color: #494949;">srt字幕以其简单、体积小、易查看、易掌握等优点，深得人们的喜爱，但便利的代价就是样式少，无法实现复杂的特效。<br>本文整理了srt字幕的基本格式以及支持的格式，同时介绍了ffmpeg中srt格式生成和渲染的用法，仅供后续参考。</p>
+<h2 style="color: #494949;">5 参考资料</h2>
+<ol style="color: #494949;"> 
+ <li><a target="_blank" style="color: #494949; text-decoration: underline;">wiki-SRT</a></li> 
+ <li><a target="_blank" style="color: #494949; text-decoration: underline;">multimedia-SubRip</a></li> 
+ <li><a target="_blank" style="color: #494949; text-decoration: underline;">mkv-SRT</a></li> 
+ <li><a rel="nofollow" target="_blank" href="https://blog.csdn.net/lishirong/article/details/41674123" style="color: #494949; text-decoration: underline;">SRT字幕的颜色以及一些特效的设置</a></li> 
+ <li><a target="_blank" style="color: #494949; text-decoration: underline;">SRT字幕完全手册</a></li> 
+ <li><a target="_blank" style="color: #494949; text-decoration: underline;">SubRit Text</a></li> 
+</ol>
+<p>/----------------------------------------------------------------/</p>
+<p>youtu字幕转srt参考:</p>
+<p><a rel="nofollow" href="https://github.com/jptiancai/Google2SRT">https://github.com/jptiancai/Google2SRT</a></p>
+<p><a rel="nofollow" href="https://gist.github.com/Dobby233Liu/29b27e4e6b0c96ced83909f2504845b0">https://gist.github.com/Dobby233Liu/29b27e4e6b0c96ced83909f2504845b0</a></p>
+<p><a rel="nofollow" href="https://gist.github.com/javatask/dc195cc6ad25f859dcd54f1e8aa1e235">https://gist.github.com/javatask/dc195cc6ad25f859dcd54f1e8aa1e235</a></p>
+<p><a rel="nofollow" href="https://github.com/LuisMayo/GoogleSTTtoSRTConverter">https://github.com/LuisMayo/GoogleSTTtoSRTConverter</a></p>
+<p></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/246367#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.网络_Blog" title="网络" href="https://developer.huaweicloud.com/tags/200227/blog_1">网络</a>
+        
+    </div>
+</div></div>

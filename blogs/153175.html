@@ -1,0 +1,84 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>最近goland证书过期了，手动修改系统时间还可以使用（仅供学习研究，支持购买正版）</p><p>然后就考虑可以使用getsystemtimeasfiletime</p><p>msdn介绍:</p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsystemtimeasfiletime">https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getsystemtimeasfiletime</a></p><p>FILETIME的使用</p><p><a rel="nofollow" href="https://blog.csdn.net/TracyZhongcf/article/details/3711684">https://blog.csdn.net/TracyZhongcf/article/details/3711684</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/11222709/assigning-data-and-time-to-filetime-structure-in-c">https://stackoverflow.com/questions/11222709/assigning-data-and-time-to-filetime-structure-in-c</a></p><p>也可以用runasdate小工具，原理一样的，不过自己方便和放心点而已;</p><p>参考实现如下:</p><pre class="brush:cpp;toolbar:false">#define&nbsp;_AFXDLL
+#include&nbsp;&lt;windows.h&gt;
+#include&nbsp;&lt;cstdio&gt;
+#include&nbsp;&lt;QBuffer&gt;
+#include&nbsp;&lt;QDebug&gt;
+#include&nbsp;&lt;QString&gt;
+#include&nbsp;"detours.h"
+#define&nbsp;&nbsp;PER_SECOND&nbsp;&nbsp;&nbsp;&nbsp;1*10*1000*1000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//1秒
+void&nbsp;(__stdcall&nbsp;*oldGetSystemTimeAsFileTime)(
+&nbsp;&nbsp;LPFILETIME&nbsp;lpSystemTimeAsFileTime
+)&nbsp;=&nbsp;GetSystemTimeAsFileTime;
+void&nbsp;newGetSystemTimeAsFileTime(
+&nbsp;&nbsp;LPFILETIME&nbsp;lpSystemTimeAsFileTime
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;ULONGLONG&nbsp;ullSeconds&nbsp;=&nbsp;0*&nbsp;PER_SECOND;
+&nbsp;&nbsp;&nbsp;&nbsp;FILETIME&nbsp;tTime;
+&nbsp;&nbsp;&nbsp;&nbsp;ULARGE_INTEGER&nbsp;temp;//1961==&gt;&nbsp;可以参考11222709写一个更近的时间
+&nbsp;&nbsp;&nbsp;&nbsp;temp.QuadPart&nbsp;=&nbsp;ullSeconds;
+&nbsp;&nbsp;&nbsp;&nbsp;lpSystemTimeAsFileTime-&gt;dwHighDateTime&nbsp;=&nbsp;temp.HighPart;
+&nbsp;&nbsp;&nbsp;&nbsp;lpSystemTimeAsFileTime-&gt;dwLowDateTime&nbsp;=&nbsp;temp.LowPart;
+}
+BOOL&nbsp;APIENTRY&nbsp;DllMain(&nbsp;HMODULE&nbsp;hModule,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;ul_reason_for_call,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LPVOID&nbsp;lpReserved
+					&nbsp;)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;LONG&nbsp;error;
+	switch&nbsp;(ul_reason_for_call)
+	{
+	case&nbsp;DLL_PROCESS_ATTACH:
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourTransactionBegin();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourUpdateThread(GetCurrentThread());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourAttach(&amp;(PVOID&amp;)oldGetSystemTimeAsFileTime,&nbsp;newGetSystemTimeAsFileTime);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error&nbsp;=&nbsp;DetourTransactionCommit();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(error&nbsp;==&nbsp;NO_ERROR)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("echofx"&nbsp;DETOURS_STRINGIFY(DETOURS_BITS)&nbsp;".dll:""&nbsp;Detoured&nbsp;Echo().\n");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("echofx"&nbsp;DETOURS_STRINGIFY(DETOURS_BITS)&nbsp;".dll:""&nbsp;Error&nbsp;detouring&nbsp;Echo():&nbsp;%d\n",&nbsp;error);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("ul_reason_for_call=%d\n",ul_reason_for_call);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+	case&nbsp;DLL_THREAD_ATTACH:
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("ul_reason_for_call=%d\n",ul_reason_for_call);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+	case&nbsp;DLL_THREAD_DETACH:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printf("ul_reason_for_call=%d\n",ul_reason_for_call);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+	case&nbsp;DLL_PROCESS_DETACH:
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourTransactionBegin();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourUpdateThread(GetCurrentThread());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DetourDetach(&amp;(PVOID&amp;)oldGetSystemTimeAsFileTime,&nbsp;newGetSystemTimeAsFileTime);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error&nbsp;=&nbsp;DetourTransactionCommit();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//printf("echofx"&nbsp;DETOURS_STRINGIFY(DETOURS_BITS)&nbsp;".dll:"&nbsp;"&nbsp;Removed&nbsp;Echo()&nbsp;(result=%d)\n",&nbsp;error);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//printf("ul_reason_for_call=%d\n",ul_reason_for_call);
+	break;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+	}
+	return&nbsp;TRUE;
+}</pre><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/153175#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>看到一个不错的包:</p><p><a rel="nofollow" href="https://www.npmjs.com/package/gulp-stamp">https://www.npmjs.com/package/gulp-stamp</a></p><p>命令:gulp stamp 刷新时间戳</p><p><span style="color:rgb(0,176,80);">/*-----------------------分割线------------------- --------------------------*/</span></p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>安装gulp</p><p><span style="font-family:'Microsoft YaHei';font-size:medium;">npm install --save-dev gulp</span><br><span style="font-family:'Microsoft YaHei';font-size:medium;">npm install --save-dev gulp-rev</span><br><span style="font-family:'Microsoft YaHei';font-size:medium;">npm install --save-dev gulp-rev-collector</span><br><span style="font-family:'Microsoft YaHei';font-size:medium;">npm install --save-dev run-sequence</span>
+ &nbsp; &nbsp; &nbsp; &nbsp;</p></li><li><p><span style="font-family:'Microsoft YaHei';font-size:medium;">编写打包程序</span></p></li></ol><pre class="brush:js;toolbar:false">//引入gulp和gulp插件
+var&nbsp;gulp&nbsp;=&nbsp;require('gulp'),&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;runSequence&nbsp;=&nbsp;require('run-sequence'),&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;rev&nbsp;=&nbsp;require('gulp-rev'),&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;revCollector&nbsp;=&nbsp;require('gulp-rev-collector');
+
+//定义css、js、img文件路径，是本地css,js,img文件的路径，可自行配置
+var&nbsp;cssUrl&nbsp;=&nbsp;'css/*.css',&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;jsUrl&nbsp;=&nbsp;'js/*.js';&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;imageUrl&nbsp;=&nbsp;'images/*';
+
+//CSS生成文件hash编码并生成&nbsp;rev-manifest.json文件名对照映射
+gulp.task('revCss',&nbsp;function(){&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;gulp.src(cssUrl)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev.manifest())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(gulp.dest('rev/css'));
+});
+
+//js生成文件hash编码并生成&nbsp;rev-manifest.json文件名对照映射
+gulp.task('revJs',&nbsp;function(){&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;gulp.src(jsUrl)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev.manifest())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(gulp.dest('rev/js'));
+});
+
+//img生成文件hash编码并生成&nbsp;rev-manifest.json文件名对照映射
+gulp.task('revImg',&nbsp;function(){&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;gulp.src(imageUrl)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(rev.manifest())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(gulp.dest('rev/images'));
+});
+
+//Html更换css、js、img文件版本
+gulp.task('revHtml',&nbsp;function&nbsp;()&nbsp;{&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;gulp.src(['rev/**/*.json',&nbsp;'./*.html'])&nbsp;&nbsp;/*./是本地html文件的路径，可自行配置*/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(revCollector())&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.pipe(gulp.dest('.'));&nbsp;&nbsp;/*Html更换css、js文件版本,.也是和本地html文件的路径一致*/});
+
+//开发构建
+gulp.task('dev',&nbsp;function&nbsp;(done)&nbsp;{&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;condition&nbsp;=&nbsp;false;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;runSequence(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['revCss'],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['revJs'],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['revImg'],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;['revHtml'],&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;done);
+});
+
+gulp.task('default',&nbsp;['dev']);</pre><p style="font-family:'Microsoft YaHei';font-size:medium;white-space:normal;"><strong>3.更改gulp-rev和gulp-rev-collector</strong></p><pre>打开node_modules\gulp-rev\index.js
+第144行&nbsp;manifest[originalFile]&nbsp;=&nbsp;revisionedFile;
+更新为:&nbsp;manifest[originalFile]&nbsp;=&nbsp;originalFile&nbsp;+&nbsp;'?v='&nbsp;+&nbsp;file.revHash;</pre><pre>打开node_modules\gulp-rev\node_modules\rev-path\index.js
+10行&nbsp;return&nbsp;filename&nbsp;+&nbsp;'-'&nbsp;+&nbsp;hash&nbsp;+&nbsp;ext;
+更新为:&nbsp;return&nbsp;filename&nbsp;+&nbsp;ext;</pre><pre>打开node_modules\gulp-rev-collector\index.js
+31行if&nbsp;(&nbsp;!_.isString(json[key])&nbsp;||&nbsp;path.basename(json[key]).replace(new&nbsp;RegExp(&nbsp;opts.revSuffix&nbsp;),&nbsp;''&nbsp;)&nbsp;!==&nbsp;path.basename(key)&nbsp;)&nbsp;{
+更新为:&nbsp;if&nbsp;(&nbsp;!_.isString(json[key])&nbsp;||&nbsp;path.basename(json[key]).split('?')[0]&nbsp;!==&nbsp;path.basename(key)&nbsp;)&nbsp;{</pre><p style="font-family:'Microsoft YaHei';font-size:medium;white-space:normal;"><strong>4.继续更改gulp-rev-collector</strong></p><pre>打开node_modules\gulp-rev-collector\index.js
+第107行&nbsp;regexp:&nbsp;new&nbsp;RegExp(&nbsp;'([\/\\\\\'"])'&nbsp;+&nbsp;pattern,&nbsp;'g'&nbsp;),
+更新为:&nbsp;regexp:&nbsp;new&nbsp;RegExp(&nbsp;'([\/\\\\\'"])'&nbsp;+&nbsp;pattern+'(\\?v=\\w{10})?',&nbsp;'g'&nbsp;),</pre><p>参考:</p><p><a rel="nofollow" href="https://www.jianshu.com/p/164344f8e2ac">前端静态资源版本更新与缓存——通过gulp 在原html文件上自动化添加js、css、img版本号</a></p><p><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:GX97sawVRPQJ:https://www.infoq.cn/article/front-end-engineering-and-performance-optimization-part1/+&amp;cd=17&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">前端工程精粹（一）：静态资源版本更新与缓存</a></p><p><a rel="nofollow" href="https://blog.csdn.net/jimolangyaleng/article/details/76617771">关于angularJs清除浏览器缓存的方法</a></p><p><a rel="nofollow" href="https://github.com/amandakelake/blog/issues/41">缓存（二）——浏览器缓存机制：强缓存、协商缓存</a></p><p>其他:</p><p><a rel="nofollow" href="https://www.cnblogs.com/s-quan/p/6005020.html">angular页面缓存与页面刷新</a></p><p><a rel="nofollow" href="http://webcache.googleusercontent.com/search?q=cache:D6f5FBc0as4J:www.fly63.com/article/detial/516+&amp;cd=5&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">angularjs 缓存详解</a></p><p><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:XOCtFB5ljnsJ:https://www.w3ctech.com/topic/1000+&amp;cd=4&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">Angular 跨页缓存设计</a></p><p><a rel="nofollow" href="https://blog.csdn.net/u012396955/article/details/73015217">angularJs中$cacheFactory缓存用法</a></p><p><a rel="nofollow" href="https://juejin.im/post/5abcb85af265da23884d256b">Angularjs中的缓存以及缓存清理</a></p><p>db操作缓存</p><p><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:fSVS5OS32aAJ:https://my.oschina.net/thinwonton/blog/918163+&amp;cd=5&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">基于注解的spring缓存，轻松无侵入解决cache问题</a></p><p><a rel="nofollow" href="https://www.ibm.com/developerworks/cn/opensource/os-cn-spring-cache/">注释驱动的 Spring cache 缓存介绍</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/fashflying/p/6908028.html">Spring缓存注解@Cacheable、@CacheEvict、@CachePut使用</a></p><p><a rel="nofollow" href="https://juejin.im/post/5abcb85af265da23884d256b">Angularjs中的缓存以及缓存清理</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/103616#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

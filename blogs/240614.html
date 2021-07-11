@@ -1,0 +1,215 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <article> 
+ <div class="post post-717392 type-post status-publish format-standard hentry category-c category-com tag-_bstr_t-function tag-addref-method tag-c tag-cl-exe tag-com tag-com-component-implementation tag-iunknown-interface tag-queryinterface-method tag-release-method tag-std-namespace"> 
+  <div class="single_post"> 
+   <div class="post-single-content box mark-links"> 
+    <header> 
+     <h1 class="title single-title" style="color: #000000;">codesteps上面的广告有点多,影响阅读,下面这段脚本去除下:</h1> 
+     <pre class="language-actionscript"><code>function removeElementsByClass(cls){
+	for(var i=0;i&lt;cls.length;i++){
+	let className = cls[i]
+	    var elements = document.getElementsByClassName(className);
+	    while(elements.length &gt; 0){
+	        elements[0].parentNode.removeChild(elements[0]);
+	    }
+    }
+}
+function removeElementsById(ids){
+	for(var i=0;i&lt;ids.length;i++){
+		if(document.getElementById(ids[i])){
+			document.getElementById(ids[i]).parentNode.removeChild(document.getElementById(ids[i]))
+		}	
+	}
+
+}
+removeElementsByClass(['google-auto-placed','sidebar','adsbygoogle','related-posts','postauthor'])
+removeElementsById(['site-header','comments',
+  'commentsAdd','site-footer','cookie-notice' ])
+
+</code></pre> 
+     <h1 class="title single-title" style="color: #000000;"><br></h1> 
+     <h1 class="title single-title" style="color: #000000;"><a>https://codesteps.com/2014/02/28/com-creating-a-com-component-using-cpp-part-1/</a></h1> 
+     <header> 
+      <h1 class="title single-title">COM – Creating a COM Component using C++ – IUnknown interface</h1> 
+      <div class="post-date-feather" style="color: #a2a2a2;">
+        February 28, 2014 
+      </div> 
+     </header> 
+     <div class="post-single-content box mark-links" style="color: #555555;"> 
+      <p>COM<span>&nbsp;</span><em>(Component Object Model)</em><span>&nbsp;</span>is a platform-independent, distributed and object-oriented technology developed by Microsoft to create re-usable software components and enables software components to communicate.</p> 
+      <p><span>COM enables interaction between objects through&nbsp;</span><em>interfaces</em><span>.&nbsp;</span><em>Interfaces</em><span>&nbsp;are core concepts to build COM components. An&nbsp;</span><em>interface</em><span>&nbsp;contains function prototypes not the function implementations. COM&nbsp;</span><em>interfaces</em><span>&nbsp;are strongly typed and every interface has its own unique interface identifier&nbsp;</span><em>(called GUID – Globally Unique IDentifier)</em><span>. Component developers must provide&nbsp;</span><em>interface implementation</em><span>&nbsp;and associate the implementation with&nbsp;</span><em>interfaces</em><span>.</span></p> 
+      <p>COM Component expose the<span>&nbsp;</span><em>interfaces</em><span>&nbsp;</span>to COM Clients<span>&nbsp;</span><em>(those are going to use COM Components)</em><span>&nbsp;</span>or another COM Components. COM Clients will call the methods in<span>&nbsp;</span><em>interfaces&nbsp;</em>and because of the association between<span>&nbsp;</span><em>interfaces</em><span>&nbsp;</span>and<span>&nbsp;</span><em>interface implementations</em>, methods defined in COM Components will execute.</p> 
+      <p>COM components can be created with variety of programming languages.&nbsp;In this article we are going to create a simple COM component using C++ programming language. As this concept is difficult to understand, we are going to explain this in series of articles; instead of a single article.</p> 
+      <p>Before going to start implementing a COM component, lets have a look at basic<span>&nbsp;</span><em>interface<span>&nbsp;</span><strong>IUnknown</strong></em>.</p> 
+      <h3><strong>IUnknown interface</strong></h3> 
+      <p>This is the core<span>&nbsp;</span><em>interface</em><span>&nbsp;</span>and must be implemented as part of every interface.<span>&nbsp;</span><em>IUnknown interface</em><span>&nbsp;</span>has 3 methods, two of them<span>&nbsp;</span><em>(AddRef and Release methods)</em><span>&nbsp;</span>are used for reference counting and<span>&nbsp;</span><em>QueryInterface</em><span>&nbsp;</span>method is used to retrieve pointer to object’s interfaces. Reference count controls the life of the object. When no references to the object, object should be destroyed.</p> 
+      <p>Now the time for implementation.</p> 
+      <p><strong>Step (1).</strong><span>&nbsp;</span>The first step is define an interface using Interface Definition Language<span>&nbsp;</span><em>(IDL)</em><span>&nbsp;</span>and save it in<span>&nbsp;</span><strong><span style="text-decoration: underline;"><em>.idl</em></span></strong><span>&nbsp;</span>file. Each interface in an IDL file contains interface header and body. The interface header contains attributes and the interface body contains interface methods. See below:</p> 
+      <pre style="background: #eeeeee;">// Hello.idl : IDL source for IHello
+//
+
+import "unknwn.idl";
+
+[
+	uuid(2BEFC176-884D-4B33-A9FB-B0F86F2699A5),
+	version(1.0)
+]
+interface IHello : IUnknown
+{
+	[id(1)] HRESULT SayHello([in] BSTR message);
+};</pre> 
+      <ul> 
+       <li>Define an interface<span>&nbsp;</span><em>IHello</em><span>&nbsp;</span>using IDL language and save the file as “<em>Hello.idl”</em><span>&nbsp;</span>file.</li> 
+       <li><strong><em>IUnknown</em></strong><span>&nbsp;</span>interface is defined in<span>&nbsp;</span><em>“unknwn.idl”</em><span>&nbsp;</span>file. So, imported it into “<em>Hello.idl”</em><span>&nbsp;</span>file; because this file is using<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface.</li> 
+       <li>Inside<span>&nbsp;</span><em>interface header</em>: 
+        <ul> 
+         <li><em>uuid</em>&nbsp;interface attribute is used to define an unique 128-bit identifier for this interface.<span>&nbsp;</span><em>uuid</em><span>&nbsp;</span>value can be generated by using GUID generator tools.<span>&nbsp;</span><a title="uToolbox - GUID Generator Tool" style="color: #c69c6d; text-decoration: none;"><em>This article used&nbsp;uToolbox GUID generator tool to generate GUIDs.</em></a></li> 
+         <li><em>version</em><span>&nbsp;</span>attribute is used to specify the version number of this interface.</li> 
+        </ul> </li> 
+       <li>Inside<span>&nbsp;</span><em>interface body</em>, define<span>&nbsp;</span><em>SayHello</em><span>&nbsp;</span>function. This function takes one argument<span>&nbsp;</span><em>(a string)</em><span>&nbsp;</span>and display the message.</li> 
+      </ul> 
+      <p><strong>Step (2).</strong><span>&nbsp;</span>Now compile&nbsp;“<em>Hello.idl”</em>&nbsp;file using Microsoft’s MIDL compiler. Type the following at command prompt.</p> 
+      <pre style="background: #eeeeee;">midl Hello.idl</pre> 
+      <p>MIDL compiler compiles&nbsp;“<em>Hello.idl”&nbsp;</em>file and generate the following files.</p> 
+      <ul> 
+       <li><em>Hello.h</em><span>&nbsp;– This is the header file contains the type definitions and function declarations for the interfaces.</span></li> 
+       <li><em>Hello_i.c</em><span>&nbsp;– The interface ID file. This file contains the IIDs and CLSIDs for every interface defined in IDL file.&nbsp;</span><em>For eg:&nbsp;<strong>IID_IHello</strong>&nbsp;is defined in this file.</em></li> 
+       <li><em>Hello_p.c</em><span>&nbsp;– Proxy/Stub code contains in this file. Proxy/Stub code is used for marshaling. Marshaling is the process of packaging and unpackaging parameters between the remote procedure calls.</span></li> 
+       <li><em>dlldata.c</em><span>&nbsp;– Contains information to build and register a proxy/stub DLL.</span></li> 
+      </ul> 
+      <p>Next article we will look into defining a component based on these MIDL generated files.</p> 
+      <p>**</p> 
+     </div> 
+     <h1 class="title single-title" style="color: #000000;"><a>https://codesteps.com/2014/03/07/com-creating-a-com-component-using-c-part-2/</a></h1> 
+     <h1 class="title single-title" style="color: #000000;">COM – Creating a COM Component using C++ – IUnknown interface definition</h1> 
+     <div class="post-date-feather" style="color: #a2a2a2;">
+       March 7, 2014 
+     </div> 
+    </header> 
+    <div class="post-single-content box mark-links"> 
+     <p>This is the series of articles explaining creating a COM component using C++.<span>&nbsp;</span><a title="COM: Creating a COM Component using C++ (Part-1)" style="color: #c69c6d; text-decoration: none;">In our previous article</a>, we have defined an interface<span>&nbsp;</span><em>IHello</em><span>&nbsp;</span>and compiled the IDL file using Microsoft’s MIDL compiler.</p> 
+     <p>Now we are going to define a COM Component using C++.&nbsp;Remember that the all the interfaces defined in an IDL file must be implemented.</p> 
+     <p><strong>Step (1).</strong><span>&nbsp;</span>Derive a C++ class from<span>&nbsp;</span><em>IHello</em><span>&nbsp;</span>interface. Add necessary header files.</p> 
+     <pre style="background: #eeeeee;">// HelloComponent.h
+//
+#include "Hello.h"
+#include "Hello_i.c"
+
+class CHelloComponent : public IHello
+{
+};</pre> 
+     <p><strong>Step (2).</strong><span>&nbsp;</span>Declare the class methods in<span>&nbsp;</span><em>.h</em><span>&nbsp;</span>file and implement those methods in<span>&nbsp;</span><em>.cpp</em><span>&nbsp;</span>file for maintainability. Add&nbsp;<em>IHello</em>&nbsp;and<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface method declarations into&nbsp;<em>CHelloComponent</em><span>&nbsp;</span>class.<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>methods maintain object’s reference counting; to keep object reference count add a variable<span>&nbsp;</span><em>(for eg: m_cRef)</em>.</p> 
+     <pre style="background: #eeeeee;">// HelloComponent.h
+//
+#include "Hello.h"
+#include "Hello_i.c"
+
+#include &lt;iostream&gt;
+
+class CHelloComponent : public IHello
+{
+public:
+	CHelloComponent() : m_cRef (1)
+	{
+	}
+	~CHelloComponent()
+	{
+	}
+
+	// -- IUnknown Methods
+	ULONG STDMETHODCALLTYPE AddRef();
+	ULONG STDMETHODCALLTYPE Release();
+	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, LPVOID *ppv);
+
+	// -- IHello Method
+	HRESULT STDMETHODCALLTYPE SayHello(BSTR message);
+
+private:
+	ULONG m_cRef;
+};</pre> 
+     <p><strong>Step (3).</strong><span>&nbsp;</span>Lets implement the<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>methods first.<span>&nbsp;</span><em>AddRef</em><span>&nbsp;</span>and<span>&nbsp;</span><em>Release</em><span>&nbsp;</span>methods of<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface maintains the object’s reference counting to ensure the lifetime of the object. Once no reference are there for the object; object will be released from the memory. These things are not done automatically; we need to implement this functionality in<span>&nbsp;</span><em>AddRef</em><span>&nbsp;</span>and<span>&nbsp;</span><em>Release</em><span>&nbsp;</span>methods. These are the guidelines for<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface. Because this is an interface, implementation doesn’t exist itself. But whoever going to implement<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface, they should implement these methods.</p> 
+     <pre style="background: #eeeeee;">ULONG CHelloComponent::AddRef()
+{
+	return (++m_cRef);
+}
+
+ULONG CHelloComponent::Release()
+{
+	if ( --m_cRef != 0 ) 
+		return m_cRef; 
+
+	delete this;
+	return 0;
+}</pre> 
+     <p><em>AddRef</em><span>&nbsp;</span>will increment and<span>&nbsp;</span><em>Release</em><span>&nbsp;</span>will decrement the reference count value by 1.<span>&nbsp;</span><em>Release</em><span>&nbsp;</span>method also releases the object from memory when the reference count is 0. This way we have achieved initial goal of<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface.</p> 
+     <p><strong>Step (4).</strong><span>&nbsp;</span>Another important method of<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interface is<span>&nbsp;</span><em>QueryInterface</em>. This method retrieves the requested interface pointer to the callers. A component can implement multiple interfaces. This function should always return the appropriate interface pointer requested by the caller.</p> 
+     <pre style="background: #eeeeee;">HRESULT CHelloComponent::QueryInterface(REFIID riid, LPVOID *ppv)
+{
+	if ( ( riid == IID_IHello ) || ( riid == IID_IUnknown ) )
+	{
+		*ppv = (void *) this;
+		AddRef(); // -- Maintain the reference count
+	}
+	else
+		*ppv = NULL;
+
+	return (*ppv == NULL) ? E_NOINTERFACE : S_OK;
+}</pre> 
+     <p>In this component<span>&nbsp;</span><em>IHello</em><span>&nbsp;</span>and<span>&nbsp;</span><em>IUnknown</em><span>&nbsp;</span>interfaces are implemented. If the requested interface pointer is either of this type,<span>&nbsp;</span><em>QueryInterface</em><span>&nbsp;</span>function will return the pointer to this component. Otherwise this returns, NULL pointer with E_NOINTERFACE return code.</p> 
+     <p><strong>Step (5).</strong><span>&nbsp;</span>Now we have to implement<span>&nbsp;</span><em>IHello</em>‘s<span>&nbsp;</span><em>SayHello</em><span>&nbsp;</span>method. This method simply takes a string as an argument and display the string on the console window.</p> 
+     <pre style="background: #eeeeee;">HRESULT CHelloComponent::SayHello(BSTR message)
+{
+	_bstr_t bstrMessage = message;
+
+	cout &lt;&lt; bstrMessage &lt;&lt; endl;
+
+	return S_OK;
+}</pre> 
+     <p><em>_bstr_t</em><span>&nbsp;</span>class is the helper class deals with BSTR data types. It internally maintains resource allocation and deallocation for BSTR data types or you can specify it through its parameter.</p> 
+     <p><strong>Step (6).</strong><span>&nbsp;</span>Include the necessary files in<span>&nbsp;</span><em>HelloComponent.cpp</em><span>&nbsp;</span>file.</p> 
+     <pre style="background: #eeeeee;">#include "HelloComponent.h"
+
+// -- for _bstr_t
+#include &lt;comutil.h&gt;
+
+// -- for std namespace; for cout etc.,
+using namespace std;</pre> 
+     <p><strong>Step (7).</strong><span>&nbsp;</span>Now compile<span>&nbsp;</span><em>HelloComponent.cpp</em>&nbsp;from command prompt&nbsp;using Microsoft’s tool&nbsp;<em>cl.exe.</em></p> 
+     <pre style="background: #eeeeee;">cl HelloComponent.cpp /EHsc /c</pre> 
+     <p>The file<span>&nbsp;</span><em>HelloComponent.cpp</em>&nbsp;will compile and it will generate an<span>&nbsp;</span><em>.obj</em><span>&nbsp;</span>file.</p> 
+     <p>Now the<span>&nbsp;</span><em>HelloComponent</em><span>&nbsp;</span>is ready. But, this is not enough to deploy the component. We need to wrap the component into a DLL and register it into Windows registry to complete the deployment.&nbsp;We will discuss about these in our next articles.</p> 
+     <p>**</p> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</article>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="4007ac82215a49aa98fc306363744570" href="/blogs/attachment?id=4007ac82215a49aa98fc306363744570" title="codesteps_com_series.zip">codesteps_com_series.zip</a>
+                <span class="attSize">1.13MB</span>
+                <span class="downloadNum">，下载次数：<i>0</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/240614#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.C++_Blog" title="C++" href="https://developer.huaweicloud.com/tags/200434/blog_1">C++</a>
+        
+    </div>
+</div></div>

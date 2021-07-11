@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>由于 Chrome 88 和 Edge 88 中删除了对FTP 协议的支持,所以以往直接在chrome打开ftp协议共享文件目录的方式不再可行了;<br>所以有必要寻求一个可选的替代方案;<br>go filebrowser项目就是一个可选的网页文件浏览选项;&nbsp; &nbsp;&nbsp;<br><strong>&nbsp;项目地址：&nbsp;</strong> &nbsp;<br><a rel="nofollow" href="https://github.com/filebrowser/filebrowser">https://github.com/filebrowser/filebrowser</a>&nbsp; &nbsp;<br>如果不需要进行特殊定制,那么可以直接下载release页面最新的二进制可执行程序使用<br>可以使用filebrowser -h查看命令说明,<br><strong>简单启动</strong>(这样启动默认的用户和密码是admin/admin)<br>filebrowser -r /path/to/your/files&nbsp;</p>
+<p><strong>安装说明:</strong><br><a>https://filebrowser.org/installation</a>&nbsp;</p>
+<p><strong>免密码模式的设定方式,参考</strong><br></p>
+<pre class="language-actionscript"><code>#!/bin/bash
+./filebrowser config init --port 10000 --address "0.0.0.0" --baseurl "" --log "stdout" --root="/srv" --auth.method='noauth' --commands "" --lockPassword --perm.admin=false --perm.create=false --perm.delete=false --perm.execute=false --perm.modify=false --perm.rename=false --signup=false
+./filebrowser users add anonymous "anonymous"
+exec ./filebrowser</code></pre>
+<p><br><strong>来自</strong>(https://bneijt.nl/blog/post/host-files-read-only-with-filebrowser-web-interface/)</p>
+<p><strong>可以使用screen命令</strong>,运行到background<br></p>
+<pre class="language-actionscript"><code>kill -9 $(lsof -ti tcp:10000)
+screen -dmSL filebrowser "./filebrowser" &amp;&amp; screen -wipe</code></pre>
+<p><br><strong>其他命令说明:</strong><br><a>https://filebrowser.org/configuration/command-runner</a>&nbsp;</p>
+<p><strong>关于自行编译运行filebrowser项目的注意点:</strong><br>1.filebrowser最新的版本使用了golang 1.16新增的embed包来把前端资源都嵌入到可执行文件;<br>2.要注意工程目录下的前端页面(frontend子目录)工程要自行安装依赖(npm i)和打包(npm run build)</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/249313#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

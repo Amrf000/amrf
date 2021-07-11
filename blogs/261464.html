@@ -1,0 +1,92 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h1># 安装</h1>
+<ul> 
+ <li><strong>方式一：&nbsp;</strong><strong></strong></li> 
+</ul>
+<pre class="language-bash"><code>curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+sudo apt update
+sudo apt install mongodb-org</code></pre>
+<p><strong>（https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-18-04-source）</strong></p>
+<ul> 
+ <li> <h3>方式二：</h3> </li> 
+</ul>
+<p>访问<a href="https://mirrors.huaweicloud.com/mongodb/apt/ubuntu/dists/bionic/mongodb-org/4.2/multiverse/binary-amd64/">https://mirrors.huaweicloud.com/mongodb/apt/ubuntu/dists/bionic/mongodb-org/4.2/multiverse/binary-amd64/，</a></p>
+<p>分别下载<img class="mce_image" id="images_161914483059343" src="https://bbs-img.huaweicloud.com/blogs/img/1619144831762043090.png">,然后从上到下使用dpkg -i xxx.deb依次进行安装;</p>
+<h1># 运行</h1>
+<ul> 
+ <li>启动&nbsp;&nbsp;<br>sudo systemctl start mongod.service&nbsp;&nbsp;<br></li> 
+ <li>查看状态&nbsp;&nbsp;<br>sudo systemctl status mongod<br><br></li> 
+ <li>配置为自启<br>sudo systemctl enable mongod<br></li> 
+ <li>重启服务<br>sudo systemctl restart mongod<br></li> 
+ <li>测试<br>mongo --eval 'db.runCommand({ connectionStatus: 1 })'</li> 
+</ul>
+<h1># mongodb配置</h1>
+<p>ubuntu18下mongodb 4.2的配置文件默认在/etc/mongod.conf</p>
+<ul> 
+ <li>如果需要远程访问，修改绑定ip</li> 
+</ul>
+<p><img class="mce_image" id="images_161914523219580" src="https://bbs-img.huaweicloud.com/blogs/img/1619145232603067625.png"></p>
+<ul> 
+ <li>如果需要开启数据库访问权限控制，则需要开启</li> 
+</ul>
+<p><img class="mce_image" id="images_161914537297780" src="https://bbs-img.huaweicloud.com/blogs/img/1619145374299084577.png"></p>
+<p>修改完配置后需要使用sudo systemctl restart mongod重新启动mongod服务，以使新的配置生效</p>
+<h1># 新增管理员用户（https://juejin.cn/post/6844903961162416135）</h1>
+<p><span style="color: #333333;">1</span><span style="color: #333333;">、进入mongodb的shell：mongo</span></p>
+<p><span style="color: #333333;"> </span><span style="color: #333333;">2</span><span style="color: #333333;">、切换数据库：use admin db.createUser( { </span><span style="color: #333333;">user</span><span style="color: #333333;">: </span><span style="color: #333333;">"admin"</span><span style="color: #333333;"> pwd: </span><span style="color: #333333;">"admin"</span><span style="color: #333333;">, </span><span style="color: #333333;">roles</span><span style="color: #333333;">: [ { </span><span style="color: #333333;">role</span><span style="color: #333333;">: </span><span style="color: #333333;">"root"</span><span style="color: #333333;">, </span><span style="color: #333333;">db</span><span style="color: #333333;">: </span><span style="color: #333333;">"admin"</span><span style="color: #333333;"> } ] } ) </span></p>
+<p><span style="color: #333333;">user字段，为新用户的名字； </span></p>
+<p><span style="color: #333333;">pwd字段，用户的密码； </span></p>
+<p><span style="color: #333333;">cusomData字段，为任意内容，例如可以为用户全名介绍；</span></p>
+<p><span style="color: #333333;"> roles字段，指定用户的角色，可以用一个空数组给新用户设定空角色。在roles字段,可以指定内置角色和用户定义的角色。</span></p>
+<p><span style="color: #333333;">--- ---&nbsp; ---&nbsp;</span></p>
+<p><span style="color: #333333;"><span>数据库用户角色：read、readWrite; </span></span></p>
+<p><span style="color: #333333;"><span>数据库管理角色：dbAdmin、dbOwner、userAdmin； </span></span></p>
+<p><span style="color: #333333;"><span>Read：允许用户读取指定数据库 </span></span></p>
+<p><span style="color: #333333;"><span>readWrite：允许用户读写指定数据库 dbAdmin：允许用户在指定数据库中执行管理函数，如索引创建、删除，查看统计或访问system.profile </span></span></p>
+<p><span style="color: #333333;"><span>userAdmin：允许用户向system.users集合写入，可以找指定数据库里创建、删除和管理用户 </span></span></p>
+<p><span style="color: #333333;"><span>clusterAdmin：只在admin数据库中可用，赋予用户所有分片和复制集相关函数的管理权限。</span></span></p>
+<p><span style="color: #333333;"><span> readAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读权限 </span></span></p>
+<p><span style="color: #333333;"><span>readWriteAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的读写权限 </span></span></p>
+<p><span style="color: #333333;"><span>userAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的userAdmin权限 </span></span></p>
+<p><span style="color: #333333;"><span>dbAdminAnyDatabase：只在admin数据库中可用，赋予用户所有数据库的dbAdmin权限。 </span></span></p>
+<p><span style="color: #333333;"><span>root：只在admin数据库中可用。超级账号，超级权限</span></span></p>
+<h1><span style="color: #333333;"><span># 创建库和创建授权用户（https://medium.com/mongoaudit/how-to-enable-authentication-on-mongodb-b9e8a924efac）</span></span></h1>
+<p><span style="color: #333333;"><span>首先mongo命令进入shell</span></span></p>
+<p><span style="color: #333333;"><span>切换用户 db.auth("admin","admin")</span></span></p>
+<pre class="language-bash"><code>use test
+db.createUser(
+  {
+    user: "myTester",
+    pwd: "xyz123",
+    roles: [ { role: "readWrite", db: "test" } ]
+  }
+)</code></pre>
+<h1># 插入数据到集合（https://blog.csdn.net/claroja/article/details/100516412）(<a rel="nofollow" href="https://blog.csdn.net/zhujq_icode/article/details/81142157">https://blog.csdn.net/zhujq_icode/article/details/81142157</a>)</h1>
+<pre class="language-bash"><code>db.inventory.insertOne(
+...    { item: "canvas", qty: 100, tags: ["cotton"], size: { h: 28, w: 35.5, uom: "cm" } }
+... )</code></pre>
+<p>插入方法 &nbsp; &nbsp;描述<br>db.collection.insertOne() &nbsp; &nbsp;Inserts a single document into a collection.<br>db.collection.insertMany() &nbsp; &nbsp;db.collection.insertMany() inserts multiple documents into a collection.<br>db.collection.insert() &nbsp; &nbsp;db.collection.insert() inserts a single document or multiple documents into a collection.<br>1.如果collection,不存在则创建集合,再插入<br>2.如果不指定_id列,会自动创建.必须保证_id唯一,否则会报错<br><br></p>
+<h1># 创建一个开启数据压缩的集合(https://scalegrid.io/blog/enabling-data-compression-in-mongodb-3-0/)</h1>
+<p>(<a>https://stackoverflow.com/questions/59610238/how-to-enable-data-compression-in-mongodb</a>)</p>
+<pre class="language-actionscript"><code>db.createCollection('collects', {storageEngine: {wiredTiger: {configString: 'block_compressor=zlib'}}})</code></pre>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/261464#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.MongoDB_Blog" title="MongoDB" href="https://developer.huaweicloud.com/tags/200229/blog_1">MongoDB</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Ubuntu_Blog" title="Ubuntu" href="https://developer.huaweicloud.com/tags/200030/blog_1">Ubuntu</a>
+        
+    </div>
+</div></div>

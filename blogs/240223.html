@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>参考:(vue也同样适用)</p>
+<p><a>http://stackoverflow.com/questions/41631399/disable-caching-of-a-single-file-with-try-files-directive</a></p>
+<pre class="language-actionscript"><code>location /  {
+    root html;
+    try_files $uri @index
+}
+location @index {
+   add_header Cache-Control no-cache;
+   expires 0;
+   try_files /index.html =404;
+}</code></pre>
+<p></p>
+<p></p>
+<p></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/240223#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Nginx_Blog" title="Nginx" href="https://developer.huaweicloud.com/tags/200304/blog_1">Nginx</a>
+        
+    </div>
+</div></div>

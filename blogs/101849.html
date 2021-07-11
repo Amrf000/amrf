@@ -1,0 +1,76 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>28.2“Spring WebFlux框架”</p><p>Spring WebFlux是Spring Framework 5.0中引入的新的反应式Web框架。与Spring MVC不同，它不需要Servlet API，完全异步且无阻塞，并 通过Reactor项目实现Reactive Streams规范。</p><p>Spring WebFlux有两种版本：基于功能和注释。基于注释的注释非常接近Spring MVC模型，如以下示例所示：</p><pre class="brush:java;toolbar:false">@RestController
+@RequestMapping("/users")
+public&nbsp;class&nbsp;MyRestController&nbsp;{
+@GetMapping("/{user}")
+public&nbsp;Mono&lt;User&gt;&nbsp;getUser(@PathVariable&nbsp;Long&nbsp;user)&nbsp;{
+//&nbsp;...
+}
+@GetMapping("/{user}/customers")
+public&nbsp;Flux&lt;Customer&gt;&nbsp;getUserCustomers(@PathVariable&nbsp;Long&nbsp;user)&nbsp;{
+//&nbsp;...
+}
+@DeleteMapping("/{user}")
+public&nbsp;Mono&lt;User&gt;&nbsp;deleteUser(@PathVariable&nbsp;Long&nbsp;user)&nbsp;{
+//&nbsp;...
+}
+}</pre><p>“WebFlux.fn”是功能变体，它将路由配置与请求的实际处理分开，如以下示例所示：</p><pre class="brush:java;toolbar:false">@Configuration
+public&nbsp;class&nbsp;RoutingConfiguration&nbsp;{
+@Bean
+public&nbsp;RouterFunction&lt;ServerResponse&gt;&nbsp;monoRouterFunction(UserHandler&nbsp;userHandler)&nbsp;{
+return&nbsp;route(GET("/{user}").and(accept(APPLICATION_JSON)),&nbsp;userHandler::getUser)
+.andRoute(GET("/{user}/customers").and(accept(APPLICATION_JSON)),&nbsp;userHandler::getUserCustomers)
+.andRoute(DELETE("/{user}").and(accept(APPLICATION_JSON)),&nbsp;userHandler::deleteUser);
+}
+}
+@Component
+public&nbsp;class&nbsp;UserHandler&nbsp;{
+public&nbsp;Mono&lt;ServerResponse&gt;&nbsp;getUser(ServerRequest&nbsp;request)&nbsp;{
+//&nbsp;...
+}
+public&nbsp;Mono&lt;ServerResponse&gt;&nbsp;getUserCustomers(ServerRequest&nbsp;request)&nbsp;{
+//&nbsp;...
+}
+public&nbsp;Mono&lt;ServerResponse&gt;&nbsp;deleteUser(ServerRequest&nbsp;request)&nbsp;{
+//&nbsp;...
+}
+}</pre><p>WebFlux是Spring Framework的一部分，详细信息可在其 参考文档中找到。</p><p>[注]</p><p>您可以根据需要定义任意数量的RouterFunctionbean来模块化路由器的定义。如果需要应用优先级，可以订购Bean。</p><p>要开始，请将spring-boot-starter-webflux模块添加到您的应用程序中。</p><p>[注]</p><p>在应用程序中添加两个spring-boot-starter-web和spring-boot-starter-webflux模块会导致Spring Boot自动配置Spring MVC，而不是WebFlux。选择此行为是因为许多Spring开发人员spring-boot-starter-webflux 在其Spring MVC应用程序中添加了使用被动的WebClient。您仍然可以通过将所选应用程序类型设置为来强制执行您的选择 SpringApplication.setWebApplicationType(WebApplicationType.REACTIVE)。</p><p>28.2.1 Spring WebFlux自动配置</p><p>Spring Boot为Spring WebFlux提供自动配置，适用于大多数应用程序。</p><p>自动配置在Spring的默认值之上添加了以下功能：</p><p>为for HttpMessageReader和HttpMessageWriter实例配置编解码器（ 本文档稍后将介绍）。</p><p>支持提供静态资源，包括对WebJars的支持（ 本文档后面将介绍）。</p><p>如果你想保留Spring Boot WebFlux功能，并且想要添加额外的 WebFlux配置，你可以添加自己的 @Configuration类类WebFluxConfigurer但不需要 @EnableWebFlux。</p><p>如果要完全控制Spring WebFlux，可以添加自己的 @Configuration注释@EnableWebFlux。</p><p>28.2.2带有HttpMessageReaders和HttpMessageWriters的HTTP编解码器</p><p>Spring WebFlux使用HttpMessageReader和HttpMessageWriter接口来转换HTTP请求和响应。CodecConfigurer通过查看类路径中可用的库，它们被配置为具有合理的默认值。</p><p>Spring Boot通过使用CodecCustomizer实例进一步自定义。例如，spring.jackson.*配置密钥应用于Jackson编解码器。</p><p>如果需要添加或自定义编解码器，可以创建自定义CodecCustomizer 组件，如以下示例所示：</p><pre class="brush:java;toolbar:false">import&nbsp;org.springframework.boot.web.codec.CodecCustomizer;
+@Configuration
+&nbsp;public&nbsp;&nbsp;class&nbsp;MyConfiguration&nbsp;{
+@Bean
+&nbsp;public&nbsp;CodecCustomizer&nbsp;myCodecCustomizer（）{
+&nbsp;return&nbsp;codecConfigurer&nbsp;&nbsp;-&nbsp;&gt;&nbsp;{
+&nbsp;//&nbsp;...
+}
+}
+}</pre><p>您还可以利用Boot的自定义JSON序列化程序和反序列化程序。</p><p>28.2.3静态内容</p><p>默认情况下，Spring Boot从类路径中名为/static（ /public或/resources或/META-INF/resources）的目录中提供静态内容。它使用 ResourceWebHandlerSpring WebFlux，以便您可以通过添加自己WebFluxConfigurer的addResourceHandlers方法来修改该行为并覆盖该方法。</p><p>默认情况下，会映射资源/**，但您可以通过设置spring.webflux.static-path-pattern属性来调整它 。例如，/resources/**可以按如下方式重新定位所有资源 ：</p><p>spring.webflux.static-path-pattern = / resources / **</p><p>您还可以使用自定义静态资源位置 spring.resources.static-locations。这样做会将默认值替换为目录位置列表。如果这样做，默认的欢迎页面检测会切换到您的自定义位置。因此，如果index.html您的任何位置在启动时存在，则它是应用程序的主页。</p><p>除了前面列出的“标准”静态资源位置之外，还为Webjars内容制作了一个特例。具有路径的任何资源 /webjars/**都是从jar文件提供的，如果它们以Webjars格式打包的话。</p><p>[注]</p><p>Spring WebFlux应用程序并不严格依赖于Servlet API，因此它们不能作为war文件部署，也不能使用该src/main/webapp目录。</p><p>28.2.4模板引擎</p><p>除REST Web服务外，您还可以使用Spring WebFlux来提供动态HTML内容。Spring WebFlux支持各种模板技术，包括Thymeleaf，FreeMarker和Mustache。</p><p>Spring Boot包含对以下模板引擎的自动配置支持：</p><p>FreeMarker</p><p>Thymeleaf</p><p>胡子</p><p>当您使用其中一个模板引擎和默认配置时，您的模板将自动从中获取src/main/resources/templates。</p><p>28.2.5错误处理</p><p>Spring Boot提供了WebExceptionHandler一种以合理的方式处理所有错误的方法。它在处理顺序中的位置紧接在WebFlux提供的处理程序之前，这被认为是最后的。对于计算机客户端，它会生成一个JSON响应，其中包含错误，HTTP状态和异常消息的详细信息。对于浏览器客户端，有一个“whitelabel”错误处理程序，它以HTML格式呈现相同的数据。您还可以提供自己的HTML模板来显示错误（请参阅 下一节）。</p><p>自定义此功能的第一步通常涉及使用现有机制，但替换或扩充错误内容。为此，您可以添加类型的bean ErrorAttributes。</p><p>要更改错误处理行为，可以实现ErrorWebExceptionHandler并注册该类型的bean定义。由于a WebExceptionHandler是一个非常低级别的，Spring Boot还提供了一个方便AbstractErrorWebExceptionHandler的让你以WebFlux功能方式处理错误，如下例所示：</p><pre class="brush:java;toolbar:false">public&nbsp;class&nbsp;CustomErrorWebExceptionHandler&nbsp;extends&nbsp;AbstractErrorWebExceptionHandler&nbsp;{
+//&nbsp;Define&nbsp;constructor&nbsp;here
+@Override
+protected&nbsp;RouterFunction&lt;ServerResponse&gt;&nbsp;getRoutingFunction(ErrorAttributes&nbsp;errorAttributes)&nbsp;{
+return&nbsp;RouterFunctions
+.route(aPredicate,&nbsp;aHandler)
+.andRoute(anotherPredicate,&nbsp;anotherHandler);
+}
+}</pre><p>要获得更完整的图片，您还可以DefaultErrorWebExceptionHandler 直接子类化并覆盖特定方法。</p><p><br></p><p>自定义错误页面</p><p><br></p><p>如果要显示给定状态代码的自定义HTML错误页面，可以将文件添加到文件/error夹。错误页面可以是静态HTML（即，添加到任何静态资源文件夹下）或使用模板构建。文件名应该是确切的状态代码或系列掩码。</p><p><br></p><p>例如，要映射404到静态HTML文件，您的文件夹结构如下所示：</p><p><br></p><p>src/</p><p>&nbsp;+- main/</p><p>&nbsp; &nbsp; &nbsp;+- java/</p><p>&nbsp; &nbsp; &nbsp;| &nbsp; + &lt;source code&gt;</p><p>&nbsp; &nbsp; &nbsp;+- resources/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- public/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- error/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; +- 404.html</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- &lt;other public assets&gt;</p><p>要5xx使用Mustache模板映射所有错误，您的文件夹结构如下：</p><p>src/</p><p>&nbsp;+- main/</p><p>&nbsp; &nbsp; &nbsp;+- java/</p><p>&nbsp; &nbsp; &nbsp;| &nbsp; + &lt;source code&gt;</p><p>&nbsp; &nbsp; &nbsp;+- resources/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- templates/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- error/</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| &nbsp; +- 5xx.mustache</p><p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+- &lt;other templates&gt;</p><p>28.2.6 Web过滤器</p><p>Spring WebFlux提供了一个WebFilter可以实现过滤HTTP请求 - 响应交换的接口。WebFilter在应用程序上下文中找到的bean将自动用于过滤每个交换。</p><p>如果过滤器的顺序很重要，则可以实现Ordered或注释@Order。Spring Boot自动配置可以为您配置Web过滤器。执行此操作时，将使用下表中显示的订单：</p><table class="informaltable" width="1198"><thead style="background:rgb(245,245,245);"><tr style="border:none;" class="firstRow"><th align="left" valign="top" style="padding:6px 13px;border-top:none;border-left:none;">Web Filter</th><th align="left" valign="top" style="padding:6px 13px;border-top:none;border-right:none;border-left:none;">Order</th></tr></thead><tbody><tr style="border:none;"><td align="left" valign="top" style="padding:6px 13px;border-top:none;border-left:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">MetricsWebFilter</code></p></td><td align="left" valign="top" style="padding:6px 13px;border-top:none;border-right:none;border-left:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">Ordered.HIGHEST_PRECEDENCE + 1</code></p></td></tr><tr style="border:none;background-color:rgb(248,248,248);"><td align="left" valign="top" style="padding:6px 13px;border-top:none;border-left:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">WebFilterChainProxy</code>&nbsp;(Spring Security)</p></td><td align="left" valign="top" style="padding:6px 13px;border-top:none;border-right:none;border-left:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">-100</code></p></td></tr><tr style="border:none;"><td align="left" valign="top" style="padding:6px 13px;border-top:none;border-bottom:none;border-left:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">HttpTraceWebFilter</code></p></td><td align="left" valign="top" style="padding:6px 13px;border-style:none;"><p style="margin-bottom:15px;"><code class="literal" style="font-family:Consolas, 'liberation mono', Courier, monospace;color:rgb(109,24,11);background-color:rgb(242,242,242);border:1px solid rgb(204,204,204);padding:1px 3px 0px;">Ordered.LOWEST_PRECEDENCE - 10</code></p></td></tr></tbody></table><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/101849#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.MVC_Blog" title="MVC" href="https://developer.huaweicloud.com/tags/200255/blog_1">MVC</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Spring Boot_Blog" title="Spring Boot" href="https://developer.huaweicloud.com/tags/200524/blog_1">Spring Boot</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Spring_Blog" title="Spring" href="https://developer.huaweicloud.com/tags/200680/blog_1">Spring</a>
+        
+    </div>
+</div></div>

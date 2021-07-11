@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>Goland是JetBrains系列下的go语言开发的IDE,界面和操作风格上和IDEA、Clion等等相似;</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>首先下载Goland,我下载的是2019.2版本;</p></li><li><p>克隆或者直接下载https://github.com/gogs/gogs.git,最好可以选择最近的发布分支;<br></p></li><li><p>gogs项目使用了go module管理依赖,go module最低需要go1.11,可以到golang官网下载对应版本,附一个1.13 w64的下载链接<a rel="nofollow" href="https://dl.google.com/go/go1.13.4.windows-amd64.zip" style="margin:0px;padding:0px;background-color:rgb(255,255,255);color:rgb(45,86,177);font-family:roboto, 'PingFang SC', '微软雅黑', 'Microsoft Yahei', Helvetica, Arial, sans-serif;white-space:normal;">https://dl.google.com/go/go1.13.4.windows-amd64.zip</a>;以及一个1.13的镜像地址<a href="https://mirrors.huaweicloud.com/go/go1.13.4/">https://mirrors.huaweicloud.com/go/go1.13.4/</a></p></li><li><p>goproxy默认是proxy.<span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);">golang.org,可以考虑goproxy.cn或者其他镜像</span></p><p><span style="color:rgb(77,77,77);font-family:'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;background-color:rgb(255,255,255);"></span></p></li></ul><p>linux:</p><p>export GO111MODULE=on</p><p>export GOPROXY=http://xxxx/goproxy/</p><p>export GONOSUMDB=*</p><p>windows下同样可以在环境变量中添加,</p><p>Goland中可以设置项目的GOROOT和GO111MODULE,GOPATH,GOPROXY,没有看到可以设置GONOSUMDB,所以我在环境变量中进行了设置</p><p>关于Go代理:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579436339701195.png" title="1579436339701195.png" alt="image.png" width="507" height="407" class="localImage"></p><p>如果还有网络代理还需要设置:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579436410963314.png" title="1579436410963314.png" alt="image.png" class="localImage"></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>&nbsp;以上的工具都配置准备好了，就可以使用Goland打开gogs项目并执行go build了,首次编译会下载相关依赖，时间会比较旧;</p></li></ul><p>指定生成目录到当前项目目录会看到编译出了go_build_gogs_go.exe文件</p><p><br></p><p>/*---------------------------------------------------分割线--------------------------------------------------------------*/</p><p>go语法学习文档</p><p><a rel="nofollow" href="https://runoob.com/go/go-functions.html">https://runoob.com/go/go-functions.html</a></p><p><a rel="nofollow" href="https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-04-func-method-interface.html">https://chai2010.cn/advanced-go-programming-book/ch1-basic/ch1-04-func-method-interface.html</a> </p><p>(<a rel="nofollow" href="https://github.com/chai2010/advanced-go-programming-book">https://github.com/chai2010/advanced-go-programming-book</a></p><p><a rel="nofollow" href="https://legacy.gitbook.com/book/chai2010/advanced-go-programming-book/details">https://legacy.gitbook.com/book/chai2010/advanced-go-programming-book/details</a></p><p><a rel="nofollow" href="https://legacy.gitbook.com/download/pdf/book/chai2010/advanced-go-programming-book">https://legacy.gitbook.com/download/pdf/book/chai2010/advanced-go-programming-book</a>)</p><p><a rel="nofollow" href="https://www.cnblogs.com/howDo/archive/2013/06/04/GoLang-function.html">https://www.cnblogs.com/howDo/archive/2013/06/04/GoLang-function.html</a></p><p><a rel="nofollow" href="https://segmentfault.com/a/1190000010211111">https://segmentfault.com/a/1190000010211111</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/pluse/p/7655977.html">https://www.cnblogs.com/pluse/p/7655977.html</a></p><p><br></p><p>html/template</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/33984147/golang-embed-html-from-file">https://stackoverflow.com/questions/33984147/golang-embed-html-from-file</a></p><p><a rel="nofollow" href="https://medium.com/%40thedevsaddam/easy-way-to-render-html-in-go-34575f858026">https://medium.com/%40thedevsaddam/easy-way-to-render-html-in-go-34575f858026</a></p><p><a rel="nofollow" href="https://www.calhoun.io/intro-to-templates-p1-contextual-encoding/">https://www.calhoun.io/intro-to-templates-p1-contextual-encoding/</a> </p><p><a rel="nofollow" href="https://gowebexamples.com/templates/">https://gowebexamples.com/templates/</a> </p><p><a rel="nofollow" href="https://golang.org/src/html/template/example_test.go">https://golang.org/src/html/template/example_test.go</a> </p><p><a rel="nofollow" href="https://astaxie.gitbooks.io/build-web-application-with-golang/en/07.4.html">https://astaxie.gitbooks.io/build-web-application-with-golang/en/07.4.html</a> </p><p>.tmpl语法高亮设置</p><p><a rel="nofollow" href="https://blog.csdn.net/idwtwt/article/details/80985489">https://blog.csdn.net/idwtwt/article/details/80985489</a></p><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="d7521127378b11eab759fa163e330718" href="/blogs/attachment?id=d7521127378b11eab759fa163e330718" title="rust-1.40.0-msi.7z.007.zip">rust-1.40.0-msi.7z.007.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="d7553245378b11eab759fa163e330718" href="/blogs/attachment?id=d7553245378b11eab759fa163e330718" title="rust-1.40.0-msi.7z.008.zip">rust-1.40.0-msi.7z.008.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="d75ad091378b11eab759fa163e330718" href="/blogs/attachment?id=d75ad091378b11eab759fa163e330718" title="rust-1.40.0-msi.7z.006.zip">rust-1.40.0-msi.7z.006.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="d75f0540378b11eab759fa163e330718" href="/blogs/attachment?id=d75f0540378b11eab759fa163e330718" title="rust-1.40.0-msi.7z.009.zip">rust-1.40.0-msi.7z.009.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="d76b16b2378b11eab759fa163e330718" href="/blogs/attachment?id=d76b16b2378b11eab759fa163e330718" title="rust-1.40.0-msi.7z.010.zip">rust-1.40.0-msi.7z.010.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/135328#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>方式一---依赖ssh.exe的子进程调用:</p></li> 
+</ul>
+<pre class="brush:js;toolbar:false">import&nbsp;*&nbsp;as&nbsp;child&nbsp;from&nbsp;"child_process";
+
+const&nbsp;childProc&nbsp;=&nbsp;child.spawn(command,&nbsp;args,&nbsp;Object.assign({},&nbsp;options,&nbsp;{&nbsp;env:&nbsp;currentEnv&nbsp;}));
+childProc.stdout.on("data",&nbsp;(data)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;data.toString();
+&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;result.concat(data);
+});
+childProc.stderr.on("data",&nbsp;(data)&nbsp;=&gt;&nbsp;{
+});
+childProc.on("error",&nbsp;reject);
+childProc.on("close",&nbsp;(code)&nbsp;=&gt;&nbsp;{
+});
+//====================================
+let&nbsp;ls&nbsp;=&nbsp;child.exec(command,&nbsp;options);
+ls.stdout.setEncoding('binary');
+ls.stdout.on('data',&nbsp;(data:string)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;dd&nbsp;=&nbsp;iconv.decode(new&nbsp;Buffer(data,&nbsp;'binary'),&nbsp;'UTF-8');
+...
+});
+ls.stderr.setEncoding('binary');
+ls.stderr.on('data',&nbsp;(data:string)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;dd&nbsp;=&nbsp;iconv.decode(new&nbsp;Buffer(data,&nbsp;'binary'),&nbsp;'UTF-8');
+...
+});
+ls.on('error',&nbsp;function&nbsp;(error)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;reject(error);
+&nbsp;&nbsp;&nbsp;&nbsp;return;
+});
+ls.on('close',&nbsp;(code)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(error.length&nbsp;&gt;&nbsp;0&nbsp;&amp;&amp;&nbsp;code&nbsp;!=&nbsp;0)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reject(error&nbsp;+&nbsp;`error&nbsp;code:${code}`);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;resolve(error);
+});</pre>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>方式二---依赖纯ts实现的ssh2实现ssh调用:</p></li> 
+</ul>
+<pre class="brush:js;toolbar:false">ssh2的一些使用参考:https://github.com/cweijan/vscode-ssh
+ssh.client?.exec("echo&nbsp;123",function(err,&nbsp;stream){
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(err)&nbsp;throw&nbsp;err;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;stream.on('data',&nbsp;async&nbsp;function(data:any)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;tempPath&nbsp;=&nbsp;await&nbsp;FileManager.record(`temp/result.mul`,&nbsp;null,&nbsp;FileModel.WRITE);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....
+&nbsp;&nbsp;&nbsp;&nbsp;});
+});
+ssh.client?.shell(false,function(err,stream){
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(err)&nbsp;throw&nbsp;err;
+&nbsp;&nbsp;&nbsp;&nbsp;stream.on('data',&nbsp;function(data:&nbsp;string)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.log('STDOUT:&nbsp;'+&nbsp;data);
+&nbsp;&nbsp;&nbsp;&nbsp;}).stderr.on('data',&nbsp;function(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Console.log('STDERR:&nbsp;'+&nbsp;data);
+&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;stream.write("bash&nbsp;-c&nbsp;'/xxx/install.sh'\n");
+&nbsp;&nbsp;&nbsp;&nbsp;stream.write("bash&nbsp;-c&nbsp;'/xxx/config.sh'\n");
+})</pre>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/184689#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.ssh_Blog" title="ssh" href="https://developer.huaweicloud.com/tags/200493/blog_1">ssh</a>
+        
+    </div>
+</div></div>

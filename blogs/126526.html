@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <pre class="brush:java;toolbar:false">public&nbsp;static&nbsp;SqlSessionFactory&nbsp;SqlSessionFactory()&nbsp;throws&nbsp;Exception&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;SqlSessionFactoryBean&nbsp;sqlSessionFactoryBean&nbsp;=&nbsp;new&nbsp;SqlSessionFactoryBean();
+&nbsp;&nbsp;&nbsp;&nbsp;org.apache.commons.dbcp.BasicDataSource&nbsp;ds&nbsp;=&nbsp;new&nbsp;org.apache.commons.dbcp.BasicDataSource();
+&nbsp;&nbsp;&nbsp;&nbsp;ds.setDriverClassName("net.sf.log4jdbc.sql.jdbcapi.DriverSpy");
+&nbsp;&nbsp;&nbsp;&nbsp;ds.setUrl("jdbc:log4jdbc:mysql://xxx:port/xxx");
+&nbsp;&nbsp;&nbsp;&nbsp;ds.setUsername("root");
+&nbsp;&nbsp;&nbsp;&nbsp;ds.setPassword("xxxx");
+&nbsp;&nbsp;&nbsp;&nbsp;sqlSessionFactoryBean.setDataSource(ds);
+&nbsp;&nbsp;&nbsp;&nbsp;sqlSessionFactoryBean.setMapperLocations(
+&nbsp;&nbsp;&nbsp;&nbsp;		new&nbsp;Resource[]&nbsp;{&nbsp;new&nbsp;ClassPathResource("mappers\\xxx\\robotMapper.xml")&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;&nbsp;&nbsp;sqlSessionFactoryBean.setConfigLocation(
+&nbsp;&nbsp;&nbsp;&nbsp;		new&nbsp;ClassPathResource("mybatis-config.xml")
+&nbsp;&nbsp;&nbsp;&nbsp;);
+&nbsp;&nbsp;&nbsp;&nbsp;sqlSessionFactoryBean.setTypeAliasesPackage("com.pineone.icbms.so.interfaces.database.model");
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;sqlSessionFactoryBean.getObject();
+}
+SqlSessionFactory&nbsp;sqlSessionFactory&nbsp;=&nbsp;SqlSessionFactory();
+try&nbsp;(SqlSession&nbsp;sqlSession&nbsp;=&nbsp;sqlSessionFactory.openSession())&nbsp;{
+	XXXMapper&nbsp;robotMapper&nbsp;=&nbsp;sqlSession.getMapper(XXXMapper.class);
+}</pre><pre class="brush:java;toolbar:false">参考:</pre><p><a rel="nofollow" href="https://github.com/mybatis/mybatis-3/wiki/Unit-Test">https://github.com/mybatis/mybatis-3/wiki/Unit-Test</a></p><p><a rel="nofollow" href="https://www.programcreek.com/java-api-examples/index.php%3Fapi%3Dorg.mybatis.spring.SqlSessionFactoryBean+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://www.programcreek.com/java-api-examples/index.php%3Fapi%3Dorg.mybatis.spring.SqlSessionFactoryBean+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/126526#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

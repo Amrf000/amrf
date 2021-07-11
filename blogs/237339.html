@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><a>https://www.docs4dev.com/docs/zh/mysql/5.7/reference/sha256-pluggable-authentication.html</a></p>
+<p style="color: #000000;">MySQL 提供了两个身份验证插件，用于对用户帐户密码实施 SHA-256 哈希：</p>
+<ul style="color: #000000;"> 
+ <li> <p><code>sha256_password</code>：实现基本的 SHA-256 身份验证。</p> </li> 
+ <li> <p><code>caching_sha2_password</code>：实现 SHA-256 身份验证(如<code>sha256_password</code>)，但在服务器端使用缓存可提高性能，并具有其他功能可更广泛地应用。</p> </li> 
+</ul>
+<p style="color: #000000;">本节描述了原始的非缓存 SHA-2 身份验证插件。有关缓存插件的信息，请参见<a>第 6.4.1.4 节“缓存 SHA-2 可插入身份验证”</a>。</p>
+<div class="alert callout tip" style="color: #000000;"> 
+ <p class="title"><i class="fa fa-lightbulb-o"></i>Important</p> 
+ <div> 
+  <p>要使用通过<code>sha256_password</code>插件进行身份验证的帐户连接到服务器，必须使用支持使用 RSA 密钥对进行密码交换的 TLS 连接或未加密连接，如本节稍后所述。无论哪种方式，<code>sha256_password</code>插件都使用 MySQL 的加密功能。参见<a>第 6.3 节“使用加密的连接”</a>。</p> 
+ </div> 
+</div>
+<div class="alert callout info" style="color: #000000;"> 
+ <p class="title"><i class="fa fa-info-circle"></i>Note</p> 
+ <div> 
+  <p>在名称<code>sha256_password</code>中，“ sha256”是指插件用于加密的 256 位摘要长度。在名称<code>caching_sha2_password</code>中，“ sha2”更一般地 table 示 SHA-2 类加密算法，其中 256 位加密是其中的一种实例。后一种名称选择为将来扩展可能的摘要长度留出了空间，而无需更改插件名称。</p> 
+ </div> 
+</div>
+<p style="color: #000000;">下 table 显示了服务器端和 Client 端上的插件名称。</p>
+<p><a>https://www.docs4dev.com/docs/zh/mysql/5.7/reference/creating-ssl-rsa-files-using-mysql.html</a></p>
+<h1 style="color: #000000;">6.3.3.1 使用 MySQL 创建 SSL 和 RSA 证书和密钥</h1>
+<div style="color: #000000;"> 
+ <p>MySQL 提供了以下方法来创建 SSL 证书和密钥文件以及 RSA 密钥对文件，以支持使用 SSL 的加密连接以及使用 RSA 通过未加密的连接进行安全密码交换(如果这些文件丢失)：</p> 
+ <ul> 
+  <li> <p>服务器可以在启动时自动生成这些文件，以使用 OpenSSL 编译 MySQL 发行版。</p> </li> 
+  <li> <p>用户可以手动调用<a>mysql_ssl_rsa_setup</a>Util。</p> </li> 
+  <li> <p>对于某些分发类型，例如 RPM 和 DEB 包，在数据目录初始化期间发生<a>mysql_ssl_rsa_setup</a>调用。在这种情况下，只要<span>&nbsp;</span><strong>openssl</strong><span>&nbsp;</span>命令可用，就不需要使用 OpenSSL 编译 MySQL 发行版。<span style="background-color: #2d2d2d; color: #cccccc; font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; font-size: 1em; white-space: pre; word-spacing: normal;"></span></p> </li> 
+ </ul> 
+</div>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/237339#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.MySQL_Blog" title="MySQL" href="https://developer.huaweicloud.com/tags/200464/blog_1">MySQL</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,113 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h1 class="headline" style="color: #000000; text-align: center;">三种IP电话协议比较(https://www.eefocus.com/communication/210771)</h1>
+<p style="color: #333333; text-align: justify;">随着IP电话应用的普及，建立终端设备和网关的可扩展网络已成为业界面临的一大技术挑战。目前IP电话技术已完美实现了对语音和传真信息的编码和传输，但仍需进一步发展为大型公司和服务提供平台的呼叫控制和地址管理技术。因此，支持IP电话系统互通的多个协议已经出台。常用的IP电话协议如H.323、MGCP和SIP的优缺点各异，谁能成为下一代网络的精神领袖呢？</p>
+<p style="color: #333333; text-align: justify;"><strong>成熟但却无法包罗万象</strong></p>
+<p style="color: #333333; text-align: justify;">　　1996年H.323创建，并于1998年1月推出升级版本2。H.323据称是一种包罗万象的标准，因为它本身由众多从属协议构成。正因为如此，ITU可以通过使用许多现有的数据和通信标准如Q.931、G.711和G.723.1对H.323进行定义。</p>
+<p style="color: #333333; text-align: justify;">　　H.323最初由Intel和PictureTel提出，该协议定义了一种能灵活应用于多媒体电话会议设备的通信方式，并在IP栈上提供应用共享特性。设计人员提出了适用于多种设备的标准，这些设备包括可视电话、台式电脑和大型多端口网关。因此，H.323内容广泛，并提供了应用于不同设备的多种媒体类型和压缩技术。</p>
+<p style="color: #333333; text-align: justify;">　　H.323的核心优点在于其成熟性，这有助于诸多软件供应商开发性能稳定的设备，并且还有利于不同的供应商消除互操作性中出现的问题，并在市场上推出各种支持H.323标准的设备。因为H.323标准包容了Q.931呼叫控制协议，许多在现有ISDN电话技术上具有丰富经验的开发商对该呼叫控制模型也非常熟悉。实际上，事件和参数通常能够直接通过H.323进入以前工作在ISDN下的应用系统。</p>
+<p style="color: #333333; text-align: justify;">　　在定义H.323时，设计人员是从终端设备的角度入手的，而非从现有PSTN的内部设备入手，因此H.323不能与SS7集成，或补充SS7必须提供的强大功能。另外，H.323的扩展性在超大型应用中已证明确实存在问题。设计人员在使用含有成千上万个端口的网关时发现，集中状态管理是瓶颈。</p>
+<p style="color: #333333; text-align: justify;">　　市场对H.323的反应表明，H.323的最佳应用点应是位于或临近端点并带有1至200个端口的系统。H.323在具有足够的处理能力实现呼叫控制和媒体处理的环境中工作良好。H.323作为企业IP电话解决方案已得到了业界最强有力的支持。</p>
+<p style="color: #333333; text-align: justify;"><strong>MGCP：精湛的互操作性</strong></p>
+<p>媒体网关控制协议(MGCP)为众多IP电话网关的互联提供了一种解决方案，能将这些网关联结成一个具备互操作性的整体。MGCP假定呼叫代理(CA)完成所有呼叫控制处理，而媒体网关控制器(MGC)完成所有媒体处理和转换。</p>
+<p>　　MGCP的规格是由不同的公司开发建立的(如Telecordia和Lucent公司)，并由IETF以RFC(RFC 2705)信息文件的形式加以发布。MGCP是简单网关控制协议(SGCP)和IP设备控制(IPDC)协议合并的结果，但目前尚未获得认可。IETF的Megaco工作组协同ITUA正致力于开发基于MGCP的推荐标准H.248(其前身为H.gcp)。该核心文件及相关规格已于2000年2月完成，并作为IETF的RFC标准文件发布。</p>
+<p>　　当H.323网关提供媒体转换而SS7网关翻译呼叫控制信息时，MGCP可与H.323网关和SS7网关协同使用。这种情况下，MGCP将所有来自端点设备的呼叫控制信息传送至网络。使用这种结构方式，开发人员能够补充SS7网络的能力，并且与单用H.323相比，能够构建更大的IP电话系统。</p>
+<p>　　为协调单个呼叫的媒体路径和性能，MGCP要依赖对话描述协议(SDP)，该协议是MGCP规格的一部分。SDP允许就实时协议(RTP)端口及端点IP地址、语音编码方法(如G.711和G.723.1)、报文分组周期和其他联接类型参数等进行协商。</p>
+<p>　　MGCP的优点包括：特别适合于配置大型应用系统，因为其本身就用于解决大型系统的具体问题。应用MGCP可以实现与SS7网络良好的集成，为呼叫处理提供更大的控制和流通量。MGCP将媒体处理和信令功能分离，从而可由多个设备提供商开发更简洁的系统。</p>
+<p>　　MGCP协议的部分缺陷包括：MGCP对于小型应用系统过于复杂。MGCP与H.248/Megaco标准存在竞争关系，而后者已于2000年初由IETF和ITU签署认可。这样，需要MGC的运营商既可选用MGCP，也可选用H.248。因此，H.248或许最终能取代早期的MGCP版本。MGCP的归宿是电信运营市场，由它实现成千上万路IP电话的传送。</p>
+<p style="color: #333333; text-align: justify;"><strong>SIP：长江后浪推前浪</strong></p>
+<p style="color: #333333; text-align: justify;">　　对话启动协议提供了一种既可在终端设备或代理服务器之间，也可向网关设备传输呼叫控制信息的方法，这是IETF MMUSIC工作组的劳动结晶。同样地，像许多现有的因特网协议一样，SIP中也包含了常用的HTTP协议。</p>
+<p style="color: #333333; text-align: justify;">　　SIP被认为是一种轻量级协议，因为该协议使用的是能被终端设备轻易生成并分析的简单文本命令。SIP只使用6个指令管理呼叫控制信息，SIP协议的简单易行是极低成本应用系统选择该协议的重要原因。</p>
+<p style="color: #333333; text-align: justify;">　　SIP并未对媒体传输机制加以定义，因此该协议能用在媒体传输作为专用设备的应用系统，这可提高效率并降低成本。SIP也允许通过任意数据报协议传输呼叫控制信息，使其在非TCP/IP环境(如Novell或其他专有协议)中也能有效使用。</p>
+<p style="color: #333333; text-align: justify;">　　SIP的部分优点包括：该协议具有可扩展特性，可以轻松定义并迅速实现新功能。可以简单易行地嵌入廉价终端用户设备。该协议可确保互操作能力，并使不同的设备进行通信。便于那些非电话领域的开发人员理解该协议。</p>
+<p style="color: #333333; text-align: justify;">　　SIP的缺点包括：SIP问世不久，因此大多数应用尚处于原型阶段。该协议单独应用的范围较窄。但与其他协议协同使用时，具有较强的灵活性。SIP只是完整解决方案的一小部分，还需要许多其他的软件来构建完整的IP电话产品。</p>
+<p style="color: #333333; text-align: justify;">　　低成本终端产品无疑是SIP最自然的应用了，像无线电话、置顶分线盒、<a class="article-link" style="color: #0070c9; background: transparent; text-decoration: none;">以太网</a>电话及其它带有有限计算和内存资源的设备都能使用该协议。由于SIP是一种优越的呼叫控制协议，因此是当前取代MGCP呼叫控制协议的首选。</p>
+<p style="color: #333333; text-align: justify;">　　上述每个协议强调了开发IP电话系统所需技术的不同方面，当前开发的许多系统中至少包含其中一种协议，而且这些协议通常要求互操作性。所有这些协议在构建复杂IP电话系统的过程中不断发展。各制造商都在尝试研制具备互操作性的系统，所以互操作能力将继续成为未来的一大挑战。由IETF和ITU衍生而来的新标准协议MGC(H.248/Megaco)有望成为MGCP在传输市场最强有力的竞争对手。(张资)</p>
+<p style="color: #333333; text-align: justify;"><strong>SIP已成大势所趋</strong></p>
+<p style="color: #333333; text-align: justify;">　　近年来，在建设下一代网络的过程中发生了一个很明显的变化：很多设备厂商都开始将其下一代网络的协议标准向SIP方向倾斜，包括思科，北电都在很多年前取得了较大的提高。</p>
+<p style="color: #333333; text-align: justify;">　　SIP成为追逐的标准，最大的优势就是开发简单，这是相比以前的H.323标准而言的。当IP及多媒体已成为不可逆转的趋势，因此SIP得到追捧也是情理之中的事情。同时SIP具有继承性，对于拥有传统网络的运营商来说，SIP在网络发展过程中，无疑是一个承上启下最好的切入点。</p>
+<p style="color: #333333; text-align: justify;">　　在用户对网络服务质量要求多样性的今天，原有的H.323协议已经无法提供较高的服务质量保障，而SIP协议却很好地保证了网络服务质量，随着产品化地加速，已经有众多厂商完成了以SIP为协议的解决方案的产品化，并且这已成为运营商在建网招标前的重点指标要求。</p>
+<p style="color: #333333; text-align: justify;">　　在3GPP中使用SIP标准来支撑语音和数据是SIP协议得以发展的一个重要原因，SIP可以对语音进行很好优化，并且由于他的可编程性，使移动业务面临灵活性和多样性的变化时，有了很好的保证。</p>
+<p style="color: #333333; text-align: justify;">　　另外，基于SIP的终端丰富多彩很有利于从网络到接入到最终用户完整产业链的完成，这是在缺少产业链均衡发展因素的今天，运营商最稀缺的。(张杰&amp;nbsp; 信息产业部电信研究院研究员)</p>
+<p style="color: #333333; text-align: justify;"><strong>下一代网络需要什么? SIP：越简单越流行</strong></p>
+<p style="color: #333333; text-align: justify;">　　几乎是在同一时间,电信与互联网的各种力量都开始了对SIP的青睐,先是3GPP将SIP作为第三代移动通信全IP网络的核心协议，这就使所有的3G设备厂商开始了服从SIP协议以达到互联互通的努力；再是WindowsXP操作系统中NetMeeting组建的协议也由H.323改为SIP协议，这就表示连即时通信这种最有价值的软件终端也开始了跟踪SIP的道路。对于电信网和互联网，为了开展业务的灵活性，SIP协议成为了网络未来发展的方向。</p>
+<p style="color: #333333; text-align: justify;">　　SIP是一种电话信令协议，来自于传统的电信阵营，因此与生俱来就带出了具有复杂体系架构的特性，它能为在软交换中实施现有电路交换电话网络中的业务提供很好的透明性。SIP主要用于支持多媒体和其他新型业务，在基于IP网络的多业务应用方面具有更加灵活方便的特性。</p>
+<p style="color: #333333; text-align: justify;">　　然而,SIP并非完美,相对而言，SIP在语音业务方面没有BICC成熟，但它能支持较强的多媒体业务，扩展性好，根据不同的应用，可对其进行相应的扩展。在固定网软交换应用中，SIP协议处于扁平体系结构中的呼叫控制层，提供了不同软交换之间呼叫接续的支持。采用SIP体系架构时，从路由角度看，存在两种情况：第一种情况，正常的ISUP消息添加一些信息后封装在SIP消息中传送，呼叫服务器、号码、路由分析和信令以及业务的互通等功能保持不变，路由分析指引到目标IP地址的寻址。第二种情况是基于ENUM数据库的。在这种方式下，呼叫服务器的呼叫控制与现有电路交换网中的呼叫控制完全不同，呼叫控制中将没有号码和路由分析，但是仍需业务映射和互通。</p>
+<p style="color: #333333; text-align: justify;">　　另外，和现有网络相比，运营商对网络的控制减少，控制方式发生了巨大的变化。如果要引入一些功能，则需要对SIP协议进行扩展。</p>
+<p style="color: #333333; text-align: justify;">　　SIP-I(SIPwithEncapsulatedISUP)协议系列包括ITU-TSG11工作组的TRQ.BICC/ISCUPSIP和Q.1912.SIP。前者定义了SIP与BICC/ISUP互通时的技术需求，包括互通接口模型、互通单元IWU所应支持的协议能力集、互通接口的安全模型等。后者根据IWU在SIP侧的NNI上所应支持的协议能力配置集A、B、C，详细定义了3GPPSIP与BICC/ISUP的互通、一般情况下SIP与BICC/ISUP的互通，等等。</p>
+<p style="color: #333333; text-align: justify;">　　最重要的是，SIP-I协议系列具有ITU-T标准固有的清晰准确和详细具体，可操作性非常强，并且3GPP已经采用Q.1912.SIP作为3GPP IMS&lt;/a&gt;R5与PSTN/PLMN互通的最终标准。</p>
+<p style="color: #333333; text-align: justify;">　　所以，中国的SIP与PSTN/ISDN互通的标准化应该以ITU-T的SIP-I协议系列为基础。实际上，已经有大的中国电信运营商最终选择了SIP-I而放弃了SIP-T。</p>
+<p style="color: #333333; text-align: justify;">　　据专家称，SIP应用于NGN环境下需要满足电信网络的许多新要求。NGN SIP域内的标准化应当主要在网络架构、运营商对呼叫和会话的控制、计费、安全、QoS、路由、业务实现等方面进行，并且NGNSIP的标准化应当在IETFSIP的基础上完成。由于ITU-T的SIP-I协议系列比IETF的SIP-T协议系列内容更为丰富完整、描述清晰准确、可操作性更强，所以NGNSIP网络与传统PSTN/ISDN的互通应采用ITU-T的SIP-I协议系列。(记者 刘琦)</p>
+<p style="color: #333333; text-align: justify;"><strong>相关资料</strong></p>
+<p style="color: #333333; text-align: justify;">　　SIP(Session Initiation Protocol，会话发起协议)是由IETF(Interne工程任务组)提出的IP电话信令协议。基于SIP协议标准，整合了传统的语音及增值服务，并提供最新的即时通信服务以及IP网络上的视频服务，并且可以为其他更多的增值应用服务商提供一个标准的具有高扩展性的平台。系统平台完全采用因特网的分布式的体系结构，具有高度的灵活性和可扩展性，并具有大型电信服务所需要的高可靠性和容错性，可支持百万级及千万级的用户量。</p>
+<p style="color: #333333; text-align: justify;"><br></p>
+<p style="color: #333333; text-align: justify;"><a>http://www2.ensc.sfu.ca/people/faculty/ljilja/cnl/presentations/milan/milan_thesis/tsld029.htm</a></p>
+<h1 style="color: #000000; text-align: start;">NetMeeting protocol architecture</h1>
+<ul style="color: #000000; text-align: start;"> 
+ <li> <h2>NetMeeting also uses H.263 standard for IP/Ethernet LAN multimedia conferencing:</h2> 
+  <ul> 
+   <li>Audio codec uses ITU G.723 standard and offers bit-rates between 4.8 kbps and 64 kbps.</li> 
+   <li>Video codec uses ITU H.263 standard and supports 30 fps.</li> 
+  </ul> </li> 
+</ul>
+<ul style="color: #000000; text-align: start;"> 
+ <li> <h2>NetMeeting audio and video codecs use RTP above UDP/IP connections.</h2> </li> 
+</ul>
+<ul style="color: #000000; text-align: start;"> 
+ <li> <h2>Whiteboard, Chat, and File Transfer use ITU T.120 Data Conferencing standard above TCP/IP connections.</h2> </li> 
+</ul>
+<p><a>https://en.wikipedia.org/wiki/Microsoft_NetMeeting#:~:text=NetMeeting%20multimedia%20conferencing%20sessions%20over,standard%20over%20TCP%2FIP%20connections</a>.</p>
+<p><b style="color: #202122;"><span>Microsoft NetMeeting</span></b><span>是已停产的</span><a title="站嘉" class="mw-redirect" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>VoIP</span></a><span>和多点</span><a title="可视电话" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>视频会议</span></a><span>客户端，包含在许多版本的</span><a title="微软Windows" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>Microsoft Windows</span></a><span>（从</span><a title="视窗 95" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>Windows 95</span></a><span>&nbsp;OSR2 到</span><a title="视窗Vista" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>Windows Vista</span></a><span>）中。它使用</span><a title="H.323" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>H.323</span></a><span>协议进行视频会议，并可与基于</span><a title="OpenH323" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>OpenH323</span></a><span>的客户端（例如</span><a title="" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>Ekiga</span></a><span>、</span><a title="Remote Assistance" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>OpenH323</span></a><span>和</span><a title="互联网定位服务" class="mw-redirect" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>Internet Locator Service</span></a><span>&nbsp;(ILS) 作为</span><a title="Reflector（软件）（页面不存在）" class="new" style="color: #ba0000; background: none #ffffff; text-decoration: none;"><span>反射器</span></a><span>）互操作。它也使用稍微改良的方案</span><sup class="noprint Inline-Template" style="color: #202122;"><span>[</span><i><a title="维基百科：需要引用" style="color: #0645ad; background: none; text-decoration: none;"><span>在主体未验证</span></a></i><span>]</span></sup><span>所述的</span><a title="T.120" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>T.120</span></a><span>协议</span><a title="白板" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>白板</span></a><span>、</span><a title="" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>应用程序共享</span></a><span>（或扩展为</span><a title="桌面共享" style="color: #0645ad; background: none #ffffff; text-decoration: none;"><span>桌面共享</span></a><span>）和文件传输。</span></p>
+<h2 style="color: #000000;"><span class="mw-headline"><span>历史</span></span></h2>
+<p style="color: #202122;"><span>NetMeeting中发布了1996年5月29日，原本捆绑</span><a title="互联网" style="color: #0645ad; background: none; text-decoration: none;"><span>Internet Explorer的3</span></a><span>，</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[1]&nbsp;</span></a></sup><span>，后来与</span><a title="浏览器 4" style="color: #0645ad; background: none; text-decoration: none;"><span>Internet Explorer 4中</span></a><span>。它结合了 Microsoft 从英国软件开发商 Data Connection Ltd&nbsp;</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[2]&nbsp;</span></a></sup><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[3]</span></a></sup><span>和 DataBeam Corporation（随后被 Lotus&nbsp;</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[4]</span></a></sup><span>收购）处获得的技术。</span></p>
+<p style="color: #202122;"><span>在视频服务在免费</span><a title="即时通讯" style="color: #0645ad; background: none; text-decoration: none;"><span>IM</span></a><span>客户端上变得普遍之前，例如</span><a title="" style="color: #0645ad; background: none; text-decoration: none;"><span>Yahoo!&nbsp;Messenger</span></a><span>和</span><a title="MSN 信使" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>MSN Messenger</span></a><span>，NetMeeting 是在</span><a title="" style="color: #0645ad; background: none; text-decoration: none;"><span>Internet</span></a><span>上进行视频会议和聊天的流行方式（借助公共</span><a title="互联网定位服务器" style="color: #0645ad; background: none; text-decoration: none;"><span>ILS</span></a><span>服务器，或“直接拨号”到 IP 地址）。已倒闭的</span><a title="科技电视" style="color: #0645ad; background: none; text-decoration: none;"><span>TechTV</span></a><span>频道甚至使用 NetMeeting 作为通过网络摄像头吸引观众观看他们的电话节目的一种手段，尽管观众不得不拨打他们的电话，因为宽带互联网连接仍然很少见。</span></p>
+<h2 style="color: #000000;"><span class="mw-headline"><span>协议架构</span></span></h2>
+<p style="color: #202122;"><span>NetMeeting 使用</span><a title="H.323" style="color: #0645ad; background: none; text-decoration: none;"><span>H.323</span></a><span>标准进行</span><a title="实时传输协议" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>视频会议</span></a><span>：它使用</span><a title="G.723.1" style="color: #0645ad; background: none; text-decoration: none;"><span>G.723.1</span></a><span>和</span><a title="G.711" style="color: #0645ad; background: none; text-decoration: none;"><span>G.711</span></a><span>标准进行音频编码，并提供 5.3&nbsp;</span><a title="千比特/秒" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>kbit/s</span></a><span>和 64&nbsp;</span><a title="千比特/秒" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>kbit/s</span></a><span>之间的比特率。对于视频编码，它使用</span><a title="H.263" style="color: #0645ad; background: none; text-decoration: none;"><span>H.263</span></a><span>标准并支持</span><a title="每秒帧数" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>每秒</span></a><span>30<a title="每秒帧数" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;">帧</a>。网络上的 NetMeeting 多媒体会议会话是通过</span><a title="" style="color: #0645ad; background: none; text-decoration: none;"><span>RTP</span></a><span>、</span><a title="用户数据报协议" style="color: #0645ad; background: none; text-decoration: none;"><span>UDP</span></a><span>和</span><a title="互联网协议" style="color: #0645ad; background: none; text-decoration: none;"><span>IP</span></a><span>网络协议建立的。</span></p>
+<p style="color: #202122;"><span>应用程序共享、共享白板、聊天和文件传输功能在<a title="TCP/IP" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;">TCP/IP</a>连接上使用</span><a title="T.120" style="color: #0645ad; background: none; text-decoration: none;"><span>T.120</span></a><span>标准。</span></p>
+<h2 style="color: #000000;"><span class="mw-headline"><span>停产</span></span></h2>
+<p style="color: #202122;"><span>从</span><a title="Skype 商务版" style="color: #0645ad; background: none; text-decoration: none;"><span>Windows XP</span></a><span>开始，NetMeeting 的“开始”菜单快捷方式已“按设计”删除。用户必须</span><code>conf.exe</code><span>从“开始”菜单“运行”对话框手动启动。</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[5]</span></a></sup></p>
+<p style="color: #202122;"><span>从</span><a title="" style="color: #0645ad; background: none; text-decoration: none;"><span>Windows Vista 开始</span></a><span>，Microsoft Windows 不再包含 NetMeeting。NetMeeting 仍然可以在 32 位版本的 Windows Vista 上安装和运行，因为 Microsoft 在 2007 年 3 月 22 日发布了 32 位版本的 Windows Vista 更新</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[6]</span></a></sup><span>，在 Windows Vista 商业版、企业版或旗舰版上安装 NetMeeting 3.02 .&nbsp;但是，某些功能在 3.02 中不可用，例如远程桌面共享邀请（传入）和白板区域选择。</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[6]</span></a></sup><span>&nbsp;Microsoft 已声明不支持 Vista 兼容版本，仅用作过渡工具，在与基于 Windows XP 的计算机一起使用时帮助支持协作会话。</span><sup class="reference"><a style="color: #0645ad; background: none; text-decoration: none;"><span>[6]</span></a></sup><span>在</span><a title="Windows 7的" style="color: #0645ad; background: none; text-decoration: none;"><span>Windows 7 上</span></a><span>Professional、Enterprise 或 Ultimate 用户可以选择安装</span><a title="视窗 XP 模式" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>Windows XP Mode</span></a><span>来访问 NetMeeting。</span></p>
+<p style="color: #202122;"><span>Microsoft 最初建议使用较新的应用程序，例如</span><a title="浏览器 4" style="color: #0645ad; background: none; text-decoration: none;"><span>Meeting Space</span></a><span>、</span><a title="远程桌面连接" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>远程桌面</span></a><span>、</span><a title="" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>远程协助</span></a><span>、</span><a title="Skype" style="color: #0645ad; background: none; text-decoration: none;"><span>Skype</span></a><span>、</span><a title="Microsoft Office Live Meeting" style="color: #0645ad; background: none; text-decoration: none;"><span>Microsoft Office Live Meeting</span></a><span>和</span><a title="微软共享视图" style="color: #0645ad; background: none; text-decoration: none;"><span>SharedView</span></a><span>来代替 NetMeeting。除远程桌面、远程协助和 Skype 外，所有产品均已停产，没有一款能完全取代 NetMeeting。NetMeeting 2.1 及更高版本中的辅助白板使用</span><a title="H.324" style="color: #0645ad; background: none; text-decoration: none;"><span>H.324</span></a><span>协议。</span></p>
+<p style="color: #202122;"><a title="实时通信服务器" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>Live Communications Server</span></a><span>、</span><a title="" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>Office Communicator</span></a><span>、</span><a title="微软林克" class="mw-redirect" style="color: #0645ad; background: none; text-decoration: none;"><span>Microsoft Lync</span></a><span>、</span><a title="" style="color: #0645ad; background: none; text-decoration: none;"><span>Skype for Business</span></a><span>和现在的</span><a title="微软团队" style="color: #0645ad; background: none; text-decoration: none;"><span>Microsoft Teams</span></a><span>在某种程度上可以被视为 NetMeeting 的继承者，因为它们与 NetMeeting 一样支持白板、桌面共享和文件传输——但具有更多功能，最突出的是 IM .</span></p>
+<h2 style="color: #000000;"><span class="mw-headline"><span>另见</span></span></h2>
+<ul style="color: #202122;"> 
+ <li><a title="林风" style="color: #0645ad; background: none; text-decoration: none;"><span>Linphone</span></a><span>：免费的 IP 语音 (VoIP) 服务和 SIP 客户端</span></li> 
+ <li><a title="吉西" style="color: #0645ad; background: none; text-decoration: none;"><span>Jitsi</span></a><span>：一个免费和开源的多平台 VoIP、视频会议和即时消息</span></li> 
+ <li><a title="站嘉" style="color: #0645ad; background: none; text-decoration: none;"><span>Ekiga</span></a><span>：适用于 GNOME 和 Windows 的免费 VoIP 和视频会议应用程序</span></li> 
+ <li><a title="H323Plus" style="color: #0645ad; background: none; text-decoration: none;"><span>H323Plus</span></a><span>：H.323 VOIP 的一种实现，已集成到许多开源和商业软件产品中</span></li> 
+</ul>
+<p><a>https://en.wikipedia.org/wiki/H.263</a></p>
+<h1 class="gp cu gq ba cj gr gs gt gu gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl es" style="color: #292929;">A complete beginner’s introduction to Session Initiation Protocol (SIP)</h1>
+<p><a>https://medium.com/@sangee_kp/a-complete-beginners-introduction-to-session-initiation-protocol-sip-40415ca6af93</a></p>
+<h1 class="gp cu gq ba cj gr gs gt gu gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl es" style="color: #292929;">Asterisk Tutorial 35 — SIP in Detail</h1>
+<p><a>https://medium.com/@pascomnet/asterisk-tutorial-35-sip-in-detail-1c0bccb1a93</a></p>
+<p><a>https://www.voip-info.org/sip/</a></p>
+<h2 class="u-font-serif u-text-light" style="color: #2e2e2e;"><a class="anchor" style="color: #2e2e2e; text-decoration: none;"><span class="anchor-text">Introduction to the IMS Network</span></a></h2>
+<p><a>https://www.sciencedirect.com/topics/engineering/medium-session</a></p>
+<h1 class="title" style="color: #4d4d4d;">What Is the SIP Protocol?</h1>
+<p><a>https://www.softwareadvice.com/resources/what-is-sip/</a></p>
+<h1 class="on-dark m-bottom-none" style="color: #ffffff;"><span style="background-color: #000000;">Session Initiation Protocol (SIP)</span></h1>
+<p><a>https://www.extrahop.com/resources/protocols/sip/</a></p>
+<h1 class="ff fg fh fi b fj fk fl fm fn fo fp fq fr fs ft fu fv fw fx fy fz ga gb gc gd bx cyxy-trs-source cyxy-trs-source-ted" style="color: #292929;">Learning VoIP, RTP and SIP (aka awesome pjsip)</h1>
+<p><a>https://medium.com/fantageek/learning-voip-rtp-and-sip-aka-awesome-pjsip-2035fa02cf88</a></p>
+<h1 class="post__title" style="color: #ffffff; text-align: left;"><span style="background-color: #000000;">Top 5: Best Open Source WebRTC Media Server Projects</span></h1>
+<p><a>https://ourcodeworld.com/articles/read/1212/top-5-best-open-source-webrtc-media-server-projects</a></p>
+<h1 class="fo bf fp fq b fr fs ft fu fv fw fx fy fz ga gb gc gd ge gf gg gh gi gj gk gl co" style="color: #292929;">gRPC, Protocol Buffers and Go Language</h1>
+<p>https://medium.com/the-polyglot-programmer/grpc-protocol-buffers-and-go-language-16f9a08e2177</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/279519#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.TCP/IP_Blog" title="TCP/IP" href="https://developer.huaweicloud.com/tags/200314/blog_1">TCP/IP</a>
+        
+    </div>
+</div></div>

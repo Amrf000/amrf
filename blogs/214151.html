@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>问题描述：</h3>
+<p>文件一</p>
+<pre class="brush:js;toolbar:false">export&nbsp;class&nbsp;SomeClass&nbsp;{
+
+}</pre>
+<p>文件二</p>
+<pre class="brush:js;toolbar:false">import&nbsp;{&nbsp;SomeClass&nbsp;}&nbsp;from&nbsp;'./xxx/SomeClass';
+
+node&nbsp;instanceof&nbsp;SomeClass//&nbsp;node&nbsp;=&nbsp;new&nbsp;SomeClass在别的ts文件中,预期返回true,实际返回false</pre>
+<h3>临时补救方法:<br></h3>
+<pre class="brush:js;toolbar:false">node.constructor.name&nbsp;===&nbsp;'SomeClass'</pre>
+<h3 style="white-space: normal;">参考:</h3>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1606370929640020927.png" title="1606370929640020927.png" alt="image.png"></p>
+<p><a>https://stackoverflow.com/questions/59265098/instanceof-not-work-correctly-in-typescript-library-project</a></p>
+<p><a>https://stackoverflow.com/questions/45964008/typescript-instanceof-not-working</a></p>
+<p><a>https://stackoverflow.com/questions/899574/what-is-the-difference-between-typeof-and-instanceof-and-when-should-one-be-used</a></p>
+<p><a>https://stackoverflow.com/questions/203739/why-does-instanceof-return-false-for-some-literals</a></p>
+<p><a>https://stackoverflow.com/questions/48867220/webpack-bundling-library-causing-instanceof-to-fail</a></p>
+<p><a>https://stackoverflow.com/questions/58770473/code-runs-but-instanceof-failes-when-importing-via-tsconfig-path</a></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/214151#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

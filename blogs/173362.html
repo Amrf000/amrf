@@ -1,0 +1,73 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul style="list-style-type: disc;" class=" list-paddingleft-2"> 
+ <li><h3>不错的qt线程启动暂停停止的实现方法:<br></h3></li> 
+</ul>
+<p>具体实现参考:</p>
+<p>https://codereview.stackexchange.com/questions/26724/thread-pausing-resuming-canceling-with-qt</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1591150486564026673.png" title="1591150486564026673.png" alt="image.png"></p>
+<ul style="list-style-type: disc;" class=" list-paddingleft-2"> 
+ <li><h3>QItemDelegate绘制图片<br></h3></li> 
+</ul>
+<pre style="margin-top: 0px; margin-bottom: 0px;">m_image&nbsp;=&nbsp;new&nbsp;QImage(":/xxxx.png");
+
+...
+painter-&gt;drawImage(option.rect,*m_image);</pre>
+<p><br></p>
+<ul class=" list-paddingleft-2" style="width: 1104.08px; white-space: normal;"> 
+ <li><h3>QTableView锁定选区的一个实现思路</h3></li> 
+ <p><br></p> 
+</ul>
+<p style="white-space: normal;">在子类中重写虚函数selectionChanged</p>
+<pre class="brush:cpp;toolbar:false">void&nbsp;xxxTableView::selectionChanged(const&nbsp;QItemSelection&nbsp;&amp;selected,&nbsp;const&nbsp;QItemSelection&nbsp;&amp;deselected)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;if(isLocked){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;oldstate&nbsp;=&nbsp;&nbsp;this-&gt;blockSignals(true);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;oldstate1&nbsp;=&nbsp;&nbsp;this-&gt;selectionModel()-&gt;blockSignals(true);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;selectionModel()-&gt;select(selected,&nbsp;QItemSelectionModel::Deselect);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;selectionModel()-&gt;select(deselected,&nbsp;QItemSelectionModel::Select);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;blockSignals(oldstate);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;selectionModel()-&gt;blockSignals(oldstate1);
+&nbsp;&nbsp;&nbsp;&nbsp;}else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//emit&nbsp;onViewSelectionChanged(this-&gt;selectedIndexes());//如果需要捕捉选区变化,注意这里没有使用selected
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;viewport()-&gt;update();
+}
+
+void&nbsp;xxxTableView::setSelectQuiet(QRect&nbsp;&amp;rect)//忽略当前锁定设置的选择
+{
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;oldstate&nbsp;=&nbsp;&nbsp;this-&gt;blockSignals(true);
+&nbsp;&nbsp;&nbsp;&nbsp;bool&nbsp;oldstate1&nbsp;=&nbsp;&nbsp;this-&gt;selectionModel()-&gt;blockSignals(true);
+&nbsp;&nbsp;&nbsp;&nbsp;QModelIndex&nbsp;topLeft&nbsp;=&nbsp;this-&gt;model()-&gt;index(rect.top(),rect.left());
+&nbsp;&nbsp;&nbsp;&nbsp;QModelIndex&nbsp;bottomRight&nbsp;=&nbsp;this-&gt;model()-&gt;index(rect.bottom(),rect.right());
+&nbsp;&nbsp;&nbsp;&nbsp;QItemSelection&nbsp;se(topLeft,bottomRight);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;selectionModel()-&gt;select(se,QItemSelectionModel::Select);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;blockSignals(oldstate);
+&nbsp;&nbsp;&nbsp;&nbsp;this-&gt;selectionModel()-&gt;blockSignals(oldstate1);
+}</pre>
+<ul style="list-style-type: disc;" class=" list-paddingleft-2"> 
+ <li><h3 style="white-space: normal;">std::queue下标索引</h3></li> 
+</ul>
+<p style="white-space: normal;"><a>https://stackoverflow.com/questions/5877504/access-c-queue-elements-like-an-array</a></p>
+<p style="white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1591151737833062174.png" title="1591151737833062174.png" alt="image.png"></p>
+<p><span style="color: rgb(0, 176, 80);">/*--------------------------------------------其他------------------------------------------------------------*/</span></p>
+<p>最近犯的几个错误：</p>
+<p>队列元素采用变量缓存后,对缓存变量做自增自减操作,问题是每次再缓存时又重新覆盖；</p>
+<p>类中包含指针成员时,尽量使用赋值而不是memcpy,触发有大批量的并且有性能要求,同样的包括拷贝构造;</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/173362#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

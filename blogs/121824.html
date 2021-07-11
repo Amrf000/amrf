@@ -1,0 +1,99 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>使用<a rel="nofollow" href="https://mozilla.github.io/">https://mozilla.github.io</a>打开一个带bookmark的pdf文件,我们可以复制出一个bookmark的链接，通过这个链接访问pdf就可以直接跳转到对应的bookmark位置,</p><p>链接形式如下:</p><pre class="brush:html;toolbar:false">https://mozilla.github.io/web/viewer.html#%5B%7B%22num%22%3A93%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2Cnull%2C506.63281%2Cnull%5D</pre><p><a rel="nofollow" href="https://mozilla.github.io/web/viewer.html#%5B%7B%22num%22%3A93%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2Cnull%2C506.63281%2Cnull%5D"></a>&nbsp;解码为<br></p><pre class="brush:html;toolbar:false">https://mozilla.github.io/web/viewer.html#[{"num":93,"gen":0},{"name":"XYZ"},null,506.63281,null]</pre><p>后面的那么和浮点数还好理解,但是num和gen到底是怎么来的呢，很明显的可以观察出num并不是页码,</p><p>&nbsp;网上可以找到这样的分析,<a rel="nofollow" href="http://www.ishenping.com/ArtInfo/3499828.html+&amp;cd=6&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">www.ishenping.com/ArtInfo/3499828.html+&amp;cd=6&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p><p>&nbsp;但是这篇文章里只是在前端进行了记录并没有说明num是如何产生的,</p><p>&nbsp;使用chrome可以观察追踪num的产生来源，可以看到下面这段代码</p><pre class="brush:js;toolbar:false">getObj
+...
+if&nbsp;(Number.isInteger(buf1))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(Number.isInteger(this.buf1)&nbsp;&amp;&amp;&nbsp;(0,&nbsp;_primitives.isCmd)(this.buf2,&nbsp;'R'))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;ref&nbsp;=&nbsp;_primitives.Ref.get(buf1,&nbsp;this.buf1);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.shift();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.shift();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;ref;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;buf1;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p>还有这段代码</p><pre class="brush:js;toolbar:false">processXRefTable:&nbsp;function&nbsp;XRef_processXRefTable(parser)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!('tableState'&nbsp;in&nbsp;this))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.tableState&nbsp;=&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entryNum:&nbsp;0,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;streamPos:&nbsp;parser.lexer.stream.pos,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parserBuf1:&nbsp;parser.buf1,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parserBuf2:&nbsp;parser.buf2
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;obj&nbsp;=&nbsp;this.readXRefTable(parser);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!(0,&nbsp;_primitives.isCmd)(obj,&nbsp;'trailer'))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;throw&nbsp;new&nbsp;_util.FormatError('Invalid&nbsp;XRef&nbsp;table:&nbsp;could&nbsp;not&nbsp;find&nbsp;trailer&nbsp;dictionary');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;dict&nbsp;=&nbsp;parser.getObj();</pre><p>即这个num是从解析pdf的xreftable得出的,</p><p>关于xreftable可以参考,<a rel="nofollow" href="https://blog.csdn.net/steve_cui/article/details/82152721">https://blog.csdn.net/steve_cui/article/details/82152721</a></p><p>&nbsp;然后就是看后端的pdf库是否有相关的api了,aspose中似乎没有,不过pdfbox里面很容易找到相关的api&nbsp;</p><p>写一个简单的测试类dump一下相关的信息</p><pre class="brush:java;toolbar:false">public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;{
+	&nbsp;PDFParser&nbsp;parser&nbsp;=&nbsp;null;
+	&nbsp;&nbsp;&nbsp;&nbsp;PDDocument&nbsp;pdDoc&nbsp;=&nbsp;null;
+	&nbsp;&nbsp;&nbsp;&nbsp;try&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;	RandomAccessRead&nbsp;accessRead&nbsp;=&nbsp;new&nbsp;RandomAccessFile(new&nbsp;File("xxxx.pdf"),&nbsp;"rw");
+	&nbsp;&nbsp;&nbsp;&nbsp;	parser&nbsp;=&nbsp;new&nbsp;PDFParser(accessRead);
+	&nbsp;&nbsp;&nbsp;&nbsp;	parser.parse();
+	&nbsp;&nbsp;&nbsp;&nbsp;	PDDocument&nbsp;doc&nbsp;=&nbsp;parser.getPDDocument();
+	&nbsp;&nbsp;&nbsp;&nbsp;	logger.info("xsize="+doc.getDocument().getXrefTable().size());
+	&nbsp;&nbsp;&nbsp;&nbsp;	doc.getDocument().getXrefTable().forEach((key,&nbsp;value)&nbsp;-&gt;&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;		logger.info("Key&nbsp;:&nbsp;"&nbsp;+&nbsp;key&nbsp;+&nbsp;"&nbsp;Value&nbsp;:&nbsp;"&nbsp;+&nbsp;value);
+	&nbsp;&nbsp;&nbsp;&nbsp;	});
+	&nbsp;&nbsp;&nbsp;&nbsp;	PDDocumentOutline&nbsp;outline&nbsp;=&nbsp;&nbsp;doc.getDocumentCatalog().getDocumentOutline();
+	&nbsp;&nbsp;&nbsp;&nbsp;	printBookmark(outline,&nbsp;"");
+	&nbsp;&nbsp;&nbsp;&nbsp;	
+	&nbsp;&nbsp;&nbsp;&nbsp;}catch&nbsp;(Exception&nbsp;e)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;	logger.info(e.getMessage());
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;}
+&nbsp;public&nbsp;static&nbsp;void&nbsp;printBookmark(PDOutlineNode&nbsp;bookmark,&nbsp;String&nbsp;indentation)&nbsp;throws&nbsp;IOException{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PDOutlineItem&nbsp;current&nbsp;=&nbsp;bookmark.getFirstChild();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;(current&nbsp;!=&nbsp;null){
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;COSDictionary&nbsp;cos&nbsp;=&nbsp;current.getCOSObject();
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;/*for&nbsp;(&nbsp;Map.Entry&lt;COSName,&nbsp;COSBase&gt;&nbsp;entry&nbsp;:&nbsp;cos.entrySet()&nbsp;)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		&nbsp;logger.info("Key&nbsp;:&nbsp;"&nbsp;+&nbsp;entry.getKey()&nbsp;+&nbsp;"&nbsp;Value&nbsp;:&nbsp;"&nbsp;+&nbsp;entry.getValue());
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;}*/
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;List&nbsp;ret&nbsp;=&nbsp;new&nbsp;ArrayList&lt;Object&gt;();
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;COSArray&nbsp;arr&nbsp;=&nbsp;cos.getCOSArray(COSName.getPDFName("Dest"));
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;COSObject&nbsp;ob&nbsp;=&nbsp;(COSObject)arr.get(0);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;Map&lt;String,Object&gt;&nbsp;ret0&nbsp;=&nbsp;new&nbsp;HashMap&lt;&gt;();
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret0.put("num",&nbsp;ob.getObjectNumber());
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret0.put("gen",&nbsp;ob.getGenerationNumber());
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(ret0);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;COSName&nbsp;oN&nbsp;=&nbsp;(COSName)arr.get(1);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret0&nbsp;=&nbsp;new&nbsp;HashMap&lt;&gt;();
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret0.put("name",&nbsp;oN.getName());
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(ret0);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(null);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;if(arr.get(3)&nbsp;instanceof&nbsp;COSFloat)&nbsp;{
+			&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;COSFloat&nbsp;oF&nbsp;=&nbsp;(COSFloat)arr.get(3);
+			&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(oF.floatValue());
+	&nbsp;}else&nbsp;{
+		&nbsp;&nbsp;&nbsp;&nbsp;		&nbsp;COSInteger&nbsp;oF&nbsp;=&nbsp;(COSInteger)arr.get(3);
+			&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(oF.intValue());
+	&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;ret.add(null);
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;logger.info(indentation&nbsp;+&nbsp;current.getTitle()+","+cos.getCOSArray(COSName.getPDFName("Dest")));//getCOSObject&nbsp;Parent
+&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;logger.info(indentation&nbsp;+&nbsp;current.getTitle()+","+ret);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;printBookmark(current,&nbsp;indentation&nbsp;+&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current&nbsp;=&nbsp;current.getNextSibling();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;}</pre><pre class="brush:java;toolbar:false">&nbsp;//[{"num":78,"gen":0},{"name":"XYZ"},null,224.5144,null]
+&nbsp;//COSArray{[COSObject{78,&nbsp;0},&nbsp;COSName{XYZ},&nbsp;COSNull{},&nbsp;COSFloat{224.5144},&nbsp;COSNull{}]}</pre><p>上面的是dump出来的信息，很容易就可以比照出相似的结构;</p><p>由于我的后端pdf分析的主要工作是使用aspose完成的,所以我写了一个bookmarkPreLink(InputStream inStream)方法将pdf的bookmark title和</p><p>对应的[{"num":78,"gen":0},{"name":"XYZ"},null,224.5144,null]字符串缓存起来以便aspose输出解析结果时作为辅助使用;</p><p><br></p><p>备注:</p><p>pdf.js还带有一个namedest的hash参数跳转,不知道是不是由于bookmark中文还是，我的测试pdf的bookmark压根不是named,测试使用这个方法的时候没有成功,不过上面的方案已经满足了我的要求;</p><p>另外我还扩展了一下pdf.js的工作范围，使用aspose将word转成pdf，一样返回到bookmark位置的链接显示,有个问题是aspose word转pdf如果要带上bookmark的话需要设置,</p><pre class="brush:java;toolbar:false">PdfSaveOptions&nbsp;options&nbsp;=&nbsp;new&nbsp;PdfSaveOptions();
+options.getOutlineOptions().setHeadingsOutlineLevels(3);//我这个是到word的3级标题都转转成pdf里的bookmark</pre><p>&nbsp;可以参考一下<a rel="nofollow" href="https://forum.aspose.com/t/convert-word-bookmark-to-pdf-bookmark/57214+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://forum.aspose.com/t/convert-word-bookmark-to-pdf-bookmark/57214+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/121824#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

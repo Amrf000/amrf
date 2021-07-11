@@ -1,0 +1,37 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>工程地址:</p>
+<p><a rel="nofollow" href="https://github.com/myliang/x-spreadsheet">https://github.com/myliang/x-spreadsheet</a> </p>
+<p><br></p>
+<p>基本导入导出例子:</p>
+<p><a rel="nofollow" href="https://github.com/SheetJS/sheetjs/tree/master/demos/xspreadsheet">https://github.com/SheetJS/sheetjs/tree/master/demos/xspreadsheet</a></p>
+<p><br></p>
+<p>默认导入导出不带合并单元格信息,可以对上面的例子做一个修改以导出合并信息:</p>
+<pre class="brush:js;toolbar:false">changeMergeCellsToSheet(sheet,&nbsp;mergeCells)&nbsp;{
+&nbsp;&nbsp;let&nbsp;merges&nbsp;=&nbsp;[];
+&nbsp;&nbsp;mergeCells.forEach(item&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;tmp&nbsp;=&nbsp;XLSX.utils.decode_range(item);
+&nbsp;&nbsp;&nbsp;&nbsp;merges.push(tmp);
+&nbsp;&nbsp;});
+&nbsp;&nbsp;return&nbsp;merges;
+},
+var&nbsp;ws&nbsp;=&nbsp;XLSX.utils.aoa_to_sheet(aoa);
+ws["!merges"]&nbsp;=&nbsp;_this.changeMergeCellsToSheet(ws,&nbsp;xws.merges);</pre>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/209127#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

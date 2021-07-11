@@ -1,0 +1,46 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>mull工程 - <a rel="nofollow" href="https://github.com/mull-project/mull">https://github.com/mull-project/mull</a></p>
+<p><br></p>
+<h3>问题现象:</h3>
+<p><br></p>
+<p>使用mull对gtest进行用例变异有效性检查的时候,跑origin test过程中,</p>
+<p>首先是,报了一堆gtest和mockcpp的符号找不到的waring,(JIT engine could not resolve the following symbols)</p>
+<p>然后是,跑origin test报一堆status:crashed;</p>
+<p><br></p>
+<h3>问题分析过程:</h3>
+<p><br></p>
+<p>由于刚升级gtest到了最新的版本,而最新的版本里使用了c++11,而1.8.1之前的版本不用c++11就可以编译;(其实后来发现没升级的那个版本也有同样的问题)</p>
+<p>--&gt;所以分析的时候也就因为这个关注点走偏了,所以花了很多功夫看mull中的TestFramework为googletest相关的内容;</p>
+<p><br></p>
+<p>测试背景原来ubuntu16/mull0.7-llvm8,前面使用的是clang5编译的gtest和用例;</p>
+<p>后来无意中切换gtest编译选项为 CXX:=clang++-8 -fembed-bitcode,crashed和符号的问题消失了;</p>
+<p><br></p>
+<p>看了下面这个https://stackoverflow.com/questions/56567351/mutation-testing-fails-with-mull,</p>
+<p><br></p>
+<p>得出的判断是当用例的llvm版本和mull的版本不一致时候,有概率会出现crash,(gtest升级高版本使用了c++11特性,所以导致的更高的crash概率,这个结论存疑)</p>
+<p><br></p>
+<p>进一步的修改gtest编译选项 CXX:=clang++-5.0 -fembed-bitcode,发现mull检测依旧没有出现crashed问题,llvm版本虽然不同，但是只有有一些找不到debug符号的问题;</p>
+<p><br></p>
+<p><br></p>
+<h3>过程反思:</h3>
+<p><br></p>
+<p>问题定位的基础立足点要早好，这就好像分组实验里的控制变量法,否则问题的焦点就容易找偏了,但是我的看法是，弯路也有弯路的价值，只要成本你还能接受;</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/206411#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.C++_Blog" title="C++" href="https://developer.huaweicloud.com/tags/200434/blog_1">C++</a>
+        
+    </div>
+</div></div>

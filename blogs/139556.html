@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>前面一篇关于wpf设计器的文章的后续,(<a href="https://bbs.huaweicloud.com/blogs/123716">https://bbs.huaweicloud.com/blogs/123716</a>)</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>为了使我们的设计器开启后能够自动加载保存的特定xml图形文件,可以在主窗口加载后关闭上挂载函数:<br></p></li></ul><pre class="brush:xml;toolbar:false">Loaded="Window_Loaded"
+Closing="Window_Closing"
+private&nbsp;void&nbsp;Window_Loaded(object&nbsp;sender,&nbsp;RoutedEventArgs&nbsp;e)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;designer&nbsp;=&nbsp;(DesignerCanvas)this.FindName("MyDesigner");
+&nbsp;&nbsp;&nbsp;&nbsp;DesignerCanvas.InitView.Execute(null,&nbsp;designer);
+}
+private&nbsp;void&nbsp;Window_Closing(object&nbsp;sender,&nbsp;System.ComponentModel.CancelEventArgs&nbsp;e)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;designer&nbsp;=&nbsp;(DesignerCanvas)this.FindName("MyDesigner");
+&nbsp;&nbsp;&nbsp;&nbsp;DesignerCanvas.SaveView.Execute(null,&nbsp;designer);
+}</pre><p>相应的需要在DesignerCanvas.Commands.cs中添加两个RoutedCommand InitView和SaveView, 其实现分别对于原始的Open和Save,只不过其中的路径指定过程不再来自对话框中的用户选择,而来自参数;</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>ctrl+e切换工具栏显示状态</p></li></ul><pre class="brush:ruby;toolbar:false">&lt;RowDefinition&nbsp;Height="{Binding&nbsp;RelativeSource={RelativeSource&nbsp;FindAncestor,&nbsp;AncestorType={x:Type&nbsp;Window}},&nbsp;Path=toolH}"/&gt;
+public&nbsp;int&nbsp;toolH
+{
+&nbsp;&nbsp;&nbsp;&nbsp;get&nbsp;{&nbsp;return&nbsp;(int)this.GetValue(toolHProperty);&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;{&nbsp;this.SetValue(toolHProperty,&nbsp;value);&nbsp;}
+}
+public&nbsp;static&nbsp;readonly&nbsp;DependencyProperty&nbsp;toolHProperty&nbsp;=&nbsp;DependencyProperty.Register("toolH",&nbsp;typeof(int),&nbsp;typeof(Window1),&nbsp;new&nbsp;PropertyMetadata(120));
+private&nbsp;void&nbsp;Window_KeyUp(object&nbsp;sender,&nbsp;KeyEventArgs&nbsp;e){
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(Keyboard.Modifiers&nbsp;==&nbsp;ModifierKeys.Control&nbsp;&amp;&amp;&nbsp;e.Key&nbsp;==&nbsp;Key.E){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(toolH&nbsp;&gt;&nbsp;0){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toolH&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;toolH&nbsp;=&nbsp;120;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>隐藏GroupBox的头部</p></li></ul><p><strong><a rel="nofollow" href="https://stackoverflow.com/questions/2110148/wpf-groupbox-with-no-header-space">https://stackoverflow.com/questions/2110148/wpf-groupbox-with-no-header-space</a></strong></p><p><br></p><p>Right click on GroupBox &gt; Edit Template &gt; Edit Copy &gt; OK</p><p><strong>备注:</strong></p><p>需要注意的是,测试发现DesignerItem序列化后再次打开宽度和高度始终不变,</p><p>定位发现原来写测试代码绑定的时候p.Width写成了指定值,修改成如下代码后可以正常保存并还原宽高</p><p>Test1Property p&nbsp; = (this.Parent as DesignerItem).property as Test1Property;</p><p>p.Text = "Test1";</p><p>p.Width = (this.Parent as DesignerItem).Width;</p><p>p.Height = (this.Parent as DesignerItem).Height;</p><p>/***************************************************************************************************/</p><p><strong>DesignerCanvas多实例改造</strong></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>首先在window1中添加Tab,并在其TabItem中分别放入Designer</p></li></ul><p>&lt;TabControl Grid.Column="1" HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch" SelectionChanged="TabControl_SelectionChanged"&gt;</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>当tab切换时</p></li></ul><p>TabControl_SelectionChanged中执行ClearSelection清除当前选择</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>为DesignerCanvas添加配置文件地址属性，并在window1.xaml中传入</p></li></ul><p>storePath="C:\\xxxx\\tt1.xml"//临时使用绝对地址</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>改写Window_Loaded/Window_Closing</p></li></ul><p>foreach (DesignerCanvas designer in UIChildFinder.GetLogicalChildCollection&lt;DesignerCanvas&gt;((((this.Content as Grid).Children[1] as Grid).Children[2] as TabControl)))</p><p>{</p><p>&nbsp; &nbsp; DesignerCanvas.xxx.Execute(null, designer);</p><p>}</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>修改windows中的MyDesigner_SelectionChanged提起RaisePropertyChanged</p></li><li><p>为window1添加currentDesigner属性,并在TabControl_SelectionChanged中修改currentDesigner</p></li></ul><p>TabItem selectedTab = e.AddedItems[0] as TabItem;</p><p>foreach (DesignerCanvas designer in UIChildFinder.GetLogicalChildCollection&lt;DesignerCanvas&gt;(selectedTab))</p><p>{</p><p>&nbsp; &nbsp; currentDesigner = designer;</p><p>}</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>修改ApplicationToolbar.xaml中所有涉及到MyDesigner的绑定</p></li></ul><p>{Binding ElementName=MyDesigner}</p><p>=&gt;</p><p>{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=currentDesigner}</p><p>/***************************************************************************************************************/</p><p><strong>连接线Connection虚实线切换和序列化</strong></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>我们可以看到Connection.xaml中的绑定StrokeDashArray="{Binding StrokeDashArray}",为Connection增加一个defaultStrokeDashArray属性,并在构造函数中将默认值赋值给StrokeDashArray,增加toggleDash函数使default在实虚之间切换,并赋值给StrokeDashArray;</p></li><li><p>为了方便测试切换我们再Connection.xaml中的ContextMenu中再增加一个菜单,并绑定到DesignerCanvas.ToggleDash命令,命令中调用toggleDash;</p></li><li><p>上述步骤实现的虚实线的绑定和切换,但是修改并不会被序列化，需要在SerializeConnections和InitView_Executed中添defaultStrokeDashArray序列化、反序列化逻辑；</p></li><li><p>当tab切换时Designer隐藏会触发Connection的Unload时间,导致后面Connection序列化过程异常,可以在Connection_Unloaded处理中添加this.Parent != null判断，区分到底是控件删除导致的Unload还是隐藏导致的;</p></li></ul><p>/*******************************************************************************************************/</p><p>移除连接线阴影效果,Canvas.BitmapEffect</p><p>/*******************************************************************************************************/</p><p>DependencyProperty的默认值会使的多个实例共用一个属性对象,从而导致从xml中序列化时出现问题,需要在构造函数中各自设置各自的初值属性对象;</p><p>参考:</p><p><a rel="nofollow" href="https://mlog.club/article/2741844">https://mlog.club/article/2741844</a></p><p><a rel="nofollow" href="https://www.skcircle.com/%3Fid%3D728">https://www.skcircle.com/%3Fid%3D728</a></p><p><a rel="nofollow" href="https://cloud.tencent.com/developer/article/1200300">https://cloud.tencent.com/developer/article/1200300</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/zlgcool/archive/2008/06/19/1225952.html">https://www.cnblogs.com/zlgcool/archive/2008/06/19/1225952.html</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/139556#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

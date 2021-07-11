@@ -1,0 +1,18 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>403的原因是官方cdn变成了globalcdn.nuget.org,但是这个地址暂时没有添加到公司内网白名单;</p><p>解决办法-------使用华为云nuget镜像</p><p>准备工作</p><p>使用前请确保您已安装<a rel="nofollow" href="https://www.microsoft.com/net/learn/get-started/windows?utm_expid=.-Fmi9Q05Ry2oXQgdtPElHw.0&amp;utm_referrer=https%3A%2F%2Fwww.google.com.sg%2F" style="background-color:transparent;color:rgb(120,141,163);">DotNet</a>和<a rel="nofollow" href="https://www.nuget.org/downloads" style="background-color:transparent;color:rgb(120,141,163);">NuGet</a>。</p><p>使用说明</p><p>Nuget的配置文件为用户根目录下的：C:\Users\&lt;UserName&gt;\AppData\Roaming\NuGet\NuGet.Config，您可以&nbsp;<span class="deploy-config-icontext" style="color:rgb(120,141,163);"><a href="https://mirrors.huaweicloud.com/v1/configurations/nuget?">点击此处</a></span>&nbsp;直接下载配置文件。</p><p><span class="deploy-download-config" style="padding:0px 15px;font-size:13px;color:rgb(51,51,51);line-height:25px;">您也可以打开终端执行如下命令：</span></p><p><span class="deploy-download-text" style="height:50px;margin:0px;">nuget sources Disable -Name "nuget.org"<br>nuget sources add -Name "huaweicloud" -Source "https://mirrors.huaweicloud.com/repository/nuget/v3/index.json"</span><a class="deploy-download-copy" title="复制" style="background-color:transparent;color:rgb(120,141,163);margin-left:35px;"><span class="aveIcon-copy" style="line-height:1;font-family:'ave-icomoon';"></span></a></p><p>相关网址</p><p>Nuget官方地址：<a rel="nofollow" href="https://www.nuget.org/" style="background-color:transparent;color:rgb(120,141,163);">https://www.nuget.org</a></p><p>Nuget文档地址：<a rel="nofollow" href="https://docs.microsoft.com/en-us/nuget/what-is-nuget" style="background-color:transparent;color:rgb(120,141,163);">https://docs.microsoft.com/en-us/nuget/what-is-nuget</a></p><p>DotNet文档地址：<a rel="nofollow" href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet?tabs=netcore2x" style="background-color:transparent;color:rgb(120,141,163);">https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet?tabs=netcore2x</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/126546#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

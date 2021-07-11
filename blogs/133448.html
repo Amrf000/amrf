@@ -1,0 +1,44 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <pre class="brush:html;toolbar:false">iframe或者
+&lt;object&nbsp;data="xxx"&nbsp;style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:773px;width:981px;top:0px;left:0px;right:0px;bottom:0px"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;embed&nbsp;src="xxx"&nbsp;style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:773px;width:981px;top:0px;left:0px;right:0px;bottom:0px"&gt;&nbsp;
+&lt;/object&gt;</pre><p>父子windows之间通讯:</p><p>父窗口中：</p><pre class="brush:js;toolbar:false">function&nbsp;communicator()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;this.receiveMessage&nbsp;=&nbsp;function(event)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;//alert(event.data.name);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;eventData&nbsp;=&nbsp;event.data;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(eventData.name)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'ActionA':
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ActionA();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;case&nbsp;'ActionB':
+&nbsp;&nbsp;&nbsp;&nbsp;ActionB();
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;default:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;this.sendMessage&nbsp;=&nbsp;function(iFrameElem,&nbsp;message)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;iFrameElem.contentWindow.postMessage(message,&nbsp;'*');
+&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;this.addListeners&nbsp;=&nbsp;function()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;window.addEventListener("message",&nbsp;jQuery.proxy(this.receiveMessage,&nbsp;this),&nbsp;false);
+&nbsp;&nbsp;&nbsp;&nbsp;};
+};
+var&nbsp;c&nbsp;=&nbsp;new&nbsp;communicator();
+c.addListeners();</pre><p>子窗口中:</p><pre class="brush:js;toolbar:false">window.parent.postMessage({name:&nbsp;'ActionA'},&nbsp;'*')</pre><p>参考:</p><p><a rel="nofollow" href="https://www.panda-os.com/blog/2015/03/communicate-iframe-parent-window/">communicate-iframe-parent-window</a></p><p><a rel="nofollow" href="https://github.com/ternarylabs/porthole">https://github.com/ternarylabs/porthole</a></p><p><a rel="nofollow" href="https://gist.github.com/pbojinov/8965299">https://gist.github.com/pbojinov/8965299</a></p><p><a rel="nofollow" href="https://blog.csdn.net/fdipzone/article/details/17619673">https://blog.csdn.net/fdipzone/article/details/17619673</a></p><p>Axure添加自定义js代码</p><p>简单的可以使用这种:</p><pre>javascript:void(alert('请至少选择一项！'))</pre><p>复杂的可以采用:</p><pre class="brush:js;toolbar:false">javascript:eval('function&nbsp;....');void(0);</pre><p>参考:<a rel="nofollow" href="https://zhuanlan.zhihu.com/p/25305935">https://zhuanlan.zhihu.com/p/25305935</a><br></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/133448#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

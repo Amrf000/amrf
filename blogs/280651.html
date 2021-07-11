@@ -1,0 +1,246 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>(原文:https://levelup.gitconnected.com/build-your-own-future-in-go-f66c568e9a7a)Go 编程语言的主要特点之一是它的同名</span><code class="js jt ju jv jw b">go</code><span>语句。不过，在我看来，该</span><code class="js jt ju jv jw b">go</code><span>声明也是其主要缺点之一。</span><a class="cd it" style="color: inherit; text-decoration: underline;"><span>这不仅仅是我这么认为(https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/)</span></a><span>。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>与表达式不同，语句不产生任何结果。在 Go 中，启动一个新的 goroutine 非常容易。但是你如何得到它的结果呢？你怎么知道它是否可能出错？你如何等待它完成？如果不再需要它的结果，如何取消它？</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>熟悉 Go 的人会说：嗯，显然，使用通道。但是 Go 中的 channel 仍然是一个低级结构。首先，要拥有一个可以产生结果或错误的 goroutine，而且它也是可取消的，你需要其中的三个。您可能认为</span><code class="js jt ju jv jw b">Context</code><span>这有助于满足第三个要求。但</span><code class="js jt ju jv jw b">Context</code><span>还是暴露渠道：</span><code class="js jt ju jv jw b">Done()</code><span>只是</span><code class="js jt ju jv jw b">&lt;-chan struct{}</code></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>这有什么问题？您拥有的渠道越多——问题也就越多。通道可能会死锁。渠道可能会恐慌。甚至在您开始编写业务逻辑之前，您就已经有所有需要处理的低级问题。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>而且只写一次是不够的。你将不得不一遍又一遍地重复它。因为很可能，两个不同的 goroutine 会返回两种不同类型的结果。这意味着，两种不同的渠道类型。这意味着，如果没有泛型，您要么多次复制代码，要么求助于使用</span><code class="js jt ju jv jw b">interface{}</code><span>和运行时强制转换，这完全打破了类型安全的想法。您必须在两个糟糕的解决方案之间做出选择，因为这</span><code class="js jt ju jv jw b">go</code><span>是一个陈述，而不是一个表达式。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>好吧，在 Go 语言将泛型作为实验性功能引入之前，情况确实如此。我已经</span><a class="cd it" style="color: inherit; text-decoration: underline;"><span>简要地写过一次关于它们的文章</span></a>(https://medium.com/swlh/experimenting-with-generics-in-go-39ffa155d6a1)<span>，这一次，我想展示泛型如何帮助我们解决 Go 设计的最大缺陷之一。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>我们将实现一个延迟值设计模式，它在不同的语言和框架中被称为 Future、Promise 和一堆其他名称。我将它称为 Future，就像 Java 一样。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>延迟值要么是急切的，要么是懒惰的。这意味着它们要么在创建后立即开始执行，要么仅在某些事情触发它们时开始执行。由于</span><code class="js jt ju jv jw b">go</code><span>语句本质上是急切的，我更喜欢急切的执行。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>我们的 Future 会有以下方法：</span></p>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr ke kf kg bx"><code class="js jt ju jv jw b">Get()</code><span>&nbsp;阻塞当前 goroutine 直到获得 Future 的结果</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr ke kf kg bx"><code class="js jt ju jv jw b">Cancel()</code><span>&nbsp;停止执行我们的未来</span></li> 
+</ul>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>在 Go 术语中，它将是一个具有两种方法的接口：</span></p>
+<pre class="language-actionscript"><code>type Future[type T] interface {
+   Get() Result[T]
+   Cancel()
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><em class="ks"><span>请注意，我将使用方括号来表示泛型类型。它们没有记录在提案中，但</span></em><a class="cd it" style="color: inherit; text-decoration: underline;"><em class="ks"><span>Go2Playground</span></em></a><em class="ks"><span>支持它们，这是我从</span></em><a class="cd it" style="color: inherit; text-decoration: underline;"><em class="ks"><span>这篇文章中</span></em></a><span><em class="ks">了解到的</em></span><em class="ks"><span>。我发现这种类似 Scala 的语法比圆括号更容易混淆。</span></em></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><code class="js jt ju jv jw b">Result</code><span>是另一个接口，它包装</span><code class="js jt ju jv jw b">Success</code><span>了 type</span><code class="js jt ju jv jw b">S</code><span>或 a&nbsp;</span><code class="js jt ju jv jw b">Failure</code><span>：</span></p>
+<pre class="language-actionscript"><code>type Result[type S] interface {
+   Success() S
+   Failure() error
+}</code></pre>
+<p><span style="color: #292929;">为了支持 Result，我们需要一个结构来保存它的数据：</span></p>
+<pre class="language-actionscript"><code>type result[type S] struct {
+   success S
+   failure error
+}</code></pre>
+<p><span style="color: #292929;">查看结构，实现两个 Result 接口方法应该是微不足道的：</span></p>
+<pre class="language-actionscript"><code>func (this *result(S)) Success() S {
+   return this.success
+}
+
+func (this *result(S)) Failure() error {
+   return this.failure
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>我们可以简单地将结构本身公开，并避免使用接口，从而节省几行代码，但接口提供了更清晰的 API。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>将来，打印结果的内容也会很方便，因此我们将为此实现 Stringer 接口：</span></p>
+<pre class="language-actionscript"><code>func (this *result(S)) String() string {
+   if this.failure != nil {
+      return fmt.Sprintf("%v", this.failure)
+   } else {
+      return fmt.Sprintf("%v", this.success)
+   }
+}</code></pre>
+<p><span>到目前为止，它应该非常简单。现在让我们讨论我们的结构支持</span><code class="js jt ju jv jw b">Future</code><span>将需要哪些数据。</span></p>
+<p><span><span style="color: #292929;">有这个结构：</span></span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+    ...
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>关于 的状态，我们需要了解什么</span><code class="js jt ju jv jw b">Future</code><span>？</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>首先，我们想把结果保存在某个地方：</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+   result   *result[T]
+   ...
+}</code></pre>
+<p><span style="color: #292929;">了解 Future 是否已经完成也很有用：</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+   ...
+   completed bool
+   ...
+}</code></pre>
+<p><span>如果它还没有完成，我们需要一种方法来等待它。</span><span>Go 中的一种常见方法是使用通道：</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct { 
+   ... 
+   wait chan bool 
+   ... 
+}</code></pre>
+<p><span>我们的最后一个要求是能够取消<code class="js jt ju jv jw b">Future</code>.&nbsp;为此，我们将使用<code class="js jt ju jv jw b">Context</code>, 返回一个我们需要调用以取消它的函数：</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+   ...
+   cancel   func()
+}</code></pre>
+<p><span>但参考</span><code class="js jt ju jv jw b">Context</code><span>自身也很有用：</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+   ...
+   ctx      context.Context
+   cancel   func()
+}</code></pre>
+<p><span>就是这样，这就是我们</span><code class="js jt ju jv jw b">Future</code><span>现在需要的所有数据。</span></p>
+<pre class="language-actionscript"><code>type future[type T] struct {
+   result   *result[T]
+   complete bool
+   wait     chan bool
+   ctx      context.Context
+   cancel   func()
+}</code></pre>
+<p><span>现在让我们实现这两种</span><code class="js jt ju jv jw b">Future</code><span>方法。</span></p>
+<p><span>由于我们正在使用<code class="js jt ju jv jw b">Context</code>，取消我们<code class="js jt ju jv jw b">Future</code>变得微不足道：</span></p>
+<pre class="language-actionscript"><code>func (this *future[T]) Cancel() {
+   this.cancel()
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>现在让我们讨论我们</span><code class="js jt ju jv jw b">Get()</code><span>应该处理哪些情况。</span></p>
+<ol class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr kt kf kg bx" style="color: #292929;"><span>在</span><code class="js jt ju jv jw b">Future</code><span>已经完成的工作。然后我们应该简单地返回结果，无论是成功还是失败</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr kt kf kg bx" style="color: #292929;"><span>还</span><code class="js jt ju jv jw b">Future</code><span>没有完成它的工作。然后我们应该等待，阻塞调用 goroutine，当结果准备好时，我们应该返回它</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr kt kf kg bx" style="color: #292929;"><span>将</span><code class="js jt ju jv jw b">Future</code><span>在此期间取消。我们应该返回一个错误，表明</span></li> 
+</ol>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>映射了这三种情况后，我们得出了以下方法：</span></p>
+<pre class="language-actionscript"><code>func (this *future[T]) Get() Result[T] {
+   if this.completed {
+      return this.result
+   } else {
+      fmt.Println("Need to wait...")
+      select {
+      case &lt;-this.wait:
+         return this.result
+      case &lt;-this.ctx.Done():
+         return &amp;result(T){failure: this.ctx.Err()}
+      }
+   }
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>已经完成的 Future 的案例非常简单。我们只返回缓存的结果。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>如果它还没有完成，我们使用</span><code class="js jt ju jv jw b">wait</code><span>通道等待它。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>也可能存在我们的 Future 通过取消上下文而被取消的情况。我们会通过检查</span><code class="js jt ju jv jw b">ctx.Done()</code><span>频道知道这一点。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>这就是实现处理结果的不同用例。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>接下来，让我们看看我们如何构建我们的 Future。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>我们的 Future 需要执行任意一段代码。代码本身可能返回泛型类型的结果或错误。我们的构造函数将简单地返回相同泛型类型的 Future。</span></p>
+<pre class="language-actionscript"><code>func NewFuture[type T](f func() (T, error)) Future[T] {
+    ...
+}</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>请注意泛型如何让我们现在定义输入和输出类型之间的强大关系。我们</span><code class="js jt ju jv jw b">Future</code><span>保证返回与我们提供的构造函数的任意函数相同的类型。不再需要</span><code class="js jt ju jv jw b">interface{}</code><span>不安全地使用和投射。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>接下来，我们要初始化我们的</span><code class="js jt ju jv jw b">Future</code><span>：</span></p>
+<pre class="language-actionscript"><code>fut := &amp;future[T]{
+   wait: make(chan bool),
+}
+fut.ctx, fut.cancel = context.WithCancel(context.Background())
+...
+
+return fut</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>我们创建了一个</span><code class="js jt ju jv jw b">Context</code><span>，以便我们</span><code class="js jt ju jv jw b">Future</code><span>可以取消，以及一个通道，以便我们可以等待它以并发方式完成。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><em class="ks"><span>您可能需要考虑传递</span></em><code class="js jt ju jv jw b"><em class="ks">Context</em></code><em class="ks"><span>给 的构造函数</span></em><code class="js jt ju jv jw b"><em class="ks">Future</em></code><em class="ks"><span>，而不是自己创建它。为了示例的简洁，我省略了这一点。</span></em></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>最后，我们需要对我们推迟的任意一段代码做一些事情：</span></p>
+<pre class="language-actionscript"><code>go func() {
+   success, failure := f()
+
+   fut.result = &amp;result[T]{success, failure}
+   fut.completed = true
+   fut.wait &lt;- true
+   close(fut.wait)
+}()</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>在这里，我们在一个新的 goroutine 中执行该函数，获取其结果，并将我们的标记</span><code class="js jt ju jv jw b">Future</code><span>为已完成。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>Channel 应该只使用一次，所以最好关闭它。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><em class="ks"><span>根据您的用例，您可能需要考虑使用工作池而不是为每个未来生成 goroutine。</span></em></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>现在让我们看看它是如何工作的。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx"><span>首先，我们希望看到我们的 Future 能够返回一个结果：</span></p>
+<pre class="language-actionscript"><code>f1 := NewFuture(func() (string, error) {
+   time.Sleep(1000)
+   return "F1", nil
+})
+
+fmt.Printf("ready with %v \n", f1.Get()) 
+// Need to wait...
+// ready with F1</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>到目前为止，看起来不错。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>但是，如果我们再次尝试获得结果怎么办？</span></p>
+<pre class="language-actionscript"><code>fmt.Printf("trying again with %v \n", f1.Get()) 
+// trying again with F1</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>请注意，它现在不会打印“需要等待”，因为结果已经被记住了。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>如果函数返回错误，我们的 Future 会如何表现？</span></p>
+<pre class="language-actionscript"><code>f2 := NewFuture(func() (string, error) {
+   time.Sleep(1000)
+   return "F2", fmt.Errorf("something went wrong")
+})
+
+fmt.Printf("ready with %v \n", f2.Get())
+// Need to wait...
+// ready with something went wrong</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>不错，似乎错误也得到了正确处理。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>最后，取消呢？</span></p>
+<pre class="language-actionscript"><code>f3 := NewFuture(func() (string, error) {
+   time.Sleep(100)
+   fmt.Println("I'm done!")
+   return "F3", nil
+})
+f3.Cancel()
+
+fmt.Printf("ready with %v \n", f3.Get())
+// Need to wait...
+// ready with context canceled</code></pre>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>请注意“我完成了！”&nbsp;永远不会打印，因为我们丢弃了这个 Future 的结果。</span></p>
+<h1 class="ky ko fp as kz la lb iz lc ld le jd lf lg lh li lj lk ll lm ln lo lp lq lr ls bx" style="color: #292929;"><span>结论</span></h1>
+<p class="iu iv fp iw b ix lt iz ja jb lu jd je jf lv jh ji jj lw jl jm jn lx jp jq jr fh bx" style="color: #292929;"><span>Go 中的泛型可能有助于解决许多由</span><code class="js jt ju jv jw b">go</code><span>语句而不是表达式引起的问题。</span></p>
+<p class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr fh bx" style="color: #292929;"><span>多亏了它们，我们可以使用延迟值作为我们的并发原语，就像许多其他语言一样。这意味着我们现在可以：</span></p>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="iu iv fp iw b ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr ke kf kg bx" style="color: #292929;"><span>轻松访问 goroutine 结果和错误</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr ke kf kg bx" style="color: #292929;"><span>编写类型安全的代码，这仍然是可重用和通用的</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr ke kf kg bx" style="color: #292929;"><span>停止搞乱低级并发原语，例如通道</span></li> 
+ <li class="iu iv fp iw b ix kh iz ja jb ki jd je jf kj jh ji jj kk jl jm jn kl jp jq jr ke kf kg bx" style="color: #292929;"><span>可以</span><code class="js jt ju jv jw b">go</code><span>完全停止使用语句</span></li> 
+</ul>
+<h2 class="kn ko fp as kz ly lz ma lc mb mc md lf me mf mg lj mh mi mj ln mk ml mm lr mn bx" style="color: #292929;"><span>脚注</span></h2>
+<p class="iu iv fp iw b ix lt iz ja jb lu jd je jf lv jh ji jj lw jl jm jn lx jp jq jr fh bx" style="color: #292929;"><span>完整的代码示例可以在这里找到：<a rel="nofollow" href="https://github.com/AlexeySoshin/go2future" class="cd it" style="color: inherit; text-decoration: underline;">https:</a></span><a rel="nofollow" href="https://github.com/AlexeySoshin/go2future" class="cd it" style="color: inherit; text-decoration: underline;"><span>//github.com/AlexeySoshin/go2future</span></a></p>
+<p class="iu iv fp iw b ix lt iz ja jb lu jd je jf lv jh ji jj lw jl jm jn lx jp jq jr fh bx" style="color: #292929;">/*******************************/</p>
+<h1 class="gs cu gt ba cj gu gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho ev"><span>为什么golang下划线结构字段存在(https://paulyeo21.medium.com/golang-underscore-struct-field-f0aecabc72ae)</span></h1>
+<p class="ik il gt im b in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd cw ev" style="color: #292929;"><span>如果您编写了一些 go 或深入研究了一个维护良好的 go 项目，您可能会看到带有下划线字段的结构：</span></p>
+<pre class="language-javascript"><code>type ListTablesInput struct {
+ _ struct{} `type:"structure"`
+ ExclusiveStartTableName *string `min:"3" type:"string"
+ Limit *int64 `min:"1" type:"integer"`
+}</code></pre>
+<p class="ik il gt im b in jw io ip iq jx ir is it jy iu iv iw jz ix iy iz ka ja jb jd cw ev" style="color: #292929;"><a rel="nofollow" href="https://github.com/aws/aws-sdk-go/blob/7e0246814d8eb87bdc6850c44e8f75f020db80eb/service/dynamodb/api.go#L15104-L15115" class="dc kb" style="color: inherit; text-decoration: underline;"><span>&gt; https://github.com/aws/aws-sdk-go/blob/7e0246814d8eb87bdc6850c44e8f75f020db80eb/service/dynamodb/api.go#L15104-L15115</span></a></p>
+<p class="ik il gt im b in jw io ip iq jx ir is it jy iu iv iw jz ix iy iz ka ja jb jd cw ev" style="color: #292929;"><span>在结构上使用 _ 字段的目的是在初始化结构时强制使用键控字段。</span></p>
+<pre class="language-javascript"><code>input := ListTablesInput{
+  ExclusiveStartTableName: "table-name",
+  Limit: 100,
+}
+// instead of
+input := ListTablesInput{"table-name", 100}</code></pre>
+<p class="ik il gt im b in jw io ip iq jx ir is it jy iu iv iw jz ix iy iz ka ja jb jd cw ev" style="color: #292929;"><span>如果您尝试在没有字段名称的情况下初始化结构体，您将收到类似“不能在字段值中用作类型结构{}”这样的错误信息。</span></p>
+<p class="ik il gt im b in jw io ip iq jx ir is it jy iu iv iw jz ix iy iz ka ja jb jd cw ev" style="color: #292929;"><span>的enforcin的一大优势</span><span>摹</span><span>初始化结构时，这个规则是添加到任何结构新的领域将不引入重大更改。例如，添加了一个新字段，例如：</span></p>
+<pre class="language-javascript"><code>type ListTablesInput struct {
+ _ struct{} `type:"structure"`
+ ExclusiveStartTableName *string `min:"3" type:"string"`
+ Limit *int64 `min:"1" type:"integer"`
+  // New field
+  Option string
+}</code></pre>
+<p class="ik il gt im b in jw io ip iq jx ir is it jy iu iv iw jz ix iy iz ka ja jb jd cw ev" style="color: #292929;"><span>那么从我们前面的例子来看，没有关键字段的结构初始化将无法编译，因为它现在需要添加新字段。</span></p>
+<pre class="language-javascript"><code>// valid still
+ListTablesInput{
+  ExclusiveStartTableName: "table-name",
+  Limit: 100,
+}
+// fails to compile
+ListTablesInput{"table-name", 100}</code></pre>
+<p class="iu iv fp iw b ix lt iz ja jb lu jd je jf lv jh ji jj lw jl jm jn lx jp jq jr fh bx" style="color: #292929;"></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/280651#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

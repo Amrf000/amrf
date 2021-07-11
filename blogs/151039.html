@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>参考:</p><p><a rel="nofollow" href="http://blog.technololist.org/2017/06/09.html">http://blog.technololist.org/2017/06/09.html</a></p><p><a rel="nofollow" href="https://raw.githubusercontent.com/Technololist/golang-http-windows-service/master/websvc.go">https://raw.githubusercontent.com/Technololist/golang-http-windows-service/master/websvc.go</a></p><p><a rel="nofollow" href="https://github.com/golang/sys/blob/master/windows/svc/example/service.go">https://github.com/golang/sys/blob/master/windows/svc/example/service.go</a></p><p><a rel="nofollow" href="https://godoc.org/golang.org/x/sys/windows/svc/example">https://godoc.org/golang.org/x/sys/windows/svc/example</a></p><p><a rel="nofollow" href="https://github.com/golang/go/wiki/WindowsDLLs">https://github.com/golang/go/wiki/WindowsDLLs</a></p><p><a rel="nofollow" href="https://www.jianshu.com/p/632ffea266f3">https://www.jianshu.com/p/632ffea266f3</a></p><p><a rel="nofollow" href="https://chai2010.cn/post/2018/window-service/">https://chai2010.cn/post/2018/window-service/</a></p><p><a rel="nofollow" href="https://groups.google.com/forum/#!topic/golang-nuts/66RXNMQ1auU">https://groups.google.com/forum/#!topic/golang-nuts/66RXNMQ1auU</a></p><p><br></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>bat检测服务是否存在和启动</p></li></ul><pre class="brush:ps;toolbar:false">@Echo&nbsp;Off
+Set&nbsp;ServiceName=xxx
+
+SC&nbsp;QUERY&nbsp;"%ServiceName%"&nbsp;&gt;&nbsp;NUL
+IF&nbsp;ERRORLEVEL&nbsp;1060&nbsp;GOTO&nbsp;MISSING
+ECHO&nbsp;EXISTS
+GOTO&nbsp;EXIST
+
+:MISSING
+ECHO&nbsp;SERVICE&nbsp;MISSING&nbsp;BEGIN&nbsp;INSTALLL&nbsp;IT
+REM&nbsp;xxxx&nbsp;install
+
+:EXIST
+
+SC&nbsp;queryex&nbsp;"%ServiceName%"|Find&nbsp;"STATE"|Find&nbsp;/v&nbsp;"RUNNING"&gt;Nul&amp;&amp;(
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;%ServiceName%&nbsp;not&nbsp;running&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;Start&nbsp;%ServiceName%
+
+&nbsp;&nbsp;&nbsp;&nbsp;Net&nbsp;start&nbsp;"%ServiceName%"&gt;nul||(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Echo&nbsp;"%ServiceName%"&nbsp;wont&nbsp;start&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;/b&nbsp;1
+&nbsp;&nbsp;&nbsp;&nbsp;)
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"%ServiceName%"&nbsp;started
+&nbsp;&nbsp;&nbsp;&nbsp;REM&nbsp;start&nbsp;chrome&nbsp;https://localhost:8088/
+&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;/b&nbsp;0
+)||(
+&nbsp;&nbsp;&nbsp;&nbsp;echo&nbsp;"%ServiceName%"&nbsp;working
+&nbsp;&nbsp;&nbsp;&nbsp;REM&nbsp;start&nbsp;chrome&nbsp;https://localhost:8088/
+&nbsp;&nbsp;&nbsp;&nbsp;exit&nbsp;/b&nbsp;0
+)</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>bat设置服务自启动</p></li></ul><pre class="brush:ps;toolbar:false">&nbsp;sc&nbsp;config&nbsp;“xxx”&nbsp;start=&nbsp;auto</pre><p><span style="font-family:Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;font-size:14px;background-color:rgb(255,255,255);"></span><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/151039#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

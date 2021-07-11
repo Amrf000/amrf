@@ -1,0 +1,33 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>需求说明：</p></li></ul><p>收到一个改变单个checkbox控件大小的需求---老项目是mfc的</p><p>---改变颜色和字体和按钮大小感觉都还行，改变checkbox的大小字体可以给放大 背景的选中和不选的图片却是没有变大</p><p>------&gt;于是使用了CButtonST这个实现</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>有一点要说明：</p></li></ul><p>CButtonST的一般用法如下：</p><p>m_btn.SubclassDlgItem(IDC_CHECK_xxx, this);</p><p>将一个按钮子类化为CButtonST的实例，但是我这个项目里按钮本身已经自定义按钮类了，所以attach会报错；</p><p>说以我实际使用中的改动是让CButtonST继承于我项目中原来的按钮类，沿用原有按钮按钮的初始化部分，</p><p>然后在initDialog中</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>设置选择和不选的图片</p></li></ul><pre class="brush:cpp;toolbar:false">((CButtonST*)GetDlgItem(IDC_CHECK_xxx&nbsp;))-&gt;SetIcon(IDI_ICON_UN,&nbsp;IDI_ICON_SE);
+((CButtonST*)GetDlgItem(IDC_CHECK_xxx&nbsp;))-&gt;DrawTransparent(TRUE);
+((CButtonST*)GetDlgItem(IDC_CHECK_xxx))-&gt;DrawBorder(false);</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>设置更大的字体<br></p></li></ul><pre class="brush:cpp;toolbar:false">LOGFONT&nbsp;lf;
+memset(&amp;lf,&nbsp;0,&nbsp;sizeof(LOGFONT));
+lf.lfHeight&nbsp;=&nbsp;200;&nbsp;//&nbsp;Request&nbsp;a&nbsp;100-pixel-height&nbsp;font
+&nbsp;&nbsp;&nbsp;//&nbsp;DP&nbsp;and&nbsp;LP&nbsp;are&nbsp;always&nbsp;the&nbsp;same&nbsp;on&nbsp;CE&nbsp;-&nbsp;The&nbsp;conversion&nbsp;below&nbsp;is&nbsp;used&nbsp;by&nbsp;CFont::CreateFontIndirect
+HDC&nbsp;hDC&nbsp;=&nbsp;::GetDC(NULL);
+lf.lfHeight&nbsp;=&nbsp;::GetDeviceCaps(hDC,&nbsp;LOGPIXELSY)&nbsp;*&nbsp;lf.lfHeight;
+::ReleaseDC(NULL,&nbsp;hDC);
+lf.lfHeight&nbsp;/=&nbsp;720;&nbsp;//&nbsp;72&nbsp;points/inch,&nbsp;10&nbsp;decipoints/point
+if&nbsp;(lf.lfHeight&nbsp;&gt;&nbsp;0)
+lf.lfHeight&nbsp;*=&nbsp;-1;
+lstrcpy(lf.lfFaceName,&nbsp;_T("幼圆"));
+HFONT&nbsp;font&nbsp;=&nbsp;::CreateFontIndirect(&amp;lf);
+CWnd*&nbsp;myButton&nbsp;=&nbsp;GetDlgItem(IDC_CHECK_BST_CLASSD_EN);&nbsp;//The&nbsp;Button&nbsp;with&nbsp;regular&nbsp;font
+myButton-&gt;SendMessage(WM_SETFONT,&nbsp;(WPARAM)font,&nbsp;TRUE);</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>实际效果:</p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1564488915831099.png" title="1564488915831099.png" alt="image.png" class="localImage">===&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1564488893468138.png" title="1564488893468138.png" alt="image.png" class="localImage"></p><p>按钮好像没有变大，这个是因为我导入的ico尺寸16*16,没找到系统默认的单选按钮资源的图片，自己截的图片ps的，但是感觉已经相对大了一些了；</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/103326#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

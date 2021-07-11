@@ -1,0 +1,30 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>首先 我们看别人一个对FastDfs和HDFS的分析结论，（<a>https://cloud.tencent.com/developer/article/1727648</a>）</p>
+<p style="color: #000000;">结论</p>
+<ol class="ol-level-0" style="color: #000000;"> 
+ <li>FastDFS客户端底层连接服务端使用的是Socket，本身速度就要快很多。</li> 
+ <li>HDFS在做删除测试时，明显较慢的地方是在创建到服务端的连接上，实际删除文件的速度很快。由于每次测试都需要先创建到服务端的连接，HDFS在这块消耗较大，在实际场景下，差距应该没有这么大。</li> 
+ <li>两者的适用场景确有不同，FastDFS更适合小文件的高效存取，而HDFS更适合超大文件上传后使用Mapreduce去做大数据处理</li> 
+</ol>
+<p>&nbsp;下面是一些部署工程中参考的链接：<br>go-fastdfs 是一个简单的分布式文件系统(私有云存储)，具有无中心、高性能，高可靠，免维护等优点，支持断点续传，分块上传，小文件合并，自动同步，自动修复。<br><a rel="nofollow" href="https://github.com/sjqzhang/go-fastdfs">https://github.com/sjqzhang/go-fastdfs</a>&nbsp;<br>go-fastdfs api文档<br><a rel="nofollow" href="https://github.com/sjqzhang/go-fastdfs/blob/master/doc/api.md">https://github.com/sjqzhang/go-fastdfs/blob/master/doc/api.md</a>&nbsp;<br>fastdfs-client for golang<br><a rel="nofollow" href="https://github.com/guoyibin27/fastdfs-client-go">https://github.com/guoyibin27/fastdfs-client-go</a>&nbsp;<br>fastdfs中golang的api上传文件<br><a rel="nofollow" href="https://blog.csdn.net/qq_30505673/article/details/83140784">https://blog.csdn.net/qq_30505673/article/details/83140784</a>&nbsp;<br>fastdfs下载时恢复原始文件名<br><a>https://www.geek-share.com/detail/2707479914.html</a></p>
+<p>fastdfs+nginx 高性能高可用文件服务<br><a>http://www.voycn.com/article/gaoxingnenggaokeyongwenjianfuwufastdfsnginxkeepalivedopenofficeluadajian</a>&nbsp;</p>
+<p>go-fastdfs 上传文件终极篇（全网最正确版本）<br><a rel="nofollow" href="https://blog.csdn.net/weixin_41876822/article/details/111479280">https://blog.csdn.net/weixin_41876822/article/details/111479280</a>&nbsp;<br>go-fastdfs断点续传示例<br><a>https://sjqzhang.github.io/go-fastdfs/breakpoint.html#go</a>&nbsp;<br>分布式文件存储go-fastdfs 与 go-fastdfs-web管理页面<br><a>https://www.jianshu.com/p/33f3440f69b9</a>&nbsp;<br>【go-fastdfs】go-fastdfs 分布式文件系统搭建<br><a rel="nofollow" href="https://blog.csdn.net/LUCKWXF/article/details/105363017">https://blog.csdn.net/LUCKWXF/article/details/105363017</a>&nbsp;<br>完美集成fastDFS文件服务客户端, 支持断点续传, 分块上传, 文件秒传, 稳定的前后端组件(前端H5), 支持多用户并发上传文件校验(文件锁), 可以快速集成fastDFS文件服务, 免去繁琐的配置, 拿来即用, 目前暂时仅支持springboot开发环境<br><a rel="nofollow" href="https://github.com/mzxc/gomyck-fastdfs-spring-boot-starter">https://github.com/mzxc/gomyck-fastdfs-spring-boot-starter</a>&nbsp;<br>go-fastdfs安装<br><a>https://www.jianshu.com/p/dbb3a2ba76d4</a>&nbsp;<br>用FastDFS一步步搭建文件管理系统<br><a>https://www.cnblogs.com/chiangchou/p/fastdfs.html</a>&nbsp;</p>
+<p>其他低关联文档:<br>go beego入门教程<br><a>https://beego.me/docs/quickstart/new.md</a>&nbsp;<br><a>https://beego.me/docs/quickstart/router.md</a>&nbsp;<br>FTP client package for Go<br><a rel="nofollow" href="https://github.com/jlaffaye/ftp">https://github.com/jlaffaye/ftp</a>&nbsp;<br>Working with FTP protocol in Golang&nbsp;<br><a>http://blog.ralch.com/tutorial/golang-ftp/</a>&nbsp;<br>A FTP server framework written by Golang, moved to<br><a rel="nofollow" href="https://github.com/goftp/server">https://github.com/goftp/server</a>&nbsp;<br>openresty及第三方模块下载安装总结<br><a rel="nofollow" href="https://blog.csdn.net/sinat_15433607/article/details/105680828">https://blog.csdn.net/sinat_15433607/article/details/105680828</a>&nbsp;<br><a rel="nofollow" href="https://blog.csdn.net/qq_35320621/article/details/51983594">https://blog.csdn.net/qq_35320621/article/details/51983594</a>&nbsp;<br><a rel="nofollow" href="https://blog.csdn.net/z_ruitao/article/details/101482755">https://blog.csdn.net/z_ruitao/article/details/101482755</a>&nbsp;</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/249323#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

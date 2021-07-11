@@ -1,0 +1,171 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><span style="font-family:'Microsoft YaHei';font-size:medium;background-color:rgb(247,247,247);">这几天又在回顾一些angularjs、还有一些项目基本目录结构、项目打包相关的东西;</span></p><p><span style="font-family:'Microsoft YaHei';font-size:medium;background-color:rgb(247,247,247);">不禁要感叹一句 “<span style="font-family:'Microsoft YaHei';font-size:medium;background-color:rgb(247,247,247);">吾生也有涯，而知也無涯。以有涯隨無涯，殆已。</span>”</span></p><p><span style="font-family:'Microsoft YaHei';font-size:16px;"><span style="background-color:rgb(247,247,247);">1.回顾过程中，重新发现的点，这个项目的背景就是客户端的框架结构是我用"拿来主义"镜像的,今天才留意到?t=这段,我前面一直以为是webpack或者gulp的版本控制 ,当时看的时候没留意到;</span></span></p><p><span style="font-family:'Microsoft YaHei';font-size:medium;background-color:rgb(247,247,247);"></span></p><pre class="brush:html;toolbar:false">&lt;script&nbsp;src="api/internal/properties/env.jsx"&gt;&lt;/script&gt;//window.XXX&nbsp;=&nbsp;{"version":xxx}
+document.writeln((window.XXX.env&nbsp;===&nbsp;"dev"?[
+&nbsp;&nbsp;&nbsp;&nbsp;xxxx
+]:[
+&nbsp;&nbsp;&nbsp;&nbsp;xxxx
+]).map(function&nbsp;(s)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'&lt;link&nbsp;&nbsp;href="'&nbsp;+&nbsp;s&nbsp;+&nbsp;'?t='&nbsp;+&nbsp;window.XXX.version&nbsp;+&nbsp;'"&nbsp;rel="stylesheet"&nbsp;type="text/css"/&gt;'
+&nbsp;&nbsp;&nbsp;&nbsp;//return&nbsp;'&lt;script&nbsp;type="application/javascript"&nbsp;src="'&nbsp;+&nbsp;s&nbsp;+&nbsp;'?t='&nbsp;+&nbsp;window.XXX.version&nbsp;+&nbsp;'"&gt;&lt;\/script&gt;'
+}).join('\n'));</pre><p>2. 很容易了解到的是angularjs的前端路由机制,在一个现有的前端项目代码中做一些路由修改增改不难，但是让你在仔细想想你的angularjs项目具体使用的什么路由手段的时候，此时我茫然了<br></p><p>形如:<br></p><pre class="brush:html;toolbar:false">$stateProvider.state("login",&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'url':&nbsp;"/login",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'views':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'header':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'controller':&nbsp;'headerCtrl',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'templateUrl':&nbsp;'xxx/header.html'
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'content':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'templateUrl':&nbsp;function&nbsp;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'xxx/login.action';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//'controller':&nbsp;'XXXCtrl',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//template:&nbsp;'&lt;ui-view/&gt;'
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//'controller':&nbsp;'xxxCtrl',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//'templateUrl':&nbsp;function&nbsp;()&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;'xxxx/xxxx.action';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'resolve':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loadMyCtrl:&nbsp;['$ocLazyLoad',&nbsp;function&nbsp;($ocLazyLoad)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$ocLazyLoad.load(&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xxx
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//'abstract':&nbsp;true,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//'cache':&nbsp;false,</pre><p>似乎和标准的angularjs路由写法并不相同,这属于那种呢？见参考;</p><p>参考:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/27645202/what-is-the-difference-between-routeprovider-and-stateprovider">https://stackoverflow.com/questions/27645202/what-is-the-difference-between-routeprovider-and-stateprovider</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/22790209/angular-ui-router-ui-views-vs-directives">https://stackoverflow.com/questions/22790209/angular-ui-router-ui-views-vs-directives</a></p><p><a rel="nofollow" href="https://ivanproskuryakov.github.io/publications/AngularJS-routeProvider-and-stateProvider/">https://ivanproskuryakov.github.io/publications/AngularJS-routeProvider-and-stateProvider/</a></p><p>3.关于前端的代码项目目录的组织结构</p><pre class="brush:html;toolbar:false">D:.
+│&nbsp;&nbsp;index.html
+│&nbsp;&nbsp;style.css
+│&nbsp;&nbsp;
+├─api
+│&nbsp;&nbsp;├─internal
+│&nbsp;&nbsp;│&nbsp;&nbsp;├─i18n
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;语言包.jsx
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;│&nbsp;&nbsp;├─properties
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;环境.jsx
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;│&nbsp;&nbsp;└─sso
+│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单点登录
+│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;└─private
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─npi
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─collection
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├─xxx
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;└─XXController
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─v1
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└─xxxx
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─common
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一些公用的静态资源
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─fonts
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;xxx.woff
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─images
+│&nbsp;&nbsp;│&nbsp;&nbsp;一些静态的图片资源
+
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─js
+│&nbsp;&nbsp;│&nbsp;&nbsp;外部的js
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─node_modules
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─npi
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;一些动态请求的template
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─pages
+│&nbsp;&nbsp;├─common
+│&nbsp;&nbsp;│&nbsp;&nbsp;├─公用的一些模板和，相当于component
+│&nbsp;&nbsp;│&nbsp;&nbsp;├─js其controller
+│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+│&nbsp;&nbsp;│&nbsp;&nbsp;├─XXX
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;XXXView.html
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;└─js
+│&nbsp;&nbsp;│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XXXView.js
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─state
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;打包后的js
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+├─style
+│&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;css样式
+│&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+└─upload
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文件上传的url</pre><p>这个路径下混杂这一些后端路径，生产环境和开发环境的路径也是混杂的;</p><p>参考:</p><p><a rel="nofollow" href="https://scotch.io/tutorials/angularjs-best-practices-directory-structure">https://scotch.io/tutorials/angularjs-best-practices-directory-structure</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/18542353/angularjs-folder-structure">https://stackoverflow.com/questions/18542353/angularjs-folder-structure</a></p><p><a rel="nofollow" href="https://tutorialedge.net/javascript/angularjs/angularjs-project-structure-tutorial/">https://tutorialedge.net/javascript/angularjs/angularjs-project-structure-tutorial/</a> </p><p><a rel="nofollow" href="http://bguiz.github.io/js-standards/angularjs/application-structure/">http://bguiz.github.io/js-standards/angularjs/application-structure/</a></p><p><a rel="nofollow" href="https://dzone.com/articles/angularjs-%25E2%2580%2593-recommended">https://dzone.com/articles/angularjs-%25E2%2580%2593-recommended</a> </p><p><a rel="nofollow" href="https://github.com/rudolfolah/learning-angularjs/blob/master/project-structures.org">https://github.com/rudolfolah/learning-angularjs/blob/master/project-structures.org</a></p><p><a rel="nofollow" href="https://thinkster.io/egghead/directive-for-route-handling">https://thinkster.io/egghead/directive-for-route-handling</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/21414133/angularjs-directive-vs-routeprovider">https://stackoverflow.com/questions/21414133/angularjs-directive-vs-routeprovider</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/37069110/what-is-the-difference-between-controller-and-directives-in-angular-js/37070464">https://stackoverflow.com/questions/37069110/what-is-the-difference-between-controller-and-directives-in-angular-js/37070464</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/31481000/difference-between-and-when-to-use-controllers-vs-directives">https://stackoverflow.com/questions/31481000/difference-between-and-when-to-use-controllers-vs-directives</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/38342664/what-are-the-main-differences-between-components-and-directives-in-angularjs-1-5">https://stackoverflow.com/questions/38342664/what-are-the-main-differences-between-components-and-directives-in-angularjs-1-5</a></p><p>4.关于angular-ui</p><p>参考:</p><p><a rel="nofollow" href="http://angular-ui.github.io/bootstrap/">http://angular-ui.github.io/bootstrap/</a></p><p>由于plnkr.co不在公司内网白名单, 居然想不到简单的运行样例代码的方法了，后来发现包裹代码在plucker.js中;</p><p>5.关于项目打包<br></p><p>&nbsp;项目打包的重点在于将解决方案有机的融合到自己的当前项目中去,也就意味着框架和开发流还是有不完整和缺失的;</p><p>参考:</p><p><a rel="nofollow" href="https://blog.csdn.net/ZWQ0325/article/details/90694099">https://blog.csdn.net/ZWQ0325/article/details/90694099</a></p><p><a rel="nofollow" href="https://www.webpackjs.com/guides/getting-started/">https://www.webpackjs.com/guides/getting-started/</a></p><p><a rel="nofollow" href="https://webpack.js.org/plugins/commons-chunk-plugin/">https://webpack.js.org/plugins/commons-chunk-plugin/</a> </p><p><a rel="nofollow" href="https://stackoverflow.com/questions/30329337/how-to-bundle-vendor-scripts-separately-and-require-them-as-needed-with-webpack">https://stackoverflow.com/questions/30329337/how-to-bundle-vendor-scripts-separately-and-require-them-as-needed-with-webpack</a><a rel="nofollow" href="https://github.com/wooorm/vendors/blob/master/package.json">https://github.com/wooorm/vendors/blob/master/package.json</a></p><p><a rel="nofollow" href="https://www.toptal.com/javascript/optimize-js-and-css-with-gulp">https://www.toptal.com/javascript/optimize-js-and-css-with-gulp</a></p><p><a rel="nofollow" href="http://blog.namangoel.com/browserify-vs-webpack-js-drama">http://blog.namangoel.com/browserify-vs-webpack-js-drama</a> </p><p><a rel="nofollow" href="https://www.cleveroad.com/blog/gulp-browserify-webpack-grunt">https://www.cleveroad.com/blog/gulp-browserify-webpack-grunt</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/dear_mr/article/details/72589256">https://blog.csdn.net/dear_mr/article/details/72589256</a></p><p><a rel="nofollow" href="https://www.npmjs.com/package/bundle-js">https://www.npmjs.com/package/bundle-js</a></p><p>6.关于前端测试</p><p>规模比较小的团队说实话很难花太多人力和精力投入这部分内容,但是自动接口测试和系统测试其实是版本可靠性的不可缺少的保障;尤其可以避免的情况是，在频繁迭代的项目中，发布前自动测试可以避免出现后面的开发影响前面的功能这类情况;</p><p>摘一段:</p><pre class="brush:html;toolbar:false">11.&nbsp;测试
+测试的目的在于能以最少的人力和时间发现潜在的各种错误和缺陷，这在项目更新、重构等的过程中尤其重要，因为每当更改一些代码后，你并不知道这些代码有没有问题、会不会影响其他的模块。如果有了测试，运行一遍测试用例，就知道更改的代码有没有问题、会不会产生影响。
+一般前端测试分以下几种：
+单元测试：模块单元、函数单元、组件单元等的单元块的测试
+集成测试：接口依赖（ajax）、I/O&nbsp;依赖、环境依赖（localStorage、IndexedDB）等的上下文的集成测试
+样式测试：对样式的测试
+E2E&nbsp;测试：端到端测试，也就是在实际生产环境测试整个应用
+一般会用到下面的一些工具：
+jest
+enzyme
+cypress
+selenium
+puppeteer
+另外，可以参考&nbsp;聊聊前端开发的测试。</pre><p>&nbsp;参考:</p><p style="white-space:normal;"><a rel="nofollow" href="https://segmentfault.com/a/1190000017158444">https://segmentfault.com/a/1190000017158444</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://github.com/senntyou/blogs">https://github.com/senntyou/blogs</a></p><p style="white-space:normal;"><a rel="nofollow" href="https://github.com/senntyou/blogs/blob/master/web-extend/10.md">https://github.com/senntyou/blogs/blob/master/web-extend/10.md</a></p><p>7.angularjs的一些常见的小点</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs的$compile</p></li></ul><p>.controller('dataAuditCtrl', ['$scope', ..., '$timeout','$compile',..., function ($scope,..., $timeout,$compile,...) {</p><p>angular.element(document.getElementById("drop_" + tableId)).append($compile(html)($scope));//编译进去</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs的$timeout---适用于你希望下一帧执行的这类场景，我这个描述可能不太准确</p></li></ul><p>$timeout(function() {</p><p>});</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs $broadcast</p></li></ul><p>参考：</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/37717493/usage-of-broadcast-emit-and-on-in-angularjs/42772444">https://stackoverflow.com/questions/37717493/usage-of-broadcast-emit-and-on-in-angularjs/42772444</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/19446755/on-and-broadcast-in-angular">https://stackoverflow.com/questions/19446755/on-and-broadcast-in-angular</a></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs component的几种bindings</p></li></ul><p>@ &gt; =</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs ng-if vs ng-show</p></li><li><p>angularjs ng-repeat中$index始终不变时看一下是否存在autocomplate等</p></li><li><p>angularjs中deferred使用</p></li></ul><pre class="brush:html;toolbar:false">To&nbsp;make&nbsp;it&nbsp;shorter,&nbsp;here's&nbsp;what&nbsp;you&nbsp;should&nbsp;know:
+deferred.resolve()&nbsp;-&nbsp;means&nbsp;request&nbsp;succeeded
+deferred.reject()&nbsp;-&nbsp;request&nbsp;failed
+deferred.resolve(data)&nbsp;-&nbsp;means&nbsp;request&nbsp;succeeded&nbsp;and&nbsp;here's&nbsp;some&nbsp;data
+deferred.reject(data)&nbsp;-&nbsp;request&nbsp;failed&nbsp;and&nbsp;here;s&nbsp;some&nbsp;data</pre><p><a rel="nofollow" href="https://stackoverflow.com/questions/36460706/what-is-the-difference-between-deferred-resolvedata-and-deferred-resolve-i">https://stackoverflow.com/questions/36460706/what-is-the-difference-between-deferred-resolvedata-and-deferred-resolve-i</a></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs服务的写法</p></li></ul><pre class="brush:html;toolbar:false">angularjs服务Service
+angular.module('xxx.service',&nbsp;[]).factory('locals',&nbsp;['$window',&nbsp;function&nbsp;($window)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...//https://stackoverflow.com/questions/37431652/angularjs-localstorage-with-object
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}]).service('xxxService',&nbsp;['locals',&nbsp;'$timeout',&nbsp;'$http',&nbsp;'$httpParamSerializerJQLike','$q',&nbsp;function&nbsp;(locals,&nbsp;$timeout,&nbsp;$http,&nbsp;$httpParamSerializerJQLike,$q)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;xxxService&nbsp;=&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;xxxService;
+}]).service("SsoService",&nbsp;['$q',&nbsp;'$injector',&nbsp;'$rootScope',&nbsp;function&nbsp;($q,&nbsp;$injector,&nbsp;$rootScope)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;login:&nbsp;function&nbsp;(err)&nbsp;{
+			...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}]).constant('xxxConstant',&nbsp;{//定义前端使用的常量
+&nbsp;&nbsp;&nbsp;&nbsp;XXX:'xxx'
+});</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs发送json</p></li></ul><pre class="brush:js;toolbar:false">PostJson:&nbsp;function&nbsp;(url,&nbsp;data,&nbsp;successFun)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(url.indexOf(window.xxx.contextPath)===-1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;window.xxx.contextPath&nbsp;+&nbsp;url;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$http.post(url,&nbsp;angular.toJson(data),&nbsp;{headers:&nbsp;{'Content-Type':&nbsp;'application/json'}}).then(function&nbsp;(response)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(angular.isFunction(successFun))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;successFun(response);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>angularjs发送form结构</p></li></ul><pre class="brush:js;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PostJQlike:&nbsp;function&nbsp;(url,&nbsp;data,&nbsp;successFun)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(url.indexOf(window.xxx.contextPath)===-1){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;window.xxx.contextPath&nbsp;+&nbsp;url;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$http.post(url,&nbsp;$httpParamSerializerJQLike(data),&nbsp;{headers:&nbsp;{'Content-Type':&nbsp;'application/x-www-form-urlencoded'}}).then(function&nbsp;onSuccess(response)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(angular.isFunction(successFun))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;successFun(response);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;})
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre><p>一些暂未分类的参考:</p><p><a rel="nofollow" href="https://github.com/thelgevold/angular-lazy-load">https://github.com/thelgevold/angular-lazy-load</a></p><p><a rel="nofollow" href="https://github.com/go-gitea/gitea">https://github.com/go-gitea/gitea</a></p><p><a rel="nofollow" href="https://github.com/gogs/gogs">https://github.com/gogs/gogs</a></p><p><span style="color:rgb(0,176,80);">/*---------------------------------- 分割线-------------------------------------*/</span></p><p>关于前端优化：</p><p><a rel="nofollow" href="https://zhuanlan.zhihu.com/p/52625231+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://zhuanlan.zhihu.com/p/52625231</a></p><p><br></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/133818#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

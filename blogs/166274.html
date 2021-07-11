@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>测试前用everything搜了搜，发现机器上已经有了gtk+-bundle_2.22.1-20101229_win64,完全忘了什么时候安装的了;</p>
+<p>&nbsp;先阅读一下安装目录下的gtk+-bundle_2.22.1-20101229_win64.README.txt,将bin目录添加环境变量;</p>
+<p>然后从参考的第一个链接去一个例子代码;</p>
+<h3>例子里是linux环境:</h3>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1589525928378078501.png" title="1589525928378078501.png" alt="image.png"></p>
+<h3>windows环境下:</h3>
+<p>运行pkg-config --cflags gtk+-2.0,回显的-mms-bitfields之后的即需要增加的include目录,</p>
+<p>运行pkg-config --libs gtk+-2.0,回显即需要增加的链接目录,但是msvc下使用需要改变一下风格,即-L=&gt;/link /LIBPATH:,-l去掉并加上.lib后缀;</p>
+<p>&nbsp;然后进去vs 本机命令提示窗口，进入例程源码目录</p>
+<p>cl xxx.cpp 加上上面的那些选项后即可生成例子的可执行程序。</p>
+<h3>测试运行效果：</h3>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1589526294195098930.png" title="1589526294195098930.png" alt="image.png"></p>
+<p><br></p>
+<p><br></p>
+<h3>&nbsp;参考:</h3>
+<p>[How to create GUI in C programming using GTK Toolkit](https://www.geeksforgeeks.org/how-to-create-gui-in-c-programming-using-gtk-toolkit/)</p>
+<p>[how to compile gtk+ application for native windows](<a>https://stackoverflow.com/questions/18799904/how-to-compile-gtk-application-for-native-windows-and-not-for-x-windows</a>)</p>
+<p>[Custom widget in GTK#](http://zetcode.com/gui/gtksharp/customwidget/)</p>
+<p>[Creating a C/C++ GUI with GTK+](https://www.codeguru.com/cpp/cpp/creating-a-cc-gui-with-gtk.html)</p>
+<p>[MFC、WTL、WPF、wxWidgets、Qt、GTK 各有什么特点？](https://www.zhihu.com/question/23480014)</p>
+<p>[Tutorials for GTK+3 and GTK+4](https://medium.com/@ryanpatiency/my-experience-of-learning-gtk-3-4b07dc78c7c1)</p>
+<p>[GTK入门学习：glade的使用](https://blog.csdn.net/dodod2012/article/details/81456707)</p>
+<p>[GTK+：GTK+的简介、安装、使用方法之详细攻略](https://blog.csdn.net/qq_41185868/article/details/90238729)</p>
+<p>[Flutter vs Qt QML](https://medium.com/@petar.koretic/flutter-vs-qt-qml-9a2d655b5ab1)</p>
+<p>[Why you should use Qt/QML for your next cross-platform application — part 1 — desktop](https://medium.com/@petar.koretic/why-you-should-use-qt-qml-for-you-next-cross-platform-application-part-1-desktop-5e6d8856b7b4)</p>
+<p>[how to ignore certificate error on qml WebEngineView](https://stackoverflow.com/questions/55194575/how-to-ignore-certificate-error-on-qml-webengineview)</p>
+<p>[libGDIPlus](https://github.com/GCrean/libGDIPlus)</p>
+<p>[TGdi](https://github.com/bzmework/TGdi)</p>
+<p>[GDI-plus](https://www.codeproject.com/KB/GDI-plus/)</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/166274#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Windows_Blog" title="Windows" href="https://developer.huaweicloud.com/tags/200366/blog_1">Windows</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,27 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>nginx字体跨域配置</h3><p>nginx.conf添加</p><p><br></p><pre class="brush:css;toolbar:false">location&nbsp;~*&nbsp;\.(eot|ttf|woff|svg|otf)$&nbsp;{
+&nbsp;&nbsp;&nbsp;add_header&nbsp;'Access-Control-Allow-Origin'&nbsp;'http://xxxx.com';
+&nbsp;&nbsp;&nbsp;add_header&nbsp;'Access-Control-Allow-Methods'&nbsp;'OPTION,&nbsp;POST,&nbsp;GET';
+&nbsp;&nbsp;&nbsp;add_header&nbsp;'Access-Control-Allow-Headers'&nbsp;'X-Requested-With,&nbsp;Content-Type';
+}</pre><p>参考:</p><p><a rel="nofollow" href="https://github.com/ckinmind/PHPHub/issues/2">https://github.com/ckinmind/PHPHub/issues/2</a></p><p><a rel="nofollow" href="https://carey.akhack.com/2017/06/08/Nginx%E8%B7%A8%E5%9F%9F%E4%BD%BF%E7%94%A8%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/">https://carey.akhack.com/2017/06/08/Nginx%E8%B7%A8%E5%9F%9F%E4%BD%BF%E7%94%A8%E5%AD%97%E4%BD%93%E6%96%87%E4%BB%B6%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95/</a></p><h3>chrome解析中文字体文件异常(OTS parsing error: OS/2: Failed to parse table)</h3><p>---&gt;原因其实只是因为中文字体比较大</p><p>---&gt;使用font-spider可以解决静态特定范围字符的字体注册和字体文件的减小</p><pre class="brush:cpp;toolbar:false">npm&nbsp;i&nbsp;-g&nbsp;font-spider
+font-spider&nbsp;./xxx.html</pre><p><br></p><p>---&gt;ttf转woff2/woff/eot</p><p>可以使用在线转换,<a rel="nofollow" href="https://transfonter.org">https://transfonter.org</a></p><p>也可以使用工具离线转换,查找github可以看到nodejs环境的和java环境的两种wrapper,底层都基于c的实现,</p><p>例如<a rel="nofollow" href="https://github.com/Jijun/font-converter-gui">https://github.com/Jijun/font-converter-gui</a>这个是一个java的wrapper,</p><p>但是其woff2转换依赖于jwoff2.dll,woff2enc.dll,woff2enc.dll等等,需要注意的是jvm的位数需要与dll一致,</p><p>如果感觉比较麻烦ttf转woff2可以直接使用</p><p><a rel="nofollow" href="https://github.com/trinhnghia/ttf2woff2">https://github.com/trinhnghia/ttf2woff2</a>这个仓里的已经编译好的32位binary文件,</p><pre class="brush:cpp;toolbar:false">woff2_compress&nbsp;xxx.ttf</pre><p>可以将ttf转换为同名woff2文件<br></p><pre class="brush:cpp;toolbar:false">woff2_uncompress&nbsp;xxx.woff2</pre><p>可以将woff2转换为ttf同名文件</p><h3>反思</h3><p>font-spider命令可以扫描静态文件中使用到的字体的相关文字,移除掉字体文件中未使用的数据实现压缩,但是如果是动态的页面的情况下呢</p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/100709#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Nginx_Blog" title="Nginx" href="https://developer.huaweicloud.com/tags/200304/blog_1">Nginx</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.web前端_Blog" title="web前端" href="https://developer.huaweicloud.com/tags/201873/blog_1">web前端</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,141 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>同一个目录下多个makefile指定需要编译的</strong></p></li>
+</ul>
+<p><strong><img src="https://bbs-img.huaweicloud.com/blogs/img/1596721812443039174.png"></strong></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/12057852/multiple-makefiles-in-one-directory">https://stackoverflow.com/questions/12057852/multiple-makefiles-in-one-directory</a><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>tar单独一个横杠的含义</strong></p></li>
+</ul>
+<p>打包输入到标准输出或者从标准输入中解包<br></p>
+<p><a></a></p>
+<p><a target="_blank" title="https://askubuntu.com/questions/1151909/what-does-the-hyphen-mean-in-tar-xzf  https://unix.stackexchange.com/questions/85194/how-to-download-an-archive-and-extract-it-without-saving-the-archive-to-disk  https://stackoverflow.com/questions/2597875/how-can-i-build-a-tar-from-stdin  https://stackoverflow.com/questions/11524602/how-to-extract-tar-archive-from-stdin https://superuser.com/questions/325504/howto-pipe-cp-tar-gzip-without-creating-intermediary-files">https://askubuntu.com/questions/1151909/what-does-the-hyphen-mean-in-tar-xzf&nbsp;</a></p>
+<p><a target="_blank" title="https://unix.stackexchange.com/questions/85194/how-to-download-an-archive-and-extract-it-without-saving-the-archive-to-disk">https://unix.stackexchange.com/questions/85194/how-to-download-an-archive-and-extract-it-without-saving-the-archive-to-disk&nbsp;</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/2597875/how-can-i-build-a-tar-from-stdin">https://stackoverflow.com/questions/2597875/how-can-i-build-a-tar-from-stdin&nbsp;</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/11524602/how-to-extract-tar-archive-from-stdin">https://stackoverflow.com/questions/11524602/how-to-extract-tar-archive-from-stdin</a></p>
+<p><a target="_blank" title="https://superuser.com/questions/325504/howto-pipe-cp-tar-gzip-without-creating-intermediary-files">https://superuser.com/questions/325504/howto-pipe-cp-tar-gzip-without-creating-intermediary-files</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>tar参数的含义</strong></p><p><strong><img src="https://bbs-img.huaweicloud.com/blogs/img/1596721625056057820.png"></strong></p></li>
+</ul>
+<p><a rel="nofollow" href="https://blog.csdn.net/pan_tian/article/details/7686408">https://blog.csdn.net/pan_tian/article/details/7686408</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>tar设置排除<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">exclude</span></strong></p></li>
+</ul>
+<p><a target="_blank" title="https://stackoverflow.com/questions/984204/shell-command-to-tar-directory-excluding-certain-files-folders">https://stackoverflow.com/questions/984204/shell-command-to-tar-directory-excluding-certain-files-folders</a><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong style="white-space: normal;">tar打包绝对路径问题</strong></p></li>
+</ul>
+<p><a></a></p>
+<p><a target="_blank" title="https://blog.51cto.com/dihuo/1347236">https://blog.51cto.com/dihuo/1347236</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/jiexunpc/article/details/72781681" target="_blank" title="https://blog.csdn.net/jiexunpc/article/details/72781681">https://blog.csdn.net/jiexunpc/article/details/72781681</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/chenyulancn/article/details/45248069" target="_blank" title="https://blog.csdn.net/chenyulancn/article/details/45248069">https://blog.csdn.net/chenyulancn/article/details/45248069</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>GLIBCXX_3.4.14 not found</strong></p></li>
+</ul>
+<p>这个问题发生在我人为指定加载的libstdc++.so.6的版本比较低,<span style="color: rgb(41, 41, 41); font-family: Menlo, Monaco, &quot;Courier New&quot;, Courier, monospace; letter-spacing: -0.352px; white-space: pre-wrap; background-color: rgb(242, 242, 242);">可以</span>sudo strings libstdc++.so.6 | grep GLIBCXX查看一下</p>
+<p><a target="_blank" title="https://medium.com/@akingsukh/how-to-solve-glibcxx-3-4-14-not-found-on-centos6-738d048b713f">https://medium.com/@akingsukh/how-to-solve-glibcxx-3-4-14-not-found-on-centos6-738d048b713f</a><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>增加查找动态库的路径</strong></p></li>
+</ul>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Keep the previous path, don't overwrite it:</p>
+<pre>export&nbsp;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/your/custom/path/</pre>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">You can add it to your ~/.bashrc:</p>
+<pre>echo&nbsp;'export&nbsp;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/your/custom/path/'&nbsp;&gt;&gt;&nbsp;~/.bashrc</pre>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$PWD"</p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Alternatively you can execute program with specified library dir:</p>
+<pre>/lib/ld-linux.so.2&nbsp;--library-path&nbsp;PATH&nbsp;EXECUTABLE</pre>
+<p><strong><a>https://stackoverflow.com/questions/13428910/how-to-set-the-environmental-variable-ld-library-path-in-linux</a></strong></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>ldd列出程序依赖的动态库</strong></p></li>
+</ul>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Example:</p>
+<pre>$&nbsp;ldd&nbsp;/bin/ls</pre>
+<pre>readelf&nbsp;-d&nbsp;/bin/ls&nbsp;|&nbsp;grep&nbsp;'NEEDED'</pre>
+<p><a target="_blank" title="https://unix.stackexchange.com/questions/120015/how-to-find-out-the-dynamic-libraries-executables-loads-when-run">https://unix.stackexchange.com/questions/120015/how-to-find-out-the-dynamic-libraries-executables-loads-when-run</a><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>生成指定大小文件</strong></p></li>
+</ul>
+<p><a></a></p>
+<p><a target="_blank" title="https://cloud.tencent.com/developer/article/1004339">https://cloud.tencent.com/developer/article/1004339&nbsp;</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/beswkwangbo/article/details/46375795" target="_blank" title="https://blog.csdn.net/beswkwangbo/article/details/46375795">https://blog.csdn.net/beswkwangbo/article/details/46375795</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>输出目录下文件的md5</strong></p></li>
+</ul>
+<pre class="brush:c#;toolbar:false">find&nbsp;./&nbsp;-type&nbsp;f&nbsp;-exec&nbsp;md5sum&nbsp;'{}'&nbsp;+</pre>
+<p><a target="_blank" title="https://unix.stackexchange.com/questions/392990/how-to-check-md5sum-between-two-directories">https://unix.stackexchange.com/questions/392990/how-to-check-md5sum-between-two-directories</a></p>
+<p><a target="_blank" title="https://unix.stackexchange.com/questions/35832/how-do-i-get-the-md5-sum-of-a-directorys-contents-as-one-sum/35834">https://unix.stackexchange.com/questions/35832/how-do-i-get-the-md5-sum-of-a-directorys-contents-as-one-sum/35834</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>在当前目录下查找</strong><br></p></li>
+</ul>
+<pre class="brush:c#;toolbar:false">find&nbsp;"$pwd"&nbsp;-name&nbsp;xxx</pre>
+<p>过滤</p>
+<pre class="brush:c#;toolbar:false">&nbsp;find&nbsp;"/"&nbsp;-type&nbsp;f&nbsp;-print&nbsp;|&nbsp;awk&nbsp;-F'/'&nbsp;'{printf&nbsp;"%s&nbsp;%s\n",$NF,&nbsp;$0}'&nbsp;|&nbsp;grep&nbsp;-e&nbsp;"^xx.*"</pre>
+<ul class=" list-paddingleft-2" style="width: 1104.08px; white-space: normal;">
+ <li><p><strong>sftp,scp,rsync 的异同</strong></p></li>
+</ul>
+<p style="white-space: normal;"><a></a></p>
+<p><a target="_blank" title="https://segmentfault.com/a/1190000016151406">https://segmentfault.com/a/1190000016151406</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/29624524/how-can-i-print-log-the-checksum-calculated-by-rsync">https://stackoverflow.com/questions/29624524/how-can-i-print-log-the-checksum-calculated-by-rsync</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>其他rsync相关的查询</strong></p></li>
+</ul>
+<p>目录最后的斜杠对rsync有影响</p>
+<p><strong><a rel="nofollow" href="https://github.com/thbar/rsync-windows"></a></strong></p>
+<p><a rel="nofollow" href="https://github.com/thbar/rsync-windows" target="_blank" title="https://github.com/thbar/rsync-windows">https://github.com/thbar/rsync-windows</a></p>
+<p><a rel="nofollow" href="https://github.com/jbenden/rsync" target="_blank" title="https://github.com/jbenden/rsync">https://github.com/jbenden/rsync</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/15787676/rsync-how-to-do-a-checksum-on-rsync">https://stackoverflow.com/questions/15787676/rsync-how-to-do-a-checksum-on-rsync</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/14566355/how-to-get-files-list-with-checksums">https://stackoverflow.com/questions/14566355/how-to-get-files-list-with-checksums</a></p>
+<p><a target="_blank" title="https://serverfault.com/questions/426520/get-list-of-transferred-files-from-rsync">https://serverfault.com/questions/426520/get-list-of-transferred-files-from-rsync&nbsp;</a></p>
+<p><a target="_blank" title="https://stackoverflow.com/questions/10525748/rsync-with-checksum-from-local-to-local">https://stackoverflow.com/questions/10525748/rsync-with-checksum-from-local-to-local</a></p>
+<p><a target="_blank" title="https://serverfault.com/questions/363555/why-is-rsync-skipping-the-main-directory">https://serverfault.com/questions/363555/why-is-rsync-skipping-the-main-directory&nbsp;</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/niushuai666/article/details/16880061" target="_blank" title="https://blog.csdn.net/niushuai666/article/details/16880061">https://blog.csdn.net/niushuai666/article/details/16880061</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/weixin_38599972/article/details/79528826" target="_blank" title="https://blog.csdn.net/weixin_38599972/article/details/79528826">https://blog.csdn.net/weixin_38599972/article/details/79528826</a>&nbsp; 选项</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/github_38336924/article/details/82700052" target="_blank" title="https://blog.csdn.net/github_38336924/article/details/82700052">https://blog.csdn.net/github_38336924/article/details/82700052</a></p>
+<p><a target="_blank" title="https://linux.die.net/man/1/rsync">https://linux.die.net/man/1/rsync</a> 手册</p>
+<p><a target="_blank" title="https://serverfault.com/questions/211005/rsync-difference-between-checksum-and-ignore-times-options">https://serverfault.com/questions/211005/rsync-difference-between-checksum-and-ignore-times-options&nbsp;</a></p>
+<p><a target="_blank" title="https://unix.stackexchange.com/questions/57305/rsync-compare-directories">https://unix.stackexchange.com/questions/57305/rsync-compare-directories</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>rsync工作原理</strong></p></li>
+</ul>
+<p><a target="_blank" title="https://www.cnblogs.com/f-ck-need-u/p/7226781.html">https://www.cnblogs.com/f-ck-need-u/p/7226781.html</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>关于 rsync 中: 和 :: 及 rysnc 和 ssh 认证协议的区别</strong></p></li>
+</ul>
+<p><a target="_blank" title="https://my.oschina.net/leejun2005/blog/75007">https://my.oschina.net/leejun2005/blog/75007</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>&nbsp;rsync最大连接和超时</strong><br></p></li>
+</ul>
+<p><a rel="nofollow" href="https://blog.csdn.net/caoshuming_500/article/details/22877861" target="_blank" title="https://blog.csdn.net/caoshuming_500/article/details/22877861">https://blog.csdn.net/caoshuming_500/article/details/22877861</a></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>rsync打印checksum</strong></p></li>
+</ul>
+<pre class="brush:c#;toolbar:false">rsync&nbsp;-avnc&nbsp;--out-format="%i&nbsp;%n%L%C"&nbsp;--ignore-times&nbsp;--checksum&nbsp;&nbsp;/xxx/&nbsp;/xxx/</pre>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>windows环境rsync上传文件到linux</strong></p></li>
+</ul>
+<pre class="brush:c#;toolbar:false">D:\xxx\rsync.exe&nbsp;-av&nbsp;--no-o&nbsp;--no-g&nbsp;--delete&nbsp;-e&nbsp;"'D:\xxx\ssh.exe'"&nbsp;/cygdrive/D/dev/xxx&nbsp;root@xxx.xxx.xxx.xxx:/home/xxx</pre>
+<p><a rel="nofollow" href="https://blog.csdn.net/haoyiyide/article/details/70157004"></a></p>
+<p><a target="_blank" title="https://askubuntu.com/questions/719439/using-rsync-with-sudo-on-the-destination-machine">https://askubuntu.com/questions/719439/using-rsync-with-sudo-on-the-destination-machine&nbsp;</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/haoyiyide/article/details/70157004" target="_blank" title="https://blog.csdn.net/haoyiyide/article/details/70157004">https://blog.csdn.net/haoyiyide/article/details/70157004</a></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/193126#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Shell_Blog" title="Shell" href="https://developer.huaweicloud.com/tags/200087/blog_1">Shell</a>
+        
+    </div>
+</div></div>
