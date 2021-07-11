@@ -1,0 +1,185 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h1 class="article-title" style="color: #000000;">最小公倍数 （1-n 个数的最小公倍数，大数）</h1>
+<p><a>https://hanks.pub/2013/10/23/NYOJ_517_%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0_%EF%BC%881-n_%E4%B8%AA%E6%95%B0%E7%9A%84%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0%EF%BC%8C%E5%A4%A7%E6%95%B0%EF%BC%89/</a></p>
+<h1 class="article-title" style="color: #000000;">两种任意进制之间的转换（大数）</h1>
+<p><a>https://hanks.pub/2013/10/20/POJ_1220_%EF%BC%88%E4%B8%A4%E7%A7%8D%E4%BB%BB%E6%84%8F%E8%BF%9B%E5%88%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%EF%BC%88%E5%A4%A7%E6%95%B0%EF%BC%89%EF%BC%8Cjava%E7%9A%84BigInteger%EF%BC%89/</a></p>
+<h1 class="title-article" style="color: #222226;">C++ ! 最大公约数 ！（大数）</h1>
+<p><a rel="nofollow" href="https://blog.csdn.net/weixin_42228705/article/details/100082286">https://blog.csdn.net/weixin_42228705/article/details/100082286</a></p>
+<p>通用的最小公倍数和最大公约数运算</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/xiaoquantouer/article/details/61919470">https://blog.csdn.net/xiaoquantouer/article/details/61919470</a></p>
+<p><a rel="nofollow" href="https://github.com/wanggchongg/leetcode/blob/master/%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0_%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0.cpp">https://github.com/wanggchongg/leetcode/blob/master/%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0_%E6%9C%80%E5%B0%8F%E5%85%AC%E5%80%8D%E6%95%B0.cpp</a></p>
+<h1 class="postTitle" style="color: #333333;"><a class="postTitle2 vertical-middle" style="color: #333333; text-decoration: none;"><span>Pairs of Numbers</span></a></h1>
+<p><a>https://www.cnblogs.com/ustc-anmin/p/11265363.html</a></p>
+<h3>整数的质因子</h3>
+<p><a rel="nofollow" href="https://blog.csdn.net/zzran/article/details/8076783">https://blog.csdn.net/zzran/article/details/8076783</a></p>
+<pre class="language-cpp"><code>#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+void prime_factors(long n) {
+	long i;
+	while(n % 2 ==0) {
+		n = n / 2;
+		cout&lt;&lt;2&lt;&lt;" ";
+	}
+	for(i = 3; i &lt;= sqrt(n); i += 2) {
+		while(n % i == 0) {
+			n = n / i;
+			cout&lt;&lt;i&lt;&lt;" ";
+		}
+	}
+	if(n &gt; 2) {
+		cout&lt;&lt;n &lt;&lt; " ";
+	}
+}
+
+int main(int argc, char *argv[])
+{
+    long num;
+    cin&gt;&gt;num;
+    prime_factors(num);
+    return 0;
+}</code></pre>
+<ul> 
+ <li class="title-article" style="color: #222226;">135 修理手机 -- 队列的使用</li> 
+</ul>
+<pre class="language-perl"><code>题目描述
+一个城市可以近似看成n*m的网格图，某公司有k个维修点，每个维修点有固定的坐标，城市里面有h个客户需要修理手机，客户有固定的坐标。维修员在地图上只能上下左右走，不能斜着走，每走一个格子需要2块钱的花费。每个维修点拥有无数个员工，每个员工可以被派去为一个客户服务。城市里面有z个地方在修理管道，这些地方是不能走的。可能有一些客户是被隔离的（上下左右都在修管道），这里是不需要派员工去修理手机了。华为公司为了节省财力，想找到最小的花费。
+
+输入
+第一行给出两个正整数n，m（0&lt;n&lt;1000,0&lt;m&lt;1000)。第二行给出k（0&lt;k&lt;20)以及k个维修点的坐标。第三行给出z(0&lt;z&lt;100)以及z个坐标。第四行给出h(0&lt;h&lt;100)以及h个坐标。保证客户,维修点以及修理管道都在n*m的地图里面。
+输出
+输出最小的花费。
+
+样例
+输入样例 1 
+100 100
+4 1 1 2 2 3 3 4 4
+1 0 0
+3 99 99 88 88 77 77
+输出样例 1
+1008
+
+提示
+对于队列的应用，部分数据用bfs也能过。</code></pre>
+<p><a rel="nofollow" href="https://blog.csdn.net/zhongyunde/article/details/100621939">https://blog.csdn.net/zhongyunde/article/details/100621939</a></p>
+<ul> 
+ <li>购物单 (<a>www.nowcoder.com</a>)</li> 
+</ul>
+<pre class="language-actionscript"><code>题目描述
+王强今天很开心，公司发给N元的年终奖。王强决定把年终奖用于购物，他把想买的物品分为两类：主件与附件，附件是从属于某个主件的，下表就是一些主件与附件的例子：
+主件	附件
+电脑	打印机，扫描仪
+书柜	图书
+书桌	台灯，文具
+工作椅	无
+如果要买归类为附件的物品，必须先买该附件所属的主件。每个主件可以有 0 个、 1 个或 2 个附件。附件不再有从属于自己的附件。王强想买的东西很多，为了不超出预算，他把每件物品规定了一个重要度，分为 5 等：用整数 1 ~ 5 表示，第 5 等最重要。他还从因特网上查到了每件物品的价格（都是 10 元的整数倍）。他希望在不超过 N 元（可以等于 N 元）的前提下，使每件物品的价格与重要度的乘积的总和最大。
+    设第 j 件物品的价格为 v[j] ，重要度为 w[j] ，共选中了 k 件物品，编号依次为 j 1 ， j 2 ，……， j k ，则所求的总和为：
+v[j 1 ]*w[j 1 ]+v[j 2 ]*w[j 2 ]+ … +v[j k ]*w[j k ] 。（其中 * 为乘号）
+    请你帮助王强设计一个满足要求的购物单。
+
+输入描述:
+输入的第 1 行，为两个正整数，用一个空格隔开：N m（其中 N （ &lt;32000 ）表示总钱数， m （ &lt;60 ）为希望购买物品的个数。）
+从第 2 行到第 m+1 行，第 j 行给出了编号为 j-1 的物品的基本数据，每行有 3 个非负整数 v p q（其中 v 表示该物品的价格（ v&lt;10000 ）， p 表示该物品的重要度（ 1 ~ 5 ）， q 表示该物品是主件还是附件。如果 q=0 ，表示该物品为主件，如果 q&gt;0 ，表示该物品为附件， q 是所属主件的编号）
+ 
+输出描述:
+ 输出文件只有一个正整数，为不超过总钱数的物品的价格与重要度乘积的总和的最大值（ &lt;200000 ）。
+示例1
+输入
+复制
+1000 5
+800 2 0
+400 5 1
+300 5 1
+400 3 0
+500 2 0
+输出
+复制
+2200</code></pre>
+<ul> 
+ <li class="post-title" style="color: #555555; text-align: left;">OJ1964-求解立方根（牛顿迭代法） - https://songlee24.github.io/2015/03/20/hua-wei-OJ1964/</li> 
+</ul>
+<pre class="language-cpp"><code>#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+#define E 0.01
+
+double f(double x, double num) // 函数
+{
+	return x*x*x-num;
+}
+
+double _f(double x)  // 导函数
+{
+	return 3*x*x;
+}
+
+double getCubeRoot(double input)
+{
+	double x0;  
+	double r = 1;
+	do
+	{
+		x0 = r;
+		r = x0 - f(x0,input)/_f(x0);
+	} while(f(r,input) &gt; E || f(r,input) &lt; -E);
+	
+	return r;
+}
+
+int main()
+{
+	double x;
+	cin &gt;&gt; x;
+	double result = getCubeRoot(x); 
+	cout &lt;&lt; fixed &lt;&lt; showpoint &lt;&lt; setprecision(1) &lt;&lt; result &lt;&lt; endl;
+	return 0;
+}</code></pre>
+<p></p>
+<p></p>
+<p>/*-----------------------备用片段---------------------------------------*/</p>
+<p>stl自定义排序</p>
+<p>set 自定义排序规则</p>
+<pre class="language-cpp"><code>struct custom_compare final
+{
+    bool operator() (const std::string&amp; left, const std::string&amp; right) const
+    {
+        int nLeft = atoi(left.c_str());
+        int nRight = atoi(right.c_str());
+        return nLeft &lt; nRight;
+    }
+};
+ std::set&lt;std::string, custom_compare&gt; sut_custom({"1", "2", "5", "23", "6", "290"},
+                                                     custom_compare{}); //&lt; Compare object optional as its default constructible.
+</code></pre>
+<p>map 自定义排序规则的</p>
+<pre class="language-cpp"><code>struct cmpByStringLength {
+    bool operator()(const std::string&amp; a, const std::string&amp; b) const {
+        return a.length() &lt; b.length();
+    }
+};
+
+// ...
+std::map&lt;std::string, std::string, cmpByStringLength&gt; myMap;</code></pre>
+<p>c++11</p>
+<pre class="language-cpp"><code>auto comp = [](const string&amp; a, const string&amp; b) { return a.length() &lt; b.length(); };
+map&lt;string, string, decltype(comp)&gt; my_map(comp);</code></pre>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/244357#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.数据结构_Blog" title="数据结构" href="https://developer.huaweicloud.com/tags/200252/blog_1">数据结构</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,80 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>guest用户没有clone权限但是可以看，clone权限需要申请成为开发成员;</p>
+<p>如果感觉申请成为成员比较麻烦,那么你可以试试下面这段下载脚本；</p>
+<p>依赖FileSaver.js，JSZip v3.5.0，jQuery v3.5.1</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <h3>下载文本文件<br></h3> </li> 
+</ul>
+<pre><code>function downfile(zip,filepath,fileurl){
+	return new Promise((resolve,reject)=&gt;{
+		fetch(fileurl)
+		.then(response =&gt; response.json())
+		.then(data =&gt; {
+			let htmlstr = data.html
+			var template = $.parseHTML(htmlstr);
+			var final = $(template).find("code");
+			let savestr = final.text();
+			var blob = new Blob([savestr], { type: "text/plain;charset=utf-8" });
+			zip.file(filepath,blob,{ binary: true, createFolders: true });
+			resolve(true);
+			})
+		.catch(console.error);
+	});
+}</code></pre>
+<p><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <h3>遍历目录树<br></h3> </li> 
+</ul>
+<p><br></p>
+<pre><code>function looptree(zip,treeurl){
+	return new Promise((resolve,reject)=&gt;{
+		fetch(treeurl).then(response =&gt; response.json()).then(async data =&gt; {
+				for(let i=0;i&lt;data.length;++i){
+					let value = data[i];
+					if(value.type=='tree'){
+						path = treeurl.replace(/path=[^&amp;]+/,'')
+						await looptree(zip,treeurl+'&amp;path='+encodeURIComponent(value.path))
+					}else if(value.type=='blob' &amp;&amp;&nbsp;
+						(value.name.endsWith('.h') || value.name.endsWith('.cpp') || value.name.endsWith('.js') || //指定了一些后缀下载，只能下载文本类的文件
+						value.name.endsWith('.cc') || value.name.endsWith('.cxx') || value.name.endsWith('.sh') || value.name.endsWith('.bat') ) ){
+						await downfile(zip,value.path,'https://code.你访问的gitlab地址.com/udtest/libdtcenter/blob/分支名/'+value.path+'?format=json');
+					}
+				}
+				resolve(true);
+			}).catch(console.error);
+	})
+}</code></pre>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <h3>开始下载&nbsp;&nbsp;</h3> <p><br></p> </li> 
+</ul>
+<pre><code>async&nbsp;function&nbsp;startDownload(){//api/v3&nbsp;我测试的这个部署使用的的是gitlab&nbsp;v3版本，其他版本能需要作些调整
+	var&nbsp;zip&nbsp;=&nbsp;new&nbsp;JSZip();
+	await&nbsp;looptree(zip,'https://code.你访问的gitlab地址.com/api/v3/projects/仓数字id/repository/tree?private_token=你的私钥(一般可以在个人设置里找到)&amp;id=96271&amp;ref_name=分支名(例如master/develop)&amp;path=子路径名(不带path参数则为整个项目,path可以指定下载特定子目录)');
+	zip.generateAsync({type:"blob"})
+	.then(function(content)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;see&nbsp;FileSaver.js
+	&nbsp;&nbsp;&nbsp;&nbsp;saveAs(content,&nbsp;"example.zip");
+	});
+}</code></pre>
+<ul> 
+ <li><strong>图片和markdown的处理</strong><strong></strong></li> 
+</ul>
+<p>上面只包含代码和文本类的下载过程，图片和md文件需要做类似处理;</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/202303#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

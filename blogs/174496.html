@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp; &nbsp;BaseParser</p>
+<p>&nbsp; &nbsp; |</p>
+<p>&nbsp; &nbsp; |_TXTParser --List&lt;string&gt;</p>
+<p>&nbsp; &nbsp; |</p>
+<p>&nbsp; &nbsp; |_WordParser&nbsp; --- List&lt;Aspose.Words.Node&gt;</p>
+<p>&nbsp; &nbsp; |</p>
+<p>&nbsp; &nbsp; |_PDFParser&nbsp; ---PDF =&gt;Doc,List&lt;Aspose.Words.Node&gt; --Paragraph</p>
+<p>&nbsp; &nbsp; |</p>
+<p>&nbsp; &nbsp; |_PPTParser&nbsp; ---List&lt;Aspose.slides.Paragraph&gt;</p>
+<p>&nbsp; &nbsp; |</p>
+<p>&nbsp; &nbsp; |_ExcelParser&nbsp; ---Aspose.cells.Workbook</p>
+<p><br></p>
+<p>&nbsp; &nbsp;&nbsp;</p>
+<p>BaseParser</p>
+<p>--GetTranslateText(调用服务向后端api发送翻译请求)</p>
+<p>--IsSupportBatchTranslate(全局开启分批翻译的开关,分批的好处是减少请求数),</p>
+<p><span style="white-space:pre"> </span>如果开启则调用BatchTranslate分批组合翻译，否则调用singleTranslate一段段翻译</p>
+<p>--BatchSetParagraphContent输出并替换word节点中翻译后的内容</p>
+<p><br></p>
+<p>TXTParser-----TranslateTXT \</p>
+<p>WordParser----TranslateDoc&nbsp; &nbsp;\</p>
+<p>PDFParser-----TranslatePDF&nbsp; &nbsp; 参数为Task</p>
+<p>PPTParser-----TranslatePPT&nbsp; &nbsp; /</p>
+<p>ExcelParser---TranslateExcel /</p>
+<p><br></p>
+<p>Task为单个翻译任务对应的数据其继承了INotifyPropertyChanged,</p>
+<p>TaskViewModel为一个翻译任务界面对应的数据可以当成任务数据集合ObservableCollection&lt;Task&gt;,当点击开始翻译时,</p>
+<p>从其中过滤出需要跑的翻译任务,构造TaskThread任务执行包裹结构并添加到待启动集合，包裹执行StartTranslate(task),通过任务中的文件名</p>
+<p>后缀(Dictionary&lt;string, Action&lt;Task&gt;&gt;)映射到对应的Action从而执行具体调用;遍历集合启动所有task;</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/174496#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

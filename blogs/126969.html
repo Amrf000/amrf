@@ -1,0 +1,111 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>当博主的博客数超过10篇的时候，在华为云博客上很难指定作者搜索(也行是我还没找到正确的打开方式)</p><p>为了避免一页一页的找,下面我摘了一段js可以把目标博主的所有博文都加载出来;</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>首先进入作者的博客主页:</p></li></ul><p>https://bbs.huaweicloud.com/community/usersnew/id_xxxxxxx</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>打开开发者工具,将下面的js粘贴到console中执行:</p></li></ul><pre class="brush:js;toolbar:false">function&nbsp;UpData(pageNo,total){
+&nbsp;&nbsp;&nbsp;&nbsp;$.ajax({
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;type:&nbsp;"get",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url:&nbsp;'/api/blog/search-blog',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data:{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id:window.location.href.match(/id_([\d]+)/)[1],
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;order:"desc",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pageNo:pageNo
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dataType:&nbsp;"json",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;async:&nbsp;false,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;success:&nbsp;function&nbsp;(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;datas&nbsp;=&nbsp;data;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;number&nbsp;=&nbsp;datas.length&nbsp;+&nbsp;parseInt(pageNo)*10&nbsp;-&nbsp;10;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;pos,tagIds,tagNames,cus_j;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(number==parseInt(total)){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$("#UpData").html('加载完成');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$("#UpData").attr('data-num',1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(datas.length&gt;0&amp;&amp;number&lt;=parseInt(total)){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;addp&nbsp;=&nbsp;"";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;adda,cus_i,uptime,dateUpTime;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(var&nbsp;i=0;i&lt;datas.length;i++){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cus_i&nbsp;=&nbsp;parseInt(pageNo)*10&nbsp;-&nbsp;10&nbsp;+&nbsp;i;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;uptime&nbsp;=&nbsp;new&nbsp;Date(parseInt(datas[i].updated_at)&nbsp;*&nbsp;1000);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dateUpTime&nbsp;=&nbsp;uptime.getFullYear()&nbsp;+&nbsp;"-"&nbsp;+&nbsp;Appendzero(uptime.getMonth()&nbsp;+&nbsp;1)&nbsp;+&nbsp;"-"&nbsp;+&nbsp;Appendzero(uptime.getDate())&nbsp;+&nbsp;"&nbsp;"&nbsp;+&nbsp;Appendzero(uptime.getHours())&nbsp;+&nbsp;":"&nbsp;+&nbsp;Appendzero(uptime.getMinutes())&nbsp;+&nbsp;":"&nbsp;+&nbsp;Appendzero(uptime.getSeconds());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datas[i].viewNums&nbsp;=&nbsp;parseInt(datas[i].viewNums)&nbsp;&gt;&nbsp;999&nbsp;?&nbsp;"999+"&nbsp;:&nbsp;datas[i].viewNums;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datas[i].commNums&nbsp;=&nbsp;parseInt(datas[i].commNums)&nbsp;&gt;&nbsp;999&nbsp;?&nbsp;"999+"&nbsp;:&nbsp;datas[i].commNums;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datas[i].voteNums&nbsp;=&nbsp;parseInt(datas[i].voteNums)&nbsp;&gt;&nbsp;999&nbsp;?&nbsp;"999+"&nbsp;:&nbsp;datas[i].voteNums;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//标题
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-header').children('a').attr('id','portal_usercenter_2_usernew_blog_title_cus_i_'&nbsp;+&nbsp;cus_i);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-header').children('a').attr('href','/blogs/'+datas[i].id);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-header').children('a').attr('title',datas[i].title);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-header').children('a').html(datas[i].title);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//头像
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('a').attr('id',"portal_usercenter_2_usernew_author_type2_cus_i_"+cus_i);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('a').attr('href',"/community/usersnew/id_"+datas[i].author);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('a').children('img').attr("src","/user/img/head/"+datas[i].memPhoto);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//博客作者&nbsp;&nbsp;手机版不需要展示博客作者
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/*&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-eye').prev('span').children('a').attr('id','portal_usercenter_6_iblognew_article_authorname_'+cus_i);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-eye').prev('span').children('a').attr('href','/community/usersnew/id_'+datas[i].author);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-eye').prev('span').children('a').attr('title',datas[i].memAlias);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-eye').prev('span').children('a').html(datas[i].memAlias);&nbsp;*/
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//浏览赞评论数
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').prev('div').html(dateUpTime);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-eye').next('span').html(datas[i].viewNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-bubbling').next('span').html(datas[i].commNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-icons').children('.common-blog-praise').next('span').html(datas[i].voteNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.m-current').children('.update-times-how').html(dateUpTime);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.m-current').children('.common-blog-icons').children('.common-blog-eye').next('span').html(datas[i].viewNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.m-current').children('.common-blog-icons').children('.common-blog-bubbling').next('span').html(datas[i].commNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.m-current').children('.common-blog-icons').children('.common-blog-praise').next('span').html(datas[i].voteNums);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//内容
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children('.blog-menu-content').children('div').children('.common-blog-text').html(datas[i].intro?datas[i].intro:datas[i].content);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tagIds&nbsp;=&nbsp;datas[i].tag.split(',');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tagNames&nbsp;=&nbsp;datas[i].tagName.split(',');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cus_j&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adda&nbsp;=&nbsp;"";
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(&nbsp;pos=0;&nbsp;pos&nbsp;&lt;&nbsp;tagNames.length&nbsp;;pos++&nbsp;)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").children("a").attr("id","portal_usercenter_2_usernew_"+cus_i+"_tag_"+cus_j);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").children("a").attr("href","/blogs/tag_"+tagIds[pos]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").children("a").attr("title",tagNames[pos]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").children("a").attr("mate_data_ts","portal_v4_community.click.toptag_"+tagNames[pos]+"_twb_PersonalCenter");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").children("a").html(tagNames[pos]);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;adda&nbsp;=&nbsp;adda&nbsp;+&nbsp;$(".blog-menu-model").children("blog-menu-footer").html();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cus_j++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$(".blog-menu-model").children("blog-menu-footer").html(adda);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addp&nbsp;=&nbsp;addp+&nbsp;'&lt;div&nbsp;class="blog-menu"&gt;'&nbsp;+&nbsp;$(".blog-menu-model").html()&nbsp;+&nbsp;'&lt;/div&gt;';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#mobilePageNo').before(addp);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$('#mobilePageNo').val(parseInt(pageNo)&nbsp;+&nbsp;1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}else{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$("#UpData").html('加载完成');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$("#UpData").attr('data-num',1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;error:&nbsp;function&nbsp;(data)&nbsp;{
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;});
+}
+function&nbsp;Appendzero(obj)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(obj&nbsp;&lt;&nbsp;10)&nbsp;return&nbsp;"0"&nbsp;+&nbsp;obj;&nbsp;else&nbsp;return&nbsp;obj;
+}
+function&nbsp;loadAll(){
+	var&nbsp;total&nbsp;=&nbsp;parseInt($('.ucd-pager-page')[$('.ucd-pager-page').length-1].innerText,10);
+	var&nbsp;index&nbsp;=&nbsp;2;
+	for(;index&lt;=total;++index){
+		UpData(index,parseInt($('.pcShow')[0].innerText,10));
+	}
+}
+loadAll();</pre><p>然后就可以在当页搜索所有了,当然如果要更方便的话可以改成浏览器扩展</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/126969#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

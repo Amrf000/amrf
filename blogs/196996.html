@@ -1,0 +1,65 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>经常听到有祖传的代码一说,就是一些项目经过了很长时间的维护,经过了很多人之手,业务逻辑堆叠的越来越多,然后就变成了一个越来越难以维护。</p>
+<p>前几个月,同事刚走,留下一个node支撑的Master/Slaver结构的分布的任务调度系统;</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;">
+ <li><p><strong>从运行部署角度看</strong>,现状是多个发布版本,而且版本依赖的node存在差异,而且部署需要手动进行一些依赖文件的拷贝;</p></li>
+ <li><p><strong>从代码结构层面看</strong>,主要需要维护的版本,使用js语法编写,常常是大量的业务逻辑堆砌到了一个文件之中;</p></li>
+</ul>
+<p><br></p>
+<p>下面以Slaver为例,分析一些当前存在的问题,并且分析一些我考虑过的优化方案</p>
+<p><strong>首先我们看,Slaver部分包含了哪些模块和功能:</strong></p>
+<p>1.包含与Master之间的消息请求和响应;</p>
+<p>2.包含了子任务的状态机;</p>
+<p>3.包含了不同任务的处理细节;</p>
+<p><br></p>
+<p><strong>从语法和性能角度看:</strong></p>
+<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+ <li><p>比较多的以对象类型和变长参数形式作为传参;</p></li>
+ <li><p>同文件中包含大量实体的定义和构造,过多的使用Object而不是定义实体对象,包含很多隐式的类型转换和冗长的元素引用;</p></li>
+ <li><p>大量的使用sync形式的io操作,过多的文件操作;</p></li>
+ <li><p>只有分散各处的错误打印,没有集中的错误定义;</p></li>
+ <li><p>变量命名没有规则,无法区分局部和全局的,存在重复的名称使用,加重了理解的难度;</p></li>
+ <li><p>变量的定义穿插分布,全局范围的函数调用穿插分散多处</p></li>
+ <li><p>嵌套多层的try...catch语句</p></li>
+ <li><p>持续性循环的任务设计造成服务器资源的浪费</p></li>
+ <li><p>函数中多处使用绝对路径,迁移移植性差</p></li>
+</ol>
+<p><br></p>
+<p><strong>优化方案的考虑:</strong></p>
+<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+ <li><p>js=&gt;Ts,采用typescript语法重新组织代码结构;(这个方案前同事已经开发了一个版本,由于升级的调整幅度有些大,实际上线后发现还有比较多的功能问题,版本暂时搁置)</p></li>
+ <li><p>js=&gt;java,采用java重新开发相关逻辑(业务代码逻辑较多,工作量较大);</p></li>
+ <li><p>保留js语言不变,对原代码进行重构切分;</p></li>
+</ol>
+<p><br></p>
+<p>typescript/java相对于js都有更强的类型和更易于使用面向对象的软件设计的语法设计;</p>
+<p>但是是不是采用js开发后端代码的就一定是个糟糕的选择呢,也不尽然,需要的更多的设计和规范坚持;</p>
+<p>题外话,其实如果一个老系统运行的很好,也不需要在其基础上做大规模的二次开发,从投入成本角度看,我认为就没必要对这种项目进行重构了;</p>
+<p><br></p>
+<p>重构和解耦是软件开发中最长久的话题,</p>
+<p>未完待续...</p>
+<p><br></p>
+<p>&nbsp;参考文档:</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1599720078294021947.png" title="1599720078294021947.png" alt="image.png"></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/196996#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,47 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp;问题现象记录,log4js中的streamroller删除旧的日志文件时报权限错误,单独调用fs.statSync无法重现该问题;</p>
+<p>报错调用栈日志：</p>
+<pre class="brush:bash;toolbar:false">fs.js:953
+&nbsp;&nbsp;binding.stat(pathModule._makeLong(path));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;^
+
+Error:&nbsp;EPERM:&nbsp;operation&nbsp;not&nbsp;permitted,&nbsp;stat&nbsp;'...\xxx\logs\xxx.log'
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;Object.fs.statSync&nbsp;(fs.js:953:11)
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;DateRollingFileStream.removeFilesOlderThan&nbsp;(...\node_modules\streamroller\lib\DateRollingFileStream.js:137:24)
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;DateRollingFileStream.removeOldFilesIfNeeded&nbsp;(...\node_modules\streamroller\lib\DateRollingFileStream.js:122:10)
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;DateRollingFileStream.compressIfNeeded&nbsp;(...\node_modules\streamroller\lib\DateRollingFileStream.js:112:5)
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;_combinedTickCallback&nbsp;(internal/process/next_tick.js:95:7)
+&nbsp;&nbsp;&nbsp;&nbsp;at&nbsp;process._tickCallback&nbsp;(internal/process/next_tick.js:161:9)</pre>
+<p>处理:</p>
+<p>1.升级log4js版本到最新---&gt;不确定是否能够解决该问题;</p>
+<p>2.发现存在其他用户配置的pm2的同应用自启服务,与控制台直接启动模块可能也会有影响,单应用应该并不存在多用户都能同时启动的情况(存疑),</p>
+<p>=》重新配置pm2服务,不再使用控制台启动，pm2 delete id删除掉不再使用的应用;</p>
+<p><br></p>
+<p><br></p>
+<p>其他参考pm2相关配置:</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/tuanyuanmian/article/details/104148864">https://blog.csdn.net/tuanyuanmian/article/details/104148864</a></p>
+<p style="box-sizing: border-box; outline: 0px; margin-top: 0px; margin-bottom: 16px; padding: 0px; color: rgb(77, 77, 77); line-height: 26px; overflow-wrap: break-word; font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-variant-ligatures: common-ligatures; white-space: normal; background-color: rgb(255, 255, 255);">安装pm2服务：</p>
+<ol style="list-style-type: none;" class=" list-paddingleft-2"> 
+ <li><p><code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">cnpm install -g pm2-windows-service</code></p></li> 
+ <li><p><code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">pm2-service-install</code><br>配置环境<br>i.&nbsp;<code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">PM2_HOME</code>是pm2的主目录，一般是用户目录下.pm2，即<code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">c:\users\xxx\.pm2</code>，可以通过<code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">pm2 save</code>查看<br>ii.&nbsp;<code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">PM2_SERVICE_SCRIPTS</code>是启动脚本位置，不用配置，输入n。<br>iii.&nbsp;<code style="box-sizing: border-box; outline: 0px; font-family: &quot;Source Code Pro&quot;, &quot;DejaVu Sans Mono&quot;, &quot;Ubuntu Mono&quot;, &quot;Anonymous Pro&quot;, &quot;Droid Sans Mono&quot;, Menlo, Monaco, Consolas, Inconsolata, Courier, monospace, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, sans-serif; font-size: 14px; line-height: 22px; color: rgb(199, 37, 78); background-color: rgb(249, 242, 244); border-radius: 2px; padding: 2px 4px; overflow-wrap: break-word;">PM2_SERVICE_PM2_DIR</code>是pm2的位置，如果把pm2所在目录加到了path里就不用配置，输入n。</p></li> 
+ <li><p>安装成功后，会在服务中看见pm2.exe的服务，自动启动</p></li> 
+</ol>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/205535#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

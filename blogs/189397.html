@@ -1,0 +1,358 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 17.056px; white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1595819922534053413.png"><br></h3>
+<h3 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 17.056px; white-space: normal;"><span style="">请求-回复模式</span></h3>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">请求-应答模式用于从发送请求</span><em>的客户端</em><span style="">的一个或多个实例中</span><em>的服务</em><span style="">，并接收后续答复每个请求发送。</span></p>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_REQ</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><em><span style="">客户端</span></em><span style="">使用</span></span><em>ZMQ_REQ</em><span style=""><span style="">类型的套接字</span><span style="">向服务发送请求并从</span><em><span style="">服务</span></em><span style="">接收答复</span><span style="">。</span><span style="">此套接字类型仅允许</span><em><span style="">zmq_send（request）</span></em><span style="">和后续</span><em><span style="">zmq_recv（reply）</span></em><span style="">调用</span><span style="">的交替序列</span><span style="">。</span><span style="">发送的每个请求都在所有</span><em><span style="">服务中</span></em><span style="">轮循</span><span style="">，并且收到的每个答复都与最后发出的请求匹配。</span></span></p>
+<p><span style="">当</span><em>ZMQ_REQ</em><span style="">套接字由于已达到所有</span><em>服务</em><span style="">的最高水位而进入异常状态时，或者如果根本没有任何</span><em>服务</em><span style="">，则套接字上的任何</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_send（3）</span></a><span style="">操作均应阻塞，直到异常状态结束或至少一个异常状态为止</span><em>服务</em><span style="">变为可发送；消息不会被丢弃。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_REQ特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_REP</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">双向的</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送，接收，发送，接收...</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">轮循</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">最后一位</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">块<br><br></span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_REP</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><em><span style="">服务</span></em><span style="">使用</span></span><em>ZMQ_REP</em><span style=""><span style="">类型的套接字</span><span style="">来接收来自</span><em><span style="">客户端的</span></em><span style="">请求并向</span><em><span style="">客户端</span></em><span style="">发送回复</span><span style="">。</span><span style="">此套接字类型仅允许</span><em><span style="">zmq_recv（request）</span></em><span style="">和后续</span><em><span style="">zmq_send（reply）</span></em><span style="">调用</span><span style="">的交替序列</span><span style="">。</span><span style="">接收到的每个请求都从所有</span><em><span style="">客户端中</span></em><span style="">公平排队</span><span style="">，并且发送的每个回复都路由到</span><span style="">发出最后一个请求</span><span style="">的</span><em><span style="">客户端</span></em><span style="">。</span><span style="">如果原始请求者不再存在，则答复将被静默丢弃。</span></span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">当</span><em>ZMQ_REP</em><span style="">套接字由于达到</span><em>客户端</em><span style=""><span style="">的高水位线而进入异常状态时</span><span style="">，发送给有</span><span style="">问题</span><span style="">的</span></span><em>客户端的</em><span style=""><span style="">所有答复都</span><span style="">将被丢弃，直到异常状态结束为止。</span></span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_REP特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_REQ</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">双向的</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">接收，发送，接收，发送...</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">公平排队</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">最后一位</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">下降</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_DEALER</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><em>ZMQ_DEALER</em><span style=""><span style="">类型的</span><em><span style="">套接字</span></em><span style="">是用于扩展请求/应答套接字的高级模式。</span><span style="">发送的每个消息都在所有连接的对等方之间进行轮询，并且收到的每个消息都从所有连接的对等方进行公平排队。</span></span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">以前，此套接字称为</span><em>ZMQ_XREQ，</em><span style="">并且该名称仍可用于向后兼容。</span></p>
+<p><span style="">当</span><em>ZMQ_DEALER</em><span style="">套接字由于达到所有同位体的最高水位而进入异常状态时，或者如果根本没有任何同位体，则套接字上的任何</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_send（3）</span></a><span style="">操作都应阻塞，直到异常状态结束或至少一个异常状态为止对等方可以发送；消息不会被丢弃。</span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">当将</span><em>ZMQ_DEALER</em><span style="">套接字连接到</span><em>ZMQ_REP</em><span style="">套接字时，发送的每个消息都必须包含一个空的消息部分，</span><em>定界符</em><span style="">以及一个或多个</span><em>主体部分</em><span style="">。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_DEALER特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_ROUTER</em><span style=""><span style="">，</span></span><em>ZMQ_REQ</em><span style=""><span style="">，</span></span><em>ZMQ_REP</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">双向的</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">无限制</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">轮循</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">公平排队</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">块</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_ROUTER</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><em>ZMQ_ROUTER</em><span style=""><span style="">类型的</span><em><span style="">套接字</span></em><span style="">是用于扩展请求/应答套接字的高级模式。</span><span style="">当收到消息时，</span></span><em>ZMQ_ROUTER</em><span style=""><span style="">套接字</span><span style="">在将消息传递给应用程序之前，</span><span style="">应在消息部分之前包含消息</span><span style="">的原始对等方</span><span style="">的</span></span><em>身份</em><span style=""><span style="">。</span><span style="">接收到的消息在所有连接的同级之间公平排队。</span><span style="">发送消息时，</span></span><em>ZMQ_ROUTER</em><span style=""><span style="">套接字应删除消息的第一部分，并使用它来确定</span><span style="">消息应路由到的对等方的</span></span><em>身份</em><span style=""><span style="">。</span><span style="">如果对等体不再存在，则该消息将被静默丢弃。</span></span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">以前，此套接字称为</span><em>ZMQ_XREP</em><span style="">，该名称仍可用于向后兼容。</span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">当</span><em>ZMQ_ROUTER</em><span style=""><span style="">套接字由于达到所有对等方的最高水位而进入异常状态时，或者如果根本没有任何对等体，则发送到套接字的任何消息都将被丢弃，直到异常状态结束。</span><span style="">同样，任何路由到不存在的对等方或已达到单个高水位标记的对等方的消息也应被丢弃。</span></span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">当</span><em>ZMQ_REQ</em><span style="">套接字连接到</span><em>ZMQ_ROUTER</em><span style=""><span style="">套接字时，除了</span><span style="">源对等方</span><span style="">的</span></span><em>标识</em><span style=""><span style="">之外，</span><span style="">每个收到的消息还应包含一个空的</span></span><em>定界符</em><span style=""><span style="">消息部分。</span><span style="">因此，由应用程序看到的每个接收到的消息的整个结构变为：一个或多个</span></span><em>标识</em><span style="">部分，</span><em>定界符</em><span style="">部分，一个或多个</span><em>主体部分</em><span style=""><span style="">。</span><span style="">将回复发送到</span></span><em>ZMQ_REQ</em><span style="">套接字时，应用程序必须包括</span><em>定界符</em><span style="">部分。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_ROUTER特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_DEALER</em><span style=""><span style="">，</span></span><em>ZMQ_REQ</em><span style=""><span style="">，</span></span><em>ZMQ_REP</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">双向的</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">无限制</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">看到文字</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">公平排队</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">下降</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h3 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 17.056px; white-space: normal;"><span style="">发布-订阅模式</span></h3>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">发布-订阅模式用于以</span><span style="">扇出方式</span><span style="">将数据从单个</span></span><em>发布</em><em>者</em><span style=""><span style="">一对多分发</span><span style="">到多个</span><em><span style="">订阅者</span></em><span style="">。</span></span></p>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_PUB</span></h4>
+<p><span style=""><em><span style="">发布者</span></em><span style="">使用类型为</span></span><em>ZMQ_PUB</em><span style="">的套接字来分发数据。发送的消息以扇出方式分发给所有连接的对等方。所述</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_recv（3）</span></a><span style="">函数不是此套接字类型实现。</span><a style="color: rgb(0, 0, 170);"></a></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">当</span><em>ZMQ_PUB</em><span style="">套接字由于已达到</span><em>订户</em><span style=""><span style="">的最高水位而进入例外状态时</span><span style="">，将发送给有</span><span style="">问题</span><span style="">的</span></span><em>订户的</em><span style=""><span style="">任何消息都将</span><span style="">被丢弃，直到例外状态结束。</span><span style="">对于该套接字类型</span><span style="">，</span></span><em>zmq_send（）</em><span style="">函数不得阻塞。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_PUB特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_SUB</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">单向</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">仅发送</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">扇出</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">下降</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_SUB</span></h4>
+<p><span style=""><em><span style="">订阅</span></em><span style="">者使用</span></span><em>ZMQ_SUB</em><span style=""><span style="">类型的套接字来订阅</span><em><span style="">发布</span></em><span style="">者分发的数据。最初，</span><em><span style="">ZMQ_SUB</span></em><span style="">套接字未订阅任何消息，请使用</span></span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_setsockopt（3）</span></a><span style=""><span style="">的</span><em><span style="">ZMQ_SUBSCRIBE</span></em><span style="">选项指定要订阅的消息。该</span><em><span style="">zmq_send（）</span></em><span style="">函数没有此套接字类型实现。</span></span><a style="color: rgb(0, 0, 170);"></a></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_SUB特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_PUB</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">单向</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">仅接收</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">公平排队</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">下降</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h3 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 17.056px; white-space: normal;"><span style="">流水线</span><span style="">模式</span></h3>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">流水线模式用于将数据分发到</span><span style="">布置在流水线中的</span></span><em>节点</em><span style=""><span style="">。</span><span style="">数据始终沿流水线向下流动，流水线的每一级都连接到至少一个</span></span><em>节点</em><span style=""><span style="">。</span><span style="">当流水线级连接到多个</span></span><em>节点时</em><span style="">，将在所有连接的</span><em>节点</em><span style=""><span style="">之间循环数据</span><span style="">。</span></span></p>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_PUSH</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">流水线</span><em><span style="">节点</span></em><span style="">使用</span></span><em>ZMQ_PUSH</em><span style=""><span style="">类型的套接字</span><span style="">将消息发送到下游流水线</span><em><span style="">节点</span></em><span style="">。</span><span style="">消息循环到所有连接的下游</span><em><span style="">节点</span></em><span style="">。</span><span style="">该</span><em><span style="">zmq_recv（）</span></em><span style="">函数没有此套接字类型实现。</span></span></p>
+<p><span style="">当</span><em>ZMQ_PUSH</em><span style="">套接字由于已达到所有下游</span><em>节点</em><span style="">的高水位线而进入异常状态时，或者如果根本没有下游</span><em>节点</em><span style="">，则套接字上的任何</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_send（3）</span></a><span style="">操作都应阻塞，直到异常状态结束或在异常状态结束时为止。至少一个下游</span><em>节点</em><span style="">可用于发送；消息不会被丢弃。</span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">弃用的别名：</span><em>ZMQ_DOWNSTREAM</em><span style="">。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_PUSH特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_PULL</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">单向</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">仅发送</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">轮循</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">块</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_PULL</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">流水线</span><em><span style="">节点</span></em><span style="">使用</span></span><em>ZMQ_PULL</em><span style=""><span style="">类型的套接字</span><span style="">从上游流水线</span><em><span style="">节点</span></em><span style="">接收消息</span><span style="">。</span><span style="">消息从所有连接的上游</span><em><span style="">节点</span></em><span style="">中公平排队</span><span style="">。</span><span style="">该</span><em><span style="">zmq_send（）</span></em><span style="">函数没有此套接字类型实现。</span></span></p>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style="">弃用的别名：</span><em>ZMQ_UPSTREAM</em><span style="">。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_PULL特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_PUSH</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">单向</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">仅接收</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">公平排队</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h3 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 17.056px; white-space: normal;"><span style="">互斥</span><span style="">对模式</span></h3>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">互斥对模式用于将一个对等点精确地连接到另一个对等点。</span><span style="">此模式用于跨inproc传输的线程间通信。</span></span></p>
+<h4 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-size: 15.744px; white-space: normal;"><span style="">ZMQ_PAIR</span></h4>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><em>ZMQ_PAIR</em><span style=""><span style="">类型的套接字</span><span style="">只能在任何一次连接到单个对等方。</span><span style="">对通过</span></span><em>ZMQ_PAIR</em><span style=""><span style="">套接字</span><span style="">发送的消息不执行消息路由或筛选</span><span style="">。</span></span></p>
+<p><span style="">当</span><em>ZMQ_PAIR</em><span style="">套接字由于已达到所连接对等方的高水位线而进入异常状态时，或者如果未连接任何对等方，则套接字上的任何</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_send（3）</span></a><span style="">操作都将阻塞，直到对等方可用于发送；消息不会被丢弃。</span></p>
+<p><em>ZMQ_PAIR</em><span style="">套接字设计用于通过</span><a style="color: rgb(84, 141, 212); text-decoration: underline;"><span style="color: rgb(84, 141, 212);">zmq_inproc（7）</span></a><span style="">传输进行线程间通信，并且不实现自动重新连接等功能。</span><em>ZMQ_PAIR</em><span style="">套接字被视为实验性的，可能还有其他遗漏或损坏的方面。</span></p>
+<table class="wiki-content-table" style="empty-cells: show; border-spacing: 0px; margin: 0.5em auto; font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal; border-collapse: collapse;">
+ <tbody>
+  <tr class="firstRow">
+   <th colspan="2" style="border-color: rgb(136, 136, 136); padding: 0.3em 0.7em; background-color: rgb(238, 238, 238);"><span style=""><span style="">ZMQ_PAIR特性摘要</span></span></th>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">兼容的对等套接字</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><em>ZMQ_PAIR</em></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">方向</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">双向的</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">发送/接收模式</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">无限制</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">入网路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">外发路由策略</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">不适用</span></span></td>
+  </tr>
+  <tr>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">ZMQ_HWM选项操作</span></span></td>
+   <td style="border: 1px solid rgb(0, 0, 0); padding: 5px 10px;"><span style=""><span style="">块</span></span></td>
+  </tr>
+ </tbody>
+</table>
+<h2 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-weight: normal; font-size: 19.68px; white-space: normal;"><span style="">返回值</span></h2>
+<p style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;"><span style=""><span style="">如果成功</span><span style="">，</span></span><em>zmq_socket（）</em><span style=""><span style="">函数应向新创建的套接字返回一个不透明的句柄。</span><span style="">否则，它将返回NULL并将</span></span><em>errno设置</em><span style="">为以下定义的值之一。</span></p>
+<h2 style="font-family: &quot;Trebuchet MS&quot;, Trebuchet, Verdana, Arial, Helvetica; font-weight: normal; font-size: 19.68px; white-space: normal;"><span style="">失误</span></h2>
+<ul style="font-family: verdana, arial, helvetica, sans-serif; font-size: 13.12px; white-space: normal;" class=" list-paddingleft-2">
+ <li><p><strong>英瓦尔</strong></p></li>
+ <li><p><span style="">请求的套接字</span><em>类型</em><span style="">无效。</span></p></li>
+ <li><p><strong>完美</strong></p></li>
+ <li><p><span style="">提供的</span><em>上下文</em><span style="">无效。</span></p></li>
+ <li><p><strong>EMFILE</strong></p></li>
+ <li><p><span style="">已达到打开的ØMQ插座总数的限制。</span></p></li>
+ <li><p><strong>永恒</strong></p></li>
+ <li><p><span style="">指定的上下文已终止。</span></p></li>
+</ul>
+<p><br></p>
+<p>其他：</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/qq769651718/article/details/79435475"></a><img src="https://bbs-img.huaweicloud.com/blogs/img/1595820527067015026.png" title="1595820527067015026.png" alt="image.png"><a rel="nofollow" href="https://gist.github.com/alexgartrell/2986091"></a></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/189397#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.HTTP_Blog" title="HTTP" href="https://developer.huaweicloud.com/tags/200074/blog_1">HTTP</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.TCP/IP_Blog" title="TCP/IP" href="https://developer.huaweicloud.com/tags/200314/blog_1">TCP/IP</a>
+        
+    </div>
+</div></div>

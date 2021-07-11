@@ -1,0 +1,32 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>项目地址:<br></p><p><a rel="nofollow" href="https://github.com/ghiscoding/angular-markdown-editor">https://github.com/ghiscoding/angular-markdown-editor</a> </p><p>测试步骤:</p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>下载工程项目</p></li><li><p>npm install 安装相关依赖，bootstrap-markdown无法获取先打开package.json注释掉再次运行npm install</p></li><li><p>https://github.com/toopay/bootstrap-markdown/tags下载release包，并解压到node_modules目录</p></li><li><p>使用vscode打开项目目录</p></li><li><p>在集成终端中输入ng serve启动项目，可以看到</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1542619391148101.png" title="1542619391148101.png" alt="image.png" class="localImage"></p></li><li><p>不是很喜欢上下结构，改一改</p><p>打开template.componet.html</p><p>修改为</p></li></ol><pre class="brush:js;toolbar:false">&lt;div&nbsp;class="row"&gt;
+&lt;div&nbsp;class="col-md-6"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;class="editor"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--label&gt;Editor&nbsp;(with&nbsp;French&nbsp;locale)&lt;/label--&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;angular-markdown-editor&nbsp;textareaId="editor1"&nbsp;[locale]="locale"&nbsp;[options]="editorOptions"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rows="42"&nbsp;name="markdownText"&nbsp;[(ngModel)]="markdownText"&nbsp;(onFullscreenExit)="hidePreview()"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/angular-markdown-editor&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&nbsp;class="col-md-6"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;div&nbsp;class="result-preview&nbsp;outline"&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;markdown&nbsp;[data]="markdownText"&gt;&lt;/markdown&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;</pre><p>展示效果为:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1542619569244825.png" title="1542619569244825.png" alt="image.png" class="localImage"></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/104756#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

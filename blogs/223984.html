@@ -1,0 +1,233 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>看到一个spring-boot开源项目,感觉写得不错,打算花一些时间分析分析,首先从使用到的注解角度初步的看看;</p>
+<h3>## Swagger&nbsp;</h3>
+<pre><code>https://github.com/swagger-api/swagger-core/wiki/annotations&nbsp;
+</code></pre>
+<ul> 
+ <li><span style="color: #e67e23;">@Api 标记一个类为Swagger资源&nbsp; &nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@ApiParam 为操作参数添加额外的meta数据&nbsp; &nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@ApiModelProperty 添加和操作model属性数据&nbsp; &nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@ApiOperation 描述一个操作，典型的是一个特定路径的http请求 </span></li> 
+ <li><span style="color: #e67e23;">@ApiResponse 描述操作可能的响应&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@ApiIgnore&nbsp;</span></li> 
+</ul>
+<h3>## spring/spring-boot&nbsp;</h3>
+<pre><code>https://www.baeldung.com/spring-core-annotations&nbsp;
+https://www.javatpoint.com/spring-boot-annotations </code></pre>
+<ul> 
+ <li><span style="color: #e67e23;">@Autowired &nbsp;标记一个spring会去查找和注入的依赖&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Bean 标记一个组装spring bean的工厂方法&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Qualifier 和@Autowired一起提供一个bean的id或者name&nbsp; &nbsp; </span>&nbsp; &nbsp;</li> 
+</ul>
+<pre><code>https://www.baeldung.com/spring-annotations-resource-inject-autowire&nbsp;
+https://stackoverflow.com/questions/4093504/resource-vs-autowired&nbsp;&nbsp;</code></pre>
+<ul> 
+ <li><span style="color: #e67e23;">@Resource 来自JSR标准 @Value 注入属性到beans中，可以在构造，设置和段注入&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Primary 当我们需要定义多个同一种类型的beans时，注入会因为不知道需要那个bean而失败,我们已经看到一个可选的方法：使用@Qualifier标记所有注入点,指定给bean特定的名称;然而,大多数时候我们只需要一个特定的bean而不是别的。我们可以用@Primary去简化这种场景。&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@ImportResource 我们可以导入xml配置通过这个注解&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Component 这是个类级别的注解。它用来标记一个类为bean</span></li> 
+</ul>
+<pre><code>https://www.baeldung.com/spring-postconstruct-predestroy&nbsp;</code></pre>
+<ul> 
+ <li><span style="color: #e67e23;">@PostConstruct spring只会调用@PostConstruct一次，在初始化bean的属性之后。可以是任意的访控属性，但不能是静态的。&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Transactional&nbsp; </span></li> 
+ <li><span style="color: #e67e23;">&nbsp;@DateTimeFormat 用于在请求层级转换日期参数格式 - https://www.baeldung.com/spring-date-parameters&nbsp; &nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Controller 这是个类级别的注解。它是一种特殊化的@Component。它标记一个类为网络请求处理器。通常和@RequestMapping一同使用</span></li> 
+ <li><span style="color: #e67e23;">&nbsp;@ControllerAdvice&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@Service 这是个类级别的注解。它告诉Spring这个类包含业务逻辑。&nbsp;&nbsp;</span><br></li> 
+</ul>
+<h3>## spring Mvc and Rest Annotation</h3>
+<ul> 
+ <li><code>@RequestMapping 它用来映射网络请求。它有许多可选元素consumes, header, method, name, params, path, produces, and value </code></li> 
+ <li><code>@GetMapping 它映射一个HTTP GET请求到一个特定的处理方法。它取代了@RequestMapping(method = RequestMethod.GET) </code></li> 
+ <li><code>@PostMapping 它映射一个HTTP POST请求一个特定的处理方法。他取代了@RequestMapping(method = RequestMethod.POST) </code></li> 
+ <li><code>@RequestBody 它用来绑定一个对象到方法形参给HTTP请求。内部使用HTTP消息转换器转换一个请求的消息体。 </code></li> 
+ <li><code>@ResponseBody &nbsp;它绑定了一个返回值到相应体。它告诉spring boot框架去序列化一个返回对象到JSON和XML格式。 </code></li> 
+ <li><code>@RequestParam 它用来从URL中解析出query参数。 </code></li> 
+ <li><code>@RestController 它可以被认为是@Controller 和 @ResponseBody的组合。</code></li> 
+</ul>
+<h3><code></code>## springboot anno<br></h3>
+<ul> 
+ <li><code>@Configuration </code></li> 
+ <li><code>@SpringBootApplication 它是@EnableAutoConfiguration, @ComponentScan, 和 @Configuration的组合。</code></li> 
+ <li><code>@ComponentScan </code></li> 
+ <li><code>@ComponentScan.Filter </code></li> 
+ <li><code>@EnableDiscoveryClient </code></li> 
+ <li><code>@ConditionalOnMissingBean&nbsp; </code></li> 
+ <li><code>@ConditionalOnProperty</code></li> 
+</ul>
+<h3>## spring aop<br></h3>
+<ul> 
+ <li><span style="color: #e67e23;">@Aspect 作用是把当前类标识为一个切面供容器读取</span></li> 
+ <li><span style="color: #e67e23;">&nbsp;@After final增强，不管是抛出异常或者正常退出都会执行</span></li> 
+ <li><span style="color: #e67e23;">@Before 标识一个前置增强方法，相当于BeforeAdvice的功能，相似功能的还有</span></li> 
+ <li><span style="color: #e67e23;">@Pointcut Pointcut是植入Advice的触发条件。</span></li> 
+</ul>
+<pre><code>https://www.baeldung.com/java-default-annotations&nbsp;</code></pre>
+<ul> 
+ <li><code>@Retention </code></li> 
+ <li><code>@Target</code></li> 
+</ul>
+<pre><code>https://stackoverflow.com/questions/49624930/how-to-enable-requirespermissions-in-spring-mvc-project &nbsp;
+https://blog.csdn.net/qi923701/article/details/75224554 &nbsp;
+https://zhuanlan.zhihu.com/p/37870725&nbsp;</code></pre>
+<ul> 
+ <li><code>@RequiresPermissions</code></li> 
+</ul>
+<h3>## JPA&nbsp;<br></h3>
+<pre><code>https://www.cnblogs.com/xuwenjin/p/8830850.html
+https://stackoverflow.com/questions/37729770/what-is-the-use-of-table-annotation-in-jpa &nbsp;
+https://www.baeldung.com/jpa-entity-table-names&nbsp;</code></pre>
+<ul> 
+ <li><code>@Table </code></li> 
+ <li><code>@Id&nbsp; </code></li> 
+ <li><code>@Column </code></li> 
+ <li><code>@GeneratedValue </code></li> 
+ <li><code>@Transient</code></li> 
+</ul>
+<h3>## poiji - excel 解析</h3>
+<ul> 
+ <li><code>@ExcelCell </code></li> 
+ <li><code>@ExcelCellName </code></li> 
+ <li><code>@ExcelRow&nbsp; </code></li> 
+ <li><code>@ExcelTable </code></li> 
+ <li><code>@ExcelWidths</code><br><a rel="nofollow" href="https://github.com/ozlerhakan/poiji"></a><a></a></li> 
+</ul>
+<pre><code>https://github.com/ozlerhakan/poiji &nbsp;&nbsp;
+https://www.wanaright.com/2020/04/10/annotation-poi-excel/&nbsp;
+https://stackoverflow.com/questions/58981017/java-excel-pojo-mapping-in-poi</code></pre>
+<h3>## spring kafka<br></h3>
+<ul> 
+ <li><span style="color: #e67e23;">@EnableKafka &nbsp;</span></li> 
+ <li><span style="color: #e67e23;"> &nbsp;@KafkaListener &nbsp; &nbsp;</span></li> 
+</ul>
+<pre><code>https://www.baeldung.com/spring-kafka</code></pre>
+<h3>## Jackson&nbsp;</h3>
+<ul> 
+ <li><span style="color: #e67e23;">@JsonFormat&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@JsonIgnore</span></li> 
+ <li><span style="color: #e67e23;"> &nbsp;@JsonProperty</span></li> 
+ <li><span style="color: #e67e23;">&nbsp;@JsonSerialize</span></li> 
+ <li><span style="color: #e67e23;">&nbsp;@JacksonAnnotationsInside&nbsp;</span></li> 
+ <li><span style="color: #e67e23;">@JsonIgnoreProperties</span><br><br></li> 
+</ul>
+<pre><code>https://dzone.com/articles/jackson-annotations-for-json-part-4-general
+https://www.baeldung.com/jackson-jsonformat
+</code></pre>
+<h3>## javax anno</h3>
+<ul> 
+ <li><span style="background-color: #ecf0f1; color: #e67e23;"><code>@Max <span style="text-align: start;">&nbsp;被注释的元素必须是一个数字，其值必须大于等于指定的最小值</span></code></span></li> 
+ <li><code><span style="color: #e67e23;">@Min <span style="text-align: start;">被注释的元素必须是一个数字，其值必须小于等于指定的最大值</span></span><span style="background-color: #ecf0f1;"></span></code></li> 
+ <li><span style="color: #e67e23;"><code>@NotNull <span style="text-align: start;">注释的元素不能为null，可以为空字符串</span></code></span></li> 
+ <li><code>@Nonnull </code></li> 
+ <li><code>@Nullable </code></li> 
+ <li><code>@Valid </code></li> 
+ <li><span style="color: #e67e23;"><code>@Pattern <span style="text-align: start;">被注释的元素必须符合指定的正则表达式。</span></code></span></li> 
+ <li><code>@CheckForNull</code></li> 
+</ul>
+<pre><code>https://blog.csdn.net/weixin_30439067/article/details/98076558
+https://www.jianshu.com/p/32327ca2365f</code></pre>
+<h3>## feign 一个java httpclient绑定</h3>
+<ul> 
+ <li><code>@EnableFeignClients </code></li> 
+ <li><code>@Param </code></li> 
+ <li><code>@RequestLine </code></li> 
+ <li><code>@Headers </code></li> 
+ <li><code>@HeaderMap</code></li> 
+</ul>
+<pre><code>https://github.com/OpenFeign/feign&nbsp;
+https://stackoverflow.com/questions/43868680/feign-client-does-not-resolve-query-parameter</code></pre>
+<h3>##&nbsp;JUnit&nbsp;<br></h3>
+<ul> 
+ <li><code>@DisplayName </code></li> 
+ <li><code>@Test&nbsp;</code></li> 
+</ul>
+<pre><code>https://www.journaldev.com/21674/junit-display-name-displayname</code></pre>
+<h3>## 其他技术栈分析</h3>
+<p>swagger整合spring mvc教程&nbsp;</p>
+<pre>https://blog.csdn.net/wangjun5159/article/details/47283125</pre>
+<p>spring后端国际化</p>
+<pre>https://www.logicbig.com/tutorials/spring-framework/spring-core/message-sources.html
+https://stackoverflow.com/questions/2952196/ant-path-style-patterns/22636142#22636142</pre>
+<p><br>在 Spring Boot 项目中使用 Swagger 文档&nbsp;</p>
+<pre>https://developer.ibm.com/zh/articles/j-using-swagger-in-a-spring-boot-project/
+https://github.com/swagger-api/swagger-codegen</pre>
+<p>spring 过滤器、拦截器</p>
+<p>jedisLock<br></p>
+<pre>https://redis.io/topics/distlock
+https://github.com/kaidul/jedis-lock/blob/master/src/main/java/com/github/jedis/lock/JedisLock.java</pre>
+<p>MyBatis Redis Extension<br></p>
+<pre>https://github.com/mybatis/redis-cache
+http://mybatis.org/mybatis-3/sqlmap-xml.html#cache
+https://redis.io/commands#hash
+https://spring.io/projects/spring-data-redis</pre>
+<p>MyBatis 通用 Mapper4 https://github.com/abel533/Mapper<br>Spring Boot API Project Seed、根据数据表名称生成对应的Model、Mapper、Service、Controller&nbsp;<br></p>
+<pre>https://blog.csdn.net/qq_36857572/article/details/81143014
+https://www.jianshu.com/p/9962be89e2cf
+https://juejin.cn/post/6844903598422245383
+https://github.com/lihengming/spring-boot-api-project-seed
+MyBatis Pagination - PageHelper https://github.com/pagehelper/Mybatis-PageHelper</pre>
+<p>mybatis 二级缓存</p>
+<pre>https://blog.csdn.net/xiaolyuh123/article/details/73912617
+https://stackoverflow.com/questions/31760648/get-all-keys-from-spring-reloadableresourcebundlemessagesource/31761884#31761884</pre>
+<p>通过User-Agent判断浏览器环境版本<br></p>
+<pre>https://blog.csdn.net/fzy629442466/article/details/84784940
+http://www.useragentstring.com/pages/useragentstring.php?name=Internet+Explorer
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox</pre>
+<p>elasticsearch 基于luence的非结构化索引库<br></p>
+<pre>https://www.elastic.co/guide/en/elasticsearch/reference/6.5/search-template.html</pre>
+<p>权重&nbsp;</p>
+<pre>https://www.elastic.co/guide/en/elasticsearch/guide/current/scoring-theory.html
+https://www.quora.com/What-is-inverted-index-It-is-a-well-known-fact-that-you-need-to-build-indexes-to-implement-efficient-searches-What-is-the-difference-between-index-and-inverted-index-and-how-does-one-build-inverted-index</pre>
+<p>IK分词&nbsp;</p>
+<pre>https://github.com/medcl/elasticsearch-analysis-ik</pre>
+<p><br>Prefix与keyword分词器<br>Ngram与edge-Ngram分词器</p>
+<p>Excel生成&nbsp;</p>
+<pre>https://spreadsheet.dsl.builders/</pre>
+<p>Excel sheets 转换 Java classes&nbsp;</p>
+<pre>https://github.com/ozlerhakan/poiji</pre>
+<p>Feign一款基于注解与动态代理的HTTP Client。</p>
+<pre> https://github.com/OpenFeign/feign</pre>
+<p>Jackson Annotations for JSON (Part 4): General Annotations</p>
+<pre>https://dzone.com/articles/jackson-annotations-for-json-part-4-general
+https://github.com/thymeleaf/thymeleaf/issues/623
+http://www.scienjus.com/get-field-annotation-property-by-jackson-contextualserializer/</pre>
+<p>Intro to Apache Kafka with Spring&nbsp;</p>
+<pre>https://www.baeldung.com/spring-kafka</pre>
+<p>Service(Mybatis/Eureka)<br>Eureka: 一款命名服务平台，输入是名称，返回是IP列表&nbsp;<br></p>
+<pre>https://spring.io/guides/gs/service-registration-and-discovery/
+https://medium.com/swlh/spring-cloud-service-discovery-with-eureka-16f32068e5c7</pre>
+<p><br>Ribbon：客户端负载均衡<br></p>
+<pre>https://www.baeldung.com/spring-cloud-rest-client-with-netflix-ribbon
+https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html
+https://howtodoinjava.com/spring-cloud/spring-boot-ribbon-eureka/</pre>
+<p><br>Swagger/SwaggerGenerator</p>
+<p>java项目代码风格<br></p>
+<pre>https://github.com/google/google-java-format
+intellij-java-google-style.xml</pre>
+<p>sonarqube代码检查<br></p>
+<pre>https://github.com/SonarSource/sonarqube</pre>
+<p>敏捷团队jira/rally<br></p>
+<pre>https://www.atlassian.com/zh/software/jira/comparison/jira-vs-rally</pre>
+<p>closure压缩,其实感觉现在很多前端框架已经采用webpack、gulp压缩打包，这个似乎没必要了、<br></p>
+<pre>https://github.com/google/closure-compiler/</pre>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/223984#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

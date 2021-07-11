@@ -1,0 +1,110 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><strong>编译zeromq4</strong></p>
+<p>首先使用vs编译zeromq4-x,我这里使用的是vs2015,目前这个版本已经不存在以前的帖子里说的路径问题了,可以正常编译;</p>
+<p>编译完成之后可以在bin/win32目录下看到libzmq_d.dll,lib/win32目录下看到libzmq_d.lib;</p>
+<p><strong>写一个测试程序:</strong></p>
+<pre class="brush:cpp;toolbar:false">#include&nbsp;&lt;iostream&gt;
+#include&nbsp;"zmq.h"
+#pragma&nbsp;comment(lib,&nbsp;"libzmq_d.lib")&nbsp;
+
+int&nbsp;main()
+{
+	int&nbsp;a,&nbsp;b,&nbsp;c;
+	zmq_version(&amp;a,&nbsp;&amp;b,&nbsp;&amp;c);
+	std::cout&nbsp;&lt;&lt;&nbsp;"zmq-version:"&nbsp;&lt;&lt;&nbsp;a&nbsp;&lt;&lt;&nbsp;"-"&nbsp;&lt;&lt;&nbsp;b&nbsp;&lt;&lt;&nbsp;"-"&nbsp;&lt;&lt;&nbsp;c&nbsp;&lt;&lt;std::endl;
+	
+	return&nbsp;0;
+}</pre>
+<p>编译：</p>
+<p>cl /ID:\dev\zeromq4-x-master\include test.cpp /link /LIBPATH:D:\dev\zeromq4-x-master\lib\Win32</p>
+<p>运行:</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595473321207038332.png"></p>
+<p>可以参考：<a>https://dirtysalt.github.io/html/zeromq.html</a>进一步的编写测试程序，</p>
+<p>需要注意的是第一个例子中,有些api的形式发生了变化,所以需要做一些修改，例如例子中的zmq_send/zmq_recv需要修改为zmq_msg_send/zmq_msg_recv；</p>
+<p>其中的zhelpers.h可以使用<a rel="nofollow" href="https://github.com/booksbyus/zguide/blob/master/examples/C/zhelpers.h">https://github.com/booksbyus/zguide/blob/master/examples/C/zhelpers.h</a>，</p>
+<p>&nbsp;当做到Publish-Subscribe这个测试的时候，发现先启动的sub始终得不到消息;一度以为是不是版本问题,（<a rel="nofollow" href="https://github.com/zeromq/clrzmq4/issues/141">https://github.com/zeromq/clrzmq4/issues/141</a>）</p>
+<p>切换到<a rel="nofollow" href="https://github.com/zeromq/zeromq4-1">https://github.com/zeromq/zeromq4-1</a>/<a rel="nofollow" href="https://github.com/jedisct1/libsodium">https://github.com/jedisct1/libsodium</a>后问题依旧存在,</p>
+<p>然后发现在publisher消息循环之前增加50ms的延时后，sub可以正常接收到,去掉开始的50ms延时，转而把循环中的延时改为50ms，则可以看到先启动的sub丢失了部分消息；这样看原帖中所谓的丢失掉了一条消息就好理解了。没有看sub的具体实现，但可以想象的是sub有一个检测连接的周期存在,如果pub在这个检测周期到来之前就结束了，那么sub就什么消息都不会收到;</p>
+<p><span style="color: rgb(0, 176, 80);">/===========================================================/</span></p>
+<p><span style="color:#00b050"><span style="color: rgb(0, 0, 0);">&nbsp;为了能够比较方便的看懂zeromq的一些网络拓扑，需要了解zeromq的socket类型包括如下:</span></span></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595575065040092325.png" title="1595575065040092325.png" alt="image.png"><span style="color: rgb(255, 192, 0);">有效的连接组合</span><img src="https://bbs-img.huaweicloud.com/blogs/img/1595576001818034754.png" title="1595576001818034754.png" alt="image.png"></p>
+<p style="white-space: normal;">官方文档：<a>http://zguide.zeromq.org/page:all</a>（<a rel="nofollow" href="https://github.com/booksbyus/zguide">https://github.com/booksbyus/zguide</a>）</p>
+<p style="white-space: normal;">1.最简单的请求响应结构:</p>
+<p style="white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1595575194931039850.png" title="1595575194931039850.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578029899021602.png" title="1595578029899021602.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578062967004042.png" title="1595578062967004042.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578163842047878.png" title="1595578163842047878.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578272818037070.png" title="1595578272818037070.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595579892633054515.png" title="1595579892633054515.png" alt="image.png">=&gt;</p>
+<p style="white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1595579913179091695.png" title="1595579913179091695.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595579935724095423.png" title="1595579935724095423.png" alt="image.png"></p>
+<p>2. 发布者订阅者结构：</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595575347088079175.png" title="1595575347088079175.png" alt="image.png">=》<img src="https://bbs-img.huaweicloud.com/blogs/img/1595577714736086865.png" title="1595577714736086865.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578211753061683.png" title="1595578211753061683.png" alt="image.png"></p>
+<p>3.并行管线结构：</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595575494969060125.png" title="1595575494969060125.png" alt="image.png">=&gt;<img src="https://bbs-img.huaweicloud.com/blogs/img/1595578236100018940.png" title="1595578236100018940.png" alt="image.png"></p>
+<p>4.公平队列</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595575717017000202.png" title="1595575717017000202.png" alt="image.png"></p>
+<p>5.同步<br></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595579440936050857.png" title="1595579440936050857.png" alt="image.png">=》<img src="https://bbs-img.huaweicloud.com/blogs/img/1595579459900092479.png" title="1595579459900092479.png" alt="image.png"></p>
+<p>6.关于消息丢失</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595579577323053536.png" title="1595579577323053536.png" alt="image.png"></p>
+<p>值得注意的是第四五章关于高可用性的一些结构设计；</p>
+<p><span style="color: rgb(0, 176, 80);">/===========================================================/</span></p>
+<p><strong>参考:</strong></p>
+<p>zeromq4 git地址:<br></p>
+<p><a rel="nofollow" href="https://github.com/zeromq/zeromq4-x">https://github.com/zeromq/zeromq4-x</a></p>
+<p>vs2015编译zeroMQ和应用:</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/u012442719/article/details/56281670">https://blog.csdn.net/u012442719/article/details/56281670</a></p>
+<p>openresty环境中的zeromq:</p>
+<p><a rel="nofollow" href="https://github.com/FRiCKLE/ngx_zeromq">https://github.com/FRiCKLE/ngx_zeromq</a></p>
+<p><a rel="nofollow" href="https://github.com/aifeiasdf/lua-resty-zeromq">https://github.com/aifeiasdf/lua-resty-zeromq</a></p>
+<p>golang环境下的zeromq:</p>
+<p><a>https://www.cnblogs.com/wjx0912/p/6124390.html</a> </p>
+<p><a>https://dirtysalt.github.io/html/zeromq.html</a> </p>
+<p><a>http://webcache.googleusercontent.com/search?q=cache:pOX0rghQISIJ:zguide.zeromq.org/go:asyncsrv+&amp;cd=2&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p>
+<p><a>https://stackoverflow.com/questions/61567146/using-zeromq-golang-within-fargate</a> </p>
+<p><a rel="nofollow" href="https://github.com/pebbe/zmq4/blob/master/examples/hwserver.go">https://github.com/pebbe/zmq4/blob/master/examples/hwserver.go</a> </p>
+<p><a>http://webcache.googleusercontent.com/search?q=cache:J-q1jaKxmQ8J:zguide.zeromq.org/go:hwserver+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p>
+<p><a>https://www.cnblogs.com/thingk/p/4274711.html</a> </p>
+<p><a>https://www.google.com/search?source=hp&amp;ei=X64OX9HkHcqNoASu2bjYDg&amp;q=pkg-config.exe+%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99&amp;oq=pkg-config.exe+%E5%90%AF%E5%8A%A8%E6%8A%A5%E9%94%99&amp;gs_lcp=CgZwc3ktYWIQAzoCCAA6BQgAEM0COgQIABAeOgUIIRCgAToHCCEQChCgAVCyAVi6UGCpU2gHcAB4AIABgwGIAZgRkgEEMTQuOJgBAKABAqABAaoBB2d3cy13aXo&amp;sclient=psy-ab&amp;ved=0ahUKEwiRkOKh3M7qAhXKBogKHa4sDusQ4dUDCAc&amp;uact=5</a> </p>
+<p><a>https://webcache.googleusercontent.com/search?q=cache:R9quKFC7WeoJ:https://www.it-swarm.dev/zh/windows/%25E5%25A6%2582%25E4%25BD%2595%25E5%259C%25A8windows%25E4%25B8%25AD%25E5%25AE%2589%25E8%25A3%2585pkg%25E9%2585%258D%25E7%25BD%25AE%25EF%25BC%259F/968921570/+&amp;cd=5&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a> </p>
+<p><a>http://mirror.yandex.ru/mirrors/ftp.gnome.org/binaries/win64/dependencies/</a> </p>
+<p><br></p>
+<p><a>https://stackoverflow.com/questions/25897838/zmq-pub-sub-should-it-be-dropping-messages</a></p>
+<p><a>https://stackoverflow.com/questions/43987457/zeromq-what-is-a-difference-between-zmq-recv-v-s-zmq-msg-recv-calls</a></p>
+<p><a>https://opensource.com/article/20/3/zeromq-c-python</a> </p>
+<p><a>https://stackoverflow.com/questions/41700291/why-is-zeromq-pub-enqueing-messages-with-no-connected-subscribers-well-disc</a></p>
+<p><a rel="nofollow" href="https://github.com/zeromq/netmq/issues/679">https://github.com/zeromq/netmq/issues/679</a>&nbsp;&nbsp;Subscribe or Unsubscribe while receiving</p>
+<p><a>https://stackoverflow.com/questions/16608580/publisher-finishes-before-subscriber-and-messages-are-lost-why</a></p>
+<p><a>https://stackoverflow.com/questions/30572183/buffering-messages-for-dead-subscriber-with-zeromq</a></p>
+<p><a>https://stackoverflow.com/questions/42948798/understanding-zmqs-hwm</a></p>
+<p><a>https://www.cnblogs.com/kohlrabi/p/7306587.html</a>&nbsp;ZeroMQ高水位标记（high-water mark，HWM）</p>
+<p><a rel="nofollow" href="https://github.com/zeromq/libzmq/issues/1373">https://github.com/zeromq/libzmq/issues/1373</a>&nbsp;&nbsp;zmq_socket options ZMQ_RCVHWM, ZMQ_SNDHWM ignored</p>
+<p><a>https://stackoverflow.com/questions/16228484/zeromq-c-is-it-necessary-to-set-a-high-water-mark-for-subscribers</a></p>
+<p><a>https://stackoverflow.com/questions/53356451/pyzmq-high-water-mark-not-working-on-pub-socket</a></p>
+<p><a>https://stackoverflow.com/questions/54979404/zmq-c-topics-for-publish-subscribe</a></p>
+<p><a>https://stackoverflow.com/questions/13287378/same-zmq-identity-for-multiple-subcribers</a></p>
+<p><a>https://wizardforcel.gitbooks.io/zmq-guide/chapter2.html</a>&nbsp; ---官方教程的中文翻译版本</p>
+<p><a>http://suntus.github.io/2015/03/02/zmq%E4%B8%AD%E6%96%87%E6%8C%87%E5%8D%97-5/</a></p>
+<p><a>https://stackoverflow.com/questions/27479504/how-to-reconnect-the-dealer-in-zeromq</a></p>
+<p><a>https://stackoverflow.com/questions/36578003/auto-reconnect-in-zmq-subscriber</a></p>
+<p><a>https://stackoverflow.com/questions/16157518/reconnecting-to-zmq-feed-after-disconnect</a></p>
+<p><br></p>
+<p><a></a><a>https://www.codeproject.com/Articles/1087619/State-Machine-Design-in-Cplusplus-2</a></p>
+<p><a>https://www.aleksandrhovhannisyan.com/blog/dev/finite-state-machine-fsm-tutorial-implementing-an-fsm-in-c/</a></p>
+<p style="white-space: normal;">其他常见的消息队列:</p>
+<p style="white-space: normal;">&nbsp;&nbsp;&nbsp;&nbsp;ActiveMQ、RabbitMQ、Kafka、MetaMQ、RocketMQ、Apollo</p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/186200#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

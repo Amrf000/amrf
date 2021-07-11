@@ -1,0 +1,41 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>vscode-webview-resource：</p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode/pull/97777">https://github.com/microsoft/vscode/pull/97777</a></p>
+<p>比较新的vscode版本已经不支持vscode-resource头了，或者这样说就算代码里还是使用的vscode-resource形式，</p>
+<p>新版的vscode在运行时会将vscode-resource头替换为vscode-webview-resource头；</p>
+<p>其自动替换逻辑如下:<br></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1597993701785011932.png" title="1597993701785011932.png" alt="image.png"></p>
+<p>如果原来vscode-resource:后面的路径是归一化的，这样没什么问题；</p>
+<p>如果原来的vscode-resource后面的路径不是归一化的，包含../这样的结构，上面这个自动处理过后,会出现找不到资源的问题；</p>
+<p>方案一:</p>
+<pre class="brush:js;toolbar:false">private&nbsp;static&nbsp;buildPath(data:&nbsp;string,&nbsp;webview:&nbsp;vscode.Webview,&nbsp;contextPath:&nbsp;string):&nbsp;string&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;data.replace(/((src|href)=("|'))(.+?\.(css|js))\b/gi,&nbsp;"$1"&nbsp;+&nbsp;vscode.Uri.file(`${contextPath}/`).with({&nbsp;scheme:&nbsp;'vscode-resource'&nbsp;}).toString()&nbsp;+&nbsp;"/$4");
+}</pre>
+<p>=》</p>
+<pre class="brush:js;toolbar:false">data.replace(/((src|href)=("|'))(.+?\.(css|js))\b/gi,function(m0,m1,m2,m3,m4,m5){
+return&nbsp;m1+vscode.Uri.file(path.join(contextPath,&nbsp;m4)).with({&nbsp;scheme:&nbsp;'vscode-resource'&nbsp;}).toString()
+});</pre>
+<p>方案二:</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1597996596138034341.png" title="1597996596138034341.png" alt="image.png"></p>
+<p>参考:</p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode-extension-samples/blob/master/webview-sample/src/extension.ts">https://github.com/microsoft/vscode-extension-samples/blob/master/webview-sample/src/extension.ts</a></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/195034#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

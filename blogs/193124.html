@@ -1,0 +1,62 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><strong>下载逻辑参考：</strong></p>
+<p><a rel="nofollow" href="https://gist.github.com/mscdex/c1a7199af2af9d3ceb1c">https://gist.github.com/mscdex/c1a7199af2af9d3ceb1c</a></p>
+<p><a>https://ourcodeworld.com/articles/read/428/how-to-download-an-entire-directory-from-an-unix-server-with-ssh2-in-node-js</a> </p>
+<p>依赖ssh2和tar-fs,如果采用ts开发则还要添加@type/tar-fs;</p>
+<p>流程就是远端采用tar把目录压缩打包到标准输出中，本地的对应tar管道接收并解压;</p>
+<p>如果不想解压后的路径保留远端机器的绝对路径的完整嵌套结构,可以在tar之前cd 到待打包目录的上层目录执行打包；</p>
+<p>可以在tar.extract传入map选项用于获取执行细节；</p>
+<p><strong>相似的，对应的上传逻辑参考：</strong></p>
+<p>即本地压到远端的标准输入,tar从标准输入中解压到目标路径;</p>
+<pre class="brush:js;toolbar:false">transferLocalDirectory(client:&nbsp;Client,&nbsp;remotePath:&nbsp;string,&nbsp;localPath:&nbsp;string,&nbsp;compression:&nbsp;any,&nbsp;cb:&nbsp;any)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remotePath&nbsp;=&nbsp;remotePath.replace(/[\/]$/,&nbsp;"")&nbsp;+&nbsp;'/';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;folderName&nbsp;=&nbsp;remotePath.match(/([^\/]*)\/$/)![1];
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;remotePath0&nbsp;=&nbsp;remotePath.replace(folderName&nbsp;+&nbsp;'/',&nbsp;"");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;cmd&nbsp;=&nbsp;'cd&nbsp;'&nbsp;+&nbsp;remotePath0&nbsp;+&nbsp;';tar&nbsp;xzvf&nbsp;-';//&nbsp;2&gt;/dev/null
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client.exec(cmd,&nbsp;function&nbsp;(err,&nbsp;stream)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(err)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;cb(err);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;exitErr:&nbsp;any&nbsp;=&nbsp;null;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;tarStream&nbsp;=&nbsp;tar.pack(localPath,{finish:(pack:tar.Pack)=&gt;{console.log("finish");}})
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tarStream.finalize&nbsp;=&nbsp;function(){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cb(exitErr);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;stream.on('data',&nbsp;function&nbsp;(data:&nbsp;any)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(data.toString());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).on('exit',&nbsp;function&nbsp;(code,&nbsp;signal)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(typeof&nbsp;code&nbsp;===&nbsp;'number'&nbsp;&amp;&amp;&nbsp;code&nbsp;!==&nbsp;0)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exitErr&nbsp;=&nbsp;new&nbsp;Error('Remote&nbsp;process&nbsp;exited&nbsp;with&nbsp;code&nbsp;'&nbsp;+&nbsp;code);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;if&nbsp;(signal)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;exitErr&nbsp;=&nbsp;new&nbsp;Error('Remote&nbsp;process&nbsp;killed&nbsp;with&nbsp;signal&nbsp;'&nbsp;+&nbsp;signal);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).stderr.on('data',&nbsp;function&nbsp;(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(data.toString());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(compression)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tarStream&nbsp;=&nbsp;tarStream.pipe(zlib.createGzip())&nbsp;as&nbsp;any;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tarStream.pipe(stream);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+}</pre>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/193124#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.TypeScript_Blog" title="TypeScript" href="https://developer.huaweicloud.com/tags/200564/blog_1">TypeScript</a>
+        
+    </div>
+</div></div>

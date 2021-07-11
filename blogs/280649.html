@@ -1,0 +1,118 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><em class="jh" style="color: #292929;"><span>即使本文(原文:https://medium.com/nerd-for-tech/golangci-lint-and-the-goland-ide-42aabc14f7d5)是以 GoLand IDE 作为最终目标编写的，我猜这里的想法也适用于任何现代 IDE。</span></em></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><span>运行静态代码分析（又名</span><em class="jh"><span>掉毛</span></em><span>golang程序）是对糟糕的编码和廉价的方式开始新的golang代码审查的做法防御的第一线。它也是持续集成管道中的第一个质量门。这篇文章是关于前者。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><span>有一个完整的 golang linters 列表，单独运行每一个都不是很有趣。于是</span><a class="cd kh" style="color: inherit; text-decoration: underline;"><span>golangci-lint(https://golangci-lint.run/)</span></a><span>诞生了。与单独运行每个 linter（可能在 shell 脚本的帮助下）相比，该软件将以非常有效的方式运行您喜欢的 linter。此外，习惯上只在 CI 管道中运行 linter，而不是在您的开发环境中运行。很多时候，人们最终会配置抑制“有问题”的 lint 错误，甚至更糟：一起禁用照明。</span></p>
+<h1 class="ki kj fp as kk kl km io kn ko kp is kq kr ks kt ku kv kw kx ky kz la lb lc ld bx" style="color: #292929;"><span>当 linting 成为敌人时</span></h1>
+<p class="ij ik fp il b im le io ip iq lf is it iu lg iw ix iy lh ja jb jc li je jf jg fh bx" style="color: #292929;"><span>从命令行运行 golangci-lint（或任何与此相关的 linter）可能会导致问题列表，然后您需要在一个窗口中拥有该列表并在编辑器中手动修复问题。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>雪上加霜的是，如果您使用的是操作系统的 Unix 衍生版本，那么有关如何在 JetBrains GoLand IDE 下运行 linter 的文档可能就足够了。事实上，一切都与 golangci-lint 文档中建议的设置相得益彰。</span><strong class="il lj"><span>但是</span></strong><span>，当仅限于企业环境开发设置时，安全性歇斯底里使您的 CPU 在实时扫描所有文件系统操作上花费太多周期……好吧……事情变慢了，您的 IDE 感觉就像是PTFE 覆盖的垂直杆。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>此外，在编码时让 linter 喷出 lint 错误会使注意力从实际编码上移开。我想这可能是人们更喜欢编辑器（vim、Emacs、Sublime Text 等）和更简单的 IDE（如 VS Code）而不是可用的成熟 IDE 产品的原因之一。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>这种干扰类似于违背您的意愿或无法控制的强制</span><a class="cd kh" style="color: inherit; text-decoration: underline;"><span>上下文切换(https://www.linkedin.com/pulse/context-switching-developers-paul-graham)</span></a><span>。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>很有可能你会说</span><em class="jh"><span>sod this</span></em><span>并一起禁用linting。</span></p>
+<h1 class="ki kj fp as kk kl km io kn ko kp is kq kr ks kt ku kv kw kx ky kz la lb lc ld bx"><span>按需运行 linter</span></h1>
+<p class="ij ik fp il b im le io ip iq lf is it iu lg iw ix iy lh ja jb jc li je jf jg fh bx"><span>任何 IDE 最酷的地方在于它的构建配置（又名。</span><em class="jh"><span>运行/调试配置</span></em><span>）。大多数情况下，这些仅用于此目的：设置运行和调试配置。但是，瞧，通常，您可以设置运行/调试配置来运行 shell 脚本（Powershell 脚本确实属于这一类）。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><strong class="il lj"><span>注意</span></strong><span>：在下面的示例设置中，我将使用</span><em class="jh"><span>Gorm</span></em><span>包。本文不反映包的质量，这里仅作为示例使用。我喜欢这个包并使用过它，并且不止一次推荐过它。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><span>我喜欢使用 GoLand IDE，它具有足够的智能来检测我的程序生成的输出类型。除此之外，它将检测给定文件的路径以及相应的行号和列号。当点击链接时，编辑器的光标将被放置在文件的相应位置。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><span><img referrerpolicy="no-referrer" class="mce_image" id="images_162418970509360" src="https://miro.medium.com/max/2452/1*fv50DN6aKDS7BkDoRQ-iNA.png"></span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="text-align: center;"><span><span style="color: #757575; text-align: center;">在 GoLand IDE 中运行 golangci-lint 时使用 tab 格式的示例输出。</span></span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: start;"><span>您可能更喜欢 golangci-lint 产生的其他输出之一。我喜欢这种输出格式（名为</span><em class="jh"><span>tab</span></em><span>），因为它的清晰度和减少信息过载。我发现此输出中缺少的是 lint 问题的严重性（默认情况下，golangci-lint 将所有内容都视为严重性错误）。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: start;"><span>另一方面，默认输出对我来说太冗长了。</span></p>
+<pre class="language-actionscript"><code>F:\gorm/callbacks\callbacks.go:28:24: Error return value of `queryCallback.Register` is not checked (errcheck)
+ queryCallback.Register(“gorm:preload”, Preload)
+ ^
+F:\gorm/callbacks\callbacks.go:29:24: Error return value of `queryCallback.Register` is not checked (errcheck)
+ queryCallback.Register(“gorm:after_query”, AfterQuery)
+ ^
+F:\gorm/callbacks\callbacks.go:32:50: Error return value of `(*gorm.io/gorm.callback).Register` is not checked (errcheck)
+ deleteCallback.Match(enableTransaction).Register(“gorm:begin_transaction”, BeginTransaction)</code></pre>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx"><span>您需要的第一件事是包装外壳脚本。撰写本文时考虑到了 Windows 的烦恼。因此，Powershell 就是这样。我们称这个文件为 linting.ps1：</span></p>
+<pre class="language-actionscript"><code>$location = "$(Get-Location)"
+golangci-lint.exe run --out-format tab --path-prefix $location $args[0]</code></pre>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>$args[0] 允许您将目录名称传递给脚本，从而可以一次仅对子包进行 lint。</span></p>
+<p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929;"><span>您需要的第二件事是调用 Powershell 脚本的运行/调试配置（或者您可以调用 shell 脚本并将 Powershell 作为要使用的解释器）。当然，Jetbrains IDE 具有可用的 Powershell 配置。</span></p>
+<div class="lv lw bz lx aj ly"> 
+ <div class="eu ev mf"> 
+  <div class="mk s bz ml"> 
+   <div class="mm mn s"> 
+    <div class="bv mg t u v mh aj dl mi mj">
+     <img referrerpolicy="no-referrer" class="mce_image" id="images_162418977643574" src="https://miro.medium.com/max/735/1*zgYaAC62QFzgMh4u8YIseg.png">
+    </div> 
+    <div class="bv mg t u v mh aj dl mi mj" style="text-align: center;">
+     <span style="color: #757575; text-align: center;">Powershell 运行/调试配置示例。</span> 
+     <br> 
+     <p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: left;"><span>您现在已准备好按需运行 linting。</span></p> 
+     <p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: left;"><span>使用运行/调试配置中的</span><em class="jh"><span>脚本参数</span></em><span>字段通过传递相应的目录名称来分析子包。</span></p> 
+     <h1 class="ki kj fp as kk kl km io kn ko kp is kq kr ks kt ku kv kw kx ky kz la lb lc ld bx" style="text-align: start;"><span>关于下一步去哪里的建议</span></h1> 
+     <p class="ij ik fp il b im le io ip iq lf is it iu lg iw ix iy lh ja jb jc li je jf jg fh bx" style="text-align: start;"><span>我发现您可能会考虑使用一些</span><em class="jh"><span>更好的做法</span></em><span>：</span></p> 
+     <ul class="" style="color: rgba(0, 0, 0, 0.8); text-align: start;"> 
+      <li class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg mr ms mt bx"><span>定义要使用的短绒。有几种可用的 linter，启用所有内容和厨房水槽可能会适得其反，所以从默认值开始。要使用的 linter 可以作为命令行选项传递给 golangci-lint 程序。查看</span><a class="cd kh" style="color: inherit; text-decoration: underline;"><span>https://golangci-lint.run/usage/linters/</span></a><span>以了解可用 linters 的概述。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx"><span>太多的命令行选项会让生活变得一团糟。请改用配置文件。一个好的起点是</span><a class="cd kh" style="color: inherit; text-decoration: underline;"><span>https://golangci-lint.run/usage/configuration/#config-file</span></a><span>。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx"><span>通过修改配置文件来调整 linter 的行为。您的团队可能会发现，如果函数超过 60 行或 40 条语句，并且行长超过 120 个字符，那么它仍然具有可读性。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx"><span>对整个存储库进行 lint 处理可能很诱人，但由于可能返回的 lint 错误数量众多，很快就会变得不堪重负。一次清理一个包是一种更好的方法。</span></li> 
+     </ul> 
+     <h1 class="ki kj fp as kk kl km io kn ko kp is kq kr ks kt ku kv kw kx ky kz la lb lc ld bx" style="text-align: start;"><span>关于配置文件选项的一些注意事项</span></h1> 
+     <p class="ij ik fp il b im le io ip iq lf is it iu lg iw ix iy lh ja jb jc li je jf jg fh bx" style="text-align: start;"><span>我不会详细说明要使用哪些 linter 以及诸如此类的东西，因为本文的范围是</span><em class="jh"><span>IDE 内部的 linting</span></em><span>。我将接触的唯一配置与此主题相关。</span></p> 
+     <pre class="language-actionscript"><code>output:
+  path-prefix: ""
+  sort-results: true
+  format: tab
+  print-issued-lines: false
+  print-linter-name: true
+  uniq-by-line: false</code></pre> 
+     <p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: start;"><span>前三个选项对于我们的<em class="jh">按需上市</em>最重要</span><em class="jh"><span>。</span></em></p> 
+     <ul class="" style="color: rgba(0, 0, 0, 0.8); text-align: start;"> 
+      <li class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>path-prefix: “”</span></strong><span>这个值无关紧要，因为它被（Power）shell 文件中的相应命令行选项覆盖。但为了清楚起见，空白和任何东西一样好。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>sort-results: true</span></strong><span>您希望这样可以将每个文件组合在一起，而不是到处都是。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>格式：tab</span></strong><span>如上所述，我发现</span><em class="jh"><span>tab</span></em><span>格式比其他格式更容易阅读。</span></li> 
+     </ul> 
+     <p class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg fh bx" style="color: #292929; text-align: start;"><span>请自行决定使用以下选项：</span></p> 
+     <ul class="" style="color: rgba(0, 0, 0, 0.8); text-align: start;"> 
+      <li class="ij ik fp il b im in io ip iq ir is it iu iv iw ix iy iz ja jb jc jd je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>print-issued-lines: false</span></strong><span>如果设置为</span><em class="jh"><span>true</span></em><span>并使用任何其他格式化程序，则会产生非常冗长的输出。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>print-linter-name: true</span></strong><span>了解哪些 linter 对什么做出反应是很有用的。</span></li> 
+      <li class="ij ik fp il b im mu io ip iq mv is it iu mw iw ix iy mx ja jb jc my je jf jg mr ms mt bx" style="color: #292929;"><strong class="il lj"><span>uniq-by-line: false 进一步</span></strong><span>减少可能的信息过载。</span><span></span></li> 
+     </ul> 
+     <p style="text-align: left;"><span>/**********************************<strong>golangci-lint 安装</strong>***********************************************/</span></p> 
+     <p style="text-align: left;"><span><a>https://asciinema.org/a/183662</a></span></p> 
+     <p style="text-align: left;"><strong>安装:</strong></p> 
+     <h3 style="color: #737380; text-align: start;">Linux and Windows</h3> 
+     <pre class="language-actionscript"><code># binary will be $(go env GOPATH)/bin/golangci-lint
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.41.1
+
+golangci-lint --version</code></pre> 
+     <p style="text-align: left;"><span style="color: #737380; text-align: start;">On Windows, you can run the above commands with Git Bash, which comes with<span>&nbsp;</span></span><a target="_blank" style="color: #737380; text-align: start;">Git for Windows</a><span style="color: #737380; text-align: start;">.</span></p> 
+     <h3 style="text-align: left;">Install from Source</h3> 
+     <p style="text-align: left;">Note: such<span>&nbsp;</span><code class="inline-code">go get</code><span>&nbsp;</span>installation aren't guaranteed to work. We recommend using binary installation.</p> 
+     <pre class="language-actionscript"><code>go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.41.1</code></pre> 
+     <p style="text-align: left;"><strong>简单运行:</strong></p> 
+     <pre class="language-actionscript"><code>golangci-lint run</code></pre> 
+     <p style="text-align: left;">/*************************************<strong>题外话</strong>***********************************************/</p> 
+     <p style="text-align: left;"><a>https://asciinema.org/</a> Linux/mac控制台操作轻量的录制工具</p> 
+     <p style="text-align: left;">安装:</p> 
+     <pre class="language-actionscript"><code>Ubuntu
+sudo apt-add-repository ppa:zanchey/asciinema
+sudo apt-get update
+sudo apt-get install asciinema</code></pre> 
+     <p style="text-align: left;">cast文件嵌入参考:</p> 
+     <p style="text-align: left;">https://github.com/asciinema/asciinema-player</p> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/280649#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.PowerShell_Blog" title="PowerShell" href="https://developer.huaweicloud.com/tags/200286/blog_1">PowerShell</a>
+        
+    </div>
+</div></div>

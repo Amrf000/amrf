@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><span style="font-family: monospace; font-size: medium;">帮一个同事解决一些chrome插件开发的问题时遇到一个问题,怎么在插件中修改一个vuejs框架下的input框的绑定值,试了试发现通过</span><span style="font-family: monospace; font-size: medium;">__vue__属性是可以的;</span></p>
+<p><span style="font-family: monospace; font-size: medium; color: rgb(0, 176, 80);">----------后续</span></p>
+<p><span style="font-family: monospace; font-size: medium;">由于dom树和vue的component节点数树并不是完全一致的,即存在$el一样,_uid不一样，即不是同一个节点的情况,开启devtools对照，然后遍历_uid或者$parent*n可以找到;(目前还没发现更好的方式)</span></p>
+<p><font face="monospace" size="3">此外值的更新需要采用$emit('change',val)句式以触发相关事件回调;</font></p>
+<h3>参考:</h3>
+<p><a>https://stackoverflow.com/questions/26915193/dom-element-to-corresponding-vue-js-component</a></p>
+<p>过程中又回顾到了一个老的点,还是写一下好了:</p>
+<pre class="brush:js;toolbar:false">var&nbsp;event=&nbsp;new&nbsp;CustomEvent("GoCatePage",&nbsp;{
+&nbsp;&nbsp;"detail":&nbsp;{&nbsp;}
+});
+window.parent.document.dispatchEvent(event);
+
+document.addEventListener("GoCatePage",&nbsp;function(data)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;...
+});</pre>
+<p>参考:</p>
+<p><a>https://stackoverflow.com/questions/30546370/how-to-make-vue-js-directive-working-in-an-appended-html-element</a></p>
+<p><a>https://cloud.tencent.com/developer/news/267672</a></p>
+<p><a>https://cloud.tencent.com/developer/article/1395426</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/160702#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

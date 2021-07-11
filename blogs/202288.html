@@ -1,0 +1,306 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文：<a>https://www.codejava.net/java-core/concurrency/java-concurrency-understanding-thread-pool-and-executors</a>&nbsp;原文作者：<a style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; font-style: italic; white-space: normal;">Nam Ha Minh</a></p>
+<p><br></p>
+<p><span style="">该Java并发教程可帮助您开始使用</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style="color: rgb(128, 0, 0);"><strong><span style=""><span style="">java.util.concurrent</span></span></strong></span>&nbsp;</span><span style=""><span style="">包</span><span style="">中的高级并发API，该</span><span style="">包提供了并发编程中通常有用的实用程序类，例如执行器(<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">executors</span>)，线程池管理，计划任务执行，Fork / Join框架，等并发集合。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">在本教程中，您将学习线程池的工作原理，以及如何通过执行器(<span style="font-size: medium; font-family: &quot;Microsoft YaHei&quot;;">executors</span>)使用不同种类的线程池。</span></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>1.了解Java中的线程池</a></h2>
+<p><span style=""><span style="">在性能方面，创建新线程是一项昂贵的操作，因为它要求操作系统为线程分配所需的资源。</span><span style="">因此，实际上，线程池用于启动许多短期线程(<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">short-lived&nbsp;<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">threads</span></span>)的大型应用程序，以便有效利用资源并提高性能。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">线程池会保留许多空闲线程，这些线程准备好根据需要执行任务，而不是在新任务到达时创建新线程。</span><span style="">线程完成任务的执行后，它不会消失。</span><span style="">相反，它在池中保持空闲状态，等待被选择执行新的任务。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">您可以限制池中一定数量的并发线程，这对于防止过载非常有用。</span><span style="">如果所有线程都在忙于执行任务，则将新任务放入队列中，等待线程可用。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">Java Concurrency API支持以下类型的线程池：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><strong>缓存线程池（<strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Cached thread pool</strong>）</strong><span style="">：保留多个活动线程并根据需要创建新线程。</span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><strong>固定线程池（<strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Fixed thread pool</strong><span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">:</span>）</strong><span style=""><span style="">：限制并发线程的最大数量。</span><span style="">其他任务在队列中排队。</span></span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><strong>单线程池（<strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Single-threaded pool</strong>）</strong><span style="">：一次只保留一个线程执行一个任务。</span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><strong>Fork / Join池（<strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">Fork/Join pool</strong>）</strong><span style="">：一种特殊的线程池，它使用Fork / Join框架来利用多个处理器的优势，通过将工作递归分解成较小的部分来更快地执行繁重的工作。</span></p></li> 
+</ul>
+<p><span style=""><span style="">基本上这就是线程池的工作方式。</span><span style="">在实践中，线程池广泛用于Web服务器，其中，线程池用于服务客户端的请求。</span><span style="">线程池还用于数据库应用程序，其中线程池维护与数据库的开放连接。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">实现线程池是一项复杂的任务，但是您不必自己做。</span><span style="">由于Java Concurrency API允许您轻松创建和使用线程池，而无需担心细节。</span><span style="">您将在下一节中学习如何操作。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>2.了解Java中的执行器（Executors)</a></h2>
+<p><span style="">一个</span><span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">执行器</span></span></span></strong></span><span style="">是一个对象，是负责管理线程和执行从客户端代码提交的</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">Runnable</span></span></span><span style=""><span style="">任务。</span><span style="">它使线程创建，调度等细节与任务提交脱钩，因此您可以专注于开发任务的业务逻辑，而无需关心线程管理细节。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">这意味着，在最简单的情况下，而不是创建线程来执行如下任务：</span></p>
+<pre class="brush:java">Thread&nbsp;t&nbsp;=&nbsp;new&nbsp;Thread(new&nbsp;RunnableTask());
+t.start();</pre>
+<p><span style="">您将任务提交给执行者，如下所示：</span></p>
+<pre class="brush:java">Executor&nbsp;executor&nbsp;=&nbsp;anExecutorImplementation;
+executor.execute(new&nbsp;RunnableTask1());
+executor.execute(new&nbsp;RunnableTask2());</pre>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">Java Concurrency API为执行者定义了以下3个基本接口：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style=""><strong style="color: rgb(128, 0, 0); font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;">Executor</span></strong></span></span></span></strong></span><span style=""><span style="">：是所有</span><strong style="color: rgb(128, 0, 0); font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;">executors</span></strong><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""></span></span></strong></span><span style="">的超类。</span><span style="">它仅定义了一种方法</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">execute（Runnable）</span></span></span><span style="">。</span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">ExecutorService</span></span></span></strong></span><span style="">：是一个</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Executor</span></span></span><span style=""><span style="">，它允许</span><span style="">通过</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style="">Future</span></span><span style="">对象</span><span style="">跟踪返回<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">值</span>任务（</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Callable</span></span></span><span style=""><span style="">）的</span><span style="">进度</span><span style="">，并管理线程的终止。</span><span style="">它的关键方法包括</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style="">Submit（）</span></span><span style="">和</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style="">shutdown（）</span></span><span style="">。</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"></span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">ScheduledExecutorService</span></span></span></strong></span><span style="">：是一个</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">ExecutorService</span></span></span><span style=""><span style="">，可以安排任务在给定的延迟后执行或定期执行。</span><span style="">它的关键方法是</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">schedule（）</span></span></span><span style="">，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">scheduleAtFixedRate（）</span></span></span><span style="">和</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">scheduleWithFixedDelay（）</span></span></span><span style="">。</span></p></li> 
+</ul>
+<p><span style="">您可以使用</span><strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">Executors</span></span></span></strong><span style=""><span style="">实用程序类（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">utility</span> <span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">class</span>）</span><span style="">提供的几种工厂方法之一来创建</span><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">executor&nbsp;</span></span></span></strong><span style="">程序。</span><span style="">这里仅举几例：</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">newCachedThreadPool（）</span></span></span></strong></span><span style=""><span style="">：创建一个可扩展的线程池执行程序。</span><span style="">根据需要创建新线程，并在可用时重新使用先前构造的线程。</span><span style="">空闲线程在池中保留一分钟。</span><span style="">该执行程序适用于启动许多短期并发任务（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">short-lived concurrent tasks</span>）的应用程序。</span></span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">newFixedThreadPool（int n）</span></span></span></strong></span><span style=""><span style="">：在池中创建具有固定线程数的执行程序。</span><span style="">该执行程序可确保在任何时候不超过n个并发线程。</span><span style="">如果在所有线程都处于活动状态时提交了其他任务，则它们将在队列中等待，直到某个线程可用为止。</span><span style="">如果任何线程由于执行过程中的失败而终止，它将被新线程替换。</span><span style="">池中的线程将一直存在，直到明确将其关闭。</span><span style="">如果您要限制并发线程的最大数量，请使用此执行程序。</span></span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">newSingleThreadExecutor（）</span></span></span></strong></span><span style=""><span style="">：创建一个执行程序，一次执行一个任务。</span><span style="">确保已提交的任务按顺序执行，并且在任何时候都不会激活一个以上的任务。</span><span style="">如果您要依次执行要排队的任务，请考虑使用此执行程序。</span></span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">newScheduledThreadPool（int corePoolSize）</span></span></span></strong></span><span style=""><span style="">：创建一个执行程序，该执行程序可以安排任务在给定的延迟后执行或定期执行。</span><span style="">如果要调度要并发执行的定时任务，请考虑使用此执行程序。</span></span></p></li> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">newSingleThreadScheduleExecutor（）</span></span></span></strong></span><span style=""><span style="">：创建一个单线程执行器，该执行器可以安排任务在给定的延迟后执行或定期执行。</span><span style="">如果要<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">定时</span>任务（s<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">chedule tasks&nbsp;</span>）按顺序执行，请考虑使用此执行程序。</span></span></p></li> 
+</ul>
+<p><br></p>
+<p><span style="font-size: 16px; font-family: sans-serif;">如果工厂方法不能满足您的需求，则可以直接将执行程序构造为</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);">ThreadPoolExecutor</span><span style="font-size: 16px; font-family: sans-serif;">或</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);">ScheduledThreadPoolExecutor</span><span style="font-size: 16px; font-family: sans-serif;">的实例，这为您提供了其他选项，例如池大小，按需构造，保持活动时间等。</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">要创建Fork / Join池，请构造</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">ForkJoinPool</span></span></span><span style=""><span style="">类</span><span style="">的实例</span><span style="">。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>3. Java Simple Executor和ExecutorService示例</a></h2>
+<p><span style="">让我们看几个简单的示例，这些示例显示如何创建执行器（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">executor&nbsp;</span>）来执行</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Runnable</span></span></span><span style="">任务和</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Callable</span></span></span><span style="">任务。</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">以下程序为您展示了一个由单线程执行器（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">single-threaded executor</span>）执行任务的简单示例：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<pre class="brush:java">import&nbsp;java.util.concurrent.*;
+
+/**
+&nbsp;*&nbsp;SimpleExecutorExample.java
+&nbsp;*&nbsp;This&nbsp;program&nbsp;demonstrates&nbsp;how&nbsp;to&nbsp;create&nbsp;a&nbsp;single-threaded&nbsp;executor
+&nbsp;*&nbsp;to&nbsp;execute&nbsp;a&nbsp;Runnable&nbsp;task.
+&nbsp;*&nbsp;@author&nbsp;www.codejava.net
+&nbsp;*/
+public&nbsp;class&nbsp;SimpleExecutorExample&nbsp;{
+
+	public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;{
+		ExecutorService&nbsp;pool&nbsp;=&nbsp;Executors.newSingleThreadExecutor();
+
+		Runnable&nbsp;task&nbsp;=&nbsp;new&nbsp;Runnable()&nbsp;{
+			public&nbsp;void&nbsp;run()&nbsp;{
+				System.out.println(Thread.currentThread().getName());
+			}
+		};
+
+		pool.execute(task);
+
+		pool.shutdown();
+	}
+}</pre>
+<p><span style="">如您所见，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Runnable</span></span></span><span style=""><span style="">任务是使用匿名类语法创建的。</span><span style="">该任务仅打印线程名称并终止。</span><span style="">编译并运行该程序，您将看到如下输出：</span></span></p>
+<pre class="brush:text">pool-1-thread-1</pre>
+<p><span style=""><span style="">请注意，</span><span style="">线程完成执行后</span><span style="">，应调用</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">shutdown（）</span></span></span><span style=""><span style="">销毁执行程序。</span><span style="">否则，程序随后仍将运行。</span><span style="">您可以通过注释关闭请求来观察（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">observe</span>）此行为。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">以下程序展示了如何向</span><span style="">执行器</span><span style="">提交</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Callable</span></span></span><span style=""><span style="">任务。</span><span style="">一个</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">可调用（<span style="color: rgb(128, 0, 0); font-family: &quot;Courier New&quot;; font-size: 13.3333px;">Callable</span>）</span></span></span><span style="">任务返回完成后的值，我们使用</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style=""><span style="color: rgb(128, 0, 0); font-family: &quot;Courier New&quot;; font-size: 13.3333px;">Future</span></span></span></span><span style=""><span style="">对象获取值。下面</span><span style="">是代码：</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<pre class="brush:java">import&nbsp;java.util.concurrent.*;
+
+/**
+&nbsp;*&nbsp;SimpleExecutorServiceExample.java
+&nbsp;*&nbsp;This&nbsp;program&nbsp;demonstrates&nbsp;how&nbsp;to&nbsp;create&nbsp;a&nbsp;single-threaded&nbsp;executor
+&nbsp;*&nbsp;to&nbsp;execute&nbsp;a&nbsp;Callable&nbsp;task.
+&nbsp;*&nbsp;@author&nbsp;www.codejava.net
+&nbsp;*/
+public&nbsp;class&nbsp;SimpleExecutorServiceExample&nbsp;{
+
+	public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;{
+		ExecutorService&nbsp;pool&nbsp;=&nbsp;Executors.newSingleThreadExecutor();
+
+		Callable&lt;Integer&gt;&nbsp;task&nbsp;=&nbsp;new&nbsp;Callable&lt;Integer&gt;()&nbsp;{
+			public&nbsp;Integer&nbsp;call()&nbsp;{
+				try&nbsp;{
+					//&nbsp;fake&nbsp;computation&nbsp;time
+					Thread.sleep(5000);
+				}&nbsp;catch&nbsp;(InterruptedException&nbsp;ex)&nbsp;{
+					ex.printStackTrace();
+				}
+
+				return&nbsp;1000;
+			}
+		};
+
+		Future&lt;Integer&gt;&nbsp;result&nbsp;=&nbsp;pool.submit(task);
+
+		try&nbsp;{
+
+			Integer&nbsp;returnValue&nbsp;=&nbsp;result.get();
+
+			System.out.println("Return&nbsp;value&nbsp;=&nbsp;"&nbsp;+&nbsp;returnValue);
+
+		}&nbsp;catch&nbsp;(InterruptedException&nbsp;|&nbsp;ExecutionException&nbsp;ex)&nbsp;{
+			ex.printStackTrace();
+		}
+
+		pool.shutdown();
+	}
+}</pre>
+<p><span style="">请注意，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Future</span></span></span><span style="">的</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">get（）</span></span></span><span style=""><span style="">方法将阻塞当前线程，直到任务完成并返回值。</span><span style="">运行该程序，5秒钟后您将看到以下输出：</span></span></p>
+<pre class="brush:text">Return&nbsp;value&nbsp;=&nbsp;1000</pre>
+<p><span style="">有关使用</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Callable</span></span></span><span style="">和</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Future</span></span></span><span style=""><span style="">执行任务的更多详细信息</span><span style="">，请参见</span></span><a target="_blank" style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><span style="">Java并发：使用Callable和Future执行返回值的任务</span></a><span style="">。</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">让我们看一个更复杂的示例，其中向您展示如何使用不同类型的执行器执行多个任务。</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>4. Java缓存线程池执行器示例</a></h2>
+<p><span style=""><span style="">以下示例显示了如何创建缓存的线程池（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">cached thread pool&nbsp;</span>）以同时执行一些任务。</span><span style="">给定以下类：</span></span></p>
+<pre class="brush:java">/**
+&nbsp;*&nbsp;CountDownClock.java
+&nbsp;*&nbsp;This&nbsp;class&nbsp;represents&nbsp;a&nbsp;coutdown&nbsp;clock.
+&nbsp;*&nbsp;@author&nbsp;www.codejava.net
+&nbsp;*/
+public&nbsp;class&nbsp;CountDownClock&nbsp;extends&nbsp;Thread&nbsp;{
+	private&nbsp;String&nbsp;clockName;
+
+	public&nbsp;CountDownClock(String&nbsp;clockName)&nbsp;{
+		this.clockName&nbsp;=&nbsp;clockName;
+	}
+
+	public&nbsp;void&nbsp;run()&nbsp;{
+		String&nbsp;threadName&nbsp;=&nbsp;Thread.currentThread().getName();
+
+		for&nbsp;(int&nbsp;i&nbsp;=&nbsp;5;&nbsp;i&nbsp;&gt;=&nbsp;0;&nbsp;i--)&nbsp;{
+
+			System.out.printf("%s&nbsp;-&gt;&nbsp;%s:&nbsp;%d\n",&nbsp;threadName,&nbsp;clockName,&nbsp;i);
+
+			try&nbsp;{
+				Thread.sleep(1000);
+			}&nbsp;catch&nbsp;(InterruptedException&nbsp;ex)&nbsp;{
+				ex.printStackTrace();
+			}
+		}
+	}
+}</pre>
+<p><span style=""><span style="">此类表示一个倒计时时钟，该时钟将从5向下计数到0，并在每次计数后暂停1秒。</span><span style="">运行时，它将打印当前线程名称，后跟时钟名称和计数编号。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">让我们创建一个带有缓存线程池的执行器，以同时执行4个时钟。下面</span><span style="">是代码：</span></span></p>
+<pre class="brush:java">import&nbsp;java.util.concurrent.*;
+
+/**
+&nbsp;*&nbsp;MultipleTasksExecutorExample.java
+&nbsp;*&nbsp;This&nbsp;program&nbsp;demonstrates&nbsp;how&nbsp;to&nbsp;execute&nbsp;multiple&nbsp;tasks
+&nbsp;*&nbsp;with&nbsp;different&nbsp;kinds&nbsp;of&nbsp;executors.
+&nbsp;*&nbsp;@author&nbsp;www.codejava.net
+&nbsp;*/
+public&nbsp;class&nbsp;MultipleTasksExecutorExample&nbsp;{
+
+	public&nbsp;static&nbsp;void&nbsp;main(String[]&nbsp;args)&nbsp;{
+
+		ExecutorService&nbsp;pool&nbsp;=&nbsp;Executors.newCachedThreadPool();
+
+		pool.execute(new&nbsp;CountDownClock("A"));
+		pool.execute(new&nbsp;CountDownClock("B"));
+		pool.execute(new&nbsp;CountDownClock("C"));
+		pool.execute(new&nbsp;CountDownClock("D"));
+
+		pool.shutdown();
+
+	}
+}</pre>
+<p><span style="">编译并运行该程序，您将看到有4个线程同时执行4个时钟：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1603763998743020783.png" title="1603763998743020783.png" alt="image.png"></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">修改该程序以添加更多任务，例如增加3个时钟。</span><span style="">重新编译并再次运行该程序，您将看到线程数与提交的任务数相等。</span><span style="">这是缓存的线程池的关键行为：根据需要创建新线程。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>5. Java固定线程池执行器示例</a></h2>
+<p><span style="">接下来，</span>以固定线程池（f<span style="font-size: medium; font-family: &quot;Microsoft YaHei&quot;;">ixed thread pool</span>）的语句更新创建执行器：</p>
+<pre class="brush:java">ExecutorService&nbsp;pool&nbsp;=&nbsp;Executors.newFixedThreadPool(2);</pre>
+<p><span style=""><span style="">在这里，我们创建一个执行器，该执行器具有最多2个并发线程池。</span><span style="">仅将4个任务（4个时钟）提交给执行者。</span><span style="">重新编译并运行程序，您将看到只有2个线程执行时钟：</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1603764142753061852.png" title="1603764142753061852.png" alt="image.png"></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style=""><span style="">时钟A和B首先运行，而时钟C和D在队列中等待。</span><span style="">在A和B完成执行之后，这2个线程继续执行时钟C和D。这是固定线程池(<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">a fixed thread pool</span>)的关键行为：限制并发线程数并排队其他任务。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>6. Java单线程池执行器示例</a></h2>
+<p><span style="">让我们以使用像这样的单线程执行器（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">&nbsp;a single-threaded executor</span>）更新上面的程序：</span></p>
+<pre class="brush:java">ExecutorService&nbsp;pool&nbsp;=&nbsp;Executors.newSingleThreadExecutor();</pre>
+<p><span style="">重新编译并运行程序，您将看到只有一个线程按顺序执行4个时钟：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><img src="https://bbs-img.huaweicloud.com/blogs/img/1603764245494047564.png" title="1603764245494047564.png" alt="image.png"></p>
+<p><span style="">这就是单线程执行器（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">a single-threaded executor</span>）的关键行为：将任务依次依次排队执行。</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h2 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><a>7.创建一个自定义线程池执行器</a></h2>
+<p><span style="">如果希望更好地控制线程池的行为，可以直接从</span><strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">ThreadPoolExecutor</span></span></span></strong><span style="">类而不是</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">Executors</span></span></span><span style=""><span style="">实用程序类</span><span style="">的工厂方法</span><span style="">创建线程池执行</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style="">器（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">a thread pool executor</span>）</span></span><span style="">。</span></span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<p><span style="">例如，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">ThreadPoolExecutor</span></span></span><span style="">具有如下通用构造函数：</span></p>
+<pre class="brush:java">public&nbsp;ThreadPoolExecutor(int&nbsp;corePoolSize,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;maximumPoolSize,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;keepAliveTime,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TimeUnit&nbsp;unit,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BlockingQueue&lt;Runnable&gt;&nbsp;workQueue)</pre>
+<p><span style="">只要您真正了解参数的含义，就可以对其进行调整：</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">corePoolSize</span></span></span></strong></span><span style="">：要保留在池中的线程数。</span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">maximumPoolSize</span></span></span></strong></span><span style=""><span style="">：</span><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style="">池中允许</span></span></strong></span><span style="">的最大线程数。</span></span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">keepAliveTime</span></span></span></strong></span><span style="">：如果当前池中有多个</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">corePoolSize</span></span></span><span style="">线程，则多余的线程将在空闲状态超过</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">keepAliveTime时</span></span></span><span style=""><span style="">终止</span><span style="">。</span></span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">unit</span></span></span></strong></span><span style="">：</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">keepAliveTime</span></span></span><span style=""><span style="">参数</span><span style="">的时间单位</span><span style="">。</span><span style="">可以是</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">NANOSECONDS</span></span></span><span style="">，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">MILLISECONDS</span></span></span><span style="">，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">SECONDS</span></span></span><span style="">，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">MINUTES</span></span></span><span style="">，</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">HOURS</span></span></span><span style="">和</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">DAYS</span></span></span><span style="">。</span></p></li> 
+</ul>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><span style="color: rgb(128, 0, 0);"><strong><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">workQueue</span></span></span></strong></span><span style=""><span style="">：用于在执行任务之前保留任务的队列。</span><span style="">默认选择是</span><span style="">对于多线程池</span><span style="">为</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">SynchronousQueue，</span></span></span><span style=""><span style="">对于单线程池</span><span style="">为</span></span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;; color: rgb(128, 0, 0);"><span style=""><span style="">LinkedBlockingQueue</span></span></span><span style="">。</span></p></li> 
+</ul>
+<p><span style=""><span style="">让我们来看一个例子。</span><span style="">以下代码创建一个缓存的线程池（<span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">a cached thread pool</span>），该线程池至少保留10个线程，最多允许1,000个线程，并且空闲线程在该池中保留120秒：</span></span></p>
+<pre class="brush:java">int&nbsp;corePoolSize&nbsp;=&nbsp;10;
+int&nbsp;maxPoolSize&nbsp;=&nbsp;1000;
+int&nbsp;keepAliveTime&nbsp;=&nbsp;120;
+BlockingQueue&lt;Runnable&gt;&nbsp;workQueue&nbsp;=&nbsp;new&nbsp;SynchronousQueue&lt;Runnable&gt;();
+
+ThreadPoolExecutor&nbsp;pool&nbsp;=&nbsp;new&nbsp;ThreadPoolExecutor(corePoolSize,
+						&nbsp;maxPoolSize,
+						&nbsp;keepAliveTime,
+						&nbsp;TimeUnit.SECONDS,
+						&nbsp;workQueue);
+pool.execute(new&nbsp;RunnableTask());</pre>
+<p><span style="">您可以看到，当</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">corePoolSize</span></span></span><span style="">&nbsp;=&nbsp;</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">maxPoolSize</span></span></span><span style="">&nbsp;=&nbsp;</span><span style="font-size: 10pt; line-height: 15.3333px; font-family: &quot;Courier New&quot;;"><span style=""><span style="">1时</span></span></span><span style="">，我们得到一个单线程池执行器。</span></p>
+<h3 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal;"><span style="font-size: 16pt; line-height: 24.5333px;">API References:</span></h3>
+<ul style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;" class=" list-paddingleft-2"> 
+ <li><p><a target="_blank">Executor Interface Javadoc</a></p></li> 
+ <li><p><a target="_blank">ExecutorService Interface Javadoc</a></p></li> 
+ <li><p><a target="_blank">ScheduledExecutorService Interface Javadoc</a></p></li> 
+ <li><p><a target="_blank">Executors Class Javadoc</a></p></li> 
+ <li><p><a target="_blank">Callable Interface Javadoc</a></p></li> 
+ <li><p><a target="_blank">Future Interface Javadoc</a></p></li> 
+ <li><p><a target="_self">ThreadPoolExecutor Class Javadoc</a></p></li> 
+</ul>
+<p><span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">&nbsp;</span></p>
+<h3 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal; padding: 0px; color: rgb(51, 51, 51);">Related Tutorials:</h3>
+<ul style="white-space: normal; font-family: Arial, Helvetica, sans-serif; font-size: 14.3px;" class=" list-paddingleft-2"> 
+ <li><p><a target="_parent" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">Executing Value-Returning Tasks with Callable and Future</a></p></li> 
+ <li><p><a target="_blank">Scheduling Tasks to Execute After a Given Delay or Periodically</a></p></li> 
+</ul>
+<p><span style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium;">&nbsp;</span></p>
+<p style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;"><br></p>
+<h3 style="font-family: &quot;Open Sans&quot;, sans-serif; white-space: normal; padding: 0px; color: rgb(51, 51, 51);">Other Java Concurrency Tutorials:</h3>
+<ul style="white-space: normal; font-family: Arial, Helvetica, sans-serif; font-size: 14.3px;" class=" list-paddingleft-2"> 
+ <li><p><a target="_blank" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">How to use Threads in Java (create, start, pause, interrupt and join)</a></p></li> 
+ <li><p><a target="_blank" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">Java Synchronization Tutorial</a></p></li> 
+ <li><p><a target="_blank" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">Understanding Deadlock, Livelock and Starvation with Code Examples in Java</a></p></li> 
+ <li><p><a target="_blank" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">Understanding Java Fork-Join Framework with Examples</a></p></li> 
+ <li><p><a target="_blank" style="margin: 0px; padding: 0px; color: rgb(9, 81, 151); cursor: pointer;">Understanding Atomic Variables in Java</a></p></li> 
+</ul>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/202288#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+    </div>
+</div></div>

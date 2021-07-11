@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp;下载openresty程序包：</p>
+<p><a>http://openresty.org/cn/download.html</a></p>
+<p><a>https://mirrors.huaweicloud.com/openresty</a></p>
+<p>修改conf/nginx.conf端口</p>
+<p>运行nginx.exe</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1589608597858059611.png"></p>
+<p>修改nginx.conf 增加</p>
+<pre class="brush:html;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/lua&nbsp;{
+			default_type&nbsp;'text/plain';
+			content_by_lua_block&nbsp;{
+				ngx.say("Hello,world!")
+			}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;location&nbsp;/luadir&nbsp;{
+			default_type&nbsp;'text/plain';
+			content_by_lua_file&nbsp;'lua/hello.lua';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+<pre class="brush:html;toolbar:false"><br></pre>
+<p>hello.lua 中也只放一个lua打印</p>
+<p>nginx.exe -s reload后，就可以看到</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1589608737376007609.png"></p>
+<p>然后我们就可以在nginx上愉快的使用lua脚本了.</p>
+<p>参考:</p>
+<p><a>https://blog.csdn.net/yufei6808/article/details/80682878</a> </p>
+<p><span style="color: rgb(0, 176, 80);">---------------------------------------------------------</span><br></p>
+<h3>luacom excel操作</h3>
+<p>参考:</p>
+<p>https://github.com/davidm/luacom</p>
+<p>http://code.google.com/archive/p/luaforwindows/downloads</p>
+<p>https://blog.csdn.net/liuyukuan/article/details/5471625</p>
+<p><a>https://www.gammon.com.au/forum/bbshowpost.php?bbsubject_id=6022</a> </p>
+<h3>lua异常处理</h3>
+<p>参考:</p>
+<p><a>https://blog.csdn.net/ZZ7ZZ7ZZ/article/details/38848383</a></p>
+<p><a>https://blog.csdn.net/yuanfengyun/article/details/53454488</a></p>
+<p><a>https://www.cnblogs.com/-colin/p/8306547.html</a></p>
+<p><a>https://www.cnblogs.com/Richard-Core/p/4359953.html</a></p>
+<h3>lua sleep</h3>
+<p>参考:</p>
+<p><a>https://stackoverflow.com/questions/17987618/how-to-add-a-sleep-or-wait-to-my-lua-script</a></p>
+<h3>lua 文件编码<br></h3>
+<p>参考:</p>
+<p><a>https://github.com/starwing/luautf8</a></p>
+<p><a>https://blog.csdn.net/hloveloveu/article/details/5833229</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/167460#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>用mfc,在任务栏中实时显示上证指数:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1576565359296707.png" title="1576565359296707.png" alt="image.png" class="localImage"><br></p><p>修改基于TrafficMonitor:</p><p><a rel="nofollow" href="https://github.com/zhongyang219/TrafficMonitor/blob/master/TrafficMonitor/Common.h" style="white-space:normal;">https://github.com/zhongyang219/TrafficMonitor</a></p><p><a rel="nofollow" href="https://github.com/nlohmann/json">https://github.com/nlohmann/json</a></p><p>修改:</p><p><a rel="nofollow" href="https://github.com/zhongyang219/TrafficMonitor/blob/master/TrafficMonitor/Common.h">https://github.com/zhongyang219/TrafficMonitor/blob/master/TrafficMonitor/Common.h</a></p><p>中的GetURL实现</p><pre class="brush:cpp;toolbar:false">if&nbsp;(url.find(L"https")&nbsp;==&nbsp;0)&nbsp;{
+	pfile&nbsp;=&nbsp;(CHttpFile&nbsp;*)pSession-&gt;OpenURL(url.c_str(),&nbsp;1,&nbsp;INTERNET_FLAG_SECURE&nbsp;|
+	INTERNET_FLAG_TRANSFER_BINARY&nbsp;|&nbsp;INTERNET_FLAG_RELOAD);
+}
+else&nbsp;{
+	pfile&nbsp;=&nbsp;(CHttpFile&nbsp;*)pSession-&gt;OpenURL(url.c_str(),&nbsp;INTERNET_FLAG_TRANSFER_BINARY&nbsp;|&nbsp;INTERNET_FLAG_RELOAD);
+}</pre><p>//TrafficMonitorDlg.cpp OnTimer中周期获取上证指数信息</p><pre class="brush:cpp;toolbar:false">wstring&nbsp;trade_info&nbsp;=&nbsp;L"[]";
+if&nbsp;(!CCommon::GetURL(L"https://www.google.com/async/finance_wholepage_price_updates?ei=m_nyXYjdJoTWmAXn4rDgDQ&amp;yv=3&amp;async=mids:%2Fm%2F04xk2h,currencies:,_fmt:jspb",&nbsp;trade_info,&nbsp;false))
+{
+...
+}
+json&nbsp;trade;
+std::wcout&nbsp;&lt;&lt;&nbsp;trade_info.substr(4).c_str()&nbsp;&lt;&lt;&nbsp;std::endl;
+trade&nbsp;=&nbsp;json::parse(trade_info.substr(4));
+std::string&nbsp;composite&nbsp;=&nbsp;trade["PriceUpdate"][0][0][0][17][4].dump();//TODO:异常处理
+std::string&nbsp;percentage&nbsp;=&nbsp;trade["PriceUpdate"][0][0][0][17][6].dump();
+percentage.erase(std::remove(percentage.begin(),&nbsp;percentage.end(),&nbsp;'"'),&nbsp;percentage.end());
+theApp.m_composite&nbsp;=&nbsp;CCommon::StrToUnicode(composite.c_str(),false);
+theApp.m_percentage&nbsp;=&nbsp;CCommon::StrToUnicode(percentage.c_str(),&nbsp;false);</pre><p><br></p><p>//TaskBarDlg.cpp showInfo中绘制上证指数</p><pre class="brush:cpp;toolbar:false">draw.DrawWindowText(value_rect,&nbsp;theApp.m_composite.c_str(),&nbsp;text_colors[1],&nbsp;value_alignment,&nbsp;false);
+value_rect.MoveToY(value_rect.bottom);
+draw.DrawWindowText(value_rect,&nbsp;theApp.m_percentage.c_str(),&nbsp;text_colors[0],&nbsp;Alignment::LEFT,&nbsp;false);</pre><p><br></p><p>----------Code for ？</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/139179#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,41 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>tscon(<a rel="nofollow" href="https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tscon">https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/tscon</a>)</h3><p>连接到远程桌面所有连接中其他一个连接<br></p><p>命令形式<br></p><p><span style="color:rgb(23,23,23);font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;font-size:14px;white-space:pre;background-color:rgb(250,250,250);">tscon {&lt;SessionID&gt; | &lt;SessionName&gt;} [/dest:&lt;SessionName&gt;] [/password:&lt;pw&gt; | /password:*] [/v] &nbsp;</span></p><p>例如:</p><p>tscon.exe 2 /dest:console&nbsp;</p><p>其中2是sessionId,可以通过<span style="font-family:monospace;font-size:medium;">Query Session查询需要的session id</span></p><p><span style="font-family:monospace;font-size:medium;"><br></span></p><h3>(psexec)<a rel="nofollow" href="https://docs.microsoft.com/en-us/sysinternals/downloads/psexec">https://docs.microsoft.com/en-us/sysinternals/downloads/psexec</a></h3><p><span style="font-family:monospace;font-size:medium;">PsExec.exe \\Host cmd 可以在本地打开一个远程主机的控制台</span></p><p>PsExec.exe -s -i 2 \\<span style="font-family:monospace;font-size:medium;">Host</span> cmd\\可以在指定连接打开控制台，其中2是连接的SessionId</p><p>PsExec.exe -s -i 2 \\<span style="font-family:monospace;font-size:medium;">Host</span> c:\Users\xxx\tsc.bat 可以以指定session启动bat脚本</p><p><br></p><p>在RDP模式下,如果不借助vnc又想使用到远程主机的GPU(例如opengl或者一些cuda)则可以采用：</p><p>tscon id /dest:console</p><p>start xxx.exe</p><p>的方式启动对应的程序，然后再重新连接,也可以使用Psexec命令直接启动远程图形程序之后再连接;</p><p>有没有别的更好的办法,vnc打开blankscreen之后好像不行;</p><p><br></p><h3>rdp连接快捷bat</h3><pre class="brush:bash;toolbar:false">@echo&nbsp;off
+FOR&nbsp;/F&nbsp;"tokens=*&nbsp;USEBACKQ"&nbsp;%%F&nbsp;IN&nbsp;(`powershell&nbsp;"[Text.Encoding]::UTF8.GetString([convert]::FromBase64String('cGFzc3dvcmQ='))"`)&nbsp;DO&nbsp;(
+&nbsp;&nbsp;&nbsp;&nbsp;SET&nbsp;pass=%%F
+)
+cmdkey&nbsp;/add:hostIp&nbsp;/user:domain\userName&nbsp;/pass:$pass
+start&nbsp;/wait&nbsp;mstsc&nbsp;/v:hostIp:3389
+cmdkey&nbsp;/delete:hostIp</pre><p>cGFzc3dvcmQ=即password的base64编码</p><p>如果提示管理员不允许使用保存的凭证,需要修改客户机的组策略</p><p>参考:</p><p><a rel="nofollow" href="https://answers.microsoft.com/en-us/windows/forum/windows_7-security/remote-desktop-connection-not-using-saved/13a17d84-b008-4767-95fb-b891e9e6bc66">https://answers.microsoft.com/en-us/windows/forum/windows_7-security/remote-desktop-connection-not-using-saved/13a17d84-b008-4767-95fb-b891e9e6bc66</a><br></p><p>bat中获取管理员权限</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/1894967/how-to-request-administrator-access-inside-a-batch-file">https://stackoverflow.com/questions/1894967/how-to-request-administrator-access-inside-a-batch-file</a></p><pre class="brush:bash;toolbar:false">@echo&nbsp;off
+if&nbsp;not&nbsp;"%1"=="am_admin"&nbsp;(powershell&nbsp;start&nbsp;-verb&nbsp;runas&nbsp;'%0'&nbsp;am_admin&nbsp;&amp;&nbsp;exit&nbsp;/b)
+
+echo&nbsp;main&nbsp;code&nbsp;here
+pause</pre><p><a rel="nofollow" href="https://stackoverflow.com/questions/4451668/bat-file-to-open-cmd-in-current-directory">https://stackoverflow.com/questions/4451668/bat-file-to-open-cmd-in-current-directory</a></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="b396f800378e11eab759fa163e330718" href="/blogs/attachment?id=b396f800378e11eab759fa163e330718" title="dhtmlx.zip">dhtmlx.zip</a>
+                <span class="attSize">240KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/142646#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

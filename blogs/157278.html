@@ -1,0 +1,50 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>一个获取google图片查询第一个结果的例子<br></p><pre class="brush:python;toolbar:false">from&nbsp;bs4&nbsp;import&nbsp;BeautifulSoup
+import&nbsp;requests
+import&nbsp;json
+
+def&nbsp;get_google_img(query):
+&nbsp;&nbsp;&nbsp;&nbsp;"""
+&nbsp;&nbsp;&nbsp;&nbsp;gets&nbsp;a&nbsp;link&nbsp;to&nbsp;the&nbsp;first&nbsp;google&nbsp;image&nbsp;search&nbsp;result
+&nbsp;&nbsp;&nbsp;&nbsp;:param&nbsp;query:&nbsp;search&nbsp;query&nbsp;string
+&nbsp;&nbsp;&nbsp;&nbsp;:result:&nbsp;url&nbsp;string&nbsp;to&nbsp;first&nbsp;result
+&nbsp;&nbsp;&nbsp;&nbsp;"""
+&nbsp;&nbsp;&nbsp;&nbsp;proxies&nbsp;=&nbsp;{&nbsp;"http":&nbsp;"http://user:pass@proxy.xyz.com:port",
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"https":&nbsp;"http://user:pass@proxy.xyz.com:port",&nbsp;}&nbsp;
+
+&nbsp;&nbsp;&nbsp;&nbsp;url&nbsp;=&nbsp;"https://www.google.com/search?q="&nbsp;+&nbsp;query&nbsp;+&nbsp;"&amp;tbm=isch"
+&nbsp;&nbsp;&nbsp;&nbsp;headers={'User-Agent':"Mozilla/5.0&nbsp;(Windows&nbsp;NT&nbsp;6.1;&nbsp;WOW64)&nbsp;AppleWebKit/537.36&nbsp;(KHTML,&nbsp;like&nbsp;Gecko)&nbsp;Chrome/43.0.2357.134&nbsp;Safari/537.36"}
+
+&nbsp;&nbsp;&nbsp;&nbsp;try:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html&nbsp;=&nbsp;requests.get(url,&nbsp;headers=headers,&nbsp;proxies=proxies).text
+&nbsp;&nbsp;&nbsp;&nbsp;except&nbsp;requests.ConnectireplaceString:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("couldn't&nbsp;reach&nbsp;google")
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;#with&nbsp;open('output.txt',&nbsp;'w')&nbsp;as&nbsp;f:
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;&nbsp;&nbsp;&nbsp;f.write(html.encode().decode('utf-8'))
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;soup&nbsp;=&nbsp;BeautifulSoup(html,&nbsp;'html.parser')
+&nbsp;&nbsp;&nbsp;&nbsp;image&nbsp;=&nbsp;soup.find("img",{"class":"rg_i"})
+&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;image
+
+if&nbsp;__name__&nbsp;==&nbsp;'__main__':
+&nbsp;&nbsp;&nbsp;&nbsp;query&nbsp;=&nbsp;"https://www.peculiar-coding-endeavours.com/assets/mlp_vs_cnn/neuron.jpg"
+&nbsp;&nbsp;&nbsp;&nbsp;print(get_google_img(query))</pre><p style="white-space:normal;">因为内网的原因,有些图片只可以在google图片搜索缓存里看到,考虑是不是要写个浏览器插件了.</p><p style="white-space:normal;">参考:</p><p style="white-space:normal;"><a rel="nofollow" href="https://gist.github.com/ZerataX/a0719af17fdf8d338f8fdd6601f90a36">https://gist.github.com/ZerataX/a0719af17fdf8d338f8fdd6601f90a36</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/157278#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.其他_Blog" title="其他" href="https://developer.huaweicloud.com/tags/200213/blog_1">其他</a>
+        
+    </div>
+</div></div>

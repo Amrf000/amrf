@@ -1,0 +1,321 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>最近的一个项目中, 我采用了go作为我的后端基础,需求总体上并不复杂,代码写着写着就变多了,除去脚手架生成的代码,代码其实并不多;期间遇到不少关于go语法认知的小问题,早就想开个帖子单独记录下,这周终于有空开始发发博客了,整理下集中放一个帖子,帖子上面放我自己的一些收集,下面部分放一些网络上的相关帖子.</p>
+<h1><span style="color: #e67e23;">PART.A</span></h1>
+<ul> 
+ <li><strong>golang中的switch</strong>(参考https://yourbasic.org/golang/switch-statement/,https://www.runoob.com/go/go-switch-statement.html,https://studygolang.com/articles/28415,https://www.cnblogs.com/yahuian/p/11615408.html)</li> 
+</ul>
+<p>需要注意的点,代码段中自带break,由于这点多条件语句不能像其他语言中那样写,多条件的语法是单行中逗号这种形式,由于经常写不同的语言,我不倾向于使用fallthrough这个关键词;</p>
+<ul> 
+ <li>由于golang中存在指针,虽然他的解指针等等已经做的很舒适了,但是其实容易犯一种不易察觉的错误,slice中存储了同一个指针,循环中操作到最后所有的值其实是同一个;</li> 
+ <li>gorm使用很方便,但是我有个有个比较常犯的错误,查询出错并不包含查询到0条记录;</li> 
+ <li>待续</li> 
+</ul>
+<h1><span style="color: #e67e23;"><strong>PART.B</strong></span></h1>
+<h1 class="gs cu gt ba cj gu gv gw gx gy gz ha hb hc hd he hf hg hh hi hj hk hl hm hn ho ev" style="color: #292929;"><span style="background-color: #c2e0f4;">Go: what to return? A slice of structs vs a slice of pointers?(https://andrii-kushch.medium.com/go-what-to-return-a-slice-of-structs-vs-a-slice-of-pointers-42647912530a)</span></h1>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>我多次回答了同样的问题：从</span><strong class="iv cj"><span>go 中</span></strong><span>的函数返回什么更可取，一片结构还是一片指向这些结构的指针？所以我决定写这篇文章来展示这两种方法之间的区别。</span></p>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>换句话说，问题是以下哪个功能更好。</span></p>
+<pre class="jr js jt ju jv jw dr jx  language-javascript"><code>func ReturnSliceWithPointers() []*Person 
+func ReturnSliceWithStructs() []Person</code></pre>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>更好的，在这种情况下，工作手段的快</span><span>d</span><span>使用较少的内存。最简单的方法是使用 golang 测试包提供的工具。我写了两个类似的函数，它们创建、填充和返回一个数组。我为他们写了一个基准。</span></p>
+<pre class="language-actionscript"><code>package main
+
+import "testing"
+
+type Person struct {
+   Age int
+}
+
+func ReturnSliceWithPointers(size int) []*Person {
+   res := make([]*Person, size)
+
+   for i := 0; i &lt; size; i++ {
+      res[i] = &amp;Person{}
+   }
+
+   return res
+}
+
+
+func ReturnSliceWithStructs(size int) []Person {
+   res := make([]Person, size)
+
+   for i := 0; i &lt; size; i++ {
+      res[i] = Person{}
+   }
+
+   return res
+}
+
+
+func Benchmark_ReturnSliceWithPointers(b *testing.B) {
+   for i := 0; i &lt; b.N; i++ {
+      ReturnSliceWithPointers(10000)
+   }
+}
+
+func Benchmark_ReturnSliceWithStructs(b *testing.B) {
+   for i := 0; i &lt; b.N; i++ {
+      ReturnSliceWithStructs(10000)
+   }
+}</code></pre>
+<p><span style="color: #292929;">让我们运行它</span></p>
+<pre class="language-actionscript"><code>go test -bench=. -benchmem -benchtime=10000x</code></pre>
+<p><strong class="iv cj" style="color: #292929;"><span>结论</span></strong></p>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>我们看到函数</span><strong class="iv cj"><span>ReturnSliceWithStructs</span></strong><span>的分配更少。每次操作使用的内存也更少，性能更好。</span></p>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>同时，函数</span><strong class="iv cj"><span>ReturnSliceWithPointers</span></strong><span>看起来更糟：性能和内存效率更低。</span></p>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>它有更多的内存分配：一个分配给一个切片，一个分配给一个切片中的每个项目。</span></p>
+<pre class="language-actionscript"><code>res := make([]*Person, size)
+for i := 0; i &lt; size; i++ {
+   res[i] = &amp;Person{}
+}</code></pre>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>正因为如此，它会在 GC 上产生更多的负载。</span></p>
+<p class="it iu gt iv b iw ix iy iz ja jb jc jd je jf jg jh ji jj jk jl jm jn jo jp jq cw ev" style="color: #292929;"><span>那么使用哪一种呢？看起来选择是显而易见的，但并非总是如此。在某些情况下，您可以更喜欢一种方法而不是另一种方法。首先，问问自己，你有必要在乎它吗？如果是，那么决定完全取决于您的应用程序设计和您使用的库的接口。请记住：您始终可以使用类似的基准来查找提示。</span></p>
+<h1 class="fn fo fp fq b fr fs ft fu fv fw fx fy fz ga gb gc gd ge gf gg gh gi gj gk gl bx" style="color: #292929;"><span style="background-color: #c2e0f4;">5 Mistakes I’ve Made in Go(<a style="background-color: #c2e0f4;">https://medium.com/swlh/5-mistakes-ive-made-in-go-75fb64b943b8</a>)</span></h1>
+<p><span style="color: #757575;">To err is human, to forgive divine.</span><br><span style="color: #757575;">— Alexander Pope</span></p>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>这些是我在编写 Go 时犯的错误。虽然这些可能不会导致任何类型的错误，但它们可能会影响软件。</span></p>
+<h1 class="jw jx fp as jy jz ka je kb kc kd ji ke kf kg kh ki kj kk kl km kn ko kp kq kr bx" style="color: #292929;"><span>1. 内循环</span></h1>
+<p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>有几种方法可以在循环中弄乱您需要注意的问题。</span></p>
+<h2 class="kx jx fp as jy ky kz la kb lb lc ld ke le lf lg ki lh li lj km lk ll lm kq ln bx" style="color: #292929;"><span>1.1 使用引用来循环迭代器变量</span></h2>
+<p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>由于效率原因，循环迭代器变量是单个变量，在每次循环迭代中采用不同的值。它可能会导致不知情的行为。</span></p>
+<pre class="language-actionscript"><code>in := []int{1, 2, 3}
+
+var out []*int
+for  _, v := range in {
+	out = append(out, &amp;v)
+}
+
+fmt.Println("Values:", *out[0], *out[1], *out[2])
+fmt.Println("Addresses:", out[0], out[1], out[2])</code></pre>
+<p><span style="color: #292929;">结果将是：</span></p>
+<pre class="language-javascript"><code>Values: 3 3 3
+Addresses: 0xc000014188 0xc000014188 0xc000014188</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx"><span>如您所见，</span><code class="mf mg mh mi mb b">out</code><span>切片中的所有元素都是 3。实际上很容易解释为什么会发生这种情况：在每次迭代中，我们都将 的地址附加</span><code class="mf mg mh mi mb b">v</code><span>到</span><code class="mf mg mh mi mb b">out</code><span>切片中。如前所述，</span><code class="mf mg mh mi mb b">v</code><span>是一个在每次迭代中都采用新值的单个变量。因此，正如您在输出的第二行中看到的那样，地址是相同的，并且所有地址都指向相同的值。</span></p>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx"><span>简单的解决方法是将循环迭代器变量复制到一个新变量中：</span></p>
+<pre class="language-actionscript"><code>in := []int{1, 2, 3}
+
+var out []*int
+for  _, v := range in {
+	v := v
+	out = append(out, &amp;v)
+}
+
+fmt.Println("Values:", *out[0], *out[1], *out[2])
+fmt.Println("Addresses:", out[0], out[1], out[2])</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>新的输出：</span></p>
+<pre class="language-javascript"><code>Values: 1 2 3
+Addresses: 0xc0000b6010 0xc0000b6018 0xc0000b6020</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>同样的问题可以发现循环迭代变量正在 Goroutine 中使用。</span></p>
+<pre class="language-actionscript"><code>list := []int{1, 2, 3}
+
+for _, v := range list {
+	go func() {
+		fmt.Printf("%d ", v)
+	}()
+}</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>输出将是：</span></p>
+<pre class="lo lp lq lr ls ma hg du  language-javascript"><code>3 3 3</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>可以使用上述相同的解决方案来修复它。请注意，没有使用 Goroutine 运行该函数，代码会按预期运行。</span></p>
+<h2 class="kx jx fp as jy ky kz la kb lb lc ld ke le lf lg ki lh li lj km lk ll lm kq ln bx" style="color: #292929;"><span>1.2 循环调用WaitGroup.Wait</span></h2>
+<p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>这个错误可以使用类型的共享变量来犯</span><code class="mf mg mh mi mb b">WaitGroup</code><span>，如下面的代码所示</span><code class="mf mg mh mi mb b">Wait()</code><span>，当</span><code class="mf mg mh mi mb b">Done()</code><span>第 5 行被调用</span><code class="mf mg mh mi mb b">len(tasks)</code><span>次数时，第7 行只能被解除阻塞，因为它被用作在第 2 行调用的参数</span><code class="mf mg mh mi mb b">Add()</code><span>。但是，在</span><code class="mf mg mh mi mb b">Wait()</code><span>循环内部调用了 ，因此它会在下一次迭代中阻止在第 4 行创建 Goroutine。简单的解决方案是将</span><code class="mf mg mh mi mb b">Wait()</code><span>out的调用从循环中移出。</span></p>
+<pre class="language-actionscript"><code>var wg sync.WaitGroup
+wg.Add(len(tasks))
+for _, t := range tasks {
+	go func(t *task) { 
+		defer group.Done()
+	}(t)
+	// group.Wait()
+}
+
+group.Wait()</code></pre>
+<h2 class="kx jx fp as jy ky kz la kb lb lc ld ke le lf lg ki lh li lj km lk ll lm kq ln bx" style="color: #292929;"><span>1.3 在循环中使用 defer</span></h2>
+<p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><code class="mf mg mh mi mb b">defer</code><span>在</span><em class="mj"><span>函数</span></em><span>返回之前不会执行。</span><code class="mf mg mh mi mb b">defer</code><span>除非您确定自己在做什么，否则不应在循环中使用。</span></p>
+<pre class="language-actionscript"><code>var mutex sync.Mutex
+type Person struct {
+	Age int
+}
+persons := make([]Person, 10)
+for _, p := range persons {
+	mutex.Lock()
+	// defer mutex.Unlock()
+	p.Age = 13
+	mutex.Unlock()
+}</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>在上面的例子中，如果你使用第 8 行而不是第 10 行，下一次迭代不能持有互斥锁，因为锁已经被使用并且循环永远阻塞。</span></p>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>如果您真的需要在循环内使用 defer，您可能需要委托另一个函数来完成这项工作。</span></p>
+<pre class="language-actionscript"><code>var mutex sync.Mutex
+type Person struct {
+	Age int
+}
+persons := make([]Person, 10)
+for _, p := range persons {
+	func() {
+		mutex.Lock()
+		defer mutex.Unlock()
+		p.Age = 13
+	}()
+}</code></pre>
+<p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>但是，有时</span><code class="mf mg mh mi mb b">defer</code><span>在循环中使用可能会变得方便。所以你真的需要知道你在做什么。</span></p>
+<h1 class="jw jx fp as jy jz mw je kb kc mx ji ke kf my kh ki kj mz kl km kn na kp kq kr bx"><span>2. 发送到无保障频道</span></h1>
+<p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx"><span>您可以将值从一个 Goroutine 发送到通道，然后将这些值接收到另一个 Goroutine。默认情况下，发送和接收阻塞，直到对方准备好。这允许 Goroutines 在没有显式锁或条件变量的情况下进行同步。</span></p>
+<pre class="language-actionscript"><code>func doReq(timeout time.Duration) obj {
+	// ch :=make(chan obj)
+	ch := make(chan obj, 1)
+	go func() {
+		obj := do()
+		ch &lt;- result
+	} ()
+	select {
+	case result = &lt;- ch :
+		return result
+	case&lt;- time.After(timeout):
+		return nil 
+	}
+}</code></pre>
+<p><span>让我们检查上面的代码。该</span><code class="mf mg mh mi mb b">doReq</code><span>函数在第 4 行创建一个子 Goroutine 来处理请求，这是 Go 服务器程序中的常见做法。子 Goroutine在第 6 行执行</span><code class="mf mg mh mi mb b">do</code><span>函数并通过 channel 将结果发送回父</span><code class="mf mg mh mi mb b">ch</code><span>。子将在第 6 行阻塞，直到父</span><code class="mf mg mh mi mb b">ch</code><span>在第 9 行收到结果。同时，父将阻塞，</span><code class="mf mg mh mi mb b">select</code><span>直到子将结果发送到</span><code class="mf mg mh mi mb b">ch</code><span>（第 9 行）或发生超时时（第 11 行）。如果超时发生得更早，父</span><code class="mf mg mh mi mb b">doReq</code><span>进程将在第 12 行从func返回，并且没有其他人可以再收到结果</span><code class="mf mg mh mi mb b">ch</code><span>，这导致子进程被永远阻塞。解决方法是改变</span><code class="mf mg mh mi mb b">ch</code><span>从一个无缓冲通道到一个缓冲通道，这样子 Goroutine 总是可以发送结果，即使父 Goroutine 已经退出。另一个解决方法是在第 6 行使用一个</span><code class="mf mg mh mi mb b">select</code><span>带有空</span><code class="mf mg mh mi mb b">default</code><span>case的语句，这样如果没有 Goroutine 接收</span><code class="mf mg mh mi mb b">ch</code><span>,</span><code class="mf mg mh mi mb b">default</code><span>就会发生。尽管此解决方案可能并不总是有效。</span></p>
+<pre class="language-actionscript"><code>...
+select { 
+case ch &lt;- result: 
+default:
+}
+...</code></pre>
+<section> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag fm ai aj"> 
+   <h1 class="jw jx fp as jy jz mw je kb kc mx ji ke kf my kh ki kj mz kl km kn na kp kq kr bx" style="color: #292929;"><span>3. 不使用接口</span></h1> 
+   <p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>接口可以使代码更加灵活。这是在代码中引入多态的一种方式。接口允许您请求一组行为而不是特定类型。不使用接口可能不会导致任何错误，但可能会导致代码不那么简单、不灵活和可扩展性较差。</span></p> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>在众多的接口，</span><code class="mf mg mh mi mb b">io.Reader</code><span>并且</span><code class="mf mg mh mi mb b">io.Writer</code><span>可能是最可爱的人。</span></p> 
+   <pre class="language-javascript"><code>type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}</code></pre> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>这些接口可能非常强大。假设您要将一个对象写入文件，因此您定义了一个</span><code class="mf mg mh mi mb b">Save</code><span>方法：</span></p> 
+   <pre class="language-javascript"><code>func (o *obj) Save(file os.File) error</code></pre> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>如果你需要写到</span><code class="mf mg mh mi mb b">http.ResponseWriter</code><span>第二天怎么办？您不想定义新方法。你？所以使用</span><code class="mf mg mh mi mb b">io.Writer</code><span>.</span></p> 
+   <pre class="language-javascript"><code>func (o *obj) Save(w io.Writer) error</code></pre> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>还有一个重要的注意事项，您应该知道的是，始终询问您将要使用的行为。在上面的示例中，请求 an</span><code class="mf mg mh mi mb b">io.ReadWriteCloser</code><span>也可以工作，但是当您要使用的唯一方法是</span><code class="mf mg mh mi mb b">Write</code><span>.&nbsp;接口越大，抽象越弱。</span></p> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>所以大多数时候你最好保持行为而不是具体的类型。</span></p> 
+  </div> 
+ </div> 
+</section>
+<div class="n p gm mp mq mr" style="color: rgba(0, 0, 0, 0.8);"> <span class="ms df bq mt mu mv"></span><span class="ms df bq mt mu mv"></span><span class="ms df bq mt mu"></span> 
+ <br> 
+</div>
+<section> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag fm ai aj"> 
+   <h1 class="jw jx fp as jy jz mw je kb kc mx ji ke kf my kh ki kj mz kl km kn na kp kq kr bx" style="color: #292929;"><span>4. 错误的有序结构</span></h1> 
+   <p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>这个错误也不会导致任何错误，但它会导致更多的内存使用。</span></p> 
+   <pre class="language-actionscript"><code>
+type BadOrderedPerson struct {
+	Veteran bool   // 1 byte
+	Name    string // 16 byte
+	Age     int32  // 4 byte
+}
+
+type OrderedPerson struct {
+	Name    string
+	Age     int32
+	Veteran bool
+}</code></pre> 
+   <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>似乎两种类型的大小都相同，均为 21 字节，但结果显示出完全不同的内容。使用 编译代码</span><code class="mf mg mh mi mb b">GOARCH=amd64</code><span>，</span><code class="mf mg mh mi mb b">BadOrderedPerson</code><span>类型分配 32 个字节，而</span><code class="mf mg mh mi mb b">OrderedPerson</code><span>类型分配24 个字节。为什么？嗯，原因是</span><a class="cd nb" style="color: inherit; text-decoration: underline;"><span>数据结构对齐</span></a><span>。在 64 位架构中，内存分配 8 字节的连续数据包。需要添加的 Padding 可以通过以下方式计算：</span></p> 
+   <pre class="language-javascript"><code>padding = (align - (offset mod align)) mod align
+aligned = offset + padding
+        = offset + ((align - (offset mod align)) mod align)</code></pre> 
+   <pre class="language-actionscript"><code>type BadOrderedPerson struct {
+	Veteran bool     // 1 byte
+	_       [7]byte  // 7 byte: padding for alignment
+	Name    string   // 16 byte
+	Age     int32    // 4 byte
+	_       struct{} // to prevent unkeyed literals
+	// zero sized values, like struct{} and [0]byte occurring at 
+	// the end of a structure are assumed to have a size of one byte.
+	// so padding also will be addedd here as well.
+	
+}
+
+type OrderedPerson struct {
+	Name    string
+	Age     int32
+	Veteran bool
+	_       struct{} 
+}</code></pre> 
+   <section> 
+    <div class="n p"> 
+     <div class="ab ac ae af ag fm ai aj"> 
+      <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>当您有一个大的常用类型时，它可能会导致性能问题。但别担心，您不必手动处理所有结构。使用</span><a rel="nofollow" href="https://github.com/mdempsky/maligned" class="cd nb" style="color: inherit; text-decoration: underline;"><span>maligned</span></a><span>您可以轻松检查您的代码是否存在此问题。</span></p> 
+     </div> 
+    </div> 
+   </section> 
+   <div class="n p gm mp mq mr" style="color: rgba(0, 0, 0, 0.8);"> <span class="ms df bq mt mu mv"></span><span class="ms df bq mt mu mv"></span><span class="ms df bq mt mu"></span> 
+    <br> 
+   </div> 
+   <section> 
+    <div class="n p"> 
+     <div class="ab ac ae af ag fm ai aj"> 
+      <h1 class="jw jx fp as jy jz mw je kb kc mx ji ke kf my kh ki kj mz kl km kn na kp kq kr bx" style="color: #292929;"><span>5. 在测试中不使用种族检测器</span></h1> 
+      <p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><span>数据竞争会导致神秘的失败，通常是在代码部署到生产之后很久。因此，这些是并发系统中最常见和最难调试的错误类型。为了帮助区分这些类型的错误，Go 1.1 引入了一个内置的数据竞争检测器。只需添加</span><code class="mf mg mh mi mb b">-race</code><span>标志即可使用。</span></p> 
+      <pre class="language-javascript"><code>$ go test -race pkg    // to test the package
+$ go run -race pkg.go  // to run the source file
+$ go build -race       // to build the package
+$ go install -race pkg // to install the package</code></pre> 
+      <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>启用竞争检测器后，编译器将记录在代码中访问内存的时间和方式，同时</span><code class="mf mg mh mi mb b">runtime</code><span>监视对共享变量的非同步访问。</span></p> 
+      <p class="iz ja fp jb b jc jd je jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv il fh bx" style="color: #292929;"><span>当发现数据竞争时，竞争检测器会打印一份报告，其中包含冲突访问的堆栈跟踪。下面是一个例子：</span></p> 
+      <pre class="language-javascript"><code>WARNING: DATA RACE
+Read by goroutine 185:
+  net.(*pollServer).AddFD()
+      src/net/fd_unix.go:89 +0x398
+  net.(*pollServer).WaitWrite()
+      src/net/fd_unix.go:247 +0x45
+  net.(*netFD).Write()
+      src/net/fd_unix.go:540 +0x4d4
+  net.(*conn).Write()
+      src/net/net.go:129 +0x101
+  net.func·060()
+      src/net/timeout_test.go:603 +0xaf
+Previous write by goroutine 184:
+  net.setWriteDeadline()
+      src/net/sockopt_posix.go:135 +0xdf
+  net.setDeadline()
+      src/net/sockopt_posix.go:144 +0x9c
+  net.(*conn).SetDeadline()
+      src/net/net.go:161 +0xe3
+  net.func·061()
+      src/net/timeout_test.go:616 +0x3ed
+Goroutine 185 (running) created at:
+  net.func·061()
+      src/net/timeout_test.go:609 +0x288
+Goroutine 184 (running) created at:
+  net.TestProlongTimeout()
+      src/net/timeout_test.go:618 +0x298
+  testing.tRunner()
+      src/testing/testing.go:301 +0xe8</code></pre> 
+      <h1 class="jw jx fp as jy jz ka je kb kc kd ji ke kf kg kh ki kj kk kl km kn ko kp kq kr bx" style="color: #292929;"><span>最后的话</span></h1> 
+      <p class="iz ja fp jb b jc ks je jf jg kt ji jj jk ku jm jn jo kv jq jr js kw ju jv il fh bx" style="color: #292929;"><mark><span>唯一真正的错误是我们一无所获。</span></mark></p> 
+     </div> 
+    </div> 
+   </section> 
+  </div> 
+ </div> 
+</section>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/280656#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.HTTP_Blog" title="HTTP" href="https://developer.huaweicloud.com/tags/200074/blog_1">HTTP</a>
+        
+    </div>
+</div></div>

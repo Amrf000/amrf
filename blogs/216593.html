@@ -1,0 +1,77 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文参考:</p>
+<p><a>https://www.cnblogs.com/cthon/p/9357464.html</a></p>
+<p>两个相关的仓：</p>
+<p>首先编译和安装hiredis/redis-plus-plus</p>
+<pre>git clone https://github.com/redis/hiredis.git
+
+cd hiredis
+
+make
+
+make install</pre>
+<pre>git clone https://github.com/sewenew/redis-plus-plus.git
+
+cd redis-plus-plus
+
+mkdir compile
+
+cd compile
+
+cmake -DCMAKE_BUILD_TYPE=Release ..
+
+make
+
+make install
+
+cd ..</pre>
+<p>&nbsp;在自己的项目中使用，样例cmakelist.txt</p>
+<pre>cmake_minimum_required(VERSION 3.16)
+project(test1)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(test1 main.cpp)
+
+find_path(HIREDIS_HEADER hiredis)
+target_include_directories(test1 PUBLIC ${HIREDIS_HEADER})
+
+find_library(HIREDIS_LIB hiredis)
+target_link_libraries(test1  PRIVATE  ${HIREDIS_LIB})
+
+# &lt;------------ add redis-plus-plus dependency --------------&gt;
+# NOTE: this should be *sw* NOT *redis++*
+find_path(REDIS_PLUS_PLUS_HEADER sw)
+target_include_directories(test1 PUBLIC ${REDIS_PLUS_PLUS_HEADER})
+
+find_library(REDIS_PLUS_PLUS_LIB redis++)
+target_link_libraries(test1  PRIVATE  ${REDIS_PLUS_PLUS_LIB})
+
+set(THREADS_PREFER_PTHREAD_FLAG ON)
+find_package(Threads REQUIRED)
+target_link_libraries(test1 PRIVATE Threads::Threads)
+
+</pre>
+<p><br></p>
+<p>样例代码参考：<a rel="nofollow" href="https://github.com/sewenew/redis-plus-plus/blob/master/README.md">https://github.com/sewenew/redis-plus-plus/blob/master/README.md</a></p>
+<p>最后一段;</p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/216593#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.C++_Blog" title="C++" href="https://developer.huaweicloud.com/tags/200434/blog_1">C++</a>
+        
+    </div>
+</div></div>

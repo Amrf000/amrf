@@ -1,0 +1,107 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3><span style="font-size: 16px;">Redis与Memcached对比：</span><br></h3>
+<p>https://medium.com/@Alibaba_Cloud/redis-vs-memcached-in-memory-data-storage-systems-3395279b0941</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p>Redis支持服务端数据操作,并且支持更多的数据结构并支持更丰富的数据操作;如果需要缓存支持更复杂的结构和操作,Redis更好;</p></li> 
+ <li><p>Memcached对于简单的键值存储具有更高的内存利用率。但是，如果Redis采用哈希结构，则会比Memcached具有更高的利用率;</p></li> 
+ <li><p>Redis仅适用单核,而Memcached使用多个内核,平均来看,Redis在小数据存储方面拥有更高的性能,但存储100k数据以上时Memcached要更优;</p></li> 
+ <li><p>Redis支持字符串，哈希，列表，集合和有序集合</p></li> 
+ <li><p>Redis中，并非所有数据都在内存中进行。</p></li> 
+ <li><p>Redis支持数据持久性操作包括RDB快照和AOF日志。</p></li> 
+ <li><p>Memcached本身不支持分布式模式。您只能通过分布式算法（如Consistent Hash）在客户端上实现Memcached的分布式存储。</p></li> 
+</ul>
+<p>&nbsp; 与只能在客户端实现分布式存储的Memcached相比，Redis更喜欢在服务器端构建分布式存储。</p>
+<h3 style="white-space: normal;">Django中配置memcached：</h3>
+<p style="white-space: normal;">https://medium.com/@netfluff/memcached-for-django-ecedcb74a06d</p>
+<ul class=" list-paddingleft-2" style="width: 1104.08px; white-space: normal;"> 
+ <li><p>系统设置</p></li> 
+</ul>
+<pre class="brush:html;toolbar:false">memcached.exe&nbsp;-d&nbsp;install&nbsp;&nbsp;|&nbsp;sudo&nbsp;apt-get&nbsp;install&nbsp;memcached
+memcached.exe&nbsp;-d&nbsp;start&nbsp;&nbsp;&nbsp;&nbsp;|
+-------------------------------------------------------
+pip&nbsp;install&nbsp;python-memcached</pre>
+<ul class=" list-paddingleft-2" style="width: 1104.08px; white-space: normal;"> 
+ <li><p>Django设置</p></li> 
+</ul>
+<p style="white-space: normal;"># settings.py</p>
+<pre class="brush:html;toolbar:false">CACHES&nbsp;=&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;'default':&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'BACKEND':&nbsp;'django.core.cache.backends.memcached.MemcachedCache',
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'LOCATION':&nbsp;'127.0.0.1:11211',
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre>
+<pre class="brush:python;toolbar:false">from&nbsp;django.core.cache&nbsp;import&nbsp;cache
+def&nbsp;my_view(request):
+&nbsp;&nbsp;&nbsp;&nbsp;cache_key&nbsp;=&nbsp;'my_unique_key'&nbsp;#&nbsp;needs&nbsp;to&nbsp;be&nbsp;unique
+&nbsp;&nbsp;&nbsp;&nbsp;cache_time&nbsp;=&nbsp;86400&nbsp;#&nbsp;time&nbsp;in&nbsp;seconds&nbsp;for&nbsp;cache&nbsp;to&nbsp;be&nbsp;valid
+&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;cache.get(cache_key)&nbsp;#&nbsp;returns&nbsp;None&nbsp;if&nbsp;no&nbsp;key-value&nbsp;pair
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;not&nbsp;data:
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;my_service&nbsp;=&nbsp;Service()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data&nbsp;=&nbsp;service.get_data()
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;cache.set(cache_key,&nbsp;data,&nbsp;cache_time)
+return&nbsp;JsonResponse(data,&nbsp;safe=False)</pre>
+<p style="white-space: normal;"><br></p>
+<h3 style="white-space: normal;">Openresty中memcached使用：</h3>
+<p style="white-space: normal;">https://github.com/openresty/lua-resty-memcached</p>
+<h3 style="white-space: normal;">使用OpenResty实现流控：</h3>
+<p style="white-space: normal;">https://www.nosuchfield.com/2019/07/04/Flow-control-using-OpenResty/</p>
+<h3 style="white-space: normal;">win7 安装Memcache：</h3>
+<p style="white-space: normal;">https://blog.csdn.net/Alex_Best/article/details/5802294</p>
+<h3 style="white-space: normal;">Memcached和Memcache安装：</h3>
+<p style="white-space: normal;">https://blog.csdn.net/LANGZI7758521/article/details/86583646</p>
+<h3>Redis总结:</h3>
+<p>https://zhuanlan.zhihu.com/p/54513277</p>
+<p>memcached命令参考:</p>
+<p>https://www.runoob.com/memcached/</p>
+<h3>SpringBoot中使用Redis缓存：</h3>
+<p>https://blog.csdn.net/u014449560/article/details/82807880</p>
+<h3>在共享内存实现 Redis（上）</h3>
+<p>https://cloud.tencent.com/developer/article/1005881</p>
+<h3>MongoDB和redis的区别,mmap</h3>
+<p>https://blog.csdn.net/fanlei5458/article/details/81005798</p>
+<p>https://www.jianshu.com/p/2b523fbee36f</p>
+<p>https://stackoverflow.com/questions/5400163/when-to-redis-when-to-mongodb</p>
+<h3>mongodb，redis，mysql 简要对比</h3>
+<p>https://www.cnblogs.com/lovychen/p/5613986.html</p>
+<h3>使用node存储图片到mongodb</h3>
+<p>https://medium.com/@alvenw/how-to-store-images-to-mongodb-with-node-js-fb3905c37e6d</p>
+<h3>MongoDB启动配置：</h3>
+<p>https://www.jianshu.com/p/f179ce608391</p>
+<h3>openresty操作mongodb：</h3>
+<p>https://www.cnblogs.com/tm2015/p/7505438.html</p>
+<p>OpenResty中使用Lua的MongoDB库，使用连接池节省连接认证时间</p>
+<p>https://renqiang.xyz/2016/12/24/OpenResty%E4%B8%AD%E4%BD%BF%E7%94%A8Lua%E7%9A%84MongoDB%E5%BA%93%EF%BC%8C%E4%BD%BF%E7%94%A8%E8%BF%9E%E6%8E%A5%E6%B1%A0%E8%8A%82%E7%9C%81%E8%BF%9E%E6%8E%A5%E8%AE%A4%E8%AF%81%E6%97%B6%E9%97%B4/</p>
+<h3>Mongodb基本语法</h3>
+<p>https://juejin.im/post/5c68cbfa6fb9a049e2328b4e</p>
+<h3>mongodb基本语法归纳</h3>
+<p>https://www.jianshu.com/p/d7dad6dfe3c6</p>
+<h3>mongo数据库的各种查询语句示例</h3>
+<p>https://blog.csdn.net/qq_27093465/article/details/51700435</p>
+<h3>MongoDB mapreduce介绍</h3>
+<p>https://medium.com/@mallikarjuna91/mongodb-mapreduce-introduction-649f8533f509</p>
+<h3>MongoDB mapreduce速度提升</h3>
+<p>https://www.oschina.net/translate/how-to-speed-up-mongodb-map-reduce-by-20x</p>
+<h3>MongoDB中MapReduce介绍与使用</h3>
+<p>https://www.cnblogs.com/chenpingzhao/p/7913247.html</p>
+<h3>Mongodb高级篇-MapReduce</h3>
+<p>https://www.jianshu.com/p/5a24629e1126</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/170636#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

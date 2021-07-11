@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>相关介绍的文章很多：</p>
+<pre>https://blog.csdn.net/stpeace/article/details/61622214
+https://blog.csdn.net/justheretobe/article/details/52986461
+https://blog.csdn.net/justheretobe/article/details/52986461
+https://blog.csdn.net/u013457167/article/details/80150413
+https://stackoverflow.com/questions/5134891/how-do-i-use-valgrind-to-find-memory-leaks</pre>
+<p>对于ut用例可以采用如下的命令形式检测特定用例的内存泄露情况:</p>
+<p>valgrind --tool=memcheck --leak-check=no --xml=yes --xml-file=valgrind.xml ./utcase --gtest_catch_exceptions=1 --gtest_filter=xxx.yyy</p>
+<p>输出的结果xml中会分组显示各种类型的错误，以及对应的源文件和行号;</p>
+<p>/------------------------------------------------------------------------------/</p>
+<h3 class="title-article" style="color: #222226;">valgrind运行错误</h3>
+<p><span style="color: #111111; text-align: left;">valgrind: failed to start tool 'memcheck' for platform 'amd64-linux': No such file or directory</span></p>
+<p><span style="color: #111111; text-align: left;">出来处理方案：</span></p>
+<p><span style="color: #111111;">vi ~/.bashrc</span></p>
+<p><span style="color: #111111;">添加 export VALGRIND_LIB=/usr/local/lib/valgrind</span></p>
+<p><span style="color: #111111;">source <span style="color: #111111;">~/.bashrc</span></span></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/194900#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.C++_Blog" title="C++" href="https://developer.huaweicloud.com/tags/200434/blog_1">C++</a>
+        
+    </div>
+</div></div>

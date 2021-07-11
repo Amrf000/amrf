@@ -1,0 +1,38 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp; &nbsp; &nbsp; &nbsp;</p>
+<pre class="brush:cpp;toolbar:false">void&nbsp;encrypt(std::vector&lt;char&gt;&amp;&nbsp;msg,std::string&nbsp;const&amp;&nbsp;key)
+{
+&nbsp;&nbsp;&nbsp;&nbsp;if(!key.size())
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(std::string::size_type&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;msg.size();&nbsp;++i)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg[i]&nbsp;^=&nbsp;key[i%key.size()];
+&nbsp;&nbsp;&nbsp;&nbsp;return;
+}</pre>
+<p>需要注意的是std::ios_base::binary输入输出以及约定好是否加密bom头;</p>
+<p>参考:</p>
+<p><a>http://www.cplusplus.com/forum/windows/128374/</a></p>
+<p><a>http://www.cplusplus.com/articles/Ly86b7Xj/</a></p>
+<p><a><br></a></p>
+<p><a>引申阅读：</a></p>
+<p><a></a><a></a></p>
+<h1 class="postTitle" style="font-size: 14.7px; margin-bottom: 10px; color: rgb(75, 75, 75); font-family: Verdana, Geneva, Arial, Helvetica, sans-serif; white-space: normal;"><a class="postTitle2" style="text-decoration-line: none; color: rgb(26, 139, 200);">加盐密码哈希：如何正确使用</a>&nbsp;<a style="font-family: sans-serif; font-size: 16px;">https://www.cnblogs.com/zhangxiaolei521/p/5814598.html</a></h1>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/165017#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

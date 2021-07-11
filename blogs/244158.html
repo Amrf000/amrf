@@ -1,0 +1,59 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>背景:</h3>
+<p>最近要看一些网页中的教程文档,字比较多,看一会就走神了,所以想能不能改成像头条的有声读物的那种效果,但是朗读女和Read Aloud这类工具听着又不是很舒服,</p>
+<p>所以就考虑采用下面的调用模拟器中的讯飞有声的方式;</p>
+<h3>第一步:</h3>
+<p>第一个步参考下面的帖子:</p>
+<p><a>https://zhuanlan.zhihu.com/p/99883794</a></p>
+<p><a>https://www.jianshu.com/p/01f914e3fb82</a></p>
+<p>讯飞有声选择稍微就一些的版本,我测试使用的"<span style="color: #444444;">讯飞有声2.3.3033",关于"立即朗读"的按钮坐标,我用getevent命令发现无法获得预期的结果回显,</span></p>
+<p><span style="color: #444444;">就使用夜神的操作录制功能,导出查找相应的坐标,我这里找到的是688 928;</span><span style="color: #444444;"></span></p>
+<p><span style="color: #444444;">模拟器分辨率设置如下:</span></p>
+<p><span style="color: #444444;"><img class="mce_image" id="images_161357097634761" src="https://bbs-img.huaweicloud.com/blogs/img/1613570977609090807.png"></span></p>
+<p><span style="color: #444444;">前面的过程完成之后,已经可以在pc上复制之后,运行脚本,模拟器完成朗读的功能;</span></p>
+<h3><span style="color: #444444;">第二步:</span></h3>
+<p><span style="color: #444444;">为了更方便的使用这个功能,我希望在chrome浏览器中,选择文本,右键调用朗读,有类似的朗读插件,例如Read ALoud插件,</span></p>
+<p><span style="color: #444444;">那么只要改造一下这个插件就可以了,将它的ReadText函数改为触发我们的调用模拟器里的讯飞有声朗读即可;</span></p>
+<h3><span style="color: #444444;">附件说明:</span></h3>
+<p>ReadAloud_1.29.0 --- 修改过后的ReadAloud插件,解压后,需要在chrome扩展程序-打开开发者模式--加载已解压的扩展程序-选择解压后的文件夹,完成扩展加载;</p>
+<p>ReadText--- 调用讯飞有声的本地python服务,使用本地25798端口,post请求触发翻译过程;</p>
+<h3><span style="color: #444444;"></span><br></h3>
+<p><span style="color: #444444;"></span><br></p>
+<p><span style="color: #444444;"></span><br></p>
+<p><span style="color: #444444;"></span><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="40a246c2681b46df93be60cd65786286" href="/blogs/attachment?id=40a246c2681b46df93be60cd65786286" title="ReadAloud_1.39.0_0.zip">ReadAloud_1.39.0_0.zip</a>
+                <span class="attSize">293.31KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="8137d5fe86064ff3a71f5cb6a25b60b6" href="/blogs/attachment?id=8137d5fe86064ff3a71f5cb6a25b60b6" title="ReadText.zip">ReadText.zip</a>
+                <span class="attSize">2.16KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/244158#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

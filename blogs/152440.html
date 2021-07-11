@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>GET跨域处理</p></li></ul><pre class="brush:java;toolbar:false">gmux.HandleFunc("/version",&nbsp;func(w&nbsp;http.ResponseWriter,&nbsp;r&nbsp;*http.Request)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Set("Access-Control-Allow-Origin",&nbsp;"*")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//允许访问所有域
+&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Add("Access-Control-Allow-Headers",&nbsp;"X-Requested-With,&nbsp;Content-Type,Origin,&nbsp;Authorization,&nbsp;Accept,&nbsp;Client-Security-Token,&nbsp;Accept-Encoding,&nbsp;X-Auth-Token,&nbsp;content-type")&nbsp;//header的类型
+&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Set("content-type",&nbsp;"application/json")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//返回数据格式是json
+&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Add("Access-Control-Allow-Methods","GET,&nbsp;POST,&nbsp;PUT,&nbsp;PATCH,&nbsp;POST,&nbsp;DELETE,&nbsp;OPTIONS");
+
+&nbsp;&nbsp;&nbsp;&nbsp;fmt.Fprint(w,&nbsp;"{\"version\":\"v1.2\"}")
+}).Methods("GET")</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>POST情况下的处理使用axios时需要注意OPTIONS请求的情况</p></li></ul><pre class="brush:java;toolbar:false">gmux.HandleFunc("/xxx",&nbsp;func(w&nbsp;http.ResponseWriter,&nbsp;r&nbsp;*http.Request)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Set("Access-Control-Allow-Origin",&nbsp;"*")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Add("Access-Control-Allow-Headers",&nbsp;"X-Requested-With,&nbsp;Content-Type,Origin,&nbsp;Authorization,&nbsp;Accept,&nbsp;Client-Security-Token,&nbsp;Accept-Encoding,&nbsp;X-Auth-Token,&nbsp;content-type")&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Set("content-type",&nbsp;"application/json")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w.Header().Add("Access-Control-Allow-Methods","GET,&nbsp;POST,&nbsp;PUT,&nbsp;PATCH,&nbsp;POST,&nbsp;DELETE,&nbsp;OPTIONS");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;r.Method&nbsp;==&nbsp;"OPTIONS"&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;r.Header.Get("Content-Type")&nbsp;!=&nbsp;""&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value,&nbsp;_&nbsp;:=&nbsp;header.ParseValueAndParams(r.Header,&nbsp;"Content-Type")
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;value&nbsp;!=&nbsp;"application/json"&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;msg&nbsp;:=&nbsp;"Content-Type&nbsp;header&nbsp;is&nbsp;not&nbsp;application/json"
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http.Error(w,&nbsp;msg,&nbsp;http.StatusUnsupportedMediaType)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;r.Body&nbsp;=&nbsp;http.MaxBytesReader(w,&nbsp;r.Body,&nbsp;1048576)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b,&nbsp;err&nbsp;:=&nbsp;ioutil.ReadAll(r.Body)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;defer&nbsp;r.Body.Close()
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("b&nbsp;is&nbsp;null");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;http.Error(w,&nbsp;err.Error(),&nbsp;500)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//var&nbsp;data&nbsp;ExecBat
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//err&nbsp;=&nbsp;json.Unmarshal(b,&nbsp;&amp;data)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println("json.Unmarshal");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;http.Error(w,&nbsp;err.Error(),&nbsp;500)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;return
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//code,&nbsp;err&nbsp;:=&nbsp;base64.StdEncoding.DecodeString(data.Code)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;fmt.Fprint(w,"error:",&nbsp;err)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}).Methods("POST","OPTIONS")</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>静态文件的处理</p></li></ul><pre class="brush:java;toolbar:false">dir,&nbsp;err&nbsp;:=&nbsp;filepath.Abs(filepath.Dir(os.Args[0]))
+if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;fmt.Println(err)
+}
+gmux.PathPrefix("/static/").Handler(http.StripPrefix("/static/",&nbsp;http.FileServer(http.Dir(dir+"\\static"))))
+
+gmux.HandleFunc("/",&nbsp;func(w&nbsp;http.ResponseWriter,&nbsp;r&nbsp;*http.Request)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;http.ServeFile(w,&nbsp;r,&nbsp;dir+"\\index.html")
+}).Methods("GET")</pre><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/152440#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

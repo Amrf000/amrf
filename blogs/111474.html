@@ -1,0 +1,57 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文:</p><p><a rel="nofollow" href="https://blog.csdn.net/dawin_2008/article/details/52382237">https://blog.csdn.net/dawin_2008/article/details/52382237</a> </p><h3 style="font-family:'Microsoft YaHei';white-space:normal;">CAFFE+Ubuntu14.04LTS+CUDA7.5+cuDNN+OpenCV3.0+OpenBLAS+Anaconda+Matlab R2014a</h3><h3 class="hi-blog-personal-detail-title-cont" style="margin:15px 0px 10px;padding:0px;color:rgb(51,51,51);font-size:26px;font-family:'Microsoft YaHei', Arial, sans-serif;white-space:normal;background-color:rgb(255,255,255);"><span>Ubuntu + Nvidia GPU + Docker</span></h3><p>1、GPU驱动安装</p><p>见我的CSDN博客：blog.csdn.net/dawin_2008/article/details/52382237</p><p>CUDA和cudnn安装部分。</p><p>2、Docker和nvidia-docker安装</p><p>Docker安装：</p><p>-Powershell 代码</p><p>sudo gedit /etc/apt/apt.conf</p><p>底部添加如下代理信息：</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">Acquire::http::Proxy&nbsp;"http://10.136.214.14:3128";
+Acquire::https::Proxy&nbsp;"http://10.136.214.14:3128";
+Acquire::https::Verify-Peer&nbsp;"false";</pre><p>保存，执行:</p><p>-Powershell 代码</p><p>source /etc/apt/apt.conf</p><p>创建docker-gpg，见附件。</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">sudo&nbsp;apt-key&nbsp;add&nbsp;docker-gpg</pre><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">add-apt-repository&nbsp;\
+"deb&nbsp;[arch=amd64]&nbsp;https://download.docker.com/linux/ubuntu&nbsp;\
+$(lsb_release&nbsp;-cs)&nbsp;\
+stable"</pre><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">sudo&nbsp;apt-get&nbsp;update
+sudo&nbsp;apt-get&nbsp;install&nbsp;-y&nbsp;apt-transport-https&nbsp;ca-certificates&nbsp;curl&nbsp;software-properties-common&nbsp;python-pip
+sudo&nbsp;apt-get&nbsp;install&nbsp;-y&nbsp;"docker-ce=18.03.1~ce-0~ubuntu"</pre><p>其中docker-ce可选，根据具体情况选择。</p><p>Nvidia-docker安装：</p><p>proxy设置，添加proxy地址</p><p>-Powershell 代码</p><p>sudo gedit ~/.bashrc</p><p>在文件底部添加</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">export&nbsp;http_proxy=http://10.136.214.14:3128
+export&nbsp;https_proxy=http://10.136.214.14:3128
+export&nbsp;GIT_SSL_NO_VERIFY=1</pre><p>source一下</p><p>-Powershell 代码</p><p>source ~/.bashrc</p><p>接着，执行以下命令：</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">curl&nbsp;-s&nbsp;-L&nbsp;https://nvidia.github.io/nvidia-docker/gpgkey&nbsp;|&nbsp;\
+apt-key&nbsp;add&nbsp;-
+distribution=$(.&nbsp;/etc/os-release;echo&nbsp;$ID$VERSION_ID)
+curl&nbsp;-s&nbsp;-L&nbsp;https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list&nbsp;|&nbsp;\
+tee&nbsp;/etc/apt/sources.list.d/nvidia-docker.list
+apt-get&nbsp;update</pre><p># Install nvidia-docker2 and reload the Docker daemon configuration</p><p>-Powershell 代码</p><p>sudo apt-get install -y nvidia-docker2</p><p>-Powershell 代码</p><p>sudo gedit /etc/docker/daemon.json</p><p>在daemon.json文件添加：</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">{
+"graph":&nbsp;"/data/docker",
+"insecure-registries":&nbsp;["0.0.0.0/0"],
+"runtimes":&nbsp;{
+"nvidia":&nbsp;{
+"path":&nbsp;"/usr/bin/nvidia-container-runtime",
+"runtimeArgs":&nbsp;[]
+}
+}
+}</pre><p>-Powershell 代码</p><p>sudo gedit /lib/systemd/system/docker.service</p><p>在docker.service添加：</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">#&nbsp;BEGIN&nbsp;ANSIBLE&nbsp;MANAGED&nbsp;BLOCK
+Environment="HTTP_PROXY=http://10.136.214.14:3128"
+Environment="HTTPS_PROXY=http://10.136.214.14:3128"
+Environment="NO_PROXY=rnd-dockerhub.huawei.com,127.0.0.1,10.136.214.13"
+#&nbsp;END&nbsp;ANSIBLE&nbsp;MANAGED&nbsp;BLOCK</pre><p>并执行以下命令：</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">systemctl&nbsp;daemon-reload
+systemctl&nbsp;enable&nbsp;docker
+systemctl&nbsp;start&nbsp;docker</pre><p>验证是否正确安装：</p><p># Test nvidia-smi with the latest official CUDA image</p><p>docker run --runtime=nvidia --rm nvidia/cuda:9.0-base nvidia-smi</p><p>其中报错解决参考：</p><p>www.jianshu.com/p/95e397570896</p><p>3、配置全能深度学习框架群deepo</p><p>参考github.com/ufoym/deepo#Installation</p><p>-Html 代码</p><p>python</p><p>-Powershell 代码</p><pre class="brush:java;toolbar:false">import&nbsp;tensorflow
+import&nbsp;sonnet
+import&nbsp;torch
+import&nbsp;keras
+import&nbsp;mxnet
+import&nbsp;cntk
+import&nbsp;chainer
+import&nbsp;theano
+import&nbsp;lasagne
+import&nbsp;caffe
+import&nbsp;caffe2</pre><p>全能的deepo全家桶，你值得拥有！</p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/111474#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

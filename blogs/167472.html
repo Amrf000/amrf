@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>仓地址:</p>
+<p><a>https://github.com/openresty/lua-resty-mysql</a></p>
+<p>在ngixn.conf http段中添加lua_package_path "???/lua-resty-mysql/lib?.lua;;";</p>
+<p>参考仓readme修改lua文件,其中数据库的相关连接信息后,执行nginx.exe -s reload</p>
+<p>-----------------------------------------------<br></p>
+<p>测试过程中出现http响应中文乱码的现象,</p>
+<p>数据库设置的编码是utf-8,</p>
+<p>通过修改lua文件编码为utf-8并且增加设置</p>
+<p>ngx.header.content_type="application/json;charset=utf8"</p>
+<p>中文即不再乱码;</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/167472#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

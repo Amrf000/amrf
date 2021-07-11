@@ -1,0 +1,124 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>背景说明:</h3><p>前面有个博客提到：</p><p><a href="https://bbs.huaweicloud.com/blogs/1736e75674b111eab759fa163e330718">https://bbs.huaweicloud.com/blogs/1736e75674b111eab759fa163e330718</a></p><p>这几天就把这个想法实现了一下,<br></p><p>测试的目标帖子是:https://zhuanlan.zhihu.com/p/49468787,</p><p>由于zhuanlan.zhihu.com也不在白名单，所以访问其快照地址</p><p><a rel="nofollow" href="https://webcache.googleusercontent.com/search?q=cache:8zRJ_LpHVaAJ:https://zhuanlan.zhihu.com/p/49468787+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://webcache.googleusercontent.com/search?q=cache:8zRJ_LpHVaAJ:https://zhuanlan.zhihu.com/p/49468787+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p>然后可以发现形如"*://*.zhimg.com/*"的图片域也是无法访问的,</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p><strong style="white-space:normal;">开启插件和转发服务前</strong><br></p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1586401121705430.png" title="1586401121705430.png" alt="image.png" class="localImage"></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p><strong>开启插件和转发服务后</strong></p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1586401008502667.png" title="1586401008502667.png" alt="image.png" class="localImage"></p><h3>chrome浏览器插件部分</h3><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>background.js</p></li></ul><pre class="brush:js;toolbar:false">chrome.webRequest.onBeforeRequest.addListener(
+	function(details)&nbsp;{
+		return&nbsp;{
+			redirectUrl:&nbsp;"http://127.0.0.1:8099/search?q="&nbsp;+&nbsp;details.url&nbsp;+&nbsp;"&amp;tbm=isch"
+		};
+	},&nbsp;{
+		urls:&nbsp;[
+			"*://*.zhimg.com/*",
+		],
+		types:&nbsp;["main_frame",&nbsp;"sub_frame",&nbsp;"stylesheet",&nbsp;"script",&nbsp;"image",&nbsp;"object",&nbsp;"xmlhttprequest",&nbsp;"other"]
+	},&nbsp;["blocking"]
+);</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>content.js</p></li></ul><pre class="brush:js;toolbar:false">'use&nbsp;strict';
+
+(function()&nbsp;{
+&nbsp;&nbsp;var&nbsp;tags&nbsp;=&nbsp;document.getElementsByTagName('noscript');
+
+&nbsp;&nbsp;for&nbsp;(var&nbsp;i&nbsp;=&nbsp;tags.length-1;&nbsp;i&nbsp;&gt;=0&nbsp;;&nbsp;i--)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(tags[i].firstChild)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;newDiv&nbsp;=&nbsp;document.createElement('div');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;newDiv.innerHTML&nbsp;=&nbsp;tags[i].innerHTML;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tags[i].parentNode.removeChild(tags[i].nextSibling);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tags[i].parentNode.replaceChild(newDiv,&nbsp;tags[i]);
+&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;}
+})();</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>manifest.json</p></li></ul><pre class="brush:js;toolbar:false">&nbsp;&nbsp;...
+&nbsp;&nbsp;"background":&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;"scripts":&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"background.js"
+&nbsp;&nbsp;&nbsp;&nbsp;]
+&nbsp;&nbsp;},
+&nbsp;&nbsp;"content_scripts":&nbsp;[{
+&nbsp;&nbsp;&nbsp;&nbsp;"matches":&nbsp;["*://webcache.googleusercontent.com/*"],
+&nbsp;&nbsp;&nbsp;&nbsp;"js":&nbsp;["content.js"],
+&nbsp;&nbsp;&nbsp;&nbsp;"run_at":&nbsp;"document_end"
+&nbsp;}],
+&nbsp;&nbsp;"permissions":&nbsp;[
+&nbsp;&nbsp;&nbsp;&nbsp;"&lt;all_urls&gt;",
+&nbsp;&nbsp;&nbsp;&nbsp;"webRequest",
+&nbsp;&nbsp;&nbsp;&nbsp;"webNavigation",
+&nbsp;&nbsp;&nbsp;&nbsp;"webRequestBlocking",
+&nbsp;&nbsp;&nbsp;&nbsp;"browsingData"
+&nbsp;&nbsp;]
+&nbsp;&nbsp;...</pre><h3>请求转发部分</h3><pre class="brush:cpp;toolbar:false">package&nbsp;main
+import&nbsp;(
+	"fmt"
+	"github.com/gorilla/mux"
+	"io"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"regexp"
+	"strings"
+)
+func&nbsp;get_google_img(res&nbsp;http.ResponseWriter,query&nbsp;string)&nbsp;&nbsp;{
+	url1&nbsp;:=&nbsp;"https://www.google.com/search?q="&nbsp;+&nbsp;query&nbsp;+&nbsp;"&amp;tbm=isch"
+	os.Setenv("HTTP_PROXY",&nbsp;"http://uid:pass@proxy.domain.com:port")
+	resq,&nbsp;err&nbsp;:=&nbsp;http.NewRequest("GET",&nbsp;url1,&nbsp;nil)
+	resq.Header.Set("user-agent","Mozilla/5.0&nbsp;(Windows&nbsp;NT&nbsp;6.1;&nbsp;WOW64)&nbsp;AppleWebKit/537.36&nbsp;(KHTML,&nbsp;like&nbsp;Gecko)&nbsp;Chrome/80.0.3987.132&nbsp;Safari/537.36")
+	client&nbsp;:=&nbsp;&amp;http.Client{}
+	resp,&nbsp;err&nbsp;:=&nbsp;client.Do(resq)
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatalln(err)
+	}
+	defer&nbsp;resp.Body.Close()
+	if&nbsp;resp.StatusCode&nbsp;!=&nbsp;200&nbsp;{
+		log.Fatalf("status&nbsp;code&nbsp;error:&nbsp;%d&nbsp;%s",&nbsp;resp.StatusCode,&nbsp;resp.Status)
+	}
+	body,err&nbsp;:=&nbsp;ioutil.ReadAll(resp.Body)
+	if&nbsp;err&nbsp;!=nil&nbsp;{
+		log.Fatalln(err)
+	}
+	r&nbsp;:=&nbsp;regexp.MustCompile("(https://encrypted-tbn0.gstatic.com/[^\"]+)")
+	matches&nbsp;:=&nbsp;r.FindAllStringSubmatch(string(body),&nbsp;-1)
+	decoded&nbsp;:=&nbsp;strings.ReplaceAll(matches[0][1],"\\u003d","=")
+	decoded&nbsp;=&nbsp;strings.ReplaceAll(decoded,"\\u0026","&amp;")
+	resq,&nbsp;err&nbsp;=&nbsp;http.NewRequest("GET",&nbsp;decoded,&nbsp;nil)
+	reqImg,&nbsp;err&nbsp;:=&nbsp;client.Do(resq)
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatalln(err)
+	}
+	if&nbsp;reqImg.StatusCode&nbsp;!=&nbsp;200&nbsp;{
+		log.Fatalf("status&nbsp;code&nbsp;error:&nbsp;%d&nbsp;%s",&nbsp;reqImg.StatusCode,&nbsp;reqImg.Status)
+	}
+	res.Header().Set("Content-Length",&nbsp;fmt.Sprint(reqImg.ContentLength))
+	res.Header().Set("Content-Type",&nbsp;reqImg.Header.Get("Content-Type"))
+	if&nbsp;_,&nbsp;err&nbsp;=&nbsp;io.Copy(res,&nbsp;reqImg.Body);&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		log.Fatalln(err)
+	}
+	reqImg.Body.Close()
+}
+func&nbsp;main()&nbsp;{
+	gmux&nbsp;:=&nbsp;mux.NewRouter().StrictSlash(true)
+	gmux.HandleFunc("/search",&nbsp;func(w&nbsp;http.ResponseWriter,&nbsp;r&nbsp;*http.Request)&nbsp;{
+		w.Header().Set("Access-Control-Allow-Origin",&nbsp;"*")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		w.Header().Add("Access-Control-Allow-Headers",&nbsp;"X-Requested-With,&nbsp;Content-Type,Origin,&nbsp;Authorization,&nbsp;Accept,&nbsp;Client-Security-Token,&nbsp;Accept-Encoding,&nbsp;X-Auth-Token,&nbsp;content-type")&nbsp;
+		w.Header().Set("content-type",&nbsp;"application/json")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		w.Header().Add("Access-Control-Allow-Methods",&nbsp;"GET,&nbsp;POST,&nbsp;PUT,&nbsp;PATCH,&nbsp;POST,&nbsp;DELETE,&nbsp;OPTIONS")
+		q&nbsp;:=&nbsp;r.URL.Query().Get("q")
+		get_google_img(w,q)
+	}).Methods("GET")
+	//go&nbsp;func()&nbsp;{
+		http.ListenAndServe(":8099",&nbsp;gmux)
+	//}()
+}</pre><h3>小结</h3><p>原来考虑采用chrome.webRequest.replaceStringOccurred,那样适用范围会大些不用一个个适配,但是这个阶段redirectUrl已经不管用了,所以就改成现在的实现;</p><p>此外chrome.webRequest.onBeforeRequest的回调也不方便返回异步,所以在background中fetch的方案也有问题;</p><p>直接在content.js中fetch需要插件处理跨域问题,综合来说现在的方案 写法还是要简单的多;</p><p>----只在内网有些用，外网几本没大用.</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/158429#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

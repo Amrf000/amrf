@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">参考:<a rel="nofollow" href="https://blog.csdn.net/qq_32849357/article/details/82227344" style="padding:0px;margin:0px;list-style-type:none;color:rgb(18,108,168);border:0px;">https://blog.csdn.net/qq_32849357/article/details/82227344</a></p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">spring定时器在本地eclipse就只执行1次，放到服务器就执行2次。通过排查发现主要是由于项目被部署在服务器tomcat的webapps目录里，导致项目被tomcat初始化了2次，部署成功了2次，一次访问路径是项目名的，一次访问路径是/。而本地的eclipse项目部署在wptwebapps不在webapps里，webapps为tomcat默认目录，里面的war包会自动被解压，项目会自动被部署。</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">网上的解决办法是叫修改tomcat的server.xml，不让tomcat部署2次，但是解决办法都有些缺点。如 地址<a rel="nofollow" href="https://www.cnblogs.com/Syney/p/7678714.html" style="padding:0px;margin:0px;list-style-type:none;color:rgb(18,108,168);border:0px;">https://www.cnblogs.com/Syney/p/7678714.html</a></p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">实际中那个访问路径带项目名的不需要，，所以直接阻止它启动，这样项目就只成功启动了 1次，问题就可以解决。</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">那怎么阻止呢？ 在项目启动的时候，我们判断当前访问路径是/ 还是 项目名，如果是项目名的，我们就阻止它，制造一个异常让他创建bean的时候失败就可以阻止项目启动了。</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">阻止具体方法，创建一个bean，实现&nbsp;ServletContextAware 接口，当这个bean创建时，会自动调用setServletContext() ，在方法里我们判断下当前的项目访问路径是否为空或者是否为 / ，如果是，正常通过。如果不是，说明当前tomcat正在初始化访问路径为项目名的项目，所以我们要阻止它，，这时候抛出个运行异常，当前bean就会创建失败，这时候这个项目就会启动失败了。</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">上代码</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">由于我定时任务在CacheMapUtil里，所以直接在CacheMapUtil里实现ServletContextAware</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">总结 问题实际上是项目被tomcat部署成功2次，导致定时器有2个。本方法是直接干掉其中一个，只让tomcat成功部署一个。</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">缺点 访问路径为项目名部署被-干掉了，所以不能使用项目名访问</p><p style="padding:0px;margin-top:0px;margin-bottom:20px;list-style-type:none;line-height:1.8em;font-size:medium;white-space:normal;background-color:rgb(255,255,255);font-family:'Microsoft YaHei';">补充下，发现contextPath&nbsp;equals那里写错代码，应该是'/' 而不是'|'</p><pre class="brush:java;toolbar:false">import&nbsp;javax.servlet.ServletContext;
+import&nbsp;org.apache.log4j.Logger;
+import&nbsp;org.springframework.stereotype.Component;
+import&nbsp;org.springframework.web.context.ServletContextAware;
+@Component
+public&nbsp;class&nbsp;TwiceAware&nbsp;implements&nbsp;ServletContextAware
+{
+public&nbsp;final&nbsp;static&nbsp;Logger&nbsp;log4j&nbsp;=&nbsp;Logger.getLogger(TwiceAware.class);
+public&nbsp;void&nbsp;setServletContext(ServletContext&nbsp;servletContext)&nbsp;{
+String&nbsp;contextPath&nbsp;=&nbsp;servletContext.getContextPath();
+if("".equals(contextPath)&nbsp;||&nbsp;"|".equals(contextPath))&nbsp;{
+log4j.info("当前项目映射路径为:/");
+}else&nbsp;{
+throw&nbsp;new&nbsp;RuntimeException("为防止tomcat初始化2次，此次映射路径为"+contextPath);
+}
+}
+}</pre><pre class="brush:xml;toolbar:false">applicationContext.xml
+&lt;bean&nbsp;id="TwiceAware"&nbsp;class="common.utils.TwiceAware"&nbsp;lazy-init="false"&nbsp;/&gt;</pre><p><span style="color:rgb(0,176,80);">/*-------------------------------------------------------------------*/</span></p><p><span style="color:#00b050;"><span style="color:rgb(0,0,0);">又一次，发现@Scheduled同一个点执行了两次,还是和上面一样的原因和解决方法,表面现象就是Scheduled数据库操作死锁或者中间插入数据库时报重复主键，以前框架中并没有完全使用spring mvc的时候使用的上面的方案，后来框架升级后以为没有那样的问题了就注释掉了上面的代码了，eclipse测试时确实不会发生，需要war包为root.war的时候才会;(<a rel="nofollow" href="https://stackoverflow.com/questions/14242310/java-spring-scheduled-tasks-executing-twice">https://stackoverflow.com/questions/14242310/java-spring-scheduled-tasks-executing-twice</a>)</span></span></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/113493#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

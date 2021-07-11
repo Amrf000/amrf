@@ -1,0 +1,40 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>https://github.com/preboot/angularjs-webpack</p><p>https://www.npmjs.com/package/react-infinite-scroller</p><p>https://cassetterocks.github.io/react-infinite-scroller/</p><p>https://sroze.github.io/ngInfiniteScroll/</p><p>https://github.com/sroze/ngInfiniteScroll</p><p>https://www.bluepiit.com/blog/angularjs-infinite-scroll-pagination/</p><p>https://medium.com/%40charleeli/do-we-really-need-at-and-amp-bindings-in-angularjs-1dd65d99d2d9</p><p>https://medium.com/%40jdxcode/best-practices-for-building-angular-js-apps-266c1a4a6917</p><p>https://github.com/jdxcode/ng-async</p><p>https://github.com/thijsw/angular-medium-editor</p><p>https://yabwe.github.io/medium-editor/</p><p>https://yabwe.github.io/medium-editor/demo.html</p><p><span style="color:rgb(0,176,80);">/*--------------------------------分割线---------------------------*/</span></p><p>http://www.runoob.com/angularjs/angularjs-application.html</p><p>https://www.w3schools.com/angular/angular_htmldom.asp</p><pre class="brush:html;toolbar:false">&lt;div&nbsp;ng-app=""&gt;
+&nbsp;&nbsp;&lt;p&gt;Name:&nbsp;&lt;input&nbsp;type="text"&nbsp;ng-model="name"&gt;&lt;/p&gt;
+&nbsp;&nbsp;&lt;p&nbsp;ng-bind="name"&gt;&lt;/p&gt;
+&lt;/div&gt;</pre><p>ngularJS 通过 ng-directives 扩展了 HTML。</p><p>ng-app 指令定义一个 AngularJS 应用程序。</p><p>ng-model 指令把元素值（比如输入域的值）绑定到应用程序。</p><p>ng-bind 指令把应用程序数据绑定到 HTML 视图。</p><p><br></p><p>HTML5 允许扩展的（自制的）属性，以 data- 开头。</p><p>AngularJS 属性以 ng- 开头，但是您可以使用 data-ng- 来让网页对 HTML5 有效。</p><p><br></p><h3>AngularJS 指令</h3><p>ng-init 指令初始化 AngularJS 应用程序变量。</p><p><br></p><h3>AngularJS 表达式</h3><p>AngularJS 表达式写在双大括号内：{{ expression }}。</p><p>AngularJS 表达式把数据绑定到 HTML，这与 ng-bind 指令有异曲同工之妙。</p><p>AngularJS 将在表达式书写的位置"输出"数据。</p><p>AngularJS 表达式 很像 JavaScript 表达式：它们可以包含文字、运算符和变量。</p><p>实例 {{ 5 + 5 }} 或 {{ firstName + " " + lastName }}</p><p><br></p><p><br></p><h3>AngularJS 应用</h3><p>AngularJS 模块（Module） 定义了 AngularJS 应用。</p><p>AngularJS 控制器（Controller） 用于控制 AngularJS 应用。</p><p>ng-app指令指明了应用, ng-controller 指明了控制器。</p><pre class="brush:html;toolbar:false">&lt;div&nbsp;ng-app="myApp"&nbsp;ng-controller="myCtrl"&gt;
+&nbsp;
+名:&nbsp;&lt;input&nbsp;type="text"&nbsp;ng-model="firstName"&gt;&lt;br&gt;
+姓:&nbsp;&lt;input&nbsp;type="text"&nbsp;ng-model="lastName"&gt;&lt;br&gt;
+&lt;br&gt;
+姓名:&nbsp;{{firstName&nbsp;+&nbsp;"&nbsp;"&nbsp;+&nbsp;lastName}}
+&nbsp;
+&lt;/div&gt;
+&nbsp;
+&lt;script&gt;
+var&nbsp;app&nbsp;=&nbsp;angular.module('myApp',&nbsp;[]);
+app.controller('myCtrl',&nbsp;function($scope)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;$scope.firstName=&nbsp;"John";
+&nbsp;&nbsp;&nbsp;&nbsp;$scope.lastName=&nbsp;"Doe";
+});
+&lt;/script&gt;</pre><p><br></p><h3>AngularJS 过滤器</h3><p>过滤器可以使用一个管道字符（|）添加到表达式和指令中。</p><p><br></p><h3>AngularJS 服务(Service)</h3><p>AngularJS 中你可以创建自己的服务，或使用内建服务。</p><p>在 AngularJS 中，服务是一个函数或对象，可在你的 AngularJS 应用中使用。</p><p>AngularJS 内建了30 多个服务。</p><p><br></p><h3>AngularJS XMLHttpRequest</h3><p>$http 是 AngularJS 中的一个核心服务，用于读取远程服务器的数据。</p><p><br></p><h3>AngularJS 事件</h3><p>AngularJS 有自己的 HTML 事件指令。</p><p><br></p><h3>AngularJS API</h3><p><br></p><h3>AngularJS Bootstrap</h3><p>AngularJS 的首选样式表是 Twitter Bootstrap， Twitter Bootstrap 是目前最受欢迎的前端框架。</p><p><br></p><h3>AngularJS 包含</h3><p>在 AngularJS 中，你可以在 HTML 中包含 HTML 文件。</p><p>客户端包含</p><p>通过 JavaScript 有很多种方式可以在 HTML 中包含 HTML 文件。</p><p>通常我们使用 http 请求 (AJAX) 从服务端获取数据，返回的数据我们可以通过 使用 innerHTML 写入到 HTML 元素中。</p><p><br></p><p>跨域包含</p><p>默认情况下， ng-include 指令不允许包含其他域名的文件。</p><p>如果你需要包含其他域名的文件，你需要设置域名访问白名单：</p><p>此外，你还需要设置服务端允许跨域访问</p><p><br></p><h3>AngularJS 动画</h3><p>AngularJS 提供了动画效果，可以配合 CSS 使用。</p><p>AngularJS 使用动画需要引入 angular-animate.min.js 库。</p><p><br></p><h3>AngularJS 依赖注入</h3><p>wiki 上的解释是：依赖注入（Dependency Injection，简称DI）是一种软件设计模式，在这种模式下，一个或更多的依赖（或服务）被注入（或者通过引用传递）到一个独立的对象（或客户端）中，然后成为了该客户端状态的一部分。</p><p>该模式分离了客户端依赖本身行为的创建，这使得程序设计变得松耦合，并遵循了依赖反转和单一职责原则。与服务定位器模式形成直接对比的是，它允许客户端了解客户端如何使用该系统找到依赖</p><p>一句话 --- 没事你不要来找我，有事我会去找你。</p><p>AngularJS 提供很好的依赖注入机制。以下5个核心组件用来作为依赖注入：</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>value</p></li></ul><p>Value 是一个简单的 javascript 对象，用于向控制器传递值（配置阶段）：</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>factory</p></li></ul><p>factory 是一个函数用于返回值。在 service 和 controller 需要时创建。</p><p>通常我们使用 factory 函数来计算或返回值。</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>service</p></li><li><p>provider</p></li></ul><p>AngularJS 中通过 provider 创建一个 service、factory等(配置阶段)。</p><p>Provider 中提供了一个 factory 方法 get()，它用于返回 value/service/factory。</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>constant</p></li></ul><p>constant(常量)用来在配置阶段传递数值，注意这个常量在配置阶段是不可用的。</p><p><br></p><h3>AngularJS 路由</h3><p>本章节我们将为大家介绍 AngularJS 路由。</p><p>AngularJS 路由允许我们通过不同的 URL 访问不同的内容。</p><p>通过 AngularJS 可以实现多视图的单页 Web 应用（single page web application，SPA）。</p><p>通常我们的 URL 形式为 http://runoob.com/first/page，但在单页 Web 应用中 AngularJS 通过 #! + 标记 实现，例如：</p><p>http://runoob.com/#!/first</p><p>http://runoob.com/#!/second</p><p>http://runoob.com/#!/third</p><p>注意 Angular1.6 之前的版本是通过 # + 标记 实现路由。</p><p>当我们点击以上的任意一个链接时，向服务端请的地址都是一样的 (http://runoob.com/)。 因为 #! 号之后的内容在向服务端请求时会被浏览器忽略掉。 所以我们就需要在客户端实现 #! 号后面内容的功能实现。 AngularJS 路由就通过 #! + 标记 帮助我们区分不同的逻辑页面并将不同的页面绑定到对应的控制器上。</p><p>后续研究:</p><p><a rel="nofollow" href="https://ng-bootstrap.github.io/#/components/typeahead/examples">https://ng-bootstrap.github.io/#/components/typeahead/examples</a> </p><p><a rel="nofollow" href="https://angular-ui.github.io/bootstrap/#!%23accordion">https://angular-ui.github.io/bootstrap/#!#accordion</a></p><p><a rel="nofollow" href="https://blog.csdn.net/n_fly/article/details/52920384">https://blog.csdn.net/n_fly/article/details/52920384</a> </p><p><a rel="nofollow" href="https://github.com/beginor/learning-angular2">https://github.com/beginor/learning-angular2</a></p><p><a rel="nofollow" href="https://github.com/Hygens/UsersRegistrationSPA">https://github.com/Hygens/UsersRegistrationSPA</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/shenlei19911210/article/details/50848087">https://blog.csdn.net/shenlei19911210/article/details/50848087</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/watersevenmmfx/article/details/50327843">https://blog.csdn.net/watersevenmmfx/article/details/50327843</a> </p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/102651#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.AngularJS_Blog" title="AngularJS" href="https://developer.huaweicloud.com/tags/200264/blog_1">AngularJS</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.HTML_Blog" title="HTML" href="https://developer.huaweicloud.com/tags/200752/blog_1">HTML</a>
+        
+    </div>
+</div></div>

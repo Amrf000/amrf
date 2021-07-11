@@ -1,0 +1,59 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>在python中做一些小的用户交互输入输出时,场景特别简单的时候,我们可能就不是特别想引入wxpython/pyqt这样的图形框架,</p><p>那么这个时候python自带的tkinter就是个不错的选择;</p><p>下面是一个使用的小例子:</p><pre class="brush:python;toolbar:false">#&nbsp;-*-&nbsp;coding:&nbsp;cp936&nbsp;-*-
+
+import&nbsp;tkinter&nbsp;as&nbsp;tk
+
+def&nbsp;Exas():
+&nbsp;&nbsp;&nbsp;&nbsp;global&nbsp;root
+&nbsp;&nbsp;&nbsp;&nbsp;root.destroy()
+def&nbsp;center(win):
+&nbsp;&nbsp;&nbsp;&nbsp;"""
+&nbsp;&nbsp;&nbsp;&nbsp;centers&nbsp;a&nbsp;tkinter&nbsp;window
+&nbsp;&nbsp;&nbsp;&nbsp;:param&nbsp;win:&nbsp;the&nbsp;root&nbsp;or&nbsp;Toplevel&nbsp;window&nbsp;to&nbsp;center
+&nbsp;&nbsp;&nbsp;&nbsp;"""
+&nbsp;&nbsp;&nbsp;&nbsp;win.update_idletasks()
+&nbsp;&nbsp;&nbsp;&nbsp;width&nbsp;=&nbsp;win.winfo_width()
+&nbsp;&nbsp;&nbsp;&nbsp;frm_width&nbsp;=&nbsp;win.winfo_rootx()&nbsp;-&nbsp;win.winfo_x()
+&nbsp;&nbsp;&nbsp;&nbsp;win_width&nbsp;=&nbsp;width&nbsp;+&nbsp;2&nbsp;*&nbsp;frm_width
+&nbsp;&nbsp;&nbsp;&nbsp;height&nbsp;=&nbsp;win.winfo_height()
+&nbsp;&nbsp;&nbsp;&nbsp;titlebar_height&nbsp;=&nbsp;win.winfo_rooty()&nbsp;-&nbsp;win.winfo_y()
+&nbsp;&nbsp;&nbsp;&nbsp;win_height&nbsp;=&nbsp;height&nbsp;+&nbsp;titlebar_height&nbsp;+&nbsp;frm_width
+&nbsp;&nbsp;&nbsp;&nbsp;x&nbsp;=&nbsp;win.winfo_screenwidth()&nbsp;//&nbsp;2&nbsp;-&nbsp;win_width&nbsp;//&nbsp;2
+&nbsp;&nbsp;&nbsp;&nbsp;y&nbsp;=&nbsp;win.winfo_screenheight()&nbsp;//&nbsp;2&nbsp;-&nbsp;win_height&nbsp;//&nbsp;2
+&nbsp;&nbsp;&nbsp;&nbsp;win.geometry('{}x{}+{}+{}'.format(width,&nbsp;height,&nbsp;x,&nbsp;y))
+&nbsp;&nbsp;&nbsp;&nbsp;win.deiconify()
+def&nbsp;main():
+&nbsp;&nbsp;&nbsp;&nbsp;global&nbsp;root
+&nbsp;&nbsp;&nbsp;&nbsp;root&nbsp;=&nbsp;tk.Tk()
+&nbsp;&nbsp;&nbsp;&nbsp;root.title("InstagramBot")
+&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;root.geometry('180x100+50+50')
+&nbsp;&nbsp;&nbsp;&nbsp;portInput&nbsp;=&nbsp;tk.StringVar()
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;lblportInput&nbsp;=&nbsp;tk.Label(root,&nbsp;text&nbsp;=&nbsp;'端口:').grid(row&nbsp;=&nbsp;0,&nbsp;column&nbsp;=&nbsp;0,&nbsp;padx&nbsp;=&nbsp;0,&nbsp;pady&nbsp;=&nbsp;10)
+&nbsp;&nbsp;&nbsp;&nbsp;entportInput&nbsp;=&nbsp;tk.Entry(root,&nbsp;textvariable&nbsp;=&nbsp;portInput).grid(row&nbsp;=&nbsp;0,&nbsp;column&nbsp;=&nbsp;1)
+&nbsp;&nbsp;&nbsp;&nbsp;btn&nbsp;=&nbsp;tk.Button(root,&nbsp;text&nbsp;=&nbsp;'确定',&nbsp;command&nbsp;=&nbsp;Exas,&nbsp;fg='black',&nbsp;font='黑体&nbsp;12').grid(row&nbsp;=&nbsp;5,&nbsp;column&nbsp;=&nbsp;1)
+&nbsp;&nbsp;&nbsp;&nbsp;center(root)
+&nbsp;&nbsp;&nbsp;&nbsp;root.mainloop()
+&nbsp;&nbsp;&nbsp;&nbsp;portStr&nbsp;=&nbsp;portInput.get()
+&nbsp;&nbsp;&nbsp;&nbsp;print('===',portStr)
+
+if&nbsp;__name__&nbsp;==&nbsp;"__main__":
+&nbsp;&nbsp;&nbsp;&nbsp;main()</pre><p>参考:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1586759752813012888.png" title="1586759752813012888.png" alt="image.png"></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/54852395/using-entry-stringvar-and-intvar-with-tkinter-and-python3" style="white-space: normal;">https://stackoverflow.com/questions/54852395/using-entry-stringvar-and-intvar-with-tkinter-and-python3</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/50438182/user-input-in-dialog-box">https://stackoverflow.com/questions/50438182/user-input-in-dialog-box</a></p><p><a rel="nofollow" href="https://blog.csdn.net/wuxiushu/article/details/52515926">https://blog.csdn.net/wuxiushu/article/details/52515926</a></p><p><a rel="nofollow" href="https://blog.csdn.net/Eider1998/article/details/104725180">https://blog.csdn.net/Eider1998/article/details/104725180</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/3352918/how-to-center-a-window-on-the-screen-in-tkinter">https://stackoverflow.com/questions/3352918/how-to-center-a-window-on-the-screen-in-tkinter</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/9987624/how-to-close-a-tkinter-window-by-pressing-a-button">https://stackoverflow.com/questions/9987624/how-to-close-a-tkinter-window-by-pressing-a-button</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/17493855/python-3-3-tkinter-window-is-not-defined">https://stackoverflow.com/questions/17493855/python-3-3-tkinter-window-is-not-defined</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/lvxiuquan/archive/2012/07/09/2582437.html">https://www.cnblogs.com/lvxiuquan/archive/2012/07/09/2582437.html</a></p><p><a rel="nofollow" href="https://www.jianshu.com/p/6bc26b3ba6e5">https://www.jianshu.com/p/6bc26b3ba6e5</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/4041238/why-use-def-main">https://stackoverflow.com/questions/4041238/why-use-def-main</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/419163/what-does-if-name-main-do">https://stackoverflow.com/questions/419163/what-does-if-name-main-do</a></p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1586759675193022812.png" title="1586759675193022812.png" alt="image.png"></p><p><a rel="nofollow" href="https://blog.csdn.net/cc7756789w/article/details/46635383">https://blog.csdn.net/cc7756789w/article/details/46635383</a></p><p><a rel="nofollow" href="https://juejin.im/post/5b7ec76ce51d4538b149ffc0">https://juejin.im/post/5b7ec76ce51d4538b149ffc0</a></p><p><a rel="nofollow" href="https://blog.csdn.net/weixin_35640856/article/details/73614294">https://blog.csdn.net/weixin_35640856/article/details/73614294</a></p><p><a rel="nofollow" href="https://cloud.tencent.com/developer/article/1092206">https://cloud.tencent.com/developer/article/1092206</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/159083#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Python_Blog" title="Python" href="https://developer.huaweicloud.com/tags/200496/blog_1">Python</a>
+        
+    </div>
+</div></div>

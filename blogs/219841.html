@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>参考:http://www.shixinke.com/openresty/openresty-ngx-timer</p>
+<p>下面这段是利用ngx.timer.every每天9点25分触发，触发精度是60s;想了想,链接里面的时间的触发频率低一些,也许更好一点;</p>
+<pre>http {
+	init_worker_by_lua_block {
+         local delay = 60  -- in seconds
+         local interval_time = '0925'    -- 执行任务的时间点，格式可以随意，如02:00
+         local log = ngx.log
+         local ERR = ngx.ERR
+         local check
+
+         check = function(premature)
+             if not premature then
+             	local nowtime = os.date("%H%M")
+             	if nowtime == interval_time then
+             		log(ngx.ERR, ngx.today().." : create interval task success")
+             	end
+                -- log(ERR, "mm test mm test")
+             end
+         end
+
+         if 0 == ngx.worker.id() then
+             local ok, err = ngx.timer.every(delay, check)
+             if not ok then
+                 log(ERR, "failed to create timer: ", err)
+                 return
+             end
+         end
+    }
+  ...</pre>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/219841#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Lua_Blog" title="Lua" href="https://developer.huaweicloud.com/tags/200539/blog_1">Lua</a>
+        
+    </div>
+</div></div>

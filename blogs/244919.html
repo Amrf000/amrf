@@ -1,0 +1,61 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>将db数据结构复制到同库中的另外一张表（<a>https://stackoverflow.com/questions/876522/creating-a-copy-of-a-database-in-postgresql</a>、https://www.postgresqltutorial.com/postgresql-copy-database/）</p>
+<pre class="language-actionscript"><code>pg_dump production-db | psql test-db</code></pre>
+<p>列出用户（https://www.postgresqltutorial.com/postgresql-list-users/）</p>
+<pre class="language-sql"><code>SELECT u.usename AS "User name",
+  u.usesysid AS "User ID",
+  CASE WHEN u.usesuper AND u.usecreatedb THEN CAST('superuser, create
+database' AS pg_catalog.text)
+       WHEN u.usesuper THEN CAST('superuser' AS pg_catalog.text)
+       WHEN u.usecreatedb THEN CAST('create database' AS
+pg_catalog.text)
+       ELSE CAST('' AS pg_catalog.text)
+  END AS "Attributes"
+FROM pg_catalog.pg_user u
+ORDER BY 1;</code></pre>
+<p class="title-article" style="color: #222226;">配置文件pg_hba.conf配置、修改postgresql超级用户的密码 <a rel="nofollow" href="https://blog.csdn.net/skye1208/article/details/90406101">https://blog.csdn.net/skye1208/article/details/90406101</a></p>
+<p class="title-article" style="color: #222226;">如何退出psql 命令行 <a>https://stackoverflow.com/questions/9463318/how-to-exit-from-postgresql-command-line-utility-psql?rq=1</a></p>
+<pre class="language-actionscript"><code>Type \q and then press ENTER to quit psql.</code></pre>
+<p class="postTitle" style="color: #444444; text-align: left;">用户权限修改</p>
+<pre class="language-actionscript"><code>alter role username with superuser</code></pre>
+<p>pg_hba.conf的一般路径</p>
+<pre class="language-actionscript"><code>vi /etc/postgresql/版号/main/pg_hba.conf</code></pre>
+<p>例如配置一个可以远程访问的数据库，则在pg_hba.conf中添加</p>
+<pre class="language-actionscript"><code>host     数据库名  用户    0.0.0.0/0               md5</code></pre>
+<p>修改之后，一般可以这样使配置生效</p>
+<pre class="language-actionscript"><code> service postgresql reload</code></pre>
+<p class="postTitle" style="color: #444444; text-align: left;"><a class="postTitle2 vertical-middle" style="color: #444444; text-decoration: none;"><span>PostgreSQL学习之【用户权限管理】说明</span></a>&nbsp; <a>https://www.cnblogs.com/zhoujinyi/p/10939715.html</a><a rel="nofollow" href="https://blog.csdn.net/qq_23435961/article/details/111692602"></a></p>
+<p style="color: #4f4f4f; text-align: start;">PostgreSQL基本配置与权限控制&nbsp; <a rel="nofollow" href="https://blog.csdn.net/qq_23435961/article/details/111692602">https://blog.csdn.net/qq_23435961/article/details/111692602</a></p>
+<ul> 
+ <li style="color: #4f4f4f; text-align: start;">PostgreSQL主从分离<a rel="nofollow" href="https://blog.csdn.net/Ayhan_huang/article/details/78784486"></a></li> 
+</ul>
+<p class="title-article" style="color: #222226;">Django配置数据库读写分离 &nbsp;&nbsp;<a rel="nofollow" href="https://blog.csdn.net/Ayhan_huang/article/details/78784486">https://blog.csdn.net/Ayhan_huang/article/details/78784486</a><a rel="nofollow" href="https://blog.csdn.net/wyl9527/article/details/84973474"></a></p>
+<p class="title-article" style="color: #222226;">PostgreSQL主从复制部署 <a rel="nofollow" href="https://blog.csdn.net/wyl9527/article/details/84973474">https://blog.csdn.net/wyl9527/article/details/84973474</a><a rel="nofollow" href="https://blog.csdn.net/qq_31905135/article/details/86689735"></a></p>
+<p class="title-article" style="color: #222226;">Postgresql实现主从复制，读写分离 <a rel="nofollow" href="https://blog.csdn.net/qq_31905135/article/details/86689735">https://blog.csdn.net/qq_31905135/article/details/86689735</a></p>
+<p class="title-article" style="color: #222226;">postresql 主键自增设置 <a rel="nofollow" href="https://blog.csdn.net/u011042248/article/details/49422305">https://blog.csdn.net/u011042248/article/details/49422305</a></p>
+<pre class="language-actionscript"><code>CREATE SEQUENCE users_id_seq
+START WITH 1
+INCREMENT BY 1
+NO MINVALUE
+NO MAXVALUE
+CACHE 1;
+ 
+alter table users alter column id set default nextval('users_id_seq');</code></pre>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/244919#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.PostgreSQL_Blog" title="PostgreSQL" href="https://developer.huaweicloud.com/tags/200695/blog_1">PostgreSQL</a>
+        
+    </div>
+</div></div>

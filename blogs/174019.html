@@ -1,0 +1,305 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>原文:</p>
+<p><a>https://runestone.academy/runestone/books/published/pythonds/index.html</a> </p>
+<h2>6.5 散列</h2>
+<p>在前面的章节中，我们已经可以利用物品被存储在集合中的信息，提升我们的搜索算法。例如，如果知道一个列表是有序的，</p>
+<p>我们能够使用二分搜索以对数时间搜索结果。在这个章节，我们尝试去进一步的通过一个数据结构以达到O(1)搜索时间。这个概念</p>
+<p>就是散列。</p>
+<p>为了做这件事，当我们去寻找这个物品在集合中时，我们需要知道更多关于物品会存储在哪里。如果每个物品在哪个位置是特定的，</p>
+<p>那么搜索使用的那个比较去发现一个物品的存在。我们可以看到，然而，事情并非如此。</p>
+<p>一个散列表是一个集合的物品被存在一种为了更容易找到他们的方式下。散列表中的每个位置，通常被称为槽，可以存放一个物品</p>
+<p>并且它被命名为一个从0开始的整数。例如，我们可以命名槽0，槽1，槽2，等等；最初，散列表不包含物品即槽中是空的。</p>
+<p>我们通过列表实现一个散列表，并将列表的每个元素初始化为特殊的python值None。图4展示了一个散列表大小为m=11。换句话说，</p>
+<p>有m个槽在这张表中，名为0到10。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>|None|None|None|None|None|None|None|None|None|None|None|&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图4：拥有11个空槽的散列表</p>
+<p>在物品和一个槽在什么位置存放物品到散列表的映射被称为散列函数。一个散列函数可以将集合中的物品转换成一个在槽名范围内的整数，</p>
+<p>在0到m-1之间。假设我们有一系列的整数物品54,26,93,17,77和31。我们的以一个散列函数，有时被称为“求余法”，</p>
+<p>简单的将物品并除以表的大小，返回一个余数作为它的散列值(h(item)=item%11)。表4给出了我们的样例物品的所有的散列值。注意，</p>
+<p>这里的求余法(求模算法)会在所有的散列函数中出现，因为结果必须在槽名范围之内。</p>
+<p><br></p>
+<p>表4： 简单的散列函数-求余</p>
+<p>物品&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 散列值</p>
+<p>--------------------------</p>
+<p>54&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 10</p>
+<p>26&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 4</p>
+<p>93&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 5</p>
+<p>17&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 6</p>
+<p>77&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 0</p>
+<p>31&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 9</p>
+<p>-------------------------</p>
+<p>一旦散列值被计算出来，我们可以将每个物品插入到散列表中已经分配的位置中如图5.注意11个槽中的6个现在被占了。这被称为负载系数，</p>
+<p>并且通常被记为λ=物品数/表的大小。例如这个例子中λ=6/11。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>| 77 |None|None|None| 26 | 93 | 17 |None|None| 31 | 54 |&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图5：散列表中存放6个物品</p>
+<p>现在，当我们需要搜索一个物品时，我们只需要使用散列函数取计算一个物品的槽名，并且检查散列表去查看物品是否存在。这个搜索操作</p>
+<p>是O(1),因此一个常数时间需要去计算散列值并查找散列表中的索引位置。如果这样，我们可以发现一个常数时间的搜索逻辑。</p>
+<p>你可能已经发现这个技术如果需要工作，仅当每个物品映射到一个散列表中的唯一的位置。例如，如果物品44已经有了另一个集合中的物品，</p>
+<p>这会导致一个散列值0（44%11==0）。既然77已经有了一个散列值0，我们就会面临一个问题。</p>
+<p>根据散列函数，两个或者更多的物品会需要一个相同的槽。这会导致碰撞。明显的，碰撞会导致一个对于散列技术的问题。我们待会会讨论这个。</p>
+<h3>6.5.1 散列函数</h3>
+<p>给一个集合的物品，一个散列函数会映射每个物品到一个唯一的槽，这样被称为完美散列函数。如果我们知道物品和集合永远不会变化，那么构造出</p>
+<p>一个完美散列函数是可能的(通过不断测试完美散列函数)。不幸的是，给出一个任意的集合的物品，没有对称的方式去构造一个完美的散列函数。</p>
+<p>幸运的是，我们不需要散列函数是完美的以获取高效的性能。</p>
+<p>一种方式去始终有一个完美散列函数是去提升散列表的大小以便每个可能的值在物品范围都能被得到。这会导致每个物品会得到一个唯一的槽。</p>
+<p>尽管这个方式对于小批量的物品可行，但是这会不可行放物品数变得很大的时候。例如，如果物品时9位科学计数法数字，这个方法会需要一百万个槽。</p>
+<p>所以如果我们仅仅需要存储一个班级中的25个学生，我们会浪费大量的内存。</p>
+<p>我们的目标是创建一个散列函数最小化数据的碰撞，并且容易计算，并且均匀分布物品于散列表中。这样一系列的常见的方法去拓展求余法。</p>
+<p>在这里，我们会考虑其中的一小部分。</p>
+<p>收纳方法用于构造散列函数，从除物品到等值的批次(最后的批次可能会不等值)。这些批次会被加到一起以得到一个结果的散列值。例如，</p>
+<p>如果我们的物品是电话号码436-555-4601，我们需要将取数字并对他们求余到2个数的组(43,65,55,46,01)。然后求和，43+65+55+46+01，我们得到210。</p>
+<p>如果我们假设我们的散列表有11个槽，然后我们需要进行进一步的操作除以211并保留余数。下一个，颠倒每个批次在做加法之前。对于上面的例子。我们得到</p>
+<p>43+56+55+64+01=219然后219%11=10。</p>
+<p>另一个数字化计数以构造一个散列函数被称为中间平方方法。我们首先对每个物品求平方，然后我们解一部分结果数字。例如，如果一个物品是44，我们先计算出</p>
+<p>44的平方是1936。通过接出中间的数字是93，我们进行一个求余步骤，我们得到5(93%11)。表5展示了物品在求余和中间平方方法。你可以验证你理解了这些数</p>
+<p>字如何计算出的。</p>
+<p>表5：平方中间和求余</p>
+<p>物品&nbsp; &nbsp;余数&nbsp; &nbsp;平方中间</p>
+<p>-----------------------</p>
+<p>54&nbsp; &nbsp; &nbsp; 10&nbsp; &nbsp; &nbsp; &nbsp;3</p>
+<p>26&nbsp; &nbsp; &nbsp; 4&nbsp; &nbsp; &nbsp; &nbsp; 7</p>
+<p>93&nbsp; &nbsp; &nbsp; 5&nbsp; &nbsp; &nbsp; &nbsp; 9</p>
+<p>17&nbsp; &nbsp; &nbsp; 6&nbsp; &nbsp; &nbsp; &nbsp; 8</p>
+<p>77&nbsp; &nbsp; &nbsp; 0&nbsp; &nbsp; &nbsp; &nbsp; 4</p>
+<p>31&nbsp; &nbsp; &nbsp; 9&nbsp; &nbsp; &nbsp; &nbsp; 6</p>
+<p>-------------------------</p>
+<p>我们还可以通过基于字节的功能构造散列函数例如字符串。一个字节“cat”可以被认为是一系列的19进制数字值。</p>
+<p>&gt;&gt;&gt; ord('c')</p>
+<p>99</p>
+<p>&gt;&gt;&gt; ord('a')</p>
+<p>97</p>
+<p>&gt;&gt;&gt; ord('t')</p>
+<p>116</p>
+<p>我们可以取这些十进制数值，求和，并使用求余函数以获取散列值(参见图6)。列表1展示了一个函数hash，输入一个字符串和表大小，</p>
+<p>返回一个散列值处于0到表大小减1。</p>
+<p>&nbsp; c&nbsp; &nbsp; a&nbsp; &nbsp; &nbsp;t</p>
+<p>&nbsp; |&nbsp; &nbsp; |&nbsp; &nbsp; &nbsp;|</p>
+<p>&nbsp;99 +&nbsp; 97 + 116 =&nbsp; &nbsp;312</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 312 % 11 --&gt; 4</p>
+<p>图6： 散列一个自付出使用十进制值</p>
+<p><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p><strong>列表1</strong></p></li> 
+</ul>
+<pre class="brush:python;toolbar:false">def&nbsp;hash(astring,&nbsp;tablesize):
+	sum&nbsp;=&nbsp;0
+	for&nbsp;pos&nbsp;in&nbsp;range(len(astring)):
+		sum&nbsp;=&nbsp;sum&nbsp;+&nbsp;ord(astring[pos])
+
+	return&nbsp;sum%tablesize</pre>
+<p>有趣的是注意当使用这个散列函数，变位字会实在得到同样的散列值。为了解决这个，我们需要使用字节的位置作为权重。图7展示了一个可能的解决</p>
+<p>方案，使用位置值作为权重系数。这个对hash函数的修改作为一个练习。</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp;position</p>
+<p>&nbsp; 1&nbsp; &nbsp; &nbsp; 2&nbsp; &nbsp; &nbsp; 3</p>
+<p><br></p>
+<p>&nbsp; c&nbsp; &nbsp; &nbsp; a&nbsp; &nbsp; &nbsp; t</p>
+<p>&nbsp; |&nbsp; &nbsp; &nbsp; |&nbsp; &nbsp; &nbsp; |</p>
+<p>&nbsp;99*1 + 97*2 + 116*3&nbsp; = 641</p>
+<p>&nbsp;<span style="white-space:pre"> </span>&nbsp; &nbsp; 641 % 11 --&gt; 3</p>
+<p>图7： 使用带权重十进制数散列字符串</p>
+<p>你可能会想一个数字加上其他的方法去计算散列值对集合中物品。最重要的事情是记住散列函数需要高效以便它不会变为存储和搜索过程的累赘。</p>
+<p>如果一个散列函数是过于复杂的，那么它会变得更多的工作相比于去计算一个槽而基本的排序和二分搜索就像前面描述的那样。这与使用散列的目的相悖。</p>
+<h3>6.5.2 解决碰撞</h3>
+<p>我们现在返回到碰撞的问题。当两个物品的散列值指向同一个槽，我们必须有一个系统的方法存放第二个物品到散列表中。这个过程被称为碰撞解决。正如我们</p>
+<p>前面所说，如果一个散列函数是完美的，碰撞永远不会发生。然而，既然这通常是不可能的，碰撞解决变成一个十分重要的部分在散列中。</p>
+<p>一个解决碰撞的方法是查看散列表并尝试查找另一个开放的槽去存放导致碰撞的物品。</p>
+<p>一个简单的方式是从开始的散列值位置并且移动，依次穿过插槽，直到我们遇到第一个空的插槽。注意，我们可能需要往返回到第一个槽(循环的)以包含整个散列表。</p>
+<p>这个碰撞解决过程被称为开放寻址，在这个过程中尝试去找到下一个开的槽地址在散列表中。在系统地一次性访问了每个槽，我们进行了一次开放寻址被称为线性检测。</p>
+<p>图8展示了一个使用求余散列函数扩展整数物品(54,26,93,17,77,31,44,55,20)。上面的表4展示了原始物品的散列值。图5展示了原始内容。当我们尝试去放44到槽0时，</p>
+<p>一个碰撞发生了。在线性探测过程，我们顺序查找，一个槽接一个槽，直到我们发现一个开放的位置。在这个情况下，我们发现槽1。</p>
+<p>再次，55应该放到槽0但是我们必须放到槽2既然它是下一个开放位置。这个20散列到槽9的最终值。既然槽9已经满了，我们开始线性探测。我们访问槽10,0，1和2，</p>
+<p>并且我们最终发现一个空的槽在位置3。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>| 77 | 44 | 55 | 20 | 26 | 93 | 17 |None|None| 31 | 54 |&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图8：使用线性探测的碰撞解决</p>
+<p>一旦我们使用开发地址和线性探测构建了一个散列表，我们使用同样的方法来搜索项目是必不可少的。假设我们需要查找物品93。当我们计算散列值，我们得到5。查看槽5.</p>
+<p>得到93，所有我们返回True。如果我们查找20呢？现在散列值是9，但是槽9当前存放的是31。我们不能简单地返回False既然我们知道可能存在碰撞。我们现在强制做一个顺序查找，</p>
+<p>从位置10开始，直到找到一个物品20或者我们找到一个空槽。</p>
+<p>线性探测的一个不好的点是聚类的趋势；物品变得聚集在表中。这意味着如果很多碰撞发生在同一个散列值，大量的周围的槽会被线性探测解决填充。这会影响到其他被插入的物品，</p>
+<p>正如我们看到的当我们尝试插入物品20时。聚类的值散列到0需要被跳过，最终发现一个开放位置。这个聚类展示在图9。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>| 77 | 44 | 55 | 20 | 26 | 93 | 17 |None|None| 31 | 54 |&nbsp;</p>
+<p>----------------</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图9：槽0的聚类物品</p>
+<p>一种方式去解决聚类是拓展线性探测技术，以便替代顺序查找下一个开放的槽，我们跳过槽，从而产生碰撞的物品分布会更均匀。这会潜在的制造聚类产生。图10展示了物品当碰撞解决</p>
+<p>完成了“+3”线性探测。这意味着，一旦一个碰撞发生，我们需要查找每3个槽直到找到一个空的。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>| 77 | 55 |None| 44 | 26 | 93 | 17 | 20 |None| 31 | 54 |&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图10：使用“+3”的碰撞解决</p>
+<p>这个在碰撞之后查找下一个槽过程的通用的名称是重散列。使用简单的线性探测，重散列函数是 新散列值=rehash(旧的散列值),rehash(pos) = (pos+1)%表大小。这个“+3”重散列可以被</p>
+<p>定义为rehash(pos) = (pos+1)%表大小。一般的，rehash(pos) = (pos+skip)%表大小。这很重要去注意跳过的大小必须存在以使表中的所有槽可以事件的被访问到。否则，表中的一部分</p>
+<p>会使用不到。位置保证这一点，通常建议一个表的大小是一个质数。这是一个理由我们使用11在我们的例子中。</p>
+<p>一个线性探测想法的变体叫做二次探测。取代使用一个常数跳步值，我们使用重散列函数并提升散列值使用1,3，5,7,9等等。这意味着如果第一个散列值是h，一个成功的散列值是h+1，h+4,h+9,</p>
+<p>h+16,等等。一般的，i会等于 i^2 rehash(pos)=(h+i^2)。换句话说，二次探测使用一个由连续完美方块组成的跳跃。图11展示了我们的例子值在使用了上述技术之后。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>| 77 | 44 | 20 | 55 | 26 | 93 | 17 | None |None| 31 | 54 |&nbsp;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图11：使二次探测的碰撞解决</p>
+<p>一个可选的方法来处理碰撞问题是允许每个槽存放一个集合(或者链表)的物品。链表允许许多物品存在于散列表中同样的位置。当碰撞发生，物品仍然存放在散列表中的合适的槽位。当越来越多的散列到同一个位置，</p>
+<p>查找一个物品的困难会随之上升。图12展示了物品添加到散列表使用链表解决碰撞。</p>
+<p>&nbsp; 0&nbsp; &nbsp; 1&nbsp; &nbsp; 2&nbsp; &nbsp; 3&nbsp; &nbsp; 4&nbsp; &nbsp; 5&nbsp; &nbsp; 6&nbsp; &nbsp; 7&nbsp; &nbsp; 8&nbsp; &nbsp; 9&nbsp; &nbsp; 10&nbsp;</p>
+<p>|&nbsp; &nbsp; |None|None|None|&nbsp; &nbsp; |&nbsp; &nbsp; |&nbsp; &nbsp; |None|None|&nbsp; &nbsp; |&nbsp; &nbsp; &nbsp;|&nbsp;</p>
+<p>&nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; &nbsp;|&nbsp; &nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |&nbsp; &nbsp; &nbsp;|</p>
+<p>&nbsp; 77&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 26&nbsp; &nbsp;93&nbsp; &nbsp; 17&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;31&nbsp; &nbsp; 54</p>
+<p>&nbsp; |&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|</p>
+<p>&nbsp; 44&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 20</p>
+<p>&nbsp; |</p>
+<p>&nbsp; 55</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 图12：使链表的碰撞解决</p>
+<p>当我们想查找一个物品，我们使用散列函数生成需要槽的位置。既然每个槽存放了一个集合，我们使用搜索技术去决定物品是否存在。这个好处是平均上每个槽中的物品会很少，所以搜索大概率高效。</p>
+<p>我们查看散列分析在章节的最后。</p>
+<p>自检查</p>
+<p>问题1：在一个大小为13的散列表，哪一个索引位置下面的两个键会映射到？27,130</p>
+<p>A. 1,10</p>
+<p>B. 13,0</p>
+<p>C. 1,0</p>
+<p>D. 2,3</p>
+<p>问题2：假设你被给了下列键以插入到散列表，其中包含了11个值：113,117,97,100,114,108,116,105,99下列散列表的最佳演示内容在所有的键会被插入在线性探测解决下？</p>
+<p>A.100,_,_,113,114,105,116,117,97,108,99</p>
+<p>B.99,100,_,113,114,_,116,117,105,97,108</p>
+<p>C.100,113,117,97,14,108,116,105,99,_,_</p>
+<p>D.117,114,108,116,105,99,_,_,97,100,113</p>
+<h3>6.5.2实现Map虚数据类型</h3>
+<p>一个最有用的python集合就是字典。重新调用一个字典是一个使用键值对存储的关联数据类型。这个键是是用来查找关联数据。我们经常称这种想法为map。</p>
+<p>一个map虚数据类型定义如下。一个数据结果是一个无序集合关联一个键和值。map中的键是唯一的以便一对一的关系存在于一个键和一个值。这些操作如下。</p>
+<p>Map()创建一个新的,空map.它返回一个空的map集合。</p>
+<p>put(key,val)添加一个新的键值对到map中。如果键已经存在于map中则替换旧的值使用新的值。</p>
+<p>get(key)给出一个键，返回存在map中的值或者None当不存在的时候。</p>
+<p>del从map中删除键值对，使用的语法为 del map[key]。</p>
+<p>len()返回存储在map中键值对的数量</p>
+<p>in返回True使用语法 key in map，如果给的键在map中；False如果不在。</p>
+<p><br></p>
+<p>使用字典的一个最大的好处是给定一个键，我们可以很快的查找到关联的数据。为了提供这个快速查找的能力，我们需要实现支持高效的查找。</p>
+<p>我们可以使用一个列表并使用排序和二分查找，但是更好的使用散列表如上面所述，因为查找一个物品在散列表中的性能可以达到O(1)。</p>
+<p>在列表2中我们使用两个列表去创建一个HashTable类实现了Map虚数据类型。一个列表，称为槽，另一个会存放物品的列表，称为数据，会存放数据值。</p>
+<p>当我们查找一个键，响应位置在数据表中会存放关联数据值。我们需要将键列表处理成一个散列表使用前面的想法。注意，一个初始大小对于散列表选择</p>
+<p>为11。尽管这是随意的，这很重要大小是一个质数以便碰撞解决逻辑可以高效可能。</p>
+<p><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p><strong>列表2</strong></p></li> 
+</ul>
+<pre class="brush:python;toolbar:false">class&nbsp;HashTable:
+	def&nbsp;__init__(self):
+		self.size&nbsp;=&nbsp;11
+		self.slots&nbsp;=&nbsp;[None]&nbsp;*&nbsp;self.size
+		self.data&nbsp;=&nbsp;[None]&nbsp;*&nbsp;self.size</pre>
+<p>hashfunction实现了最简单的求余方法。这个碰撞解决技术是一个线性探测使用“+1”重散列方法。put函数参见列表3，假设会必然有一个空的槽除非键已经存在于self.slots。</p>
+<p>它会计算出原始的散列值并且如果槽是非空的，遍历rehash函数知道一个空的槽出现。如果一个非空的槽已经包含这个键，旧的值会被新的值替换。处理没有空位的情况是一个练习。</p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p><strong>列表3</strong></p></li> 
+</ul>
+<pre class="brush:python;toolbar:false">def&nbsp;put(self,key,data):
+&nbsp;&nbsp;&nbsp;&nbsp;hashvalue&nbsp;=&nbsp;self.hashfunction(key,len(self.slots))
+
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;self.slots[hashvalue]&nbsp;==&nbsp;None:
+	&nbsp;&nbsp;&nbsp;&nbsp;self.slots[hashvalue]&nbsp;=&nbsp;key
+	&nbsp;&nbsp;&nbsp;&nbsp;self.data[hashvalue]&nbsp;=&nbsp;data
+	else:
+		if&nbsp;self.slots[hashvalue]&nbsp;==&nbsp;key:
+			self.data[hashvalue]&nbsp;=&nbsp;data&nbsp;#replace
+		else:
+			nextslot&nbsp;=&nbsp;self.rehash(hashvalue,len(self.slots))
+			while&nbsp;self.slots[nextslot]&nbsp;!=&nbsp;None&nbsp;and&nbsp;\
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.slots[nextslot]&nbsp;!=&nbsp;key:
+				nextslot&nbsp;=&nbsp;self.rehash(nextslot,len(self.slots))
+
+			if&nbsp;self.slots[nextslot]&nbsp;==&nbsp;None:
+				self.slots[nextslot]=key
+				self.data[nextslot]=data
+			else:
+				self.data[nextslot]=data&nbsp;#replace
+
+def&nbsp;hashfunction(self,key,size):
+	return&nbsp;key%size
+
+def&nbsp;rehash(self,oldhash,size):
+	return&nbsp;(oldhash+1)%size</pre>
+<p>类似的，get函数参见列表4开始于计算原始的散列值。如果值不在原始的槽，rehash被使用来定位到下一个可能的位置。注意行15保证了搜索会结束通过</p>
+<p>检查以保证不会烦返回原始槽。如果那种情况发生，我们需要遍历所有可能的槽并确认这个物品是不存在的。</p>
+<p>最终的方法HashTable类提供额外的字典功能。我们重装__getitem__和__setitem__方法以运行使用[]。这意味着一旦HashTable被创建，熟悉的下标索引操作就可用。</p>
+<p>我们留下剩余的方法作为练习。</p>
+<p><br></p>
+<ul class=" list-paddingleft-2" style="list-style-type: disc;"> 
+ <li><p><strong>列表4</strong></p></li> 
+</ul>
+<pre class="brush:python;toolbar:false">def&nbsp;get(self,key):
+	startslot&nbsp;=&nbsp;self.hashfunction(key,len(self.slots))
+
+	data&nbsp;=&nbsp;None
+	stop&nbsp;=&nbsp;False
+	found&nbsp;=&nbsp;False
+	position&nbsp;=&nbsp;startslot
+	while&nbsp;self.slots[position]&nbsp;!=&nbsp;None&nbsp;and&nbsp;\
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not&nbsp;dound&nbsp;and&nbsp;not&nbsp;stop:
+		if&nbsp;self.slots[position]&nbsp;==&nbsp;key:
+			found&nbsp;=&nbsp;True
+			data&nbsp;=&nbsp;self.data[position]
+		else:
+			position=self.rehash(position,len(self.slots))
+			if&nbsp;position&nbsp;==&nbsp;startslot:
+				stop&nbsp;=&nbsp;True
+	return&nbsp;data
+
+def&nbsp;__getitem__(self,key):
+	return&nbsp;self.get(key)
+
+def&nbsp;__setitem__(self,key,data):
+	self.put(key,data)</pre>
+<p>下面的章节展示了HashTable类的操作。首先我们创建一个散列表并且存储一下物品使用整数键和字符串值。</p>
+<p>&gt;&gt;&gt; H=HashTable()</p>
+<p>&gt;&gt;&gt; H[54]="cat"</p>
+<p>&gt;&gt;&gt; H[26]="dog"</p>
+<p>&gt;&gt;&gt; H[93]="lion"</p>
+<p>&gt;&gt;&gt; H[17]="tiger"</p>
+<p>&gt;&gt;&gt; H[77]="bird"</p>
+<p>&gt;&gt;&gt; H[31]="cow"</p>
+<p>&gt;&gt;&gt; H[44]="goat"</p>
+<p>&gt;&gt;&gt; H[55]="pig"</p>
+<p>&gt;&gt;&gt; H[20]="chichen"</p>
+<p>&gt;&gt;&gt; H.slots</p>
+<p>[77, 44, 55, 20, 36, 93, 17, None, None, 31, 54]</p>
+<p>&gt;&gt;&gt; H,data</p>
+<p>['bird', 'goat', 'pig', 'chichen', 'dog', 'lion',</p>
+<p><span style="white-space:pre"> </span>'tiger', None, None, 'cow', 'cat']</p>
+<p>下面我们会获取并修改一些散列表中的物品。注意键20的值会被替换。</p>
+<p>&gt;&gt;&gt; H[20]</p>
+<p>'chicken'</p>
+<p>&gt;&gt;&gt; H[17]</p>
+<p>'tiger'</p>
+<p>&gt;&gt;&gt; H[20]='duck'</p>
+<p>&gt;&gt;&gt; H[20]</p>
+<p>'duck'</p>
+<p>&gt;&gt;&gt; H.data</p>
+<p>['bird', 'goat', 'pig', 'duck', 'dog', 'lion',</p>
+<p>&nbsp; &nbsp; 'tiger', None, None, 'cow', 'cat']</p>
+<p>&gt;&gt;&gt; print(H[99])</p>
+<p>None</p>
+<p>最终的散列表例子可以在ActiveCoce1中查看。</p>
+<h3>6.5.4 分析散列过程</h3>
+<p>我们前面说最佳散列会达到O(1)，常数查找时间。然而，由于碰撞，一系列的比较会导致不会那么简单。尽管一个完全的散列分析是远程这些文字，</p>
+<p>我们陈述一个众所周知的结果，这些结果近似于搜索一个物品所需比较的数量。</p>
+<p>最重要的是信息的批次需要去分析散列表的负载系数，λ。理论上，如果λ是小的，那么更小的碰撞概率，意味着物品更可能被存放到属于自己的槽。</p>
+<p>如果λ是大的，意味着表快填满了，所以更多的碰撞会发生。这意味着碰撞解决变得更加困难，需要更多的比较去查找一个空槽。</p>
+<p>如果使用链表，增加碰撞意味着单个链表中更多的物品。因此，我们需要一个结论对包含成功的和不成功的搜索。对一个成功的搜索，使用开放地址线性</p>
+<p>探测，平均比较大约是1/2(1+1/(1-λ))，一个不成功的搜索则1/2(1+(1/(1-λ))^2)如果我们使用链表，平均数字比较是1+λ、2对于成功的情况，与此简单</p>
+<p>的λ比较当搜索不成时。</p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/174019#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

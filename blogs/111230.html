@@ -1,0 +1,61 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>go http cookie</p><p>参考:</p><p><a rel="nofollow" href="https://colobu.com/2018/09/28/cookie-and-session-in-go/">https://colobu.com/2018/09/28/cookie-and-session-in-go/</a></p><p><a rel="nofollow" href="https://researchlab.github.io/2016/07/10/go-setcookie/">https://researchlab.github.io/2016/07/10/go-setcookie/</a></p><p><a rel="nofollow" href="https://dzone.com/articles/efficient-multi-threaded-geo-web-crawler-using-jav">https://dzone.com/articles/efficient-multi-threaded-geo-web-crawler-using-jav</a></p><p><a rel="nofollow" href="https://github.com/PuerkitoBio/gocrawl">https://github.com/PuerkitoBio/gocrawl</a></p><p><a rel="nofollow" href="https://github.com/ddliu/go-httpclient">https://github.com/ddliu/go-httpclient</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/12130582/setting-cookies-with-net-http">https://stackoverflow.com/questions/12130582/setting-cookies-with-net-http</a></p><p><a rel="nofollow" href="https://github.com/gocolly/colly">https://github.com/gocolly/colly</a></p><p><span style="color:rgb(0,176,80);">/*------------------------------------------分割线----------------------------------------------*/</span></p><p>为什么用Go呢,只需要处理一个post请求的http服务,感觉用java/php/node都麻烦了,用c++写也麻烦,go的话编出来也是个小巧的程序,很迷你;</p><h3>问题一:</h3><pre class="prettyprint prettyprinted"><span class="pln">type </span><span class="typ">Message</span><span class="pln"> </span><span class="kwd">struct</span><span class="pln"> </span><span class="pun">{</span><br><span class="pln"> &nbsp; title </span><span class="kwd">string</span><span class="pln"> </span><span class="str">`json:"title"`</span><br><span class="pln"> &nbsp; &nbsp;content &nbsp;</span><span class="kwd">string</span><span class="pln"> &nbsp;</span><span class="str">`json:"title"`</span><br><span class="pun">}</span><br><span class="pln">err </span><span class="pun">=</span><span class="pln"> json</span><span class="pun">.</span><span class="typ">Unmarshal</span><span class="pun">([]</span><span class="kwd">byte</span><span class="pun">(),</span><span class="pln"> </span><span class="pun">&amp;</span><span class="pln">msg</span><span class="pun">)</span><br><span class="pln">err </span><span class="pun">!=</span><span class="pln"> </span><span class="kwd">nil</span><span class="pln"> </span><span class="pun">{</span><br><span class="pln"> &nbsp; http</span><span class="pun">.</span><span class="typ">Error</span><span class="pun">(</span><span class="pln">w</span><span class="pun">,</span><span class="pln"> err</span><span class="pun">.</span><span class="typ">Error</span><span class="pun">(),</span><span class="pln"> </span><span class="pun">)</span><br><span class="pun">}</span><br><span class="pln">fmt</span><span class="pun">.</span><span class="typ">Println</span><span class="pun">(</span><span class="pln">msg</span><span class="pun">.</span><span class="pln">title</span><span class="pun">+</span><span class="str">","</span><span class="pun">+</span><span class="pln">msg</span><span class="pun">.</span><span class="pln">content</span><span class="pun">)</span></pre><p>json解析没有错误但是后面的打印都是空串<br>后来看到一个答案:<a rel="nofollow" href="https://gocn.vip/question/1405"></a><a rel="nofollow" href="https://gocn.vip/question/1405">https://gocn.vip/question/1405</a> 首字母大写</p><pre class="prettyprint prettyprinted"><span class="pln">type </span><span class="typ">Message</span><span class="pln"> </span><span class="kwd">struct</span><span class="pln"> </span><span class="pun">{</span><br><span class="pln"> &nbsp; </span><span class="typ">Title</span><span class="pln"> </span><span class="kwd">string</span><span class="pln"> </span><span class="str">`json:"title"`</span><br><span class="pln"> &nbsp; </span><span class="typ">Content</span><span class="pln"> &nbsp;</span><span class="kwd">string</span><span class="pln"> &nbsp;</span><span class="str">`json:"title"`</span><br><span class="pun">}</span></pre><p>果然,打印出预期了--&gt;额</p><h3>问题二:</h3><pre class="prettyprint prettyprinted">this.http.post('http://127.0.0.1:9333'&nbsp;,JSON.stringify(product),{headers}).subscribe(..)</pre><p>带{headers}时会导致Unmarshal失败,头先发了一次,头不是json结构,去掉{headers}后正常</p><p><br></p><p><span style="color:rgb(0,176,80);">/*-----------------------------公司电脑装了个go环境----------------------------------------------*/</span></p><p><a rel="nofollow" href="https://blog.csdn.net/SMonkeyKing/article/details/86886090">https://blog.csdn.net/SMonkeyKing/article/details/86886090</a></p><p><a rel="nofollow" href="https://gobyexample.com/hello-world+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://gobyexample.com/hello-world+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p><br></p><p>上一个完整测试代码:</p><pre class="brush:java;toolbar:false">package&nbsp;main
+
+import&nbsp;(
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+)
+
+func&nbsp;main()&nbsp;{
+	http.HandleFunc("/",&nbsp;home)
+	http.ListenAndServe(":9333",&nbsp;nil)
+}
+type&nbsp;Message&nbsp;struct&nbsp;{
+	Title&nbsp;string&nbsp;`json:"title"`
+	Content&nbsp;&nbsp;string&nbsp;&nbsp;`json:"content"`
+}
+func&nbsp;home(w&nbsp;http.ResponseWriter,&nbsp;r&nbsp;*http.Request)&nbsp;{
+	w.Header().Set("Access-Control-Allow-Origin",&nbsp;"*")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//允许访问所有域
+	w.Header().Add("Access-Control-Allow-Headers",&nbsp;"X-Requested-With,&nbsp;Content-Type,Origin,&nbsp;Authorization,&nbsp;Accept,&nbsp;Client-Security-Token,&nbsp;Accept-Encoding,&nbsp;X-Auth-Token,&nbsp;content-type")&nbsp;//header的类型
+	w.Header().Set("content-type",&nbsp;"application/json")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//返回数据格式是json
+	w.Header().Add("Access-Control-Allow-Methods","GET,&nbsp;POST,&nbsp;PUT,&nbsp;PATCH,&nbsp;POST,&nbsp;DELETE,&nbsp;OPTIONS");
+	fmt.Fprintf(w,&nbsp;"welcome&nbsp;to&nbsp;yanzi&nbsp;travel")
+	b,&nbsp;err&nbsp;:=&nbsp;ioutil.ReadAll(r.Body)
+	//fmt.Println("b="+string(b))
+	defer&nbsp;r.Body.Close()
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		fmt.Println("b&nbsp;is&nbsp;null");
+		http.Error(w,&nbsp;err.Error(),&nbsp;500)
+		return
+	}
+	var&nbsp;msg&nbsp;Message//:=&nbsp;make(map[string]interface{})
+	err&nbsp;=&nbsp;json.Unmarshal(b,&nbsp;&amp;msg)
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		fmt.Println("json.Unmarshal");
+		http.Error(w,&nbsp;err.Error(),&nbsp;500)
+		return
+	}
+	err&nbsp;=&nbsp;ioutil.WriteFile("xxx/"+msg.Title+".xx",&nbsp;[]byte(msg.Content),&nbsp;0644)
+	if&nbsp;err&nbsp;!=&nbsp;nil&nbsp;{
+		panic(err)
+	}
+	w.Write([]byte("[123]"))
+}</pre><p><br></p><p><br></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/111230#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

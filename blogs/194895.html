@@ -1,0 +1,66 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>最近内网灰度发布的时候,需要批量添加整个部门的人员,怎么获取这个人员列表呢？用LDAP做用户登录和关联用户查询的时候我们可以看到属性中有相关部门信息；</p>
+<p>方便起见，这个代码用python写写就好</p>
+<p>实现参考:</p>
+<p>只要 在<a rel="nofollow" href="https://blog.csdn.net/changgong2411/article/details/100965472" style="white-space: normal;">https://blog.csdn.net/changgong2411/article/details/100965472</a>的基础上修改一下就达到我们的输出部门人员列表的要求了</p>
+<pre class="brush:python;toolbar:false">from&nbsp;ldap3&nbsp;import&nbsp;Server,&nbsp;Connection,&nbsp;ALL,&nbsp;NTLM
+import&nbsp;datetime
+import&nbsp;json
+
+class&nbsp;operate_AD:
+	def&nbsp;__init__(self,Domain,User,Password):
+		self.domain=Domain
+		self.user=User
+		self.pwd=Password
+		self.DC=','.join(['DC='&nbsp;+&nbsp;dc&nbsp;for&nbsp;dc&nbsp;in&nbsp;Domain.split('.')])
+		self.pre&nbsp;=&nbsp;Domain.split('.')[0].upper()&nbsp;#'china'
+		self.server&nbsp;=&nbsp;Server(self.domain,&nbsp;use_ssl=False,get_info=ALL)
+		self.conn&nbsp;=&nbsp;Connection(self.server,&nbsp;user=self.pre+'\\'+self.user,&nbsp;password=self.pwd,&nbsp;auto_bind=True)
+		self.u_time=datetime.date.today()
+
+	def&nbsp;Get_All_UserInfo(self):
+		'''
+		查询组织下的用户
+		org:&nbsp;组织，格式为：aaa.bbb&nbsp;即bbb组织下的aaa组织，不包含域地址
+		'''
+		#print('Get_All_UserInfo')
+		att_list&nbsp;=&nbsp;['displayName','userAccountControl','sAMAccountName']
+		#&nbsp;org_base&nbsp;=&nbsp;','.join(['OU='&nbsp;+&nbsp;ou&nbsp;for&nbsp;ou&nbsp;in&nbsp;org.split('.')])&nbsp;+&nbsp;','&nbsp;+&nbsp;self.DC
+		org_base&nbsp;=&nbsp;"dc=china,dc=组织,dc=com"
+		res&nbsp;=&nbsp;self.conn.search(search_base=org_base,search_filter='(&amp;(department=匹配的部门信息*))',attributes=['department','sAMAccountName','sn'],&nbsp;paged_size='50',search_scope='SUBTREE')&nbsp;
+		if&nbsp;res:
+			for&nbsp;each&nbsp;in&nbsp;&nbsp;self.conn.response:
+				print(each['attributes']['sn'])#['dn'].split(",")[0].split("=")[1]&nbsp;['attributes']['sAMAccountName']
+		return&nbsp;[]
+
+def&nbsp;main():
+	act=operate_AD('ldap://ldap-host:port','user','pwd')
+	for&nbsp;user&nbsp;in&nbsp;act.Get_All_UserInfo():
+		print(user)
+		print('&nbsp;'*50)
+			
+if&nbsp;__name__&nbsp;==&nbsp;'__main__':
+&nbsp;&nbsp;&nbsp;&nbsp;main()</pre>
+<p><br></p>
+<p>参考:</p>
+<p><a>https://blog.51cto.com/unicom/2421224</a> </p>
+<p><a>https://www.thinbug.com/q/40225230</a></p>
+<p><a rel="nofollow" href="https://blog.csdn.net/sudaxhh/article/details/52334618">https://blog.csdn.net/sudaxhh/article/details/52334618</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/194895#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.其他_Blog" title="其他" href="https://developer.huaweicloud.com/tags/200213/blog_1">其他</a>
+        
+    </div>
+</div></div>

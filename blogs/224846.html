@@ -1,0 +1,58 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>碰巧遇到个类似的场景，在控制台里下载一些东西,用promise一个一个下载感觉太慢,一次性都请求出去,由于连接数限制,后面的请求大概率失败;所以需要一个带并发限制的fetch请求函数;下面参考的帖子的场景思路上是合适的,不过我还要对不同的请求执行不同类型的回调，所以需要改造下。</p>
+<p>初步的结构大概是这个样子的：</p>
+<pre>let pending_count = 0;
+let max = 5;
+let urls = []
+async function _fetch(arr) { 
+    if (!arr[0]) return; 
+    pending_count++; 
+    console.log(arr[0] + ':start','并发数: '+pending_count); 
+    let response = await fetch(arr[0]) 
+    if(arr[1] == "code"){
+	    。。。
+    }else if(arr[1] == "img"){
+	    。。。
+    }else if(arr[1] == "md"){
+	    。。。
+    }else if(arr[1] == "imgraw"){
+	    。。。
+    }
+    pending_count--; 
+    console.log(arr[0] + ':done','并发数: '+pending_count); 
+    _fetch(urls.pop()); 
+    pending_count
+}
+function sendResquest(url,callback) {  
+    if(pending_count &lt; max) { 
+        _fetch([url,callback])
+    } else {
+	    urls.push([url,callback])
+    } 
+}</pre>
+<p></p>
+<p>参考：<a rel="nofollow" href="https://blog.csdn.net/qq_33081841/article/details/88583735"></a></p>
+<h1 class="title-article" style="color: #222226;">15行代码实现一个带并发数限制的fetch请求函数</h1>
+<p><a rel="nofollow" href="https://blog.csdn.net/qq_33081841/article/details/88583735">https://blog.csdn.net/qq_33081841/article/details/88583735</a></p>
+<h1 class="article-title" style="color: #333333;">23行代码实现一个带并发数限制的fetch请求函数</h1>
+<p><a>https://juejin.cn/post/6844903796506624014</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/224846#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

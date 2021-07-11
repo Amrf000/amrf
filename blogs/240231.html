@@ -1,0 +1,60 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>netstat -nputw</p>
+<ul> 
+ <li><span style="color: #3d3d3d; text-align: start;">list all ports available on a server</span></li> 
+</ul>
+<pre class="language-actionscript"><code>netstat -tunlp
+-t Show TCP ports.
+-u Show UDP ports.
+-n Show numerical addresses instead of resolving hosts.
+-l Show only listening ports.
+-p Show the PID and name of the listener’s process.</code></pre>
+<ul> 
+ <li><span style="color: #212529;"><span style="color: #3d3d3d;">scan for open ports and only list port 22</span></span></li> 
+</ul>
+<pre class="language-actionscript"><code>netstat -tnlp | grep :22</code></pre>
+<ul> 
+ <li><span style="color: #212529;"><span><span style="color: #3d3d3d;">view all listening ports on Ubuntu</span></span></span></li> 
+</ul>
+<pre class="language-actionscript"><code>ss -tunlp</code></pre>
+<ul> 
+ <li><span style="color: #212529;"><span><span style="color: #3d3d3d;">list all listening TCP ports&nbsp;</span></span></span></li> 
+</ul>
+<pre class="language-actionscript"><code>lsof -nP -iTCP -sTCP:LISTEN</code></pre>
+<p>ll /proc/&lt;pid&gt;/exe</p>
+<p>ps -ef | grep &lt;pid&gt;</p>
+<p>cat /proc/&lt;pid&gt;/environ</p>
+<ul> 
+ <li class="title-article" style="color: #222226;">如何查看 Linux 中所有正在运行的服务(<a rel="nofollow" href="https://blog.csdn.net/Pipcie/article/details/82586151">https://blog.csdn.net/Pipcie/article/details/82586151</a>)</li> 
+</ul>
+<pre class="language-actionscript"><code>service --status-all | more</code></pre>
+<ul> 
+ <li>&nbsp;linux查看开机启动项目 （<a rel="nofollow" href="https://blog.csdn.net/zyddj123/article/details/82497640">https://blog.csdn.net/zyddj123/article/details/82497640）</a></li> 
+</ul>
+<pre class="language-actionscript"><code>systemctl list-unit-files</code></pre>
+<p>参考:</p>
+<p><a>https://unix.stackexchange.com/questions/94357/find-out-current-working-directory-of-a-running-process</a></p>
+<p><a>https://www.runoob.com/w3cnote/linux-check-port-usage.html</a></p>
+<p><br></p>
+<p>https://blog.csdn.net/liuxiao723846/article/details/91042025</p>
+<p>https://lyceum-allotments.github.io/2017/03/python-and-pipes-part-6-multiple-subprocesses-and-pipes/</p>
+<p>https://stackoverflow.com/questions/3190825/saving-stdout-from-subprocess-popen-to-file-plus-writing-more-stuff-to-the-file</p>
+<p></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/240231#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Shell_Blog" title="Shell" href="https://developer.huaweicloud.com/tags/200087/blog_1">Shell</a>
+        
+    </div>
+</div></div>

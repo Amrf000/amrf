@@ -1,0 +1,161 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>prebuilt环境可能是ubuntu18,&nbsp; 这里只记录一些参考的分析</p>
+<p>---&gt;实际是链接器不同导致的,指定的llvm而不是系统默认的链接器,至于为什么使用lld有问题,还没分析清楚;</p>
+<p>&nbsp;参考:</p>
+<p><span style="color: #1a1a1b;">terminate called after throwing an instance of 'std::logic_error' what(): basic_string::_M_construct null not valid Aborted (core dumped)</span></p>
+<p><a>https://www.reddit.com/r/cpp_questions/comments/lpuyp9/terminate_called_after_throwing_an_instance_of/</a></p>
+<p><img class="mce_image" id="images_161659615796466" src="https://bbs-img.huaweicloud.com/blogs/img/1616596159012032001.png"></p>
+<p><img class="mce_image" id="images_161659620648424" src="https://bbs-img.huaweicloud.com/blogs/img/1616596207670035298.png"></p>
+<p><a>https://root-forum.cern.ch/t/root-on-freebsd-again/26806/9</a></p>
+<p><img class="mce_image" id="images_161659625123996" src="https://bbs-img.huaweicloud.com/blogs/img/1616596252195013169.png"></p>
+<h1 class="fs-headline1 ow-break-word mb8 grid--cell fl1" style="color: #242729; text-align: left;"><a class="question-hyperlink" style="color: var(--black-700); text-decoration: none;">Is clang++ ABI same as g++? [duplicate]</a></h1>
+<p><a>https://stackoverflow.com/questions/11682748/is-clang-abi-same-as-g</a></p>
+<div class="answercell post-layout--right" style="color: #242729; text-align: left;"> 
+ <div class="s-prose js-post-body"> 
+  <p><span>根据</span><a style="color: var(--theme-link-color); text-decoration: underline;"><span>clang libc ++页面</span></a><span>，他们的目标是</span></p> 
+  <blockquote style="color: var(--black-600);"> 
+   <p><span>与gcc的libstdc ++的ABI兼容，可用于某些底层功能，例如异常对象，rtti和内存分配。</span></p> 
+  </blockquote> 
+  <p><span>这似乎暗示他们并不是针对100％的兼容性。例如，在该页面上，他们还说：</span></p> 
+  <blockquote style="color: var(--black-600);"> 
+   <p><span>通过多年的经验（包括之前实现过标准库），我们学到了很多有关实现标准容器的事情，这些事情需要ABI破损以及实现方式的根本变化。例如，对于多核计算机（尤其是在具有右值引用的C ++'0x中），使用“短字符串优化”而不是使用写时复制（COW）构建std :: string是一种较好的方法，这是公认的。已确定破坏与旧版本库的ABI兼容性对于实现libc ++的性能目标至关重要。</span></p> 
+  </blockquote> 
+  <p><span>我相信GCC仍在使用引用计数的COW，因此clang似乎并不担心与ABI的兼容性</span><code>std::string</code><span>（与较旧的clang编译的二进制文件或与GCC兼容）。</span></p> 
+ </div> 
+ <div class="mt24"> 
+  <div class="grid fw-wrap ai-start jc-end gs8 gsy"> 
+   <div class="grid--cell mr16"> 
+    <div class="js-post-menu pt2"> 
+     <div class="grid d-flex gs8 s-anchors s-anchors__muted fw-wrap"> 
+      <div class="grid--cell">
+       <a title="简短的永久链接到这个答案" class="js-share-link js-gps-track" style="margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-size: 13px; vertical-align: baseline; box-sizing: inherit; text-decoration: none; color: var(--black-500); cursor: pointer; user-select: auto;"><span>分享</span></a>
+      </div> 
+      <div class="grid--cell">
+       <a title="" class="js-suggest-edit-post js-gps-track" style="color: var(--black-500); text-decoration: none;"><span>改善这个答案</span></a>
+      </div> 
+      <div class="grid--cell">
+       <span>跟随</span>
+      </div> 
+     </div> 
+     <div class="js-menu-popup-container">
+      <br>
+     </div> 
+    </div> 
+   </div> 
+   <div class="post-signature grid--cell fl0" style="text-align: left;"> 
+    <div class="user-info user-hover" style="color: var(--black-500);"> 
+     <div class="user-action-time">
+      <span><span class="relativetime" style="text-decoration: none;">12年7月27日在8:13</span>&nbsp;回答</span><span class="relativetime" style="text-decoration: none;"><span></span></span>
+     </div> 
+     <div class="user-gravatar32"> 
+      <div class="gravatar-wrapper-32">
+       <br>
+      </div> 
+     </div> 
+     <div class="user-details">
+      <a style="color: var(--theme-link-color); text-decoration: none;"><span>迈克尔·伯尔</span></a> 
+      <div class="-flair">
+       <span class="reputation-score"><span>310k</span></span><span aria-hidden="true"><span class="badge1"></span><span class="badgecount" style="color: var(--black-400);"><span>48</span></span></span><span class="v-visible-sr"><span>48枚金牌</span></span><span aria-hidden="true"><span class="badge2"></span><span class="badgecount" style="color: var(--black-400);"><span>494</span></span></span><span class="v-visible-sr"><span>494枚银牌</span></span><span aria-hidden="true"><span class="badge3"></span><span class="badgecount" style="color: var(--black-400);"><span>720</span></span></span><span class="v-visible-sr"><span>720枚青铜徽章</span></span>
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<div class="post-layout--right js-post-comments-component" style="color: #242729; text-align: left;"> 
+ <div class="comments js-comments-container bt bc-black-075 mt12 "> 
+  <ul class="comments-list js-comments-list"> 
+   <li class="comment js-comment "> 
+    <div class="js-comment-actions comment-actions"> 
+     <div class="comment-score js-comment-edit-hide">
+      <span class="cool" style="color: var(--black-350);"><span>4</span></span>
+     </div> 
+    </div> 
+    <div class="comment-text  js-comment-text-and-form"> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><span>与VC ++相同。“在每个主要版本（VS 2005、2008、2010、2012等）中，我们都更改了STL对象的表示形式，例如字符串和向量，使其与二进制不兼容。我们现在具有链接器检查，可防止混合编译目标文件/静态库用（见不同的主要版本（2010 +）......”&nbsp;</span><a style="color: var(--theme-link-color); text-decoration: underline;"><span>social.msdn.microsoft.com/forums/en-us/vcgeneral/thread/...</span></a><span>）</span></span><span>&nbsp;-&nbsp;&nbsp;</span><a title="1,724信誉" class="comment-user" style="color: var(--theme-link-color); text-decoration: none;"><span>SChepurin&nbsp;</span></a><span class="comment-date" style="color: var(--black-350);"><a class="comment-link" style="color: var(--black-350); text-decoration: none;"><span class="relativetime-clean"><span>7月27日在'12 8:22</span></span></a></span><span>&nbsp;</span><span></span>
+     </div> 
+    </div> </li> 
+   <li class="comment js-comment "> 
+    <div class="js-comment-actions comment-actions"> 
+     <div class="comment-score js-comment-edit-hide">
+      <br>
+     </div> 
+    </div> 
+    <div class="comment-text  js-comment-text-and-form"> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><span>我想反而</span><i><span>C</span></i><span>&nbsp;ABI是100％兼容的，对不对？</span></span><span>&nbsp;–&nbsp;&nbsp;</span><a title="1,235信誉积分" class="comment-user owner" style="color: var(--theme-link-color); text-decoration: none;"><span>Emanuele&nbsp;</span></a><span class="comment-date" style="color: var(--black-350);"><a class="comment-link" style="color: var(--black-350); text-decoration: none;"><span class="relativetime-clean"><span>'12 Jul 27'9:44</span></span></a></span>
+     </div> 
+    </div> </li> 
+   <li class="comment js-comment "> 
+    <div class="js-comment-actions comment-actions"> 
+     <div class="comment-score js-comment-edit-hide">
+      <span class="warm" style="color: var(--orange-800);"><span>11</span></span>
+     </div> 
+    </div> 
+    <div class="comment-text  js-comment-text-and-form"> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><code>libc++</code><span>我认为这与Clang不同。为什么anwser专注于标准库兼容性，而不是语言二进制兼容性？很明显，它们对方法使用相同的调用约定，它们在堆栈上返回对象，并且通常在语言级别上是二进制兼容的吗？</span></span><span>&nbsp;–&nbsp;&nbsp;</span><a title="6,241信誉积分" class="comment-user" style="color: var(--theme-link-color); text-decoration: none;"><span>cubuspl42 2014年</span></a><span>&nbsp;</span><span class="comment-date" style="color: var(--black-350);"><a class="comment-link" style="color: var(--black-350); text-decoration: none;"><span class="relativetime-clean"><span>6月22日0:48</span></span></a></span><span>&nbsp;</span><span></span>
+     </div> 
+    </div> </li> 
+   <li class="comment js-comment "> 
+    <div class="js-comment-actions comment-actions"> 
+     <div class="comment-score js-comment-edit-hide">
+      <span class="warm" style="color: var(--orange-800);"><span>5</span></span>
+     </div> 
+    </div> 
+    <div class="comment-text  js-comment-text-and-form"> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><span>正如上面的注释正确指出的那样，标准库的ABI兼容性与编译器的ABI不同。例如，</span><code>clang++ -stdlib=libstdc++</code><span>将生成与g ++ 100％ABI兼容的代码。但是，如今，clang</span><code>-stdlib=libc++</code><span>默认使用（而不是</span><code>stdlibc++</code><span>）。因此，尽管在发布时是错误的，但此答案在随后的几年中意外地变得正确了，至少在OSX上是如此。（编写此答案时，clang的默认设置为</span><code>-stdlib=libstdc++</code><span>，因此默认情况下二进制文件与g ++兼容。）</span></span><span>&nbsp;–&nbsp;&nbsp;</span><a title="13,732信誉积分" class="comment-user" style="color: var(--theme-link-color); text-decoration: none;"><span>Stuart Berg&nbsp;</span></a><span class="comment-date" style="color: var(--black-350);"><a class="comment-link" style="color: var(--black-350); text-decoration: none;"><span class="relativetime-clean"><span>15年9月24日在17:45</span></span></a></span>
+     </div> 
+    </div> </li> 
+   <li class="comment js-comment "> 
+    <div class="js-comment-actions comment-actions"> 
+     <div class="comment-score js-comment-edit-hide">
+      <br>
+     </div> 
+    </div> 
+    <div class="comment-text  js-comment-text-and-form"> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><span>顺便说一句，因为gcc 5.1 libstdc ++不再默认为COW字符串，因为C ++ 11禁止使用它们来更改ABI。（某些发行版，例如Slackware，继续使用旧的ABI）。libstdc ++</span><a style="color: var(--theme-link-color); text-decoration: underline;"><span>继续支持两个ABI，</span></a><span>但是您不能将目标文件/库（除libstdc ++之外）与不同的ABI混合在一起</span></span>
+     </div> 
+     <div class="comment-body js-comment-edit-hide">
+      <span class="comment-copy"><span></span></span> 
+      <br>
+     </div> 
+    </div> </li> 
+  </ul> 
+ </div> 
+</div>
+<h3 class="fs-headline1 ow-break-word mb8 grid--cell fl1" style="color: #242729; text-align: left;"><a class="question-hyperlink" style="color: var(--black-700); text-decoration: none;">Standard library ABI compatibility</a></h3>
+<p><a>https://stackoverflow.com/questions/60836246/standard-library-abi-compatibility</a></p>
+<p><a>https://stackoverflow.com/questions/41745527/cannot-view-stdstring-when-compiled-with-clang</a></p>
+<p><a>https://www.coder.work/article/3287082</a></p>
+<h3 class="title-article" style="color: #222226;">libstdc++版本冲突的解决</h3>
+<p><a rel="nofollow" href="https://blog.csdn.net/jindingwang/article/details/7569466">https://blog.csdn.net/jindingwang/article/details/7569466</a></p>
+<h3 class="title-article" style="color: #222226;">Linux下GLIBCXX和GLIBC版本低造成的编译错误的解决方案</h3>
+<p><a rel="nofollow" href="https://blog.csdn.net/fly_time2012/article/details/78482323">https://blog.csdn.net/fly_time2012/article/details/78482323</a></p>
+<h3 class="title-article" style="color: #222226;">linux glibc不兼容问题解决</h3>
+<p><a rel="nofollow" href="https://blog.csdn.net/itas109/article/details/106751869">https://blog.csdn.net/itas109/article/details/106751869</a></p>
+<h3>关于Mull的并行参数</h3>
+<p><img class="mce_image" id="images_161658611290219" src="https://bbs-img.huaweicloud.com/blogs/img/1616586113708016913.png"></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/250383#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Ubuntu_Blog" title="Ubuntu" href="https://developer.huaweicloud.com/tags/200030/blog_1">Ubuntu</a>
+        
+    </div>
+</div></div>

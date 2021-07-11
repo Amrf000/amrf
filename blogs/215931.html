@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><img alt="Screenshot_2020-11-30-10-49-31-924_com.android.chrome.jpg" class="mce_image " height="1097" id="image_images_mce_1" src="https://bbs-img.huaweicloud.com/blogs/img/1606704971107048062.jpg" width="617"></p>
+<p><a>https://www.npmtrends.com/react-bootstrap-vs-material-ui-vs-semantic-ui-vs-element-ui-vs-weui</a></p>
+<p><br></p>
+<p>/************************************************************************************************************************/</p>
+<p>&nbsp;发现一个好东西:</p>
+<p>jsplumb连线工具库</p>
+<p><a rel="nofollow" href="https://github.com/jsplumb/jsplumb">https://github.com/jsplumb/jsplumb &nbsp;</a></p>
+<p>在 Vue 中使用 jsPlumb 的简单 Tutorial<br><a>https://zhuanlan.zhihu.com/p/41808577 </a></p>
+<p>Jsplumb基础教程(vue+jsplumb+d3)<br><a rel="nofollow" href="https://blog.csdn.net/weixin_39085822/article/details/106879459">https://blog.csdn.net/weixin_39085822/article/details/106879459 </a></p>
+<p>vue项目中使用jsplumb流程图(以及类似官网的放大缩小漫游)<br><a rel="nofollow" href="https://blog.csdn.net/ya_nan_zhang/article/details/90643887">https://blog.csdn.net/ya_nan_zhang/article/details/90643887 &nbsp; </a></p>
+<p>jsplumb创建弯曲的连接<br><a>https://stackoverflow.com/questions/25026560/jsplumb-create-curved-connection</a></p>
+<p>jsplumb简单使用参考</p>
+<pre class="language-actionscript"><code>import { jsPlumb } from 'jsplumb'
+//  连接点定义
+const dot = {
+  isSource: false,
+  isTarget: false,
+  maxConnections: -1,
+  endpoint: [
+    'Dot',
+    {
+      radius: 3
+    }
+  ]
+}
+// 获得jsPlumb实例
+const plumbIns = jsPlumb.getInstance({
+  Container: '外层容器的id',
+  PaintStyle: {
+    stroke: '#B9C1D4',
+    strokeWidth: 1
+  }
+})
+// 创建连线
+plumbIns.ready(function() {
+  const info = [
+    ['Source的id', 'target的id']
+  ]
+  for (const item of info) {
+    plumbIns.connect(
+      {
+        source: item[0],
+        target: item[1],
+        anchor: ['Right', 'Left'],
+        connector: [
+          'Flowchart',
+          {
+            curviness: 50,
+            cornerRadius: 5,
+            gap: 3
+          }
+        ]
+      },
+      dot
+    )
+  }
+})</code></pre>
+<p>其他参考:<br>Render and Compile String using vue.js<br><a>https://stackoverflow.com/questions/54617255/render-and-compile-string-using-vue-js</a><br>How can I compile the v-html content inside the template of a component?<br><a>https://forum.vuejs.org/t/how-can-i-compile-the-v-html-content-inside-the-template-of-a-component/86966</a><br>Render v-html as VUE components<br><a>https://stackoverflow.com/questions/51006553/render-v-html-as-vue-components</a>&nbsp;<br>Vue - How to render HTML in vue components<br><a>https://stackoverflow.com/questions/56881982/vue-how-to-render-html-in-vue-components</a>&nbsp;<br>How to get the latest record in each group using GROUP BY? [duplicate]<br><a>https://stackoverflow.com/questions/10999522/how-to-get-the-latest-record-in-each-group-using-group-by</a>&nbsp;<br>Retrieving the last record in each group - MySQL<br><a>https://stackoverflow.com/questions/1313120/retrieving-the-last-record-in-each-group-mysql</a>&nbsp;<br>mysql分组取最大(最小、最新、前N条)条记录<br><a>https://www.cnblogs.com/fps2tao/p/9041175.html</a>&nbsp;<br>mysql sql技巧: 子查询改为连接查询&amp;&amp;涉及多个表的删除和更新<br><a rel="nofollow" href="https://blog.csdn.net/clark_xu/article/details/52892862">https://blog.csdn.net/clark_xu/article/details/52892862</a>&nbsp;<br>SQL中JOIN与子查询的优劣<br><a>https://segmentfault.com/q/1010000000134455</a>&nbsp;<br>MySQL子查询改写为表连接<br><a href="https://bbs.huaweicloud.com/forum/thread-79003-1-1.html">https://bbs.huaweicloud.com/forum/thread-79003-1-1.html</a>&nbsp;<br>mysql 分组查询取各分组的前两名及子查询性能优化<br><a rel="nofollow" href="https://blog.csdn.net/sinat_41780498/article/details/79956561">https://blog.csdn.net/sinat_41780498/article/details/79956561</a>&nbsp;<br>用于查询和数据库性能调整 的MySQL优化工具使用MySQL优化工具实现快速的性能调整<br><a>https://www.solarwinds.com/database-performance-analyzer/use-cases/mysql-optimization</a>&nbsp;<br>How can we convert subqueries to LEFT JOIN?<br><a>https://www.tutorialspoint.com/How-can-we-convert-subqueries-to-LEFT-JOIN</a>&nbsp;<br>通过本教程提高MySQL性能<br><a>https://stackify.com/mysql-tutorial-improve-performance/?_ga=2.195980908.1588041097.1615425235-343887412.1594795109</a>&nbsp;<br>v-contextmenu<br><a rel="nofollow" href="https://github.com/heynext/v-contextmenu">https://github.com/heynext/v-contextmenu</a>&nbsp;<br>ant design vue 和 v-contextmenu右键点击菜单实现树tree 增删改查<br><a rel="nofollow" href="https://blog.csdn.net/luyu13141314/article/details/101690316">https://blog.csdn.net/luyu13141314/article/details/101690316</a>&nbsp;<br>Ivy 是 Angular 框架的新一代编译器。<br><a>https://twohappy.me/2020/04/05/ivy-and-view-engine/</a>&nbsp;<br>Angular 4 Renderer2 Example<br><a>https://www.concretepage.com/angular-2/angular-4-renderer2-example</a>&nbsp;<br>mull install<br><a>https://mull.readthedocs.io/en/latest/Installation.html</a>&nbsp;<br><a>https://stackoverflow.com/questions/56567351/mutation-testing-fails-with-mull</a>&nbsp;<br>webpack 填坑之路--提取独立文件(模块)<br><a>https://segmentfault.com/a/1190000011920743</a>&nbsp;<br>调试webpack的插件<br><a rel="nofollow" href="https://blog.csdn.net/AtalantaDavis/article/details/97040240">https://blog.csdn.net/AtalantaDavis/article/details/97040240</a>&nbsp;<br>同样在 Chrome 88 和 Edge 88 中被删除的功能还有 FTP 协议的支持，使用浏览器打开 FTP 站点时，浏览器会弹出使用系统中的其他应用来打开 FTP 链接的提示。<br>如果你在平时的学习和工作中需要经常用到 FTP 访问，当然也可以配置其他浏览器来进行操作，比如 IE。<br>以上便是我们整理的 Chrome 88 和 Edge 88 本次更新的 12 个功能亮点，截至发稿，Chrome 88 稳定版已经开始推送，Edge 88 稳定版根据计划将于本周内推送完毕。<br><a>https://www.163.com/dy/article/G11C316E05119NPR.html</a>&nbsp;<br>js位操作<br><a>https://stackoverflow.com/questions/1436438/how-do-you-set-clear-and-toggle-a-single-bit-in-javascript</a>&nbsp;<br>gtest 参数化<br><a>https://www.cnblogs.com/jiangyibo/p/9826300.html</a></p>
+<p>other:</p>
+<p>avenueui<br>rxjs<br>jsplumb<br>lodash</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/215931#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

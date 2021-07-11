@@ -1,0 +1,85 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>首先cppdbg选项是需要安装额外的cpptools扩展支持的；</p>
+<p><strong>启动调试设置参考：</strong></p>
+<pre class="brush:xml;toolbar:false">{
+	"name":&nbsp;"case",
+	"type":&nbsp;"cppdbg",
+	"request":&nbsp;"launch",
+	"program":&nbsp;"/xxx/aaa",
+	"args":&nbsp;["--gtest_catch_exceptions=1",&nbsp;"--gtest_filter=aaaa.xxx"],
+	"stopAtEntry":&nbsp;false,
+	"cwd":&nbsp;"/xxx",
+	"environment":&nbsp;
+	[
+	&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name":&nbsp;"LD_LIBRARY_PATH",
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"value":&nbsp;"/xxx"&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;&nbsp;&nbsp;&nbsp;
+	],
+	"externalConsole":&nbsp;false,
+	"MIMode":&nbsp;"gdb",
+	"pipeTransport":&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;"pipeCwd":&nbsp;"",&nbsp;"pipeProgram":&nbsp;"ssh.exe",&nbsp;"pipeArgs":&nbsp;["root@xx.xx.xx.xx"],
+	&nbsp;&nbsp;&nbsp;&nbsp;"debuggerPath":&nbsp;"export&nbsp;LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/xxx;/usr/bin/gdb"
+	},
+	"sourceFileMap":&nbsp;{&nbsp;"/xxx":&nbsp;"d:/xxx"&nbsp;},
+	"setupCommands":&nbsp;[{&nbsp;"description":&nbsp;"Enable&nbsp;pretty-printing&nbsp;for&nbsp;gdb",&nbsp;"text":&nbsp;"-enable-pretty-printing",&nbsp;"ignoreFailures":&nbsp;true&nbsp;}],
+	"logging":&nbsp;{&nbsp;"engineLogging":&nbsp;true&nbsp;}//这个选项会开启调试过程中gdb的打印
+}</pre>
+<p>然后通过vscode.debug.startDebugging即可启动调试<br></p>
+<p><a>https://hekar.github.io/luminousforts-website/doc/code/debug/</a></p>
+<p><a>https://stackoverflow.com/questions/58478472/vs-code-does-not-stop-at-any-breakpoints-on-mac</a></p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode-cpptools/issues/1471">https://github.com/microsoft/vscode-cpptools/issues/1471</a></p>
+<p><a>https://code.visualstudio.com/docs/editor/debugging</a></p>
+<p><strong>关于设置额外的环境变量:</strong></p>
+<p><a>https://stackoverflow.com/questions/37338402/vs-code-cpptools-debugging-environment</a></p>
+<p><a>https://code.visualstudio.com/docs/cpp/launch-json-reference</a></p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode-cpptools/issues/616">https://github.com/microsoft/vscode-cpptools/issues/616</a></p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode-cpptools/issues/22">https://github.com/microsoft/vscode-cpptools/issues/22</a></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1596715930146016576.png" title="1596715930146016576.png" alt="image.png"></p>
+<p><a rel="nofollow" href="https://github.com/microsoft/vscode-cpptools/issues/2526">https://github.com/microsoft/vscode-cpptools/issues/2526</a></p>
+<p><a>https://stackoverflow.com/questions/37338402/vs-code-cpptools-debugging-environment</a></p>
+<p><a>https://stackoverflow.com/questions/13428910/how-to-set-the-environmental-variable-ld-library-path-in-linux</a></p>
+<p><a>https://stackoverflow.com/questions/34991934/how-to-run-c-program-with-so-file</a></p>
+<p><a rel="nofollow" href="https://github.com/Microsoft/VSLinux/issues/257">https://github.com/Microsoft/VSLinux/issues/257</a></p>
+<p>gdb&nbsp;set solib-search-path command</p>
+<p><a>https://visualgdb.com/gdbreference/commands/set_solib-search-path</a></p>
+<p><strong>其他：</strong></p>
+<p>一些纯node实现的rsync逻辑的实现，目前没有发现完全支持linux侧rsync的版本；</p>
+<p><a rel="nofollow" href="https://github.com/ttezel/anchor">https://github.com/ttezel/anchor</a></p>
+<p><a rel="nofollow" href="https://github.com/royalrover/node-rsync">https://github.com/royalrover/node-rsync</a></p>
+<p><a>https://www.npmjs.com/package/sync-directory</a></p>
+<p><a rel="nofollow" href="https://gist.github.com/rioki/3713041">https://gist.github.com/rioki/3713041</a></p>
+<p><a>https://developer.aliyun.com/mirror/npm/package/js-rsync</a></p>
+<p><a rel="nofollow" href="https://github.com/WebDeltaSync/WebRsync">https://github.com/WebDeltaSync/WebRsync</a></p>
+<p><a>https://www.npmjs.com/package/sftp2sync</a></p>
+<p><a rel="nofollow" href="https://github.com/lukasz-wronski/vscode-ftp-sync">https://github.com/lukasz-wronski/vscode-ftp-sync</a></p>
+<p>node 目录hash</p>
+<p><a>https://www.npmjs.com/package/folder-hash</a></p>
+<p><a>https://www.npmjs.com/package/md5-dir</a></p>
+<p><a rel="nofollow" href="https://github.com/mcavage/node-dirsum">https://github.com/mcavage/node-dirsum</a></p>
+<p>vscode插件获取当前打开的工作空间的路径</p>
+<p><a>https://stackoverflow.com/questions/39569993/vs-code-extension-get-full-path</a></p>
+<p><a>https://stackoverflow.com/questions/57843809/how-to-get-project-folder-path-in-visual-studio-code-extension</a></p>
+<p>node tar-fs例子</p>
+<p><a>https://www.codota.com/code/javascript/functions/tar-fs/extract</a> </p>
+<p><a>https://openbase.io/js/tar-stream</a> </p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/193127#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.TypeScript_Blog" title="TypeScript" href="https://developer.huaweicloud.com/tags/200564/blog_1">TypeScript</a>
+        
+    </div>
+</div></div>

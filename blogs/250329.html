@@ -1,0 +1,596 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h1 class="ds dt du dv b dw dx dy dz ea eb ec ed ee ef eg eh ei ej ek el em en eo ep eq er" style="color: #292929;"><span>每个开发人员都应该知道的一些很棒的现代C ++功能</span><img alt="0_IttEgAi22EwkjY2h.jpg" class="mce_image " id="image_images_161641632928323" src="https://bbs-img.huaweicloud.com/blogs/img/1616416331303099211.jpg" style="color: #252b3a; font-size: 16px;"><span>(原文作者:<span class="cf b ft ch bl fw fx fy fz ga gb er" style="color: #292929;">Mottakin)</span></span></h1>
+<section> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>作为一种语言，C ++已经发展了很多。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>当然，这并非一overnight而就。曾经有一段时间，C ++缺乏活力。很难喜欢这种语言。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>但是，当C ++标准委员会决定加快发展时，事情发生了变化。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>自2011年以来，C ++已经成为许多人一直期望的动态且不断发展的语言。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>不要误以为语言变得更容易了。它仍然是使用最广泛的最困难的编程语言之一，即使不是最困难的一种。但是C ++也比以前的版本更加易于使用。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>在我的上一篇文章中，我谈到&nbsp;了在过去几年中得到了丰富的&nbsp;</span><a class="cl ij" style="color: inherit; text-decoration: underline;"><span>C ++算法库&nbsp;</span></a>(https://medium.freecodecamp.org/how-i-discovered-the-c-algorithm-library-and-learned-not-to-reinvent-the-wheel-2398a34e23e3)<span>。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>今天，我们将研究每个开发人员都想知道的一些新功能（从C ++ 11开始，已经有8年的历史了）。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>还要注意，我在本文中略过了一些高级功能，但是我愿意在将来写它们。🤞️</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>去！</span></p> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>自动关键字</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>当C ++ 11首次引入时&nbsp;，生活变得更加轻松。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>的想法&nbsp;是让C ++编译器在编译时推断出数据的类型—而不是让您在<em class="kg">&nbsp;每次中断时都</em>声明该类型&nbsp;<em class="kg">。&nbsp;</em>当您拥有&nbsp;😛&nbsp;这样的数据类型时，这非常方便&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto<span>&nbsp;</span></strong></code><span></span><em class="kg"><span></span></em><span></span><code class="hz kb kc kd ke b"><strong class="im kf">map&lt;string,vector&lt;pair&lt;int,int&gt;&gt;&gt;</strong></code><span></span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz kp"> 
+      <div class="hy s hq hz"> 
+       <div class="ks ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="1_FpIfC3i3C1XV5KyT0ZLYfw.png" class="mce_image " id="image_images_161641638276040" src="https://bbs-img.huaweicloud.com/blogs/img/1616416383327002676.png"></p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>查看行号5。没有，您不能声明某些内容&nbsp;。这实际上是有道理的。第5行没有让编译器知道数据类型可以是什么。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">initializer</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>最初，它&nbsp;是有一定局限性的。然后，在该语言的更高版本中，添加了更多功能！&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto</strong></code><span></span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz kt"> 
+      <div class="hy s hq hz"> 
+       <div class="ku ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="1_djxcpNzkBv4qWbG_FeE_eg.png" class="mce_image " id="image_images_16164164034418" src="https://bbs-img.huaweicloud.com/blogs/img/1616416404072006540.png"></p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>在第7和8行中，我使用了括号括起来的初始化。这也是C ++ 11中添加的新功能。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>请记住，在使用的情况下，&nbsp;编译器必须采用某种方式来推断出您的类型。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>现在是一个很好的问题，&nbsp;</span><em class="kg"><span>如果我们写东西会&nbsp;</span></em><span>怎样？那是编译错误吗？那是向量吗？&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto a = {1, 2, 3}</strong></code><span></span></p> 
+   <div class="cy cz kv"> 
+    <div class="hy s hq hz"> 
+     <div class="kw ib s"> 
+      <div class="ht hu t u v hv aj bl hw hx"> 
+       <p><img alt="1_thcs9HD7UQrtWDeSWwTXGQ.jpeg" class="mce_image " id="image_images_161641642115630" src="https://bbs-img.huaweicloud.com/blogs/img/1616416421619059082.jpeg"></p> 
+      </div> 
+     </div> 
+    </div> 
+   </div> <span></span> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>实际上，C ++ 11引入了&nbsp;。如果声明，大括号初始化列表将被视为此轻量级容器&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">std::initializer_list&lt;type&gt;<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">auto</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>最后，正如我之前提到的，当您具有复杂的数据结构时，由编译器进行类型推导可能非常有用：</span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz kx"> 
+      <div class="hy s hq hz"> 
+       <div class="ky ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="1_2bUjEx0Uu9PCV_CJhFlWig.png" class="mce_image " id="image_images_161641645279169" src="https://bbs-img.huaweicloud.com/blogs/img/1616416453585045114.png"></p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>不要忘记签出第25行！该表达式&nbsp;实际上是C ++ 17中的一个新功能。这称为&nbsp;<strong class="im kf">结构化绑定&nbsp;</strong>。在该语言的早期版本中，您必须分别提取每个变量。但是结构化绑定使其更加方便。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto [v1,v2] = itr.second</strong></code><span></span><strong class="im kf"><span></span></strong><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>此外，如果您想使用引用获取数据，只需添加一个符号-即可&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">auto &amp;[v1,v2] = itr.second</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>整洁的。</span></p> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>Lambda表达式</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>C ++ 11引入了lambda表达式，类似于JavaScript中的匿名函数。它们是函数对象，没有任何名称，并且它们&nbsp;基于一些简洁的语法在各种</span><em class="kg"><span>&nbsp;范围内&nbsp;</span></em><span>捕获变量&nbsp;。它们也可以分配给变量。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>如果您需要在代码中完成一些小的快速操作，但是您不愿意为此编写一个完整的单独函数，则Lambda非常有用。另一个很常见的用途是将它们用作比较功能。</span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz kz"> 
+      <div class="hy s hq hz"> 
+       <div class="la ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="1_bn-dG2MDn5rXgbYk9DZk1g.png" class="mce_image " id="image_images_161641649414758" src="https://bbs-img.huaweicloud.com/blogs/img/1616416494761021166.png"></p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>上面的例子有很多话要说。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>首先，请注意花括号初始化如何为您增加负担。然后是通用的&nbsp;，这也是C ++ 11中的新增功能。然后，lambda函数用作数据的比较器。声明了lambda函数的参数，该参数&nbsp;是在C ++ 14中添加的。在此之前，我们不能使用&nbsp;函数参数。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">begin(), end()<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">auto<span>&nbsp;</span></strong></code><strong class="im kf"></strong><span></span><code class="hz kb kc kd ke b"><strong class="im kf">auto</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>注意我们如何用方括号开始lambda表达式&nbsp;。它们定义了lambda的范围-它对局部变量和对象有多少权限。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">[]</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>正如&nbsp;现代C ++上这个</span><a rel="nofollow" href="https://github.com/AnthonyCalandra/modern-cpp-features#lambda-expressions" class="cl ij" style="color: inherit; text-decoration: underline;"><span>&nbsp;出色的存储库中 (https://github.com/AnthonyCalandra/modern-cpp-features#lambda-expressions)</span></a><span>所定义的&nbsp;：</span></p> 
+   <ul class=""> 
+    <li class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf lb lc ld er"><code class="hz kb kc kd ke b">[]<span>&nbsp;</span></code><span>-什么也没捕获。因此，您不能在lambda表达式内使用外部作用域的任何局部变量。您只能使用参数。</span></li> 
+    <li class="ik il du im b et le io ip ew lf ir is it lg iv iw ix lh iz ja jb li jd je jf lb lc ld er"><code class="hz kb kc kd ke b">[=]<span>&nbsp;</span></code><span>—按值捕获作用域中的局部对象（局部变量，参数）。您可以使用它们，但不能修改它们。</span></li> 
+    <li class="ik il du im b et le io ip ew lf ir is it lg iv iw ix lh iz ja jb li jd je jf lb lc ld er"><code class="hz kb kc kd ke b">[&amp;]<span>&nbsp;</span></code><span>—通过引用捕获作用域中的局部对象（局部变量，参数）。您可以修改它们。像下面的例子。</span></li> 
+    <li class="ik il du im b et le io ip ew lf ir is it lg iv iw ix lh iz ja jb li jd je jf lb lc ld er"><code class="hz kb kc kd ke b">[this]<span>&nbsp;</span></code><span>—</span><code class="hz kb kc kd ke b"><span>&nbsp;</span>this<span>&nbsp;</span></code><span>按值捕获&nbsp;指针。</span></li> 
+    <li class="ik il du im b et le io ip ew lf ir is it lg iv iw ix lh iz ja jb li jd je jf lb lc ld er"><code class="hz kb kc kd ke b">[a, &amp;b]<span>&nbsp;</span></code><span>—&nbsp;通过引用</span><code class="hz kb kc kd ke b"><span>&nbsp;</span>a<span>&nbsp;</span></code><span>，</span><code class="hz kb kc kd ke b"><span>&nbsp;</span>b<span>&nbsp;</span></code><span>按值&nbsp;捕获对象&nbsp;。</span></li> 
+   </ul> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>因此，如果您想在lambda函数中将数据转换为其他格式，则可以利用作用域的优势来使用lambda。例如：</span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz lj"> 
+      <div class="hy s hq hz"> 
+       <div class="lk ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="1_B2pwK3bNtKFcuGO1fLcztw.png" class="mce_image " id="image_images_161641651597478" src="https://bbs-img.huaweicloud.com/blogs/img/1616416516575057010.png"></p> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>在上面的示例中，如果您&nbsp;在lambda表达式中通过值（）捕获了局部变量，则&nbsp;无法&nbsp;在第5行中进行更改&nbsp;。因为简单地说，您无权执行此操作。不要滥用您的权利！😛&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">[factor]<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">factor</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>最后，请注意我们&nbsp;作为参考。这样可以确保lambda函数内部的任何更改实际上都会更改&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">val<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">vector</strong></code><span></span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz ll"> 
+      <div class="hy s hq hz"> 
+       <div class="lm ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx">
+         <br>
+        </div> 
+        <p><img alt="0_0kU50Y_36U0Nw350.jpg" class="mce_image " id="image_images_161641653938421" src="https://bbs-img.huaweicloud.com/blogs/img/1616416539961068506.jpg"></p> 
+        <br> 
+        <div>
+         <br>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> <span>学习了现代C ++之后，他们会感到高兴！（照片由&nbsp;</span><a class="cl ij" style="color: inherit; text-decoration: underline;"><span>Ian Schneider&nbsp;</span></a><span>在</span><a class="cl ij" style="color: inherit; text-decoration: underline;"><span>&nbsp;Unsplash</span></a><span>上&nbsp;<a class="cl ij" style="color: inherit; text-decoration: underline;">拍摄&nbsp;</a>）</span>
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>if和switch内部的init语句</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>我一开始就很喜欢C ++ 17的这个功能。</span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz ln"> 
+      <div class="hy s hq hz"> 
+       <div class="lo ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx"> 
+         <p><img alt="1_LKpeYuEUJUc3-Zo8-F3y_w.png" class="mce_image " id="image_images_161641655830736" src="https://bbs-img.huaweicloud.com/blogs/img/1616416559017061670.png"></p> 
+        </div> 
+        <div>
+         <br>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>因此，显然，您现在可以在&nbsp;块内同时进行变量的初始化和检查条件&nbsp;。这对于使代码简洁明了非常有帮助。通用形式为：&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">if/switch</strong></code><span></span></p> 
+   <pre class="hj hk hl hm hn lp lq bu  language-javascript"><code>if( init-statement(x); condition(x)) {
+// do some stuff here
+} else {
+// else has the scope of x
+// do some other stuff
+}</code></pre> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>在constexpr的编译时完成</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><code class="hz kb kc kd ke b"><strong class="im kf">constexpr<span>&nbsp;</span></strong></code><span>很酷！</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>假设您有一些要评估的表达式，并且初始化后其值不会改变。您可以预先计算该值，然后将其用作宏。或者，如提供的C ++ 11一样，您可以使用&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>程序员倾向于尽可能减少其程序的运行时间。因此，如果有一些操作可以使编译器完成并减轻运行时的负担，则可以改善运行时。</span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz lv"> 
+      <div class="hy s hq hz"> 
+       <div class="lw ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx"> 
+         <p><img alt="1_b_pmcPSAbckcVO7TEmF9tA.png" class="mce_image " id="image_images_161641658063630" src="https://bbs-img.huaweicloud.com/blogs/img/1616416581110057048.png"></p> 
+        </div> 
+        <div>
+         <br>
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>上面的代码是的非常常见的示例&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>由于我们将fibonacci计算函数声明为&nbsp;，因此编译器可以&nbsp;在编译时进行预计算&nbsp;。所以编译后就可以替换行了&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">fib(20)</strong></code><strong class="im kf"></strong><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><code class="hz kb kc kd ke b"><strong class="im kf">const long long bigval = fib(20);<span>&nbsp;</span></strong></code><strong class="im kf"></strong><span>和</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><code class="hz kb kc kd ke b"><strong class="im kf">const long long bigval = 2432902008176640000;</strong></code></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>请注意，传递的参数是一个&nbsp;值。这是声明函数的重要点&nbsp;-传递的参数也应该为&nbsp;or&nbsp;。否则，该函数将作为普通函数运行，这意味着在编译期间不会进行任何预先计算。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">const<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">const</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>变量也可以是&nbsp;。如您所料，在那种情况下，这些变量必须在编译时可计算。否则，您将收到编译错误。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">constexpr</strong></code><span></span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>有趣的是，后来在C ++ 17，&nbsp;并&nbsp;进行了介绍。&nbsp;</span><code class="hz kb kc kd ke b"><a class="cl ij" style="color: inherit; text-decoration: underline;"><strong class="im kf">constexpr-if<span>&nbsp;</span></strong></a></code><span></span><code class="hz kb kc kd ke b"><a class="cl ij" style="color: inherit; text-decoration: underline;"><strong class="im kf">constexpr-lambda</strong></a></code><strong class="im kf"></strong><span></span></p> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>元组</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>就像一样&nbsp;，&nbsp;是各种数据类型的固定大小值的集合。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">pair<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">tuple</strong></code><span></span></p> 
+  </div> 
+ </div> 
+ <div class="hi"> 
+  <div class="n p"> 
+   <div class="kh ki kj kk kl km af kn ag ko ai aj"> 
+    <div class="ho hp hq hr aj hs"> 
+     <div class="cy cz kp"> 
+      <div class="hy s hq hz"> 
+       <div class="lx ib s"> 
+        <div class="ht hu t u v hv aj bl hw hx"> 
+         <p><img alt="1_O0bsV0XdVhflKEm_1QB4Uw.png" class="mce_image " id="image_images_16164166275601" src="https://bbs-img.huaweicloud.com/blogs/img/1616416628186026601.png"></p> 
+        </div> 
+       </div> 
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+  </div> 
+ </div> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>有时使用&nbsp;代替&nbsp;会更方便&nbsp;。&nbsp;与普通的C类型数组相似，并具有C ++标准库的几个功能。此数据结构是在C ++ 11中添加的。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">std::array<span>&nbsp;</span></strong></code><span></span><code class="hz kb kc kd ke b"><strong class="im kf">tuple<span>&nbsp;</span></strong></code><span></span><strong class="im kf"></strong><code class="hz kb kc kd ke b"><strong class="im kf">array</strong></code><strong class="im kf"></strong><span></span></p> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>类模板参数推导</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>功能的非常冗长的名称。这个想法是，从C ++ 17开始，标准类模板也将进行模板的参数推导。以前，仅功能模板支持该功能。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span style="color: #000000;">因此，</span></p> 
+   <pre class="hj hk hl hm hn lp lq bu  language-javascript"><code>std::pair&lt;std::string, int&gt; user = {"M", 25}; // previous
+std::pair user = {"M", 25}; // C++17</code></pre> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>推导的类型是隐式完成的。这对于变得更加方便&nbsp;。&nbsp;</span><code class="hz kb kc kd ke b"><strong class="im kf">tuple</strong></code><span></span></p> 
+   <pre class="hj hk hl hm hn lp lq bu  language-javascript"><code>// previous
+std::tuple&lt;std::string, std::string, int&gt; user ("M", "Chy", 25);
+// deduction in action! 
+std::tuple user2("M", "Chy", 25);</code></pre> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>如果您不太熟悉C ++模板，则上述功能将毫无意义。</span></p> 
+   <h2 class="jg jh du cf ji jj jk ev jl jm jn ey jo ez jp fb jq fc jr fe js ff jt fh ju jv er"><span>智能指针</span></h2> 
+   <p class="ik il du im b et jw io ip ew jx ir is it jy iv iw ix jz iz ja jb ka jd je jf dm er"><span>指针可能是地狱般的。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>由于C ++之类的语言为程序员提供的自由度，有时候使自己陷入困境非常容易。在很多情况下，指针是造成危害的原因。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>幸运的是，C ++ 11引入了智能指针，这些指针比原始指针要方便得多。它们通过尽可能释放内存来帮助程序员防止内存泄漏。它们还提供异常安全性。</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>我想在这篇文章中写有关C ++中的智能指针的文章。但是显然，关于它们有很多重要的细节。他们应有自己的职位，我当然愿意在不久的将来写一篇关于他们的文章。</span></p> 
+  </div> 
+ </div> 
+</section>
+<div class="n p fk ly lz ma" style="color: rgba(0, 0, 0, 0.8);">
+ <span class="mb fp gt mc md me"></span><span class="mb fp gt mc md me"></span><span class="mb fp gt mc md"></span> 
+ <br>
+</div>
+<section> 
+ <div class="n p"> 
+  <div class="ab ac ae af ag dr ai aj"> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>今天就这些。请记住，C ++实际上在该语言的最新版本中添加了许多新功能。如果您有兴趣，应该检查一下。这是现代C ++上的一个很棒的存储库，其字面名称为&nbsp;</span><a rel="nofollow" href="https://github.com/rigtorp/awesome-modern-cpp" class="cl ij" style="color: inherit; text-decoration: underline;"><span>Awesome Modern C ++&nbsp;</span></a>(https://github.com/rigtorp/awesome-modern-cpp)<span>！</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>阿迪奥斯！</span></p> 
+   <p class="ik il du im b et in io ip ew iq ir is it iu iv iw ix iy iz ja jb jc jd je jf dm er"><span>(原文:https://radiant-brushlands-42789.herokuapp.com/medium.com/free-code-camp/some-awesome-modern-c-features-that-every-developer-should-know-5e3bf6f79a3c)</span></p> 
+  </div> 
+ </div> 
+</section>
+<p><span><span class="cf b ft ch bl fw fx fy fz ga gb er" style="color: #292929;"></span></span>----------------------------</p>
+<h1><span><span class="cf b ft ch bl fw fx fy fz ga gb er" style="color: #292929;">在C ++ 11中move语义</span></span></h1>
+<p></p>
+<p><img alt="1_zYzyNyTI1soUFT3TJ25zXQ.jpeg" class="mce_image " id="image_images_161641706648691" src="https://bbs-img.huaweicloud.com/blogs/img/1616417066916029076.jpeg"></p>
+<p></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>Move语义</span></strong><span>是右值引用的第一个用例，</span><strong class="hi cd"><span>&nbsp;</span></strong><span>其主要目的</span><strong class="hi cd"><span>&nbsp;</span></strong><span>是将昂贵的复制操作替换为较便宜的移动操作，例如复制构造函数/复制赋值运算符可以帮助我们实现复制语义，移动构造函数/移动赋值运算符可以帮助我们实现移动语义，但是要了解此主题，我们首先需要了解左值，右值，左值引用和右值引用，然后我们才能讨论这一点。</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>左值和右值：</span></strong></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>左值：</span></strong><span>通常是表达式，您可以使用例如命名变量的地址</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>Rvalues：</span><span>&nbsp;</span></strong><span>是不是Lvalues的那些表达式。他们大多是临时人员，其范围仅限于该陈述</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span style="color: #000000;"><strong class="hi cd">例子</strong>：</span></p>
+<pre class="ib ic id ie if jc jd je"><span style="color: #ecf0f1; text-align: start;">1. int x = 9;// x is lvalue and 9 is rvalue</span><br><span style="color: #ecf0f1; text-align: start;">2. auto emp = getEmployee(101); //emp is lvalue &amp; getEmployee(101) expression and 101 is rvalue</span><br><span style="color: #ecf0f1; text-align: start;">3. processEmployee(emp);//passing lvaue to processEmployee</span><br><span style="color: #ecf0f1; text-align: start;">4. processEmployee(getEmployee(101));//passing rvalue to processEmployee</span><br><span style="color: #ecf0f1; text-align: start;">5. Employee&amp; lemp = emp;//lemp is lvalue reference to lvalue emp</span><br><span style="color: #ecf0f1; text-align: start;">6. Employee&amp;&amp; remp = getEmployee(101); //remp is rvalue reference to rvalue getEmployee(101)</span><br><span style="color: #ecf0f1; text-align: start;">7. const Employee&amp; cemp = getEmployee(101); //const reference to temporary(C++03)/rvalue(C++11)</span></pre>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>所以现在我们很清楚Lvalues和Rvalues了，正如在示例5和6中看到的那样，C ++ 11中的lvalue引用和rvalue引用现在有两种类型的引用，以前我们只有一种引用类型，对于临时类型，我们需要使用const参考。</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>右值引用：</span></strong><span>正如我们在示例中看到的那样，它们在语法上是用两个&amp;&amp;编写的，顾名思义，它们仅绑定到右值，并且其主要目标是识别可从其移出的对象。</span></p>
+<pre class="ib ic id ie if jc jd je"><span class="eo jf jg hh jh b cr ji jj s jk" style="color: #ecf0f1;">int y = 10;</span><span class="eo jf jg hh jh b cr jl jm jn jo jp jj s jk" style="color: #292929;"><span style="color: #ecf0f1;">int &amp;&amp; x = 9;// fine as rvalue reference can bind to rvalues</span><br><span style="color: #ecf0f1;">int &amp;&amp; r = y; //error as you cannot bind lvalue to rvalue refer</span>ence</span></pre>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>这里需要注意的一点是x和r本身是</span><strong class="hi cd"><span>左值，</span></strong><span>其类型是</span><strong class="hi cd"><span>右值引用，</span></strong><span>并且它们是左值，因为它们具有名称（x和r），其次我们可以获取它们的地址，并且它们的寿命也超出此行。</span><strong class="hi cd"><span>所以在这之后，如果我们做int &amp;&amp; temp = r;&nbsp;那么这将是错误的，因为r是不能由rvalue reference引用的左值</span></strong><span>。</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>移动语义：</span></strong></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>现在掌握了左值，右值，左值引用（c ++ 98的引用）和右值引用的知识，让我们跳到Move Semantics（在右值引用的帮助下实现），并了解一个例子：</span></p>
+<div class="ft fu jq"> 
+ <div class="iq s ah ir"> 
+  <div class="jr it s"> 
+   <div class="em il gb fl fi im w in io ip"> 
+    <p><img alt="0_0eFQ197ElsN7_6wX.jpg" class="mce_image " id="image_images_161641714233419" src="https://bbs-img.huaweicloud.com/blogs/img/1616417142771085030.jpg"></p> 
+   </div> 
+  </div> 
+ </div> 
+</div>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>请记住此示例，以更好地理解此博客文章</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>所以这里的getMyParser是工厂函数，它将基于传递给函数的第一个参数创建OptionParser或FutureParser对象，第二个参数是const引用，以便它可以同时获取左值和右值，然后将其转发给类的构造函数。完美，但是如果xml解析器的工作是解析巨大的输入xml（将它作为字符串传递给工厂函数，然后作为对构造函数的引用传递给我们，我们将使用该类构造函数初始化类std :: string成员函数作为下面的快速参考）是FutureXML班级 ：</span></p>
+<div class="ft fu jq"> 
+ <div class="iq s ah ir"> 
+  <div class="js it s"> 
+   <div class="em il gb fl fi im w in io ip"> 
+    <p><img alt="0_pY25cHh_iKPGIgXz.jpg" class="mce_image " id="image_images_16164171657900" src="https://bbs-img.huaweicloud.com/blogs/img/1616417166229016299.jpg"></p> 
+    <br>
+   </div> 
+  </div> 
+ </div> 
+</div>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>因此，如果按以下方式调用工厂函数，则一切都很好：</span></p>
+<pre class="ib ic id ie if jc jd je"><span style="color: #ecf0f1;"><span class="eo jf jg hh jh b cr ji jj s jk">std::string bigFutureXML ("This is test xml..........");<br><br></span><span class="eo jf jg hh jh b cr jl jm jn jo jp jj s jk">auto xmlParser = getMyParser(1,bigFutureXML);</span></span></pre>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>因为bigFutureXML在这里是左值，即使在函数调用后我们也不想保留它，所以在m_sfutureXML中复制它很有意义，但是如果函数调用如下：</span></p>
+<pre class="ib ic id ie if jc jd je"><span style="color: #ecf0f1; text-align: start;">auto xmlParser = getMyParser(1,std::string("This is test xml......."));</span></pre>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>这里的第二个参数是右值，将其复制到类成员函数中是不合逻辑的，因为此右值在此行之后就被销毁了。因此，在这里我们不必调用昂贵的std :: string复制构造函数，并且效率低下，并且由于c ++都是关于效率的，所以在新的c ++ 11中，他们引入了移动语义（通过rvalue引用实现），从而可以移动rvalue而不是被复制。作为示例，这是我们如何实现FutureParser rvalue重载构造函数的方法：</span></p>
+<div class="ft fu jq"> 
+ <div class="iq s ah ir"> 
+  <div class="jt it s"> 
+   <div class="em il gb fl fi im w in io ip"> 
+    <p><img alt="0_46ZyCEqlKAL0u2ZI.jpg" class="mce_image " id="image_images_161641720558166" src="https://bbs-img.huaweicloud.com/blogs/img/1616417205954074625.jpg"></p> 
+    <br>
+   </div> 
+  </div> 
+ </div> 
+</div>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>现在，如果我们调用工厂函数，如下所示：</span></p>
+<pre class="ib ic id ie if jc jd je"><span style="color: #ecf0f1; text-align: start;">auto xmlParser = getMyParser(1,std::string("This is test xml......."));</span></pre>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>那么它将调用FutureParser构造函数的右值重载对吗？</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>不，记住getMyParser，我们在其中调用类构造函数，如新的FutureParser（arg_sInputXML），此时arg_sInputXML是左值，左值未绑定到右值引用，因此它将调用类左值参数化的构造函数，而不是该值，所以我们该怎么办这样就可以调用该类的右值构造函数，答案是将arg_sInputXML从左值转换为右值，这可以通过std :: move实现。</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>当arg_sInputXML转换为rvalue时，将调用std :: string move构造函数，并将原始arg_sInputXML渲染为无用，而m_sfutureXML将包含该字符串。这种方法不是很好，因为它将使该左值无效，并且在函数调用后使用该值会导致未定义的行为，因此我们要做的是再编写一个仅对右值有效的重载，如下所示：</span></p>
+<div class="ft fu jq"> 
+ <div class="iq s ah ir"> 
+  <div class="ju it s"> 
+   <div class="em il gb fl fi im w in io ip">
+    <br>
+   </div> 
+   <p><img alt="0_fS7rKRVmkp8OWtjP.jpg" class="mce_image " id="image_images_16164172274461" src="https://bbs-img.huaweicloud.com/blogs/img/1616417227885090534.jpg"></p> 
+  </div> 
+ </div> 
+</div>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><strong class="hi cd"><span>请记住，std::move不会移动任何东西，它只是将左值转换为右值的静态转换</span></strong><span>，对于右值类，移动构造函数被调用，效率更高，其效率的原因及其实现方式将在其他部分进行解释博客文章。</span></p>
+<p class="hf hg hh hi b hj ix hk hl hm iy hn ho hp iz hq hr hs ja ht hu hv jb hw hx hz cq eo"><span>(原文:https://medium.com/@kpl.vermani/move-semantics-in-c-11-a0b836a8b4fa)</span></p>
+<p><span><span class="cf b ft ch bl fw fx fy fz ga gb er" style="color: #292929;"></span></span>------------</p>
+<h1 class="fk fl fm fn b fo fp fq fr fs ft fu fv fw fx fy fz ga gb gc gd ge gf gg gh gi bx" style="color: #292929;"><span>用C ++的功能方式做到这一点</span></h1>
+<p><span>(原文作者:Sheik Arbaz)</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>在毕业的日子里，我花了一些时间在C ++上做竞争性编程。但是我从来没有机会在我的办公室项目中使用C ++，而是用函数式编程（FP）语言进行编码。但是两年后，我有机会从事C ++工作。作为一个非常喜欢凉爽的FP风格（使开发人员的工作变得轻松）的函数式编程爱好者，我开始探索在C ++中以FP风格进行编码的方法。我了解到C ++在最新版本中具有惊人的功能。在此博客中，我们将介绍函数式编程的基础知识，以及在C ++中可能实现的哪些部分。</span></p>
+<h1 class="iu iv fm as iw ix iy ib iz ja jb if jc jd je jf jg jh ji jj jk jl jm jn jo jp bx" style="color: #292929;"><span>先决条件：</span></h1>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it jv jw jx bx" style="color: #292929;"><span>一点C ++经验</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><span>具备任何函数式编程语言或范例的经验</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><span>支持C ++ 11标准的C ++编译器</span></li> 
+</ul>
+<h1 class="iu iv fm as iw ix iy ib iz ja jb if jc jd je jf jg jh ji jj jk jl jm jn jo jp bx" style="color: #292929;"><span>让我们开始吧</span></h1>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>函数式编程是一种声明式的编程风格。与命令式风格相反，命令式风格只关注“<strong class="hy kd">如何解决</strong>”，而它的唯一关注点是“</span><strong class="hy kd"><span>解决什么</span></strong><span>”。它使用表达式而不是语句。</span><strong class="hy kd"><span></span></strong><span></span></p>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>功能编程关键概念</span></h2>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it jv jw jx bx" style="color: #292929;"><span>用作一流对象</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><span>纯功能</span></li> 
+</ul>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>功能性编程规则</span></h2>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it jv jw jx bx" style="color: #292929;"><em class="kv"><span>不可变的变量</span></em><span>：在函数式编程中，您无法在变量初始化后对其进行修改。你就是不行&nbsp;您可以创建新变量，但不能修改现有变量。</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><em class="kv"><span>无副作用</span></em><span>：副作用是状态变化，而不是当前正在执行的功能。修改函数外部定义的变量，打印到控制台，引发异常以及从文件读取数据都是副作用的示例。</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><em class="kv"><span>无状态：</span></em><span>一个函数可能具有内部包含临时状态的局部变量，但是该函数不能引用该函数所属的类或对象的任何成员变量。国家鼓励易变性导致副作用。函数式编程不希望您那样做。</span></li> 
+</ul>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>这些是FP的一些关键概念，即规则。即使您始终不遵循所有这些规则，您仍然可以从应用程序中的FP创意中受益。无论如何，C ++绝不是要成为严格或纯函数式编程语言。老实说，函数式编程并不是解决每个问题的正确工具（是的，这是我的观点。将来可能会有所改变。观点会随着经验的变化而改变！）。现在，让我们了解FP擅长解决哪些问题。</span></p>
+<h1 class="iu iv fm as iw ix iy ib iz ja jb if jc jd je jf jg jh ji jj jk jl jm jn jo jp bx" style="color: #292929;"><span>用作一流对象</span></h1>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>在函数式编程世界中，函数是一流的对象。函数与其他任何变量一样被对待。例如，一个函数可以作为参数传递给其他函数，也可以作为值分配给变量。</span></p>
+<div class="es et kw"> 
+ <div class="lh s bz li"> 
+  <div class="lj lk s"> 
+   <p><img alt="1_djs_FQQfX8cw6psDH_hfUw.jpeg" class="mce_image " id="image_images_161641756335254" src="https://bbs-img.huaweicloud.com/blogs/img/1616417563849064326.jpeg"></p> 
+  </div> 
+ </div> 
+</div>
+<p><span>用作一流对象（pinterest.com）</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>在C ++中，函数不是一流的对象。我们得到的最接近的是lambda表达式。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">auto printText = [](std::string text) { std::cout &lt;&lt; text &lt;&lt; std::endl; };</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>上面的代码创建了一个lambda&nbsp;</span><code class="li ly lz ma lu b">printText</code><span>，它接受一个参数</span><code class="li ly lz ma lu b">text<span>&nbsp;</span></code><span>，将其输出，但不返回任何内容。该</span><code class="li ly lz ma lu b">[]</code><span>支架是用来指定功能关闭。有关lambda的更多信息，请参见</span><a rel="nofollow" href="https://en.cppreference.com/w/cpp/language/lambda" class="cd mb" style="color: inherit; text-decoration: underline;"><span>此处</span></a><span>。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>通过查看如何应用不同的组合器（如过滤器，映射，C ++向量上的reduce或任何集合），来了解如何实现FP。让我们采用以下向量：</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">std::vector&lt;std::string&gt; messages = { "Hello Pal", "How are you?", "I'm still coding in C++" };</span></pre>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>for_each</span></h2>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">std::for_each(messages.begin(), messages.end(), printText);</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>前两个参数是集合的开始和结束。然后，我们传递的第三个参数是对每个元素进行操作的一元lambda。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>让我们创建一个自定义学生对象的向量，并在其上应用组合器。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">class Student</span><br><span style="text-align: start;">{</span><br><span style="text-align: start;">public:</span><br><span style="text-align: start;"> string _name;</span><br><span style="text-align: start;"> int _score;</span><br><span style="text-align: start;"> Student(string name, int score)</span><br><span style="text-align: start;"> {</span><br><span style="text-align: start;"> _name = name;</span><br><span style="text-align: start;"> _score = score;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;"> void incrementScore() {</span><br><span style="text-align: start;"> _score += 1;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;"> string name()</span><br><span style="text-align: start;"> {</span><br><span style="text-align: start;"> return _name;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;"> int score()</span><br><span style="text-align: start;"> {</span><br><span style="text-align: start;"> return _score;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;">};</span><br><span style="text-align: start;">std::vector&lt;Student&gt; students = {Student("Alice", 85), Student("Bob", 62), Student("Charlie", 81), Student("Jack", 90), Student("Jimmy", 40), Student("Sherlock", 67),};</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>假设您是老师，想打印他们的详细信息。然后，您可以使用for_each来打印其详细信息。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="color: #ecf0f1;"><span class="bx ke iv fm lu b bu lv lw s lx">auto printStudentDetails = [](Student student) { std::cout &lt;&lt; student.name() &lt;&lt; " " &lt;&lt; student.score() &lt;&lt; std::endl; };<br></span><span class="bx ke iv fm lu b bu mc md me mf mg lw s lx">std::for_each(students.begin(), students.end(), printStudentDetails);</span></span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>在上面的代码中，我们使用了打印lambda来打印每个学生的详细信息。</span></p>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>地图</span></h2>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>在C ++中，该功能的等效项</span><code class="li ly lz ma lu b">map</code><span>是</span><code class="li ly lz ma lu b">transform</code><span>。假设，您提出了一个分数不足或无效数据的问题，并想为每个学生加一个分数。然后，您可以使用transform更新每个学生的分数。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">auto addOne = [](Student student) { student.incrementScore(); return student; };</span><br><span style="text-align: start;"> std::transform(students.begin(), students.end(), students.begin(), addOne);</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>您必须提供输入集合的开始，结束指针，输出集合的开始指针和操作。您甚至可以</span><code class="li ly lz ma lu b">transform</code><span>一次执行两个集合。您可以检查出来，这超出了本博客的范围。</span></p>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>筛选</span></h2>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>在C ++中，该功能</span><code class="li ly lz ma lu b">filter</code><span>根据用例具有许多等效项。如果您只想获取具有特定属性的元素的副本，则可以使用</span><code class="li ly lz ma lu b">copy_if</code><span>。总之，有喜欢的其他功能</span><code class="li ly lz ma lu b">remove_if</code><span>，</span><code class="li ly lz ma lu b">find_if</code><span>等过。并且每个这样的函数有一个“&nbsp;</span><code class="li ly lz ma lu b">not</code><span>”候补以及像</span><code class="li ly lz ma lu b">copy_if_not</code><span>，</span><code class="li ly lz ma lu b">find_if_not</code><span>等等。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">auto aboveEighty = [](Student student) { return student.score() &gt; 80; };</span><br><span style="text-align: start;"> vector&lt;Student&gt; topStudents = {};</span><br><span style="text-align: start;"> auto it = std::copy_if(students.begin(), students.end(), back_inserter(topStudents), aboveEighty);</span><br><span style="text-align: start;"> std::for_each(topStudents.begin(), topStudents.end(), printStudentDetails);</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>的语法为</span><code class="li ly lz ma lu b">copy_if</code><span>：</span><code class="li ly lz ma lu b">copy_if(Iterator inputBegin, Iterator inputEnd, Iterator outputBegin, predicate)</code><span>。您必须提供输入集合的开始，结束指针，输出集合的开始指针和操作。我使用了</span><a class="cd mb" style="color: inherit; text-decoration: underline;"><span>back_inserter_iterator</span></a><span>而不是outputBegin，这使我可以将元素推入topStudents向量，而无需初始化向量。</span></p>
+<h2 class="ke iv fm as iw kf kg kh iz ki kj kk jc kl km kn jg ko kp kq jk kr ks kt jo ku bx" style="color: #292929;"><span>缩小或折叠</span></h2>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span></span><code class="li ly lz ma lu b"><a class="cd mb" style="color: inherit; text-decoration: underline;">reduce</a></code><span>C ++中的功能等效项是</span><code class="li ly lz ma lu b">accumulate</code><span>。假设您有一个带有数字的向量，并且您想将它们全部求和。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">vector&lt;int&gt; numbers{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};</span><br><span style="text-align: start;"> std::cout &lt;&lt; std::accumulate(numbers.begin(), numbers.end(), 0,</span><br><span style="text-align: start;"> [](int first, int second) { return first + second; });</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>您必须提供输入集合的开始，结束指针，累加器的初始值和二进制lambda。累加器也可以应用于我们的自定义学生矢量。下面的代码计算教室的平均分数。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span class="bx ke iv fm lu b bu lv lw s lx" style="color: #ecf0f1;"><span style="text-align: start;">auto binaryOp = [](int score, Student student) { return score + student.score(); };</span><br><span style="text-align: start;">std::cout &lt;&lt; std::accumulate(students.begin(), students.end(), 0, binaryOp)/students.size();</span></span></pre>
+<h1 class="iu iv fm as iw ix iy ib iz ja jb if jc jd je jf jg jh ji jj jk jl jm jn jo jp bx" style="color: #292929;"><span>纯函数</span></h1>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>在以下情况下，函数是纯函数：</span></p>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it jv jw jx bx" style="color: #292929;"><span>该功能的执行没有副作用。</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><span>函数的返回值仅取决于传递给函数的输入参数。</span></li> 
+</ul>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">int sum(int a, int b){</span><br><span style="text-align: start;"> return a+b;</span><br><span style="text-align: start;">}</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>上面创建的函数是纯函数。许多内置的C ++函数是纯函数，例如min，max，strlen等。您可以编写接受所有const参数且不更改实例变量的函数。在GCC中，您甚至可以使用“&nbsp;</span><code class="li ly lz ma lu b">pure</code><span>”属性将函数标记为纯函数，从而实现更好的优化。如果编译器将某个函数称为纯函数，则可以对其进行</span><a class="cd mb" style="color: inherit; text-decoration: underline;"><span>循环优化(http://en.wikipedia.org/wiki/Loop_optimization)</span></a><span>和</span><a class="cd mb" style="color: inherit; text-decoration: underline;"><span>子表达式消除(http://en.wikipedia.org/wiki/Common_subexpression_elimination)</span></a><span>。但是C ++默认情况下也具有副作用，可变性。</span></p>
+<pre class="kx ky kz la lb ls lt du"><span style="text-align: start;">public class NonPureFunctionAndMutatingParametersExample{</span><br><span style="text-align: start;"> private int total= 0;</span><br><br><span style="text-align: start;"> public int add(int nextValue) {</span><br><span style="text-align: start;"> this.total+= nextValue;</span><br><span style="text-align: start;"> return this.total;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;"> public void incrementScore(Student &amp;student){</span><br><span style="text-align: start;"> student.score += 1;</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;">}</span></pre>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>在上面的代码中：</span></p>
+<ul class="" style="color: rgba(0, 0, 0, 0.8);"> 
+ <li class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it jv jw jx bx" style="color: #292929;"><span>添加方法正在改变状态</span></li> 
+ <li class="hw hx fm hy b hz jy ib ic id jz if ig ih ka ij ik il kb in io ip kc ir is it jv jw jx bx" style="color: #292929;"><span>IncrementScore方法正在更改函数参数</span></li> 
+</ul>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>除非必要，否则我们应避免做上述事情。是的，在某些情况下，副作用和可变性会受益。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span></span><em class="kv"><span>不可变变量</span></em><span>规则是遵循的好习惯。一旦创建了变量并设置了它的值，就可以完全放心地知道该变量的值将永远不会改变，但有时并不适用。如果要构建必须在最终用户配置较低的计算机上运行的应用程序，则内存和时间将有限。在这种情况下，建议接受参数的引用/指针，对其进行更改以节省内存和复制时间。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span></span><em class="kv"><span>没有副作用</span></em><span>的规则非常有帮助。它使人确信此功能不会影响外界，因此可以在任何地方调用它。但这在某些情况下（例如，写入数据库）会带来困难（这是副作用）。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>还有其他一些概念，规则，例如高阶函数，循环递归等，可以在需要时应用。</span></p>
+<h1 class="iu iv fm as iw ix iy ib iz ja jb if jc jd je jf jg jh ji jj jk jl jm jn jo jp bx" style="color: #292929;"><span>结论</span></h1>
+<p class="hw hx fm hy b hz jq ib ic id jr if ig ih js ij ik il jt in io ip ju ir is it fe bx" style="color: #292929;"><span>正如我之前说的，函数式编程是一个了不起的范例，但是在某些情况下，不遵守其中的一些规则可以提供最佳的解决方案。</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>在过去的几年中，C ++发生了很大的变化。新的构造使其成为构建任何类型的应用程序的绝佳工具。不再</span><em class="kv"><span>只是</span></em><span>&nbsp;</span><em class="kv"><span>带有Class的C了</span></em><span>。快乐编码！！！</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>(原文:https://medium.com/swlh/doing-it-the-functional-way-in-c-5c392bbdd46a)</span></p>
+<p class="hw hx fm hy b hz ia ib ic id ie if ig ih ii ij ik il im in io ip iq ir is it fe bx" style="color: #292929;"><span>------------------------</span></p>
+<h1 class="hd co he au cd hf hg hh hi hj hk hl hm hn ho hp hq hr hs ht hu hv hw hx hy hz eo"><span>Lambdas：现代C ++的函数式编程伴侣</span></h1>
+<p><span>(原文:</span>Daksh<span>)</span></p>
+<section> 
+ <div class="n p"> 
+  <div class="aj ak al am an gj ap w"> 
+   <p class="jc jd he je b jf jg jh ji jj jk jl jm jn jo jp jq jr js jt ju jv cq eo" style="color: #292929;"><span>Lambda是</span><strong class="je cd"><em class="jw"><span>C ++ 11的</span></em></strong><span>全新功能之一，它改变了我们用C ++编写代码的方式。没有使用lambda的任何现代C ++代码都是不完整的，该lambda允许创建就地匿名函数并将C ++转换为成熟的</span><strong class="je cd"><em class="jw"><span>函数式编程</span></em></strong><span>语言。</span></p> 
+   <blockquote class="jx"> 
+    <p class="jy jz he au ka kb kc kd ke kf kg jv ax" style="color: #757575;"><span>由于语法和用法相对较新，因此许多C ++程序员仍然发现编写和使用情况有点困难。</span></p> 
+   </blockquote> 
+   <p class="jc jd he je b jf kh jg jh ji ki jj jk jl kj jm jn jo kk jp jq jr kl js jt jv cq eo" style="color: #292929;"><span>本博客旨在描述lambda的语法，用法和适用性，以及它如何帮助编写简短，可维护，功能强大的现代C ++代码。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>但是在了解什么是lambda并使用它们之前，我们需要对<strong class="je cd">函数式编程</strong>有所了解。</span><strong class="je cd"><span></span></strong></p> 
+   <h1 class="kr ks he au kt ku kv jg kw kx ky jj kz la lb lc ld le lf lg lh li lj lk ll lm eo" style="color: #292929;"><span>什么是函数式编程</span></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>在一个nutshell</span><span>，</span><strong class="je cd"><span>函数式编程</span></strong><span>是所有关于写作类似于数学函数的程序功能。例如，考虑数学函数</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">f(x)2 = x * x</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>该函数返回的平方，</span><code class="gx mf mg mh mb b">x</code><span>并且是一个独立的函数，既不依赖于函数范围，也不影响函数范围之外的任何事物。给定输入</span><code class="gx mf mg mh mb b">x</code><span>，输出将始终是</span><code class="gx mf mg mh mb b">x * x</code><span>始终的。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>我们还要考虑多项式数学函数，例如（x + y）2（整个平方），写为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">f(x,y)2 = x2 + y2 + 2xy</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>该功能可以简单地分解为多个较小的功能，例如</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">f(x,y)2 = f(x)2 + f(y)2 + f(2xy)</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>同样，此处的功能输出仅取决于输入参数。对于给定的输入，该函数将始终生成相同的输出。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>函数的其他特征是参数中传递的参数是</span><strong class="je cd"><em class="jw"><span>不可变的。</span></em></strong><span>在以上函数</span><code class="gx mf mg mh mb b">f(x)2</code><span>和中</span><code class="gx mf mg mh mb b">f(x,y)2</code><span>，参数</span><code class="gx mf mg mh mb b">x and y</code><span>都是不可变的。它们用于计算，但不会更改，因为数学函数总是从现有值中生成新值。这就是数学的原因，我们看不到像</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">f(x) = x++</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>但是</span><code class="gx mf mg mh mb b">x++</code><span>在C ++和其他编程语言中普遍存在的功能。</span><strong class="je cd"><span>函数式编程</span></strong><span>希望我们编写像数学函数这样的代码，其中函数是</span></p> 
+   <ol class=""> 
+    <li class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv mi mj mk eo" style="color: #292929;"><span>既不依赖也不更改功能外部的任何内容。</span></li> 
+    <li class="jc jd he je b jf ml jg jh ji mm jj jk jl mn jm jn jo mo jp jq jr mp js jt jv mi mj mk eo" style="color: #292929;"><span>一切都是不可变的，如果我们更改某些内容，它将创建一个新的内容，而不是更改现有项目</span></li> 
+   </ol> 
+   <h2 class="ma ks he au kt mq mr ms kw mt mu mv kz mw mx my ld mz na nb lh nc nd ne ll nf eo" style="color: #292929;"><span>为什么要使用函数式编程？</span></h2> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>在程序并行运行的多核CPU的世界中，功能性程序可以安全地执行多个CPU，而不必担心过度锁定，因为它不会使用或修改任何全局资源。</span></p> 
+   <blockquote class="ng nh ni"> 
+    <p class="jc jd jw je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>功能编程并不是什么新鲜事物，只是随着多核CPU的到来，它的真正潜力得以展现。</span></p> 
+   </blockquote> 
+  </div> 
+ </div> 
+</section>
+<div class="n p ca iv iw ix" style="color: rgba(0, 0, 0, 0.8);">
+ <span class="iy id dw iz ja jb"></span><span class="iy id dw iz ja jb"></span><span class="iy id dw iz ja"></span>
+ <br>
+</div>
+<section> 
+ <div class="n p"> 
+  <div class="aj ak al am an gj ap w"> 
+   <h1 class="kr ks he au kt ku nj jg kw kx nk jj kz la nl lc ld le nm lg lh li nn lk ll lm eo" style="color: #292929;"><span>Lambda的语法</span></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>拉姆达的语法组成的</span><code class="gx mf mg mh mb b">[]</code><span>，</span><code class="gx mf mg mh mb b">()</code><span>和</span><code class="gx mf mg mh mb b">{}</code><span>。下面的代码是有效的lambda语法，应由编译器成功编译</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">[](){};</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>在此代码中</span><br><span>-</span><code class="gx mf mg mh mb b">[]</code><span>是捕获列表</span><br><span>-</span><code class="gx mf mg mh mb b">()</code><span>是函数参数提供程序</span><br><span>-</span><code class="gx mf mg mh mb b">{}</code><span>是lambda实现</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>我们可以创建一个非常简单的lambda，它只将hello world打印为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">[](){</span><br><span style="text-align: start;"> cout&lt;&lt;”Hello World”&lt;&lt;endl;</span><br><span style="text-align: start;"> };</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>但是，lambda无法自动调用自身，我们需要显式调用它们。我们可以像调用其他任何普通函数一样，就地调用lambda。</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span class="eo ma ks he mb b cr mc md s me" style="color: #292929;"><span><span style="text-align: start; color: #ecf0f1;">[](){</span><br><span style="text-align: start; color: #ecf0f1;"> cout&lt;&lt;”Hello World”&lt;&lt;endl;</span><br><span style="text-align: start;"><span style="color: #ecf0f1;">}(); // See Here.. we're calling by appendin</span>g()</span>调用</span></span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>Lambda作为函数也可以返回值，并且Lambda的返回类型使用以下</span><code class="gx mf mg mh mb b">-&gt;</code><span>语法表示：</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">[]() -&gt; int{</span><br><span style="text-align: start;"> cout&lt;&lt;”Hello World”&lt;&lt;endl;</span><br><span style="text-align: start;"> return 1;</span><br><span style="text-align: start;">}();</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>我们可以在任何变量中收集lambda的返回值，如下所示：</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int retLambda = []()-&gt;int{</span><br><span style="text-align: start;"> cout&lt;&lt;"Hello World"&lt;&lt;endl;</span><br><span style="text-align: start;"> return 1;</span><br><span style="text-align: start;">}();</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>就像其他普通函数一样，我们也可以在lambda函数中的参数（）中传递为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int retLambda = [](int value)-&gt;int{</span><br><span style="text-align: start;"> cout&lt;&lt;"Hello World"&lt;&lt;endl;</span><br><span style="text-align: start;"> return value + 1;</span><br><span style="text-align: start;">}(100);</span></pre> 
+   <blockquote class="ng nh ni"> 
+    <p class="jc jd jw je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>lambda函数不必就地调用，我们可以很好地将lambda保留在</span><strong class="je cd"><em class="he"><span>功能指针内</span></em></strong><span>，并在我们选择的位置调用它。</span></p> 
+   </blockquote> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>我们可以使用C ++</span><code class="gx mf mg mh mb b">auto</code><span>关键字，也可以使用</span><code class="gx mf mg mh mb b">std::function&lt;&gt;</code><span>模板来保存函数，我们也可以使用</span><code class="gx mf mg mh mb b">C</code><span>样式</span><em class="jw"><span>函数指针</span></em><code class="gx mf mg mh mb b"><em class="jw">int(*lambdaFn)(int)</em></code><em class="jw"><span>&nbsp;</span></em><span>，但是通常由于语法复杂（读取指针）而避免使用。例如，让我们使用</span><code class="gx mf mg mh mb b">std::function&lt;&gt;</code><span>获取</span><strong class="je cd"><em class="jw"><span>函数参考</span></em></strong></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="color: #ecf0f1;"><span class="eo ma ks he mb b cr mc md s me">// Getting the function reference using std::function&lt;&gt;<br>std::function&lt;int(int)&gt; lambdaFn = [](int value)-&gt;int{ <br>    cout&lt;&lt;"Hello World"&lt;&lt;endl;<br>    return value + 1;<br>};</span><span class="eo ma ks he mb b cr no np nq nr ns md s me">// Calling the lambda function here<br>int retLambda = lambdaFn(100);</span></span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>lambda函数就像数学函数一样，在将</span><code class="gx mf mg mh mb b">101</code><span>值</span><code class="gx mf mg mh mb b">100</code><span>传递给lambda函数时，它将始终返回。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>我们也可以</span><code class="gx mf mg mh mb b">auto</code><span>在取功能参考时使用代替</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">auto lambdaFn = [](int value)-&gt;int{ </span><br><span style="text-align: start;"> cout&lt;&lt;"Hello World"&lt;&lt;endl;</span><br><span style="text-align: start;"> return value + 1;</span><br><span style="text-align: start;">};</span></pre> 
+   <h1 class="kr ks he au kt ku kv jg kw kx ky jj kz la lb lc ld le lf lg lh li lj lk ll lm eo" style="color: #292929;"><span>为</span><code class="gx mf mg mh mb b">f(x)2</code><span>和创建Lambda</span><code class="gx mf mg mh mb b">f(x,y)2</code></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>对于该函数，</span><code class="gx mf mg mh mb b">f(x) = x * x</code><span>我们可以将lambda函数编写为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">std::function&lt;int(int)&gt; fxsquare = [](int x) -&gt;int {</span><br><span style="text-align: start;"> return x * x;</span><br><span style="text-align: start;">};</span><br><span style="text-align: start;">int retValue = fxsquare(10);</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>对于函数</span><code class="gx mf mg mh mb b">f(x,y)2 = x2 + y2 + 2xy</code><span>，我们可以将lambda编写为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">std::function&lt;int(int, int)&gt; fxsquare = [](int x, int y) -&gt;int {</span><br><span style="text-align: start;"> int xsquare = [](int x) { return x * x; }(x);</span><br><span style="text-align: start;"> int ysquare = [](int y) { return y * y; }(y);</span><br><span style="text-align: start;"> int twoxy = [](int x, int y) { return 2 * x * y;}(x,y);</span><br><span style="text-align: start;"> return xsquare + ysquare + twoxy;</span><br><span style="text-align: start;">};</span><br><span style="text-align: start;">int retValue = fxsquare(5,3);</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>从这些lambda可以看出，它既满足函数编程的目的，即既不依赖函数，也不更改函数外部的任何内容，以及将输入变量视为不可变的。</span></p> 
+   <blockquote class="jx"> 
+    <p class="jy jz he au ka kb kc kd ke kf kg jv ax" style="color: #757575;"><span>我们在这里编写了一个纯函数式代码</span></p> 
+   </blockquote> 
+   <h2 class="ma ks he au kt mq nt ms kw mt nu mv kz mw nv my ld mz nw nb lh nc nx ne ll nf eo" style="color: #292929;"><span>除了功能之外，此代码还有什么好处？</span></h2> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>在这里，我们不会在全局范围内创建将永远存在的多个功能。内部的所有lambda函数在外部均不可用，并且在函数执行后将不在范围之内。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>同时，这些lambda确保我们不会影响作用域变量，因为即使lambda在函数内部就地创建，它也将无法访问在作用域内声明的任何局部变量。例如，在下面的代码中，</span><code class="gx mf mg mh mb b">localvar</code><span>无法在lambda函数内部访问该变量</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">[](){</span><br><span style="text-align: start;"> localvar++; // Compiler error..Not Accessible</span><br><span style="text-align: start;">}();</span></pre> 
+  </div> 
+ </div> 
+</section>
+<div class="n p ca iv iw ix" style="color: rgba(0, 0, 0, 0.8);">
+ <span class="iy id dw iz ja jb"></span><span class="iy id dw iz ja jb"></span><span class="iy id dw iz ja"></span>
+ <br>
+</div>
+<section> 
+ <div class="n p"> 
+  <div class="aj ak al am an gj ap w"> 
+   <h1 class="kr ks he au kt ku nj jg kw kx nk jj kz la nl lc ld le nm lg lh li nn lk ll lm eo" style="color: #292929;"><span>lambda的捕获列表[]</span></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>捕获列表</span><code class="gx mf mg mh mb b">[]</code><span>用于使本地范围变量可用于lambda函数，而无需在参数实参列表中显式传递它们。</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>可以通过值（即副本）或引用来使局部作用域变量可用。要传递值，我们需要在捕获列表中指定局部作用域变量。如下所示，只有捕获列表中提到的变量才可用于lambda函数。</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">int localvar2 = 200;</span><br><span style="text-align: start;">[localvar](){</span><br><span style="text-align: start;"> cout&lt;&lt;localvar; // Success.. </span><br><span style="text-align: start;"> cout&lt;&lt;localvar2; // Compiler Error... can't access</span><br><span style="text-align: start;">}();</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>要访问所有元素，我们可以在捕获列表中指定所有元素，例如</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">int localvar2 = 200;</span><br><span style="text-align: start;">[localvar, localvar2](){ ... }</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>或者我们可以</span><code class="gx mf mg mh mb b">=</code><span>在捕获列表中使用，这意味着所有局部作用域变量都在lambda函数中可用</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">int localvar2 = 200;</span><br><span style="text-align: start;">[=](){</span><br><span style="text-align: start;"> cout&lt;&lt;localvar; // Success... </span><br><span style="text-align: start;"> cout&lt;&lt;localvar2; // Success...</span><br><span style="text-align: start;">}();</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>按值传递参数是不可变的，即我们无法更改它们的值</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">int localvar2 = 200;</span><br><span style="text-align: start;">[=](){</span><br><span style="text-align: start;"> localvar++; // Compiler Error</span><br><span style="text-align: start;"> localvar2++; // Compiler Error</span><br><span style="text-align: start;">}();</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>您可能已经理解，这是在lambda中完成的，以实现功能编程的不变性，但是我们仍然可以使用C ++引用</span><code class="gx mf mg mh mb b">&amp;</code><span>机制通过引用传递局部范围变量并更改值。这些变化应在全球范围内反映出来。</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int localvar = 100;</span><br><span style="text-align: start;">int localvar2 = 200;</span><br><span style="text-align: start;">[&amp;](){</span><br><span style="text-align: start;"> localvar++; // Success...</span><br><span style="text-align: start;"> localvar2++; // Success...</span><br><span style="text-align: start;">}();</span></pre> 
+   <h1 class="kr ks he au kt ku kv jg kw kx ky jj kz la lb lc ld le lf lg lh li lj lk ll lm eo" style="color: #292929;"><span>为创建Lambda&nbsp;</span><code class="gx mf mg mh mb b">f(x,y)2 using Capture List</code></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>我们可以使用捕获列表机制来实现lambda函数，而无需将任何参数传递为</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">int x = 5, y = 3;</span><br><span style="text-align: start;">std::function&lt;int(void)&gt; fxsquare = [x,y]() -&gt;int {</span><br><span style="text-align: start;"> int xsquare = [](int x) { return x * x; }(x);</span><br><span style="text-align: start;"> int ysquare = [](int y) { return y * y; }(y);</span><br><span style="text-align: start;"> int twoxy = [](int x, int y) { return 2 * x * y;}(x,y);</span><br><span style="text-align: start;"> return xsquare + ysquare + twoxy;</span><br><span style="text-align: start;">};</span><br><span style="text-align: start;">int retValue = fxsquare();</span></pre> 
+   <h1 class="kr ks he au kt ku kv jg kw kx ky jj kz la lb lc ld le lf lg lh li lj lk ll lm eo" style="color: #292929;"><span>在班级内使用捕获列表</span></h1> 
+   <p class="jc jd he je b jf ln jg jh ji lo jj jk jl lp jm jn jo lq jp jq jr lr js jt jv cq eo" style="color: #292929;"><span>捕获列表也可以在类内部使用，但是，在类函数中，仅</span><code class="gx mf mg mh mb b">this</code><span>可用，因此我们只能</span><code class="gx mf mg mh mb b">this</code><span>在捕获列表中传递以访问lambdas内部的类变量。</span></p> 
+   <pre class="ls lt lu lv lw lx ly lz"><span style="text-align: start;">template&lt;int iValue, int jValue&gt;</span><br><span style="text-align: start;">struct AbcTest {</span><br><span style="text-align: start;"> int i = iValue;</span><br><span style="text-align: start;"> int j = jValue;</span><br><span style="text-align: start;"> int sumFn() {</span><br><span style="text-align: start;"> return [this](){</span><br><span style="text-align: start;"> return this-&gt;i + this-&gt;j;</span><br><span style="text-align: start;"> }();</span><br><span style="text-align: start;"> }</span><br><span style="text-align: start;">};</span><br><span style="text-align: start;">// Using class </span><br><span style="text-align: start;">AbcTest&lt;100,200&gt; aTest;</span><br><span style="text-align: start;">int sum = aTest.sumFn()</span></pre> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>这就是关于C ++ lambda的全部内容。希望它有助于人们理解并鼓励他们在代码中使用lambda</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>谢谢阅读…。！！！！</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>达克什</span></p> 
+   <p class="jc jd he je b jf km jg jh ji kn jj jk jl ko jm jn jo kp jp jq jr kq js jt jv cq eo" style="color: #292929;"><span>(原文:https://medium.com/@DakshHub/lambdas-the-companion-of-modern-c-b7dfd43b5abb)</span></p> 
+  </div> 
+ </div> 
+</section>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/250329#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.数据结构_Blog" title="数据结构" href="https://developer.huaweicloud.com/tags/200252/blog_1">数据结构</a>
+        
+    </div>
+</div></div>

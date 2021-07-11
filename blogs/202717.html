@@ -1,0 +1,20 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h5><p>问题描述：</p><p>表格中的一个单元格，单元格格式是日期,但其中的内容却是一个非日期的字符串，com.aspose.cells获取字符串异常</p><p>试了getvalue/getStringValue/getStringValueWithoutFormat/getDisplayValue,获取异常</p><p>com.aspose.cells.Style style = cell.getStyle();</p><p>style.setNumber(49);</p><p>cell.setStyle(style);</p><p>修改格式后再次获取依旧获取不到；</p><p><br></p><p>解决方案：</p><p>对应的采用poi相关的api可以获取到</p><p>cell.setCellType(org.apache.poi.xssf.usermodel.XSSFCell.CELL_TYPE_STRING);</p><p>String text = cell.getStringCellValue();</p><p><br><a></a><br></p></h5>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/202717#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+    </div>
+</div></div>

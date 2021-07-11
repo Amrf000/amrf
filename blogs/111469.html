@@ -1,0 +1,25 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>分析的项目代码可以在<a rel="nofollow" href="https://github.com/loiane/angular-login-hide-navbar">https://github.com/loiane/angular-login-hide-navbar</a>找到</p><p>这个项目里有一段用户登录认证服务如下:</p><p>auth.guard.ts</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1545184610327971.png" title="1545184610327971.png" alt="image.png" class="localImage"></p><p>auth.service.ts</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1545184659528327.png" title="1545184659528327.png" alt="image.png" class="localImage"></p><p>可以注意到这三句代码</p><p><span style="color:#073642;font-weight:bold;">private</span> loggedIn<span style="color:#859900;">:</span> <span style="color:#268bd2;">BehaviorSubject</span>&lt;<span style="color:#859900;">boolean</span>&gt; <span style="color:#859900;">=</span> <span style="color:#859900;">new</span> <span style="color:#268bd2;">BehaviorSubject</span>&lt;<span style="color:#859900;">boolean</span>&gt;(<span style="color:#b58900;">false</span>);</p><p><span style="color:#268bd2;">this</span>.<span style="color:#268bd2;">loggedIn</span>.<span style="color:#268bd2;">next</span>(<span style="color:#b58900;">true</span>);</p><p><span style="color:#268bd2;">this</span>.<span style="color:#268bd2;">authService</span>.<span style="color:#268bd2;">isLoggedIn</span>.<span style="color:#268bd2;">pipe</span></p><p>理解理解：</p><p>当Observer订阅了一个BehaviorSubject，它一开始就会释放Observable最近释放的一个数据对象，当还没有任何数据释放时，它则是一个默认值。接下来就会释放Observable释放的所有数据。如果Observable因异常终止，BehaviorSubject将不会向后续的Observer释放数据，但是会向Observer传递一个异常通知。简单来说，就是释放订阅前最后一个数据和订阅后接收到的所有数据:（参考:<a rel="nofollow" href="https://blog.csdn.net/mq2553299/article/details/78848773">理解RxJava（四）Subject用法及原理分析</a>）</p><p><span style="font-family:'Microsoft YaHei';font-size:medium;">take使得Observable仅仅发射我们指定的前面的n个项(参考:<a rel="nofollow" href="https://blog.csdn.net/tianjun2012/article/details/51276290">RxJS入门（5）----编写并发程序</a>)</span></p><p><br></p><p>未完待续<br></p><p><br></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/u012631731/article/details/72935313">RxJS异步通信之Subject和BehaviorSubject</a>
+ &nbsp; &nbsp;</p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/zhixin9001/article/details/77658225">Angular基础(八) Observable &amp; RxJS</a>
+ &nbsp; &nbsp;</p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/mq2553299/article/details/78848773">理解RxJava（四）Subject用法及原理分析</a>
+ &nbsp; &nbsp;</p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/kongbaidepao/article/details/51240456">PublishSubject，ReplaySubject，BehaviorSubject，AsyncSubject</a></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/cuishizun/article/details/80367442">Rxjs入门3-Operators[实例操作符、静态操作符、弹珠图、选择操作符、操作符分类]、Subject、为啥要定义Subject (主体)概念、Subject派生</a></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/qq_28949495/article/details/77351026">rxjs-操作符</a></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/weixin_41404460/article/details/83110952">angular6 rxjs6的新特性汇总</a></p><p><br></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/37252146/angular-2-redirect-on-click">Angular 2 redirect on click</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/45632013/why-routerlink-and-router-navigate-act-differently">Why routerLink and router.navigate() act differently?</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/45025334/how-to-use-router-navigatebyurl-and-router-navigate-in-angular">How to use router.navigateByUrl and router.navigate in Angular</a></p><p>参考:<a rel="nofollow" href="https://xgrommx.github.io/rx-book/index.html#">RxJS github.io</a></p><p>参考:<a rel="nofollow" href="https://github.com/xgrommx/rxjs-react-component">rxjs-react-component</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/111469#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Angular_Blog" title="Angular" href="https://developer.huaweicloud.com/tags/201890/blog_1">Angular</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.RxJS_Blog" title="RxJS" href="https://developer.huaweicloud.com/tags/200728/blog_1">RxJS</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <h3>spring上下文看起来加载了两次的问题</h3><p>以前遇到过真的加载了两次的问题，在前面的有一篇博客里记录过;</p><p>这次是把一个spring的非maven项目转换成maven项目，转换完了后发现所有控制器的映射都打印了两次,</p><p>一开始也是以为是重复加载，--------------------------------</p><p>-----------------------------------后来在"Initializing Spring root WebApplicationContext"这个点打上了断点，</p><p>执行了一次，打印了两条，才把问题的焦点移到了log4j的配置上面,</p><p>移除logger name="org.springframework..这些多余的日志类后，正常了</p><p><br></p><h3>另一个问题</h3><p>升级完之后，发现login会无限重定向</p><p>这个正常情况下是用来保留登录前url的功能的,但是登录设置了security="none"，正常情况下不会走"class ContinueEntryPoint extends LoginUrlAuthenticationEntryPoint"部分的逻辑----------------------以前遇到同样的情况是因为清理无用代码的时候误删了login的control,<br></p><p>这次的情况也是login进不了对应的control，但是实际上control是映射了的，后来发现</p><p>&nbsp; &nbsp; &lt;security:http security="none" pattern="/xx/login/" /&gt;加上上面这个就好了</p><p>&nbsp; &nbsp; &lt;security:http security="none" pattern="/xx/login" /&gt;</p><p>但是问题在于在另一个项目里和没升级maven项目之前 表现是正常的，</p><p>这个项目和另一个项目在登录这块的差异其实只有一点，就是这个项目配了两个security:authentication-provider,但是也不能解释为什么原项目一转换成maven项目就异常了;</p><p><br></p><h3>其他：</h3><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p><a rel="nofollow" href="https://blog.csdn.net/wudiyong22/article/details/78009523">Eclipse中maven项目update project后项目编码会自动变成GBK的问题</a></p></li><li><p>eclipse maven安装本地的jar</p></li></ul><pre class="brush:xml;toolbar:false">&lt;plugin&gt;
+&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;maven-install-plugin&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&lt;version&gt;2.5.2&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&lt;configuration&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;net.xxx&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;xxx&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;1.10&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;packaging&gt;jar&lt;/packaging&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;file&gt;D:\Users\cxxx-1.10.jar&lt;/file&gt;
+&nbsp;&nbsp;&nbsp;&lt;/configuration&gt;
+&nbsp;&nbsp;&nbsp;&lt;executions&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;execution&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id&gt;install-jar-lib&lt;/id&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goals&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goal&gt;install-file&lt;/goal&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/goals&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;phase&gt;validate&lt;/phase&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/execution&gt;
+&nbsp;&nbsp;&nbsp;&lt;/executions&gt;
+&lt;/plugin&gt;</pre><p>然后maven build--&gt;goal 填写install:install-file initialize</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>maven附加jar源</p></li></ul><pre class="brush:xml;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;plugin&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;3.1.0&lt;/version&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;executions&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;execution&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;id&gt;attach-sources&lt;/id&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goals&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goal&gt;jar-no-fork&lt;/goal&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;goal&gt;test-jar-no-fork&lt;/goal&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/goals&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/execution&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/executions&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/plugin&gt;</pre><p><img src="https://bbs.huaweicloud.com/static/ueditor/themes/default/images/spacer.gif" alt="spacer.gif"><img src="https://bbs-img.huaweicloud.com/blogs/img/1565925117767310.png" title="1565925117767310.png" alt="image.png" class="localImage"></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>maven /tomcat7:run 的时候断点找不到源码时查看一下run configuration</p></li></ul><p><img src="https://bbs.huaweicloud.com/static/ueditor/themes/default/images/spacer.gif" alt="spacer.gif"><img src="https://bbs-img.huaweicloud.com/blogs/img/1565925257956338.png" title="1565925257956338.png" alt="image.png" class="localImage"></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/110525#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

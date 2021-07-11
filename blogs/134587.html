@@ -1,0 +1,117 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>日常逛街（一个基于kendoUI的文档在线编辑浏览审核发布管理的网站<span style="font-family:'-apple-system', BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC', 'WenQuanYi Micro Hei', sans-serif;"><span style="font-size:22px;background-color:rgb(255,255,255);">)</span></span></p><p>看看代码，看到一段代码，很怀念的感觉，最近都不怎么见到这么写的了,可能是用多了npm install了的原因吧...</p><p>（类似的这种<a rel="nofollow" href="https://github.com/inolen/quakejs/blob/master/lib/directed-graph.js" style="white-space:normal;">https://github.com/inolen/quakejs/blob/master/lib/directed-graph.js</a>写法）</p><pre class="brush:js;toolbar:false">function&nbsp;CommonClassA(){
+	this.projectId&nbsp;=&nbsp;null;
+	this.aaaLists&nbsp;=&nbsp;null;
+	this.aaaObj&nbsp;=&nbsp;{};
+	this.cloneaaaObj&nbsp;=&nbsp;{};
+	this.aaaUrl&nbsp;=&nbsp;localStorage.contextPath&nbsp;+&nbsp;"/xxx/getAAA.do";
+	this.aaasUrl&nbsp;=&nbsp;localStorage.contextPath&nbsp;+&nbsp;"/xxx/getAAALists.do";
+}
+CommonClassA.prototype={
+		getAAA&nbsp;:&nbsp;function(aaa){
+			var&nbsp;self&nbsp;=&nbsp;this;
+		&nbsp;&nbsp;&nbsp;&nbsp;$.ajax({
+	&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;"post",
+	&nbsp;&nbsp;&nbsp;&nbsp;		url&nbsp;&nbsp;:&nbsp;...Utils.appendTimeForUrl(self.aaaUrl),
+	&nbsp;&nbsp;&nbsp;&nbsp;		data&nbsp;:&nbsp;JSON.stringify(aaa),
+	&nbsp;&nbsp;&nbsp;&nbsp;		contentType:"application/json",
+	&nbsp;&nbsp;&nbsp;&nbsp;		success&nbsp;:&nbsp;function(data){
+	&nbsp;&nbsp;&nbsp;&nbsp;			...
+	&nbsp;&nbsp;&nbsp;&nbsp;		},
+	&nbsp;&nbsp;&nbsp;&nbsp;		error&nbsp;:function(data){
+	&nbsp;&nbsp;&nbsp;&nbsp;			...
+	&nbsp;&nbsp;&nbsp;&nbsp;		},
+	&nbsp;&nbsp;&nbsp;&nbsp;	});
+		},
+		getAAALists&nbsp;:&nbsp;function(){
+		&nbsp;&nbsp;&nbsp;&nbsp;var&nbsp;self&nbsp;=&nbsp;this;
+			$.ajax({
+			&nbsp;&nbsp;&nbsp;&nbsp;type&nbsp;:&nbsp;"post",
+				dataType&nbsp;:"json",
+	&nbsp;&nbsp;&nbsp;&nbsp;		url&nbsp;&nbsp;:&nbsp;...,
+	&nbsp;&nbsp;&nbsp;&nbsp;		success:function(data){
+	&nbsp;&nbsp;&nbsp;&nbsp;			...
+	&nbsp;&nbsp;&nbsp;&nbsp;		},
+	&nbsp;&nbsp;&nbsp;&nbsp;		error:function(data){
+	&nbsp;&nbsp;&nbsp;&nbsp;			...;
+	&nbsp;&nbsp;&nbsp;&nbsp;		},
+			});
+		},	
+};
+var&nbsp;commonClassA=&nbsp;new&nbsp;CommonClassA();</pre><p>感觉和直接这么写也没什么区别:</p><pre class="brush:js;toolbar:false">var&nbsp;LibraryVM&nbsp;=&nbsp;{
+	$VM__deps:[]
+	SUSPENDED:&nbsp;0xDEADBEEF,
+	FindLabels:&nbsp;function&nbsp;(state)&nbsp;{}
+}</pre><p>于是搜了搜prototype和class相关的对比，感觉下面这篇文章写得不错<br></p><p><a rel="nofollow" href="https://alligator.io/js/objects-prototypes-classes/">https://alligator.io/js/objects-prototypes-classes/</a></p><h3>摘录如下:<br></h3><p>考虑到JavaScript中的几乎所有内容都是对象这一事实，面向对象的JavaScript代码与其他支持对象的语言完全不同。JS对象系统更多地是基于原型的对象系统。</p><p>从C ++背景的，我知道的面向对象的编程范式中，及比类和对象如何非常严格的想法应该工作。接触其他语言（如Java）似乎只会进一步确立这个想法。这些语言在对象和类的工作方式上有其自己的语义；对于新用户来说，JavaScript是一个很大的启示。</p><p>首先，JavaScript对象的创建方式非常不同。不需要一个类。可以使用<a rel="nofollow" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">new运算符</a>创建对象实例：</p><pre>let&nbsp;Reptile&nbsp;=&nbsp;new&nbsp;Object()&nbsp;{
+&nbsp;//&nbsp;...
+}</pre><p>或使用函数构造函数</p><pre>function&nbsp;Reptile()&nbsp;{
+&nbsp;//&nbsp;...
+}</pre><p>其次，JavaScript对象非常灵活。传统的面向对象语言仅允许属性修改或属性槽，而JavaScript则允许对象修改其属性和方法。即JavaScript对象同时具有属性和方法槽。</p><p>在发现时，我的第一个念头是“是的，自由！”，但这要付出代价-需要了解JavaScript的原型属性。对于希望在JavaScript中实现任何面向对象系统的外观的开发人员来说，原型知识都是必不可少的。</p><p>所有JavaScript对象都是从<code class="highlighter-rouge">Object</code>构造函数创建的：</p><pre>Reptile.prototype.doesItDrown&nbsp;=&nbsp;function()&nbsp;{
+&nbsp;&nbsp;if&nbsp;(this.canItSwim)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;can&nbsp;swim`);
+&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;has&nbsp;drowned`);
+&nbsp;&nbsp;}
+};</pre><p>并且<code class="highlighter-rouge">prototype</code>允许我们向对象构造函数添加新方法，这意味着以下方法现在存在于的所有实例中<code class="highlighter-rouge">Reptile</code>。</p><pre>Reptile.prototype.doesItDrown&nbsp;=&nbsp;function()&nbsp;{
+&nbsp;&nbsp;if&nbsp;(this.canItSwim)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;can&nbsp;swim`);
+&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;has&nbsp;drowned`);
+&nbsp;&nbsp;}
+};</pre><p><code class="highlighter-rouge">Reptile</code>现在可以创建的对象实例：</p><pre>croc.__proto__.doesItDrown&nbsp;=&nbsp;function()&nbsp;{
+&nbsp;&nbsp;console.log(`the&nbsp;croc&nbsp;never&nbsp;drowns`);
+};
+
+croc.doesItDrown();&nbsp;//&nbsp;the&nbsp;croc&nbsp;never&nbsp;drowns
+alligator.doesItDrown();&nbsp;//&nbsp;the&nbsp;croc&nbsp;never&nbsp;drowns</pre><p>该<code class="highlighter-rouge">prototype</code>对的<code class="highlighter-rouge">Reptile</code>，现在目标是继承的基础上，<code class="highlighter-rouge">doesItDrown</code>方法是既可以访问<code class="highlighter-rouge">alligator</code>并<code class="highlighter-rouge">croc</code>因为<code class="highlighter-rouge">prototype</code>中<code class="highlighter-rouge">Reptile</code>有这个方法。该<code class="highlighter-rouge">prototype</code>属性在其所有实例之间共享，并且可以通过<code class="highlighter-rouge">__proto__</code>特定实例的属性进行访问。</p><p>现在，由于存在方法槽，并且<code class="highlighter-rouge">prototype</code>在所有实例之间共享一个公共实例属性，因此可能会出现一些非常巧妙的技巧，这对C ++人士来说很奇怪：</p><pre>croc.__proto__.doesItDrown&nbsp;=&nbsp;function()&nbsp;{
+&nbsp;&nbsp;console.log(`the&nbsp;croc&nbsp;never&nbsp;drowns`);
+};
+
+croc.doesItDrown();&nbsp;//&nbsp;the&nbsp;croc&nbsp;never&nbsp;drowns
+alligator.doesItDrown();&nbsp;//&nbsp;the&nbsp;croc&nbsp;never&nbsp;drowns</pre><p>更改一个实例的<code class="highlighter-rouge">prototype</code>属性或方法，该对象的所有实例都会受到影响。这意味着我们也可以删除东西。厌倦了溺水的鳄鱼可能会这样做：</p><pre>delete&nbsp;croc.__proto__.doesItDrown
+alligator.doesItDrown();
+
+//TypeError:&nbsp;alligator.doesItDrown
+//&nbsp;is&nbsp;not&nbsp;a&nbsp;function</pre><p>现在没有人去游泳。</p><p>这只是一个愚蠢的示例，它展示了<code class="highlighter-rouge">prototype</code>JavaScript对对象系统的根本意义，以及它对来自其他面向对象语言的人们的影响如何。</p><p>使用ES6语法，已为JavaScript提供了创建类的功能。</p><p>但是，真正的类的概念在JavaScript中不存在，但可以通过它进行仿真，<code class="highlighter-rouge">prototype</code>并且类语法只是围绕它的语法糖。因此，了解此行为对于实现ES6类的便利性和局限性很重要。</p><p>使用新<code class="highlighter-rouge">class</code>语法，<code class="highlighter-rouge">Reptile</code>将被定义为：</p><pre>class&nbsp;Reptile&nbsp;{
+&nbsp;&nbsp;constructor&nbsp;(name,&nbsp;canItSwim)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;this.name&nbsp;=&nbsp;name;
+&nbsp;&nbsp;&nbsp;&nbsp;this.canItSwim&nbsp;=&nbsp;canItSwim;
+&nbsp;&nbsp;}
+
+&nbsp;&nbsp;doesItDrown&nbsp;()&nbsp;{
+&nbsp;&nbsp;&nbsp;if(this.canItSwim)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;can&nbsp;swim`);
+&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;console.log(`${this.name}&nbsp;has&nbsp;drowned`);
+&nbsp;&nbsp;}
+}
+
+let&nbsp;alligator&nbsp;=&nbsp;new&nbsp;Reptile("alligator",&nbsp;true);
+alligator.doesItDrown();&nbsp;//alligator&nbsp;can&nbsp;swim</pre><p>这并不意味着它不会为<code class="highlighter-rouge">prototype</code>用户带来任何新鲜事物，使用ES6类可以避免一些陷阱，例如使<code class="highlighter-rouge">new</code>关键字对于创建实例是强制性的。</p><pre>let&nbsp;croc&nbsp;=&nbsp;Reptile("croc",&nbsp;false);
+//TypeError:&nbsp;Class&nbsp;constructor&nbsp;Reptile&nbsp;cannot&nbsp;be&nbsp;invoked&nbsp;without&nbsp;'new'</pre><p>这实际上是一件好事，因为它可以防止在使用对象属性和方法（通常是全局范围或窗口对象）时访问错误的上下文。</p><h2>结论<br></h2><p>尽管JavaScript现在确实确实缺少真正的私有成员之类的功能。它使通过类语法创建对象成为可能，而不是使原型与来自其他OO语言（如C ++ / Java）的类非常相似。</p><hr><p>PS。TC39提出了在JavaScript类中创建真正的私有成员的建议，您可以<a rel="nofollow" href="https://tc39.github.io/proposal-class-fields">在此处关注</a>并提出您的意见。如果它要包含在下一个修订版中，那么我们将有类似以下内容：</p><pre>class&nbsp;Foo&nbsp;{
+&nbsp;&nbsp;#a;&nbsp;#b;&nbsp;//&nbsp;#&nbsp;indicates&nbsp;private&nbsp;members&nbsp;here
+&nbsp;&nbsp;#sum&nbsp;=&nbsp;function()&nbsp;{&nbsp;return&nbsp;#a&nbsp;+&nbsp;#b;&nbsp;};
+}
+
+//&nbsp;personally&nbsp;this&nbsp;format&nbsp;reminds&nbsp;me&nbsp;of&nbsp;$variable&nbsp;in&nbsp;PHP.
+//&nbsp;I'm&nbsp;not&nbsp;sure&nbsp;if&nbsp;that's&nbsp;a&nbsp;good&nbsp;thing</pre><h3>其他：</h3><p>一些关于js原型链的讨论</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritance">https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritance</a></p><p><a rel="nofollow" href="https://medium.com/%40parsyval/javascript-prototype-vs-class-a7015d5473b">https://medium.com/%40parsyval/javascript-prototype-vs-class-a7015d5473b</a></p><p><a rel="nofollow" href="https://juejin.im/post/5db0fec4518825648c3a8770">https://juejin.im/post/5db0fec4518825648c3a8770</a></p><p>关于 Kendo UI 开发教程</p><p><a rel="nofollow" href="https://www.w3cschool.cn/kendouidevelopmenttutorial/62s81jv1.html">https://www.w3cschool.cn/kendouidevelopmenttutorial/62s81jv1.html</a></p><p><a rel="nofollow" href="https://github.com/kendo-labs/bower-kendo-ui">https://github.com/kendo-labs/bower-kendo-ui</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/134587#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.JavaScript_Blog" title="JavaScript" href="https://developer.huaweicloud.com/tags/200323/blog_1">JavaScript</a>
+        
+    </div>
+</div></div>

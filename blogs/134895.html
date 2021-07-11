@@ -1,0 +1,109 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <ul class="list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <p>以管理账户登录</p> </li> 
+ <li> <p>进入管理面板</p> </li> 
+</ul>
+<p><img alt="image.png" class="localImage" src="https://bbs-img.huaweicloud.com/blogs/img/1574747217164129.png" title="1574747217164129.png"></p>
+<ul class="list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <p>点击授权认证管理，并添加新的源</p> </li> 
+</ul>
+<p><img alt="image.png" class="localImage" height="228" src="https://bbs-img.huaweicloud.com/blogs/img/1574747272750249.png" title="1574747272750249.png" width="549"></p>
+<ul class="list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <p>进行相关ldap参数设置,参考设置如下</p> </li> 
+</ul>
+<pre class="brush:java;toolbar:false  language-javascript"><code>{
+	"Name": "LDAP1",
+	"Host": "ddd.china.xyz.com",
+	"Port": 389,
+	"SecurityProtocol": 2,
+	"SkipVerify": false,
+	"BindDN": "uid@china.xyz.com",
+	"BindPassword": "pwd",
+	"UserBase": "dc=china,dc=xyz,dc=com",
+	"UserDN": "",
+	"AttributeUsername": "",
+	"AttributeName": "",
+	"AttributeSurname": "",
+	"AttributeMail": "mail",
+	"AttributesInBind": true,
+	"Filter": "(sAMAccountName=%s)",
+	"AdminFilter": "",
+	"Enabled": true
+}</code></pre>
+<ul class="list-paddingleft-2" style="list-style-type: disc;"> 
+ <li> <p>可以通过在另一个浏览器触发登录验证，并查看gogs.log进行参数调试</p> </li> 
+</ul>
+<p><br></p>
+<p>看到一个关于gogs和gitea的闲聊,挺有意思的<a>https://blog.wolfogre.com/posts/gogs-vs-gitea/</a></p>
+<p><a>https://dl.google.com/go/go1.13.4.windows-amd64.zip</a></p>
+<p>----------------------</p>
+<h5 style="color: #24292e;">配置子路径</h5>
+<p style="color: #24292e;">如果您想要通过域名的子路径来访问 Gogs 实例，可以将 NGINX 的配置修改为以下形式（特别注意后缀<span>&nbsp;</span><code>/</code>）:</p>
+<pre class="language-javascript"><code>server {
+    listen 80;
+    server_name git.crystalnetwork.us;
+
+    location /gogs/ {
+        proxy_pass http://localhost:3000/;
+    }
+}
+</code></pre>
+<p style="color: #24292e;">然后在配置文件中设置<span>&nbsp;</span><code>[server] EXTERNAL_URL = http://git.crystalnetwork.us/gogs/</code>。</p>
+<p><a rel="nofollow" href="https://github.com/gogs/docs/blob/master/zh-CN/intro/faqs.md">https://github.com/gogs/docs/blob/master/zh-CN/intro/faqs.md</a></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2d37805d378c11eab759fa163e330718" href="/blogs/attachment?id=2d37805d378c11eab759fa163e330718" title="rust-1.40.0-msi.7z.012.zip">rust-1.40.0-msi.7z.012.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2d3d04ef378c11eab759fa163e330718" href="/blogs/attachment?id=2d3d04ef378c11eab759fa163e330718" title="rust-1.40.0-msi.7z.011.zip">rust-1.40.0-msi.7z.011.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2d4126cf378c11eab759fa163e330718" href="/blogs/attachment?id=2d4126cf378c11eab759fa163e330718" title="rust-1.40.0-msi.7z.013.zip">rust-1.40.0-msi.7z.013.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2d44b4dc378c11eab759fa163e330718" href="/blogs/attachment?id=2d44b4dc378c11eab759fa163e330718" title="rust-1.40.0-msi.7z.015.zip">rust-1.40.0-msi.7z.015.zip</a>
+                <span class="attSize">3.27M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="2d4b216d378c11eab759fa163e330718" href="/blogs/attachment?id=2d4b216d378c11eab759fa163e330718" title="rust-1.40.0-msi.7z.014.zip">rust-1.40.0-msi.7z.014.zip</a>
+                <span class="attSize">19M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/134895#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

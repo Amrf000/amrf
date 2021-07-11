@@ -1,0 +1,378 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>WC中Hash表的接口形式，后面有空再填填实现</p><pre class="brush:cpp;toolbar:false">template&lt;typename&nbsp;T,typename&nbsp;TKey&gt;
+class&nbsp;TSHashTable{
+public:
+	TSHashTable();;
+	~TSHashTable();
+	int*&nbsp;Ptr(int&nbsp;a2,int*&nbsp;a3);
+	int&nbsp;Initialize();
+	int&nbsp;GrowListArray(unsigned&nbsp;int&nbsp;a2);
+	int&nbsp;MonitorFullness(int&nbsp;a2);
+	int&nbsp;InternalNewNode(int&nbsp;a2,int&nbsp;a3,int&nbsp;a4);
+	int&nbsp;InternalLinkNode(int&nbsp;a2,int&nbsp;a3);
+	int&nbsp;InternalClear(int&nbsp;a2);
+	void&nbsp;Unlink(int&nbsp;a2);
+	int&nbsp;Delete(int&nbsp;a2);
+	int&nbsp;DeleteNode(int&nbsp;a2);
+	unsigned&nbsp;int&nbsp;*&nbsp;New(void*&nbsp;a2,int&nbsp;a3,int&nbsp;a4);
+	int&nbsp;Insert(int&nbsp;a2,int&nbsp;a3);
+	int&nbsp;Next(int&nbsp;a2);
+	int&nbsp;Head();
+public:
+	//IntPtr&nbsp;vtable;&nbsp;//&nbsp;4
+	TSExplicitList&lt;T,?&gt;&nbsp;m_fulllist;&nbsp;//&nbsp;12
+	int&nbsp;m_fullnessIndicator;&nbsp;//&nbsp;4
+	TSGrowableArray&lt;TSExplicitList&lt;T,?&gt;,TSCD&lt;TSExplicitList&lt;T,?&gt;&gt;&gt;&nbsp;m_slotlistarray;&nbsp;//&nbsp;20
+	int&nbsp;m_slotmask;&nbsp;//&nbsp;4
+};</pre><p><span style="color:rgb(0,176,80);"><span style="color:rgb(0,176,80);">/*==============================分割线===================================*/</span></span></p><p><span style="color:rgb(0,0,0);">内存池</span></p><p><span style="color:rgb(0,176,80);"><a rel="nofollow" href="https://stackoverflow.com/questions/1885849/difference-between-new-operator-and-operator-new">https://stackoverflow.com/questions/1885849/difference-between-new-operator-and-operator-new</a> </span></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/6500313/why-should-c-programmers-minimize-use-of-new">https://stackoverflow.com/questions/6500313/why-should-c-programmers-minimize-use-of-new</a></p><p><a rel="nofollow" href="https://softwareengineering.stackexchange.com/questions/162614/compilable-modern-alternatives-to-c-c">https://softwareengineering.stackexchange.com/questions/162614/compilable-modern-alternatives-to-c-c</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/519808/call-a-constructor-on-a-already-allocated-memory">https://stackoverflow.com/questions/519808/call-a-constructor-on-a-already-allocated-memory</a></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/cpp/cpp/new-operator-cpp?redirectedfrom=MSDN&amp;view=vs-2019">https://docs.microsoft.com/en-us/cpp/cpp/new-operator-cpp?redirectedfrom=MSDN&amp;view=vs-2019</a></p><p><a rel="nofollow" href="https://bbs.csdn.net/topics/200069137">https://bbs.csdn.net/topics/200069137</a></p><p><a rel="nofollow" href="https://isocpp.org/wiki/faq/dtors#placement-new">https://isocpp.org/wiki/faq/dtors#placement-new</a></p><p><a rel="nofollow" href="https://www.geeksforgeeks.org/placement-new-operator-cpp/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://www.geeksforgeeks.org/placement-new-operator-cpp/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/3763846/what-is-an-in-place-constructor-in-c">https://stackoverflow.com/questions/3763846/what-is-an-in-place-constructor-in-c</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/2697892/what-is-return-type-of-new-in-c/2697929#2697929">https://stackoverflow.com/questions/2697892/what-is-return-type-of-new-in-c/2697929#2697929</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/27552466/c-is-constructing-object-twice-using-placement-new-undefined-behaviour">https://stackoverflow.com/questions/27552466/c-is-constructing-object-twice-using-placement-new-undefined-behaviour</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/5279042/placement-new-vs-explicit-constructor-call-in-c">https://stackoverflow.com/questions/5279042/placement-new-vs-explicit-constructor-call-in-c</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/38171964/move-construct-object-with-placement-new">https://stackoverflow.com/questions/38171964/move-construct-object-with-placement-new</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/519808/call-a-constructor-on-a-already-allocated-memory">https://stackoverflow.com/questions/519808/call-a-constructor-on-a-already-allocated-memory</a></p><p><a rel="nofollow" href="https://isocpp.org/wiki/faq/dtors+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://isocpp.org/wiki/faq/dtors+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://docs.microsoft.com/en-us/cpp/cpp/new-operator-cpp?redirectedfrom=MSDN&amp;view=vs-2019">https://docs.microsoft.com/en-us/cpp/cpp/new-operator-cpp?redirectedfrom=MSDN&amp;view=vs-2019</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/31432606/is-it-okay-to-give-a-stack-object-address-to-placement-new">https://stackoverflow.com/questions/31432606/is-it-okay-to-give-a-stack-object-address-to-placement-new</a></p><p><a rel="nofollow" href="https://thinkingeek.com/2017/11/19/simple-memory-pool/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://thinkingeek.com/2017/11/19/simple-memory-pool/+&amp;cd=1&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://www.boost.org/doc/libs/1_46_1/libs/pool/doc/index.html+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://www.boost.org/doc/libs/1_46_1/libs/pool/doc/index.html+&amp;cd=2&amp;hl=en&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/30508183/what-are-the-usual-im-ple-men-ta-tion-de-tails-be-hind-mem-ory-pools">https://stackoverflow.com/questions/30508183/what-are-the-usual-im-ple-men-ta-tion-de-tails-be-hind-mem-ory-pools</a></p><p><span style="color:rgb(0,176,80);">/*==============================分割线===================================*/</span></p><p><span style="color:#00b050;"><span style="color:rgb(0,0,0);">AOP</span></span></p><p><span style="color:#00b050;"><span style="color:rgb(0,0,0);"><a rel="nofollow" href="https://stackoverflow.com/questions/4200183/aspect-oriented-programming-in-c-current-supported-alternatives">https://stackoverflow.com/questions/4200183/aspect-oriented-programming-in-c-current-supported-alternatives</a></span></span></p><p><a rel="nofollow" href="http://vitiy.info/c11-functional-decomposition-easy-way-to-do-aop/+&amp;cd=3&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">http://vitiy.info/c11-functional-decomposition-easy-way-to-do-aop/+&amp;cd=3&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a></p><p><span style="color:rgb(0,176,80);">/*==============================分割线===================================*/</span></p><p>参考:</p><p><a rel="nofollow" href="https://github.com/webcoyote/coho/blob/master/Base/List.h">https://github.com/webcoyote/coho/blob/master/Base/List.h</a></p><p>数据和link的转换逻辑迷了好久,参考上面的仓里的测试用例才想明白,<span style="color:rgb(106,115,125);font-family:'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;font-size:12px;white-space:pre;background-color:rgb(255,255,255);">"embedded"Links</span></p><p>照着这个还原了一下WC里面的TSList实现如下:</p><p>Link</p><pre class="brush:cpp;toolbar:false">template&lt;typename&nbsp;T&gt;
+class&nbsp;TSLink{
+public:
+	TSLink(){
+		m_nextNode&nbsp;=&nbsp;(T*)((size_t)this&nbsp;+&nbsp;1&nbsp;-&nbsp;0);
+		m_prevLink&nbsp;=&nbsp;this;
+	}
+	T*&nbsp;Next(){
+	&nbsp;&nbsp;&nbsp;&nbsp;T*&nbsp;ret&nbsp;=&nbsp;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;((size_t)ret&nbsp;&amp;&nbsp;1)&nbsp;||&nbsp;!ret&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;ret&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;(T*)ret;
+	}
+	T*&nbsp;Prev(){
+	&nbsp;&nbsp;T*&nbsp;prevNode&nbsp;=&nbsp;m_prevLink-&gt;m_prevLink-&gt;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;((size_t)prevNode&nbsp;&amp;&nbsp;1)&nbsp;||&nbsp;!prevNode&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;prevNode&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;prevNode;
+	}
+	TSLink&lt;T&gt;*&nbsp;NextLink(int&nbsp;offset){
+		T*&nbsp;next&nbsp;=&nbsp;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;((size_t)next&nbsp;&amp;&nbsp;1)&nbsp;||&nbsp;!next&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;(TSLink&lt;T&gt;*)((size_t)next&nbsp;&amp;&nbsp;~1);
+	&nbsp;&nbsp;if&nbsp;(&nbsp;offset&nbsp;&lt;&nbsp;0&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;offset&nbsp;=&nbsp;(size_t)&nbsp;this&nbsp;-&nbsp;(size_t)m_prevLink-&gt;m_nextNode;
+	&nbsp;&nbsp;return&nbsp;(TSLink&lt;T&gt;*)((size_t)next&nbsp;+&nbsp;offset);
+	}
+public:
+	TSLink&lt;T&gt;*&nbsp;m_prevLink;
+	T*&nbsp;m_nextNode;
+};</pre><p>List(模板第二个参数我还没想明白,目前没影响，估计和offset获取赋值有关)</p><pre class="brush:cpp;toolbar:false">template&lt;typename&nbsp;T,typename&nbsp;N&gt;
+class&nbsp;TSList{
+public:
+	TSList(){
+		m_terminator.m_nextNode&nbsp;=&nbsp;NULL;
+		m_linkoffset&nbsp;=&nbsp;0;
+		m_terminator.m_prevLink&nbsp;=&nbsp;(TSLink&lt;T&gt;*)&amp;m_terminator.m_prevLink;
+		m_terminator.m_nextNode&nbsp;=&nbsp;(T*)((size_t)(&amp;m_terminator.m_prevLink)&nbsp;|&nbsp;1);
+	}
+	~TSList(){
+		UnlinkAll();
+		if&nbsp;(&nbsp;m_terminator.m_prevLink&nbsp;)&nbsp;{
+			m_terminator.m_prevLink-&gt;NextLink(-1)-&gt;m_prevLink&nbsp;=&nbsp;m_terminator.m_prevLink;
+			m_terminator.m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;m_terminator.m_nextNode;
+			m_terminator.m_prevLink&nbsp;=&nbsp;NULL;
+			m_terminator.m_nextNode&nbsp;=&nbsp;NULL;
+		}
+	}
+	void&nbsp;UnlinkAll(){
+		while&nbsp;(1){
+			T*&nbsp;next&nbsp;=&nbsp;m_terminator.m_nextNode;
+			if&nbsp;(&nbsp;((size_t)next&nbsp;&amp;&nbsp;1)&nbsp;||&nbsp;!next&nbsp;)
+				break;
+			UnlinkNode(m_terminator.m_nextNode);
+		}
+	}
+	void&nbsp;UnlinkNode(T*&nbsp;whichNode)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;target;
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(whichNode)
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;(TSLink&lt;T&gt;*)whichNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;&amp;m_terminator;
+		if&nbsp;(&nbsp;target-&gt;m_prevLink&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;	target-&gt;NextLink(-1)-&gt;m_prevLink&nbsp;=&nbsp;target-&gt;m_prevLink;
+			target-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;target-&gt;m_nextNode;
+			target-&gt;m_prevLink&nbsp;=&nbsp;NULL;
+			target-&gt;m_nextNode&nbsp;=&nbsp;NULL;
+		}
+	}
+	T*&nbsp;NewNode(int&nbsp;option,&nbsp;int&nbsp;a3,&nbsp;int&nbsp;a4){&nbsp;
+		T&nbsp;*v5;&nbsp;
+		v5&nbsp;=&nbsp;new&nbsp;T;
+		if&nbsp;(option)
+			LinkNode(v5,&nbsp;option,&nbsp;NULL);
+		return&nbsp;v5;
+	}
+
+	&nbsp;void&nbsp;LinkNode(TSLink&lt;T&gt;*&nbsp;a2,&nbsp;int&nbsp;option,&nbsp;TSLink&lt;T&gt;*&nbsp;a4){
+	&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;target;
+	&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;dest&nbsp;=&nbsp;a4;
+	&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;a2&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;a2;
+	&nbsp;&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;&nbsp;if&nbsp;(target-&gt;m_prevLink)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;NextLink(-1)-&gt;m_prevLink&nbsp;=&nbsp;target-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;target-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;&nbsp;}
+	&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;!a4&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;1&nbsp;)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;dest;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;dest-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;NextLink(m_linkoffset)-&gt;m_prevLink&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;m_nextNode&nbsp;=&nbsp;(T*)a2;
+	&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;2&nbsp;)&nbsp;{
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v6&nbsp;=&nbsp;dest-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;dest-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;v6-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v6-&gt;m_nextNode&nbsp;=&nbsp;(T*)a2;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;m_prevLink&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;&nbsp;}
+	&nbsp;}
+	void&nbsp;LinkNode(T*&nbsp;a2,&nbsp;int&nbsp;option,&nbsp;TSLink&lt;T&gt;*&nbsp;a4)&nbsp;{
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;target;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;a2&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;(size_t)a2);
+	&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;target-&gt;m_prevLink&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;NextLink(-1)-&gt;m_prevLink&nbsp;=&nbsp;target-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;target-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;}
+	&nbsp;&nbsp;TSLink&lt;T&gt;&nbsp;*dest;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;a4&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;dest&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;(size_t)a4);
+	&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;dest&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;1&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;dest;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;dest-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;NextLink(&nbsp;m_linkoffset)-&gt;m_prevLink&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;m_nextNode&nbsp;=&nbsp;a2;
+	&nbsp;&nbsp;}else&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;2&nbsp;){
+		TSLink&lt;T&gt;&nbsp;*v6&nbsp;=&nbsp;dest-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_prevLink&nbsp;=&nbsp;dest-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_nextNode&nbsp;=&nbsp;v6-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;v6-&gt;m_nextNode&nbsp;=&nbsp;a2;
+	&nbsp;&nbsp;&nbsp;&nbsp;dest-&gt;m_prevLink&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;}
+	}
+	
+	T*&nbsp;DeleteNode(T*&nbsp;a2)&nbsp;{
+	&nbsp;&nbsp;T*&nbsp;v2;&nbsp;
+	&nbsp;&nbsp;v2&nbsp;=&nbsp;Next(a2);
+	&nbsp;&nbsp;delete&nbsp;a2;
+	&nbsp;&nbsp;return&nbsp;v2;
+	}
+	T*&nbsp;Next(T*&nbsp;whichNode)&nbsp;{//sure
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;target;
+	&nbsp;&nbsp;T*&nbsp;result;
+	&nbsp;&nbsp;if&nbsp;(whichNode)
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;(size_t)whichNode);
+	&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;result&nbsp;=&nbsp;target-&gt;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+
+	T*&nbsp;Next(TSLink&lt;T&gt;*&nbsp;target)&nbsp;{//sure
+	&nbsp;&nbsp;T*&nbsp;result;
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v2&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;!target&nbsp;)
+	&nbsp;&nbsp;	v2&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;result&nbsp;=&nbsp;v2-&gt;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+	
+	T*&nbsp;Next(TSList&lt;T,N&gt;*&nbsp;target)&nbsp;{//sure
+	&nbsp;&nbsp;T*&nbsp;result;
+	&nbsp;&nbsp;TSList&lt;T,N&gt;*&nbsp;v2&nbsp;=&nbsp;target;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;!target&nbsp;)
+	&nbsp;&nbsp;	v2&nbsp;=&nbsp;this;
+	&nbsp;&nbsp;result&nbsp;=&nbsp;v2-&gt;m_terminator.m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+
+	
+	T*&nbsp;RawNext(T*&nbsp;whichNode)&nbsp;{
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;target;
+	&nbsp;&nbsp;if&nbsp;(whichNode)
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;(size_t)whichNode);
+	&nbsp;&nbsp;else
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;return&nbsp;target-&gt;m_nextNode;
+	}
+
+	T*&nbsp;RawNext(TSLink&lt;T&gt;*&nbsp;whichNode)&nbsp;{
+		TSLink&lt;T&gt;*&nbsp;target;
+		target&nbsp;=&nbsp;whichNode;
+		if&nbsp;(&nbsp;!whichNode&nbsp;)
+			target&nbsp;=&nbsp;&amp;m_terminator;
+		return&nbsp;target-&gt;m_nextNode;
+	}
+	
+	T*&nbsp;RawNext(TSList&lt;T,N&gt;*&nbsp;whichNode)&nbsp;{
+		TSList&lt;T,N&gt;*&nbsp;target;
+		target&nbsp;=&nbsp;whichNode;
+		if&nbsp;(&nbsp;!whichNode&nbsp;)
+			target&nbsp;=&nbsp;this;
+		return&nbsp;target-&gt;m_terminator.m_nextNode;
+	}
+
+
+	T*&nbsp;Prev(T*&nbsp;whichNode)&nbsp;{
+		TSLink&lt;T&gt;*&nbsp;v2;
+		T*&nbsp;result;
+		if&nbsp;(&nbsp;whichNode&nbsp;)
+			v2&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;whichNode);
+		else
+			v2&nbsp;=&nbsp;&amp;m_terminator;
+		result&nbsp;=&nbsp;v2-&gt;m_prevLink-&gt;m_nextNode;
+		if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+			result&nbsp;=&nbsp;NULL;
+		return&nbsp;result;
+	}
+	
+	T*&nbsp;Prev(TSLink&lt;T&gt;*&nbsp;whichNode)&nbsp;{//sure
+	&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v2;&nbsp;
+	&nbsp;&nbsp;&nbsp;T*&nbsp;result;&nbsp;
+	&nbsp;&nbsp;&nbsp;v2&nbsp;=&nbsp;whichNode;
+	&nbsp;&nbsp;&nbsp;if(!whichNode)
+	&nbsp;&nbsp;&nbsp;&nbsp;v2&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;result&nbsp;=&nbsp;v2-&gt;m_prevLink-&gt;m_prevLink-&gt;m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+	T*&nbsp;Head()&nbsp;{//sure
+	&nbsp;&nbsp;T*&nbsp;result;&nbsp;
+	&nbsp;&nbsp;result&nbsp;=&nbsp;m_terminator.m_nextNode;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)result&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!result&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;NULL;
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+	void&nbsp;Combine(TSList&lt;T,N&gt;*&nbsp;target,&nbsp;int&nbsp;option,&nbsp;TSLink&lt;T&gt;*&nbsp;mid)&nbsp;{
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;midLink&nbsp;=&nbsp;mid;
+	&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v5&nbsp;=&nbsp;&amp;target-&gt;m_terminator;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;&amp;target-&gt;m_terminator&nbsp;!=&nbsp;target-&gt;m_terminator.m_prevLink&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!mid)
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;midLink&nbsp;=&nbsp;&amp;m_terminator;
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;1&nbsp;)&nbsp;{
+		&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v9&nbsp;=&nbsp;midLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T*&nbsp;v6&nbsp;=&nbsp;midLink-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;midLink-&gt;NextLink(m_linkoffset)-&gt;m_prevLink&nbsp;=&nbsp;v5;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v9-&gt;m_nextNode&nbsp;=&nbsp;target-&gt;m_terminator.m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v5-&gt;NextLink(target-&gt;m_linkoffset)-&gt;m_prevLink&nbsp;=&nbsp;v9;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v5-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;v6;
+	&nbsp;&nbsp;&nbsp;&nbsp;}else&nbsp;if&nbsp;(&nbsp;option&nbsp;==&nbsp;2&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;*&nbsp;v7&nbsp;=&nbsp;midLink-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T*&nbsp;v8&nbsp;=&nbsp;midLink-&gt;m_prevLink-&gt;m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;midLink-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;target-&gt;m_terminator.m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;midLink-&gt;m_prevLink&nbsp;=&nbsp;v5-&gt;m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v5-&gt;m_prevLink-&gt;NextLink(target-&gt;m_linkoffset)-&gt;m_prevLink&nbsp;=&nbsp;v7;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v5-&gt;m_prevLink-&gt;m_nextNode&nbsp;=&nbsp;v8;
+	&nbsp;&nbsp;&nbsp;&nbsp;}
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_terminator.m_prevLink&nbsp;=&nbsp;v5;
+	&nbsp;&nbsp;&nbsp;&nbsp;target-&gt;m_terminator.m_nextNode&nbsp;=&nbsp;(T*)((size_t)v5&nbsp;|&nbsp;1);
+	&nbsp;&nbsp;}
+	}
+	bool&nbsp;IsLinked(T*&nbsp;whichNode){
+	&nbsp;&nbsp;&nbsp;&nbsp;TSLink&lt;T&gt;&nbsp;*target;&nbsp;
+		if(whichNode)
+			target&nbsp;=&nbsp;(TSLink&lt;T&gt;*)(m_linkoffset&nbsp;+&nbsp;(size_t)whichNode);
+		else
+			target&nbsp;=&nbsp;&amp;m_terminator;
+		return&nbsp;target-&gt;m_nextNode&nbsp;!=&nbsp;NULL;
+	}
+	void&nbsp;Clear(){
+	&nbsp;&nbsp;T*&nbsp;target;&nbsp;
+	&nbsp;&nbsp;for&nbsp;(;;){//free(target)
+	&nbsp;&nbsp;&nbsp;&nbsp;target&nbsp;=&nbsp;m_terminator.m_nextNode;
+	&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(&nbsp;(size_t)target&nbsp;&amp;&nbsp;1&nbsp;||&nbsp;!target&nbsp;)
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;
+	&nbsp;&nbsp;&nbsp;&nbsp;delete&nbsp;target;
+	&nbsp;&nbsp;}
+	}
+	int&nbsp;ChangeLinkOffset(int&nbsp;newOffset){
+	&nbsp;&nbsp;int&nbsp;result;
+	&nbsp;&nbsp;if&nbsp;(&nbsp;m_linkoffset&nbsp;!=&nbsp;newOffset&nbsp;){
+	&nbsp;&nbsp;&nbsp;&nbsp;UnlinkAll();
+	&nbsp;&nbsp;&nbsp;&nbsp;m_linkoffset&nbsp;=&nbsp;newOffset;
+	&nbsp;&nbsp;&nbsp;&nbsp;m_terminator.m_prevLink&nbsp;=&nbsp;m_terminator.m_prevLink;
+	&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;(size_t)m_terminator.m_prevLink&nbsp;|&nbsp;1;
+	&nbsp;&nbsp;&nbsp;&nbsp;m_terminator.m_nextNode&nbsp;=&nbsp;(T*)result;
+	&nbsp;&nbsp;}
+	&nbsp;&nbsp;return&nbsp;result;
+	}
+public:
+	int&nbsp;m_linkoffset;
+	TSLink&lt;T&gt;&nbsp;m_terminator;
+};</pre><p>测试用例:<br></p><pre class="brush:cpp;toolbar:false">struct&nbsp;Data&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;TSLink&lt;Data&gt;&nbsp;forward;
+&nbsp;&nbsp;&nbsp;&nbsp;unsigned&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value;
+};
+
+int&nbsp;main(int&nbsp;argv,char*&nbsp;argc[]){
+	Data&nbsp;a,a2,a3,a4;
+	a.value&nbsp;=&nbsp;1;
+	a2.value&nbsp;=&nbsp;2;
+	a3.value&nbsp;=&nbsp;3;
+	a4.value&nbsp;=&nbsp;4;
+	TSList&lt;Data,int&gt;&nbsp;b,e;
+	std::cout&nbsp;&lt;&lt;&nbsp;b.m_linkoffset&nbsp;&lt;&lt;&nbsp;std::endl;
+	b.Clear();
+	std::cout&nbsp;&lt;&lt;&nbsp;b.IsLinked(&amp;a)&nbsp;&lt;&lt;&nbsp;std::endl;
+	b.LinkNode(&amp;a,&nbsp;2,&nbsp;NULL);
+	b.LinkNode(&amp;a2,&nbsp;2,&nbsp;NULL);
+	b.LinkNode(&amp;a3,&nbsp;2,&nbsp;NULL);
+	std::cout&nbsp;&lt;&lt;&nbsp;b.IsLinked(&amp;a)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;b.m_linkoffset&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Head()&nbsp;?&nbsp;b.Head()-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Head())&nbsp;?&nbsp;b.Next(b.Head())-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Next(b.Head()))&nbsp;?&nbsp;b.Next(b.Next(b.Head()))-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+	e.LinkNode(&amp;a4,&nbsp;2,&nbsp;NULL);
+	b.Combine(&amp;e,1,NULL);
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Head()&nbsp;?&nbsp;b.Head()-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Head())&nbsp;?&nbsp;b.Next(b.Head())-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Next(b.Head()))&nbsp;?&nbsp;b.Next(b.Next(b.Head()))-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Next(b.Next(b.Head())))&nbsp;?&nbsp;b.Next(b.Next(b.Next(b.Head())))-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+	Data*&nbsp;next&nbsp;=&nbsp;&amp;a2;
+	if&nbsp;(!((size_t)next&nbsp;&amp;&nbsp;1)&nbsp;&amp;&amp;&nbsp;next)
+		b.UnlinkNode(&amp;a2);
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Head()&nbsp;?&nbsp;b.Head()-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Head())&nbsp;?&nbsp;b.Next(b.Head())-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;(b.Next(b.Next(b.Head()))&nbsp;?&nbsp;b.Next(b.Next(b.Head()))-&gt;value&nbsp;:&nbsp;0)&nbsp;&lt;&lt;&nbsp;std::endl;
+	std::cout&nbsp;&lt;&lt;&nbsp;"================"&nbsp;&lt;&lt;&nbsp;std::endl;
+&nbsp;&nbsp;&nbsp;&nbsp;getchar();
+	return&nbsp;0;
+}</pre><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/125726#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

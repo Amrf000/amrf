@@ -1,0 +1,54 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>仓库地址：</p>
+<p><a rel="nofollow" href="https://github.com/zeromq/zeromq.js/issues">https://github.com/zeromq/zeromq.js</a></p>
+<p>API介绍:</p>
+<p><a>https://zeromq.github.io/zeromq.js/globals.html</a></p>
+<p>在http://zguide.zeromq.org/page:chapter4教程里实现了一个<strong style="font-family: &quot;Microsoft YaHei&quot;; font-size: medium; white-space: normal;">懒惰的海盗模式</strong>，</p>
+<p>服务端:</p>
+<p><a rel="nofollow" href="https://github.com/booksbyus/zguide/blob/master/examples/C%2B%2B/lpserver.cpp">https://github.com/booksbyus/zguide/blob/master/examples/C%2B%2B/lpserver.cpp</a></p>
+<p>客户端:</p>
+<p><a rel="nofollow" href="https://github.com/booksbyus/zguide/blob/master/examples/C%2B%2B/lpclient.cpp">https://github.com/booksbyus/zguide/blob/master/examples/C%2B%2B/lpclient.cpp</a></p>
+<p>为了熟悉这个nodejs绑定版本,我们用ts语法实现一下上面的这个模式(参考zeromq.js的examples目录中的写法):</p>
+<p>首先安装zeromq.js</p>
+<pre style="box-sizing: border-box; font-family: SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo, monospace; font-size: 13.6px; margin-top: 0px; margin-bottom: 0px; overflow-wrap: normal; padding: 16px; overflow: auto; line-height: 1.45; background-color: rgb(246, 248, 250); border-radius: 6px; word-break: normal; color: rgb(36, 41, 46);">npm&nbsp;install&nbsp;zeromq@6.0.0-beta.6&nbsp;-S</pre>
+<p>为了调试我们再添加如下的开发依赖</p>
+<pre class="brush:java;toolbar:false">&nbsp;&nbsp;"devDependencies":&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;"@types/archiver":&nbsp;"^3.1.0",
+&nbsp;&nbsp;&nbsp;&nbsp;"@types/node":&nbsp;"^13.13.4",
+&nbsp;&nbsp;&nbsp;&nbsp;"@types/nodemailer":&nbsp;"^6.4.0",
+&nbsp;&nbsp;&nbsp;&nbsp;"eslint":&nbsp;"^6.8.0",
+&nbsp;&nbsp;&nbsp;&nbsp;"prettier":&nbsp;"^2.0.5",
+&nbsp;&nbsp;&nbsp;&nbsp;"typescript":&nbsp;"^3.8.3",
+&nbsp;&nbsp;&nbsp;&nbsp;"ts-node":&nbsp;"&gt;=&nbsp;0"
+&nbsp;&nbsp;},</pre>
+<p>lauch.json参考</p>
+<p style="white-space: normal;"><span style="color: rgb(36, 41, 46); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;; font-size: 14px; background-color: rgb(255, 255, 255);">Run ts-node in VSCode Debugger</span></p>
+<p style="white-space: normal;"><a rel="nofollow" href="https://gist.github.com/cecilemuller/2963155d0f249c1544289b78a1cdd695">https://gist.github.com/cecilemuller/2963155d0f249c1544289b78a1cdd695</a></p>
+<p>服务端<br></p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595900476280005652.png" title="1595900476280005652.png" alt="image.png"></p>
+<p>客户端:</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1595900684390066912.png" title="1595900684390066912.png" alt="image.png"></p>
+<p>可以看到nodejs中的写法与原c++的实现的写法几乎完全一致，只是语法上略有差别</p>
+<p>参考:</p>
+<p><a>https://anribras.github.io/tech/2018/09/26/ZeroMq-%E5%8F%AF%E9%9D%A0REQ-REP%E6%A8%A1%E5%BC%8F/</a></p>
+<p><a>http://suntus.github.io/2014/10/13/zmq%E4%B8%AD%E6%96%87%E6%8C%87%E5%8D%97-1/</a></p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/190377#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

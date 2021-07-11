@@ -1,0 +1,65 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>相关论文与实现:</p><p><a rel="nofollow" href="https://github.com/google-research/bert">https://github.com/google-research/bert</a></p><p><a rel="nofollow" href="https://arxiv.org/pdf/1810.04805.pdf">https://arxiv.org/pdf/1810.04805.pdf</a></p><p><a rel="nofollow" href="http://jalammar.github.io/illustrated-transformer/">http://jalammar.github.io/illustrated-transformer/</a></p><p><a rel="nofollow" href="https://arxiv.org/pdf/1907.00151.pdf">https://arxiv.org/pdf/1907.00151.pdf</a></p><p><br></p><p>附件是caffe&nbsp; cpu版本：</p><p>来自<a rel="nofollow" href="https://my.oschina.net/kalnkaya/blog/1824298">https://my.oschina.net/kalnkaya/blog/1824298</a></p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1573015182991415.png" title="1573015182991415.png" alt="image.png" width="663" height="629" class="localImage"></p><p>测试的代码来自这篇博客:</p><p><a rel="nofollow" href="https://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html" style="white-space:normal;">https://christopher5106.github.io/deep/learning/2015/09/04/Deep-learning-tutorial-on-Caffe-Technology.html</a></p><p>在公司电脑上测试时一直报python35.dll版本不匹配冲突;---这是由于我在命令行中直接输入的python文件名，然后调用的是系统的默认打开python的程序与我bat中设置的python路径不同，<span style="color:rgb(255,0,0);">需要使用python 文件形式启动;</span></p><p>回家试了试:</p><p>pip切个国内源:</p><p><a rel="nofollow" href="https://blog.csdn.net/sinat_21591675/article/details/82770360">https://blog.csdn.net/sinat_21591675/article/details/82770360</a></p><p style="white-space:normal;">这个prebuilt版的caffe是64位的需要下载对应的64位的:</p><p style="white-space:normal;"><a href="https://mirrors.huaweicloud.com/python/3.5.2/">https://mirrors.huaweicloud.com/python/3.5.2/</a></p><p>在公司我是按照上面设置的环境变量，有个io.py冲突,用改名的方法解决了,在家没出现这个问题;</p><p>可能是我在家用的是bat预准备环境:</p><p>bat如下:</p><pre class="brush:bash;toolbar:false">REM&nbsp;C:\Python27\;C:\Python27\Scripts;C:\Python27-x64;
+SET&nbsp;PYTHONPATH=E:\dev\AI\caffe\python
+REM&nbsp;SET&nbsp;PYTHONHOME=D:\Python\Python36
+REM&nbsp;SET&nbsp;PYTHONHOME=E:\dev\AI\python-3.5.2\PCbuild\win32
+REM&nbsp;SET&nbsp;PATH=E:\dev\AI\python-3.5.2\PCbuild\win32;{other&nbsp;path}
+REM&nbsp;SET&nbsp;PATH=D:\Python\Python36;D:\Python\Python36\Scripts;{other&nbsp;path}
+SET&nbsp;PYTHONHOME=D:\Python\Python35
+SET&nbsp;PATH=D:\Python\Python35;D:\Python\Python35\Scripts;{other&nbsp;path}
+
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;numpy
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;--upgrade&nbsp;pip
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;matplotlib==3.0
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;pillow
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;scikit-image==0.15
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;numpy&nbsp;scipy
+REM&nbsp;python&nbsp;-m&nbsp;pip&nbsp;install&nbsp;protobuf</pre><p>tknter问题解决参考:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/36327134/matplotlib-error-no-module-named-tkinter" style="white-space:normal;">https://stackoverflow.com/questions/36327134/matplotlib-error-no-module-named-tkinter</a>&nbsp;</p><p>其他:</p><p><a rel="nofollow" href="https://github.com/topics/backpropagation-algorithm?l=java">backpropagation-algorithm</a></p><p><a rel="nofollow" href="https://github.com/gabrielfreire/Backpropagation-NeuralNetwork/blob/master/src/com/gabrielfreire/app/BackpropagationNeuralNetwork.java">Backpropagation-NeuralNetwork</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/charlotte77/p/5629865.html">一文弄懂神经网络中的反向传播法——BackPropagation</a></p><p><a rel="nofollow" href="https://www.zhihu.com/question/27239198">如何直观地解释 backpropagation 算法？</a></p><p><a rel="nofollow" href="https://blog.csdn.net/u014313009/article/details/51039334">反向传播算法（过程及公式推导）</a></p><p><a rel="nofollow" href="https://jdhao.github.io/2016/01/19/back-propagation-in-mlp-explained/">神经网络中误差反向传播(back propagation)算法的工作原理</a></p><p><a rel="nofollow" href="https://github.com/BVLC/caffe">caffe</a></p><p><a rel="nofollow" href="https://blog.csdn.net/light169/article/details/53993893">Windows下VS2015编译caffe(CPU ONLY)</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/fengfenggirl/p/cnn_implement.html">数据挖掘系列（10）——卷积神经网络算法的一个实现</a></p><p><a rel="nofollow" href="https://blog.csdn.net/dare_kz/article/details/77603522">BP神经网络计算过程详解，用笔手算一遍弄懂反向传播</a></p><p><a rel="nofollow" href="https://blog.csdn.net/qq_41004007/article/details/83153830">神经网络--反向传播（手算）</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/3102819/disable-same-origin-policy-in-chrome">Disable same origin policy in Chrome</a></p><p><a rel="nofollow" href="https://github.com/wikimedia/mediawiki">wiki engine</a></p><p><br></p><p><a rel="nofollow" href="https://blog.csdn.net/climaxwind/article/details/52930738">https://blog.csdn.net/climaxwind/article/details/52930738</a></p><p><a rel="nofollow" href="https://blog.csdn.net/iamzhangzhuping/article/details/49993899">https://blog.csdn.net/iamzhangzhuping/article/details/49993899</a></p><p><span style="color:rgb(0,176,80);">/*----------------------------------分割线-------------------------------------------------*/</span></p><p><span style="color:rgb(0,176,80);"></span></p><p><br></p><p>caffe</p><p><a rel="nofollow" href="https://yufeigan.github.io/">https://yufeigan.github.io/</a></p><p><a rel="nofollow" href="https://blog.csdn.net/mounty_fsc/article/details/51085654">https://blog.csdn.net/mounty_fsc/article/details/51085654</a></p><p><a rel="nofollow" href="https://blog.csdn.net/zsf211/article/details/79690082">https://blog.csdn.net/zsf211/article/details/79690082</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/empty16/p/4878164.html">https://www.cnblogs.com/empty16/p/4878164.html</a></p><p><a rel="nofollow" href="http://ask.ainoob.cn/article/9141">http://ask.ainoob.cn/article/9141</a></p><p><a rel="nofollow" href="https://cloud.tencent.com/developer/article/1100814">https://cloud.tencent.com/developer/article/1100814</a></p><p><a rel="nofollow" href="https://blog.csdn.net/elysion122/article/details/64151247">https://blog.csdn.net/elysion122/article/details/64151247</a></p><p><a rel="nofollow" href="https://github.com/ZhaofanQiu/caffe-windows-3dConvNet">https://github.com/ZhaofanQiu/caffe-windows-3dConvNet</a></p><p><a rel="nofollow" href="https://github.com/Ewenwan/MVision/blob/master/CNN/Action_Recognition/CDC/readme.md">https://github.com/Ewenwan/MVision/blob/master/CNN/Action_Recognition/CDC/readme.md</a></p><p><a rel="nofollow" href="http://zgyxwlxzz.paperopen.com/en/OA/pdfdow.aspx%3FSid%3D201804085">http://zgyxwlxzz.paperopen.com/en/OA/pdfdow.aspx%3FSid%3D201804085</a></p><p><a rel="nofollow" href="http://element-ui.cn/news_show_5142.shtml">http://element-ui.cn/news_show_5142.shtml</a></p><p>pytorch</p><p><a rel="nofollow" href="https://github.com/yunjey/pytorch-tutorial/tree/master/tutorials/03-advanced/image_captioning">https://github.com/yunjey/pytorch-tutorial/tree/master/tutorials/03-advanced/image_captioning</a></p><p>tensorflow</p><p><a rel="nofollow" href="https://github.com/yunjey/davian-tensorflow">https://github.com/yunjey/davian-tensorflow</a> </p><p><br></p><p><span style="color:rgb(0,176,80);"><br></span>/*--------------------------------------------------------------------------------------------------------------*/</p><p>caffe可视化</p><p><a rel="nofollow" href="http://ethereon.github.io/netscope/#/editor">http://ethereon.github.io/netscope/#/editor</a></p><p><a rel="nofollow" href="https://blog.csdn.net/u012915263/article/details/60579429">https://blog.csdn.net/u012915263/article/details/60579429</a></p><p><a rel="nofollow" href="https://juejin.im/post/5ae2a7b3f265da0b9f40011a">https://juejin.im/post/5ae2a7b3f265da0b9f40011a</a></p><p><a rel="nofollow" href="https://www.cnblogs.com/carle-09/p/9086793.html">https://www.cnblogs.com/carle-09/p/9086793.html</a></p><p><a rel="nofollow" href="https://cloud.tencent.com/developer/article/1065135">https://cloud.tencent.com/developer/article/1065135</a> </p><p>/*****************************************************************************************************************/</p><p>&nbsp;读懂caffe</p><p><a rel="nofollow" href="https://blog.csdn.net/u012526120/article/details/49471485">https://blog.csdn.net/u012526120/article/details/49471485</a></p><p><a rel="nofollow" href="https://github.com/Stephenfang51/Caffe_structure">https://github.com/Stephenfang51/Caffe_structure</a></p><p><a rel="nofollow" href="https://www.thinbug.com/q/39742486">https://www.thinbug.com/q/39742486</a> </p><p><a rel="nofollow" href="https://stackoom.com/question/3Gmwx/Caffe-prototxt%25E7%259A%2584%25E8%25AF%25AD%25E6%25B3%2595%25E6%258C%2587%25E5%258D%2597%25E5%2592%258C%25E7%2589%2588%25E6%259C%25AC%25E6%258E%25A7%25E5%2588%25B6">https://stackoom.com/question/3Gmwx/Caffe-prototxt%25E7%259A%2584%25E8%25AF%25AD%25E6%25B3%2595%25E6%258C%2587%25E5%258D%2597%25E5%2592%258C%25E7%2589%2588%25E6%259C%25AC%25E6%258E%25A7%25E5%2588%25B6</a> </p><p><a rel="nofollow" href="https://www.cnblogs.com/xiaochouk/p/10107726.html">https://www.cnblogs.com/xiaochouk/p/10107726.html</a></p><p><a rel="nofollow" href="https://www.jiqizhixin.com/articles/2019-12-19-15">https://www.jiqizhixin.com/articles/2019-12-19-15</a></p><p><br></p><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="8c149c55004f11eab759fa163e330718" href="/blogs/attachment?id=8c149c55004f11eab759fa163e330718" title="caffe.zip.003.zip">caffe.zip.003.zip</a>
+                <span class="attSize">17.89M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="8c18de75004f11eab759fa163e330718" href="/blogs/attachment?id=8c18de75004f11eab759fa163e330718" title="caffe.zip.001.zip">caffe.zip.001.zip</a>
+                <span class="attSize">17.96M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="8c1d27d4004f11eab759fa163e330718" href="/blogs/attachment?id=8c1d27d4004f11eab759fa163e330718" title="caffe.zip.004.zip">caffe.zip.004.zip</a>
+                <span class="attSize">16.11M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="8c20c763004f11eab759fa163e330718" href="/blogs/attachment?id=8c20c763004f11eab759fa163e330718" title="caffe.zip.002.zip">caffe.zip.002.zip</a>
+                <span class="attSize">17.82M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/107108#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

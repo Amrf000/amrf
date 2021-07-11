@@ -1,0 +1,95 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>问题场景:<br></p><p>同事使用htmlunit发送post请求（负载json）请求一个预期json数据,返回始终和预期不一致;</p><p>问题分析过程:</p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>使用httpclient进行post请求,header中直接附加浏览器中的cookie和其他,content-type未设置时http状态500,content-type设置后状态204,初步判断可能是有连接session相关的判断;</p></li><li><p>使用selenium，设置Headless为false,进行目标网站登录操作,然后由于selenium没有直接post的方法，所以使用executeScript发送相关请求</p></li></ol><pre class="brush:js;toolbar:false">String&nbsp;js=&nbsp;"function&nbsp;getRet(){\r\n"&nbsp;+&nbsp;
+		"	var&nbsp;datas&nbsp;=&nbsp;null;\r\n"&nbsp;+&nbsp;
+		"	XXX.doPost({\r\n"&nbsp;+&nbsp;
+		"		async:false,\r\n"&nbsp;+&nbsp;
+		"		url:'目标地址',\r\n"&nbsp;+&nbsp;
+		"		data:{json负载},\r\n"&nbsp;+&nbsp;
+		"		success&nbsp;:&nbsp;function(datass){\r\n"&nbsp;+&nbsp;
+		"			datas&nbsp;=&nbsp;datass;\r\n"&nbsp;+&nbsp;
+		"		}\r\n"&nbsp;+&nbsp;
+		"	});\r\n"&nbsp;+&nbsp;
+		"	return&nbsp;datas;\r\n"&nbsp;+&nbsp;
+		"}\r\n"&nbsp;+&nbsp;
+		"return&nbsp;getRet();";
+Object&nbsp;ret&nbsp;=&nbsp;(Object)jsExecutor.executeScript(js);</pre><p>结果符合预期</p><p>3.同事使用的是htmlunit</p><p>由于目标网站的登录会跳转sso域然后返回存在多次重定向,<br></p><p>设置webClient.getOptions().setRedirectEnabled(true);</p><pre class="brush:java;toolbar:false">HtmlPage&nbsp;retPage&nbsp;=&nbsp;button.click();
+Thread.sleep(10000);//区别于synchronized&nbsp;(homePage)&nbsp;{homePage.wait(25000);}和client.waitForBackgroundJavaScript(30000)
+//由于存在多次重定向，这个等待是必要的
+PrintStream&nbsp;originalOut&nbsp;=&nbsp;System.out;
+PrintStream&nbsp;fileOut&nbsp;=&nbsp;new&nbsp;PrintStream("./out111.txt");
+System.setOut(fileOut);
+System.out.println(((HtmlPage)&nbsp;webClient.getCurrentWindow().getEnclosedPage()).asXml());//获取当前页面而不使用前面的Page变量，因为存在多次重定向
+System.setOut(originalOut);</pre><p>经过修改后,第一步的日志结果符合预期,第二步post请求</p><p>1.使用htmlunit的post</p><pre class="brush:java;toolbar:false">WebRequest&nbsp;requestSettings&nbsp;=&nbsp;new&nbsp;WebRequest(url,&nbsp;HttpMethod.POST)
+requestSettings.setAdditionalHeader("Content-Type","application/json");
+requestSettings.setAdditionalHeader("Accept",&nbsp;"application/json");
+requestSettings.setRequestBody(param);</pre><p>由于和登录共用的一个webclient对象,就没必要设置cookie头了；</p><p>测试结果，始终返回一个不符合预期的html结果</p><p>2.使用executeJavaScript获取,</p><p>js最后的return需要修改为JSON.stringify(getRet())，</p><pre class="brush:java;toolbar:false">ScriptResult&nbsp;result&nbsp;=&nbsp;((HtmlPage)&nbsp;webClient.getCurrentWindow().getEnclosedPage()).executeJavaScript(js);//使用当前页，即登录跳转最终页
+Thread.sleep(10000);//需不需要等待，没有测试
+Object&nbsp;rt&nbsp;=&nbsp;result.getJavaScriptResult();
+fileOut&nbsp;=&nbsp;new&nbsp;PrintStream("./out222.txt");
+System.setOut(fileOut);
+System.out.println(rt.toString());
+System.setOut(originalOut);</pre><p>结果符合预期<br></p><p><span style="color:rgb(0,176,80);">/*-------------------------------------------------------------------------------------------*/</span></p><p>后面我又采用httpclient的方式继续做了测试, 前面说到可能是有连接session相关的判断,那么考虑 登录和post共用一个httpclient和httpcontent,</p><pre class="brush:java;toolbar:false;">CloseableHttpClient&nbsp;httpClient&nbsp;=&nbsp;HttpClients.createDefault();
+CookieStore&nbsp;cookieStore&nbsp;=&nbsp;new&nbsp;BasicCookieStore();
+HttpContext&nbsp;httpContext&nbsp;=&nbsp;new&nbsp;BasicHttpContext();
+httpContext.setAttribute(HttpClientContext.COOKIE_STORE,&nbsp;cookieStore);
+DoLoginD(httpClient,"xxx",Base64.decode("xxxxx"),httpContext);//使用同一个httpclient和httpContext
+RequestConfig&nbsp;requestConfig&nbsp;=&nbsp;RequestConfig.custom()
+		.setConnectTimeout(2*5000)
+		.setConnectionRequestTimeout(2*5000)
+		.setSocketTimeout(2*5000)
+		.setRedirectsEnabled(true)
+		.build();
+HttpPost&nbsp;request&nbsp;=&nbsp;new&nbsp;HttpPost(url);
+request.setConfig(requestConfig);
+request.setHeader("Accept",&nbsp;"application/json,&nbsp;text/plain,&nbsp;*/*");&nbsp;//,&nbsp;text/javascript,&nbsp;*/*;&nbsp;q=0.01
+request.setHeader("Content-Type","application/json;charset=utf-8");
+StringEntity&nbsp;postStr&nbsp;=&nbsp;new&nbsp;StringEntity(postBody,ContentType.APPLICATION_JSON);//这个ContentType.APPLICATION_JSON需要尤为注意，前面204很大程度是这个没设置的问题
+request.setEntity(postStr);
+HttpResponse&nbsp;response&nbsp;=&nbsp;httpClient.execute(request,httpContext);
+if(response.getStatusLine().getStatusCode()&nbsp;==&nbsp;200){
+	&nbsp;HttpEntity&nbsp;entity&nbsp;=&nbsp;response.getEntity();
+&nbsp;	&nbsp;if&nbsp;(entity&nbsp;!=&nbsp;null)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;long&nbsp;len&nbsp;=&nbsp;entity.getContentLength();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(len&nbsp;!=&nbsp;-1&nbsp;&amp;&amp;&nbsp;len&nbsp;&lt;&nbsp;2048)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;EntityUtils.toString(entity);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;StringBuffer&nbsp;sb&nbsp;=&nbsp;new&nbsp;StringBuffer(1024&nbsp;*&nbsp;512);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BufferedReader&nbsp;in&nbsp;=&nbsp;new&nbsp;BufferedReader(
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;new&nbsp;InputStreamReader(entity.getContent(),&nbsp;encoding));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;line&nbsp;=&nbsp;null;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;while&nbsp;((line&nbsp;=&nbsp;in.readLine())&nbsp;!=&nbsp;null)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sb.append(line);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result&nbsp;=&nbsp;sb.toString();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Fetched&nbsp;data&nbsp;length:&nbsp;"&nbsp;+&nbsp;(result.length()&nbsp;/&nbsp;1000)&nbsp;+&nbsp;"&nbsp;KB");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;EntityUtils.consume(entity);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+}&nbsp;else&nbsp;{
+	System.out.println("response&nbsp;code"+response.getStatusLine().getStatusCode());
+	HttpEntity&nbsp;entity&nbsp;=&nbsp;response.getEntity();
+&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;test&nbsp;=&nbsp;EntityUtils.toString(entity);
+&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(test);
+}</pre><p>反思:</p><p>前面的204的原因应该主要就是ContentType.APPLICATION_JSON未设置导致的;</p><p>参考:</p><p><a rel="nofollow" href="https://stackoverflow.com/questions/12059278/how-to-post-json-request-using-apache-httpclient">https://stackoverflow.com/questions/12059278/how-to-post-json-request-using-apache-httpclient</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/125727#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Selenium_Blog" title="Selenium" href="https://developer.huaweicloud.com/tags/200673/blog_1">Selenium</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.HTML_Blog" title="HTML" href="https://developer.huaweicloud.com/tags/200752/blog_1">HTML</a>
+        
+    </div>
+</div></div>

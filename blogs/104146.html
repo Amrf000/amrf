@@ -1,0 +1,28 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>项目地址:<a rel="nofollow" href="https://github.com/rougier/freetype-gl">https://github.com/rougier/freetype-gl</a> </p><p><span class="final-path" style="font-weight:600;color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';background-color:rgb(255,255,255);">freetype-gl.h</span></p><p><span class="final-path" style="font-weight:600;color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';background-color:rgb(255,255,255);"></span></p><pre class="brush:cpp;toolbar:false">#include&nbsp;"vector.h"
+#include&nbsp;"texture-atlas.h"
+#include&nbsp;"texture-font.h"
+using&nbsp;namespace&nbsp;ftgl;</pre><p><span class="final-path" style="font-weight:600;color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';background-color:rgb(255,255,255);">vector.h</span><br></p><p><span class="final-path" style="font-weight:600;color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';background-color:rgb(255,255,255);">模仿stl vector类实现的结构和相关函数，用来给</span>@ref texture-atlas（用于存储节点），@ ref使用</p><p>&nbsp; * texture-font（用于存储字形）和@ref font-manager（用于存储字体）,</p><p>为什么不直接用stl的vector呢，大概是兼容c吧</p><p>texture-atlas.h</p><p>纹理图集用于将多个小区域打包成单个纹理</p><pre class="brush:cpp;toolbar:false">&nbsp;*&nbsp;/&nbsp;Creates&nbsp;a&nbsp;new&nbsp;atlas&nbsp;of&nbsp;512x512&nbsp;with&nbsp;a&nbsp;depth&nbsp;of&nbsp;1
+&nbsp;*&nbsp;texture_atlas_t&nbsp;*&nbsp;atlas&nbsp;=&nbsp;texture_atlas_new(&nbsp;512,&nbsp;512,&nbsp;1&nbsp;);
+&nbsp;*
+&nbsp;*&nbsp;//&nbsp;Allocates&nbsp;a&nbsp;region&nbsp;of&nbsp;20x20
+&nbsp;*&nbsp;ivec4&nbsp;region&nbsp;=&nbsp;texture_atlas_get_region(&nbsp;atlas,&nbsp;20,&nbsp;20&nbsp;);
+&nbsp;*
+&nbsp;*&nbsp;//&nbsp;Fill&nbsp;region&nbsp;with&nbsp;some&nbsp;data
+&nbsp;*&nbsp;texture_atlas_set_region(&nbsp;atlas,&nbsp;region.x,&nbsp;region.y,&nbsp;region.width,&nbsp;region.height,&nbsp;data,&nbsp;stride&nbsp;)</pre><p>texture-font.h</p><p><span class="final-path" style="font-weight:600;color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';background-color:rgb(255,255,255);"></span>具体的纹理字体操作函数</p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/104146#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

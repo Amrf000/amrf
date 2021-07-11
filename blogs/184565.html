@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>主体参考：<a>https://www.cnblogs.com/liuxianan/p/vscode-plugin-webview.html</a></p>
+<p>webview-panel.ts：</p>
+<p><a rel="nofollow" href="https://github.com/ayqy/browser/blob/a0b2cba5a59924debb4c2a0456ff0802d2c15d95/src/WebviewPanel.ts">https://github.com/ayqy/browser/blob/a0b2cba5a59924debb4c2a0456ff0802d2c15d95/src/WebviewPanel.ts</a></p>
+<p>修改一下静态方法createOrShow,添加一些参数</p>
+<p>&nbsp;message: any,//用于消息显示类型的对话框</p>
+<p>position: vscode.WebviewModalPosition,//对话框显示的位置</p>
+<p>&nbsp;config:any,//用于传入对话框输入项的默认值</p>
+<p>callback:any//function(pConfig){}&nbsp;对框框点击确定后的回调</p>
+<p>对话框初始化参数通过message['xx'] = xxx;message['cmd'] = "initParam";WebviewPanel.currentPanel.postMessage(message);形式传给webview，对应的webview页面如果采用vuejs开发则，组件created中window.addEventListener('message', this.onMessage),然后根据message.cmd执行初始化；反向的消息通讯参考callVscode,</p>
+<p>webview : vscode.postMessage({ key: "close" }) ==》 webviewpanel.ts: message.key === "close" this.dispose();</p>
+<p>webview : callVscode({ cmd: 'saveSetting', config: this.config }, () =&gt; { this.alert('保存成功！');});==》webviewpanel.ts: this._callback(message);this.dispose();</p>
+<p>值得注意的是webview中的资源引入需要webview-panel.ts中添加支持（参考第一个链接）</p>
+<pre class="brush:js;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;private&nbsp;_getWebViewContent(templatePath:&nbsp;string):&nbsp;string&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;resourcePath:&nbsp;string&nbsp;=&nbsp;path.join(this._basePath,&nbsp;templatePath);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//const&nbsp;resourcePath&nbsp;=&nbsp;util.getExtensionFileAbsolutePath(context,&nbsp;templatePath);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;const&nbsp;dirPath&nbsp;=&nbsp;path.dirname(resourcePath);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;let&nbsp;html&nbsp;=&nbsp;fs.readFileSync(resourcePath,&nbsp;'utf-8');
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;vscode不支持直接加载本地资源，需要替换成其专有路径格式，这里只是简单的将样式和JS的路径替换
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;html&nbsp;=&nbsp;html.replace(/(&lt;link.+?href="|&lt;script.+?src="|&lt;img.+?src=")(.+?)"/g,&nbsp;(m,&nbsp;$1,&nbsp;$2)&nbsp;=&gt;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;$1&nbsp;+&nbsp;vscode.Uri.file(path.resolve(dirPath,&nbsp;$2)).with({&nbsp;scheme:&nbsp;'vscode-resource'&nbsp;}).toString()&nbsp;+&nbsp;'"';
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;});
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;html;
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+<p><br></p>
+<p>表单的样式采用引入的bootstrap支持,其他的只是一些细节调整;</p>
+<p>/----------------------------------------------------------------------------------------------------------------------------------------/</p>
+<p>依照上面这种思路:webview页面中vscode.postMessage,panel.webview.onDidReceiveMessage中处理消息,我们还可以做一些点击页面元素关联跳转文件行或者一些其他的native功能;</p>
+<p><br></p>
+<p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/184565#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

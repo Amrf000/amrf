@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>记得，以前在这记录，没找到，再记录一下好了;</p>
+<h3>1.修改\tomcat\conf\tomcat-users.xml</h3>
+<pre class="brush:html;toolbar:false">&lt;role&nbsp;rolename="manager-gui"/&gt;
+&lt;role&nbsp;rolename="admin-gui"/&gt;
+&lt;user&nbsp;username="admin"&nbsp;password="xxxxx"&nbsp;roles="admin-gui,manager-gui"&nbsp;/&gt;
+&lt;/tomcat-users&gt;</pre>
+<h3>2.修改\tomcat\webapps\manager\META-INF\context.xml</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;注释掉org.apache.catalina.valves.RemoteAddrValve这个节点;</p>
+<h3>3.修改\RobotK\tomcat\webapps\manager\WEB-INF\web.xml</h3>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;提高上传文件大小限制，以保证更新war包时能够上传成功,此外更新war包需要停应用;</p>
+<p>在HTMLManager节点下增加</p>
+<pre class="brush:html;toolbar:false">&nbsp;&nbsp;&nbsp;&nbsp;&lt;multipart-config&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;!--&nbsp;50MB&nbsp;max&nbsp;--&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;max-file-size&gt;52428800&lt;/max-file-size&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;max-request-size&gt;52428800&lt;/max-request-size&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;file-size-threshold&gt;0&lt;/file-size-threshold&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/multipart-config&gt;</pre>
+<p>参考:</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/u011471105/article/details/80724996">https://blog.csdn.net/u011471105/article/details/80724996</a></p>
+<p><a>https://www.cnblogs.com/wangjiming/p/12492764.html</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/180554#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Tomcat_Blog" title="Tomcat" href="https://developer.huaweicloud.com/tags/200666/blog_1">Tomcat</a>
+        
+    </div>
+</div></div>

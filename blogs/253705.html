@@ -1,0 +1,39 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>使用gin-swagger从swaggerui编辑出来的yaml生成相关的gin接口代码的命令参考：</p>
+<p>安装:&nbsp;</p>
+<pre class="language-actionscript"><code>go get github.com/mikkeloscar/gin-swagger</code></pre>
+<p>使用:</p>
+<pre class="language-actionscript"><code>gin-swagger -A swagger-api -f example.yaml</code></pre>
+<p>golang time.Time类型字段的定义参考</p>
+<pre class="language-actionscript"><code>。。。
+  start_time:
+    type: string
+    x-go-type:
+      type: Time
+      import:
+        package: time
+      hints:
+        noValidation: true
+    x-nullable: true</code></pre>
+<h1>备注：</h1>
+<p>另外 gin-swagger中使用了go-bindata将.gotmpl模板文件生成相应的go文件,所以如果希望修改模板文件后重新编译后生效，<br>则需要先使用go-bindata(https://github.com/kevinburke/go-bindata)<br>重新生成bindata.go文件，生成命令为go-bindata -pkg main -o bindata.go templates<br>需要注意的是如果希望后续使用新生成的gin-swagger.exe则需要将其放入GPATH下的bin目录中;go-bindata.exe也是同样的;<br></p>
+<p>参考：</p>
+<p><a>https://future-architect.github.io/articles/20200630/</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/253705#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

@@ -1,0 +1,31 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp;方案一：</p>
+<p>使用lua-resty-upload模块</p>
+<p>参考：</p>
+<p><a rel="nofollow" href="https://blog.csdn.net/weixin_30416497/article/details/96798072">https://blog.csdn.net/weixin_30416497/article/details/96798072</a></p>
+<p>需要注意上传文件报文件夹创建失败,需要</p>
+<pre>os.execute( "mkdir -p "..save_file_path:gsub("/","\\") ) -- https://stackoverflow.com/questions/1690913/how-to-create-a-directory-in-lua</pre>
+<p>方案二：</p>
+<p>使用nginx-upload-module模块(win32环境下编译这个模块需要修改代码,还是直接用方案一得了)</p>
+<p>参考</p>
+<p><a>https://www.cnblogs.com/lujiango/p/9051650.html</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/215951#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Lua_Blog" title="Lua" href="https://developer.huaweicloud.com/tags/200539/blog_1">Lua</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

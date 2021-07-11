@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>确认系统已经安装java8或以上的jdk</p><p>下载scala-2.11.8.msi</p><p><a rel="nofollow" href="https://www.scala-lang.org/download/all.html">https://www.scala-lang.org/download/all.html</a></p><p>下载sbt-1.2.8.msi</p><p><a rel="nofollow" href="https://www.scala-sbt.org/download.html">https://www.scala-sbt.org/download.html</a></p><p>分别安装scala和sbt</p><h3>配置sbt</h3><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>修改sbt/conf/sbtconfig.txt</p></li></ol><pre class="brush:css;toolbar:false">-Xmx512M
+-XX:MaxPermSize=256m
+-XX:ReservedCodeCacheSize=128m
+-Dsbt.log.format=true
+#&nbsp;如果需要修改源
+-Dsbt.override.build.repos=true
+#&nbsp;如果希望修改本地仓地址
+-Dsbt.boot.directory=D:/sbt/.sbt/boot
+-Dsbt.ivy.home=D:/sbt/.ivy2
+-Dsbt.global.base=D:/sbt/.sbt
+-Dsbt.repository.config=D:/sbt/repositories
+#&nbsp;如果需要设置代理
+-Dsbt.repository.secure=false
+-Dhttp.proxyHost=proxyhost
+-Dhttp.proxyPort=proxyport
+-Dhttp.proxyUser=user
+-Dhttp.proxyPassword=password
+-Dhttps.proxyHost=proxyhost
+-Dhttps.proxyPort=proxyport
+-Dhttps.proxyUser=user
+-Dhttps.proxyPassword=password</pre><p>2.修改源，如果sbt.repository.config不设置,需要在用户目录下的.sbt中新建repositories文件,设置了则在设置的目录中创建</p><p>如果使用华为云的sbt镜像则内容修改为<br></p><pre class="brush:c#;toolbar:false">[repositories]
+&nbsp;&nbsp;local
+&nbsp;&nbsp;huaweicloud-ivy:&nbsp;https://mirrors.huaweicloud.com/repository/ivy/,&nbsp;[organization]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]
+&nbsp;&nbsp;huaweicloud-maven:&nbsp;https://mirrors.huaweicloud.com/repository/maven/</pre><p><br></p><p>下载并安装idea,下载scala-intellij-bin-2019.2.15.zip插件,解压到idea插件目录<br></p><p>打开idea,新建scala-sbt项目</p><ol class="list-paddingleft-2" style="list-style-type:decimal;"><li><p>设置sbt为系统安装的版本而不是idea内置的</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579172023152488.png" title="1579172023152488.png" alt="image.png" width="556" height="438" class="localImage"></p><p>vm参数的设置和sbtconfig.txt一样, 启动器为安装的sbt启动器文件路径</p></li><li><p>为项目添加scala-sdk</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579172130792606.png" title="1579172130792606.png" alt="image.png" width="748" height="419" class="localImage"></p><p>添加成功后会出现在modules中</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579172275694392.png" title="1579172275694392.png" alt="image.png" width="654" height="224" class="localImage"></p></li><li><p>设置scala目录为源目录<span style="color:rgb(255,0,0);">( 注意不设置会导致找不到主类入口)</span></p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1579172645267434.png" title="1579172645267434.png" alt="image.png" class="localImage"></p></li><li><p>在scala目录下新建com目录，并添加HelloWord.scala文件,内容为</p><p><br></p><pre style="background-color:rgb(255,255,255);font-family:Consolas;font-size:9.8pt;">package&nbsp;com
+
+object&nbsp;HelloWorld{
+&nbsp;&nbsp;def&nbsp;main&nbsp;(args:&nbsp;Array[]&nbsp;):&nbsp;Unit&nbsp;=&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Hello&nbsp;World!")
+&nbsp;&nbsp;}
+}</pre><p><br></p></li><li><p>右键运行HelloWorld文件</p></li></ol><p><br></p><p>参考:</p><p><a rel="nofollow" href="https://gist.github.com/wsargent/072319c2100ac0aea4305d6f6eeacc08">https://gist.github.com/wsargent/072319c2100ac0aea4305d6f6eeacc08</a></p><p><a rel="nofollow" href="https://blog.csdn.net/lovehuangjiaju/article/details/47746391">https://blog.csdn.net/lovehuangjiaju/article/details/47746391</a></p><p><a rel="nofollow" href="https://blog.csdn.net/iamlihongwei/article/details/72783459">https://blog.csdn.net/iamlihongwei/article/details/72783459</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/13803459/how-to-use-sbt-from-behind-proxy">https://stackoverflow.com/questions/13803459/how-to-use-sbt-from-behind-proxy</a></p><p><a rel="nofollow" href="https://blog.csdn.net/liuxiao723846/article/details/80734490">https://blog.csdn.net/liuxiao723846/article/details/80734490</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/52222156/scala-sbt-error-while-importing-sbt-project">https://stackoverflow.com/questions/52222156/scala-sbt-error-while-importing-sbt-project</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/41351282/sbt-launcher-does-not-exist-when-attempting-to-open-sbt-project-in-intellij">https://stackoverflow.com/questions/41351282/sbt-launcher-does-not-exist-when-attempting-to-open-sbt-project-in-intellij</a></p><p><a rel="nofollow" href="https://blog.csdn.net/jameshadoop/article/details/52295710">https://blog.csdn.net/jameshadoop/article/details/52295710</a></p><p><a rel="nofollow" href="https://blog.csdn.net/hongzhen91/article/details/81507140">https://blog.csdn.net/hongzhen91/article/details/81507140</a></p><p><a rel="nofollow" href="https://blog.csdn.net/difffate/article/details/80631964">https://blog.csdn.net/difffate/article/details/80631964</a></p><p><a rel="nofollow" href="https://blog.csdn.net/yu0_zhang0/article/details/79237210">https://blog.csdn.net/yu0_zhang0/article/details/79237210</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/44163744/could-not-find-or-load-main-class-in-scala-in-intellij-ide">https://stackoverflow.com/questions/44163744/could-not-find-or-load-main-class-in-scala-in-intellij-ide</a></p><p>其他:</p><p><a rel="nofollow" href="https://docs.google.com/document/d/1W38UZuDkPrVwxWjjCIQaXNftnpVyYHUE4icLQ4XbGAU/edit?pli=1">https://docs.google.com/document/d/1W38UZuDkPrVwxWjjCIQaXNftnpVyYHUE4icLQ4XbGAU/edit?pli=1</a></p><p><a rel="nofollow" href="https://www.toptal.com/scala/why-should-i-learn-scala">https://www.toptal.com/scala/why-should-i-learn-scala</a></p><p><a rel="nofollow" href="https://contributors.scala-lang.org/t/what-can-make-scala-more-popular/2995">https://contributors.scala-lang.org/t/what-can-make-scala-more-popular/2995</a></p><p><a rel="nofollow" href="https://www.educative.io/blog/the-resurgence-of-scala-in-2019">https://www.educative.io/blog/the-resurgence-of-scala-in-2019</a></p><p><a rel="nofollow" href="https://hackernoon.com/10-reasons-to-learn-scala-and-functional-programming-2fce385e6ec7">https://hackernoon.com/10-reasons-to-learn-scala-and-functional-programming-2fce385e6ec7</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/15241903/what-can-i-do-in-scala-that-i-could-not-do-in-java">https://stackoverflow.com/questions/15241903/what-can-i-do-in-scala-that-i-could-not-do-in-java</a></p><p><a rel="nofollow" href="https://www.grahamlea.com/2013/02/a-new-java-library-for-amazing-productivity/">https://www.grahamlea.com/2013/02/a-new-java-library-for-amazing-productivity/</a></p><p><a rel="nofollow" href="https://stackoverflow.com/tags/scala/info">https://stackoverflow.com/tags/scala/info</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/2952732/samples-of-scala-and-java-code-where-scala-code-looks-simpler-has-fewer-lines/2953040">https://stackoverflow.com/questions/2952732/samples-of-scala-and-java-code-where-scala-code-looks-simpler-has-fewer-lines/2953040</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/142750#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Scala_Blog" title="Scala" href="https://developer.huaweicloud.com/tags/200206/blog_1">Scala</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Windows_Blog" title="Windows" href="https://developer.huaweicloud.com/tags/200366/blog_1">Windows</a>
+        
+    </div>
+</div></div>

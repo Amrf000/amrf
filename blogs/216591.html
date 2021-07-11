@@ -1,0 +1,49 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>当没有设置adapter时候，上传图片会出现filerepository-no-upload-adapter 的提示；</p>
+<p>简单的uploadadapter实现参考:</p>
+<p><a>https://stackoverflow.com/questions/59190905/vuejs-ckeditor5-upload-images</a></p>
+<p>我这里服务端使用的openresty处理上传的文件,另外一篇帖子中有说明（https://bbs.huaweicloud.com/blogs/215951）:</p>
+<p>uploader直接写在component之外，另外extraPlugin修正为extraPlugins；</p>
+<pre>export const uploader = function (editor)
+{
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) =&gt;
+        new UploadAdapter(loader);
+};<br>...<br><br>editorConfig: {<br>  &nbsp; 'extraPlugins': [uploader]<br>}<br></pre>
+<div style="color: #333333;"> 
+ <div>
+  由于我们的openresty侧需要filename、type、billingcode三个参数，我们构造一下加到xhr的url中去,web页面侧的修改就完了;
+  <br>
+ </div> 
+ <div>
+  <br>
+ </div> 
+ <div> 
+  <p>chrome环境下xhr POST form，会发送两次请求，第一次OPTIONS，第二次POST,<br>需要对OPTIONS做一下处理，否则nginx会报no boundary defined in Content-Type错误;</p> 
+  <p>我们简单处理下<br></p> 
+  <pre>local request_method = ngx.var.request_method
+if "OPTIONS" == request_method then
+&nbsp;response.code = 200
+&nbsp;ngx.say("OK")
+&nbsp;return
+end</pre> 
+  <p>另外还遇到一个问题,上传文件名包含中文时,lua io.open创建的文件名是乱码的(当然这种原文件名创建存储的方式不适用于实际的设计)<br>这个问题的解决参考https://zhuanlan.zhihu.com/p/157815053,我使用的是actboy168(魔编lua界的老神仙了)的这个修改;<br></p> 
+ </div> 
+</div>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/216591#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Lua_Blog" title="Lua" href="https://developer.huaweicloud.com/tags/200539/blog_1">Lua</a>
+        
+    </div>
+</div></div>

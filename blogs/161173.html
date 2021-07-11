@@ -1,0 +1,118 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp; &nbsp; &nbsp; &nbsp;</p><pre class="brush:python;toolbar:false">python2中（</pre><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1587638929120034861.png" class="new-carousel" title="://bbs-img.huaweicloud.com/blogs/img/1587638929120034861.png"></p><p>python3中（<a>https://docs.python.org/3.3/library/functions.html#zip</a>）</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1587639008987005853.png" class="new-carousel" title="://bbs-img.huaweicloud.com/blogs/img/1587639008987005853.png"></p><p style="white-space: normal;"><strong>背景:</strong></p><p style="white-space: normal;">不经常写python的我，今天在读<a>https://ff120.github.io/2017/05/19/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%93%E9%A2%98/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0_%E6%84%9F%E7%9F%A5%E6%9C%BA/</a></p><p style="white-space: normal;">这篇博客时,把文章中的python2语法改成python3时遇到了一个让我感觉到有些意外的情况;</p><p style="white-space: normal;">先放一下对应python3下的代码:</p><pre class="brush:python;toolbar:false">from&nbsp;functools&nbsp;import&nbsp;reduce
+from&nbsp;itertools&nbsp;import&nbsp;tee
+
+class&nbsp;Perceptron:
+	def&nbsp;__init__(self,input_num,activator):
+		self.activator&nbsp;=&nbsp;activator
+		self.weights&nbsp;=&nbsp;[0.0&nbsp;for&nbsp;_&nbsp;in&nbsp;range(input_num)]
+		self.bias&nbsp;=&nbsp;0.0
+	def&nbsp;__str__(self):
+		return&nbsp;'weights\t:%s\nbias\t:%f\n'&nbsp;%&nbsp;(self.weights,&nbsp;self.bias)
+	def&nbsp;predict(self,&nbsp;input_vec):
+		return&nbsp;self.activator(\
+			reduce(lambda&nbsp;a,b:a+b,\
+				map(lambda&nbsp;x_w:x_w[0]*x_w[1],&nbsp;\
+					zip(input_vec,self.weights))&nbsp;\
+					,0.0)+self.bias)
+
+	def&nbsp;_update_weight(self,input_vec,output,label,rate):
+		delta&nbsp;=&nbsp;label&nbsp;-&nbsp;output
+		self.weights&nbsp;=&nbsp;list(map(
+		lambda&nbsp;x_w:x_w[1]+rate*delta*x_w[0],
+		zip(input_vec,self.weights)))
+		self.bias&nbsp;+=&nbsp;rate&nbsp;*&nbsp;delta
+
+	def&nbsp;_one_iteration(self,input_vecs,labels,rate):
+		samples&nbsp;=&nbsp;zip(input_vecs,labels)
+		#print(list(samples))
+		for(input_vec,label)&nbsp;in&nbsp;samples:
+			output&nbsp;=&nbsp;self.predict(input_vec)
+			self._update_weight(input_vec,output,label,rate)
+
+	def&nbsp;train(self,input_vecs,labels,iteration,rate):
+		for&nbsp;i&nbsp;in&nbsp;range(iteration):
+			self._one_iteration(input_vecs,labels,rate)
+
+
+def&nbsp;and_f(x):
+	return&nbsp;1&nbsp;if&nbsp;x&gt;0&nbsp;else&nbsp;0
+
+if&nbsp;__name__&nbsp;==&nbsp;'__main__':
+	x&nbsp;=&nbsp;[[0,0],[0,1],[1,0],[1,1]]
+	y&nbsp;=&nbsp;[0,0,0,1]
+	and_perception&nbsp;=&nbsp;Perceptron(2,and_f)
+	and_perception.train(x,y,10,0.1)
+	print(and_perception)
+	print('1&nbsp;and&nbsp;1&nbsp;=&nbsp;%d'%and_perception.predict([1,1]))
+	print('0&nbsp;and&nbsp;0&nbsp;=&nbsp;%d'%and_perception.predict([0,0]))
+	print('1&nbsp;and&nbsp;0&nbsp;=&nbsp;%d'%and_perception.predict([1,0]))
+	print('0&nbsp;and&nbsp;1&nbsp;=&nbsp;%d'%and_perception.predict([0,1]))		</pre><p>现象就是当我将注释的print(list(samples))打开时会影响到后续的结果,感觉就像list类型强转改变了samples一样;</p><p>查了查原来问题出现在zip上,python3的zip返回迭代器(从性能方面看这样也许确实更好吧);</p><p>当修改成</p><pre class="brush:python;toolbar:false">	samples&nbsp;=&nbsp;list(zip(input_vecs,labels))
+	print(list(samples))</pre><p>或者<br></p><pre class="brush:python;toolbar:false">	samples&nbsp;=&nbsp;zip(input_vecs,labels)
+	samples,second_it&nbsp;=&nbsp;tee(samples)
+	print(list(samples))
+	samples&nbsp;=&nbsp;second_it</pre><p>就好了;</p><p>同样可以注意到python3 map返回也是个迭代器;</p><p>参考:</p><p><a>https://stackoverflow.com/questions/8689184/nameerror-name-reduce-is-not-defined-in-python</a></p><p><a>https://stackoverflow.com/questions/40912089/python-map-on-zipped-object</a></p><p><a>https://stackoverflow.com/questions/21892989/what-is-the-good-python3-equivalent-for-auto-tuple-unpacking-in-lambda</a></p><p><a>https://stackoverflow.com/questions/50671360/map-in-python-3-vs-python-2</a></p><p><a>https://stackoverflow.com/questions/19777612/python-range-and-zip-object-type</a></p><p><a>https://stackoverflow.com/questions/42132731/how-to-create-a-copy-of-python-iterator</a></p><p><a>https://stackoverflow.com/questions/31683959/the-zip-function-in-python-3</a></p><p><a>https://blog.csdn.net/benpaodelulu_guajian/article/details/81869462</a></p><p><span style="color: rgb(0, 176, 80);">/*************************************************************************************************/</span></p><p>下面我们对上面的python感知机作一些可视化</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1587709430235016030.png" class="new-carousel" title="://bbs-img.huaweicloud.com/blogs/img/1587709430235016030.png"></p><pre class="brush:python;toolbar:false">from&nbsp;matplotlib&nbsp;import&nbsp;pyplot
+from&nbsp;matplotlib&nbsp;import&nbsp;cm
+from&nbsp;mpl_toolkits.mplot3d&nbsp;import&nbsp;Axes3D
+import&nbsp;numpy&nbsp;as&nbsp;np
+
+if&nbsp;__name__&nbsp;==&nbsp;'__main__':
+	#&nbsp;训练数据
+	x&nbsp;=&nbsp;np.array([[0,0,0],[1,1,1],[1,1,0],[1,0,1],[0,1,1]])
+	y&nbsp;=&nbsp;[1,0,0,0,0]
+	and_perception&nbsp;=&nbsp;Perceptron(3,and_f)
+	and_perception.train(x,y,10,0.1)
+	print(and_perception)
+	fig&nbsp;=&nbsp;pyplot.figure()
+	pyplot.xlim(0,&nbsp;1)
+	pyplot.ylim(0,&nbsp;1)
+	ax&nbsp;=&nbsp;Axes3D(fig)
+	ax.set_zlim3d(0,1)
+	length&nbsp;=&nbsp;len(y)
+	for&nbsp;i&nbsp;in&nbsp;range(length):
+		if&nbsp;y[i]==1:
+			ax.scatter(x[0:,0:1][i],x[0:,1:2][i],x[0:,2:3][i],&nbsp;c&nbsp;=&nbsp;'r',&nbsp;marker='*')
+		else:
+			ax.scatter(x[0:,0:1][i],x[0:,1:2][i],x[0:,2:3][i],&nbsp;c&nbsp;=&nbsp;'b',&nbsp;marker='*')
+
+	x2&nbsp;=&nbsp;np.linspace(0,1,10)
+	y2&nbsp;=&nbsp;np.linspace(0,1,10)
+	X,Y&nbsp;=&nbsp;np.meshgrid(x2,y2)
+	Z&nbsp;=&nbsp;(and_perception.weights[0]*X&nbsp;+&nbsp;and_perception.weights[1]*Y&nbsp;+&nbsp;&nbsp;+&nbsp;and_perception.bias)/(-and_perception.weights[2])
+	for&nbsp;idx1,&nbsp;zz&nbsp;in&nbsp;enumerate(Z):
+		for&nbsp;idx2,&nbsp;zzz&nbsp;in&nbsp;enumerate(zz):
+			if&nbsp;Z[idx1][idx2]&lt;0&nbsp;:			
+				Z[idx1][idx2]&nbsp;=&nbsp;and_perception.bias/(-and_perception.weights[2])#Z[idx1][idx2]&nbsp;if&nbsp;Z[idx1][idx2]&gt;0&nbsp;else&nbsp;np.nan
+				X[idx1][idx2]&nbsp;=&nbsp;0
+				Y[idx1][idx2]&nbsp;=&nbsp;0
+	surf&nbsp;=&nbsp;ax.plot_surface(X,&nbsp;Y,&nbsp;Z,&nbsp;rstride&nbsp;=&nbsp;1,&nbsp;cstride&nbsp;=&nbsp;1,cmap&nbsp;=&nbsp;'viridis',&nbsp;edgecolor&nbsp;=&nbsp;'none',vmin=np.nanmin(Z),&nbsp;vmax=np.nanmax(Z))
+	#使用模型对100个随机三维点进行分类
+	test&nbsp;=&nbsp;np.random.randint(0,1000,(100,3))/1000
+	for&nbsp;t&nbsp;in&nbsp;test:
+		if&nbsp;and_perception.predict(t)==1:
+			ax.scatter(t[0],t[1],t[2],&nbsp;c&nbsp;=&nbsp;'r',&nbsp;marker='*')
+		else:
+			ax.scatter(t[0],t[1],t[2],&nbsp;c&nbsp;=&nbsp;'b',&nbsp;marker='*')
+
+	ax.set_xlabel('X-axis')
+	ax.set_ylabel('Y-axis')
+	ax.set_zlabel('Z-axis')
+	pyplot.show()</pre><p>&nbsp; 参考:</p><p><a>单层感知器算法（可用于与或非）</a></p><p><a>感知机搞不定逻辑XOR？Science新研究表示人脑单个神经元就能做到</a></p><p><a>机器学习之神经网络（上）</a></p><p><a>简单易懂的讲解深度学习（入门系列之五）</a></p><p><a>Calculate the Decision Boundary of a Single Perceptron - Visualizing Linear Separability</a></p><p><a>Perceptron in Python</a></p><p><a>Python Machine Learning Tutorial</a></p><p><a>Perceptron</a></p><p><a>[資料分析&amp;機器學習] 第3.2講：線性分類-感知器(Perceptron) 介紹</a></p><p><a>Perceptron Learning Algorithm: A Graphical Explanation Of Why It Works</a></p><p><a>【ML学习笔记】18：原始的Perceptron(感知机)</a></p><p><a>python matplotlib 2D 散点图的制作（输入二维坐标）</a></p><p><a>how to do the scatter plot for the lists or 2d array or matrix python?</a></p><p><a>scatterplotmatrix.py</a></p><p><a>Iterate over a list in Python</a></p><p><a>Plot 3D mesh using mplot3d</a></p><p><a>Python三维绘图--Matplotlib</a></p><p><a>python 画直线和平面</a></p><p><a>python - Python-Matplotlib-如何从方程式绘制平面？</a></p><p><a>有效可视化多维数据的艺术 有效数据可视化的策略</a></p><p><a>Matplotlib中的三维绘图</a></p><p><a>Matplotlib学习笔记——画三维图</a></p><p><a>坐标轴范围的设置</a></p><p><a>Set zlim in matplotlib scatter3d</a></p><p><a>Python - Set zlim in mplot3D</a></p><p><a> .pyplot has not attribute zlim</a></p><p><a>Python/matplotlib mplot3d- how do I set a maximum value for the z-axis?</a></p><p><a>Matplotlib数据分析基础课程,三剑客,之,基础教程</a></p><p><a>Getting the class name of an instance?</a></p><p><a>Most efficient way to map function over numpy array</a></p><p><a>python中的三元表达式（三目运算符）</a></p><p><a>Iterate and modify array with NumPy</a></p><p><a>Modify NumPy array in loops</a></p><p><a>Python：有没有办法用Matplotlib绘制“局部”表面图？</a></p><p><a>Simple way to create matrix of random numbers</a></p><p><a>Python time.sleep() 阻塞指定秒杀 random.randint()返回指定闭区间内的随机数</a></p><p><a>numpy.random模块用法总结</a></p><p>https://github.com/cezannec/intro-computervision intro-computervision</p><p>https://cezannec.github.io/Convolutional_Neural_Networks/ 卷积神经网络</p><p>https://github.com/ahmedfgad/NumPyCNN NumPyCNN</p><p>https://stackoverflow.com/questions/55807920/python-how-to-install-scikit-image-when-the-installation-appears-broken Python, how to install scikit-image when the installation appears broken</p><p>https://stackoverflow.com/questions/14812342/matplotlib-has-no-attribute-pyplot matplotlib-has-no-attribute-pyplot</p><p>https://towardsdatascience.com/convolutional-neural-networks-for-beginners-practical-guide-with-python-and-keras-dc688ea90dca 初学者的卷积神经网络</p><p>https://towardsdatascience.com/building-a-convolutional-neural-network-cnn-in-keras-329fbbadc5f5 Building a Convolutional Neural Network (CNN) in Keras</p><p>https://www.datacamp.com/community/tutorials/convolutional-neural-networks-python Convolutional Neural Networks in Python with Keras</p><p>https://www.tensorflow.org/tutorials/images/cnn Convolutional Neural Network (CNN)</p><p>https://missinglink.ai/guides/convolutional-neural-networks/python-convolutional-neural-network-creating-cnn-keras-tensorflow-plain-python/ Python卷积神经网络：在Keras，TensorFlow和Plain Python中创建CNN</p><p>https://www.kdnuggets.com/2018/04/building-convolutional-neural-network-numpy-scratch.html Building Convolutional Neural Network using NumPy from Scratch</p><p>http://www.skcircle.com/?id=329 滤波的概念和作用（滤波器、掩模、核、模板、窗口是一个意思）</p><p>https://cloud.tencent.com/developer/article/1198216 卷积滤波器与边缘检测</p><p>https://cloud.tencent.com/developer/article/1600526 数字图像处理中常见的变换核及其用途</p><p>https://zhuanlan.zhihu.com/p/45585819 opencv处理图像</p><p>https://zhuanlan.zhihu.com/p/81792708 卷积的通俗理解——从傅里叶变换到滤波器</p><p>https://opencv-python-tutorials.readthedocs.io/zh/latest/4.%20OpenCV%E4%B8%AD%E7%9A%84%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86/4.4.%20%E5%9B%BE%E5%83%8F%E6%BB%A4%E6%B3%A2/ 2D卷积（图像过滤）</p><p>https://www.cnblogs.com/carsonzhu/p/10831624.html 计算机视觉】OpenCV篇(6) - 平滑图像（卷积/滤波/模糊/降噪）</p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/161173#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

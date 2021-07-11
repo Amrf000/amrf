@@ -1,0 +1,113 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>问题场景:</p><p>用户输入一些关键词,如果匹配到pdf的某个bookmark则返回该段bookmark指向的具体内容,(pdf文件数量会有多个),需要匹配的bookmark基础条件的其中包含规则和建议，bookmark结构如下:</p><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1569401619564014.png" title="1569401619564014.png" alt="image.png" class="localImage"></p><p>解决方案:</p><p>通过aspose可以将获取bookmark指向的页,单页转成html或者png图片很简单,但是这样转换的进度就只到页,效果不是太好,查询了一些其他方案，有很多的精度也只是到页的切片;</p><p>中途考虑过采用前端方案，采用pdf.js在view后面加上参数直接前端跳转到指定的bookmark处,但是有个问题是pdf整个文件很大的时候加载会比较久,尤其是多pdf的时候,效果还是不理想;</p><p>后来看到aspose.pdf页面cropbox方法,可以实现截取一个页面中的一块区域转换成图片的功能,可以达到不错的效果,但是当bookmark指向的内容跨页的时候，就需要将上下两部分的截图拼到一起,为了达到更好的效果,还需要将这种情况下的图片crop掉上下的空白区域;(缺陷是当bookmark的相邻的下一个bookmark在下下页或者间隔更多页的时候，中间页没有处理)</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>图片crop掉上下的空白区域(参考:<a rel="nofollow" href="https://stackoverflow.com/questions/36811382/remove-blank-space-in-image-java">https://stackoverflow.com/questions/36811382/remove-blank-space-in-image-java</a>)</p></li></ul><pre class="brush:java;toolbar:false">&nbsp;public&nbsp;static&nbsp;BufferedImage&nbsp;crop(BufferedImage&nbsp;image)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;minY&nbsp;=&nbsp;0,&nbsp;maxY&nbsp;=&nbsp;0,&nbsp;minX&nbsp;=&nbsp;Integer.MAX_VALUE,&nbsp;maxX&nbsp;=&nbsp;0;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boolean&nbsp;isBlank,&nbsp;minYIsDefined&nbsp;=&nbsp;false;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Raster&nbsp;raster&nbsp;=&nbsp;image.getRaster();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;y&nbsp;=&nbsp;0;&nbsp;y&nbsp;&lt;&nbsp;image.getHeight();&nbsp;y++)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isBlank&nbsp;=&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;x&nbsp;=&nbsp;0;&nbsp;x&nbsp;&lt;&nbsp;image.getWidth();&nbsp;x++)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//Change&nbsp;condition&nbsp;to&nbsp;(raster.getSample(x,&nbsp;y,&nbsp;3)&nbsp;!=&nbsp;0)&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//for&nbsp;better&nbsp;performance
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(raster.getSample(x,&nbsp;y,&nbsp;0)&nbsp;!=&nbsp;255&nbsp;||&nbsp;raster.getSample(x,&nbsp;y,&nbsp;1)&nbsp;!=&nbsp;255&nbsp;||&nbsp;raster.getSample(x,&nbsp;y,&nbsp;2)&nbsp;!=&nbsp;255)&nbsp;{//raster.getPixel(x,&nbsp;y,&nbsp;(int[])&nbsp;null)[3]&nbsp;!=&nbsp;0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;isBlank&nbsp;=&nbsp;false;
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(x&nbsp;&lt;&nbsp;minX)&nbsp;minX&nbsp;=&nbsp;x;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(x&nbsp;&gt;&nbsp;maxX)&nbsp;maxX&nbsp;=&nbsp;x;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!isBlank)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!minYIsDefined)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minY&nbsp;=&nbsp;y;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;minYIsDefined&nbsp;=&nbsp;true;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}&nbsp;else&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(y&nbsp;&gt;&nbsp;maxY)&nbsp;maxY&nbsp;=&nbsp;y;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;image.getSubimage(0,&nbsp;minY,&nbsp;image.getWidth(),&nbsp;maxY&nbsp;-&nbsp;minY&nbsp;+&nbsp;1);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//return&nbsp;image.getSubimage(minX,&nbsp;minY,&nbsp;maxX&nbsp;-&nbsp;minX&nbsp;+&nbsp;1,&nbsp;maxY&nbsp;-&nbsp;minY&nbsp;+&nbsp;1);
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>切片逻辑</p></li></ul><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1569403244771675.png" title="1569403244771675.png" alt="image.png" width="715" height="562" class="localImage"></p><p><br></p><p>其他:</p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>pdf.js使用过程中的一些问题记录</p></li></ul><pre class="brush:cpp;toolbar:false">https://github.com/mozilla/pdf.js
+pdf.js目录下执行npm&nbsp;install时获取prebuilt时由于一些网络问题获取不到时,
+本地编译node-canvas报错,看了一下node-canvas的windows依赖有
+https://github.com/Automattic/node-canvas/wiki/Installation:-Windows
+（gtk2的一个镜像链接-http://ftp.vim.org/pub/windowing/gnome/binaries/win64/gtk+/2.22/,&nbsp;
+libjpeg-turbo镜像链接&nbsp;-http://mirrors.huaweicloud.com/repository/toolkit/libjpeg-turbo/2.0.0/）
+需要注意的是gtk2选择win64,libjpeg也要选择win64版本，否则还会出现链接错误;
+npm&nbsp;install执行成功后使用gulp&nbsp;server验证ok</pre><p><br></p><ul class="list-paddingleft-2" style="list-style-type:disc;"><li><p>aspose.pdf使用限制解除过程中的一些问题记录(支持付费,测试和学习除外)</p></li></ul><p>首先要找到合适的证书文件(<a rel="nofollow" href="https://github.com/fanjingdan012/JavaDetails/blob/8df20f1f20c7345a0876776276af8245a9ee3fe4/pdf/src/test/resources/licence/Aspose.Pdf.162356.lic">https://github.com/fanjingdan012/JavaDetails/blob/8df20f1f20c7345a0876776276af8245a9ee3fe4/pdf/src/test/resources/licence/Aspose.Pdf.162356.lic</a>),否则会出现没有任何报错但是处理出来的文件含有eval标记并且只能处理一部分</p><p>出现证书过期错误后就可以定位到报错位置,不同版本代码混淆后的类名可能不一样,类中存在类名为1的内部类改名处理掉,</p><p>处理掉其他语法错误，注释掉报错的异常点就可以正常使用了;</p><p><br></p><p><span style="color:rgb(0,176,80);">/*================================================================*/</span></p><p>aspose.cells解除水印:</p><p>参考:</p><p><a rel="nofollow" href="https://onew.me/tags/aspose-crack/+&amp;cd=10&amp;hl=en&amp;ct=clnk&amp;gl=sg">https://onew.me/tags/aspose-crack/+&amp;cd=10&amp;hl=en&amp;ct=clnk&amp;gl=sg</a> </p><p>关键是替换函数体</p><pre class="brush:java;toolbar:false">this.a&nbsp;=&nbsp;new&nbsp;com.aspose.cells.License();
+com.aspose.cells.XXXX.a();</pre><p>其他的异常注释就好;</p><p><span style="color:rgb(0,176,80);">/*================================================================*/</span></p><p>aspose.cells 表格转网页修改附属文件目录，并且在所有附属文件前面加前缀,并且文件中所有href中添加http:xxx域</p><p>可以使用options.setAttachedFilesDirectory("D:/xxxx");===&gt;注意只有输出为流时有效</p><p>但是还有问题, 这样修改后输出的主文件中的href中会包含D:/xxxx,</p><p>设置options.setAttachedFilesUrlPrefix("http://www.example.com/report/")</p><p>其他的sheet文件对应的.htm中href的前缀只有部分变成预期,主文件中则完全不变;</p><p>---------------</p><pre class="brush:java;toolbar:false">HtmlSaveOptions&nbsp;options&nbsp;=&nbsp;new&nbsp;HtmlSaveOptions();
+options.setExportImagesAsBase64(true);
+options.setCreateDirectory(true);
+options.setStreamProvider(new&nbsp;IStreamProvider()&nbsp;{
+	private&nbsp;Map&lt;OutputStream,String&gt;&nbsp;oPairs&nbsp;=&nbsp;new&nbsp;HashMap&lt;&gt;();
+	@Override
+	public&nbsp;void&nbsp;initStream(StreamProviderOptions&nbsp;providerOptions)&nbsp;throws&nbsp;Exception&nbsp;{
+		String&nbsp;tName&nbsp;=&nbsp;providerOptions.getDefaultPath();
+		if(providerOptions.getDefaultPath().startsWith("/"))&nbsp;{
+			tName&nbsp;=&nbsp;tName.replace("/",&nbsp;"/"+prefix+"_");
+		}else&nbsp;if(providerOptions.getDefaultPath().startsWith("\\"))&nbsp;{
+			tName&nbsp;=&nbsp;tName.replace("\\",&nbsp;"\\"+prefix+"_");
+		}
+&nbsp;&nbsp;&nbsp;&nbsp;	String&nbsp;customPath&nbsp;=&nbsp;"D:/xxxx"&nbsp;+&nbsp;tName.replace("null",&nbsp;"");
+&nbsp;&nbsp;&nbsp;&nbsp;	File&nbsp;customFile&nbsp;=&nbsp;new&nbsp;File(customPath);
+&nbsp;&nbsp;&nbsp;&nbsp;	if&nbsp;(!customFile.getParentFile().exists())&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		customFile.getParentFile().mkdirs();
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;	providerOptions.setCustomPath(customFile.getCanonicalPath());
+&nbsp;&nbsp;&nbsp;&nbsp;	OutputStream&nbsp;fs&nbsp;=&nbsp;new&nbsp;FileOutputStream(customFile);
+&nbsp;&nbsp;&nbsp;&nbsp;	providerOptions.setStream(fs);
+&nbsp;&nbsp;&nbsp;&nbsp;	oPairs.put(fs,customFile.getCanonicalPath());
+&nbsp;&nbsp;&nbsp;&nbsp;	ret.add(customFile.getCanonicalPath());
+	}
+	@Override
+	public&nbsp;void&nbsp;closeStream(StreamProviderOptions&nbsp;providerOptions)&nbsp;throws&nbsp;Exception&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;	OutputStream&nbsp;outputStream&nbsp;=&nbsp;null;
+&nbsp;&nbsp;&nbsp;&nbsp;	String&nbsp;tName&nbsp;=&nbsp;"";
+&nbsp;&nbsp;&nbsp;&nbsp;	try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		outputStream&nbsp;=&nbsp;providerOptions.getStream();
+&nbsp;&nbsp;&nbsp;&nbsp;		tName&nbsp;=&nbsp;oPairs.get(outputStream);
+&nbsp;&nbsp;&nbsp;&nbsp;	}&nbsp;catch&nbsp;(Exception&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		e.printStackTrace();
+&nbsp;&nbsp;&nbsp;&nbsp;	}&nbsp;finally&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	if&nbsp;(outputStream&nbsp;!=&nbsp;null)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		outputStream.close();
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;	if(!tName.isEmpty())&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;		if(tName.endsWith("htm"))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		String&nbsp;content&nbsp;=&nbsp;IOUtils.toString(new&nbsp;FileInputStream(tName),StandardCharsets.UTF_8);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	content&nbsp;=&nbsp;content.replaceAll("href=\"([^\"]+\\.)(htm|css)\"",&nbsp;"href=\"http://xxxx/"+prefix+"_$1$2\"");
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	IOUtils.write(content,&nbsp;new&nbsp;FileOutputStream(tName),&nbsp;StandardCharsets.UTF_8);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	if(!tName.contains("tabstrip"))&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		Integer&nbsp;index&nbsp;=&nbsp;Integer.parseInt(tName.replaceAll(".*([\\d]+)\\.htm","$1"));
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		for(Integer&nbsp;key:sheetNamePairs.keySet())&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			try&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				if(index&nbsp;==&nbsp;key)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				break;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			}	
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			}catch(Exception&nbsp;e)&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;				logger.info(e.getMessage());
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;		}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	}
+&nbsp;&nbsp;&nbsp;&nbsp;		}
+&nbsp;&nbsp;&nbsp;&nbsp;	}
+	}
+});</pre><p>注意上面的处理没有包含最外层的保存成.html的文件的内容二次处理,所有在执行保存之后,还需要将这个输出的外层.html文件中的D:/xxx替换成http://yyy;<br></p><p><span style="color:rgb(0,176,80);"><span style="color:rgb(0,176,80);">/*================================================================*/</span></span></p><p><span style="color:rgb(0,176,80);"><br></span></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/120062#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

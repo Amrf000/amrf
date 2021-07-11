@@ -1,0 +1,35 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <pre style="margin-top:0px;margin-bottom:0px;">网上查到的说的比较多的情况是存在野指针，断点也还在项目代码部分
+
+
+我遇到的这个情况断点断在了cored.dll里面了，把项目里所有new出来的对象都查了一遍处理了处理，还是出现
+
+后来发现问题出在这里，为了全局获取MainWindow,我用了如下这样的单例代码
+&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;MainWindow&amp;&nbsp;getInstance()</pre><pre style="margin-top:0px;margin-bottom:0px;">&nbsp;&nbsp;&nbsp;&nbsp;{</pre><pre style="margin-top:0px;margin-bottom:0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;MainWindow&nbsp;instance;//&nbsp;Guaranteed&nbsp;to&nbsp;be&nbsp;destroyed.</pre><pre style="margin-top:0px;margin-bottom:0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Instantiated&nbsp;on&nbsp;first&nbsp;use.</pre><pre style="margin-top:0px;margin-bottom:0px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;instance;</pre><pre style="margin-top:0px;margin-bottom:0px;">&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;析构过程有问题，换成下面这种时关闭窗口就没有上面的异常了
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;static&nbsp;MainWindow&amp;&nbsp;getInstance()
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Guaranteed&nbsp;to&nbsp;be&nbsp;destroyed.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;Instantiated&nbsp;on&nbsp;first&nbsp;use.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(instance==NULL){
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;instance&nbsp;=&nbsp;new&nbsp;MainWindow;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;*instance;
+&nbsp;&nbsp;&nbsp;&nbsp;}</pre>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/110013#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,265 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>win10串口问题</p><p><a rel="nofollow" href="https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware/rs-323-serial-ports-are-not-working-after-updating/df07daf9-0779-4d05-82ec-1f8254882c10">https://answers.microsoft.com/en-us/windows/forum/windows_10-hardware/rs-323-serial-ports-are-not-working-after-updating/df07daf9-0779-4d05-82ec-1f8254882c10</a></p><p><a rel="nofollow" href="https://blog.csdn.net/ouening/article/details/70947759">https://blog.csdn.net/ouening/article/details/70947759</a></p><p><a rel="nofollow" href="https://answers.microsoft.com/en-us/windows/forum/all/serial-comm-port-issues-windows-10-1511/1ced33e6-cc16-4035-b092-4a8535e75162">https://answers.microsoft.com/en-us/windows/forum/all/serial-comm-port-issues-windows-10-1511/1ced33e6-cc16-4035-b092-4a8535e75162</a></p><p><br></p><p><br></p><p><br></p><p>原文:<a rel="nofollow" href="https://blog.csdn.net/songshu5555/article/details/8742652">https://blog.csdn.net/songshu5555/article/details/8742652</a></p><p>串口流控制DCB结构体解析及设置</p><p>一、串口通信结构体意义解析：</p><pre class="brush:cpp;toolbar:false">typedef&nbsp;struct&nbsp;_DCB
+{&nbsp;DWORD&nbsp;DCBlength;
+DWORD&nbsp;BaudRate;&nbsp;//波特率
+DWORD&nbsp;fBinary&nbsp;:1;&nbsp;
+DWORD&nbsp;fParity&nbsp;:1;&nbsp;//是否奇偶校验
+DWORD&nbsp;fOutxCtsFlow&nbsp;:1;&nbsp;//&nbsp;CTS&nbsp;output&nbsp;flow&nbsp;control&nbsp;指定CTS是否用于检测发送控制。当为TRUE时CTS为OFF，发送将被挂起。（发送清除）
+DWORD&nbsp;fOutxDsrFlow&nbsp;:1;&nbsp;//&nbsp;DSR&nbsp;output&nbsp;flow&nbsp;control&nbsp;指定DSR是否用于检测发送控制。（数据装备好）&nbsp;当为TRUE是DSR为OFF，发送将被挂起。
+DWORD&nbsp;fDtrControl&nbsp;:2;&nbsp;//&nbsp;DTR&nbsp;flow&nbsp;control&nbsp;type&nbsp;
+//DTR_CONTROL_DISABLE值将DTR置为OFF,&nbsp;
+//DTR_CONTROL_ENABLE值将DTR置为ON,&nbsp;
+//DTR_CONTROL_HANDSHAKE&nbsp;允许DTR"握手",
+DWORD&nbsp;fDsrSensitivity&nbsp;:1;&nbsp;//若为TRUE，通讯驱动程序对DSR信号状态敏感。驱动程序将忽略任何接收的字节数，除非DSR调制解调器的输入线为高。
+DWORD&nbsp;fTXContinueOnXoff&nbsp;:1;&nbsp;//为TRUE，输入缓冲区内字节已经满XoffLim及驱动程序已经发送XoffChar停止接收字节时，仍然继续发送。为FALSE，输入缓冲区内XonLim是空的，及驱动程序已经发送XonChar字符恢复接收的字节传输后，才会继续接收。
+DWORD&nbsp;fOutX&nbsp;:1;&nbsp;//发送方的行为定义，为TRUE时，接收到XoffChar之后便停止发送，接收到XonChar之后将重新开始发送；
+DWORD&nbsp;fInX&nbsp;:1;&nbsp;&nbsp;//接收方的行为定义，为TRUE时，接收缓冲区接收到代表缓冲区满的XoffLim之后，XoffChar发送出去；接收缓冲区空的Buffer达到XonLim之后，XonChar发送出去。
+DWORD&nbsp;fErrorChar&nbsp;:1;&nbsp;
+DWORD&nbsp;fNull&nbsp;:1;&nbsp;
+DWORD&nbsp;fRtsControl&nbsp;:2;&nbsp;//&nbsp;RTS&nbsp;Control&nbsp;Flow
+//RTS_CONTROL_DISABLE时,RTS置为OFF
+//RTS_CONTROL_ENABLE时,&nbsp;RTS置为ON
+//RTS_CONTROL_HANDSHAKE时,
+//当接收缓冲区小于半满时RTS为ON
+//当接收缓冲区超过四分之三满时RTS为OFF
+//RTS_CONTROL_TOGGLE时,
+//当接收缓冲区仍有剩余字节时RTS为ON&nbsp;,否则缺省为OFF
+DWORD&nbsp;fAbortreplaceString&nbsp;:1;&nbsp;//&nbsp;abort&nbsp;reads/writes&nbsp;on&nbsp;error，为TRUE时,有错误发生时中止读和写操作
+DWORD&nbsp;fDummy2&nbsp;:17;&nbsp;
+WORD&nbsp;wReserved;&nbsp;
+WORD&nbsp;XonLim;&nbsp;//指定在XON字符发送之前接收缓冲区中空缓冲区可允许的最小字节数
+WORD&nbsp;XoffLim;&nbsp;//指定在XOFF字符发送这前接收缓冲区中数据缓冲可允许的最小字节数
+BYTE&nbsp;ByteSize;&nbsp;
+BYTE&nbsp;Parity;&nbsp;//奇偶校验方式
+BYTE&nbsp;StopBits;&nbsp;//停止位
+char&nbsp;XonChar;&nbsp;&nbsp;//请求发送方继续发送时的字符&nbsp;0x11
+char&nbsp;XoffChar;&nbsp;//请求发送方停止发送时的字符&nbsp;0x13
+char&nbsp;ErrorChar;&nbsp;
+char&nbsp;EofChar;&nbsp;
+char&nbsp;EvtChar;&nbsp;
+WORD&nbsp;wReserved1;
+}&nbsp;DCB,&nbsp;*LPDCB;</pre><p>二、设置流控制属性：</p><pre class="brush:cpp;toolbar:false">dcb.fDsrSensitivity&nbsp;=&nbsp;FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+dcb.fTXContinueOnXoff&nbsp;=&nbsp;FALSE;
+dcb.fRtsControl&nbsp;=&nbsp;RTS_CONTROL_DISABLE;
+dcb.fDtrControl&nbsp;=&nbsp;DTR_CONTROL_ENABLE;
+switch&nbsp;(g_lpInst-&gt;flowControl)
+{
+case&nbsp;NoFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}
+case&nbsp;CtsRtsFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fRtsControl&nbsp;=&nbsp;RTS_CONTROL_HANDSHAKE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}
+case&nbsp;CtsDtrFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fDtrControl&nbsp;=&nbsp;DTR_CONTROL_HANDSHAKE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}
+case&nbsp;DsrRtsFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fRtsControl&nbsp;=&nbsp;RTS_CONTROL_HANDSHAKE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}
+case&nbsp;DsrDtrFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fDtrControl&nbsp;=&nbsp;DTR_CONTROL_HANDSHAKE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}
+case&nbsp;XonXoffFlowControl:
+{
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxCtsFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutxDsrFlow&nbsp;=&nbsp;FALSE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fOutX&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.fInX&nbsp;=&nbsp;TRUE;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.XonChar&nbsp;=&nbsp;0x11;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.XoffChar&nbsp;=&nbsp;0x13;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.XoffLim&nbsp;=&nbsp;100;
+&nbsp;&nbsp;&nbsp;&nbsp;dcb.XonLim&nbsp;=&nbsp;100;
+&nbsp;&nbsp;&nbsp;&nbsp;break;
+}</pre><p>其他：<a rel="nofollow" href="http://com0com.sourceforge.net/examples/LSRMST_INSERT/tstser.cpp">http://com0com.sourceforge.net/examples/LSRMST_INSERT/tstser.cpp</a> </p><p><a rel="nofollow" href="https://social.msdn.microsoft.com/Forums/vstudio/en-US/89b88e89-5814-4819-8b50-7caa3faf5f54/xonxoff-values-in-net20-serialport-class?forum=csharpgeneral">https://social.msdn.microsoft.com/Forums/vstudio/en-US/89b88e89-5814-4819-8b50-7caa3faf5f54/xonxoff-values-in-net20-serialport-class?forum=csharpgeneral</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/SUKHOI27SMK/article/details/8236548">https://blog.csdn.net/SUKHOI27SMK/article/details/8236548</a> </p><p><a rel="nofollow" href="https://www.cnblogs.com/himessage/archive/2012/12/28/2836886.html">https://www.cnblogs.com/himessage/archive/2012/12/28/2836886.html</a> </p><p><a rel="nofollow" href="https://github.com/enthought/qt-mobility/blob/master/src/systeminfo/qsysteminfo_win.cpp">https://github.com/enthought/qt-mobility/blob/master/src/systeminfo/qsysteminfo_win.cpp</a> </p><p><a rel="nofollow" href="https://www.cnblogs.com/qq78292959/archive/2012/08/02/2620607.html">https://www.cnblogs.com/qq78292959/archive/2012/08/02/2620607.html</a> </p><p><a rel="nofollow" href="https://blog.csdn.net/lujunql/article/details/2532152">https://blog.csdn.net/lujunql/article/details/2532152</a> </p><p><a rel="nofollow" href="https://github.com/enthought/qt-mobility">https://github.com/enthought/qt-mobility</a> </p><p>DCB的使用</p><p>连接：</p><pre class="brush:cpp;toolbar:false">CString&nbsp;strCOM;
+strCOM.Format(_T("\\\\.\\"));
+strCOM&nbsp;+=&nbsp;mComName;
+hDevice&nbsp;=&nbsp;INVALID_HANDLE_VALUE;
+hDevice&nbsp;=&nbsp;CreateFile(strCOM,GENERIC_READ&nbsp;|&nbsp;GENERIC_WRITE,0,0,OPEN_EXISTING,FILE_FLAG_OVERLAPPED,NULL);
+if&nbsp;(hDevice&nbsp;==&nbsp;INVALID_HANDLE_VALUE)
+{
+return&nbsp;FALSE;
+}
+DCB&nbsp;dcb;
+FillMemory(&amp;dcb,&nbsp;sizeof(dcb),&nbsp;0);
+#if&nbsp;0
+if&nbsp;(!GetCommState(hDevice,&nbsp;&amp;dcb))&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;get&nbsp;current&nbsp;DCB
+{
+//&nbsp;Error&nbsp;in&nbsp;GetCommState
+return&nbsp;FALSE;
+}
+#endif
+//&nbsp;Update&nbsp;DCB&nbsp;rate.
+dcb.BaudRate&nbsp;=&nbsp;波特率;&nbsp;//BaudRate[m_BaudRate];
+//dcb.ByteSize&nbsp;=&nbsp;8;
+//dcb.Parity&nbsp;=&nbsp;NOPARITY;
+//dcb.StopBits&nbsp;=&nbsp;ONESTOPBIT;&nbsp;//&nbsp;(8-N-1)
+dcb.ByteSize&nbsp;=&nbsp;数据位;
+dcb.Parity&nbsp;=&nbsp;校验位;
+dcb.StopBits&nbsp;=&nbsp;停止位;
+dcb.fDtrControl=DTR_CONTROL_ENABLE&nbsp;;//this&nbsp;is&nbsp;common&nbsp;for&nbsp;all&nbsp;handshaking&nbsp;methods
+switch(流控制方式)
+{
+case&nbsp;1:
+dcb.fOutxCtsFlow=TRUE;
+dcb.fOutX=FALSE;
+dcb.fInX=FALSE;
+dcb.fOutxDsrFlow=TRUE;
+dcb.fRtsControl=RTS_CONTROL_HANDSHAKE;
+break;
+case&nbsp;2:
+dcb.fOutX=TRUE;
+dcb.fInX=TRUE;
+dcb.XonChar&nbsp;=&nbsp;0x11;
+dcb.XoffChar&nbsp;=&nbsp;0x13;
+dcb.fTXContinueOnXoff=TRUE;
+dcb.fOutxCtsFlow=FALSE;
+dcb.fOutxDsrFlow=FALSE;
+dcb.fRtsControl=RTS_CONTROL_ENABLE;
+break;
+case&nbsp;0:
+default:
+dcb.fOutxCtsFlow=FALSE;
+dcb.fOutX=FALSE;
+dcb.fInX=FALSE;
+dcb.fOutxDsrFlow=FALSE;
+dcb.fRtsControl=RTS_CONTROL_ENABLE;
+break;
+}
+dcb.fBinary=TRUE;//required&nbsp;for&nbsp;proper&nbsp;operation
+//&nbsp;Set&nbsp;new&nbsp;state.
+if&nbsp;(!SetCommState(hDevice,&nbsp;&amp;dcb))
+{
+//&nbsp;Error&nbsp;in&nbsp;SetCommState.&nbsp;Possibly&nbsp;a&nbsp;problem&nbsp;with&nbsp;the&nbsp;communications&nbsp;
+//&nbsp;port&nbsp;handle&nbsp;or&nbsp;a&nbsp;problem&nbsp;with&nbsp;the&nbsp;DCB&nbsp;structure&nbsp;itself.
+CloseHandle(hDevice);
+hDevice&nbsp;=&nbsp;INVALID_HANDLE_VALUE;
+return&nbsp;FALSE;
+}
+COMMTIMEOUTS&nbsp;timeouts;
+//&nbsp;timeouts&nbsp;are&nbsp;not&nbsp;used
+timeouts.ReadIntervalTimeout&nbsp;=&nbsp;MAXDWORD;&nbsp;
+timeouts.ReadTotalTimeoutMultiplier&nbsp;=&nbsp;0;
+timeouts.ReadTotalTimeoutConstant&nbsp;=&nbsp;0;
+timeouts.WriteTotalTimeoutMultiplier&nbsp;=&nbsp;0;
+timeouts.WriteTotalTimeoutConstant&nbsp;=&nbsp;0;
+if&nbsp;(!SetCommTimeouts(hDevice,&nbsp;&amp;timeouts))
+{
+//&nbsp;Error&nbsp;setting&nbsp;time-outs.
+CloseHandle(hDevice);
+hDevice&nbsp;=&nbsp;INVALID_HANDLE_VALUE;
+return&nbsp;FALSE;
+}</pre><p>断开：</p><pre class="brush:cpp;toolbar:false">SetCommMask(hDevice,&nbsp;0);
+Sleep(100);&nbsp;//&nbsp;sleep&nbsp;for&nbsp;a&nbsp;while&nbsp;for&nbsp;threads&nbsp;to&nbsp;stop
+CancelIo(hDevice);
+//CancelIoEx(hDevice,&nbsp;NULL);
+Sleep(100);
+CloseHandle(hDevice);
+hDevice&nbsp;=&nbsp;INVALID_HANDLE_VALUE;</pre><p>使用DeviceIoControl写：</p><pre class="brush:cpp;toolbar:false">设备自定结构体&nbsp;Data2Driver;
+Data2Driver.bReg&nbsp;=&nbsp;bReg;
+Data2Driver.wData&nbsp;=&nbsp;wData;
+Data2Driver.bURMReg&nbsp;=&nbsp;bURM;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+if(hDevice&nbsp;!=&nbsp;INVALID_HANDLE_VALUE)&nbsp;//&nbsp;hDevice&nbsp;is&nbsp;the&nbsp;port&nbsp;handle&nbsp;obtanined&nbsp;from&nbsp;CreateFile("\\\\.\\COMx"...
+{
+&nbsp;&nbsp;&nbsp;&nbsp;BOOL&nbsp;Status;
+&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;cbReturned;
+&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;DeviceIoControl(hDevice,&nbsp;IOCTL_XRUSBPORT_WRITE_UART_REG,&amp;Data2Driver,sizeof(设备自定结构体),&nbsp;NULL,&nbsp;0,&amp;cbReturned,0);
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!Status)
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;you&nbsp;will&nbsp;get&nbsp;a&nbsp;error&nbsp;message&nbsp;box&nbsp;whenever&nbsp;there&nbsp;is&nbsp;an&nbsp;error
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MessageBox(_T("Error&nbsp;in&nbsp;Writing&nbsp;to&nbsp;USB_UART&nbsp;Reg!"),&nbsp;_T("Error"),&nbsp;MB_OK|MB_ICreplaceString);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return;
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p>使用DeviceIoControl读：</p><pre class="brush:cpp;toolbar:false">设备自定结构体&nbsp;Data2Driver;
+USHORT&nbsp;Value;&nbsp;
+Data2Driver.bReg&nbsp;=&nbsp;bReg;
+Data2Driver.bURMReg&nbsp;=&nbsp;bURM;
+if(hDevice&nbsp;!=&nbsp;INVALID_HANDLE_VALUE)&nbsp;//&nbsp;hDevice&nbsp;is&nbsp;the&nbsp;port&nbsp;handle&nbsp;obtanined&nbsp;from&nbsp;CreateFile("\\\\.\\COMx"...
+{
+&nbsp;&nbsp;&nbsp;&nbsp;BOOL&nbsp;Status;
+&nbsp;&nbsp;&nbsp;&nbsp;DWORD&nbsp;&nbsp;cbReturned;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;=&nbsp;&nbsp;&nbsp;&nbsp;DeviceIoControl(hDevice,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IOCTL_XRUSBPORT_READ_UART_REG,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;Data2Driver,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(设备自定结构体),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;Value,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sizeof(USHORT),
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;cbReturned,
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0);
+&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(!Status)
+&nbsp;&nbsp;&nbsp;&nbsp;{&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//&nbsp;you&nbsp;will&nbsp;get&nbsp;a&nbsp;error&nbsp;message&nbsp;box&nbsp;whenever&nbsp;there&nbsp;is&nbsp;an&nbsp;error
+MessageBox(_T("Error&nbsp;in&nbsp;Reading&nbsp;from&nbsp;USB_UART&nbsp;Reg!"),&nbsp;_T("Error"),&nbsp;MB_OK|MB_ICreplaceString);
+return&nbsp;0xFF;&nbsp;//&nbsp;you&nbsp;can&nbsp;also&nbsp;change&nbsp;the&nbsp;return&nbsp;to&nbsp;TRUE&nbsp;and&nbsp;FALSE&nbsp;and&nbsp;use&nbsp;other&nbsp;efficient&nbsp;way&nbsp;for&nbsp;finding&nbsp;the&nbsp;success&nbsp;of&nbsp;the&nbsp;command&nbsp;and&nbsp;thus&nbsp;the&nbsp;data.
+}
+else
+return&nbsp;Value;
+}
+else
+{
+&nbsp;&nbsp;//&nbsp;you&nbsp;will&nbsp;get&nbsp;a&nbsp;error&nbsp;message&nbsp;box&nbsp;whenever&nbsp;there&nbsp;is&nbsp;an&nbsp;error
+&nbsp;&nbsp;MessageBox(_T("The&nbsp;COM&nbsp;Port&nbsp;is&nbsp;not&nbsp;opened&nbsp;for&nbsp;r/w&nbsp;registers!"),&nbsp;_T("Error"),&nbsp;MB_OK|MB_ICreplaceString);
+&nbsp;&nbsp;return&nbsp;0xFF;&nbsp;//&nbsp;you&nbsp;can&nbsp;also&nbsp;change&nbsp;the&nbsp;return&nbsp;to&nbsp;TRUE&nbsp;and&nbsp;FALSE&nbsp;and&nbsp;use&nbsp;other&nbsp;efficient&nbsp;way&nbsp;for&nbsp;finding&nbsp;the&nbsp;success&nbsp;of&nbsp;the&nbsp;command&nbsp;and&nbsp;thus&nbsp;the&nbsp;data.
+}</pre><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="5a334243d89411e9b759fa163e330718" href="/blogs/attachment?id=5a334243d89411e9b759fa163e330718" title="PL2303串口驱动.zip">PL2303串口驱动.zip</a>
+                <span class="attSize">7.57M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="f18dd91fd87811e9b759fa163e330718" href="/blogs/attachment?id=f18dd91fd87811e9b759fa163e330718" title="sscom 32.zip">sscom 32.zip</a>
+                <span class="attSize">408.13KB</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/105667#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

@@ -1,0 +1,72 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>&nbsp; &nbsp;</p><pre class="brush:java;toolbar:false">word同类标题之间的正文段转换成html,基本是吧c#版的用java对应的api写了一遍;</pre><p><img src="https://bbs-img.huaweicloud.com/blogs/img/1568890116566434.png" title="1568890116566434.png" alt="image.png" class="localImage"></p><p>参考:</p><p><a rel="nofollow" href="https://docs.aspose.com/display/wordsnet/How%2Bto%2BExtract%2BSelected%2BContent%2BBetween%2BNodes%2Bin%2Ba%2BDocument+&amp;cd=2&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://docs.aspose.com/display/wordsnet/How%2Bto%2BExtract%2BSelected%2BContent%2BBetween%2BNodes%2Bin%2Ba%2BDocument+&amp;cd=2&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a></p><p><a rel="nofollow" href="https://github.com/aspose-words/Aspose.Words-for-Java/blob/master/Examples/src/main/java/com/aspose/words/examples/programming_documents/document/ExtractContentBetweenBookmarks.java">https://github.com/aspose-words/Aspose.Words-for-Java/blob/master/Examples/src/main/java/com/aspose/words/examples/programming_documents/document/ExtractContentBetweenBookmarks.java</a></p><p><a rel="nofollow" href="https://stackoverflow.com/questions/53802211/how-to-read-between-two-heading1-word-with-aspose">https://stackoverflow.com/questions/53802211/how-to-read-between-two-heading1-word-with-aspose</a></p><pre class="brush:c#;toolbar:false">public&nbsp;static&nbsp;void&nbsp;ExtractHeadingContent()
+{
+&nbsp;&nbsp;&nbsp;&nbsp;Document&nbsp;doc&nbsp;=&nbsp;new&nbsp;Document(MyDir&nbsp;+&nbsp;"input.docx");
+&nbsp;&nbsp;&nbsp;&nbsp;int&nbsp;i&nbsp;=&nbsp;1;
+&nbsp;&nbsp;&nbsp;&nbsp;DocumentBuilder&nbsp;builder&nbsp;=&nbsp;new&nbsp;DocumentBuilder(doc);
+&nbsp;&nbsp;&nbsp;&nbsp;NodeCollection&nbsp;nodes&nbsp;=&nbsp;doc.GetChildNodes(NodeType.Paragraph,&nbsp;true);
+&nbsp;&nbsp;&nbsp;&nbsp;foreach&nbsp;(Paragraph&nbsp;paragraph&nbsp;in&nbsp;doc.GetChildNodes(NodeType.Paragraph,&nbsp;true))
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(paragraph.ParagraphFormat.IsHeading&nbsp;==&nbsp;true&nbsp;&amp;&amp;&nbsp;paragraph.ParagraphFormat.StyleName.Equals("Heading&nbsp;1"))
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Paragraph&nbsp;newPar&nbsp;=&nbsp;new&nbsp;Paragraph(doc);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;paragraph.ParentNode.InsertBefore(newPar,&nbsp;paragraph);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.MoveTo(newPar);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.StartBookmark("bm_extractcontents"&nbsp;+&nbsp;i);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;builder.EndBookmark("bm_extractcontents"&nbsp;+&nbsp;i);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i++;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}
+&nbsp;&nbsp;&nbsp;&nbsp;}
+
+&nbsp;&nbsp;&nbsp;&nbsp;builder.MoveToDocumentEnd();
+&nbsp;&nbsp;&nbsp;&nbsp;builder.StartBookmark("bm_extractcontents"&nbsp;+&nbsp;i);
+&nbsp;&nbsp;&nbsp;&nbsp;builder.EndBookmark("bm_extractcontents"&nbsp;+&nbsp;i);
+
+&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;(int&nbsp;bm&nbsp;=&nbsp;1;&nbsp;bm&nbsp;&lt;&nbsp;i;&nbsp;bm++)
+&nbsp;&nbsp;&nbsp;&nbsp;{
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BookmarkStart&nbsp;bookmarkStart&nbsp;=&nbsp;doc.Range.Bookmarks["bm_extractcontents"&nbsp;+&nbsp;bm].BookmarkStart;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BookmarkStart&nbsp;bookmarkEnd&nbsp;=&nbsp;doc.Range.Bookmarks["bm_extractcontents"&nbsp;+&nbsp;(bm&nbsp;+&nbsp;1)].BookmarkStart;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ArrayList&nbsp;extractedNodes&nbsp;=&nbsp;Common.ExtractContent(bookmarkStart,&nbsp;bookmarkEnd,&nbsp;false);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document&nbsp;dstDoc&nbsp;=&nbsp;Common.GenerateDocument(doc,&nbsp;extractedNodes);
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dstDoc.Save(MyDir&nbsp;+&nbsp;bm&nbsp;+&nbsp;"_out.docx");
+&nbsp;&nbsp;&nbsp;&nbsp;}
+}</pre><p><a rel="nofollow" href="https://forum.aspose.com/t/convert-doc-file-to-html-having-large-header-section/179379+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://forum.aspose.com/t/convert-doc-file-to-html-having-large-header-section/179379+&amp;cd=1&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a></p><pre class="brush:java;toolbar:false">We&nbsp;are&nbsp;using&nbsp;htmlFixedSaveOptions&nbsp;while&nbsp;saving&nbsp;it&nbsp;to&nbsp;html:
+htmlFixedSaveOptions.setExportEmbeddedImages(true);
+htmlFixedSaveOptions.setExportEmbeddedCss(true);
+htmlFixedSaveOptions.setExportEmbeddedFonts(true);htmlFixedSaveOptions.setPrettyFormat(true);
+Any&nbsp;help&nbsp;is&nbsp;highly&nbsp;appreciated.</pre><p><a rel="nofollow" href="https://forum.aspose.com/t/convert-word-document-to-html-with-images/163689+&amp;cd=3&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg">https://forum.aspose.com/t/convert-word-document-to-html-with-images/163689+&amp;cd=3&amp;hl=zh-CN&amp;ct=clnk&amp;gl=sg</a></p><pre class="brush:java;toolbar:false">....
+com.aspose.words.HtmlSaveOptions&nbsp;options=&nbsp;new&nbsp;com.aspose.words.HtmlSaveOptions();
+options.setSaveFormat(com.aspose.words.SaveFormat.HTML);
+options.setExportImagesAsBase64(true);
+options.setExportFontsAsBase64(true);
+ByteArrayOutputStream&nbsp;baos1&nbsp;=&nbsp;new&nbsp;ByteArrayOutputStream();
+doc.save(baos1,options);
+....</pre><p><a rel="nofollow" href="https://blog.csdn.net/liweizhong193516/article/details/83548534">https://blog.csdn.net/liweizhong193516/article/details/83548534</a></p><p><br></p>
+    </div>
+    
+    <div class="cloud-blog-detail-attachment-download" id="attachment">
+    
+            <p>
+                <img src="https://res.hc-cdn.com/ecology/6.7.104/editor/node_modules/tinymce/icons/fileassets/file_type_zip.svg">
+                <a att-id="1b1a55c2de6011e9b759fa163e330718" href="/blogs/attachment?id=1b1a55c2de6011e9b759fa163e330718" title="splitpdf.zip">splitpdf.zip</a>
+                <span class="attSize">1.25M</span>
+                <span class="downloadNum">，下载次数：<i>1</i>次</span>
+            </p>
+    
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/119209#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>

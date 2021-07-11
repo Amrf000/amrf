@@ -1,0 +1,338 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><span>原文:<a>https://brunoscheufler.com/blog/2019-04-26-choosing-the-right-go-web-framework</a></span><span></span></p>
+<p><span>诚然，有很多库和框架可以在Go中构建现代Web服务，几乎适合您将要遇到的每种情况。</span><span>但是有时候您可能只想使用一个最小的基础来构建，而不是拥有您可能永远不会在项目中使用的具有众多扩展和功能的成熟系统。</span><span>从生态系统的角度来看，我已将要比较的库数量减少到了四个主要角色：<span style="color: #000000;"><span style="color: #2dc26b;"> <span style="color: #3598db;"><span class="cursor-pointer text-accent-regular"><a rel="nofollow" href="https://github.com/gin-gonic/gin" style="color: #3598db; text-decoration: inherit;">gin</a></span>,&nbsp;<span class="cursor-pointer text-accent-regular"><a rel="nofollow" href="https://github.com/labstack/echo" style="color: #3598db; text-decoration: inherit;">echo</a></span>,&nbsp;<span class="cursor-pointer text-accent-regular"><a rel="nofollow" href="https://github.com/go-chi/chi" style="color: #3598db; text-decoration: inherit;">chi</a></span>&nbsp;</span></span>和<span style="color: #2dc26b;"><span style="color: #3598db;">&nbsp;<span class="cursor-pointer text-accent-regular"><a rel="nofollow" href="https://github.com/gorilla/mux" style="color: #3598db; text-decoration: inherit;">mux</a></span></span>.</span></span></span></p>
+<h2 class="text-2xl font-bold py-2" style="color: #000000;"><span>竞争者</span></h2>
+<ul class="pl-6 list-disc" style="color: #000000;"> 
+ <li class="font-serif text-xl"><span><span style="color: #3598db;"><strong style="color: #0200ff;">gin</strong>：</span>作为基准，我喜欢将杜松子酒描述为</span><em><span>Go的表达形式</span></em><span>。作为最流行的Go Web框架之一，它建立在基于路由器和中间件的方法的基础上，您可以在其中定义附加到特定路由的请求处理程序。由于高度关注可扩展性，因此您可以为几乎每种Web应用程序方案构建合适的解决方案。如果您需要用于所有目的的工具，杜松子酒在这方面做得非常出色。包括有用的功能，例如参数路径，JSON到结构的绑定等，它几乎包含了大多数用例所需的一切。</span></li> 
+ <li class="font-serif text-xl"><span><span style="color: #000000;"><span style="color: #3598db;"><strong style="color: #0200ff;">echo</strong>:</span>&nbsp;</span>与gin相比，Echo暴露出令人惊讶的相似结构，提供了大量可用的中间件功能，例如JWT auth支持，CORS处理等。路由逻辑之间的最大区别是：gin是在</span><span class="cursor-pointer text-accent-regular" style="color: #3598db;"><a rel="nofollow" href="https://github.com/buaazp/fasthttprouter" style="color: #3598db; text-decoration: inherit;">fasthttprouter</a></span><span>库之上构建的，其所有功能优点和缺点，echo使用一个独立的模块处理路由，这并不令人惊讶。</span></li> 
+ <li class="font-serif text-xl"><span><span style="color: #3598db;"><strong style="color: #0200ff;">chi</strong>: </span>chi是上面系统中的准系统解决方案之一，我希望在上面的库中抛弃所有的麻烦，我强烈建议您在这些项目中使用出色的路由处理逻辑，但仍然希望使用低级API进行开发请求生命周期中的所有其他内容。与其他库一样，中间件功能也是一等公民，因此您不必自己构建</span><em><span>它</span></em><span>。我认为chi是我将在稍后描述的mux库和gin或echo之类的解决方案的完美结合。</span></li> 
+ <li class="font-serif text-xl"><span><span style="color: #3598db;"><strong style="color: #0200ff;">mux</strong>:</span>如果您只需要专注于细粒度路径匹配的快速简单的路由实用程序，则mux是一个完美的选择！建立在多路复用器（因此得名）设计模式上，该模式基本上描述了路由逻辑和实际请求处理程序之间的链接层，实际上只处理选择要运行的适当请求处理程序。在某些情况下，这种简单性可以带来真正的好处！</span></li> 
+</ul>
+<h2 class="text-2xl font-bold py-2" style="color: #000000;"><span>构建示例RESTful应用程序</span></h2>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>为了真正发现库实现之间的差异，我们将创建一个具有一些基本端点的简单RESTful Web服务。因为我们专注于路由匹配和请求处理的详细信息，所以将不包含任何实际的业务逻辑，而仅包括请求-响应生命周期功能。</span></p>
+<h3 class="text-xl font-bold py-2" style="color: #000000;"><span>从简单的GET端点开始</span></h3>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>作为第一项任务，我决定为特定用户的详细信息构建一个完全简单的GET端点，该用户的名称作为route参数提供。响应将是一个简单的JSON对象（下面的结构），每个实现都以相同的方式键入该对象。</span></p>
+<pre><code class="font-mono text-base bg-accent-polar">// This is the response struct that will be<span></span>
+// serialized and sent back<span></span>
+type StatusResponse struct {<span></span>
+  Status string `json:"status"`<span></span>
+  User   string `json:"user"`<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Gin</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserGetHandler(c *gin.Context) {<span></span>
+  // Create response object<span></span>
+  body := &amp;StatusResponse{<span></span>
+    Status: "Hello world from gin!",<span></span>
+    User:   c.Param("user"),<span></span>
+  }<span></span>
+<span></span>
+  // Send it off to the client<span></span>
+  c.JSON(http.StatusOK, body)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  // Create gin router<span></span>
+  router := gin.Default()<span></span>
+<span></span>
+  // Set up GET endpoint<span></span>
+  // for route /users/&lt;username&gt;<span></span>
+  router.GET(<span></span>
+    "/users/:user",<span></span>
+    UserGetHandler,<span></span>
+  )<span></span>
+<span></span>
+  // Launch Gin and<span></span>
+  // handle potential error<span></span>
+  err := router.Run(":8003")<span></span>
+  if err != nil {<span></span>
+    panic(err)<span></span>
+  }<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Echo</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">// In addition to echo request handlers<span></span>
+// using a special context including<span></span>
+// all kinds of utilities, generated errors<span></span>
+// can be returned to handle them easily<span></span>
+func UserGetHandler(e echo.Context) error {<span></span>
+  // Create response object<span></span>
+  body := &amp;StatusResponse{<span></span>
+    Status: "Hello world from echo!",<span></span>
+    User:   e.Param("user"),<span></span>
+  }<span></span>
+<span></span>
+  // In this case we can return the<span></span>
+  // JSON function with our body<span></span>
+  // as errors thrown here will<span></span>
+  // be handled accordingly<span></span>
+  return e.JSON(http.StatusOK, body)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  // Create echo instance<span></span>
+  e := echo.New()<span></span>
+<span></span>
+  // Add endpoint route<span></span>
+  // for /users/&lt;username&gt;<span></span>
+  e.GET("/users/:user", UserGetHandler)<span></span>
+<span></span>
+  // Start echo and handle errors<span></span>
+  e.Logger.Fatal(e.Start(":8002"))<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Chi</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserGetHandler(<span></span>
+  w http.ResponseWriter,<span></span>
+  r *http.Request,<span></span>
+) {<span></span>
+  // Add Content-Type header<span></span>
+  // to indicate JSON response<span></span>
+  w.Header().Set(<span></span>
+    "Content-Type",<span></span>
+    "application/json",<span></span>
+  )<span></span>
+<span></span>
+  // create status response<span></span>
+  body := StatusResponse{<span></span>
+    Status: "Hello world from chi!",<span></span>
+    User:   chi.URLParam(r, "user"),<span></span>
+  }<span></span>
+<span></span>
+  serializedBody, _ := json.Marshal(body)<span></span>
+  _, _ = w.Write(serializedBody)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  r := chi.NewRouter()<span></span>
+<span></span>
+  r.Get("/users/{user}", UserGetHandler)<span></span>
+<span></span>
+  log.Println("Listening on :8001")<span></span>
+  log.Fatal(http.ListenAndServe(":8001", r))<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>mux</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserGetHandler(<span></span>
+  w http.ResponseWriter,<span></span>
+  r *http.Request,<span></span>
+) {<span></span>
+  vars := mux.Vars(r)<span></span>
+<span></span>
+  w.Header().Set(<span></span>
+    "Content-Type",<span></span>
+    "application/json",<span></span>
+  )<span></span>
+<span></span>
+  body := StatusResponse{<span></span>
+    Status: "Hello world from mux!",<span></span>
+    User:   vars["user"],<span></span>
+  }<span></span>
+<span></span>
+  serializedBody, _ := json.Marshal(body)<span></span>
+  _, _ = w.Write(serializedBody)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  r := mux.NewRouter()<span></span>
+<span></span>
+  r.HandleFunc("/users/{user}", UserGetHandler)<span></span>
+    .Methods("GET")<span></span>
+<span></span>
+  log.Println("Listening on :8004")<span></span>
+  log.Fatal(http.ListenAndServe(":8004", r))<span></span>
+}<span></span>
+</code></pre>
+<blockquote class="pl-4 bg-accent-polar border-l-4 border-accent-light rounded p-4" style="color: #000000;"> 
+ <p class="font-serif text-xl my-4"><span></span><strong><span class="cursor-pointer text-accent-regular" style="color: #3598db;"><a rel="nofollow" href="https://github.com/BrunoScheufler/blog-code-examples/tree/master/choosing-go-web-framework" style="color: #3598db; text-decoration: inherit;">all此处</a></span></strong><span>提供上述所有示例的完整代码。</span></p> 
+</blockquote>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>查看代码，您已经可以看到每个库公开的功能范围：而echo和gin都使用其自己的上下文结构并提供格式化响应的帮助器，chi和mux利用了大多数裸机所使用的标准请求处理程序转而使用Web应用程序，这意味着您将不得不使用其他依赖项，或者围绕它构建自己的功能，如我在示例中所做的那样。但是，每个库中都包含诸如提取路由参数之类的基本帮助程序实用程序。现在让我们更深入一些，如果我们要处理JSON请求主体该怎么办？</span></p>
+<h3 class="text-xl font-bold py-2" style="color: #000000;"><span>处理请求主体</span></h3>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>对于每个实现，请求正文都是相同的结构，下面直接添加以供参考：</span></p>
+<pre><code class="font-mono text-base bg-accent-polar">// This simple struct will be deserialized<span></span>
+// and processed in the request handler<span></span>
+type RequestBody struct {<span></span>
+  Name string `json:"name"`<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Gin</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserPostHandler(c *gin.Context) {<span></span>
+  // Create empty request body<span></span>
+  // struct used to bind actual body into<span></span>
+  requestBody := &amp;RequestBody{}<span></span>
+<span></span>
+  // Bind JSON content of request body to<span></span>
+  // struct created above<span></span>
+  err := c.BindJSON(requestBody)<span></span>
+  if err != nil {<span></span>
+    // Gin automatically returns an error<span></span>
+    // response when the BindJSON operation<span></span>
+    // fails, we simply have to stop this<span></span>
+    // function from continuing to execute<span></span>
+    return<span></span>
+  }<span></span>
+<span></span>
+  // Create response object<span></span>
+  body := &amp;StatusResponse{<span></span>
+    Status: "Hello world from echo!",<span></span>
+    User:   requestBody.Name,<span></span>
+  }<span></span>
+<span></span>
+  // And send it off to the requesting client<span></span>
+  c.JSON(http.StatusOK, body)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  router := gin.Default()<span></span>
+<span></span>
+  router.POST("/users", UserPostHandler)<span></span>
+<span></span>
+  err := router.Run(":8003")<span></span>
+  if err != nil {<span></span>
+    panic(err)<span></span>
+  }<span></span>
+}<span></span>
+<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Echo</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserPostHandler(e echo.Context) error {<span></span>
+  // Similar to the gin implementation,<span></span>
+  // we start off by creating an<span></span>
+  // empty request body struct<span></span>
+  requestBody := &amp;RequestBody{}<span></span>
+<span></span>
+  // Bind body to the request body<span></span>
+  // struct and check for potential<span></span>
+  // errors<span></span>
+  err := e.Bind(requestBody)<span></span>
+  if err != nil {<span></span>
+    // If an error was created by the<span></span>
+    // Bind operation, we can utilize<span></span>
+    // echo's request handler structure<span></span>
+    // and simply return the error so<span></span>
+    // it gets handled accordingly<span></span>
+    return err<span></span>
+  }<span></span>
+<span></span>
+  // Create status response<span></span>
+  body := &amp;StatusResponse{<span></span>
+    Status: "Hello world from echo!",<span></span>
+    User:   requestBody.Name,<span></span>
+  }<span></span>
+<span></span>
+  // Simply return error<span></span>
+  return e.JSON(http.StatusOK, body)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  e := echo.New()<span></span>
+<span></span>
+  e.POST("/users", UserPostHandler)<span></span>
+<span></span>
+  e.Logger.Fatal(e.Start(":8002"))<span></span>
+}<span></span>
+<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Chi</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserPostHandler(w http.ResponseWriter, r *http.Request) {<span></span>
+  // Read complete request body<span></span>
+  rawRequestBody, err := ioutil.ReadAll(r.Body)<span></span>
+  if err != nil {<span></span>
+    w.WriteHeader(http.StatusBadRequest)<span></span>
+    return<span></span>
+  }<span></span>
+<span></span>
+  // Transform into RequestBody struct<span></span>
+  requestBody := &amp;RequestBody{}<span></span>
+  err = json.Unmarshal(rawRequestBody, requestBody)<span></span>
+  if err != nil {<span></span>
+    w.WriteHeader(http.StatusBadRequest)<span></span>
+    return<span></span>
+  }<span></span>
+<span></span>
+  w.WriteHeader(http.StatusOK)<span></span>
+  w.Header().Set("Content-Type", "application/json")<span></span>
+<span></span>
+  body := StatusResponse{<span></span>
+    Status: "Hello world from chi!",<span></span>
+    User:   requestBody.Name,<span></span>
+  }<span></span>
+<span></span>
+  serializedBody, _ := json.Marshal(body)<span></span>
+  _, _ = w.Write(serializedBody)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  r := chi.NewRouter()<span></span>
+<span></span>
+  r.Post("/users", UserPostHandler)<span></span>
+<span></span>
+  log.Println("Listening on :8001")<span></span>
+  log.Fatal(http.ListenAndServe(":8001", r))<span></span>
+}<span></span>
+</code></pre>
+<h4 class="text-lg font-bold py-2" style="color: #000000;"><span>Mux</span></h4>
+<pre><code class="font-mono text-base bg-accent-polar">func UserPostHandler(w http.ResponseWriter, r *http.Request) {<span></span>
+  // Read complete request body<span></span>
+  rawRequestBody, err := ioutil.ReadAll(r.Body)<span></span>
+  if err != nil {<span></span>
+    w.WriteHeader(http.StatusBadRequest)<span></span>
+    return<span></span>
+  }<span></span>
+<span></span>
+  // Transform into RequestBody struct<span></span>
+  requestBody := &amp;RequestBody{}<span></span>
+  err = json.Unmarshal(rawRequestBody, requestBody)<span></span>
+  if err != nil {<span></span>
+    w.WriteHeader(http.StatusBadRequest)<span></span>
+    return<span></span>
+  }<span></span>
+<span></span>
+  w.WriteHeader(http.StatusOK)<span></span>
+  w.Header().Set("Content-Type", "application/json")<span></span>
+<span></span>
+  body := StatusResponse{<span></span>
+    Status: "Hello world from mux!",<span></span>
+    User:   requestBody.Name,<span></span>
+  }<span></span>
+<span></span>
+  serializedBody, _ := json.Marshal(body)<span></span>
+  _, _ = w.Write(serializedBody)<span></span>
+}<span></span>
+<span></span>
+func main() {<span></span>
+  r := mux.NewRouter()<span></span>
+<span></span>
+  r.HandleFunc("/users", UserPostHandler).Methods("POST")<span></span>
+<span></span>
+  log.Println("Listening on :8004")<span></span>
+  log.Fatal(http.ListenAndServe(":8004", r))<span></span>
+}<span></span>
+</code></pre>
+<blockquote class="pl-4 bg-accent-polar border-l-4 border-accent-light rounded p-4" style="color: #000000;"> 
+ <p class="font-serif text-xl my-4"><span>以上所有示例的完整代码均</span><strong><span class="cursor-pointer text-accent-regular" style="color: #3598db;"><a rel="nofollow" href="https://github.com/BrunoScheufler/blog-code-examples/tree/master/choosing-go-web-framework" style="color: #3598db; text-decoration: inherit;">在此处提供</a></span></strong></p> 
+</blockquote>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>再一次，我们可以看到极简的库和功能齐全的库之间的区别。特别是对于将请求正文数据绑定到结构上，与gin和echo提供的单行代码相比，手动读取完整的输入并将其解组会产生巨大的开销。</span></p>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>我可以继续提供更复杂的用例的示例，但是我认为到目前为止，您可能已经注意到每个实现中都有一个重复出现的主题：使用gin和echo之类的功能强大的库，您可以用更少的代码编写功能，从而获得很多好处。行代码，作为回报，您牺牲了一些灵活性，在某些情况下还降低了性能。选择一个非常轻量级的路由帮助程序库（例如chi或mux）可以帮助您构建</span><em><span>真正快速的</span></em><span>Web应用程序，但是您必须花费更多的时间来实现或搜索缺少的功能以解析请求正文，处理响应等。</span></p>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>最终取决于您和您项目的需求，因此也许可以通过查看事实和数据来做出决定。作为记录，我为这篇文章选择的每个库都</span><em><span>非常</span></em><span>受欢迎，并且由大量的贡献者积极维护，因此您不必选择已经处于报废阶段的工具。</span></p>
+<p class="font-serif text-xl my-4" style="color: #000000;"><span>我对您的选择感兴趣！如果您有任何疑问，建议或其他反馈，请随时</span><span class="cursor-pointer text-accent-regular" style="color: rgba(2,0,255,var(--tw-text-opacity));"><a style="color: inherit; text-decoration: inherit;"><span>发送邮件</span></a></span><span>。</span></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/226483#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

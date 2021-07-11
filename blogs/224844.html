@@ -1,0 +1,70 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>启动服务<br></p>
+<pre>mux := http.NewServeMux()
+mux.HandleFunc("/", handler)
+srv := &amp;http.Server{
+&nbsp; &nbsp; &nbsp; &nbsp; Addr: &nbsp; &nbsp;":2222",
+&nbsp; &nbsp; &nbsp; &nbsp; Handler: mux,
+}
+srv.ListenAndServe()</pre>
+<p>转发http请求</p>
+<pre>func handler(w http.ResponseWriter, req *http.Request) {
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	req.Body = ioutil.NopCloser(bytes.NewReader(body))
+	url := fmt.Sprintf("%s://%s%s", "http", "xxx.com", req.RequestURI)
+
+	proxyReq, err := http.NewRequest(req.Method, url, bytes.NewReader(body))
+	//头信息拷贝
+	proxyReq.Header = make(http.Header)
+	for h, val := range req.Header {
+		proxyReq.Header[h] = val
+	}
+	//头信息修正
+	//proxyReq.Header.Set("Authorization", "xxx")
+	//proxyReq.Header.Set("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
+	//proxyReq.Header.Set("Host","xxx")
+	//proxyReq.Header.Set("Origin","xxx")
+	//proxyReq.Header.Set("Referer","xxx")
+
+	httpClient := &amp;http.Client{}
+	resp, err := httpClient.Do(proxyReq)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadGateway)
+		return
+	}
+	defer resp.Body.Close()
+	//拷贝返回体
+	for name, values := range resp.Header {
+		w.Header()[name] = values
+	}
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteHeader(resp.StatusCode)
+	io.Copy(w, resp.Body)
+}</pre>
+<p>参考:</p>
+<p>...</p>
+<p></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/224844#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/200112/blog_1">软件开发</a>
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

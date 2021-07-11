@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>遇到页面dom节点过多时vue的加载和刷新的性能就会下降的很厉害,然后就会考虑使用vue-virtual-scroller;（<a rel="nofollow" href="https://github.com/Akryum/vue-virtual-scroller">https://github.com/Akryum/vue-virtual-scroller</a>）</p><p>先看一个issue：<a rel="nofollow" href="https://github.com/Akryum/vue-virtual-scroller/issues/116">https://github.com/Akryum/vue-virtual-scroller/issues/116</a></p><p><span style="color:rgb(36,41,46);font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';font-size:14px;background-color:rgb(255,255,255);">v0.12.0和v1.0.0版本的差异,新版本移除了原始table的支持;</span></p><p><span style="color:#24292e;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';"><span style="font-size:14px;background-color:rgb(255,255,255);">导致新版本中需要使用模拟的表格，例子<a rel="nofollow" href="https://codesandbox.io/s/pwlrzmjjk7">https://codesandbox.io/s/pwlrzmjjk7</a></span></span></p><p><span style="color:#24292e;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';"><span style="font-size:14px;background-color:rgb(255,255,255);">版本:("vue-virtual-scroller": "1.0.0-rc.2")</span></span></p><p><span style="color:#24292e;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';"></span></p><p><span style="color:#98c379;">VirtualTable.vue</span></p><pre class="brush:js;toolbar:false">&lt;template&gt;
+&lt;div&gt;
+&lt;RecycleScroller&nbsp;:items="items"&nbsp;:item-size="32"&nbsp;key-field="_id"&gt;
+&lt;template&nbsp;slot="before"&gt;
+&lt;div&nbsp;:key="header"&nbsp;class="th"&nbsp;v-for="header&nbsp;in&nbsp;headers"&gt;
+{{&nbsp;header&nbsp;}}
+&lt;/div&gt;
+&lt;/template&gt;
+&lt;template&nbsp;slot-scope="{&nbsp;item&nbsp;}"&gt;
+&lt;div&nbsp;class="td"&gt;{{&nbsp;item.name&nbsp;}}&lt;/div&gt;
+&lt;div&nbsp;class="td"&gt;{{&nbsp;item.age&nbsp;}}&lt;/div&gt;
+&lt;div&nbsp;class="td"&gt;{{&nbsp;item.company&nbsp;}}&lt;/div&gt;
+&lt;/template&gt;
+&lt;/RecycleScroller&gt;
+&lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import&nbsp;{&nbsp;RecycleScroller&nbsp;}&nbsp;from&nbsp;"vue-virtual-scroller";
+import&nbsp;"vue-virtual-scroller/dist/vue-virtual-scroller.css";
+import&nbsp;items&nbsp;from&nbsp;"./data.json";
+
+export&nbsp;default&nbsp;{
+components:&nbsp;{
+RecycleScroller
+},
+data:&nbsp;()&nbsp;=&gt;&nbsp;({
+items:&nbsp;items.slice(0,&nbsp;1000),
+headers:&nbsp;["Age",&nbsp;"Name",&nbsp;"Company"]
+})
+};
+&lt;/script&gt;
+
+&lt;style&gt;
+.scroller&nbsp;{
+height:&nbsp;100vh;
+}
+.vue-recycle-scroller__slot,
+.vue-recycle-scroller__item-view&nbsp;{
+display:&nbsp;flex;
+width:&nbsp;100%;
+}
+.th,
+.td&nbsp;{
+flex:&nbsp;1;
+}
+.vue-recycle-scroller__slot&nbsp;.th:first-child,
+.vue-recycle-scroller__item-view&nbsp;.td:first-child&nbsp;{
+flex:&nbsp;2;
+}
+&lt;/style&gt;</pre><p><span style="color:#24292e;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';"></span></p><p><span style="color:#24292e;font-family:'-apple-system', BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';">对比于旧版本,例子<a rel="nofollow" href="https://codesandbox.io/s/jnxyxr21lv">https://codesandbox.io/s/jnxyxr21lv</a></span></p><p>版本:"vue-virtual-scroller": "0.11.5"</p><p><span style="color:#98c379;">VirtualTable.vue</span></p><pre class="brush:js;toolbar:false">&lt;template&gt;
+&lt;virtual-scroller&nbsp;:items="items"&nbsp;item-height="42"&nbsp;container-tag="table"&nbsp;content-tag="tbody"&gt;
+&lt;thead&nbsp;slot="before-content"&gt;
+&lt;tr&gt;
+&lt;td&gt;Age&lt;/td&gt;
+&lt;td&gt;Name&lt;/td&gt;
+&lt;td&gt;Company&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;template&nbsp;slot-scope="props"&gt;
+&lt;tr&nbsp;:key="props.itemKey"&gt;
+&lt;td&gt;{{props.item.age}}&lt;/td&gt;
+&lt;td&gt;{{props.item.name}}&lt;/td&gt;
+&lt;td&gt;{{props.item.company}}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/template&gt;
+&lt;/virtual-scroller&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+import&nbsp;items&nbsp;from&nbsp;"./data.json";
+
+export&nbsp;default&nbsp;{
+data:&nbsp;()&nbsp;=&gt;&nbsp;({
+items
+})
+};
+&lt;/script&gt;</pre><p>main.js</p><pre class="brush:js;toolbar:false">import&nbsp;VueVirtualScroller&nbsp;from&nbsp;"vue-virtual-scroller";
+Vue.use(VueVirtualScroller);</pre><p>参考：</p><p><a rel="nofollow" href="https://alligator.io/vuejs/vue-virtual-scroller/">https://alligator.io/vuejs/vue-virtual-scroller/</a></p><p>也可以考虑后端渲染（<a rel="nofollow" href="https://github.com/vuejsdevelopers/blog/wiki/Pre-Render-A-Vue.js-App-(With-Node-Or-Laravel)">https://github.com/vuejsdevelopers/blog/wiki/Pre-Render-A-Vue.js-App-(With-Node-Or-Laravel)</a>）,我这次的场景是一个静态服务器，弱后端的情况，所以不太适用;</p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/149444#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.软件开发_Blog" title="软件开发" href="https://developer.huaweicloud.com/tags/101224/blog_1">软件开发</a>
+        
+    </div>
+</div></div>

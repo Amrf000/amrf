@@ -1,0 +1,64 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p><a>https://jetbrains.com.zh.xy2401.com/help/go/run-debug-configuration-for-go-test.html</a></p>
+<h1 style="color: #27282c;">去测试</h1>
+<p class="article__flow-element article__flow-element--with-nesting" style="color: #27282c;">GoLand使您可以使用以下Go测试框架来创建和运行测试：</p>
+<ul class="list _ul" style="color: #27282c;"> 
+ <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">getest</a><span>&nbsp;</span>–用于运行标准单元测试</p> </li> 
+ <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">gocheck</a><span>&nbsp;</span>–用于扩展标准测试包并运行更复杂的测试</p> </li> 
+ <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">gobench</a><span>&nbsp;</span>–用于运行性能测试</p> </li> 
+</ul>
+<div class="chapter" style="color: #27282c;"> 
+ <h2 style="color: #27282c;">创建和运行Go测试<a class="permalink" style="text-decoration: none;"></a></h2> 
+ <ol class="list _decimal"> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">打开您要为其创建Go测试的文件。</p> <img referrerpolicy="no-referrer" alt="转到示例代码" class="mce_image" height="230" id="images_162419441037272" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/go_sample_code.png" title="转到示例代码" width="440"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><br></p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在“<span>&nbsp;</span><span class="control">项目”</span>工具窗口中，右键单击要在其中创建测试文件的项目。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">从上下文菜单中，选择“<span>&nbsp;</span><span class="menupath">新建|转到文件</span><span>&nbsp;</span>。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在打开的对话框中，输入文件名。命名测试文件的正确语法是<span class="filepath" style="color: #27282c;">_test</span><span>&nbsp;</span>。</p> <img referrerpolicy="no-referrer" alt="去测试样品" class="mce_image" height="250" id="images_162419441037289" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/go_test_sample.png" title="去测试样品" width="461"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><br></p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item">创建测试或按<kbd>Alt+Insert</kbd>打开带有可用测试模板列表的上下文菜单。<img referrerpolicy="no-referrer" alt="去生成测试" class="mce_image" height="148" id="images_162419441037251" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/go_generate_test.png" title="去生成测试" width="108"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">有关如何编写<i>基准</i>测试的信息，请参阅<a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">golang基准</a>文档。</p> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">有关如何使用<i>gocheck的信息</i><span>&nbsp;</span>，请参阅<a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">gocheck</a>文档。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item">按<kbd>N/A</kbd>在“<span>&nbsp;</span><span class="control">运行</span>工具”窗口中运行创建的测试并检查结果。<img referrerpolicy="no-referrer" alt="去测试结果" class="mce_image" height="226" id="images_162419441037248" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/go_test_result.png" title="去测试结果" width="883"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在“<span>&nbsp;</span><span class="control">运行</span>工具”窗口中，您可以执行不同的操作，例如重新运行<img referrerpolicy="no-referrer" alt="图标工具Windows工具WindowRun" class="mce_image" id="images_162419441037289" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/icons.toolwindows.toolWindowRun@2x.png" width="13"><kbd>Ctrl+F5</kbd>您的测试会话或重新运行<img referrerpolicy="no-referrer" alt="重新运行失败的测试按钮" class="mce_image" id="images_162419441037212" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/icons.runConfigurations.rerunFailedTests@2x.png" width="16">测试失败。</p> </li> 
+ </ol> 
+ <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">如果要使用覆盖率运行测试，请在编辑器中，右键单击<img referrerpolicy="no-referrer" alt="图标工具Windows工具WindowRun" class="mce_image" id="images_162419441037242" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/icons.toolwindows.toolWindowRun@2x.png" width="13">图标，然后选择<span class="control">“<span>&nbsp;</span>带覆盖运行”</span>选项。</p> 
+ <img referrerpolicy="no-referrer" alt="去选择覆盖范围" class="mce_image" height="216" id="images_162419441037273" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/go_choose_coverage.png" title="去选择覆盖范围" width="366"> 
+ <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">如果要查看其他已经保存的coverage的结果，请执行以下操作：</p> 
+ <ol class="list _decimal"> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">按<kbd>Ctrl+Alt+F6</kbd></p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在打开的对话框中，选择要显示的险种，然后单击“<span>&nbsp;</span><span class="control">显示所选内容”</span>以查看险种结果。</p> </li> 
+ </ol> 
+</div>
+<div class="chapter" style="color: #27282c;"> 
+ <h2 style="color: #27282c;">为Go测试创建运行/调试配置<a class="permalink" style="text-decoration: none;"></a></h2> 
+ <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">如果需要访问“<span>&nbsp;</span><span class="control">运行/调试配置”</span>对话框或创建新的运行配置，请执行以下操作：</p> 
+ <ol class="list _decimal"> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">从主菜单中，选择<span class="menupath">运行|编辑配置</span><span>&nbsp;</span>。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">点击<img referrerpolicy="no-referrer" alt="图标一般添加" class="mce_image" id="images_162419441037286" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/icons.general.add@2x.png" width="16">工具栏上的图标，然后选择<span class="control">Go Test</span>配置类型。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item">指定<span class="control">转到测试</span>配置设置。它们的默认设置足以创建可执行的运行配置，但是如果需要，您可以指定以下特定于Go的选项： 
+   <ul class="list _ul"> 
+    <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><span class="control">测试框架</span><span>&nbsp;</span>–如果要创建其他非普通单元测试配置，请选择<i>gocheck</i>或<i>gobench</i><span>&nbsp;</span>。</p> </li> 
+    <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><span class="control">模式</span><span>&nbsp;</span>-使用此字段可以过滤要运行的<a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">测试</a><span>&nbsp;</span>。它设置<code class="code">-run</code>的参数<code class="code">go test</code><span>&nbsp;</span>。<br>如果该字段为空，则未设置过滤器，GoLand将运行所有测试。</p> </li> 
+    <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;"><span class="control">Go工具参数</span><span>&nbsp;</span>–使用此字段可以指定其他<a target="_blank" class="external-link" style="color: inherit; text-decoration: none;">go命令</a><span>&nbsp;</span>。</p> </li> 
+   </ul> </li> 
+ </ol> 
+ <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">您还可以为其他任务或Go命令创建配置，具体取决于您的主要配置。</p> 
+ <ol class="list _decimal"> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在<span class="control">启动前</span>部分中，单击<img referrerpolicy="no-referrer" alt="图标一般添加" class="mce_image" id="images_162419441037296" src="https://jetbrains.com.zh.xy2401.com/help/img/idea/2019.3/icons.general.add@2x.png" width="16">图标。</p> </li> 
+  <li class="article__flow-element article__flow-element--with-nesting list__item"> <p class="article__flow-element article__flow-element--with-nesting" style="color: inherit;">在打开的列表中，指定在启动测试配置之前要运行的内容，然后单击“<span>&nbsp;</span><span class="control">确定”</span><span>&nbsp;</span>。</p> </li> 
+ </ol> 
+</div>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/280653#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Go_Blog" title="Go" href="https://developer.huaweicloud.com/tags/200104/blog_1">Go</a>
+        
+    </div>
+</div></div>

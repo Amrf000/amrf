@@ -1,0 +1,29 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>最近遇到一个水印以及图片中特定文字识别的需求,由于网络限制和项目性质(穷),所以没法使用现在的一些ocr在线的sdk,于是就考虑离线的abbyy,</p>
+<p>查阅了一些资料后发现,abbyy ocr sdk应该是能够很容易的集成到程序中去的,但是发现这个sdk好像除非申请试用,全网好像都没找到下载;</p>
+<p>因为我的需求只是将图片中的文字(主要是英文数字)识别出来,使用ABBYY FineReader试了试</p>
+<p><img src="https://bbs-img.huaweicloud.com/blogs/img/1600264246657002181.png" title="1600264246657002181.png" alt="image.png" width="737" height="84"></p>
+<p>虽然繁体中文识别错了,但感觉还行总体上能满足我的需求了;</p>
+<p>那么下一步是怎么将这个转换集成到程序调用中去,看了看自动任务,但是还需要人为手动触发,于是就查了查命令行,</p>
+<pre class="brush:bash;toolbar:false">"......../ABBYY&nbsp;FineReader&nbsp;15/FineCmd.exe"&nbsp;E:/....../t1.PNG&nbsp;/lang&nbsp;Mixed&nbsp;/out&nbsp;E:/..../result.txt&nbsp;/quit</pre>
+<p>perfect...</p>
+<p>参考:</p>
+<p><a>https://stackoverflow.com/questions/16385443/abbyy-finereader-exe-looking-for-cmd-commands-to-use-in-other-programms</a></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/197554#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+    
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+        <a class="common-blog-menu-btn title_banner_7" target="_self" rel="noopener noreferrer" mate_data_ts="bbs_blogdetail_blogTag.click.Java_Blog" title="Java" href="https://developer.huaweicloud.com/tags/200077/blog_1">Java</a>
+        
+    </div>
+</div></div>

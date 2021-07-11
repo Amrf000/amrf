@@ -1,0 +1,286 @@
+<link rel="stylesheet" type="text/css" href="../css/blog.css"><div class="cloud-blog-detail-content-wrap the_height"><div class="cloud-blog-detail-content-wrap">
+    <div class="cloud-blog-detail-content blog-content-block-0" id="blogContent">
+        <p>还是那句话，代码使用的粗陋，但是可以参考：(注意变量生命周期)</p><pre class="brush:cpp;toolbar:false">void&nbsp;saveAsXml(const&nbsp;CString&amp;&nbsp;path)
+{
+	if&nbsp;(m_pRoot)
+	{
+		//::DeleteFile(path);
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//using&nbsp;namespace&nbsp;rapidxml;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;//xml_document&lt;&gt;&nbsp;doc;
+		root-&gt;remove_all_nodes();
+		root-&gt;remove_all_attributes();
+		m_pRoot-&gt;SaveConfigureAsXml(doc,&nbsp;root);
+		std::string&nbsp;xml_as_string;
+		rapidxml::print(std::back_inserter(xml_as_string),&nbsp;doc);
+		std::ofstream&nbsp;fileStored("file.xml");
+		fileStored&nbsp;&lt;&lt;&nbsp;xml_as_string;
+		fileStored.close();
+		//doc.clear();
+		/*CFile&nbsp;file;
+		file.Open(path,&nbsp;CFile::modeCreate&nbsp;|&nbsp;CFile::modeReadWrite);
+		file.Write(pBuffer,&nbsp;Used);
+		file.Close();*/
+	}
+}
+void&nbsp;loadFromXml(const&nbsp;CString&amp;&nbsp;path,&nbsp;int&nbsp;xmlVersion/*&nbsp;=&nbsp;0*/)
+{
+	//xml_node&lt;&gt;&nbsp;*&nbsp;root_node;
+	const&nbsp;auto&nbsp;xmlFile&nbsp;=&nbsp;loadFile(path);//"file_stored.xml"
+	if&nbsp;(!xmlFile.empty())&nbsp;{
+		const&nbsp;auto&nbsp;tmp&nbsp;=&nbsp;xmlFile;
+		processXmlFile(xmlFile.data(),&nbsp;xmlVersion);
+	}
+}
+void&nbsp;processXmlFile(const&nbsp;char*&nbsp;data,&nbsp;int&nbsp;xmlVersion)&nbsp;{
+	enum&nbsp;{
+		PARSE_FLAGS&nbsp;=&nbsp;rapidxml::parse_non_destructive
+	};
+
+	//&nbsp;NOTE&nbsp;:&nbsp;There&nbsp;is&nbsp;a&nbsp;`const_cast&lt;&gt;`,&nbsp;but&nbsp;`rapidxml::parse_non_destructive`
+	//&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;guarantees&nbsp;`data`&nbsp;is&nbsp;not&nbsp;overwritten.
+	rapidxml::xml_document&lt;&gt;&nbsp;xmlDoc;
+	xmlDoc.parse&lt;PARSE_FLAGS&gt;(const_cast&lt;char*&gt;(data));//root_node&nbsp;=&nbsp;doc.first_node("root")-&gt;first_node("XXXRectangle");
+	//walk(doc.first_node(),0,xmlVersion);//doc.first_node()
+
+	xml_node&lt;&gt;*&nbsp;node&nbsp;=&nbsp;xmlDoc.first_node();
+	std::vector&lt;const&nbsp;xml_node&lt;&gt;*&gt;&nbsp;vec0;
+	vec0.push_back(node);
+	std::vector&lt;std::vector&lt;const&nbsp;xml_node&lt;&gt;*&gt;&gt;&nbsp;vecAll;
+	vecAll.push_back(vec0);
+	for&nbsp;(int&nbsp;indent&nbsp;=&nbsp;0;;&nbsp;++indent){
+		if&nbsp;(indent&gt;=vecAll.size())&nbsp;{
+			break;
+		}
+		std::vector&lt;const&nbsp;xml_node&lt;&gt;*&gt;&amp;&nbsp;vec=vecAll[indent];
+		std::vector&lt;const&nbsp;xml_node&lt;&gt;*&gt;&nbsp;add;
+		for&nbsp;(int&nbsp;i&nbsp;=&nbsp;0;&nbsp;i&nbsp;&lt;&nbsp;vec.size();++i)
+		{
+			node&nbsp;=&nbsp;const_cast&lt;xml_node&lt;&gt;*&gt;(vec[i]);
+			const&nbsp;auto&nbsp;ind&nbsp;=&nbsp;std::string(indent&nbsp;*&nbsp;4,&nbsp;'&nbsp;');
+			printf("%s",&nbsp;ind.c_str());
+
+			const&nbsp;node_type&nbsp;t&nbsp;=&nbsp;node-&gt;type();
+			switch&nbsp;(t)&nbsp;{
+			case&nbsp;node_element:
+			{
+				if&nbsp;(xmlVersion&nbsp;==&nbsp;2)&nbsp;{
+					if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"mxCell",&nbsp;6))&nbsp;{
+						xml_attribute&lt;&gt;*&nbsp;a&nbsp;=&nbsp;node-&gt;first_attribute("id"),*b=NULL;
+						string&nbsp;id(a-&gt;value(),&nbsp;a-&gt;value_size());
+						if&nbsp;(std::stoi(id)&nbsp;!=&nbsp;0)&nbsp;{
+							//if&nbsp;(std::stoi(id)&nbsp;==&nbsp;1)&nbsp;{
+							//}&nbsp;else&nbsp;{
+							a&nbsp;=&nbsp;node-&gt;first_attribute("style");
+							b&nbsp;=&nbsp;node-&gt;first_attribute("value");
+
+
+							if&nbsp;(a&nbsp;!=&nbsp;NULL)&nbsp;{
+								string*&nbsp;style&nbsp;=&nbsp;new&nbsp;string(a-&gt;value(),&nbsp;a-&gt;value_size());
+								if&nbsp;(b&nbsp;!=&nbsp;NULL&nbsp;&amp;&amp;&nbsp;b-&gt;value_size()&gt;0)&nbsp;{
+									string&nbsp;value(b-&gt;value(),&nbsp;b-&gt;value_size());
+									size_t&nbsp;start&nbsp;=&nbsp;value.find("&amp;quot;&amp;gt;&amp;lt;b&amp;gt;");
+									if&nbsp;(start&nbsp;!=&nbsp;string::npos)&nbsp;{
+										size_t&nbsp;end&nbsp;=&nbsp;value.find("&amp;lt;",&nbsp;start&nbsp;+&nbsp;19);
+										if&nbsp;(end&nbsp;!=&nbsp;string::npos)&nbsp;{
+											LoadXXXText2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+										}else&nbsp;{
+											LoadXXXRectangle2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+										}
+									}else&nbsp;{
+									&nbsp;&nbsp;&nbsp;&nbsp;start&nbsp;=&nbsp;value.find("&amp;quot;&amp;gt;");
+									&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;(start&nbsp;!=&nbsp;string::npos)&nbsp;{
+										&nbsp;&nbsp;&nbsp;&nbsp;LoadXXXText2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+									&nbsp;&nbsp;&nbsp;&nbsp;}else&nbsp;{
+										&nbsp;&nbsp;&nbsp;&nbsp;LoadXXXRectangle2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+									&nbsp;&nbsp;&nbsp;&nbsp;}
+									}
+
+								}
+								else&nbsp;if&nbsp;(style-&gt;find("。。。。")&nbsp;!=&nbsp;string::npos&nbsp;||
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style-&gt;find("。。。。")!=string::npos&nbsp;||&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;style-&gt;find("。。。。")&nbsp;!=&nbsp;string::npos)&nbsp;{
+									LoadXXXStaticDrawing2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);//圆
+								}else&nbsp;if&nbsp;(style-&gt;find("whiteSpace")&nbsp;!=&nbsp;string::npos)&nbsp;{
+									LoadXXXRectangle2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+								}else&nbsp;if&nbsp;(style-&gt;find("startArrow")&nbsp;!=&nbsp;string::npos)&nbsp;{//折线
+									LoadXXXStaticDrawing2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+								}else&nbsp;if&nbsp;(style-&gt;find("endArrow")&nbsp;!=&nbsp;string::npos)&nbsp;{//线段
+									LoadXXXLine2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+								}
+								delete&nbsp;style;
+							}
+							//}
+						}
+					}
+				}
+				else&nbsp;{
+					//printf("&lt;%.*s",&nbsp;node-&gt;name_size(),&nbsp;node-&gt;name());
+					if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXBase",&nbsp;11))&nbsp;{
+						LoadXXXBase2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+					}
+					else&nbsp;if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXRectangle",&nbsp;16))&nbsp;{
+						if&nbsp;(strncmp(node-&gt;first_attribute("Parent")-&gt;value(),&nbsp;"-1",&nbsp;2))
+						{
+							LoadXXXRectangle2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+						}
+					}
+					else&nbsp;if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXRadioButton",&nbsp;18))&nbsp;{
+						LoadXXXRadioButton2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+					}
+					else&nbsp;if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXText",&nbsp;11))&nbsp;{
+						LoadXXXText2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+					}
+					else&nbsp;if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXLine",&nbsp;11))&nbsp;{
+						LoadXXXLine2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+					}
+					else&nbsp;if&nbsp;(!strncmp(node-&gt;name(),&nbsp;"XXXStaticDrawing",&nbsp;20))&nbsp;{
+						LoadXXXStaticDrawing2(const_cast&lt;xml_node&lt;&gt;*&gt;(node),&nbsp;xmlVersion);
+					}
+				}
+				//for&nbsp;(const&nbsp;xml_attribute&lt;&gt;*&nbsp;a&nbsp;=&nbsp;node-&gt;first_attribute();&nbsp;a;&nbsp;a&nbsp;=&nbsp;a-&gt;next_attribute())&nbsp;{
+				//	printf("&nbsp;%.*s",&nbsp;a-&gt;name_size(),&nbsp;a-&gt;name());
+				//	printf("='%.*s'",&nbsp;a-&gt;value_size(),&nbsp;a-&gt;value());
+				//}
+				//printf("&gt;\n");
+				for&nbsp;(const&nbsp;xml_node&lt;&gt;*&nbsp;n&nbsp;=&nbsp;node-&gt;first_node();&nbsp;n;&nbsp;n&nbsp;=&nbsp;n-&gt;next_sibling())&nbsp;{
+					add.push_back(n);
+					//walk(n,&nbsp;indent&nbsp;+&nbsp;1,&nbsp;xmlVersion);
+				}
+				//printf("%s&lt;/%.*s&gt;\n",&nbsp;ind.c_str(),&nbsp;node-&gt;name_size(),&nbsp;node-&gt;name());
+			}
+			break;
+
+			case&nbsp;node_data:
+				printf("DATA:[%.*s]\n",&nbsp;node-&gt;value_size(),&nbsp;node-&gt;value());
+				break;
+
+			default:
+				printf("NODE-TYPE:%d\n",&nbsp;t);
+				break;
+			}
+		}
+		if&nbsp;(add.size()&nbsp;&gt;&nbsp;0)&nbsp;{
+			vecAll.push_back(add);
+		}
+	}
+}
+void&nbsp;init(xml_node&lt;&gt;*&nbsp;node,&nbsp;XXXBase*&nbsp;m_pRoot,&nbsp;xml_document&lt;&gt;&amp;&nbsp;doc,&nbsp;int&nbsp;xmlVersion)
+{
+	data.FatherId&nbsp;=&nbsp;GetIntValueByName(node,&nbsp;"Parent",&nbsp;-1,&nbsp;xmlVersion);
+	...
+	data.ResetEcho&nbsp;=&nbsp;GetStrValueByName(node,&nbsp;"ResetEcho",&nbsp;"reset",&nbsp;xmlVersion);
+	//============
+	data.D90&nbsp;=&nbsp;GetIntValueByName(node,&nbsp;"D90",&nbsp;0,&nbsp;xmlVersion);
+	...
+	data.Ziti&nbsp;=&nbsp;GetStrValueByName(node,&nbsp;"Ziti",&nbsp;"黑体",&nbsp;xmlVersion);
+	if&nbsp;(true&nbsp;||&nbsp;node&nbsp;==&nbsp;NULL&nbsp;||&nbsp;xmlVersion&nbsp;==&nbsp;2)&nbsp;{
+		this-&gt;m_node&nbsp;=&nbsp;doc.allocate_node(node_element,&nbsp;"XXXRectangle");
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("Parent",&nbsp;doc.allocate_string(std::to_string(data.FatherId).c_str())));
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("ID",&nbsp;doc.allocate_string(std::to_string(data.ID).c_str())));
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("NameofIt",&nbsp;doc.allocate_string(data.NameofIt.c_str())));
+		...
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("BitCheckedValueFrm",&nbsp;doc.allocate_string(std::to_string(data.BitCheckedValueFrm).c_str())));
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("BitCheckedValueToo",&nbsp;doc.allocate_string(std::to_string(data.BitCheckedValueToo).c_str())));
+		...
+		//===
+		this-&gt;m_node-&gt;append_attribute(doc.allocate_attribute("D90",&nbsp;doc.allocate_string(std::to_string(data.D90).c_str())));
+		...
+	}
+	XXXBase*&nbsp;pParent&nbsp;=&nbsp;GetWidgetById(m_pRoot,&nbsp;data.FatherId);
+	pParent-&gt;AddChild(this);
+	this-&gt;WidgetId&nbsp;=&nbsp;data.ID;
+	if&nbsp;(theApp.GlobalIndex&nbsp;&lt;=&nbsp;data.ID)&nbsp;theApp.GlobalIndex&nbsp;=&nbsp;data.ID&nbsp;+&nbsp;1;
+	ANSIToUnicode(data.NameofIt.c_str(),&nbsp;this-&gt;NameofItPlus);
+	this-&gt;LcX&nbsp;=&nbsp;data.LcX;
+	...
+	this-&gt;pFramePen&nbsp;=&nbsp;new&nbsp;Pen(Color(data.pFramePenColorA,&nbsp;data.pFramePenColorR,&nbsp;data.pFramePenColorG,&nbsp;data.pFramePenColorB),&nbsp;data.PenWidth);
+	this-&gt;dashVals[0]&nbsp;=&nbsp;data.dashVals[0];
+	this-&gt;dashVals[1]&nbsp;=&nbsp;data.dashVals[1];
+	if&nbsp;(this-&gt;dashVals[0]&gt;0.&nbsp;&amp;&amp;&nbsp;this-&gt;dashVals[1]&gt;0.)
+	{
+		this-&gt;pFramePen-&gt;SetDashPattern(this-&gt;dashVals,&nbsp;2);
+	}
+	this-&gt;pMainBrush&nbsp;=&nbsp;new&nbsp;SolidBrush(Color(data.pMainBrushColorA,&nbsp;data.pMainBrushColorR,&nbsp;data.pMainBrushColorG,&nbsp;data.pMainBrushColorB));
+	this-&gt;m_pAboutReg&nbsp;=&nbsp;FindRegObject(strtoul(data.m_ulBaseAddress.c_str(),&nbsp;NULL,&nbsp;16),&nbsp;strtoul(data.m_ulOffsetAddress.c_str(),&nbsp;NULL,&nbsp;16));
+	if&nbsp;(this-&gt;m_pAboutReg)
+	{
+		AddRegToTable(this-&gt;m_pAboutReg);
+	}
+	this-&gt;m_pFuncSetEnable&nbsp;=&nbsp;(FUN_SET_ENABLE)FindFunction(CString(data.m_pFuncSetEnable.c_str()));
+	...
+	//===
+	this-&gt;D90&nbsp;=&nbsp;data.D90;
+	this-&gt;DrawBk&nbsp;=&nbsp;data.DrawBk;
+	...
+	this-&gt;TextSize&nbsp;=&nbsp;data.TextSize;
+	ANSIToUnicode(data.ShowText.c_str(),&nbsp;this-&gt;ShowText);
+	this-&gt;pTextBrush&nbsp;=&nbsp;new&nbsp;SolidBrush(Color(data.pTextBrushColorA,&nbsp;data.pTextBrushColorR,&nbsp;data.pTextBrushColorG,&nbsp;data.pTextBrushColorB));
+	ANSIToUnicode(data.Ziti.c_str(),&nbsp;this-&gt;Ziti);
+}
+BOOL&nbsp;SaveConfigureAsXml(xml_document&lt;&gt;&amp;&nbsp;doc,&nbsp;xml_node&lt;&gt;&nbsp;*&nbsp;parent)
+{
+	XXXBase*&nbsp;pEachSon&nbsp;=&nbsp;pFirstSun;
+	while&nbsp;(NULL&nbsp;!=&nbsp;pEachSon)
+	{
+		pEachSon-&gt;SaveConfigureAsXml(doc,&nbsp;m_node);
+		pEachSon&nbsp;=&nbsp;pEachSon-&gt;pBrother;
+	}
+	if&nbsp;(theApp.GlobalIndex&nbsp;&lt;=&nbsp;data.ID)&nbsp;theApp.GlobalIndex&nbsp;=&nbsp;data.ID&nbsp;+&nbsp;1;
+	//==
+	char&nbsp;rsut[128];
+	UnicodeToANSI(this-&gt;NameofItPlus,&nbsp;rsut);
+	this-&gt;m_node-&gt;first_attribute("NameofIt")-&gt;value(doc.allocate_string(rsut));
+	...
+	Color&nbsp;c;
+	this-&gt;pFramePen-&gt;GetColor(&amp;c);
+	this-&gt;m_node-&gt;first_attribute("pFramePenColorA")-&gt;value(doc.allocate_string(std::to_string(static_cast&lt;int&gt;(c.GetA())).c_str()));
+	...
+	this-&gt;pMainBrush-&gt;GetColor(&amp;c);
+	this-&gt;m_node-&gt;first_attribute("pMainBrushColorA")-&gt;value(doc.allocate_string(std::to_string(static_cast&lt;int&gt;(c.GetA())).c_str()));
+	...
+	if&nbsp;(m_pAboutReg)
+	{
+		CString&nbsp;FloatString;
+		FloatString.Format("0x%08X",&nbsp;m_pAboutReg-&gt;m_ulBaseAddress);	
+		this-&gt;m_node-&gt;first_attribute("m_ulBaseAddress")-&gt;value(doc.allocate_string(FloatString));//mark
+		FloatString.Format("0x%04X",&nbsp;m_pAboutReg-&gt;m_ulOffsetAddress);
+		this-&gt;m_node-&gt;first_attribute("m_ulOffsetAddress")-&gt;value(doc.allocate_string(FloatString));
+	}
+	this-&gt;m_node-&gt;first_attribute("m_pFuncSetEnable")-&gt;value(doc.allocate_string(GetFuncNameByAddr(this-&gt;m_pFuncSetEnable)));
+	...
+	UnicodeToANSI(this-&gt;ResetEcho,&nbsp;rsut);
+	this-&gt;m_node-&gt;first_attribute("ResetEcho")-&gt;value(doc.allocate_string(rsut));
+	//===
+	if&nbsp;(this-&gt;TextSize&nbsp;&gt;&nbsp;0)&nbsp;{
+		this-&gt;m_node-&gt;first_attribute("D90")-&gt;value(doc.allocate_string(std::to_string(this-&gt;D90).c_str()));
+		this-&gt;m_node-&gt;first_attribute("DrawBk")-&gt;value(doc.allocate_string(std::to_string(this-&gt;DrawBk).c_str()));
+		....
+		UnicodeToANSI(this-&gt;ShowText,&nbsp;rsut);
+		this-&gt;m_node-&gt;first_attribute("ShowText")-&gt;value(doc.allocate_string(rsut));
+	}
+	if&nbsp;(this-&gt;pTextBrush)&nbsp;{
+		this-&gt;pTextBrush-&gt;GetColor(&amp;c);
+		this-&gt;m_node-&gt;first_attribute("pTextBrushColorA")-&gt;value(doc.allocate_string(std::to_string(c.GetA()).c_str()));
+		....
+		UnicodeToANSI(this-&gt;Ziti,&nbsp;rsut);
+		this-&gt;m_node-&gt;first_attribute("Ziti")-&gt;value(doc.allocate_string(rsut));
+	}
+	parent-&gt;append_node(m_node);
+	return&nbsp;TRUE;
+}</pre><p>参考:<a rel="nofollow" href="https://www.cnblogs.com/hihilary/archive/2012/11/18/2772983.html">https://www.cnblogs.com/hihilary/archive/2012/11/18/2772983.html</a> </p><p>参考:<a rel="nofollow" href="https://www.cnblogs.com/chutianyao/p/3246592.html">https://www.cnblogs.com/chutianyao/p/3246592.html</a></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/wqvbjhc/article/details/7662931">https://blog.csdn.net/wqvbjhc/article/details/7662931</a></p><p>参考:<a rel="nofollow" href="https://github.com/dwd/rapidxml">https://github.com/dwd/rapidxml</a> </p><p>参考:<a rel="nofollow" href="https://github.com/dwd/rapidxml/blob/master/test/simple.cpp">https://github.com/dwd/rapidxml/blob/master/test/simple.cpp</a> </p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/u012209790/article/details/56014779">https://blog.csdn.net/u012209790/article/details/56014779</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/4583409/add-number-double-float-as-attribute-to-rapidxml-node">https://stackoverflow.com/questions/4583409/add-number-double-float-as-attribute-to-rapidxml-node</a></p><p>参考:<a rel="nofollow" href="http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1printing">http://rapidxml.sourceforge.net/manual.html#namespacerapidxml_1printing</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/46300376/rapidxml-parsing-misbehavior-when-subfunction-is-used">https://stackoverflow.com/questions/46300376/rapidxml-parsing-misbehavior-when-subfunction-is-used</a></p><p>参考:<a rel="nofollow" href="https://github.com/rstudio/rstudio/blob/master/src/cpp/core/include/core/rapidxml/rapidxml.hpp">https://github.com/rstudio/rstudio/blob/master/src/cpp/core/include/core/rapidxml/rapidxml.hpp</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/53593933/write-to-xml-with-rapidxml">https://stackoverflow.com/questions/53593933/write-to-xml-with-rapidxml</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/45170187/c-rapidxml-edit-node-and-write-to-a-new-xml-file-doesnt-have-the-updated-nod?rq=1">https://stackoverflow.com/questions/45170187/c-rapidxml-edit-node-and-write-to-a-new-xml-file-doesnt-have-the-updated-nod?rq=1</a></p><p>参考:<a rel="nofollow" href="https://gist.github.com/JSchaenzle/2726944">https://gist.github.com/JSchaenzle/2726944</a></p><p>参考:<a rel="nofollow" href="https://blog.csdn.net/hellokandy/article/details/56834236">https://blog.csdn.net/hellokandy/article/details/56834236</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/5203325/rapidxml-how-to-iterate-through-nodes-leaves-out-last-sibling">https://stackoverflow.com/questions/5203325/rapidxml-how-to-iterate-through-nodes-leaves-out-last-sibling</a></p><p>参考:<a rel="nofollow" href="https://gist.github.com/t-mat/7150417">https://gist.github.com/t-mat/7150417</a></p><p>参考:<a rel="nofollow" href="https://gist.github.com/JSchaenzle/2726944">https://gist.github.com/JSchaenzle/2726944</a></p><p>参考:<a rel="nofollow" href="https://stackoverflow.com/questions/2808022/how-to-parse-the-xml-file-in-rapidxml">https://stackoverflow.com/questions/2808022/how-to-parse-the-xml-file-in-rapidxml</a></p><p><br></p>
+    </div>
+    
+    
+    <p class="pc_current ask-tip">登录后可下载附件，请<a href="https://auth.huaweicloud.com/authui/login?service=https://bbs.huaweicloud.com/blogs/103740#attachment&amp;locale=zh-cn">登录</a>或者<a href="https://reg.huaweicloud.com/registerui/public/custom/register.html?locale=zh-cn&amp;service=https://bbs.huaweicloud.com#/register">注册</a></p>
+
+    <!-- 版权声明 start -->
+    
+   
+    
+    <!-- 版权声明 end -->
+
+    <div class="blog-menu-footer m-blog-menu-footer-bottom">
+        
+    </div>
+</div></div>
